@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
-import MainScreen from '../screens/MainScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import Navigator from '../routes/MainTabs'
 
 const screens = {
   Login: {
@@ -12,7 +12,7 @@ const screens = {
     screen: RegisterScreen, 
   },
   Main: {
-    screen: MainScreen,
+    screen: Navigator,
   },
 };
 
