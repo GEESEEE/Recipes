@@ -13,6 +13,8 @@ import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
 
+import logo from '../assets/favicon.png'
+
 const EmailInputField = ({
     onChangeText,
 }: {
@@ -58,6 +60,7 @@ const PasswordInputField = ({
 )
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
+
     const [data, setData] = React.useState({
         email: '',
         password: '',
@@ -98,7 +101,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
             {/* Logo */}
             <Image
                 style={styles.logo}
-                source={require('../assets/favicon.png')}
+                source={logo}
             />
 
             {/* Email Input Field */}

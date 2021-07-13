@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
-import Navigator from '../routes/MainTabs'
+import Navigator from './MainTabs'
 
 const screens = {
     Login: {

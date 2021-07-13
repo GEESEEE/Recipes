@@ -1,10 +1,14 @@
 import Ingredient from './Ingredient'
 
 export default class Recipe {
-    name: string = 'Recipe Name'
-    image: any
-    description: string = 'Lorem Ipsum'
+    name = 'Recipe Name'
+
+    image = ''
+
+    description = 'Lorem Ipsum'
+
     ingredients: Ingredient[]
+
     instructions: string[]
 
     constructor() {

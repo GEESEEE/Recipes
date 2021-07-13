@@ -5,14 +5,13 @@ import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
 
-//#region Components
+// #region Components
 
 const UsernameInputField = ({
     onChangeText,
 }: {
     onChangeText: (text: string) => void
-}): JSX.Element => {
-    return (
+}): JSX.Element => (
         <View style={globalStyles.userinput}>
             <TextInput
                 placeholder="Username"
@@ -22,14 +21,12 @@ const UsernameInputField = ({
             />
         </View>
     )
-}
 
 const EmailInputField = ({
     onChangeText,
 }: {
     onChangeText: (text: string) => void
-}): JSX.Element => {
-    return (
+}): JSX.Element => (
         <View style={globalStyles.userinput}>
             <TextInput
                 placeholder="E-mail"
@@ -39,7 +36,6 @@ const EmailInputField = ({
             />
         </View>
     )
-}
 
 const PasswordInputField = ({
     secureTextEntry,
@@ -49,8 +45,8 @@ const PasswordInputField = ({
     secureTextEntry: boolean
     onChangeText: (text: string) => void
     onEyePress: () => void
-}): JSX.Element => {
-    return (
+}): JSX.Element =>
+    (
         <View style={{ ...globalStyles.userinput }}>
             <TextInput
                 placeholder="Password"
@@ -68,9 +64,8 @@ const PasswordInputField = ({
             </TouchableOpacity>
         </View>
     )
-}
 
-//#endregion
+// #endregion
 
 function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     const [data, setData] = React.useState({
