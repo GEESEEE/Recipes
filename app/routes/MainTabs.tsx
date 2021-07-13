@@ -1,17 +1,15 @@
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import MainScreen from '../screens/MainScreen';
+import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import MainScreen from '../screens/MainScreen'
 
 const screens = {
-  Main: {
-    screen: MainScreen,
-  },
-};
+    Main: {
+        screen: MainScreen,
+    },
+}
 
-const tabBarOptions = {
+const tabBarOptions = {}
 
-};
+const MainTabs = createBottomTabNavigator(screens, tabBarOptions)
 
-const MainTabs = createBottomTabNavigator(screens, tabBarOptions);
-
-export default createAppContainer(MainTabs);
+export default createAppContainer(MainTabs)

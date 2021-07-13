@@ -1,7 +1,6 @@
-import Ingredient from "./Ingredient"
+import Ingredient from './Ingredient'
 
 export default class Recipe {
-
     name: string = 'Recipe Name'
     image: any
     description: string = 'Lorem Ipsum'
@@ -12,5 +11,4 @@ export default class Recipe {
         this.ingredients = []
         this.instructions = ['Instruction 1']
     }
-
 }

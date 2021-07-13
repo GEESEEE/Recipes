@@ -1,22 +1,22 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import colors from '../config/colors';
+import React from 'react'
+import { StyleSheet, View, Text } from 'react-native'
+import colors from '../config/colors'
 
 function MainScreen(): JSX.Element {
-  return (
-    <View style={styles.background}>
-      <Text>main screen</Text>
-    </View>
-  );
+    return (
+        <View style={styles.background}>
+            <Text>main screen</Text>
+        </View>
+    )
 }
 
-export default MainScreen;
+export default MainScreen
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.white,
-  },
-});
+    background: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+    },
+})
