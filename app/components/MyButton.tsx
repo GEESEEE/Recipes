@@ -11,8 +11,8 @@ export default function MyButton({
 }: {
     text: string
     onPress: () => void
-    viewStyle?: object
-    textStyle?: object
+    viewStyle?: Record<string, unknown>
+    textStyle?: Record<string, unknown>
 }): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress}>

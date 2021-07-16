@@ -1,7 +1,12 @@
+import RecipeIngredient from './recipe-ingredient'
+
 export default class Ingredient {
-    name = 'ingredient'
 
-    amount = 0
+    public readonly id!: number
 
-    unit? = 'g'
+    public name!: string
+
+    public unit?: string | null
+
+    public recipeIngredients?: RecipeIngredient[]
 }

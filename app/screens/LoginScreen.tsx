@@ -12,8 +12,9 @@ import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
+import logo from '../assets/temp_icon.png'
+import applicationAdapter from '../adapters/application'
 
-import logo from '../assets/favicon.png'
 
 const EmailInputField = ({
     onChangeText,
@@ -88,8 +89,19 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }
 
-    function handleLoginButton(): void {
-        navigation.navigate('Main')
+    async function handleLoginButton(): Promise<void> {
+        // navigation.navigate('Main')
+        try {
+            const recipe = await applicationAdapter(
+                'GET',
+                'v1/recipes',
+                {name: 'Jonko', description: 'Dikke Jonko Ouleh', prepareTime: 300, peopleCount: 1}
+            )
+            console.log(recipe)
+        } catch (error) {
+            console.error(error)
+        }
+
     }
 
     function handleRegisterButton(): void {

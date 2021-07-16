@@ -1,18 +1,19 @@
-import Ingredient from './Ingredient'
+import Instruction from './instruction'
+import RecipeIngredient from './recipe-ingredient'
 
 export default class Recipe {
-    name = 'Recipe Name'
 
-    image = ''
+    public readonly id!: number
 
-    description = 'Lorem Ipsum'
+    public name!: string
 
-    ingredients: Ingredient[]
+    public description!: string
 
-    instructions: string[]
+    public prepareTime!: number
 
-    constructor() {
-        this.ingredients = []
-        this.instructions = ['Instruction 1']
-    }
+    public peopleCount!: number
+
+    public recipeIngredients?: RecipeIngredient[]
+
+    public instructions?: Instruction[]
 }

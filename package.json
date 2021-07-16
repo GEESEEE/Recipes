@@ -15,11 +15,14 @@
         "@react-navigation/bottom-tabs": "^5.11.11",
         "@react-navigation/native": "^5.9.4",
         "@react-navigation/stack": "^5.14.5",
+        "@types/react-native-dotenv": "^0.2.0",
+        "axios": "^0.21.1",
         "expo": "~42.0.0",
         "expo-status-bar": "~1.0.4",
         "react": "16.13.1",
         "react-dom": "16.13.1",
         "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+        "react-native-config": "^1.4.2",
         "react-native-gesture-handler": "~1.10.2",
         "react-native-reanimated": "~2.2.0",
         "react-native-safe-area-context": "3.2.0",
@@ -57,7 +60,7 @@
     "private": true,
     "husky": {
         "hooks": {
-        "pre-commit": "pretty-quick --staged && npm run lint"
+            "pre-commit": "pretty-quick --staged && npm run lint"
         }
     }
 }
