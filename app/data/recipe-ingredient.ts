@@ -1,8 +1,8 @@
 import Ingredient from './ingredient'
+import ListItem from './list-item'
 import Recipe from './recipe'
 
-export default class RecipeIngredient {
-
+export default class RecipeIngredient extends ListItem {
     public recipeId!: number
 
     public ingredientId!: number

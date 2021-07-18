@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View, Text} from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
 
@@ -35,7 +35,6 @@ export default function MyButton({
         </TouchableOpacity>
     )
 }
-
 
 const styles = StyleSheet.create({
     button: {

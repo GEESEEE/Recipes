@@ -12,30 +12,30 @@ const UsernameInputField = ({
 }: {
     onChangeText: (text: string) => void
 }): JSX.Element => (
-        <View style={globalStyles.userinput}>
-            <TextInput
-                placeholder="Username"
-                style={{ ...globalStyles.textinput }}
-                autoCapitalize="none"
-                onChangeText={(text) => onChangeText(text)}
-            />
-        </View>
-    )
+    <View style={globalStyles.userinput}>
+        <TextInput
+            placeholder="Username"
+            style={{ ...globalStyles.textinput }}
+            autoCapitalize="none"
+            onChangeText={(text) => onChangeText(text)}
+        />
+    </View>
+)
 
 const EmailInputField = ({
     onChangeText,
 }: {
     onChangeText: (text: string) => void
 }): JSX.Element => (
-        <View style={globalStyles.userinput}>
-            <TextInput
-                placeholder="E-mail"
-                style={{ ...globalStyles.textinput }}
-                autoCapitalize="none"
-                onChangeText={(text) => onChangeText(text)}
-            />
-        </View>
-    )
+    <View style={globalStyles.userinput}>
+        <TextInput
+            placeholder="E-mail"
+            style={{ ...globalStyles.textinput }}
+            autoCapitalize="none"
+            onChangeText={(text) => onChangeText(text)}
+        />
+    </View>
+)
 
 const PasswordInputField = ({
     secureTextEntry,
@@ -45,25 +45,24 @@ const PasswordInputField = ({
     secureTextEntry: boolean
     onChangeText: (text: string) => void
     onEyePress: () => void
-}): JSX.Element =>
-    (
-        <View style={{ ...globalStyles.userinput }}>
-            <TextInput
-                placeholder="Password"
-                secureTextEntry={secureTextEntry}
-                style={globalStyles.textinput}
-                autoCapitalize="none"
-                onChangeText={(text) => onChangeText(text)}
-            />
-            <TouchableOpacity onPress={onEyePress}>
-                {secureTextEntry ? (
-                    <MyFeather name="eye-off" />
-                ) : (
-                    <MyFeather name="eye" />
-                )}
-            </TouchableOpacity>
-        </View>
-    )
+}): JSX.Element => (
+    <View style={{ ...globalStyles.userinput }}>
+        <TextInput
+            placeholder="Password"
+            secureTextEntry={secureTextEntry}
+            style={globalStyles.textinput}
+            autoCapitalize="none"
+            onChangeText={(text) => onChangeText(text)}
+        />
+        <TouchableOpacity onPress={onEyePress}>
+            {secureTextEntry ? (
+                <MyFeather name="eye-off" color={colors.grey} />
+            ) : (
+                <MyFeather name="eye" color={colors.grey} />
+            )}
+        </TouchableOpacity>
+    </View>
+)
 
 // #endregion
 

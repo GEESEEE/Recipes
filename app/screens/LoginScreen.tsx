@@ -13,8 +13,6 @@ import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
 import logo from '../assets/temp_icon.png'
-import applicationAdapter from '../adapters/application'
-
 
 const EmailInputField = ({
     onChangeText,
@@ -52,16 +50,15 @@ const PasswordInputField = ({
         />
         <TouchableOpacity onPress={onEyePress}>
             {secureTextEntry ? (
-                <MyFeather name="eye-off" />
+                <MyFeather name="eye-off" color={colors.grey} />
             ) : (
-                <MyFeather name="eye" />
+                <MyFeather name="eye" color={colors.grey} />
             )}
         </TouchableOpacity>
     </View>
 )
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-
     const [data, setData] = React.useState({
         email: '',
         password: '',
@@ -90,17 +87,25 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleLoginButton(): Promise<void> {
-        // navigation.navigate('Main')
-        try {
-            const recipe = await applicationAdapter(
-                'GET',
-                'v1/recipes',
-                {name: 'Jonko', description: 'Dikke Jonko Ouleh', prepareTime: 300, peopleCount: 1}
-            )
-            console.log(recipe)
-        } catch (error) {
-            console.error(error)
-        }
+        navigation.navigate('Main')
+
+        // const recipeBody = {
+        //     name: 'Jonko',
+        //     description: 'Dikke Jonko Ouleh',
+        //     prepareTime: 300,
+        //     peopleCount: 1,
+        // }
+
+        // const ingredientBody = {
+        //     name: 'wiet',
+        //     unit: 'g'
+        // }
+
+        // const amount = 0.25
+        // const instruction = 'Jonko draaien a nifo'
+
+        // const recipe = await recipeService.getRecipe(10)
+        // console.log(recipe)
 
     }
 
@@ -111,10 +116,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     return (
         <View style={globalStyles.background}>
             {/* Logo */}
-            <Image
-                style={styles.logo}
-                source={logo}
-            />
+            <Image style={styles.logo} source={logo} />
 
             {/* Email Input Field */}
             <EmailInputField onChangeText={handleEmailInputChange} />
