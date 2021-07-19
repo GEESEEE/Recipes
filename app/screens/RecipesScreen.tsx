@@ -8,7 +8,7 @@ import Recipe from '../data/recipe'
 function RecipesScreen(): JSX.Element {
 
     const recipesContext = React.useContext(RecipesContext)
-
+    console.log(recipesContext.recipes)
     return (
         <View style={styles.background}>
             <Text>recipes screen</Text>

@@ -22,7 +22,7 @@ async function storeRecipes(recipes: Recipe[]): Promise<Recipe[]> {
 function reducer(recipes: Recipe[], action : any): Recipe[] {
     switch (action.type) {
         case RECIPEACTIONS.ADD: {
-            const newState = [...recipes, action.recipe]
+            const newState = [...recipes, action.payload.recipe]
             storeRecipes(newState)
             return newState
         }

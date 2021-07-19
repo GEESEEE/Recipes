@@ -7,7 +7,7 @@ import Recipe from '../data/recipe'
 
 
 export default function RecipeListItemcomponent({recipe}: {recipe: Recipe}): JSX.Element {
-
+    console.log("Logging recipe list item", recipe)
     return (
         <View style={{...styles.container}}>
             {/* Recipe Name */}
