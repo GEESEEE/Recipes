@@ -2,13 +2,17 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import MyButton from '../components/MyButton'
 import colors from '../config/colors'
-import { RecipesContext } from '../contexts/recipes'
+import { RECIPEACTIONS, RecipesContext } from '../contexts/recipes'
 
 function MainScreen(): JSX.Element {
     const recipesContext = React.useContext(RecipesContext)
     function logRecipes(): void {
         console.log('Logging Recipes')
         console.log(recipesContext.recipes)
+    }
+
+    function clearRecipes(): void {
+        recipesContext.dispatch({type: RECIPEACTIONS.SET, payload: {recipes: []}} )
     }
 
     return (
