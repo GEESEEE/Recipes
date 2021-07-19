@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dimensions , StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { FlatList , TextInput } from 'react-native-gesture-handler'
+import { v4 as uuid } from 'uuid'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
@@ -11,38 +12,24 @@ import Recipe from '../data/recipe'
 import RecipeIngredient from '../data/recipe-ingredient'
 import { RECIPEACTIONS, RecipesContext } from '../contexts/recipes'
 
-function NewRecipeScreen(): JSX.Element {
 
-    const [recipeData, setRecipeData] = React.useState<Recipe>({
+function NewRecipeScreen(): JSX.Element {
+    const initialRecipe = {
         name: '',
         description: '',
         prepareTime: 0,
         peopleCount: 1,
-        key: '0',
+        key: uuid(),
         id: 0,
         recipeIngredients: [],
         instructions: [],
-    })
+    }
+
+    const [recipeData, setRecipeData] = React.useState<Recipe>(initialRecipe)
 
     const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>([])
 
-    const [ingredientKey, setIngredientKey] = React.useState(0)
-
-    function getIngredientKey(): string {
-        const key = ingredientKey
-        setIngredientKey(ingredientKey + 1)
-        return key.toString()
-    }
-
     const [instructionsData, setInstructionsData] = React.useState<Instruction[]>([])
-
-    const [instructionKey, setInstructionKey] = React.useState(0)
-
-    function getInstructionKey(): string {
-        const key = instructionKey
-        setInstructionKey(instructionKey + 1)
-        return key.toString()
-    }
 
     function handleNameChange(name: string): void {
         setRecipeData({...recipeData, name})
@@ -64,7 +51,7 @@ function NewRecipeScreen(): JSX.Element {
         const ingredient = new Ingredient()
         ingredient.name = ''
         ingredient.unit = ''
-        ingredient.key = getIngredientKey()
+        ingredient.key = uuid()
 
         const recipeIngredient = new RecipeIngredient()
         recipeIngredient.ingredient = ingredient
@@ -82,35 +69,26 @@ function NewRecipeScreen(): JSX.Element {
     function handleIngredientNameChange(key: string, name: string): void {
         const ingredient = ingredientsData.filter(item => item.key === key)[0]
         ingredient.name = name
-        const ingredients = ingredientsData.filter(item => item.key !== key)
-        setIngredientData([...ingredients, ingredient].sort(
-            (a, b) => (a.key > b.key) ? 1 : -1
-        ))
+        setIngredientData([...ingredientsData])
     }
 
     function handleIngredientUnitChange(key: string, unit: string): void {
         const ingredient = ingredientsData.filter(item => item.key === key)[0]
         ingredient.unit = unit
-        const ingredients = ingredientsData.filter(item => item.key !== key)
-        setIngredientData([...ingredients, ingredient].sort(
-            (a, b) => (a.key > b.key) ? 1 : -1
-        ))
+        setIngredientData([...ingredientsData])
     }
 
     function handleIngredientAmountChange(key: string, amount: string): void {
         const ingredient = ingredientsData.filter(item => item.key === key)[0]
-        const recipeIngredient = ingredient.recipeIngredients ?? []
-        recipeIngredient[0].amount = parseFloat(amount)
-        const ingredients = ingredientsData.filter(item => item.key !== key)
-        setIngredientData([...ingredients, ingredient].sort(
-            (a, b) => (a.key > b.key) ? 1 : -1
-        ))
+        const recipeIngredient = (ingredient.recipeIngredients?.[0] as RecipeIngredient)
+        recipeIngredient.amount = parseFloat(amount)
+        setIngredientData([...ingredientsData])
     }
 
     function handleAddInstruction(): void {
         const instruction = new Instruction()
         instruction.text = ''
-        instruction.key =  getInstructionKey()
+        instruction.key = uuid()
 
         setInstructionsData([...instructionsData, instruction])
         recipeData.instructions?.push(instruction)
@@ -124,10 +102,7 @@ function NewRecipeScreen(): JSX.Element {
     function handleInstructionTextChange(key: string, text: string): void {
         const instruction = instructionsData.filter(item => item.key === key)[0]
         instruction.text = text
-        const instructions = instructionsData.filter(item => item.key !== key)
-        setInstructionsData([...instructions, instruction].sort(
-            (a, b) => (a.key > b.key) ? 1 : -1
-        ))
+        setInstructionsData([...instructionsData])
     }
 
     const RecipeContext = React.useContext(RecipesContext)
@@ -146,6 +121,9 @@ function NewRecipeScreen(): JSX.Element {
         })
         recipe.recipeIngredients = recipeIngredients
         RecipeContext.dispatch({type: RECIPEACTIONS.ADD, payload: {recipe}})
+        setRecipeData(initialRecipe)
+        setIngredientData([])
+        setInstructionsData([])
     }
 
     return (

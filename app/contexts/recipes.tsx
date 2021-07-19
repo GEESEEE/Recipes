@@ -4,6 +4,8 @@ import Recipe from '../data/recipe'
 
 export const RecipesContext = React.createContext<any>(undefined)
 
+export const RecipesKeyContext = React.createContext<any>(undefined)
+
 export const RECIPEACTIONS = {
     ADD: 'addRecipe',
     SET: 'setRecipes',
@@ -44,8 +46,26 @@ function reducer(recipes: Recipe[], action : any): Recipe[] {
     }
 }
 
+async function storeRecipesKey(key: number):Promise<number> {
+    try {
+        await AsyncStorage.setItem('recipesKey', JSON.stringify(key))
+    } catch (err) {
+        console.error(err)
+    }
+    return key
+}
+
 export function RecipesContextProvider( {children}: {children: JSX.Element}): JSX.Element {
     const [recipes, recipesDispatch] = React.useReducer(reducer, [])
+
+    const [recipeKey, setRecipeKey] = React.useState(0)
+
+    const getRecipeKey = (): string => {
+        const key = recipeKey
+        setRecipeKey(key + 1)
+        storeRecipesKey(key + 1)
+        return key.toString()
+    }
 
     const initContext = async (): Promise<void> => {
         try {
@@ -67,7 +87,9 @@ export function RecipesContextProvider( {children}: {children: JSX.Element}): JS
 
     return (
         <RecipesContext.Provider value={{recipes, dispatch: recipesDispatch}} >
-            {children}
+            <RecipesKeyContext.Provider value={getRecipeKey}>
+                {children}
+            </RecipesKeyContext.Provider>
         </RecipesContext.Provider>
     )
 }

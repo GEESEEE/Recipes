@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, FlatList } from 'react-native'
-import RecipeListItemcomponent from '../components/RecipeListItemComponent'
+import RecipeListItemComponent from '../components/RecipeListItemComponent'
 import colors from '../config/colors'
 import { RecipesContext } from '../contexts/recipes'
 
@@ -11,10 +11,9 @@ function RecipesScreen(): JSX.Element {
         <View style={styles.background}>
             <Text>recipes screen</Text>
             <FlatList style={styles.recipesList}
-                // keyExtractor={item => item.name}
                 data={recipesContext.recipes}
                 renderItem={({item}) => (
-                    <RecipeListItemcomponent recipe={item} />
+                    <RecipeListItemComponent recipe={item} />
                 )}
             />
         </View>

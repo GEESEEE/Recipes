@@ -6,7 +6,7 @@ import colors from '../config/colors'
 import Recipe from '../data/recipe'
 
 
-export default function RecipeListItemcomponent({recipe}: {recipe: Recipe}): JSX.Element {
+export default function RecipeListItemComponent({recipe}: {recipe: Recipe}): JSX.Element {
     console.log("Logging recipe list item", recipe)
     return (
         <View style={{...styles.container}}>
