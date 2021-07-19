@@ -114,7 +114,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     return (
-        <View style={globalStyles.background}>
+        <View style={styles.background}>
             {/* Logo */}
             <Image style={styles.logo} source={logo} />
 
@@ -148,6 +148,12 @@ const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.15
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+    },
     logo: {
         width: logoHeight,
         height: logoHeight,

@@ -2,12 +2,6 @@ import { StyleSheet } from 'react-native'
 import colors from './colors'
 
 const globalStyles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-    },
     userinput: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -21,7 +15,6 @@ const globalStyles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: colors.lightgrey,
     },
-
     textinput: {
         flex: 1,
         paddingLeft: 10,

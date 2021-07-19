@@ -1,8 +1,7 @@
 import React from 'react'
-import { Dimensions , StyleSheet, View, Text, TouchableOpacity, ListRenderItem } from 'react-native'
+import { Dimensions , StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { FlatList , TextInput } from 'react-native-gesture-handler'
-
-
+import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
@@ -10,6 +9,7 @@ import Ingredient from '../data/ingredient'
 import Instruction from '../data/instruction'
 import Recipe from '../data/recipe'
 import RecipeIngredient from '../data/recipe-ingredient'
+import { RECIPEACTIONS, RecipesContext } from '../contexts/recipes'
 
 function NewRecipeScreen(): JSX.Element {
 
@@ -26,20 +26,22 @@ function NewRecipeScreen(): JSX.Element {
 
     const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>([])
 
-    const [ingredientId, setIngredientId] = React.useState(0)
+    const [ingredientKey, setIngredientKey] = React.useState(0)
 
-    function getIngredientId(): string {
-        setIngredientId(ingredientId + 1)
-        return (ingredientId - 1).toString()
+    function getIngredientKey(): string {
+        const key = ingredientKey
+        setIngredientKey(ingredientKey + 1)
+        return key.toString()
     }
 
     const [instructionsData, setInstructionsData] = React.useState<Instruction[]>([])
 
-    const [instructionId, setInstructionId] = React.useState(0)
+    const [instructionKey, setInstructionKey] = React.useState(0)
 
-    function getInstructionId(): string {
-        setInstructionId(instructionId + 1)
-        return (instructionId - 1).toString()
+    function getInstructionKey(): string {
+        const key = instructionKey
+        setInstructionKey(instructionKey + 1)
+        return key.toString()
     }
 
     function handleNameChange(name: string): void {
@@ -62,10 +64,9 @@ function NewRecipeScreen(): JSX.Element {
         const ingredient = new Ingredient()
         ingredient.name = ''
         ingredient.unit = ''
-        ingredient.key = getIngredientId()
+        ingredient.key = getIngredientKey()
 
         const recipeIngredient = new RecipeIngredient()
-        recipeIngredient.amount = 0
         recipeIngredient.ingredient = ingredient
         ingredient.recipeIngredients = [recipeIngredient]
 
@@ -109,7 +110,7 @@ function NewRecipeScreen(): JSX.Element {
     function handleAddInstruction(): void {
         const instruction = new Instruction()
         instruction.text = ''
-        instruction.key =  getInstructionId()
+        instruction.key =  getInstructionKey()
 
         setInstructionsData([...instructionsData, instruction])
         recipeData.instructions?.push(instruction)
@@ -129,16 +130,36 @@ function NewRecipeScreen(): JSX.Element {
         ))
     }
 
+    const RecipeContext = React.useContext(RecipesContext)
+
+    async function handleCreateRecipe(): Promise<void> {
+        console.log("Creating Recipe")
+        const recipe = {...recipeData}
+        const recipeIngredients: RecipeIngredient[] = []
+        recipeData.recipeIngredients?.forEach((recipeIngredient, id) => {
+            const ingredient =  {...recipeIngredient.ingredient} as Ingredient
+            ingredient.recipeIngredients = []
+            const newRecipeIngredient = new RecipeIngredient()
+            newRecipeIngredient.amount = recipeIngredient.amount
+            newRecipeIngredient.ingredient = ingredient
+            recipeIngredients.push(newRecipeIngredient)
+        })
+        recipe.recipeIngredients = recipeIngredients
+        RecipeContext.dispatch({type: RECIPEACTIONS.ADD, payload: {recipe}})
+    }
+
     return (
         <View style={styles.background}>
             {/* Recipe Name Input Field */}
-            <TextInput
-                style={{...styles.header}}
-                value={recipeData.name}
-                placeholder='New Recipe'
-                onChangeText={(text: string) => handleNameChange(text)}
-                multiline
-            />
+            <View style={styles.header}>
+                <TextInput style={{...styles.headerText}}
+                    value={recipeData.name}
+                    placeholder='New Recipe'
+                    placeholderTextColor={colors.darkgrey}
+                    onChangeText={(text: string) => handleNameChange(text)}
+                    multiline
+                />
+            </View>
 
             {/* Recipe Description Input Field */}
             <View style={globalStyles.userinput}>
@@ -186,8 +207,10 @@ function NewRecipeScreen(): JSX.Element {
                             <TextInput
                                 style={styles.ingredientAmount}
                                 onChangeText={(text: string) => handleIngredientAmountChange(item.key, text)}
-                                value={item.recipeIngredients[0].amount.toString() ?? ''}
-                                placeholder='Amount'
+                                value={item.recipeIngredients[0].amount
+                                    ? item.recipeIngredients[0].amount.toString()
+                                    : ''}
+                                placeholder='0'
                             />
 
                             {/* Ingredient Unit Input */}
@@ -265,12 +288,16 @@ function NewRecipeScreen(): JSX.Element {
                 />
             </View>
 
+            {/* Create Recipe Button */}
+            <MyButton
+                text="Create Recipe"
+                onPress={handleCreateRecipe}
+            />
         </View>
     )
 }
-// /*
 
-// */
+
 export default NewRecipeScreen
 
 const { height } = Dimensions.get('screen')
@@ -285,12 +312,15 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     header: {
-        top: height * 0.08,
-        fontSize: height * 0.04,
+        bottom: height * 0.05,
         width: '85%',
-        // flex: 1,
-        paddingLeft: 10,
         color: colors.black,
+
+    },
+    headerText: {
+        fontSize: height * 0.04,
+        color: colors.black,
+        textAlign: 'center'
     },
     ingredientsContainer: {
         flexDirection: 'column',

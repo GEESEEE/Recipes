@@ -111,7 +111,7 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     return (
-        <View style={globalStyles.background}>
+        <View style={styles.background}>
             {/* Username Input Field */}
             <UsernameInputField onChangeText={handleUsernameInputChange} />
 
@@ -142,6 +142,12 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
 export default RegisterScreen
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+    },
     goBackButtonView: {
         backgroundColor: colors.white,
     },
