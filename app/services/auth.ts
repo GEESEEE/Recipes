@@ -24,3 +24,11 @@ export async function signOut(headers: {token: string}): Promise<boolean | APIEr
         {headers}
     )
 }
+
+export async function verifyToken(headers: {token: string}): Promise<any | APIError> {
+    return handleError(
+        'GET',
+        '/auth/info',
+        {headers}
+    )
+}

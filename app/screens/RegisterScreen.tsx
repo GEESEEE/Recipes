@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
-import { Token } from '../reducers/auth'
+import * as authService from '../services/auth'
+import { APIError } from '../config/constants'
 
 
 // #region Components
@@ -107,10 +107,21 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }
 
-    function handleRegisterButton(): void {
-
+    async function handleRegisterButton(): Promise<void> {
         console.log('Registering')
-        navigation.goBack()
+        const userData = {
+            name: data.username,
+            password: data.password,
+            email: data.email,
+        }
+        const user = await authService.signUp(userData)
+        console.log("Register response", user)
+        if (user instanceof APIError) {
+            console.log(user.message)
+        } else {
+            navigation.goBack()
+        }
+
     }
 
     function handleGoBackButton(): void {

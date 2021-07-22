@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
     View,
     StyleSheet,
@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import * as Keychain from 'react-native-keychain'
+import * as SecureStore from 'expo-secure-store';
 import * as authService from '../services/auth'
 import globalStyles from '../config/globalStyles'
 import colors from '../config/colors'
@@ -67,27 +67,25 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useSelector((state: any) => state.auth)
     const dispatch = useDispatch()
 
-    const initToken = async (): Promise<void> => {
+    const initToken = useCallback(async (): Promise<void> => {
         try {
-            console.log("hello")
-            // const res = await Keychain.setGenericPassword('geese', 'yes')
-            // console.log('res', res)
-            // const result = await Keychain.getGenericPassword({})
-            const result = {password: 'abc'}
-            console.log(result)
-            if (result) {
-                const {password: receivedToken} = result
-                console.log('no')
-                // dispatch({type: AUTHACTIONS.RETRIEVE_TOKEN, payload: {token: receivedToken}})
+            const token = await SecureStore.getItemAsync('token')
+            console.log(token)
+            if (token) {
+                const result = await authService.verifyToken({token})
+                if (result) {
+                    dispatch({type: AUTHACTIONS.RETRIEVE_TOKEN, payload: {token}})
+                    navigation.navigate('Main')
+                }
             }
         } catch (err) {
             console.error(err)
         }
-    }
+    }, [dispatch, navigation])
 
     React.useEffect( () => {
         initToken()
-    }, [])
+    }, [initToken])
 
     const [data, setData] = React.useState({
         email: '',
@@ -116,9 +114,9 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }
 
-    async function storeToken(loginName: string, token: string): Promise<boolean> {
+    async function storeToken(token: string): Promise<boolean> {
         try {
-            await Keychain.setGenericPassword(loginName, token)
+            await SecureStore.setItemAsync('token', token)
             return true
         } catch (err) {
             return false
@@ -126,12 +124,11 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleLoginButton(): Promise<void> {
-        console.log("yes")
+        console.log("Logging In")
         const token = await authService.signIn({email: data.email, password: data.password})
-        // const token = 'abc'
-        console.log("token-----", token)
+        console.log("token:", token)
         if (typeof token === 'string') {
-            await storeToken(data.email, token)
+            await storeToken(token)
             dispatch({type: AUTHACTIONS.SIGN_IN, payload: {token}})
             navigation.navigate('Main')
         }
