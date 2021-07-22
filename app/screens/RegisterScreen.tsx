@@ -1,9 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
+import { Token } from '../reducers/auth'
+
 
 // #region Components
 
@@ -67,6 +70,8 @@ const PasswordInputField = ({
 // #endregion
 
 function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
+
+
     const [data, setData] = React.useState({
         username: '',
         email: '',
@@ -103,6 +108,8 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleRegisterButton(): void {
+
+        console.log('Registering')
         navigation.goBack()
     }
 

@@ -1,45 +1,29 @@
-import { Method } from "axios";
 import Recipe from "../data/recipe";
 import Ingredient from "../data/ingredient";
-import applicationAdapter from "../adapters/application";
 import RecipeIngredient from "../data/recipe-ingredient";
 import Instruction from "../data/instruction";
-import { APIError, APIErrorType } from "../config/constants"
-
-async function handleError<T>(
-    method: Method,
-    pathName: string,
-    data?: any
-): Promise<T | APIError> {
-    try {
-        return (await applicationAdapter(method, pathName, data)).data;
-    } catch (err) {
-        if (err.response.status === 404) {
-            return new APIError(APIErrorType.NOT_FOUND, err.response.data.errors[0].message ?? err.message)
-        }
-        return new APIError(APIErrorType.DEFAULT, err.response.data.errors[0].message ?? err.message)
-    }
-}
+import { APIError } from "../config/constants"
+import handleError from './base'
 
 export async function createIngredient(body: {name: string, unit?: string}): Promise<Ingredient | APIError> {
     return handleError(
         'POST',
         '/ingredients',
-        body
+        {body}
     )
 }
 
 export async function getIngredient(ingredientId: number): Promise<Ingredient  | APIError> {
     return handleError(
         'GET',
-        `/ingredients/${ingredientId}`
+        `/ingredients/${ingredientId}`,
     )
 }
 
 export async function deleteIngredient(ingredientId: number): Promise<Ingredient | APIError> {
     return handleError(
         'DELETE',
-        `/ingredients/${ingredientId}`
+        `/ingredients/${ingredientId}`,
     )
 }
 
@@ -52,7 +36,8 @@ export async function createRecipe(
     } ): Promise<Recipe | APIError> {
         return handleError('POST',
         '/recipes',
-        body)
+        {body}
+    )
 
 }
 
@@ -88,7 +73,7 @@ export async function updateRecipe(
         return handleError(
             'PUT',
             `/recipes/${recipeId}`,
-            body
+            {body}
         )
 }
 
@@ -100,7 +85,7 @@ export async function addIngredient(
     return handleError(
         'POST',
         `/recipes/${recipeId}/ingredients/${ingredientId}`,
-        {amount}
+        {body: {amount}}
     )
 }
 
@@ -125,7 +110,7 @@ export async function addInstruction(recipeId: number, text: string): Promise<In
     return handleError(
         'POST',
         `/recipes/${recipeId}/instructions`,
-        { text}
+        {body: { text}}
     )
 }
 
@@ -148,7 +133,7 @@ export async function updateInstruction(
     return handleError(
         'PUT',
         `/recipes/${recipeId}/instructions/${instructionId}`,
-        {text}
+        {body: { text}}
     )
 }
 

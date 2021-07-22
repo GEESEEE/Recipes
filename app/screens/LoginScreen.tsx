@@ -7,12 +7,17 @@ import {
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import * as Keychain from 'react-native-keychain'
+import * as authService from '../services/auth'
 import globalStyles from '../config/globalStyles'
 import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
 import logo from '../assets/temp_icon.png'
+
+import { AUTHACTIONS } from '../reducers/auth'
 
 const EmailInputField = ({
     onChangeText,
@@ -59,6 +64,31 @@ const PasswordInputField = ({
 )
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
+    const auth = useSelector((state: any) => state.auth)
+    const dispatch = useDispatch()
+
+    const initToken = async (): Promise<void> => {
+        try {
+            console.log("hello")
+            // const res = await Keychain.setGenericPassword('geese', 'yes')
+            // console.log('res', res)
+            // const result = await Keychain.getGenericPassword({})
+            const result = {password: 'abc'}
+            console.log(result)
+            if (result) {
+                const {password: receivedToken} = result
+                console.log('no')
+                // dispatch({type: AUTHACTIONS.RETRIEVE_TOKEN, payload: {token: receivedToken}})
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    React.useEffect( () => {
+        initToken()
+    }, [])
+
     const [data, setData] = React.useState({
         email: '',
         password: '',
@@ -86,26 +116,25 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }
 
+    async function storeToken(loginName: string, token: string): Promise<boolean> {
+        try {
+            await Keychain.setGenericPassword(loginName, token)
+            return true
+        } catch (err) {
+            return false
+        }
+    }
+
     async function handleLoginButton(): Promise<void> {
-        navigation.navigate('Main')
-
-        // const recipeBody = {
-        //     name: 'Jonko',
-        //     description: 'Dikke Jonko Ouleh',
-        //     prepareTime: 300,
-        //     peopleCount: 1,
-        // }
-
-        // const ingredientBody = {
-        //     name: 'wiet',
-        //     unit: 'g'
-        // }
-
-        // const amount = 0.25
-        // const instruction = 'Jonko draaien a nifo'
-
-        // const recipe = await recipeService.getRecipe(10)
-        // console.log(recipe)
+        console.log("yes")
+        const token = await authService.signIn({email: data.email, password: data.password})
+        // const token = 'abc'
+        console.log("token-----", token)
+        if (typeof token === 'string') {
+            await storeToken(data.email, token)
+            dispatch({type: AUTHACTIONS.SIGN_IN, payload: {token}})
+            navigation.navigate('Main')
+        }
 
     }
 

@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import MyButton from '../components/MyButton'
 import colors from '../config/colors'
-import { RECIPEACTIONS, RecipesContext } from '../contexts/recipes'
+import { RECIPEACTIONS, RecipesContext, RecipesContextProvider   } from '../contexts/recipes'
+
 
 function MainScreen(): JSX.Element {
     const recipesContext = React.useContext(RecipesContext)
@@ -16,13 +17,16 @@ function MainScreen(): JSX.Element {
     }
 
     return (
-        <View style={styles.background}>
-            <Text>main screen</Text>
-            <MyButton
-                text='Log recipes'
-                onPress={logRecipes}
-            />
-        </View>
+        <RecipesContextProvider>
+            <View style={styles.background}>
+                <Text>main screen</Text>
+                <MyButton
+                    text='Log recipes'
+                    onPress={logRecipes}
+                />
+            </View>
+        </RecipesContextProvider>
+
     )
 }
 

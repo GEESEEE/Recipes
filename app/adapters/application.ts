@@ -7,11 +7,17 @@ const V1 = 'v1'
 export default function applicationAdapter(
     method: Method,
     pathName: string,
-    data?: any
+    headers?: Record<string, unknown>,
+    data?: Record<string, unknown>
 ): AxiosPromise {
+    if (typeof headers?.token !== 'undefined') {
+        headers = {...headers, Authorization: `Bearer ${headers.token}`}
+    }
+    console.log("Path:", `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`)
     return axios({
         url: `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`,
         method,
         data,
+        headers
     })
 }
