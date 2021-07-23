@@ -19,8 +19,8 @@ const recipes = (
         }
 
         case RECIPEACTIONS.ADD_RECIPE: {
-            const { recipe } = action.payload
-            return [...state, recipe]
+            const { newRecipe } = action.payload
+            return [...state, newRecipe]
         }
 
         case RECIPEACTIONS.DELETE_RECIPE: {

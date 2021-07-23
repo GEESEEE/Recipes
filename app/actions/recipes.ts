@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
-import * as lodash from 'lodash'
 import Recipe from '../data/recipe'
 import { RECIPEACTIONS } from '../reducers/recipes'
 import * as recipeService from '../services/recipe'
@@ -46,13 +45,13 @@ export const createRecipe =
                     recipe.instructions = []
                 }
 
-                console.log('New Recipe', newRecipe)
+                // Add new recipe to local storage
                 localRecipes.push(newRecipe)
                 await AsyncStorage.setItem(
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
-                console.log('Recipe set, dispatch now')
+
                 dispatch({
                     type: RECIPEACTIONS.ADD_RECIPE,
                     payload: { newRecipe },
@@ -71,10 +70,11 @@ export const retrieveRecipes =
             // Check local storage for recipes
             let rs = await AsyncStorage.getItem('recipes')
             if (rs === null) {
-                await AsyncStorage.setItem('recipes', JSON.stringify([]))
+                await AsyncStorage.setItem('recipes', '[]')
                 rs = '[]'
             }
             const recipes: Recipe[] = JSON.parse(rs)
+
             // Put recipes without a database id into the database
             const localRecipes = recipes.filter((recipe) => recipe.id === 0)
             if (localRecipes.length > 0) {
@@ -95,7 +95,7 @@ export const retrieveRecipes =
     }
 
 export const deleteRecipe =
-    (recipe: Recipe) =>
+    () =>
     async (dispatch: Dispatch): Promise<void> => {
-        console.log('Deleting Recipe', recipe)
+        console.log('Deleting Recipe')
     }

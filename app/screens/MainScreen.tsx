@@ -1,4 +1,5 @@
 import React from 'react'
+import * as SecureStore from 'expo-secure-store'
 import { StyleSheet, View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -6,6 +7,7 @@ import MyButton from '../components/MyButton'
 import colors from '../config/colors'
 import { signOut } from '../actions/auth'
 import { retrieveRecipes } from '../actions/recipes'
+import * as recipeService from '../services/recipe'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useSelector((state: any) => state.auth)
@@ -18,7 +20,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function logRecipes(): void {
         console.log('Logging Recipes')
-        console.log(recipes)
+        // console.log(recipes)
     }
 
     async function clearRecipes(): Promise<void> {

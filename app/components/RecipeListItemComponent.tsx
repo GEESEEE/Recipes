@@ -10,7 +10,6 @@ export default function RecipeListItemComponent({
 }: {
     recipe: Recipe
 }): JSX.Element {
-    console.log('Logging recipe list item', recipe)
     return (
         <View style={{ ...styles.container }}>
             {/* Recipe Name */}
