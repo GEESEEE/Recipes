@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import {
     View,
     StyleSheet,
@@ -7,8 +7,7 @@ import {
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import * as SecureStore from 'expo-secure-store'
+import { useDispatch } from 'react-redux'
 import globalStyles from '../config/globalStyles'
 import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
@@ -16,7 +15,6 @@ import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
-import { Token } from '../reducers/auth'
 
 const EmailInputField = ({
     onChangeText,
@@ -63,7 +61,6 @@ const PasswordInputField = ({
 )
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-    const auth: Token = useSelector((state: any) => state.auth)
     const dispatch = useDispatch()
 
     React.useEffect(() => {

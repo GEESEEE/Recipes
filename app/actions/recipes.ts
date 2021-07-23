@@ -4,23 +4,11 @@ import * as lodash from 'lodash'
 import Recipe from '../data/recipe'
 import { RECIPEACTIONS } from '../reducers/recipes'
 import * as recipeService from '../services/recipe'
+import Ingredient from '../data/ingredient'
 
-async function storeRecipes(recipes: Recipe[]): Promise<Recipe[]> {
-    try {
-        await AsyncStorage.setItem('recipes', JSON.stringify(recipes))
-    } catch (err) {
-        console.error(err)
-    }
-    return recipes
-}
 
 export const createRecipe =
-    (recipe: {
-        name: string
-        description: string
-        prepareTime: number
-        peopleCount: number
-    }) =>
+    (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
         // console.log("Creating Recipe", recipe)
         try {
@@ -30,11 +18,41 @@ export const createRecipe =
 
                 const newRecipe = await recipeService.createRecipe(recipe)
 
+                // If ingredients were set, put those in database too and set in newRecipe
+                if (typeof recipe.recipeIngredients !== 'undefined' && recipe.recipeIngredients.length > 0) {
+                    const ingredientObjects: any[] = []
+                    recipe.recipeIngredients.forEach((ri) => {
+                        const i = (ri.ingredient as Ingredient)
+                        ingredientObjects.push({
+                            name: i.name,
+                            amount: ri.amount,
+                            key: i.key,
+                            unit: i.unit,
+                        })
+                    })
+                    const ingredients = await recipeService.addIngredients(newRecipe.id, ingredientObjects)
+                    newRecipe.recipeIngredients = ingredients
+                    // else set ingredients to empty array
+                } else {
+                    recipe.recipeIngredients = []
+                }
+
+                // If instructions were set, put those in database too and set in newRecipe
+                if (typeof recipe.instructions !== 'undefined' && recipe.instructions.length > 0) {
+                    const instructions = await recipeService.addInstructions(newRecipe.id, recipe.instructions)
+                    newRecipe.instructions = instructions
+                   // else set instructions to empty array
+                } else {
+                    recipe.instructions = []
+                }
+
+                console.log('New Recipe', newRecipe)
                 localRecipes.push(newRecipe)
                 await AsyncStorage.setItem(
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
+                console.log('Recipe set, dispatch now')
                 dispatch({
                     type: RECIPEACTIONS.ADD_RECIPE,
                     payload: { newRecipe },

@@ -29,6 +29,7 @@ export async function createRecipe(body: {
     description: string
     prepareTime: number
     peopleCount: number
+    key: string
 }): Promise<Recipe> {
     return handleError('POST', '/recipes', { body })
 }
@@ -39,6 +40,7 @@ export async function createRecipes(
         description: string
         prepareTime: number
         peopleCount: number
+        key: string
     }[]
 ): Promise<Recipe[]> {
     return handleError('POST', '/recipes/bulk', { body })
@@ -80,6 +82,17 @@ export async function addIngredient(
     )
 }
 
+export async function addIngredients(
+    recipeId: number,
+    body: Array<{ amount: number, name: string, unit?: string, key: string}>
+): Promise<RecipeIngredient[]> {
+    return handleError(
+        'POST',
+        `/recipes/${recipeId}/ingredients`,
+        { body}
+    )
+}
+
 export async function removeIngredient(
     recipeId: number,
     ingredientId: number
@@ -98,11 +111,16 @@ export async function getRecipeIngredients(
 
 export async function addInstruction(
     recipeId: number,
-    text: string
+    body: {text: string, key: string}
 ): Promise<Instruction> {
-    return handleError('POST', `/recipes/${recipeId}/instructions`, {
-        body: { text },
-    })
+    return handleError('POST', `/recipes/${recipeId}/instruction`, {body,})
+}
+
+export async function addInstructions(
+    recipeId: number,
+    body: Array<{text: string, key: string}>
+): Promise<Instruction[]> {
+    return handleError('POST', `/recipes/${recipeId}/instructions`, {body})
 }
 
 export async function getInstructions(

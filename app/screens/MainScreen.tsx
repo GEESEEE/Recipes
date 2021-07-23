@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import MyButton from '../components/MyButton'
 import colors from '../config/colors'
 import { signOut } from '../actions/auth'
@@ -19,6 +20,11 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         console.log('Logging Recipes')
         console.log(recipes)
     }
+
+    async function clearRecipes(): Promise<void> {
+        await AsyncStorage.setItem('recipes', JSON.stringify([]))
+    }
+
 
     async function handleSignOut(): Promise<void> {
         dispatch(signOut(auth.token, navigation))
