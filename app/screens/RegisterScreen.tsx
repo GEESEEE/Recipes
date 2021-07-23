@@ -1,12 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { useDispatch } from 'react-redux'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
-import * as authService from '../services/auth'
-import { APIError } from '../config/constants'
-
+import { signUp } from '../actions/auth'
 
 // #region Components
 
@@ -70,7 +69,7 @@ const PasswordInputField = ({
 // #endregion
 
 function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
-
+    const dispatch = useDispatch()
 
     const [data, setData] = React.useState({
         username: '',
@@ -108,20 +107,12 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleRegisterButton(): Promise<void> {
-        console.log('Registering')
         const userData = {
             name: data.username,
             password: data.password,
             email: data.email,
         }
-        const user = await authService.signUp(userData)
-        console.log("Register response", user)
-        if (user instanceof APIError) {
-            console.log(user.message)
-        } else {
-            navigation.goBack()
-        }
-
+        dispatch(signUp(userData, navigation))
     }
 
     function handleGoBackButton(): void {

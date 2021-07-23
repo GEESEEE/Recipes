@@ -1,11 +1,9 @@
-
 export enum APIErrorType {
     NOT_FOUND,
-    DEFAULT
+    DEFAULT,
 }
 
 export class APIError {
-
     type: APIErrorType
 
     message: string
@@ -14,7 +12,4 @@ export class APIError {
         this.type = type
         this.message = message
     }
-
 }
-
-

@@ -10,11 +10,11 @@ const screens = {
         screen: MainScreen,
     },
     NewRecipe: {
-        screen: NewRecipeScreen
+        screen: NewRecipeScreen,
     },
     RecipesScreen: {
-        screen: RecipesScreen
-    }
+        screen: RecipesScreen,
+    },
 }
 
 const tabBarOptions = {}

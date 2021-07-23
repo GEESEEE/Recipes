@@ -1,18 +1,19 @@
 import React from 'react'
 import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
 import RecipeListItemComponent from '../components/RecipeListItemComponent'
 import colors from '../config/colors'
-import { RecipesContext } from '../contexts/recipes'
 
 function RecipesScreen(): JSX.Element {
+    const recipes = useSelector((state: any) => state.recipes)
 
-    const recipesContext = React.useContext(RecipesContext)
     return (
         <View style={styles.background}>
             <Text>recipes screen</Text>
-            <FlatList style={styles.recipesList}
-                data={recipesContext.recipes}
-                renderItem={({item}) => (
+            <FlatList
+                style={styles.recipesList}
+                data={recipes}
+                renderItem={({ item }) => (
                     <RecipeListItemComponent recipe={item} />
                 )}
             />
@@ -29,7 +30,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.white,
     },
-    recipesList: {
-
-    }
+    recipesList: {},
 })

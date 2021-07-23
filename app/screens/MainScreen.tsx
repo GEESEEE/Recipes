@@ -1,51 +1,34 @@
 import React from 'react'
-import { StyleSheet, View, Text} from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import * as SecureStore from 'expo-secure-store'
 import MyButton from '../components/MyButton'
 import colors from '../config/colors'
-import { RECIPEACTIONS, RecipesContext} from '../contexts/recipes'
-import { AUTHACTIONS } from '../reducers/auth'
-import * as authService from '../services/auth'
+import { signOut } from '../actions/auth'
+import { retrieveRecipes } from '../actions/recipes'
 
-
-function MainScreen({ navigation }: { navigation: any}): JSX.Element {
+function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useSelector((state: any) => state.auth)
+    const recipes = useSelector((state: any) => state.recipes)
     const dispatch = useDispatch()
 
-    const recipesContext = React.useContext(RecipesContext)
+    React.useEffect(() => {
+        dispatch(retrieveRecipes())
+    }, [])
+
     function logRecipes(): void {
         console.log('Logging Recipes')
-        console.log(recipesContext.recipes)
+        console.log(recipes)
     }
 
-    async function signOut(): Promise<void> {
-        const res = await authService.signOut({token: auth.token})
-        console.log("signout response", res)
-        if (!res) {
-            console.log('Couldnt log out for some reason')
-        } else {
-            await SecureStore.deleteItemAsync('token')
-            dispatch({type: AUTHACTIONS.SIGN_OUT})
-            navigation.goBack()
-        }
-    }
-
-    function clearRecipes(): void {
-        recipesContext.dispatch({type: RECIPEACTIONS.SET, payload: {recipes: []}} )
+    async function handleSignOut(): Promise<void> {
+        dispatch(signOut(auth.token, navigation))
     }
 
     return (
         <View style={styles.background}>
             <Text>main screen</Text>
-            <MyButton
-                text='Log recipes'
-                onPress={logRecipes}
-            />
-            <MyButton
-                text='Sign Out'
-                onPress={signOut}
-            />
+            <MyButton text="Log recipes" onPress={logRecipes} />
+            <MyButton text="Sign Out" onPress={handleSignOut} />
         </View>
     )
 }
@@ -59,5 +42,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.white,
     },
-
 })

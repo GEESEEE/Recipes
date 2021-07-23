@@ -1,7 +1,15 @@
 import React from 'react'
-import { Dimensions , StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { FlatList , TextInput } from 'react-native-gesture-handler'
+import {
+    Dimensions,
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+} from 'react-native'
+import { FlatList, TextInput } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
+import { createRecipe } from '../actions/recipes'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
@@ -10,10 +18,11 @@ import Ingredient from '../data/ingredient'
 import Instruction from '../data/instruction'
 import Recipe from '../data/recipe'
 import RecipeIngredient from '../data/recipe-ingredient'
-import { RECIPEACTIONS, RecipesContext } from '../contexts/recipes'
-
 
 function NewRecipeScreen(): JSX.Element {
+    const recipes = useSelector((state: any) => state.recipes)
+    const dispatch = useDispatch()
+
     const initialRecipe = {
         name: '',
         description: '',
@@ -27,24 +36,28 @@ function NewRecipeScreen(): JSX.Element {
 
     const [recipeData, setRecipeData] = React.useState<Recipe>(initialRecipe)
 
-    const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>([])
+    const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>(
+        []
+    )
 
-    const [instructionsData, setInstructionsData] = React.useState<Instruction[]>([])
+    const [instructionsData, setInstructionsData] = React.useState<
+        Instruction[]
+    >([])
 
     function handleNameChange(name: string): void {
-        setRecipeData({...recipeData, name})
+        setRecipeData({ ...recipeData, name })
     }
 
     function handleDescriptionChange(description: string): void {
-        setRecipeData({...recipeData, description})
+        setRecipeData({ ...recipeData, description })
     }
 
     function handlePrepareTimeChange(prepareTime: number): void {
-        setRecipeData({...recipeData, prepareTime})
+        setRecipeData({ ...recipeData, prepareTime })
     }
 
     function handlePeopleCountChange(peopleCount: number): void {
-        setRecipeData({...recipeData, peopleCount})
+        setRecipeData({ ...recipeData, peopleCount })
     }
 
     function handleAddIngredient(): void {
@@ -62,25 +75,26 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     function handleRemoveIngredient(key: string): void {
-        const ingredients = ingredientsData.filter(item => item.key !== key)
+        const ingredients = ingredientsData.filter((item) => item.key !== key)
         setIngredientData([...ingredients])
     }
 
     function handleIngredientNameChange(key: string, name: string): void {
-        const ingredient = ingredientsData.filter(item => item.key === key)[0]
+        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
         ingredient.name = name
         setIngredientData([...ingredientsData])
     }
 
     function handleIngredientUnitChange(key: string, unit: string): void {
-        const ingredient = ingredientsData.filter(item => item.key === key)[0]
+        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
         ingredient.unit = unit
         setIngredientData([...ingredientsData])
     }
 
     function handleIngredientAmountChange(key: string, amount: string): void {
-        const ingredient = ingredientsData.filter(item => item.key === key)[0]
-        const recipeIngredient = (ingredient.recipeIngredients?.[0] as RecipeIngredient)
+        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
+        const recipeIngredient = ingredient
+            .recipeIngredients?.[0] as RecipeIngredient
         recipeIngredient.amount = parseFloat(amount)
         setIngredientData([...ingredientsData])
     }
@@ -95,24 +109,25 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     function handleRemoveInstruction(key: string): void {
-        const instructions = instructionsData.filter(item => item.key !== key)
+        const instructions = instructionsData.filter((item) => item.key !== key)
         setInstructionsData([...instructions])
     }
 
     function handleInstructionTextChange(key: string, text: string): void {
-        const instruction = instructionsData.filter(item => item.key === key)[0]
+        const instruction = instructionsData.filter(
+            (item) => item.key === key
+        )[0]
         instruction.text = text
         setInstructionsData([...instructionsData])
     }
 
-    const RecipeContext = React.useContext(RecipesContext)
-
     async function handleCreateRecipe(): Promise<void> {
-        console.log("Creating Recipe")
-        const recipe = {...recipeData}
+        console.log('Creating Recipe')
+        const recipe = { ...recipeData }
         const recipeIngredients: RecipeIngredient[] = []
+        // Set the recipe correctly without Cycles
         recipeData.recipeIngredients?.forEach((recipeIngredient, id) => {
-            const ingredient =  {...recipeIngredient.ingredient} as Ingredient
+            const ingredient = { ...recipeIngredient.ingredient } as Ingredient
             ingredient.recipeIngredients = []
             const newRecipeIngredient = new RecipeIngredient()
             newRecipeIngredient.amount = recipeIngredient.amount
@@ -120,7 +135,7 @@ function NewRecipeScreen(): JSX.Element {
             recipeIngredients.push(newRecipeIngredient)
         })
         recipe.recipeIngredients = recipeIngredients
-        RecipeContext.dispatch({type: RECIPEACTIONS.ADD, payload: {recipe}})
+        dispatch(createRecipe(recipe))
         setRecipeData(initialRecipe)
         setIngredientData([])
         setInstructionsData([])
@@ -130,9 +145,10 @@ function NewRecipeScreen(): JSX.Element {
         <View style={styles.background}>
             {/* Recipe Name Input Field */}
             <View style={styles.header}>
-                <TextInput style={{...styles.headerText}}
+                <TextInput
+                    style={{ ...styles.headerText }}
                     value={recipeData.name}
-                    placeholder='New Recipe'
+                    placeholder="New Recipe"
                     placeholderTextColor={colors.darkgrey}
                     onChangeText={(text: string) => handleNameChange(text)}
                     multiline
@@ -142,80 +158,96 @@ function NewRecipeScreen(): JSX.Element {
             {/* Recipe Description Input Field */}
             <View style={globalStyles.userinput}>
                 <TextInput
-                    style={{...globalStyles.textinput}}
-                    placeholder='Description'
+                    style={{ ...globalStyles.textinput }}
+                    placeholder="Description"
                     value={recipeData.description}
-                    onChangeText={(text: string) => handleDescriptionChange(text)}
+                    onChangeText={(text: string) =>
+                        handleDescriptionChange(text)
+                    }
                     multiline
                 />
             </View>
 
             {/* Ingredients List Container */}
-            <View style={{...globalStyles.userinput, ...styles.ingredientsContainer}}>
+            <View
+                style={{
+                    ...globalStyles.userinput,
+                    ...styles.ingredientsContainer,
+                }}
+            >
                 {/* Ingredients Header */}
                 <View style={styles.ingredientsHeader}>
                     {/* Header Text */}
-                    <Text style={styles.ingredientHeaderText}>
-                        Ingredients
-                    </Text>
+                    <Text style={styles.ingredientHeaderText}>Ingredients</Text>
 
                     {/* Add Ingredient Button */}
                     <TouchableOpacity
                         style={styles.addIngredientButton}
-                        onPress={handleAddIngredient}>
+                        onPress={handleAddIngredient}
+                    >
                         <MyFeather name="plus" />
                     </TouchableOpacity>
                 </View>
 
                 {/* Ingredients List */}
-                <FlatList style={styles.ingredientsList}
+                <FlatList
+                    style={styles.ingredientsList}
                     data={ingredientsData}
-                    renderItem={ ({ item }) => (
-
+                    renderItem={({ item }) => (
                         <View style={styles.ingredientsListItem}>
                             {/* Ingredient Name Input */}
                             <TextInput
                                 style={styles.ingredientName}
-                                onChangeText={(text: string) => handleIngredientNameChange(item.key, text)}
+                                onChangeText={(text: string) =>
+                                    handleIngredientNameChange(item.key, text)
+                                }
                                 value={item.name}
-                                placeholder='New Ingredient'
+                                placeholder="New Ingredient"
                             />
 
                             {/* Ingredient Amount Input */}
                             <TextInput
                                 style={styles.ingredientAmount}
-                                onChangeText={(text: string) => handleIngredientAmountChange(item.key, text)}
-                                value={item.recipeIngredients[0].amount
-                                    ? item.recipeIngredients[0].amount.toString()
-                                    : ''}
-                                placeholder='0'
+                                onChangeText={(text: string) =>
+                                    handleIngredientAmountChange(item.key, text)
+                                }
+                                value={
+                                    item.recipeIngredients[0].amount
+                                        ? item.recipeIngredients[0].amount.toString()
+                                        : ''
+                                }
+                                placeholder="0"
                             />
 
                             {/* Ingredient Unit Input */}
                             <TextInput
                                 style={styles.ingredientUnit}
-                                onChangeText={(text: string) => handleIngredientUnitChange(item.key, text)}
+                                onChangeText={(text: string) =>
+                                    handleIngredientUnitChange(item.key, text)
+                                }
                                 value={item.unit}
-                                placeholder='Unit'
+                                placeholder="Unit"
                             />
 
                             {/* Remove Ingredient Button */}
                             <TouchableOpacity
                                 style={styles.removeIngredientButton}
-                                onPress={() => handleRemoveIngredient(item.key)}>
-                                <MyFeather
-                                    name="minus"
-                                    size={15}
-                                />
+                                onPress={() => handleRemoveIngredient(item.key)}
+                            >
+                                <MyFeather name="minus" size={15} />
                             </TouchableOpacity>
-
                         </View>
                     )}
                 />
             </View>
 
             {/* Instructions List Container */}
-            <View style={{...globalStyles.userinput, ...styles.instructionsContainer}}>
+            <View
+                style={{
+                    ...globalStyles.userinput,
+                    ...styles.instructionsContainer,
+                }}
+            >
                 {/* Instructions Header */}
                 <View style={styles.instructionsHeader}>
                     {/* Header Text */}
@@ -226,55 +258,55 @@ function NewRecipeScreen(): JSX.Element {
                     {/* Add Ingredient Button */}
                     <TouchableOpacity
                         style={styles.addInstructionButton}
-                        onPress={handleAddInstruction}>
+                        onPress={handleAddInstruction}
+                    >
                         <MyFeather name="plus" />
                     </TouchableOpacity>
                 </View>
 
                 {/* Instructions List */}
-                <FlatList style={styles.instructionsList}
+                <FlatList
+                    style={styles.instructionsList}
                     data={instructionsData}
-                    renderItem={ ({item}) => (
+                    renderItem={({ item }) => (
                         <View style={styles.instructionsListItem}>
                             {/* Instruction Number */}
                             <Text style={styles.instructionNumber}>
-                                {(instructionsData.indexOf(item) + 1).toString()}
+                                {(
+                                    instructionsData.indexOf(item) + 1
+                                ).toString()}
                             </Text>
 
                             {/* Instruction Text Input */}
                             <TextInput
                                 style={styles.instructionText}
-                                onChangeText={(text: string) => handleInstructionTextChange(item.key, text)}
+                                onChangeText={(text: string) =>
+                                    handleInstructionTextChange(item.key, text)
+                                }
                                 value={item.text}
-                                placeholder='Text'
+                                placeholder="Text"
                                 multiline
                             />
 
                             {/* Remove Instruction Button */}
                             <TouchableOpacity
                                 style={styles.removeInstructionButton}
-                                onPress={() => handleRemoveInstruction(item.key)}
+                                onPress={() =>
+                                    handleRemoveInstruction(item.key)
+                                }
                             >
-                                <MyFeather
-                                    name="minus"
-                                    size={15}
-                                />
+                                <MyFeather name="minus" size={15} />
                             </TouchableOpacity>
-
                         </View>
-                    ) }
+                    )}
                 />
             </View>
 
             {/* Create Recipe Button */}
-            <MyButton
-                text="Create Recipe"
-                onPress={handleCreateRecipe}
-            />
+            <MyButton text="Create Recipe" onPress={handleCreateRecipe} />
         </View>
     )
 }
-
 
 export default NewRecipeScreen
 
@@ -293,12 +325,11 @@ const styles = StyleSheet.create({
         bottom: height * 0.05,
         width: '85%',
         color: colors.black,
-
     },
     headerText: {
         fontSize: height * 0.04,
         color: colors.black,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     ingredientsContainer: {
         flexDirection: 'column',
@@ -307,19 +338,17 @@ const styles = StyleSheet.create({
     ingredientsHeader: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     ingredientHeaderText: {
         flex: 1,
         fontSize: 20,
         textAlign: 'center',
     },
-    addIngredientButton: {
-
-    },
+    addIngredientButton: {},
     ingredientsList: {
         paddingTop: 5,
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     ingredientsListItem: {
         flexDirection: 'row',
@@ -340,7 +369,7 @@ const styles = StyleSheet.create({
         paddingEnd: 5,
     },
     removeIngredientButton: {
-        alignContent: 'flex-end'
+        alignContent: 'flex-end',
     },
 
     instructionsContainer: {
@@ -350,36 +379,32 @@ const styles = StyleSheet.create({
     instructionsHeader: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     instructionHeaderText: {
         flex: 1,
         fontSize: 20,
         textAlign: 'center',
     },
-    addInstructionButton: {
-
-    },
+    addInstructionButton: {},
     instructionsList: {
         paddingTop: 5,
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     instructionsListItem: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'space-between',
-        width: '100%'
+        width: '100%',
     },
     instructionNumber: {
         width: '10%',
-        fontSize: 18
+        fontSize: 18,
     },
     instructionText: {
         width: '80%',
         paddingEnd: 5,
     },
-    removeInstructionButton: {
-    },
-
+    removeInstructionButton: {},
 })

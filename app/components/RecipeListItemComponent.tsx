@@ -5,41 +5,30 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import colors from '../config/colors'
 import Recipe from '../data/recipe'
 
-
-export default function RecipeListItemComponent({recipe}: {recipe: Recipe}): JSX.Element {
-    console.log("Logging recipe list item", recipe)
+export default function RecipeListItemComponent({
+    recipe,
+}: {
+    recipe: Recipe
+}): JSX.Element {
+    console.log('Logging recipe list item', recipe)
     return (
-        <View style={{...styles.container}}>
+        <View style={{ ...styles.container }}>
             {/* Recipe Name */}
-            <Text style={styles.nameText} >
-                {recipe.name}
-            </Text>
+            <Text style={styles.nameText}>{recipe.name}</Text>
 
             {/* Recipe Properties */}
             <View style={styles.propertiesContainer}>
                 {/* Prepare Time */}
                 <MaterialCommunityIcons
                     style={styles.prepareTimeIcon}
-                    name= "timer-sand"
+                    name="timer-sand"
                     size={25}
-                 />
-                <Text style={styles.prepareTimeText}>
-                    {recipe.prepareTime}
-                </Text>
-
-
+                />
+                <Text style={styles.prepareTimeText}>{recipe.prepareTime}</Text>
 
                 {/* People Count */}
-                <Feather
-                    style={styles.peopleCountIcon}
-                    name= "user"
-                    size={25}
-                 />
-                <Text style={styles.peopleCountText}>
-                    {recipe.peopleCount}
-                </Text>
-
-
+                <Feather style={styles.peopleCountIcon} name="user" size={25} />
+                <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
         </View>
     )
@@ -58,21 +47,16 @@ const styles = StyleSheet.create({
     },
     propertiesContainer: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    prepareTimeIcon: {
-
-    },
+    prepareTimeIcon: {},
     prepareTimeText: {
         fontSize: 25,
-        flex:1
+        flex: 1,
     },
-    peopleCountIcon: {
-
-    },
+    peopleCountIcon: {},
     peopleCountText: {
         fontSize: 25,
-        flex:1
+        flex: 1,
     },
-
 })
