@@ -30,15 +30,15 @@ export default function RecipeListItemComponent({
                 <MaterialCommunityIcons
                     style={styles.prepareTimeIcon}
                     name="timer-sand"
-                    size={25}
+                    size={20}
                 />
                 <Text style={styles.prepareTimeText}>{recipe.prepareTime}</Text>
 
                 {/* People Count */}
-                <Feather style={styles.peopleCountIcon} name="user" size={25} />
+                <Feather style={styles.peopleCountIcon} name="user" size={20} />
                 <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
-            <MyButton text="Delete Recipe" onPress={removeRecipe}/>
+            <MyButton text="Delete Recipe" onPress={removeRecipe} viewStyle={styles.deleteButton}/>
         </View>
     )
 }
@@ -47,25 +47,31 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-start',
         backgroundColor: colors.white,
-        alignSelf: 'baseline',
         width: '100%',
+        marginTop: 5,
+        borderWidth: 3,
+        borderColor: colors.primary,
+        borderRadius: 20,
     },
     nameText: {
         left: 5,
-        fontSize: 50,
+        fontSize: 30,
     },
     propertiesContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: '50%'
     },
     prepareTimeIcon: {},
     prepareTimeText: {
-        fontSize: 25,
+        fontSize: 20,
         flex: 1,
     },
     peopleCountIcon: {},
     peopleCountText: {
-        fontSize: 25,
+        fontSize: 20,
         flex: 1,
     },
+    deleteButton: {
+    }
 })

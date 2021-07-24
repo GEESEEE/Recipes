@@ -19,14 +19,14 @@ export const createRecipe =
 
                 // If ingredients were set, put those in database too and set in newRecipe
                 if (typeof recipe.recipeIngredients !== 'undefined' && recipe.recipeIngredients.length > 0) {
-                    const ingredientObjects: any[] = []
+                    const ingredientObjects: {name: string, amount: number, key: string, unit?: string}[] = []
                     recipe.recipeIngredients.forEach((ri) => {
                         const i = (ri.ingredient as Ingredient)
                         ingredientObjects.push({
                             name: i.name,
                             amount: ri.amount,
                             key: i.key,
-                            unit: i.unit,
+                            unit: (i.unit) as string | undefined,
                         })
                     })
                     const ingredients = await recipeService.addIngredients(newRecipe.id, ingredientObjects)
@@ -97,7 +97,6 @@ export const retrieveRecipes =
 export const deleteRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
-        console.log('Deleting Recipe')
         try {
             const rs = (await AsyncStorage.getItem('recipes')) as string
             const localRecipes: Recipe[] = JSON.parse(rs)

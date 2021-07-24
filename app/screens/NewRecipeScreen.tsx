@@ -7,9 +7,10 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
+import AddableListComponent from '../components/AddableListComponent'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
@@ -19,22 +20,137 @@ import Instruction from '../data/instruction'
 import Recipe from '../data/recipe'
 import RecipeIngredient from '../data/recipe-ingredient'
 
+const IngredientListView = (
+    {
+        ingredientsData,
+        handleIngredientNameChange,
+        handleIngredientAmountChange,
+        handleIngredientUnitChange,
+        handleRemoveIngredient
+    }: {
+        ingredientsData: Ingredient[]
+        handleIngredientNameChange: any
+        handleIngredientAmountChange: any
+        handleIngredientUnitChange: any
+        handleRemoveIngredient: any
+    }
+): JSX.Element => (
+    <FlatList
+            style={styles.ingredientsList}
+            data={ingredientsData}
+            renderItem={({ item }) => (
+                <View style={styles.ingredientsListItem}>
+                    {/* Ingredient Name Input */}
+                    <TextInput
+                        style={styles.ingredientName}
+                        onChangeText={(text: string) =>
+                            handleIngredientNameChange(item.key, text)
+                        }
+                        value={item.name}
+                        placeholder="New Ingredient"
+                    />
+
+                    {/* Ingredient Amount Input */}
+                    <TextInput
+                        style={styles.ingredientAmount}
+                        onChangeText={(text: string) =>
+                            handleIngredientAmountChange(item.key, text)
+                        }
+                        value={
+                            item.recipeIngredients[0].amount
+                                ? item.recipeIngredients[0].amount.toString()
+                                : ''
+                        }
+                        placeholder="0"
+                    />
+
+                    {/* Ingredient Unit Input */}
+                    <TextInput
+                        style={styles.ingredientUnit}
+                        onChangeText={(text: string) =>
+                            handleIngredientUnitChange(item.key, text)
+                        }
+                        value={item.unit}
+                        placeholder="Unit"
+                    />
+
+                    {/* Remove Ingredient Button */}
+                    <TouchableOpacity
+                        style={styles.removeIngredientButton}
+                        onPress={() => handleRemoveIngredient(item.key)}
+                    >
+                        <MyFeather name="minus" size={15} />
+                    </TouchableOpacity>
+                </View>
+            )}
+        />
+    )
+
+const InstructionsListView = (
+   {
+       instructionsData,
+       handleInstructionTextChange,
+       handleRemoveInstruction
+   }:{ instructionsData: Instruction[],
+    handleInstructionTextChange: any,
+    handleRemoveInstruction: any}
+): JSX.Element => (
+    <FlatList
+            style={styles.instructionsList}
+            data={instructionsData}
+            renderItem={({ item }) => (
+                <View style={styles.instructionsListItem}>
+                    {/* Instruction Number */}
+                    <Text style={styles.instructionNumber}>
+                        {(
+                            instructionsData.indexOf(item) + 1
+                        ).toString()}
+                    </Text>
+
+                    {/* Instruction Text Input */}
+                    <TextInput
+                        style={styles.instructionText}
+                        onChangeText={(text: string) =>
+                            handleInstructionTextChange(item.key, text)
+                        }
+                        value={item.text}
+                        placeholder="Text"
+                        multiline
+                    />
+
+                    {/* Remove Instruction Button */}
+                    <TouchableOpacity
+                        style={styles.removeInstructionButton}
+                        onPress={() =>
+                            handleRemoveInstruction(item.key)
+                        }
+                    >
+                        <MyFeather name="minus" size={15} />
+                    </TouchableOpacity>
+                </View>
+            )}
+        />
+)
+
 function NewRecipeScreen(): JSX.Element {
-    const recipes = useSelector((state: any) => state.recipes)
     const dispatch = useDispatch()
 
-    const initialRecipe = {
-        name: '',
-        description: '',
-        prepareTime: 0,
-        peopleCount: 1,
-        key: uuid(),
-        id: 0,
-        recipeIngredients: [],
-        instructions: [],
+    function getInitialRecipe(): any{
+        const initialRecipe = {
+            name: '',
+            description: '',
+            prepareTime: 0,
+            peopleCount: 1,
+            key: uuid(),
+            id: 0,
+            recipeIngredients: [],
+            instructions: [],
+        }
+        return initialRecipe
     }
 
-    const [recipeData, setRecipeData] = React.useState<Recipe>(initialRecipe)
+
+    const [recipeData, setRecipeData] = React.useState<Recipe>(getInitialRecipe())
 
     const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>(
         []
@@ -61,12 +177,14 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     function handleAddIngredient(): void {
+        console.log('Adding Ingredient')
         const ingredient = new Ingredient()
         ingredient.name = ''
         ingredient.unit = ''
         ingredient.key = uuid()
 
         const recipeIngredient = new RecipeIngredient()
+        recipeIngredient.amount = 0
         recipeIngredient.ingredient = ingredient
         ingredient.recipeIngredients = [recipeIngredient]
 
@@ -136,29 +254,34 @@ function NewRecipeScreen(): JSX.Element {
         })
         recipe.recipeIngredients = recipeIngredients
         dispatch(createRecipe(recipe))
-        setRecipeData(initialRecipe)
+        clearRecipeData()
+    }
+
+    function clearRecipeData(): void {
+        setRecipeData(getInitialRecipe())
         setIngredientData([])
         setInstructionsData([])
     }
 
+
     return (
         <View style={styles.background}>
             {/* Recipe Name Input Field */}
-            <View style={styles.header}>
+            <View style={{...styles.header}}>
                 <TextInput
-                    style={{ ...styles.headerText }}
+                    style={{ ...styles.headerTextInput }}
                     value={recipeData.name}
                     placeholder="New Recipe"
-                    placeholderTextColor={colors.darkgrey}
+                    placeholderTextColor={colors.grey}
                     onChangeText={(text: string) => handleNameChange(text)}
                     multiline
                 />
             </View>
 
             {/* Recipe Description Input Field */}
-            <View style={globalStyles.userinput}>
+            <View style={{...globalStyles.userinput, ...styles.description}}>
                 <TextInput
-                    style={{ ...globalStyles.textinput }}
+                    style={{ ...styles.descriptionTextInput }}
                     placeholder="Description"
                     value={recipeData.description}
                     onChangeText={(text: string) =>
@@ -169,148 +292,45 @@ function NewRecipeScreen(): JSX.Element {
             </View>
 
             {/* Ingredients List Container */}
-            <View
-                style={{
-                    ...globalStyles.userinput,
-                    ...styles.ingredientsContainer,
-                }}
+            <AddableListComponent
+                buttonText = "Add Ingredient"
+                onButtonClick = {handleAddIngredient}
+                headerText = "Ingredients"
             >
-                {/* Ingredients Header */}
-                <View style={styles.ingredientsHeader}>
-                    {/* Header Text */}
-                    <Text style={styles.ingredientHeaderText}>Ingredients</Text>
-
-                    {/* Add Ingredient Button */}
-                    <TouchableOpacity
-                        style={styles.addIngredientButton}
-                        onPress={handleAddIngredient}
-                    >
-                        <MyFeather name="plus" />
-                    </TouchableOpacity>
-                </View>
-
-                {/* Ingredients List */}
-                <FlatList
-                    style={styles.ingredientsList}
-                    data={ingredientsData}
-                    renderItem={({ item }) => (
-                        <View style={styles.ingredientsListItem}>
-                            {/* Ingredient Name Input */}
-                            <TextInput
-                                style={styles.ingredientName}
-                                onChangeText={(text: string) =>
-                                    handleIngredientNameChange(item.key, text)
-                                }
-                                value={item.name}
-                                placeholder="New Ingredient"
-                            />
-
-                            {/* Ingredient Amount Input */}
-                            <TextInput
-                                style={styles.ingredientAmount}
-                                onChangeText={(text: string) =>
-                                    handleIngredientAmountChange(item.key, text)
-                                }
-                                value={
-                                    item.recipeIngredients[0].amount
-                                        ? item.recipeIngredients[0].amount.toString()
-                                        : ''
-                                }
-                                placeholder="0"
-                            />
-
-                            {/* Ingredient Unit Input */}
-                            <TextInput
-                                style={styles.ingredientUnit}
-                                onChangeText={(text: string) =>
-                                    handleIngredientUnitChange(item.key, text)
-                                }
-                                value={item.unit}
-                                placeholder="Unit"
-                            />
-
-                            {/* Remove Ingredient Button */}
-                            <TouchableOpacity
-                                style={styles.removeIngredientButton}
-                                onPress={() => handleRemoveIngredient(item.key)}
-                            >
-                                <MyFeather name="minus" size={15} />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                />
-            </View>
+                {[<IngredientListView
+                    ingredientsData={ingredientsData}
+                    handleIngredientNameChange={handleIngredientNameChange}
+                    handleIngredientAmountChange={handleIngredientAmountChange}
+                    handleIngredientUnitChange={handleIngredientUnitChange}
+                    handleRemoveIngredient={handleRemoveIngredient}
+                />]}
+            </AddableListComponent>
 
             {/* Instructions List Container */}
-            <View
-                style={{
-                    ...globalStyles.userinput,
-                    ...styles.instructionsContainer,
-                }}
+            <AddableListComponent
+                buttonText = "Add Instruction"
+                onButtonClick={handleAddInstruction}
+                headerText = "Instructions"
             >
-                {/* Instructions Header */}
-                <View style={styles.instructionsHeader}>
-                    {/* Header Text */}
-                    <Text style={styles.instructionHeaderText}>
-                        Instructions
-                    </Text>
-
-                    {/* Add Ingredient Button */}
-                    <TouchableOpacity
-                        style={styles.addInstructionButton}
-                        onPress={handleAddInstruction}
-                    >
-                        <MyFeather name="plus" />
-                    </TouchableOpacity>
-                </View>
-
-                {/* Instructions List */}
-                <FlatList
-                    style={styles.instructionsList}
-                    data={instructionsData}
-                    renderItem={({ item }) => (
-                        <View style={styles.instructionsListItem}>
-                            {/* Instruction Number */}
-                            <Text style={styles.instructionNumber}>
-                                {(
-                                    instructionsData.indexOf(item) + 1
-                                ).toString()}
-                            </Text>
-
-                            {/* Instruction Text Input */}
-                            <TextInput
-                                style={styles.instructionText}
-                                onChangeText={(text: string) =>
-                                    handleInstructionTextChange(item.key, text)
-                                }
-                                value={item.text}
-                                placeholder="Text"
-                                multiline
-                            />
-
-                            {/* Remove Instruction Button */}
-                            <TouchableOpacity
-                                style={styles.removeInstructionButton}
-                                onPress={() =>
-                                    handleRemoveInstruction(item.key)
-                                }
-                            >
-                                <MyFeather name="minus" size={15} />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                />
-            </View>
+                {[<InstructionsListView
+                    instructionsData={instructionsData}
+                    handleInstructionTextChange={handleInstructionTextChange}
+                    handleRemoveInstruction={handleRemoveInstruction}
+                />]}
+            </AddableListComponent>
 
             {/* Create Recipe Button */}
             <MyButton text="Create Recipe" onPress={handleCreateRecipe} />
+
+            {/* Clear Recipe Button */}
+            <MyButton text="Clear Recipe" onPress={clearRecipeData} inverted viewStyle={styles.clearRecipeButton}/>
         </View>
     )
 }
 
 export default NewRecipeScreen
 
-const { height } = Dimensions.get('screen')
+const {height} = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
     background: {
@@ -324,28 +344,30 @@ const styles = StyleSheet.create({
     header: {
         bottom: height * 0.05,
         width: '85%',
-        color: colors.black,
+        backgroundColor: colors.white,
+        borderColor: colors.primary,
+        borderRadius: 20,
+        borderWidth: 3,
+        paddingTop: 5,
+        paddingBottom: 5,
+
     },
-    headerText: {
+    headerTextInput: {
         fontSize: height * 0.04,
         color: colors.black,
         textAlign: 'center',
     },
-    ingredientsContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
+    description: {
+        backgroundColor: colors.white,
+        borderColor: colors.primary,
+        borderWidth: 3,
+        borderRadius: 15,
     },
-    ingredientsHeader: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-    },
-    ingredientHeaderText: {
+    descriptionTextInput: {
         flex: 1,
-        fontSize: 20,
-        textAlign: 'center',
+        paddingLeft: 10,
+        color: colors.black,
     },
-    addIngredientButton: {},
     ingredientsList: {
         paddingTop: 5,
         flexDirection: 'column',
@@ -371,22 +393,6 @@ const styles = StyleSheet.create({
     removeIngredientButton: {
         alignContent: 'flex-end',
     },
-
-    instructionsContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    instructionsHeader: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-    },
-    instructionHeaderText: {
-        flex: 1,
-        fontSize: 20,
-        textAlign: 'center',
-    },
-    addInstructionButton: {},
     instructionsList: {
         paddingTop: 5,
         flexDirection: 'column',
@@ -401,10 +407,17 @@ const styles = StyleSheet.create({
     instructionNumber: {
         width: '10%',
         fontSize: 18,
+        color: colors.darkgrey,
     },
     instructionText: {
         width: '80%',
         paddingEnd: 5,
     },
     removeInstructionButton: {},
+    clearRecipeButton: {
+        marginTop: 20,
+        paddingTop: 1,
+        paddingBottom: 1,
+        width: '35%'
+    },
 })

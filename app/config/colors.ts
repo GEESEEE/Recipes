@@ -6,4 +6,5 @@ export default {
     grey: '#777777',
     black: '#000',
     white: '#fff',
+    red: '#f00',
 }

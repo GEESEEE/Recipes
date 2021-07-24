@@ -21,7 +21,7 @@ export default function applicationAdapter(
     console.log('PATH:', `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`)
     // API_URL
     return axios({
-        url: `${'http://16521a675d7e.ngrok.io' ?? '127.0.0.1'}/${V1}${pathName}`,
+        url: `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`,
         method,
         data,
         headers,

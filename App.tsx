@@ -9,6 +9,7 @@ import rootReducer from './app/reducers/root'
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default function App(): JSX.Element {
+
     return (
         <Provider store={store}>
             <LoginNavigator />

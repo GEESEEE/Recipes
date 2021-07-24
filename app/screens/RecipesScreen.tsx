@@ -12,6 +12,7 @@ function RecipesScreen(): JSX.Element {
             <Text>recipes screen</Text>
             <FlatList
                 style={styles.recipesList}
+                contentContainerStyle={styles.recipeListItemContainer}
                 data={recipes}
                 renderItem={({ item }) => (
                     <RecipeListItemComponent recipe={item} />
@@ -30,5 +31,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.white,
     },
-    recipesList: {},
+    recipesList: {
+        width: '100%',
+    },
+    recipeListItemContainer: {
+        alignItems: 'center',
+        marginLeft: 10,
+        width: '100%',
+    },
 })
