@@ -54,4 +54,4 @@ const tabBarOptions = {
 
 const MainTabs = createMaterialBottomTabNavigator(screens, tabBarOptions)
 
-export default createAppContainer(MainTabs)
+export default MainTabs

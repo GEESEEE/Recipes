@@ -26,11 +26,16 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(signOut(auth.token, navigation))
     }
 
+    function handleDrawer(): void {
+        navigation.openDrawer()
+    }
+
     return (
         <View style={styles.background}>
             <Text>main screen</Text>
             <MyButton text="Log recipes" onPress={logRecipes} />
             <MyButton text="Sign Out" onPress={handleSignOut} />
+            <MyButton text="Drawer" onPress={handleDrawer} />
         </View>
     )
 }

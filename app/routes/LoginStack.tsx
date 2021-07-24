@@ -11,11 +11,8 @@ const screens = {
     Register: {
         screen: RegisterScreen,
     },
-    Main: {
-        screen: Navigator,
-    },
 }
 
 const LoginStack = createStackNavigator(screens, { headerMode: 'none' })
 
-export default createAppContainer(LoginStack)
+export default LoginStack

@@ -1,18 +1,26 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
-import {} from 'react-navigation-drawer'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import {View, StyleSheet, ScrollView} from 'react-native'
+import { DrawerItems } from 'react-navigation-drawer'
 import { Text } from 'react-native-paper'
-import Drawer from '../routes/Drawer'
+import DrawerNavigator from '../routes/Drawer'
 
 
-export function DrawerContent(props: any): JSX.Element {
+
+export function DrawerContent(): JSX.Element {
     return  (
-        <View style={styles.drawerContent} />
+        <ScrollView>
+            <SafeAreaView
+                style={styles.container}
+            >
+                <Text>Yes</Text>
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    drawerContent: {
+    container: {
         flex:1,
     },
     // userInfoSection: {
