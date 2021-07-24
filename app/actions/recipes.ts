@@ -95,7 +95,22 @@ export const retrieveRecipes =
     }
 
 export const deleteRecipe =
-    () =>
+    (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
         console.log('Deleting Recipe')
+        try {
+            const rs = (await AsyncStorage.getItem('recipes')) as string
+            const localRecipes: Recipe[] = JSON.parse(rs)
+
+            const index = localRecipes.indexOf(recipe)
+            if (index > -1) {
+                localRecipes.splice(index, 1)
+            }
+            await recipeService.deleteRecipe(recipe.id)
+            dispatch({ type: RECIPEACTIONS.DELETE_RECIPE, payload: { recipe }})
+
+        } catch (err) {
+            console.log(err.message)
+            console.error(err)
+        }
     }

@@ -2,14 +2,23 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useDispatch } from 'react-redux'
+import { deleteRecipe } from '../actions/recipes'
 import colors from '../config/colors'
 import Recipe from '../data/recipe'
+import MyButton from './MyButton'
 
 export default function RecipeListItemComponent({
     recipe,
 }: {
     recipe: Recipe
 }): JSX.Element {
+    const dispatch = useDispatch()
+
+    async function removeRecipe(): Promise<void> {
+        dispatch(deleteRecipe(recipe))
+    }
+
     return (
         <View style={{ ...styles.container }}>
             {/* Recipe Name */}
@@ -29,6 +38,7 @@ export default function RecipeListItemComponent({
                 <Feather style={styles.peopleCountIcon} name="user" size={25} />
                 <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
+            <MyButton text="Delete Recipe" onPress={removeRecipe}/>
         </View>
     )
 }
