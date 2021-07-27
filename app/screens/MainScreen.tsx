@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, View, BackHandler, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import MyButton from '../components/MyButton'
@@ -8,7 +8,6 @@ import { signOut } from '../actions/auth'
 import { retrieveRecipes } from '../actions/recipes'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
-    const auth = useSelector((state: any) => state.auth)
     const recipes = useSelector((state: any) => state.recipes)
     const dispatch = useDispatch()
 
@@ -21,10 +20,17 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         console.log(recipes)
     }
 
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+    }, [])
 
-    async function handleSignOut(): Promise<void> {
-        dispatch(signOut(auth.token, navigation))
+    function handleBackButton(): boolean {
+        console.log('Back button pressed')
+        return true;
     }
+
+
+
 
     function handleDrawer(): void {
         navigation.openDrawer()
@@ -34,7 +40,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         <View style={styles.background}>
             <Text>main screen</Text>
             <MyButton text="Log recipes" onPress={logRecipes} />
-            <MyButton text="Sign Out" onPress={handleSignOut} />
             <MyButton text="Drawer" onPress={handleDrawer} />
         </View>
     )

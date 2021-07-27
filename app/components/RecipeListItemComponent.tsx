@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import { StyleSheet,  View, Text } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useDispatch } from 'react-redux'
@@ -38,7 +38,8 @@ export default function RecipeListItemComponent({
                 <Feather style={styles.peopleCountIcon} name="user" size={20} />
                 <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
-            <MyButton text="Delete Recipe" onPress={removeRecipe} viewStyle={styles.deleteButton}/>
+            <MyButton text="Delete Recipe" onPress={removeRecipe} />
+
         </View>
     )
 }
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-start',
         backgroundColor: colors.white,
-        width: '100%',
+        flex: 1,
         marginTop: 5,
         borderWidth: 3,
         borderColor: colors.primary,
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
     propertiesContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '50%'
     },
     prepareTimeIcon: {},
     prepareTimeText: {

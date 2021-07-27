@@ -1,16 +1,10 @@
-import { createAppContainer } from 'react-navigation'
 import { createDrawerNavigator } from "react-navigation-drawer"
-import RecipesScreen from '../screens/RecipesScreen'
-import LoginStack from './LoginStack'
+import { DrawerContent } from '../screens/DrawerContent'
+import RecipesScreen from "../screens/RecipesScreen"
 import MainTabs from './MainTabs'
+import RecipesStack from './RecipesStack'
 
 const screens = {
-    Login: {
-        screen: LoginStack,
-        navigationOptions: {
-            drawerLockMode: 'locked-closed'
-        }
-    },
     Main: {
         screen: MainTabs,
     },
@@ -21,8 +15,9 @@ const screens = {
 }
 
 const drawerOptions = {
+    contentComponent: DrawerContent,
 }
 
 const DrawerNavigator = createDrawerNavigator(screens, drawerOptions)
 
-export default createAppContainer(DrawerNavigator)
+export default DrawerNavigator

@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Text,
 } from 'react-native'
+import { NavigationScreenProp } from 'react-navigation'
 import { useDispatch } from 'react-redux'
 import globalStyles from '../config/globalStyles'
 import colors from '../config/colors'
@@ -16,6 +17,7 @@ import MyFontAwesome from '../components/MyFontAwesome'
 import MyButton from '../components/MyButton'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
+
 
 const EmailInputField = ({
     onChangeText,
@@ -67,7 +69,7 @@ const PasswordInputField = ({
     </View>
 )
 
-function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
+function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
@@ -135,7 +137,6 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleLoginButton(): Promise<void> {
-        console.log('Signing In')
         if (data.isValidUsername && data.isValidPassword) {
             dispatch(signIn(data.username, data.password, navigation))
         }

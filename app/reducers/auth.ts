@@ -10,7 +10,7 @@ export const AUTHACTIONS = {
     RETRIEVE_TOKEN_ERROR: 'retrieveTokenError',
 }
 
-export type Token = {
+export type Auth = {
     loading: boolean
     token: string
     error: string
@@ -24,8 +24,8 @@ const initialState = {
 
 const auth = (
     state = initialState,
-    action: { type: string; payload: Token }
-): Token => {
+    action: { type: string; payload: Auth }
+): Auth => {
     switch (action.type) {
         case AUTHACTIONS.SIGN_UP_SUCCES: {
             return { ...state, error: '' }
@@ -61,7 +61,7 @@ const auth = (
 
         case AUTHACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
-            return { token, loading: false, error: '' }
+            return {token, loading: false, error: '' }
         }
 
         case AUTHACTIONS.RETRIEVE_TOKEN_ERROR: {

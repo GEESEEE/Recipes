@@ -17,11 +17,10 @@ export default function applicationAdapter(
             Authorization: `Bearer ${headers.token}`,
         }
     }
-    console.log(data)
     console.log('PATH:', `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`)
     // API_URL
     return axios({
-        url: `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`,
+        url: `${'http://43b114eb310e.ngrok.io' ?? '127.0.0.1'}/${V1}${pathName}`,
         method,
         data,
         headers,

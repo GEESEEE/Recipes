@@ -1,12 +1,8 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
-import { AUTHACTIONS, Token } from '../reducers/auth'
+import { AUTHACTIONS } from '../reducers/auth'
 import * as authService from '../services/auth'
-
-export type authPayload = {
-    type: string
-    payload: Token
-}
+import { clearUserData, getUserData } from './user'
 
 export const retrieveToken =
     (navigation: any): any =>
@@ -24,6 +20,8 @@ export const retrieveToken =
                         type: AUTHACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
+
+                    dispatch(getUserData(token))
                     navigation.navigate('Main')
                 }
             } else {
@@ -65,6 +63,7 @@ export const signIn =
             const token = await authService.signIn({ username, password })
             await SecureStore.setItemAsync('token', token)
             dispatch({ type: AUTHACTIONS.SIGN_IN_SUCCES, payload: { token } })
+            dispatch(getUserData(token))
             navigation.navigate('Main')
         } catch (err) {
             dispatch({
@@ -81,6 +80,7 @@ export const signOut =
             await authService.signOut({ token })
             await SecureStore.deleteItemAsync('token')
             dispatch({ type: AUTHACTIONS.SIGN_OUT_SUCCES, payload: {} })
+            dispatch(clearUserData())
             navigation.navigate('Login')
         } catch (err) {
             dispatch({

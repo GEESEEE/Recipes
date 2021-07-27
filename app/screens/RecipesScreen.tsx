@@ -1,15 +1,23 @@
 import React from 'react'
 import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { NavigationScreenProp } from 'react-navigation'
 import { useSelector } from 'react-redux'
+import MyButton from '../components/MyButton'
 import RecipeListItemComponent from '../components/RecipeListItemComponent'
 import colors from '../config/colors'
 
-function RecipesScreen(): JSX.Element {
+function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>}): JSX.Element {
     const recipes = useSelector((state: any) => state.recipes)
 
+    function handleCreateRecipe(): void {
+        navigation.navigate('CreateRecipe')
+    }
+
     return (
-        <View style={styles.background}>
+        <SafeAreaView style={styles.background}>
             <Text>recipes screen</Text>
+            <MyButton text="Create New Recipe" onPress={handleCreateRecipe}/>
             <FlatList
                 style={styles.recipesList}
                 contentContainerStyle={styles.recipeListItemContainer}
@@ -18,7 +26,8 @@ function RecipesScreen(): JSX.Element {
                     <RecipeListItemComponent recipe={item} />
                 )}
             />
-        </View>
+        </SafeAreaView>
+
     )
 }
 

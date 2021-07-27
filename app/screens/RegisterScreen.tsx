@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native'
+import { StyleSheet, View, TextInput, TouchableOpacity, Text} from 'react-native'
 import { useDispatch } from 'react-redux'
+import { NavigationScreenProp } from 'react-navigation'
 import colors from '../config/colors'
 import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
@@ -77,16 +78,19 @@ const PasswordInputField = ({
 
 // #endregion
 
-function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
+function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
     const dispatch = useDispatch()
 
     const [data, setData] = React.useState({
         username: '',
         email: '',
-        password: '',
-        securePasswordText: true,
+        password1: '',
+        password2: '',
+        securePassword1Text: true,
+        securePassword2Text: true,
         isValidUsername: true,
-        isValidPassword: true,
+        isValidPassword1: true,
+        isValidPassword2: true,
         isValidEmail: true,
     })
 
@@ -133,39 +137,89 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    function handlePasswordInputChange(text: string): void {
+    function handlePassword1InputChange(text: string): void {
         setData({
             ...data,
-            password: text,
+            password1: text,
         })
     }
 
-    function handlePasswordValidation(text: string): void {
+    function handlePassword2InputChange(text: string): void {
+        setData({
+            ...data,
+            password2: text,
+        })
+    }
+
+    function handlePassword1Validation(text: string): void {
         if (text.length >= 5 && text.length <= 50) {
             setData({
                 ...data,
-                isValidPassword: true
+                isValidPassword1: true
             })
         } else {
             setData({
                 ...data,
-                isValidPassword: false
+                isValidPassword1: false
             })
         }
     }
 
-    function handleSecurePasswordChange(): void {
+    function handlePassword2Validation(text: string): void {
+        if (text.length >= 5 && text.length <= 50) {
+            setData({
+                ...data,
+                isValidPassword2: true
+            })
+        } else {
+            setData({
+                ...data,
+                isValidPassword2: false
+            })
+        }
+    }
+
+    function handleSecurePassword1Change(): void {
         setData({
             ...data,
-            securePasswordText: !data.securePasswordText,
+            securePassword1Text: !data.securePassword1Text,
         })
     }
 
+    function handleSecurePassword2Change(): void {
+        setData({
+            ...data,
+            securePassword2Text: !data.securePassword2Text,
+        })
+    }
+
+    function samePasswords(): boolean {
+        return  data.password1 === data.password2
+    }
+
+    function invalidPassWord(): JSX.Element | null{
+        if (!data.isValidPassword1) {
+            return (<Text style={styles.errorMessage}>Invalid Password 1</Text>)
+        }
+        if (!data.isValidPassword2) {
+            return (<Text style={styles.errorMessage}>Invalid Password 2</Text>)
+        }
+        if (!samePasswords()) {
+            return (<Text style={styles.errorMessage}>Passwords are not the same</Text>)
+        }
+        return null
+    }
+
     async function handleRegisterButton(): Promise<void> {
-        if (data.isValidUsername && data.isValidPassword && data.isValidUsername) {
+        if (data.isValidUsername &&
+            data.isValidPassword1 &&
+            data.isValidPassword2 &&
+            data.isValidUsername &&
+            samePasswords()
+        ) {
             const userData = {
                 name: data.username,
-                password: data.password,
+                password: data.password1,
                 email: data.email,
             }
             dispatch(signUp(userData, navigation))
@@ -187,14 +241,22 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
             <EmailInputField onChangeText={handleEmailInputChange} onEndEditing={handleEmailValidation} />
             {data.isValidEmail ? null : <Text style={styles.errorMessage}>Invalid E-mail</Text>}
 
-            {/* Password Input Field */}
+            {/* Password 1 Input Field */}
             <PasswordInputField
-                secureTextEntry={data.securePasswordText}
-                onChangeText={handlePasswordInputChange}
-                onEyePress={handleSecurePasswordChange}
-                onEndEditing={handlePasswordValidation}
+                secureTextEntry={data.securePassword1Text}
+                onChangeText={handlePassword1InputChange}
+                onEyePress={handleSecurePassword1Change}
+                onEndEditing={handlePassword1Validation}
             />
-            {data.isValidPassword ? null : <Text style={styles.errorMessage}>Invalid password</Text>}
+
+            {/* Password 2 Input Field */}
+            <PasswordInputField
+                secureTextEntry={data.securePassword2Text}
+                onChangeText={handlePassword2InputChange}
+                onEyePress={handleSecurePassword2Change}
+                onEndEditing={handlePassword2Validation}
+            />
+            {invalidPassWord()}
 
             {/* Register Button */}
             <MyButton text="Register" onPress={handleRegisterButton} />

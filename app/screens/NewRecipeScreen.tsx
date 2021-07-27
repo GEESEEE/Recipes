@@ -99,7 +99,7 @@ const InstructionsListView = (
             style={styles.instructionsList}
             data={instructionsData}
             renderItem={({ item }) => (
-                <View style={styles.instructionsListItem}>
+                <View key={item.key} style={styles.instructionsListItem}>
                     {/* Instruction Number */}
                     <Text style={styles.instructionNumber}>
                         {(
@@ -135,8 +135,8 @@ const InstructionsListView = (
 function NewRecipeScreen(): JSX.Element {
     const dispatch = useDispatch()
 
-    function getInitialRecipe(): any{
-        const initialRecipe = {
+    function getInitialRecipe(): Recipe {
+        return {
             name: '',
             description: '',
             prepareTime: 0,
@@ -146,9 +146,8 @@ function NewRecipeScreen(): JSX.Element {
             recipeIngredients: [],
             instructions: [],
         }
-        return initialRecipe
-    }
 
+    }
 
     const [recipeData, setRecipeData] = React.useState<Recipe>(getInitialRecipe())
 
@@ -177,7 +176,6 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     function handleAddIngredient(): void {
-        console.log('Adding Ingredient')
         const ingredient = new Ingredient()
         ingredient.name = ''
         ingredient.unit = ''
@@ -240,11 +238,10 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     async function handleCreateRecipe(): Promise<void> {
-        console.log('Creating Recipe')
         const recipe = { ...recipeData }
         const recipeIngredients: RecipeIngredient[] = []
         // Set the recipe correctly without Cycles
-        recipeData.recipeIngredients?.forEach((recipeIngredient, id) => {
+        recipeData.recipeIngredients?.forEach((recipeIngredient) => {
             const ingredient = { ...recipeIngredient.ingredient } as Ingredient
             ingredient.recipeIngredients = []
             const newRecipeIngredient = new RecipeIngredient()
@@ -262,7 +259,6 @@ function NewRecipeScreen(): JSX.Element {
         setIngredientData([])
         setInstructionsData([])
     }
-
 
     return (
         <View style={styles.background}>
@@ -298,6 +294,7 @@ function NewRecipeScreen(): JSX.Element {
                 headerText = "Ingredients"
             >
                 {[<IngredientListView
+                    key = {uuid()}
                     ingredientsData={ingredientsData}
                     handleIngredientNameChange={handleIngredientNameChange}
                     handleIngredientAmountChange={handleIngredientAmountChange}
@@ -313,6 +310,7 @@ function NewRecipeScreen(): JSX.Element {
                 headerText = "Instructions"
             >
                 {[<InstructionsListView
+                    key = {uuid()}
                     instructionsData={instructionsData}
                     handleInstructionTextChange={handleInstructionTextChange}
                     handleRemoveInstruction={handleRemoveInstruction}
