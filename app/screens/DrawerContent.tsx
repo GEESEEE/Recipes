@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 5,
+        paddingBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: colors.primary
+        borderBottomColor: colors.primary,
     },
     title: {
         fontSize: 25,

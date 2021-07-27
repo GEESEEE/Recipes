@@ -9,7 +9,7 @@ const screens = {
         screen: MainTabs,
     },
     RecipesScreen: {
-        screen: RecipesScreen,
+        screen: RecipesStack,
     },
 
 }

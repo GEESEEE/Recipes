@@ -11,37 +11,22 @@ import MainScreen from '../screens/MainScreen'
 import RecipesStack from './RecipesStack'
 
 
-const DrawerButton = (): JSX.Element => (
-        <Feather name="menu"
-                size={30}
-                />
-    )
 
 const screens = {
     Main: {
-        screen: MainScreen,
+        screen: MainStack,
         navigationOptions: {
             tabBarLabel: 'Browse',
             tabBarIcon: ({tintColor} : {tintColor: string}) => (
                 <View>
                     <Feather color={tintColor} name="book-open" size={25}/>
                 </View>
-            )
-        }
-    },
-    NewRecipe: {
-        screen: NewRecipeScreen,
-        navigationOptions: {
-            tabBarLabel: 'Create New Recipe',
-            tabBarIcon: ({tintColor} : {tintColor: any}) => (
-                <View>
-                    <Feather color={tintColor} name="book" size={25}/>
-                </View>
-            )
+            ),
+
         }
     },
     RecipesScreen: {
-        screen: RecipesScreen,
+        screen: RecipesStack,
         navigationOptions: {
             tabBarLabel: 'My Recipes',
             tabBarIcon: ({tintColor} : {tintColor: string}) => (

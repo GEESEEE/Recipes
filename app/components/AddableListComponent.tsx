@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20,
         textAlign: 'center',
-        fontWeight: 'bold',
-        color: colors.primary,
+        color: colors.black,
     },
 
 })

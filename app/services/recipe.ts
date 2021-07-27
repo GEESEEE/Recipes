@@ -88,7 +88,7 @@ export async function addIngredients(
 ): Promise<RecipeIngredient[]> {
     return handleError(
         'POST',
-        `/recipes/${recipeId}/ingredients`,
+        `/recipes/${recipeId}/ingredients/bulk`,
         { body}
     )
 }
