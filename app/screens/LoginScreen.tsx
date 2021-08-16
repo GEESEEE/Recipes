@@ -17,7 +17,6 @@ import MyButton from '../components/MyButton'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
 
-
 const EmailInputField = ({
     onChangeText,
     onEndEditing
@@ -72,7 +71,7 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
     const dispatch = useDispatch()
 
     React.useEffect(() => {
-        dispatch(retrieveToken(navigation))
+        // dispatch(retrieveToken(navigation))
     }, [])
 
     const [data, setData] = React.useState({

@@ -1,14 +1,15 @@
 import * as SecureStore from 'expo-secure-store'
+import { NavigationScreenProp } from 'react-navigation'
 import { Dispatch } from 'redux'
-import { AUTHACTIONS } from '../reducers/auth'
+import { AUTH_ACTIONS } from '../reducers/auth'
 import * as authService from '../services/auth'
 import { clearUserData, getUserData } from './user'
 
 export const retrieveToken =
-    (navigation: any): any =>
+    (navigation: NavigationScreenProp<string>): any =>
     async (dispatch: Dispatch) => {
         dispatch({
-            type: AUTHACTIONS.RETRIEVE_TOKEN_START,
+            type: AUTH_ACTIONS.RETRIEVE_TOKEN_START,
             payload: {},
         })
         try {
@@ -17,7 +18,7 @@ export const retrieveToken =
                 const result = await authService.verifyToken({ token })
                 if (result) {
                     dispatch({
-                        type: AUTHACTIONS.RETRIEVE_TOKEN_SUCCES,
+                        type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
 
@@ -26,13 +27,13 @@ export const retrieveToken =
                 }
             } else {
                 dispatch({
-                    type: AUTHACTIONS.RETRIEVE_TOKEN_ERROR,
+                    type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
                     payload: { err: 'No credentials found in storage' },
                 })
             }
         } catch (err) {
             dispatch({
-                type: AUTHACTIONS.RETRIEVE_TOKEN_ERROR,
+                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
                 payload: { err: err.message },
             })
         }
@@ -41,50 +42,50 @@ export const retrieveToken =
 export const signUp =
     (
         userData: { name: string; password: string; email: string },
-        navigation: any
+        navigation: NavigationScreenProp<string>
     ): any =>
     async (dispatch: Dispatch) => {
         try {
             await authService.signUp(userData)
-            dispatch({ type: AUTHACTIONS.SIGN_UP_SUCCES, payload: {} })
+            dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err) {
             dispatch({
-                type: AUTHACTIONS.SIGN_UP_ERROR,
+                type: AUTH_ACTIONS.SIGN_UP_ERROR,
                 payload: { error: err.message },
             })
         }
     }
 
 export const signIn =
-    (username: string, password: string, navigation: any): any =>
+    (username: string, password: string, navigation: NavigationScreenProp<string>): any =>
     async (dispatch: Dispatch) => {
         try {
             const token = await authService.signIn({ username, password })
             await SecureStore.setItemAsync('token', token)
-            dispatch({ type: AUTHACTIONS.SIGN_IN_SUCCES, payload: { token } })
+            dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
             dispatch(getUserData(token))
             navigation.navigate('Main')
         } catch (err) {
             dispatch({
-                type: AUTHACTIONS.SIGN_IN_ERROR,
+                type: AUTH_ACTIONS.SIGN_IN_ERROR,
                 payload: { error: err.message },
             })
         }
     }
 
 export const signOut =
-    (token: string, navigation: any): any =>
+    (token: string, navigation: NavigationScreenProp<string>): any =>
     async (dispatch: Dispatch): Promise<any> => {
         try {
             await authService.signOut({ token })
             await SecureStore.deleteItemAsync('token')
-            dispatch({ type: AUTHACTIONS.SIGN_OUT_SUCCES, payload: {} })
+            dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             dispatch(clearUserData())
             navigation.navigate('Login')
         } catch (err) {
             dispatch({
-                type: AUTHACTIONS.SIGN_OUT_ERROR,
+                type: AUTH_ACTIONS.SIGN_OUT_ERROR,
                 payload: { error: err.message },
             })
         }

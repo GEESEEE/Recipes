@@ -1,13 +1,15 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {View, StyleSheet, ScrollView, Switch, Text, Settings, TouchableOpacity } from 'react-native'
+import { NavigationScreenProp } from 'react-navigation'
+import {View, StyleSheet, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
 import {  } from 'react-navigation-drawer'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import colors from '../config/colors'
 import MyButton from '../components/MyButton'
 import { signOut } from '../actions/auth'
-
+import { setTheme } from '../actions/theme'
 
 
 const Route = (iconName: string, text: string): JSX.Element => (
@@ -20,28 +22,25 @@ const Route = (iconName: string, text: string): JSX.Element => (
     )
 
 
-export function DrawerContent({navigation} : {navigation: any}
+export function DrawerContent({navigation} : {navigation: NavigationScreenProp<string>}
 ): JSX.Element {
     const user = useSelector((state: any) => state.user)
     const auth = useSelector((state: any) => state.auth)
+    const theme = useSelector((state: any) => state.theme)
     const dispatch = useDispatch()
-
-    const [theme, setTheme] = React.useState(true)
 
     async function handleSignOut(): Promise<void> {
         dispatch(signOut(auth.token, navigation))
     }
 
     return  (
-        <SafeAreaView
-                style={styles.container}
-        >
-        <ScrollView>
+        <Container>
+            <ScrollView>
 
-                <View style={styles.header}>
-                    <Text style={styles.title}>{user.name}</Text>
+                <Header>
+                    <Title>{user.name}</Title>
                     <Text style={styles.caption}>{user.email}</Text>
-                </View>
+                </Header>
 
                 <View style={styles.RoutesSection}>
                     {Route("settings", "Settings")}
@@ -53,8 +52,8 @@ export function DrawerContent({navigation} : {navigation: any}
                     <View style={styles.darkTheme}>
                         <Text style={styles.paragraph}>Dark Theme</Text>
                         <Switch
-                            value={theme}
-                            onValueChange={(value: boolean) => setTheme(value)}
+                            value={theme.mode === 'light'}
+                            onValueChange={(value: boolean) => dispatch(setTheme(value))}
                             trackColor={{true: colors.primary, false: colors.grey}}
                         />
                     </View>
@@ -65,9 +64,85 @@ export function DrawerContent({navigation} : {navigation: any}
             <View style={styles.footer}>
                 <MyButton text="Sign Out" onPress={handleSignOut}/>
             </View>
-        </SafeAreaView>
+        </Container>
     )
 }
+
+const Container = styled(SafeAreaView)`
+    flex: 1;
+    backgroundColor: ${(props) => props.theme.background};
+`
+
+const Header = styled(View)`
+    flex: 1;
+    alignItems: center;
+    paddingBottom: 15px;
+    borderBottomWidth: 1px;
+    borderBottomColor: ${(props) => props.theme.primary};
+`
+
+const Title = styled(Text)`
+    fontSize: 25px;
+    marginTop: 3px;
+    fontWeight: bold;
+    color: ${(props) => props.theme.primary};
+`
+
+const Caption = styled(Text)`
+    fontSize: 15px;
+    color: ${(props) => props.theme.text};
+`
+
+const Paragraph = styled(Text)`
+    fontSize: 15px;
+    marginRight: 3px;
+    fontWeight: bold;
+    color: ${(props) => props.theme.text};
+`
+
+const RoutesSection = styled(View)`
+    marginTop: 15px;
+`
+
+const Section = styled(View)`
+    flexDirection: row;
+    alignItems: center;
+    marginRight: 15px;
+    marginLeft: 15ps;
+    justifyContent: space-between;
+`
+
+const PreferenceView = styled(View)`
+    color: ${(props) => props.theme.primary};
+    marginTop: 20px;
+    marginLeft: 10px;
+    marginBottom: 5px;
+    fontSize: 16px;
+    fontWeight: bold;
+`
+
+const PreferenceText = styled(Text)`
+    color: ${(props) => props.theme.primary};
+    marginTop: 20px;
+    marginLeft: 10px;
+    marginBottom: 5px;
+    fontSize: 16px;
+    fontWeight: bold;
+`
+
+const DarkThemeView = styled(View)`
+    flex: 1;
+    flexDirection: row;
+    justifyContent: space-between;
+`
+
+const Footer = styled(View)`
+    marginBottom: 15px;
+    borderTopColor: ${(props) => props.theme.primary};
+    borderTopWidth: 1px;
+    alignItems: center;
+`
+
 
 const styles = StyleSheet.create({
     container: {
@@ -114,7 +189,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontSize: 16,
         fontWeight: 'bold',
-
     },
     preference: {
         flexDirection: 'row',
