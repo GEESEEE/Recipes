@@ -30,3 +30,31 @@ export const setTheme = (darkTheme: boolean) => async (dispatch: Dispatch): Prom
         console.error(err)
     }
 }
+
+export const retrieveColor = () => async (dispatch: Dispatch): Promise<void> => {
+    try {
+        const color = await SecureStore.getItemAsync('color')
+        if (color) {
+            dispatch({
+                type: THEME_ACTIONS.SET_COLOR,
+                payload: color
+            })
+        }
+    } catch (err) {
+        console.log(err.message)
+        console.error(err)
+    }
+}
+
+export const setColor = (color: string) => async (dispatch: Dispatch): Promise<void> => {
+    try {
+        dispatch({
+            type: THEME_ACTIONS.SET_COLOR,
+            payload: color
+        })
+        await SecureStore.setItemAsync('color', color)
+    } catch (err) {
+        console.log(err.message)
+        console.error(err)
+    }
+}

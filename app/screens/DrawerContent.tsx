@@ -53,7 +53,7 @@ export function DrawerContent({navigation} : {navigation: NavigationScreenProp<s
                     <DarkThemeView>
                         <Paragraph>Dark Theme</Paragraph>
                         <Switch
-                            value={theme.mode === 'light'}
+                            value={theme.mode === 'dark'}
                             onValueChange={(value: boolean) => dispatch(setTheme(value))}
                             trackColor={{true: colors.primary, false: colors.grey}}
                         />

@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, View, BackHandler, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import MyButton from '../components/MyButton'
 import colors from '../config/colors'
 import { retrieveRecipes } from '../actions/recipes'
+import { setColor } from '../actions/theme'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useSelector((state: any) => state.recipes)
+    const theme = useSelector((state: any) => state.theme)
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(retrieveRecipes())
@@ -16,6 +20,16 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     function logRecipes(): void {
         console.log('Logging Recipes')
         console.log(recipes)
+    }
+
+    function changePrimaryColor(): void {
+        console.log('Changing primary color')
+        console.log(theme)
+        if (theme.primary === '#4ecdc4') {
+            dispatch(setColor('#fc5c65'))
+        } else {
+            dispatch(setColor('#4ecdc4'))
+        }
     }
 
 
@@ -37,15 +51,23 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     return (
-        <View style={styles.background}>
+        <Container>
             <Text>main screen</Text>
             <MyButton text="Log recipes" onPress={logRecipes} />
             <MyButton text="Drawer" onPress={handleDrawer} />
-        </View>
+            <MyButton text="Change Primary Color" onPress={changePrimaryColor} />
+        </Container>
     )
 }
 
 export default MainScreen
+
+const Container = styled(View)`
+    flex: 1px;
+    justifyContent: center;
+    alignItems: center;
+    backgroundColor: ${(props) => props.theme.background}
+`
 
 const styles = StyleSheet.create({
     background: {

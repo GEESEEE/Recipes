@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
-import colors from '../config/colors'
+import { TouchableOpacity, View, Text } from 'react-native'
+import styled from 'styled-components'
 
 export default function MyButton({
     text,
@@ -15,26 +15,23 @@ export default function MyButton({
     viewStyle?: Record<string, unknown>
     textStyle?: Record<string, unknown>
 }): JSX.Element {
-    const vStyle = inverted ? styles.invertedButton : styles.button
-    const tStyle = inverted ? styles.invertedButtonText : styles.buttonText
     return (
         <TouchableOpacity onPress={onPress}>
-            <View
-                style={{
-                    ...styles.butt,
-                    ...vStyle,
-                    ...viewStyle,
-                }}
-            >
-                <Text
-                    style={{
-                        ...tStyle,
-                        ...textStyle,
-                    }}
-                >
+            {
+            inverted
+                ?
+            <InvertedButton style={viewStyle || {}}>
+                <InvertedButtonText style={textStyle || {}}>
                     {text}
-                </Text>
-            </View>
+                </InvertedButtonText>
+            </InvertedButton>
+                :
+            <Button style={viewStyle || {}}>
+                <ButtonText style={textStyle || {}}>
+                    {text}
+                </ButtonText>
+            </Button>
+            }
         </TouchableOpacity>
     )
 }
@@ -45,43 +42,46 @@ MyButton.defaultProps = {
     textStyle: {},
 }
 
-const styles = StyleSheet.create({
-    butt: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '85%',
-        marginTop: 8,
-        marginBottom: 8,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 20,
-    },
-    button: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        backgroundColor: colors.primary,
-    },
-    invertedButton: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        backgroundColor: colors.white,
-        borderWidth: 2,
-        borderColor: colors.white
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 16,
-        textAlign: 'center',
-        flex: 1,
-        color: colors.white,
-    },
-    invertedButtonText: {
-        fontWeight: 'bold',
-        textTransform: 'none',
-        fontSize: 12,
-        textAlign: 'center',
-        flex: 1,
-        color: colors.primary,
-    }
-})
+const ButtonGeneric = styled(View)`
+    flexDirection: row;
+    alignItems: center;
+    width: 85%;
+    marginTop: 8px;
+    marginBottom: 8px;
+    paddingLeft: 10px;
+    paddingRight: 10px;
+    borderRadius: 20px;
+`
+
+const Button = styled(ButtonGeneric)`
+    paddingTop: 8px;
+    paddingBottom: 8px;
+    backgroundColor: ${(props) => props.theme.primary}
+`
+
+const InvertedButton = styled(ButtonGeneric)`
+    paddingTop: 8px;
+    paddingBottom: 8px;
+    backgroundColor: ${(props) => props.theme.background}
+    borderWidth: 2px;
+    borderColor: ${(props) => props.theme.background}
+`
+
+const ButtonText = styled(Text)`
+    fontWeight: bold;
+    textTransform: uppercase;
+    fontSize: 16px;
+    textAlign: center;
+    flex: 1px;
+    color: ${(props) => props.theme.background};
+`
+
+const InvertedButtonText = styled(Text)`
+    fontWeight: bold;
+    textTransform: none;
+    fontSize: 12px;
+    textAlign: center;
+    flex: 1px;
+    color: ${(props) => props.theme.primary};
+`
+

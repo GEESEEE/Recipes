@@ -1,11 +1,14 @@
 import React from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import styled from 'styled-components'
 import Feather from "react-native-vector-icons/Feather"
+import { useSelector } from "react-redux"
 import colors from "../config/colors"
 
 
 
 export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element => {
+    const theme = useSelector((state: any) => state.theme)
 
     function handleDrawerButton(): void {
         navigation.toggleDrawer()
@@ -17,16 +20,26 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
 
                 <View style={styles.drawerButton}>
                     <TouchableOpacity onPress={handleDrawerButton}>
-                        <Feather name="menu" size={30} color={colors.white}/>
+                        <Feather name="menu" size={30} color={theme.background}/>
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.headerTitle}>Header </Text>
+                <HeaderTitle>Header </HeaderTitle>
             </View>
         </View>
 
     )
 }
+
+
+const HeaderTitle = styled(Text)`
+    paddingLeft: 10px;
+    flex: 1px;
+    fontWeight: bold;
+    fontSize: 20px;
+    color: ${(props) => props.theme.background};
+    letterSpacing: 1px;
+`
 
 
 const styles = StyleSheet.create({
@@ -47,12 +60,4 @@ const styles = StyleSheet.create({
     drawerButton: {
        // marginLeft: 10,
     },
-    headerTitle: {
-        paddingLeft: 10,
-        flex: 1,
-        fontWeight: 'bold',
-        fontSize: 20,
-        color: colors.white,
-        letterSpacing: 1,
-    }
 })
