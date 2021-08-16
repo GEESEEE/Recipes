@@ -12,6 +12,11 @@ export default function MyFeather({
     color?: string
 }): JSX.Element {
     return (
-        <Feather name={name} color={color ?? colors.black} size={size ?? 20} />
+        <Feather name={name} color={color} size={size} />
     )
+}
+
+MyFeather.defaultProps = {
+    size: 20,
+    color: colors.black
 }

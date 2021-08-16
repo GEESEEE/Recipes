@@ -25,10 +25,10 @@ const IngredientListView = (
         handleRemoveIngredient
     }: {
         ingredientsData: Ingredient[]
-        handleIngredientNameChange: any
-        handleIngredientAmountChange: any
-        handleIngredientUnitChange: any
-        handleRemoveIngredient: any
+        handleIngredientNameChange: (key: string, name: string) => void
+        handleIngredientAmountChange: (key: string, amount: string) => void
+        handleIngredientUnitChange: (key: string, unit: string) => void
+        handleRemoveIngredient: (key: string) => void
     }
 ): JSX.Element => (
     <FlatList
@@ -89,8 +89,9 @@ const InstructionsListView = (
        handleRemoveInstruction
    }:{
     instructionsData: Instruction[],
-    handleInstructionTextChange: any,
-    handleRemoveInstruction: any}
+    handleInstructionTextChange: (key: string, text: string) => void,
+    handleRemoveInstruction: (key: string) => void
+    }
 ): JSX.Element => (
     <FlatList
             style={styles.instructionsList}

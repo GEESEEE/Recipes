@@ -4,10 +4,17 @@ import colors from '../config/colors'
 
 export default function MyFontAwesome({
     name,
+    color,
     size,
 }: {
     name: string
+    color?: string
     size?: number
 }): JSX.Element {
-    return <FontAwesome name={name} color={colors.grey} size={size ?? 20} />
+    return <FontAwesome name={name} color={color} size={size} />
+}
+
+MyFontAwesome.defaultProps = {
+    color: colors.grey,
+    size: 20
 }

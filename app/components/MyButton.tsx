@@ -7,8 +7,8 @@ export default function MyButton({
     text,
     onPress,
     inverted,
-    viewStyle = {},
-    textStyle = {},
+    viewStyle,
+    textStyle,
 }: {
     text: string
     onPress: () => void
@@ -38,6 +38,12 @@ export default function MyButton({
             </View>
         </TouchableOpacity>
     )
+}
+
+MyButton.defaultProps = {
+    inverted: false,
+    viewStyle: {},
+    textStyle: {},
 }
 
 const styles = StyleSheet.create({
