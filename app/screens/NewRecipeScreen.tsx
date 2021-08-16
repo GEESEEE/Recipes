@@ -7,13 +7,13 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
 import AddableListComponent from '../components/AddableListComponent'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
-import colors from '../config/colors'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 
 const IngredientListView = (
@@ -99,11 +99,11 @@ const InstructionsListView = (
             renderItem={({ item }) => (
                 <View key={item.key} style={styles.instructionsListItem}>
                     {/* Instruction Number */}
-                    <Text style={styles.instructionNumber}>
+                    <InstructionNumber>
                         {(
                             instructionsData.indexOf(item) + 1
                         ).toString()}
-                    </Text>
+                    </InstructionNumber>
 
                     {/* Instruction Text Input */}
                     <TextInput
@@ -131,6 +131,7 @@ const InstructionsListView = (
 )
 
 function NewRecipeScreen(): JSX.Element {
+    const theme = useSelector((state: any) => state.theme)
     const dispatch = useDispatch()
 
     function getInitialRecipe(): Recipe {
@@ -259,30 +260,29 @@ function NewRecipeScreen(): JSX.Element {
     }
 
     return (
-        <View style={styles.background}>
+        <Container>
 
-            <View style={{...styles.header}}>
+            <Header>
                 {/* Recipe Name Input Field */}
-                <TextInput
-                    style={{ ...styles.recipeNameTextInput }}
+                <RecipeNameTextInput
                     value={recipeData.name}
                     placeholder="New Recipe"
-                    placeholderTextColor={colors.grey}
+                    placeholderTextColor={theme.grey}
                     onChangeText={(text: string) => handleNameChange(text)}
                     multiline
                 />
 
                 {/* Recipe Description Input Field */}
-                <TextInput
-                    style={{ ...styles.descriptionTextInput }}
+                <DescriptionTextInput
                     placeholder="Description"
                     value={recipeData.description}
+                    placeholderTextColor={theme.grey}
                     onChangeText={(text: string) =>
                         handleDescriptionChange(text)
                     }
                     multiline
                 />
-            </View>
+            </Header>
 
 
             {/* <View style={{...globalStyles.userinput, ...styles.description}}>
@@ -324,7 +324,7 @@ function NewRecipeScreen(): JSX.Element {
 
             {/* Clear Recipe Button */}
             <MyButton text="Clear Recipe" onPress={clearRecipeData} inverted viewStyle={styles.clearRecipeButton}/>
-        </View>
+        </Container>
     )
 }
 
@@ -332,42 +332,52 @@ export default NewRecipeScreen
 
 const {height} = Dimensions.get('screen')
 
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        backgroundColor: colors.white,
-    },
-    header: {
-        bottom: height * 0.03,
-        width: '85%',
-        backgroundColor: colors.white,
-        borderColor: colors.primary,
-        borderRadius: 20,
-        borderWidth: 3,
-        paddingTop: 5,
-        paddingBottom: 5,
+const Container = styled(View)`
+    flex: 1;
+    flexDirection: column;
+    justifyContent: center;
+    alignItems: center;
+    alignContent: center;
+    backgroundColor: ${(props) => props.theme.background};
+`
 
-    },
-    recipeNameTextInput: {
-        marginTop: 10,
-        paddingBottom: 10,
-        fontSize: 25,
-        color: colors.black,
-        textAlign: 'center',
-        borderBottomColor: colors.primary,
-        borderBottomWidth: 1,
-    },
-    descriptionTextInput: {
-        marginTop: 8,
-        marginLeft: 8,
-        marginRight: 8,
-        marginBottom: 5,
-        color: colors.black,
-    },
+// Bottom height * 0.03
+const Header = styled(View)`
+    bottom: ${height * 0.03};
+    width: 85%;
+    backgroundColor: ${(props) => props.theme.background};
+    borderColor: ${(props) => props.theme.primary};
+    borderRadius: 20px;
+    borderWidth: 3px;
+    paddingTop: 5px;
+    paddingBottom: 5px;
+`
+
+const RecipeNameTextInput = styled(TextInput)`
+    marginTop: 10px;
+    paddingBottom: 10px;
+    fontSize: 25px;
+    color: ${(props) => props.theme.text};
+    textAlign: center;
+    borderBottomColor: ${(props) => props.theme.primary};
+    borderBottomWidth: 1px;
+`
+
+const DescriptionTextInput = styled(TextInput)`
+    marginTop: 8px;
+    marginLeft: 8px;
+    marginRight: 8px;
+    marginBottom: 5px;
+    color: ${(props) => props.theme.text}
+`
+
+const InstructionNumber = styled(Text)`
+    width: 10%;
+    fontSize: 18px;
+    color: ${(props) => props.theme.grey}
+`
+
+const styles = StyleSheet.create({
     ingredientsList: {
         paddingTop: 5,
         flexDirection: 'column',
@@ -403,11 +413,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'space-between',
         width: '100%',
-    },
-    instructionNumber: {
-        width: '10%',
-        fontSize: 18,
-        color: colors.darkgrey,
     },
     instructionText: {
         width: '80%',

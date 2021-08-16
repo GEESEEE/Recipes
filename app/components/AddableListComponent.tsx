@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import styled from 'styled-components'
 import colors from '../config/colors'
 import MyButton from './MyButton'
 
@@ -16,10 +17,10 @@ export default function AddableListComponent({
 }): JSX.Element {
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{headerText}</Text>
-            </View>
+        <Container>
+            <Header>
+                <HeaderText>{headerText}</HeaderText>
+            </Header>
             {children}
 
             <MyButton
@@ -28,43 +29,43 @@ export default function AddableListComponent({
                 inverted
                 viewStyle={styles.button}
             />
-        </View>
+        </Container>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 8,
-        marginBottom: 8,
-        paddingTop: 5,
-        borderRadius: 12,
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-        width: '85%',
-        borderWidth: 3,
-        borderColor: colors.primary
-    },
-    button: {
+const Container = styled(View)`
+    marginTop: 8px;
+    marginBottom: 8px;
+    paddingTop: 5px;
+    borderRadius: 12px;
+    flexDirection: column;
+    alignItems: center;
+    backgroundColor: ${(props) => props.theme.background};
+    width: 85%;
+    borderWidth: 3px;
+    borderColor: ${(props) => props.theme.primary};
+`
 
+const Header = styled(View)`
+    flexDirection: row;
+    alignItems: flex-end;
+    justifyContent: center;
+    backgroundColor: ${(props) => props.theme.background};
+    borderBottomColor: ${(props) => props.theme.primary};
+    borderBottomWidth: 1px;
+    paddingBottom: 5px;
+`
+const HeaderText = styled(Text)`
+    flex: 1px;
+    fontSize: 18px;
+    textAlign: center;
+    color: ${(props) => props.theme.text};
+`
+
+const styles = StyleSheet.create({
+    button: {
         width: '50%',
         marginTop: 10,
         marginBottom: 0,
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        backgroundColor: colors.white,
-        borderBottomColor: colors.primary,
-        borderBottomWidth: 1,
-        paddingBottom: 5,
-    },
-    headerText: {
-        flex: 1,
-        fontSize: 18,
-        textAlign: 'center',
-        color: colors.black,
-    },
-
 })
