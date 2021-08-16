@@ -1,6 +1,5 @@
 import { createDrawerNavigator } from "react-navigation-drawer"
 import { DrawerContent } from '../screens/DrawerContent'
-import RecipesScreen from "../screens/RecipesScreen"
 import MainTabs from './MainTabs'
 import RecipesStack from './RecipesStack'
 

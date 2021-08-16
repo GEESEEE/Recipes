@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import styled from 'styled-components'
 import Feather from "react-native-vector-icons/Feather"
 import { useSelector } from "react-redux"
-import colors from "../config/colors"
 
 
 
@@ -15,8 +14,8 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <Container>
+            <Header>
 
                 <View style={styles.drawerButton}>
                     <TouchableOpacity onPress={handleDrawerButton}>
@@ -25,12 +24,28 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
                 </View>
 
                 <HeaderTitle>Header </HeaderTitle>
-            </View>
-        </View>
+            </Header>
+        </Container>
 
     )
 }
 
+const Container = styled(View)`
+    height: 70px;
+    paddingTop: 30px;
+    backgroundColor: ${(props) => props.theme.primary};
+`
+
+const Header = styled(View)`
+    flex: 1;
+    flexDirection: row;
+    alignItems: center;
+    justifyContent: center;
+    marginLeft: 15px;
+    marginRight: 15px;
+    marginBottom: 0px;
+    backgroundColor: ${(props) => props.theme.primary};
+`
 
 const HeaderTitle = styled(Text)`
     paddingLeft: 10px;
@@ -43,20 +58,7 @@ const HeaderTitle = styled(Text)`
 
 
 const styles = StyleSheet.create({
-    container: {
-        height: 70,
-        paddingTop: 30,
-        backgroundColor: colors.primary,
-    },
-    header: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 0,
-    },
+
     drawerButton: {
        // marginLeft: 10,
     },
