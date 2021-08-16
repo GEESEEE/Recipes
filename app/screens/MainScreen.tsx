@@ -24,7 +24,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function changePrimaryColor(): void {
         console.log('Changing primary color')
-        console.log(theme)
         if (theme.primary === '#4ecdc4') {
             dispatch(setColor('#fc5c65'))
         } else {
