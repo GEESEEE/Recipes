@@ -3,6 +3,7 @@ import { StyleSheet,  View, Text } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import { deleteRecipe } from '../actions/recipes'
 import colors from '../config/colors'
 import Recipe from '../data/recipe'
@@ -20,7 +21,7 @@ export default function RecipeListItemComponent({
     }
 
     return (
-        <View style={{ ...styles.container }}>
+        <Container>
             {/* Recipe Name */}
             <Text style={styles.nameText}>{recipe.name}</Text>
 
@@ -41,9 +42,20 @@ export default function RecipeListItemComponent({
 
             <MyButton text="Delete Recipe" onPress={removeRecipe} viewStyle={styles.deleteButton} />
 
-        </View>
+        </Container>
     )
 }
+
+const Container = styled(View)`
+    alignItems: center;
+    backgroundColor: ${(props) => props.theme.background};
+    flex: 1;
+    marginTop: 5px;
+    borderWidth: 3px;
+    borderColor: ${(props) => props.theme.primary};
+    borderRadius: 20px;
+    width: 80%;
+`
 
 const styles = StyleSheet.create({
     container: {
