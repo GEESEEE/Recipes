@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity, Text} from 'react-native'
 import { useDispatch } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation'
+import styled from 'styled-components'
 import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
@@ -231,7 +232,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     }
 
     return (
-        <View style={styles.background}>
+        <Container>
             {/* Username Input Field */}
             <UsernameInputField onChangeText={handleUsernameInputChange} onEndEditing={handleUsernameValidation} />
             {data.isValidUsername ? null : <Text style={styles.errorMessage}>Invalid username</Text>}
@@ -266,11 +267,18 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onPress={handleGoBackButton}
                 inverted
             />
-        </View>
+        </Container>
     )
 }
 
 export default RegisterScreen
+
+const Container = styled(View)`
+    flex: 1;
+    justifyContent: center;
+    alignItems: center;
+    backgroundColor: ${(props) => props.theme.background}
+`
 
 const styles = StyleSheet.create({
     background: {

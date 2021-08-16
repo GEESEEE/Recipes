@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
@@ -145,7 +146,7 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
     }
 
     return (
-        <View style={styles.background}>
+        <Container>
             {/* Logo */}
             <Image style={styles.logo} source={logo} />
 
@@ -172,7 +173,7 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
                 viewStyle={styles.registerButtonView}
                 textStyle={styles.registerButtonText}
             />
-        </View>
+        </Container>
     )
 }
 
@@ -181,13 +182,14 @@ export default LoginScreen
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.15
 
+const Container = styled(View)`
+    flex: 1;
+    justifyContent: center;
+    alignItems: center;
+    backgroundColor: ${(props) => props.theme.background}
+`
+
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-    },
     userinput: {
         flexDirection: 'row',
         alignItems: 'center',
