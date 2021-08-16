@@ -71,7 +71,7 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
     const dispatch = useDispatch()
 
     React.useEffect(() => {
-        // dispatch(retrieveToken(navigation))
+        dispatch(retrieveToken(navigation))
     }, [])
 
     const [data, setData] = React.useState({
