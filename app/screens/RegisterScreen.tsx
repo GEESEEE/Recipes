@@ -3,7 +3,6 @@ import { StyleSheet, View, TextInput, TouchableOpacity, Text} from 'react-native
 import { useDispatch } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation'
 import colors from '../config/colors'
-import globalStyles from '../config/globalStyles'
 import MyFeather from '../components/MyFeather'
 import MyButton from '../components/MyButton'
 import { signUp } from '../actions/auth'
@@ -17,10 +16,10 @@ const UsernameInputField = ({
     onChangeText: (text: string) => void
     onEndEditing: (e: any) => void
 }): JSX.Element => (
-    <View style={globalStyles.userinput}>
+    <View style={styles.userinput}>
         <TextInput
             placeholder="Username"
-            style={{ ...globalStyles.textinput }}
+            style={{ ...styles.textinput }}
             autoCapitalize="none"
             onChangeText={(text) => onChangeText(text)}
             onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
@@ -35,10 +34,10 @@ const EmailInputField = ({
     onChangeText: (text: string) => void
     onEndEditing: (e: any) => void
 }): JSX.Element => (
-    <View style={globalStyles.userinput}>
+    <View style={styles.userinput}>
         <TextInput
             placeholder="E-mail"
-            style={{ ...globalStyles.textinput }}
+            style={{ ...styles.textinput }}
             autoCapitalize="none"
             onChangeText={(text) => onChangeText(text)}
             onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
@@ -57,11 +56,11 @@ const PasswordInputField = ({
     onEyePress: () => void
     onEndEditing: (e: any) => void
 }): JSX.Element => (
-    <View style={{ ...globalStyles.userinput }}>
+    <View style={{ ...styles.userinput }}>
         <TextInput
             placeholder="Password"
             secureTextEntry={secureTextEntry}
-            style={globalStyles.textinput}
+            style={styles.textinput}
             autoCapitalize="none"
             onChangeText={(text) => onChangeText(text)}
             onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
@@ -279,6 +278,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white,
+    },
+    userinput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '85%',
+        marginTop: 8,
+        marginBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 5,
+        paddingTop: 5,
+        borderRadius: 20,
+        backgroundColor: colors.lightergrey,
+    },
+    textinput: {
+        flex: 1,
+        paddingLeft: 10,
+        color: colors.black,
     },
     errorMessage: {
         color: colors.red,

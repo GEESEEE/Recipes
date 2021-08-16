@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 import colors from '../config/colors'
-import globalStyles from '../config/globalStyles'
 
 export default function MyButton({
     text,
@@ -22,7 +21,7 @@ export default function MyButton({
         <TouchableOpacity onPress={onPress}>
             <View
                 style={{
-                    ...globalStyles.userinput,
+                    ...styles.butt,
                     ...vStyle,
                     ...viewStyle,
                 }}
@@ -47,6 +46,16 @@ MyButton.defaultProps = {
 }
 
 const styles = StyleSheet.create({
+    butt: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '85%',
+        marginTop: 8,
+        marginBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 20,
+    },
     button: {
         paddingTop: 8,
         paddingBottom: 8,

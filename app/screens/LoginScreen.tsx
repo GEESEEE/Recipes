@@ -10,7 +10,6 @@ import {
 } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import { useDispatch } from 'react-redux'
-import globalStyles from '../config/globalStyles'
 import colors from '../config/colors'
 import MyFeather from '../components/MyFeather'
 import MyFontAwesome from '../components/MyFontAwesome'
@@ -26,7 +25,7 @@ const EmailInputField = ({
     onChangeText: (text: string) => void
     onEndEditing: (e: any) => void
 }): JSX.Element => (
-    <View style={{ ...globalStyles.userinput }}>
+    <View style={{ ...styles.userinput }}>
         <MyFontAwesome name="user-o" />
         <TextInput
             placeholder="Your Username or Email"
@@ -49,7 +48,7 @@ const PasswordInputField = ({
     onEyePress: () => void
     onEndEditing: (e: any) => void
 }): JSX.Element => (
-    <View style={{ ...globalStyles.userinput }}>
+    <View style={{ ...styles.userinput }}>
         <MyFontAwesome name="lock" />
         <TextInput
             placeholder="Your Password"
@@ -189,6 +188,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white,
+    },
+    userinput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '85%',
+        marginTop: 8,
+        marginBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 5,
+        paddingTop: 5,
+        borderRadius: 20,
+        backgroundColor: colors.lightergrey,
     },
     textinput: {
         flex: 1,

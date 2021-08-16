@@ -8,9 +8,4 @@ export default {
     black: '#000',
     white: '#fff',
     red: '#f00',
-    background: '#fff',
-    card: '#333333',
-    text: `#000`,
-    border: '#4ecdc4',
-    notification: '#777777'
 }
