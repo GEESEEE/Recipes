@@ -14,10 +14,7 @@ import AddableListComponent from '../components/AddableListComponent'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
-import Ingredient from '../data/ingredient'
-import Instruction from '../data/instruction'
-import Recipe from '../data/recipe'
-import RecipeIngredient from '../data/recipe-ingredient'
+import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 
 const IngredientListView = (
     {
