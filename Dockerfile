@@ -13,4 +13,6 @@ RUN yarn install --frozen-lockfile
 # Bundle app source
 COPY . .
 
+RUN yarn build
+
 CMD yarn start

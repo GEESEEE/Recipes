@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import colors from '../config/colors'
-import globalStyles from '../config/globalStyles'
 import MyButton from './MyButton'
 
 export default function AddableListComponent({
