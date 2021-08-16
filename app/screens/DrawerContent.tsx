@@ -23,7 +23,7 @@ const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     )
 
 
-export function DrawerContent({navigation} : {navigation: NavigationScreenProp<string>}
+export function DrawerContent({navigation} : {navigation: any}
 ): JSX.Element {
     const user = useSelector((state: any) => state.user)
     const auth = useSelector((state: any) => state.auth)
