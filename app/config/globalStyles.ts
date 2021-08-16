@@ -13,7 +13,7 @@ const globalStyles = StyleSheet.create({
         paddingBottom: 5,
         paddingTop: 5,
         borderRadius: 20,
-        backgroundColor: colors.lightgrey,
+        backgroundColor: colors.lightergrey,
     },
     textinput: {
         flex: 1,

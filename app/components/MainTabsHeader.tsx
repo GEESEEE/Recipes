@@ -5,7 +5,7 @@ import colors from "../config/colors"
 
 
 
-export const MainTabsHeader = ({navigation} :{ navigation: any}): JSX.Element => {
+export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element => {
 
     function handleDrawerButton(): void {
         navigation.toggleDrawer()
@@ -21,7 +21,6 @@ export const MainTabsHeader = ({navigation} :{ navigation: any}): JSX.Element =>
                     </TouchableOpacity>
                 </View>
 
-
                 <Text style={styles.headerTitle}>Header </Text>
             </View>
         </View>
@@ -30,11 +29,10 @@ export const MainTabsHeader = ({navigation} :{ navigation: any}): JSX.Element =>
 }
 
 
-
-
 const styles = StyleSheet.create({
     container: {
-        height: 50,
+        height: 70,
+        paddingTop: 30,
         backgroundColor: colors.primary,
     },
     header: {
@@ -44,9 +42,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 15,
         marginRight: 15,
+        marginBottom: 0,
     },
     drawerButton: {
-        marginLeft: 10,
+       // marginLeft: 10,
     },
     headerTitle: {
         paddingLeft: 10,

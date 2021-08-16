@@ -5,11 +5,7 @@ import Feather from "react-native-vector-icons/Feather"
 import { View } from 'react-native'
 import colors from '../config/colors'
 import MainStack from './MainStack'
-import NewRecipeScreen from '../screens/NewRecipeScreen'
-import RecipesScreen from '../screens/RecipesScreen'
-import MainScreen from '../screens/MainScreen'
 import RecipesStack from './RecipesStack'
-
 
 
 const screens = {
@@ -41,9 +37,9 @@ const screens = {
 const tabConfig = {
     initialRouteName: 'Main',
     barStyle: { backgroundColor: colors.primary},
-    activeColor: colors.lightgrey,
-    inactiveColor: colors.grey,
-    shifting: false,
+    activeColor: colors.white,
+    inactiveColor: colors.lightgrey,
+    shifting: true,
 }
 
 const MainTabs = createMaterialBottomTabNavigator(screens, tabConfig)

@@ -1,13 +1,23 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {View, StyleSheet, ScrollView, Switch, Text, Settings } from 'react-native'
+import {View, StyleSheet, ScrollView, Switch, Text, Settings, TouchableOpacity } from 'react-native'
 import {  } from 'react-navigation-drawer'
 import { useDispatch, useSelector } from 'react-redux'
 import Feather from 'react-native-vector-icons/Feather'
 import colors from '../config/colors'
 import MyButton from '../components/MyButton'
 import { signOut } from '../actions/auth'
-import MyFeather from '../components/MyFeather'
+
+
+
+const Route = (iconName: string, text: string): JSX.Element => (
+        <TouchableOpacity>
+            <View style={styles.section}>
+                <Feather name={iconName} size={22} color={colors.darkgrey} />
+                <Text style={styles.paragraph}>{text}</Text>
+            </View>
+        </TouchableOpacity>
+    )
 
 
 export function DrawerContent({navigation} : {navigation: any}
@@ -34,10 +44,7 @@ export function DrawerContent({navigation} : {navigation: any}
                 </View>
 
                 <View style={styles.RoutesSection}>
-                    <View style={styles.section}>
-                        <Feather name="settings" size={22} color={colors.darkgrey} />
-                        <Text style={styles.paragraph}>Settings</Text>
-                    </View>
+                    {Route("settings", "Settings")}
                 </View>
 
 

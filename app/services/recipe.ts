@@ -113,14 +113,14 @@ export async function addInstruction(
     recipeId: number,
     body: {text: string, key: string}
 ): Promise<Instruction> {
-    return handleError('POST', `/recipes/${recipeId}/instruction`, {body,})
+    return handleError('POST', `/recipes/${recipeId}/instructions`, {body})
 }
 
 export async function addInstructions(
     recipeId: number,
     body: Array<{text: string, key: string}>
 ): Promise<Instruction[]> {
-    return handleError('POST', `/recipes/${recipeId}/instructions`, {body})
+    return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {body})
 }
 
 export async function getInstructions(

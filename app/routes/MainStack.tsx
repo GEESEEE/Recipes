@@ -1,6 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { MainTabsHeader } from '../components/MainTabsHeader'
-import colors from '../config/colors'
 import MainScreen from '../screens/MainScreen'
 
 const screens = {

@@ -14,7 +14,6 @@ import AddableListComponent from '../components/AddableListComponent'
 import MyButton from '../components/MyButton'
 import MyFeather from '../components/MyFeather'
 import colors from '../config/colors'
-import globalStyles from '../config/globalStyles'
 import Ingredient from '../data/ingredient'
 import Instruction from '../data/instruction'
 import Recipe from '../data/recipe'
@@ -91,7 +90,8 @@ const InstructionsListView = (
        instructionsData,
        handleInstructionTextChange,
        handleRemoveInstruction
-   }:{ instructionsData: Instruction[],
+   }:{
+    instructionsData: Instruction[],
     handleInstructionTextChange: any,
     handleRemoveInstruction: any}
 ): JSX.Element => (
@@ -262,20 +262,19 @@ function NewRecipeScreen(): JSX.Element {
 
     return (
         <View style={styles.background}>
-            {/* Recipe Name Input Field */}
+
             <View style={{...styles.header}}>
+                {/* Recipe Name Input Field */}
                 <TextInput
-                    style={{ ...styles.headerTextInput }}
+                    style={{ ...styles.recipeNameTextInput }}
                     value={recipeData.name}
                     placeholder="New Recipe"
                     placeholderTextColor={colors.grey}
                     onChangeText={(text: string) => handleNameChange(text)}
                     multiline
                 />
-            </View>
 
-            {/* Recipe Description Input Field */}
-            <View style={{...globalStyles.userinput, ...styles.description}}>
+                {/* Recipe Description Input Field */}
                 <TextInput
                     style={{ ...styles.descriptionTextInput }}
                     placeholder="Description"
@@ -287,6 +286,11 @@ function NewRecipeScreen(): JSX.Element {
                 />
             </View>
 
+
+            {/* <View style={{...globalStyles.userinput, ...styles.description}}>
+
+            </View> */}
+
             {/* Ingredients List Container */}
             <AddableListComponent
                 buttonText = "Add Ingredient"
@@ -294,7 +298,7 @@ function NewRecipeScreen(): JSX.Element {
                 headerText = "Ingredients"
             >
                 {[<IngredientListView
-                    key = {uuid()}
+                    key = {0}
                     ingredientsData={ingredientsData}
                     handleIngredientNameChange={handleIngredientNameChange}
                     handleIngredientAmountChange={handleIngredientAmountChange}
@@ -310,7 +314,7 @@ function NewRecipeScreen(): JSX.Element {
                 headerText = "Instructions"
             >
                 {[<InstructionsListView
-                    key = {uuid()}
+                    key = {0}
                     instructionsData={instructionsData}
                     handleInstructionTextChange={handleInstructionTextChange}
                     handleRemoveInstruction={handleRemoveInstruction}
@@ -340,7 +344,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     header: {
-        bottom: height * 0.05,
+        bottom: height * 0.03,
         width: '85%',
         backgroundColor: colors.white,
         borderColor: colors.primary,
@@ -350,20 +354,20 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
 
     },
-    headerTextInput: {
-        fontSize: height * 0.04,
+    recipeNameTextInput: {
+        marginTop: 10,
+        paddingBottom: 10,
+        fontSize: 25,
         color: colors.black,
         textAlign: 'center',
-    },
-    description: {
-        backgroundColor: colors.white,
-        borderColor: colors.primary,
-        borderWidth: 3,
-        borderRadius: 15,
+        borderBottomColor: colors.primary,
+        borderBottomWidth: 1,
     },
     descriptionTextInput: {
-        flex: 1,
-        paddingLeft: 10,
+        marginTop: 8,
+        marginLeft: 8,
+        marginRight: 8,
+        marginBottom: 5,
         color: colors.black,
     },
     ingredientsList: {

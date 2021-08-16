@@ -17,7 +17,7 @@ export default function AddableListComponent({
 }): JSX.Element {
 
     return (
-        <View style={{...globalStyles.userinput, ...styles.container}}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>{headerText}</Text>
             </View>
@@ -35,6 +35,10 @@ export default function AddableListComponent({
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 8,
+        marginBottom: 8,
+        paddingTop: 5,
+        borderRadius: 12,
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: colors.white,
@@ -43,17 +47,23 @@ const styles = StyleSheet.create({
         borderColor: colors.primary
     },
     button: {
-        paddingBottom: 0
+
+        width: '50%',
+        marginTop: 10,
+        marginBottom: 0,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
         backgroundColor: colors.white,
+        borderBottomColor: colors.primary,
+        borderBottomWidth: 1,
+        paddingBottom: 5,
     },
     headerText: {
         flex: 1,
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
         color: colors.black,
     },

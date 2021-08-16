@@ -38,7 +38,8 @@ export default function RecipeListItemComponent({
                 <Feather style={styles.peopleCountIcon} name="user" size={20} />
                 <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
-            <MyButton text="Delete Recipe" onPress={removeRecipe} />
+
+            <MyButton text="Delete Recipe" onPress={removeRecipe} viewStyle={styles.deleteButton} />
 
         </View>
     )
@@ -46,13 +47,14 @@ export default function RecipeListItemComponent({
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: colors.white,
         flex: 1,
         marginTop: 5,
         borderWidth: 3,
         borderColor: colors.primary,
         borderRadius: 20,
+        width: '80%'
     },
     nameText: {
         left: 5,
@@ -73,5 +75,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     deleteButton: {
+        width: '50%'
     }
 })
