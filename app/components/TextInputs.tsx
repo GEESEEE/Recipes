@@ -50,7 +50,7 @@ export const InputFieldRounded = ({
 
 const Container = styled(View)`
     flex-direction: column;
-    alignitems: center;
+    align-items: center;
 `
 
 const InputFieldRoundedStyle = styled(View)`
