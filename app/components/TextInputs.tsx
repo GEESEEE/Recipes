@@ -4,17 +4,18 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 export const InputFieldRounded = ({
-    secureTextEntry,
     onChangeText,
     onEndEditing,
     placeholder,
+    secureTextEntry,
     leftIcon,
     rightIcon,
 }: {
-    secureTextEntry?: boolean
+
     onChangeText: (text: string) => void
     onEndEditing: (e: any) => void
     placeholder: string
+    secureTextEntry?: boolean
     leftIcon?: JSX.Element
     rightIcon?: JSX.Element
 }): JSX.Element => {

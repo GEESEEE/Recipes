@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity, Text} from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
 import { useDispatch } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
@@ -7,76 +7,8 @@ import colors from '../config/colors'
 import { signUp } from '../actions/auth'
 import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
+import { InputFieldRounded } from '../components/TextInputs'
 
-// #region Components
-
-const UsernameInputField = ({
-    onChangeText,
-    onEndEditing
-}: {
-    onChangeText: (text: string) => void
-    onEndEditing: (e: any) => void
-}): JSX.Element => (
-    <View style={styles.userinput}>
-        <TextInput
-            placeholder="Username"
-            style={{ ...styles.textinput }}
-            autoCapitalize="none"
-            onChangeText={(text) => onChangeText(text)}
-            onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
-        />
-    </View>
-)
-
-const EmailInputField = ({
-    onChangeText,
-    onEndEditing
-}: {
-    onChangeText: (text: string) => void
-    onEndEditing: (e: any) => void
-}): JSX.Element => (
-    <View style={styles.userinput}>
-        <TextInput
-            placeholder="E-mail"
-            style={{ ...styles.textinput }}
-            autoCapitalize="none"
-            onChangeText={(text) => onChangeText(text)}
-            onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
-        />
-    </View>
-)
-
-const PasswordInputField = ({
-    secureTextEntry,
-    onChangeText,
-    onEyePress,
-    onEndEditing
-}: {
-    secureTextEntry: boolean
-    onChangeText: (text: string) => void
-    onEyePress: () => void
-    onEndEditing: (e: any) => void
-}): JSX.Element => (
-    <View style={{ ...styles.userinput }}>
-        <TextInput
-            placeholder="Password"
-            secureTextEntry={secureTextEntry}
-            style={styles.textinput}
-            autoCapitalize="none"
-            onChangeText={(text) => onChangeText(text)}
-            onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
-        />
-        <TouchableOpacity onPress={onEyePress}>
-            {secureTextEntry ? (
-                <MyFeather name="eye-off" color={colors.grey} />
-            ) : (
-                <MyFeather name="eye" color={colors.grey} />
-            )}
-        </TouchableOpacity>
-    </View>
-)
-
-// #endregion
 
 function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
     const dispatch = useDispatch()
@@ -86,8 +18,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
         email: '',
         password1: '',
         password2: '',
-        securePassword1Text: true,
-        securePassword2Text: true,
+        securePasswordText: true,
         isValidUsername: true,
         isValidPassword1: true,
         isValidPassword2: true,
@@ -151,30 +82,21 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
         })
     }
 
-    function handlePassword1Validation(text: string): void {
+    function handlePasswordValidation(password1: boolean, text: string): void {
+        let valid = false
         if (text.length >= 5 && text.length <= 50) {
-            setData({
-                ...data,
-                isValidPassword1: true
-            })
-        } else {
-            setData({
-                ...data,
-                isValidPassword1: false
-            })
+            valid = true
         }
-    }
 
-    function handlePassword2Validation(text: string): void {
-        if (text.length >= 5 && text.length <= 50) {
+        if (password1) {
             setData({
                 ...data,
-                isValidPassword2: true
+                isValidPassword1: valid
             })
         } else {
             setData({
                 ...data,
-                isValidPassword2: false
+                isValidPassword2: valid
             })
         }
     }
@@ -182,14 +104,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     function handleSecurePassword1Change(): void {
         setData({
             ...data,
-            securePassword1Text: !data.securePassword1Text,
-        })
-    }
-
-    function handleSecurePassword2Change(): void {
-        setData({
-            ...data,
-            securePassword2Text: !data.securePassword2Text,
+            securePasswordText: !data.securePasswordText,
         })
     }
 
@@ -234,27 +149,44 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     return (
         <Container>
             {/* Username Input Field */}
-            <UsernameInputField onChangeText={handleUsernameInputChange} onEndEditing={handleUsernameValidation} />
+            <InputFieldRounded
+                onChangeText={handleUsernameInputChange}
+                onEndEditing={handleUsernameValidation}
+                placeholder="Username"
+            />
             {data.isValidUsername ? null : <Text style={styles.errorMessage}>Invalid username</Text>}
 
             {/* Email Input Field */}
-            <EmailInputField onChangeText={handleEmailInputChange} onEndEditing={handleEmailValidation} />
+            <InputFieldRounded
+                onChangeText={handleEmailInputChange}
+                onEndEditing={handleEmailValidation}
+                placeholder="E-mail"
+            />
             {data.isValidEmail ? null : <Text style={styles.errorMessage}>Invalid E-mail</Text>}
 
             {/* Password 1 Input Field */}
-            <PasswordInputField
-                secureTextEntry={data.securePassword1Text}
+            <InputFieldRounded
+                secureTextEntry={data.securePasswordText}
                 onChangeText={handlePassword1InputChange}
-                onEyePress={handleSecurePassword1Change}
-                onEndEditing={handlePassword1Validation}
+                onEndEditing={(text) => handlePasswordValidation(true, text)}
+                placeholder="Password"
+                rightIcon={
+                    <TouchableOpacity onPress={handleSecurePassword1Change}>
+                        {data.securePasswordText ? (
+                            <MyFeather name="eye-off" color={colors.grey} />
+                        ) : (
+                            <MyFeather name="eye" color={colors.grey} />
+                        )}
+                    </TouchableOpacity>
+                }
             />
 
             {/* Password 2 Input Field */}
-            <PasswordInputField
-                secureTextEntry={data.securePassword2Text}
+            <InputFieldRounded
+                secureTextEntry
                 onChangeText={handlePassword2InputChange}
-                onEyePress={handleSecurePassword2Change}
-                onEndEditing={handlePassword2Validation}
+                onEndEditing={(text) => handlePasswordValidation(false, text)}
+                placeholder="Password"
             />
             {invalidPassWord()}
 
@@ -280,24 +212,6 @@ const Container = styled(View)`
 `
 
 const styles = StyleSheet.create({
-    userinput: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '85%',
-        marginTop: 8,
-        marginBottom: 8,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 5,
-        paddingTop: 5,
-        borderRadius: 20,
-        backgroundColor: colors.lightergrey,
-    },
-    textinput: {
-        flex: 1,
-        paddingLeft: 10,
-        color: colors.black,
-    },
     errorMessage: {
         color: colors.red,
         fontSize: 10,
