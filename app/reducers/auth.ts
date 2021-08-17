@@ -61,7 +61,7 @@ const auth = (
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
-            return {token, loading: false, error: '' }
+            return { token, loading: false, error: '' }
         }
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {

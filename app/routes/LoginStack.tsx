@@ -12,8 +12,8 @@ const screens = {
         screen: RegisterScreen,
     },
     Main: {
-        screen: Drawer
-    }
+        screen: Drawer,
+    },
 }
 
 const stackConfig: any = {

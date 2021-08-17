@@ -11,7 +11,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
-
     useEffect(() => {
         dispatch(retrieveRecipes())
     }, [])
@@ -30,7 +29,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-
     // Makes the back button do absolutely nothing
     // useEffect(() => {
     //     BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -41,9 +39,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     //     return true;
     // }
 
-
-
-
     function handleDrawer(): void {
         navigation.openDrawer()
     }
@@ -53,7 +48,10 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
             <Text>main screen</Text>
             <ButtonFilled text="Log recipes" onPress={logRecipes} />
             <ButtonFilled text="Drawer" onPress={handleDrawer} />
-            <ButtonFilled text="Change Primary Color" onPress={changePrimaryColor} />
+            <ButtonFilled
+                text="Change Primary Color"
+                onPress={changePrimaryColor}
+            />
         </Container>
     )
 }
@@ -64,5 +62,5 @@ const Container = styled(View)`
     flex: 1px;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => props.theme.background}
+    background-color: ${(props) => props.theme.background};
 `

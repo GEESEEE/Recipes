@@ -84,13 +84,11 @@ export async function addIngredient(
 
 export async function addIngredients(
     recipeId: number,
-    body: Array<{ amount: number, name: string, unit?: string, key: string}>
+    body: Array<{ amount: number; name: string; unit?: string; key: string }>
 ): Promise<RecipeIngredient[]> {
-    return handleError(
-        'POST',
-        `/recipes/${recipeId}/ingredients/bulk`,
-        { body}
-    )
+    return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
+        body,
+    })
 }
 
 export async function removeIngredient(
@@ -111,16 +109,18 @@ export async function getRecipeIngredients(
 
 export async function addInstruction(
     recipeId: number,
-    body: {text: string, key: string}
+    body: { text: string; key: string }
 ): Promise<Instruction> {
-    return handleError('POST', `/recipes/${recipeId}/instructions`, {body})
+    return handleError('POST', `/recipes/${recipeId}/instructions`, { body })
 }
 
 export async function addInstructions(
     recipeId: number,
-    body: Array<{text: string, key: string}>
+    body: Array<{ text: string; key: string }>
 ): Promise<Instruction[]> {
-    return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {body})
+    return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {
+        body,
+    })
 }
 
 export async function getInstructions(

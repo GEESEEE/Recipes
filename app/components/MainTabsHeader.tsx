@@ -1,10 +1,14 @@
-import React from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import React from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import styled from 'styled-components'
-import Feather from "react-native-vector-icons/Feather"
-import { useAppSelector } from "../types/ReduxHooks"
+import Feather from 'react-native-vector-icons/Feather'
+import { useAppSelector } from '../types/ReduxHooks'
 
-export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element => {
+export const MainTabsHeader = ({
+    navigation,
+}: {
+    navigation: any
+}): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     function handleDrawerButton(): void {
@@ -14,15 +18,13 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
     return (
         <Container>
             <Header>
-
                 <TouchableOpacity onPress={handleDrawerButton}>
-                    <Feather name="menu" size={30} color={theme.background}/>
+                    <Feather name="menu" size={30} color={theme.background} />
                 </TouchableOpacity>
 
                 <HeaderTitle>Header </HeaderTitle>
             </Header>
         </Container>
-
     )
 }
 

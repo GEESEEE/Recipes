@@ -18,63 +18,66 @@ const REGISTER_ACTIONS = {
     USERNAME_VALIDATION: 'usernameValidation',
     PASSWORD1_VALIDATION: 'password1Validation',
     PASSWORD2_VALIDATION: 'password2Validation',
-    EMAIL_VALIDATION: 'emailValidation'
+    EMAIL_VALIDATION: 'emailValidation',
 }
 
 function reducer(state: any, action: any): any {
     switch (action.type) {
         case REGISTER_ACTIONS.USERNAME_CHANGE: {
             const username = action.payload
-            return {...state, username}
+            return { ...state, username }
         }
 
         case REGISTER_ACTIONS.EMAIL_CHANGE: {
             const email = action.payload
-            return {...state, email}
+            return { ...state, email }
         }
 
         case REGISTER_ACTIONS.PASSWORD1_CHANGE: {
             const password1 = action.payload
-            return {...state, password1}
+            return { ...state, password1 }
         }
 
         case REGISTER_ACTIONS.PASSWORD2_CHANGE: {
             const password2 = action.payload
-            return {...state, password2}
+            return { ...state, password2 }
         }
 
         case REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE: {
             const securePasswordText = action.payload
-            return {...state, securePasswordText}
+            return { ...state, securePasswordText }
         }
 
         case REGISTER_ACTIONS.USERNAME_VALIDATION: {
             const isValidUsername = action.payload
-            return {...state, isValidUsername}
+            return { ...state, isValidUsername }
         }
 
         case REGISTER_ACTIONS.PASSWORD1_VALIDATION: {
             const isValidPassword1 = action.payload
-            return {...state, isValidPassword1}
+            return { ...state, isValidPassword1 }
         }
 
         case REGISTER_ACTIONS.PASSWORD2_VALIDATION: {
             const isValidPassword2 = action.payload
-            return {...state, isValidPassword2}
+            return { ...state, isValidPassword2 }
         }
 
         case REGISTER_ACTIONS.EMAIL_VALIDATION: {
             const isValidEmail = action.payload
-            return {...state, isValidEmail}
+            return { ...state, isValidEmail }
         }
 
         default:
             return state
     }
-
 }
 
-function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
+function RegisterScreen({
+    navigation,
+}: {
+    navigation: NavigationScreenProp<string>
+}): JSX.Element {
     const dispatch = useAppDispatch()
 
     const initialState = {
@@ -92,41 +95,62 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     const [data, localDispatch] = useReducer(reducer, initialState)
 
     function handleUsernameInputChange(text: string): void {
-        localDispatch({type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: text})
+        localDispatch({ type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: text })
     }
 
     function handleUsernameValidation(text: string): void {
-        localDispatch({type: REGISTER_ACTIONS.USERNAME_VALIDATION, payload: (text.length >= 4 && text.length <= 30)})
+        localDispatch({
+            type: REGISTER_ACTIONS.USERNAME_VALIDATION,
+            payload: text.length >= 4 && text.length <= 30,
+        })
     }
 
     function handleEmailInputChange(text: string): void {
-        localDispatch({type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: text})
+        localDispatch({ type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: text })
     }
 
     function handleEmailValidation(text: string): void {
         const regex = /^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/i
-        localDispatch({type: REGISTER_ACTIONS.EMAIL_VALIDATION, payload: regex.test(text)})
+        localDispatch({
+            type: REGISTER_ACTIONS.EMAIL_VALIDATION,
+            payload: regex.test(text),
+        })
     }
 
     function handlePassword1InputChange(text: string): void {
-        localDispatch({type: REGISTER_ACTIONS.PASSWORD1_CHANGE, payload: text})
+        localDispatch({
+            type: REGISTER_ACTIONS.PASSWORD1_CHANGE,
+            payload: text,
+        })
     }
 
     function handlePassword2InputChange(text: string): void {
-        localDispatch({type: REGISTER_ACTIONS.PASSWORD2_CHANGE, payload: text})
+        localDispatch({
+            type: REGISTER_ACTIONS.PASSWORD2_CHANGE,
+            payload: text,
+        })
     }
 
     function handlePasswordValidation(password1: boolean, text: string): void {
-        const valid = (text.length >= 5 && text.length <= 50)
+        const valid = text.length >= 5 && text.length <= 50
         if (password1) {
-            localDispatch({type: REGISTER_ACTIONS.PASSWORD1_VALIDATION, payload: valid})
+            localDispatch({
+                type: REGISTER_ACTIONS.PASSWORD1_VALIDATION,
+                payload: valid,
+            })
         } else {
-            localDispatch({type: REGISTER_ACTIONS.PASSWORD2_VALIDATION, payload: valid})
+            localDispatch({
+                type: REGISTER_ACTIONS.PASSWORD2_VALIDATION,
+                payload: valid,
+            })
         }
     }
 
     function handleSecurePassword1Change(): void {
-        localDispatch({type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE, payload: !data.securePasswordText})
+        localDispatch({
+            type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE,
+            payload: !data.securePasswordText,
+        })
     }
 
     function samePasswords(): boolean {
@@ -134,7 +158,8 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     }
 
     async function handleRegisterButton(): Promise<void> {
-        if (data.isValidUsername &&
+        if (
+            data.isValidUsername &&
             data.isValidPassword1 &&
             data.isValidPassword2 &&
             data.isValidUsername &&
@@ -147,7 +172,6 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
             }
             dispatch(signUp(userData, navigation))
         }
-
     }
 
     function handleGoBackButton(): void {
@@ -161,7 +185,9 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onChangeText={handleUsernameInputChange}
                 onEndEditing={handleUsernameValidation}
                 placeholder="Username"
-                errorMessage={!data.isValidUsername ? 'Invalid Username' : undefined}
+                errorMessage={
+                    !data.isValidUsername ? 'Invalid Username' : undefined
+                }
             />
             {}
 
@@ -188,7 +214,9 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                         )}
                     </TouchableOpacity>
                 }
-                errorMessage={!data.isValidPassword1 ? 'Invalid Password' : undefined}
+                errorMessage={
+                    !data.isValidPassword1 ? 'Invalid Password' : undefined
+                }
             />
 
             {/* Password 2 Input Field */}
@@ -197,8 +225,13 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onChangeText={handlePassword2InputChange}
                 onEndEditing={(text) => handlePasswordValidation(false, text)}
                 placeholder="Password"
-                errorMessage={!data.isValidPassword2 ? 'Invalid Password' :
-                !samePasswords() ? 'Passwords are not the same' : undefined}
+                errorMessage={
+                    !data.isValidPassword2
+                        ? 'Invalid Password'
+                        : !samePasswords()
+                        ? 'Passwords are not the same'
+                        : undefined
+                }
             />
 
             {/* Register Button */}
@@ -219,5 +252,5 @@ const Container = styled(View)`
     flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => props.theme.background}
+    background-color: ${(props) => props.theme.background};
 `

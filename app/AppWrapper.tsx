@@ -1,9 +1,8 @@
 import React from 'react'
-import  { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import LoginNavigator from './routes/LoginStack'
 import { useAppDispatch, useAppSelector } from './types/ReduxHooks'
-
 
 function AppWrapper(): JSX.Element {
     const dispatch = useAppDispatch()
@@ -23,4 +22,3 @@ function AppWrapper(): JSX.Element {
 }
 
 export default AppWrapper
-

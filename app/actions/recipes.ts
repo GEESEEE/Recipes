@@ -5,7 +5,6 @@ import { RECIPEACTIONS } from '../reducers/recipes'
 import * as recipeService from '../services/recipe'
 import Ingredient from '../data/ingredient'
 
-
 export const createRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
@@ -18,18 +17,29 @@ export const createRecipe =
                 const newRecipe = await recipeService.createRecipe(recipe)
 
                 // If ingredients were set, put those in database too and set in newRecipe
-                if (typeof recipe.recipeIngredients !== 'undefined' && recipe.recipeIngredients.length > 0) {
-                    const ingredientObjects: {name: string, amount: number, key: string, unit?: string}[] = []
+                if (
+                    typeof recipe.recipeIngredients !== 'undefined' &&
+                    recipe.recipeIngredients.length > 0
+                ) {
+                    const ingredientObjects: {
+                        name: string
+                        amount: number
+                        key: string
+                        unit?: string
+                    }[] = []
                     recipe.recipeIngredients.forEach((ri) => {
-                        const i = (ri.ingredient as Ingredient)
+                        const i = ri.ingredient as Ingredient
                         ingredientObjects.push({
                             name: i.name,
                             amount: ri.amount,
                             key: i.key,
-                            unit: (i.unit) as string | undefined,
+                            unit: i.unit as string | undefined,
                         })
                     })
-                    const ingredients = await recipeService.addIngredients(newRecipe.id, ingredientObjects)
+                    const ingredients = await recipeService.addIngredients(
+                        newRecipe.id,
+                        ingredientObjects
+                    )
                     newRecipe.recipeIngredients = ingredients
                     // else set ingredients to empty array
                 } else {
@@ -37,10 +47,16 @@ export const createRecipe =
                 }
 
                 // If instructions were set, put those in database too and set in newRecipe
-                if (typeof recipe.instructions !== 'undefined' && recipe.instructions.length > 0) {
-                    const instructions = await recipeService.addInstructions(newRecipe.id, recipe.instructions)
+                if (
+                    typeof recipe.instructions !== 'undefined' &&
+                    recipe.instructions.length > 0
+                ) {
+                    const instructions = await recipeService.addInstructions(
+                        newRecipe.id,
+                        recipe.instructions
+                    )
                     newRecipe.instructions = instructions
-                   // else set instructions to empty array
+                    // else set instructions to empty array
                 } else {
                     recipe.instructions = []
                 }
@@ -106,8 +122,7 @@ export const deleteRecipe =
                 localRecipes.splice(index, 1)
             }
             await recipeService.deleteRecipe(recipe.id)
-            dispatch({ type: RECIPEACTIONS.DELETE_RECIPE, payload: { recipe }})
-
+            dispatch({ type: RECIPEACTIONS.DELETE_RECIPE, payload: { recipe } })
         } catch (err) {
             console.log(err.message)
             console.error(err)

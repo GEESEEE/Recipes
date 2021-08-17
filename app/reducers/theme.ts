@@ -7,12 +7,12 @@ export const THEME_ACTIONS = {
 
 export type Theme = {
     mode: string
-    primary: string,
-    secondary: string,
-    background: string,
-    backgroundVariant: string,
-    text: string,
-    grey: string,
+    primary: string
+    secondary: string
+    background: string
+    backgroundVariant: string
+    text: string
+    grey: string
     error: string
 }
 
@@ -24,7 +24,7 @@ const lightTheme = (): Theme => ({
     backgroundVariant: colors.lightergrey,
     text: colors.darkergrey,
     grey: colors.grey,
-    error: colors.red
+    error: colors.red,
 })
 
 const darkTheme = (): Theme => ({
@@ -35,12 +35,14 @@ const darkTheme = (): Theme => ({
     backgroundVariant: colors.darkergrey,
     text: colors.lightergrey,
     grey: colors.grey,
-    error: colors.red
+    error: colors.red,
 })
 
-const theme = (state = darkTheme(), action: {type: string, payload: string}): Theme => {
+const theme = (
+    state = darkTheme(),
+    action: { type: string; payload: string }
+): Theme => {
     switch (action.type) {
-
         case THEME_ACTIONS.SET_THEME: {
             const newTheme = action.payload
             return newTheme === 'dark' ? darkTheme() : lightTheme()
@@ -49,7 +51,7 @@ const theme = (state = darkTheme(), action: {type: string, payload: string}): Th
         case THEME_ACTIONS.SET_COLOR: {
             const color = action.payload
             colors.primary = color
-            return { ...state, primary: color}
+            return { ...state, primary: color }
         }
 
         default:

@@ -8,11 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
 import { ButtonFilled } from '../Buttons'
 import { MyFeather } from '../Icons'
 
-const RecipeListItem = ({
-    recipe,
-}: {
-    recipe: Recipe
-}): JSX.Element => {
+const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     const dispatch = useAppDispatch()
     const theme = useAppSelector((state) => state.theme)
 
@@ -40,11 +36,7 @@ const RecipeListItem = ({
                 <Property>{recipe.peopleCount}</Property>
             </PropertiesContainer>
 
-            <ButtonFilled
-                text="Delete Recipe"
-                onPress={removeRecipe}
-            />
-
+            <ButtonFilled text="Delete Recipe" onPress={removeRecipe} />
         </Container>
     )
 }

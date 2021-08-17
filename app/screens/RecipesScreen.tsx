@@ -1,14 +1,18 @@
 import React from 'react'
-import {  FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import { ButtonFilled } from '../components/Buttons'
-import {RecipeListItem} from '../components/ListItems'
+import { RecipeListItem } from '../components/ListItems'
 import { Recipe } from '../data'
 import { useAppSelector } from '../types/ReduxHooks'
 
-function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>}): JSX.Element {
+function RecipesScreen({
+    navigation,
+}: {
+    navigation: NavigationScreenProp<string>
+}): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
 
     function handleCreateRecipe(): void {
@@ -17,7 +21,10 @@ function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>
 
     return (
         <Container>
-            <ButtonFilled text="Create New Recipe" onPress={handleCreateRecipe}/>
+            <ButtonFilled
+                text="Create New Recipe"
+                onPress={handleCreateRecipe}
+            />
             <RecipesList
                 data={recipes}
                 renderItem={({ item }) => (
@@ -25,7 +32,6 @@ function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>
                 )}
             />
         </Container>
-
     )
 }
 
@@ -35,7 +41,7 @@ const Container = styled(SafeAreaView)`
     flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => props.theme.background}
+    background-color: ${(props) => props.theme.background};
 `
 
 const RecipesList = styled(FlatList)`

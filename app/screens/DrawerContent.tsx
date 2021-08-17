@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
@@ -23,20 +23,26 @@ const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
-    <DarkThemeView>
-        <Paragraph>{text}</Paragraph>
-        <Switch
-            value={switchValue}
-            onValueChange={(value: boolean) => dispatch(setTheme(value))}
-            trackColor={{true: theme.backgroundVariant, false: theme.backgroundVariant}}
-            thumbColor={theme.primary}
-        />
-    </DarkThemeView>
-)}
+        <DarkThemeView>
+            <Paragraph>{text}</Paragraph>
+            <Switch
+                value={switchValue}
+                onValueChange={(value: boolean) => dispatch(setTheme(value))}
+                trackColor={{
+                    true: theme.backgroundVariant,
+                    false: theme.backgroundVariant,
+                }}
+                thumbColor={theme.primary}
+            />
+        </DarkThemeView>
+    )
+}
 
-
-export function DrawerContent({navigation} : {navigation: any}
-): JSX.Element {
+export function DrawerContent({
+    navigation,
+}: {
+    navigation: any
+}): JSX.Element {
     const user = useAppSelector((state) => state.user)
     const auth = useAppSelector((state) => state.auth)
     const theme = useAppSelector((state) => state.theme)
@@ -46,29 +52,25 @@ export function DrawerContent({navigation} : {navigation: any}
         dispatch(signOut(auth.token, navigation))
     }
 
-    return  (
+    return (
         <Container>
             <ScrollView>
-
                 <Header>
                     <Title>{user.name}</Title>
                     <Caption>{user.email}</Caption>
                 </Header>
 
                 <RoutesSection>
-                    {Route("settings", "Settings", theme)}
+                    {Route('settings', 'Settings', theme)}
                 </RoutesSection>
-
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
-                    {PreferenceSwitch("Dark Theme", theme.mode === 'dark')}
+                    {PreferenceSwitch('Dark Theme', theme.mode === 'dark')}
                 </PreferenceView>
-
-
             </ScrollView>
             <Footer>
-                <ButtonFilled text="Sign Out" onPress={handleSignOut}/>
+                <ButtonFilled text="Sign Out" onPress={handleSignOut} />
             </Footer>
         </Container>
     )
@@ -118,7 +120,6 @@ const Section = styled(View)`
     padding-right: 12px;
     padding-left: 12px;
     justify-content: space-between;
-
 `
 
 const PreferenceView = styled(View)`
@@ -151,4 +152,3 @@ const Footer = styled(View)`
     border-top-width: 1px;
     align-items: center;
 `
-

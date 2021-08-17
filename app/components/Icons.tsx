@@ -13,9 +13,7 @@ export function MyFeather({
     color?: string
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
-    return (
-        <Feather name={name} color={color || theme.grey} size={size || 20} />
-    )
+    return <Feather name={name} color={color || theme.grey} size={size || 20} />
 }
 
 export function MyFontAwesome({
@@ -29,6 +27,11 @@ export function MyFontAwesome({
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
-    return <FontAwesome name={name} color={color || theme.grey} size={size || 20} />
+    return (
+        <FontAwesome
+            name={name}
+            color={color || theme.grey}
+            size={size || 20}
+        />
+    )
 }
-

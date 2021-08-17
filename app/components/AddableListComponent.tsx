@@ -8,13 +8,12 @@ export default function AddableListComponent({
     headerText,
     buttonText,
     onButtonClick,
-}:{
-    children: JSX.Element[],
+}: {
+    children: JSX.Element[]
     headerText: string
-    buttonText: string,
+    buttonText: string
     onButtonClick: () => void
 }): JSX.Element {
-
     return (
         <Container>
             <Header>
@@ -23,10 +22,7 @@ export default function AddableListComponent({
 
             {children}
 
-            <ButtonBorderless
-                text={buttonText}
-                onPress={onButtonClick}
-            />
+            <ButtonBorderless text={buttonText} onPress={onButtonClick} />
         </Container>
     )
 }

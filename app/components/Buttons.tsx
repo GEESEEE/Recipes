@@ -21,7 +21,7 @@ const ButtonTextGeneric = styled(Text)`
 `
 
 const ButtonFilledStyle = styled(ButtonStyleGeneric)`
-    background-color: ${(props) => props.theme.primary}
+    background-color: ${(props) => props.theme.primary};
 `
 
 const ButtonFilledText = styled(ButtonTextGeneric)`
@@ -31,13 +31,17 @@ const ButtonFilledText = styled(ButtonTextGeneric)`
     color: ${(props) => props.theme.background};
 `
 
-export function ButtonFilled({text, onPress}:{text: string, onPress: () => void}): JSX.Element {
+export function ButtonFilled({
+    text,
+    onPress,
+}: {
+    text: string
+    onPress: () => void
+}): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress}>
             <ButtonFilledStyle>
-                <ButtonFilledText>
-                    {text}
-                </ButtonFilledText>
+                <ButtonFilledText>{text}</ButtonFilledText>
             </ButtonFilledStyle>
         </TouchableOpacity>
     )
@@ -56,13 +60,17 @@ const ButtonInvertedText = styled(ButtonTextGeneric)`
     color: ${(props) => props.theme.primary};
 `
 
-export function ButtonInverted({text, onPress}:{text: string, onPress: () => void}): JSX.Element {
+export function ButtonInverted({
+    text,
+    onPress,
+}: {
+    text: string
+    onPress: () => void
+}): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress}>
             <ButtonInvertedStyle>
-                <ButtonInvertedText>
-                    {text}
-                </ButtonInvertedText>
+                <ButtonInvertedText>{text}</ButtonInvertedText>
             </ButtonInvertedStyle>
         </TouchableOpacity>
     )
@@ -70,7 +78,7 @@ export function ButtonInverted({text, onPress}:{text: string, onPress: () => voi
 
 const ButtonBorderlessStyle = styled(ButtonStyleGeneric)`
     width: 50%;
-    background-color: ${(props) => props.theme.background}
+    background-color: ${(props) => props.theme.background};
 `
 
 const ButtonBorderlessText = styled(ButtonTextGeneric)`
@@ -79,13 +87,17 @@ const ButtonBorderlessText = styled(ButtonTextGeneric)`
     font-size: 12px;
     color: ${(props) => props.theme.primary};
 `
-export function ButtonBorderless({text, onPress}:{text: string, onPress: () => void}): JSX.Element {
+export function ButtonBorderless({
+    text,
+    onPress,
+}: {
+    text: string
+    onPress: () => void
+}): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress}>
             <ButtonBorderlessStyle>
-                <ButtonBorderlessText>
-                    {text}
-                </ButtonBorderlessText>
+                <ButtonBorderlessText>{text}</ButtonBorderlessText>
             </ButtonBorderlessStyle>
         </TouchableOpacity>
     )

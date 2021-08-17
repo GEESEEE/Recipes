@@ -8,5 +8,5 @@ export default combineReducers({
     auth,
     recipes,
     user,
-    theme
+    theme,
 })

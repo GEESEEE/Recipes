@@ -58,7 +58,11 @@ export const signUp =
     }
 
 export const signIn =
-    (username: string, password: string, navigation: NavigationScreenProp<string>): any =>
+    (
+        username: string,
+        password: string,
+        navigation: NavigationScreenProp<string>
+    ): any =>
     async (dispatch: Dispatch) => {
         try {
             const token = await authService.signIn({ username, password })

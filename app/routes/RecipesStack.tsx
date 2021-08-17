@@ -3,27 +3,23 @@ import RecipesScreen from '../screens/RecipesScreen'
 import NewRecipeScreen from '../screens/NewRecipeScreen'
 import { MainTabsHeader } from '../components/MainTabsHeader'
 
-
 const screens = {
     RecipesScreen: {
         screen: RecipesScreen,
         navigationOptions: () => ({
             header: MainTabsHeader,
-            headerMode: 'screen'
-        })
-
+            headerMode: 'screen',
+        }),
     },
     CreateRecipe: {
         screen: NewRecipeScreen,
         navigationOptions: () => ({
-            header: () => null
-        })
-    }
+            header: () => null,
+        }),
+    },
 }
 
-const stackConfig = {
-
-}
+const stackConfig = {}
 
 const RecipesStack = createStackNavigator(screens, stackConfig)
 

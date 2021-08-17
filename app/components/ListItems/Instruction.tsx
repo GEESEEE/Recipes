@@ -10,11 +10,9 @@ const InstructionListItem = ({
     instructionsData,
     item,
     onChangeText,
-    onRemove
-}
-    :
-{
-    onChangeText: (key: string, text: string) => void,
+    onRemove,
+}: {
+    onChangeText: (key: string, text: string) => void
     onRemove: (key: string) => void
     instructionsData: Instruction[]
     item: Instruction
@@ -22,34 +20,24 @@ const InstructionListItem = ({
     const theme = useAppSelector((state) => state.theme)
 
     return (
-        <Container key={item.key} >
-                    {/* Instruction Number */}
-                    <Number>
-                        {(
-                            instructionsData.indexOf(item) + 1
-                        ).toString()}
-                    </Number>
+        <Container key={item.key}>
+            {/* Instruction Number */}
+            <Number>{(instructionsData.indexOf(item) + 1).toString()}</Number>
 
-                    {/* Instruction Text Input */}
-                    <InstructionText
-                        onChangeText={(text: string) =>
-                            onChangeText(item.key, text)
-                        }
-                        value={item.text}
-                        placeholder="Text"
-                        placeholderTextColor={theme.grey}
-                        multiline
-                    />
+            {/* Instruction Text Input */}
+            <InstructionText
+                onChangeText={(text: string) => onChangeText(item.key, text)}
+                value={item.text}
+                placeholder="Text"
+                placeholderTextColor={theme.grey}
+                multiline
+            />
 
-                    {/* Remove Instruction Button */}
-                    <RemoveButton
-                        onPress={() =>
-                            onRemove(item.key)
-                        }
-                    >
-                        <MyFeather name="minus" size={15} color={theme.text}/>
-                    </RemoveButton>
-                </Container>
+            {/* Remove Instruction Button */}
+            <RemoveButton onPress={() => onRemove(item.key)}>
+                <MyFeather name="minus" size={15} color={theme.text} />
+            </RemoveButton>
+        </Container>
     )
 }
 
@@ -66,15 +54,13 @@ const Container = styled(View)`
 const Number = styled(Text)`
     width: 10%;
     font-size: 18px;
-    color: ${(props) => props.theme.text}
+    color: ${(props) => props.theme.text};
 `
 
 const InstructionText = styled(TextInput)`
     width: 80%;
     padding-end: 5px;
-    color: ${(props) => props.theme.text}
+    color: ${(props) => props.theme.text};
 `
 
-const RemoveButton = styled(TouchableOpacity)`
-
-`
+const RemoveButton = styled(TouchableOpacity)``

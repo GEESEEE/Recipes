@@ -1,18 +1,17 @@
 import React from 'react'
-import {
-    Dimensions,
-    View,
-} from 'react-native'
+import { Dimensions, View } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
 import AddableListComponent from '../components/AddableListComponent'
 import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
-import {InstructionListItem, IngredientListItem} from '../components/ListItems'
+import {
+    InstructionListItem,
+    IngredientListItem,
+} from '../components/ListItems'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
-
 
 function NewRecipeScreen(): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
@@ -29,10 +28,11 @@ function NewRecipeScreen(): JSX.Element {
             recipeIngredients: [],
             instructions: [],
         }
-
     }
 
-    const [recipeData, setRecipeData] = React.useState<Recipe>(getInitialRecipe())
+    const [recipeData, setRecipeData] = React.useState<Recipe>(
+        getInitialRecipe()
+    )
 
     const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>(
         []
@@ -145,7 +145,6 @@ function NewRecipeScreen(): JSX.Element {
 
     return (
         <Container>
-
             <Header>
                 {/* Recipe Name Input Field */}
                 <RecipeNameTextInput
@@ -168,64 +167,67 @@ function NewRecipeScreen(): JSX.Element {
                 />
             </Header>
 
-
             {/* <View style={{...globalStyles.userinput, ...styles.description}}>
 
             </View> */}
 
             {/* Ingredients List Container */}
             <AddableListComponent
-                headerText = "Ingredients"
-                buttonText = "Add Ingredient"
-                onButtonClick = {handleAddIngredient}
+                headerText="Ingredients"
+                buttonText="Add Ingredient"
+                onButtonClick={handleAddIngredient}
             >
-                {[<List
-                    key={0}
-                    data={ingredientsData}
-                    renderItem={({ item }) => (
-                        <IngredientListItem
-                            item={item}
-                            onRemove={handleRemoveIngredient}
-                            onChangeName={handleIngredientNameChange}
-                            onChangeAmount={handleIngredientAmountChange}
-                            onChangeUnit={handleIngredientUnitChange}
-                        />
-                    )}
-                />]}
+                {[
+                    <List
+                        key={0}
+                        data={ingredientsData}
+                        renderItem={({ item }) => (
+                            <IngredientListItem
+                                item={item}
+                                onRemove={handleRemoveIngredient}
+                                onChangeName={handleIngredientNameChange}
+                                onChangeAmount={handleIngredientAmountChange}
+                                onChangeUnit={handleIngredientUnitChange}
+                            />
+                        )}
+                    />,
+                ]}
             </AddableListComponent>
 
             {/* Instructions List Container */}
             <AddableListComponent
-                buttonText = "Add Instruction"
+                buttonText="Add Instruction"
                 onButtonClick={handleAddInstruction}
-                headerText = "Instructions"
+                headerText="Instructions"
             >
-                {[<List
-                    key={0}
-                    data={instructionsData}
-                    renderItem={({ item }) => (
-                        <InstructionListItem
-                            instructionsData={instructionsData}
-                            item={item}
-                            onRemove={handleRemoveInstruction}
-                            onChangeText={handleInstructionTextChange}
-                        />
-                    )}
-                />]}
+                {[
+                    <List
+                        key={0}
+                        data={instructionsData}
+                        renderItem={({ item }) => (
+                            <InstructionListItem
+                                instructionsData={instructionsData}
+                                item={item}
+                                onRemove={handleRemoveInstruction}
+                                onChangeText={handleInstructionTextChange}
+                            />
+                        )}
+                    />,
+                ]}
             </AddableListComponent>
 
             {/* Create Recipe Button */}
             <ButtonFilled text="Create Recipe" onPress={handleCreateRecipe} />
 
             {/* Clear Recipe Button */}
-            <ButtonBorderless text="Clear Recipe" onPress={clearRecipeData}/>
+            <ButtonBorderless text="Clear Recipe" onPress={clearRecipeData} />
         </Container>
     )
 }
 
 export default NewRecipeScreen
 
-const {height} = Dimensions.get('screen')
+const { height } = Dimensions.get('screen')
 
 const Container = styled(View)`
     flex: 1;
@@ -262,7 +264,7 @@ const DescriptionTextInput = styled(TextInput)`
     margin-left: 8px;
     margin-right: 8px;
     margin-bottom: 5px;
-    color: ${(props) => props.theme.text}
+    color: ${(props) => props.theme.text};
 `
 
 const List = styled(FlatList)`

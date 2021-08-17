@@ -7,14 +7,12 @@ const screens = {
         screen: MainScreen,
         navigationOptions: () => ({
             header: MainTabsHeader,
-            headerMode: 'screen'
-        })
-    }
+            headerMode: 'screen',
+        }),
+    },
 }
 
-const stackConfig = {
-
-}
+const stackConfig = {}
 
 const MainStack = createStackNavigator(screens, stackConfig)
 
