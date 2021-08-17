@@ -7,7 +7,8 @@ export type Theme = {
     background: string,
     backgroundVariant: string,
     text: string,
-    grey: string
+    grey: string,
+    error: string
 }
 
 export const DarkTheme = {
@@ -18,6 +19,7 @@ export const DarkTheme = {
     backgroundVariant: colors.darkergrey,
     text: colors.lightergrey,
     grey: colors.grey,
+    error: colors.red
 }
 
 export const LightTheme = {
@@ -28,4 +30,5 @@ export const LightTheme = {
     backgroundVariant: colors.lightergrey,
     text: colors.darkergrey,
     grey: colors.grey,
+    error: colors.red
 }

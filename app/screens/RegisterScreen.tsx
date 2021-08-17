@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
 import { useDispatch } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation'
@@ -9,11 +9,75 @@ import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
 import { InputFieldRounded } from '../components/TextInputs'
 
+const REGISTER_ACTIONS = {
+    USERNAME_CHANGE: 'usernameChange',
+    EMAIL_CHANGE: 'emailChange',
+    PASSWORD1_CHANGE: 'password1Change',
+    PASSWORD2_CHANGE: 'password2Change',
+    PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
+    USERNAME_VALIDATION: 'usernameValidation',
+    PASSWORD1_VALIDATION: 'password1Validation',
+    PASSWORD2_VALIDATION: 'password2Validation',
+    EMAIL_VALIDATION: 'emailValidation'
+}
+
+function reducer(state: any, action: any): any {
+    switch (action.type) {
+        case REGISTER_ACTIONS.USERNAME_CHANGE: {
+            const username = action.payload
+            return {...state, username}
+        }
+
+        case REGISTER_ACTIONS.EMAIL_CHANGE: {
+            const email = action.payload
+            return {...state, email}
+        }
+
+        case REGISTER_ACTIONS.PASSWORD1_CHANGE: {
+            const password1 = action.payload
+            return {...state, password1}
+        }
+
+        case REGISTER_ACTIONS.PASSWORD2_CHANGE: {
+            const password2 = action.payload
+            return {...state, password2}
+        }
+
+        case REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE: {
+            const securePasswordText = action.payload
+            return {...state, securePasswordText}
+        }
+
+        case REGISTER_ACTIONS.USERNAME_VALIDATION: {
+            const isValidUsername = action.payload
+            return {...state, isValidUsername}
+        }
+
+        case REGISTER_ACTIONS.PASSWORD1_VALIDATION: {
+            const isValidPassword1 = action.payload
+            return {...state, isValidPassword1}
+        }
+
+        case REGISTER_ACTIONS.PASSWORD2_VALIDATION: {
+            const isValidPassword2 = action.payload
+            return {...state, isValidPassword2}
+        }
+
+        case REGISTER_ACTIONS.EMAIL_VALIDATION: {
+            const isValidEmail = action.payload
+            return {...state, isValidEmail}
+        }
+
+        default:
+            return state
+    }
+
+}
 
 function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
     const dispatch = useDispatch()
 
-    const [data, setData] = React.useState({
+    const initialState = {
         username: '',
         email: '',
         password1: '',
@@ -23,89 +87,46 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
         isValidPassword1: true,
         isValidPassword2: true,
         isValidEmail: true,
-    })
+    }
+
+    const [data, localDispatch] = useReducer(reducer, initialState)
 
     function handleUsernameInputChange(text: string): void {
-        setData({
-            ...data,
-            username: text,
-        })
+        localDispatch({type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: text})
     }
 
     function handleUsernameValidation(text: string): void {
-        if (text.length >= 4 && text.length <= 30) {
-            setData({
-                ...data,
-                isValidUsername: true
-            })
-        } else {
-            setData({
-                ...data,
-                isValidUsername: false
-            })
-        }
+        localDispatch({type: REGISTER_ACTIONS.USERNAME_VALIDATION, payload: (text.length >= 4 && text.length <= 30)})
     }
 
     function handleEmailInputChange(text: string): void {
-        setData({
-            ...data,
-            email: text,
-        })
+        localDispatch({type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: text})
     }
 
     function handleEmailValidation(text: string): void {
         const regex = /^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/i
-        if (regex.test(text)) {
-            setData({
-                ...data,
-                isValidEmail: true
-            })
-        } else {
-            setData({
-                ...data,
-                isValidEmail: false
-            })
-        }
+        localDispatch({type: REGISTER_ACTIONS.EMAIL_VALIDATION, payload: regex.test(text)})
     }
 
     function handlePassword1InputChange(text: string): void {
-        setData({
-            ...data,
-            password1: text,
-        })
+        localDispatch({type: REGISTER_ACTIONS.PASSWORD1_CHANGE, payload: text})
     }
 
     function handlePassword2InputChange(text: string): void {
-        setData({
-            ...data,
-            password2: text,
-        })
+        localDispatch({type: REGISTER_ACTIONS.PASSWORD2_CHANGE, payload: text})
     }
 
     function handlePasswordValidation(password1: boolean, text: string): void {
-        let valid = false
-        if (text.length >= 5 && text.length <= 50) {
-            valid = true
-        }
-
+        const valid = (text.length >= 5 && text.length <= 50)
         if (password1) {
-            setData({
-                ...data,
-                isValidPassword1: valid
-            })
+            localDispatch({type: REGISTER_ACTIONS.PASSWORD1_VALIDATION, payload: valid})
         } else {
-            setData({
-                ...data,
-                isValidPassword2: valid
-            })
+            localDispatch({type: REGISTER_ACTIONS.PASSWORD2_VALIDATION, payload: valid})
         }
     }
 
     function handleSecurePassword1Change(): void {
-        setData({
-            ...data,
-            securePasswordText: !data.securePasswordText,
-        })
+        localDispatch({type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE, payload: !data.securePasswordText})
     }
 
     function samePasswords(): boolean {
@@ -114,13 +135,13 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
 
     function invalidPassWord(): JSX.Element | null{
         if (!data.isValidPassword1) {
-            return (<Text style={styles.errorMessage}>Invalid Password 1</Text>)
+            return (<ErrorMessage>Invalid Password 1</ErrorMessage>)
         }
         if (!data.isValidPassword2) {
-            return (<Text style={styles.errorMessage}>Invalid Password 2</Text>)
+            return (<ErrorMessage>Invalid Password 2</ErrorMessage>)
         }
         if (!samePasswords()) {
-            return (<Text style={styles.errorMessage}>Passwords are not the same</Text>)
+            return (<ErrorMessage>Passwords are not the same</ErrorMessage>)
         }
         return null
     }
@@ -154,7 +175,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onEndEditing={handleUsernameValidation}
                 placeholder="Username"
             />
-            {data.isValidUsername ? null : <Text style={styles.errorMessage}>Invalid username</Text>}
+            {data.isValidUsername ? null : <ErrorMessage>Invalid username</ErrorMessage>}
 
             {/* Email Input Field */}
             <InputFieldRounded
@@ -162,7 +183,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onEndEditing={handleEmailValidation}
                 placeholder="E-mail"
             />
-            {data.isValidEmail ? null : <Text style={styles.errorMessage}>Invalid E-mail</Text>}
+            {data.isValidEmail ? null : <ErrorMessage>Invalid E-mail</ErrorMessage>}
 
             {/* Password 1 Input Field */}
             <InputFieldRounded
@@ -211,9 +232,9 @@ const Container = styled(View)`
     backgroundColor: ${(props) => props.theme.background}
 `
 
-const styles = StyleSheet.create({
-    errorMessage: {
-        color: colors.red,
-        fontSize: 10,
-    }
-})
+const ErrorMessage = styled(Text)`
+    color: ${(props) => props.theme.error};
+    fontSize: 10px;
+`
+
+
