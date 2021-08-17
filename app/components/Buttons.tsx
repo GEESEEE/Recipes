@@ -3,31 +3,31 @@ import { TouchableOpacity, View, Text } from 'react-native'
 import styled from 'styled-components'
 
 const ButtonStyleGeneric = styled(View)`
-    flexDirection: row;
-    alignItems: center;
+    flex-direction: row;
+    align-items: center;
     width: 85%;
-    marginTop: 8px;
-    marginBottom: 8px;
-    paddingLeft: 10px;
-    paddingRight: 10px;
-    borderRadius: 20px;
-    paddingTop: 8px;
-    paddingBottom: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 `
 
 const ButtonTextGeneric = styled(Text)`
-    textAlign: center;
+    text-align: center;
     flex: 1;
 `
 
 const ButtonFilledStyle = styled(ButtonStyleGeneric)`
-    backgroundColor: ${(props) => props.theme.primary}
+    background-color: ${(props) => props.theme.primary}
 `
 
 const ButtonFilledText = styled(ButtonTextGeneric)`
-    fontWeight: bold;
-    textTransform: uppercase;
-    fontSize: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
     color: ${(props) => props.theme.background};
 `
 
@@ -44,15 +44,15 @@ export function ButtonFilled({text, onPress}:{text: string, onPress: () => void}
 }
 
 const ButtonInvertedStyle = styled(ButtonStyleGeneric)`
-    backgroundColor: ${(props) => props.theme.background}
-    borderWidth: 2px;
-    borderColor: ${(props) => props.theme.primary}
+    background-color: ${(props) => props.theme.background}
+    border-width: 2px;
+    border-color: ${(props) => props.theme.primary}
 `
 
 const ButtonInvertedText = styled(ButtonTextGeneric)`
-    fontWeight: bold;
-    textTransform: uppercase;
-    fontSize: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
     color: ${(props) => props.theme.primary};
 `
 
@@ -70,13 +70,13 @@ export function ButtonInverted({text, onPress}:{text: string, onPress: () => voi
 
 const ButtonBorderlessStyle = styled(ButtonStyleGeneric)`
     width: 50%;
-    backgroundColor: ${(props) => props.theme.background}
+    background-color: ${(props) => props.theme.background}
 `
 
 const ButtonBorderlessText = styled(ButtonTextGeneric)`
-    fontWeight: normal;
-    textTransform: none;
-    fontSize: 12px;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 12px;
     color: ${(props) => props.theme.primary};
 `
 export function ButtonBorderless({text, onPress}:{text: string, onPress: () => void}): JSX.Element {

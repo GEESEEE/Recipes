@@ -33,9 +33,9 @@ export default RecipesScreen
 
 const Container = styled(SafeAreaView)`
     flex: 1;
-    justifyContent: center;
-    alignItems: center;
-    backgroundColor: ${(props) => props.theme.background}
+    justify-content: center;
+    align-items: center;
+    background-color: ${(props) => props.theme.background}
 `
 
 const RecipesList = styled(FlatList)`

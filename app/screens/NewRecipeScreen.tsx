@@ -229,43 +229,43 @@ const {height} = Dimensions.get('screen')
 
 const Container = styled(View)`
     flex: 1;
-    flexDirection: column;
-    justifyContent: center;
-    alignItems: center;
-    alignContent: center;
-    backgroundColor: ${(props) => props.theme.background};
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: ${(props) => props.theme.background};
 `
 
 const Header = styled(View)`
     bottom: ${height * 0.03}px;
     width: 85%;
-    backgroundColor: ${(props) => props.theme.background};
-    borderColor: ${(props) => props.theme.primary};
-    borderRadius: 20px;
-    borderWidth: 3px;
-    paddingTop: 5px;
-    paddingBottom: 5px;
+    background-color: ${(props) => props.theme.background};
+    border-color: ${(props) => props.theme.primary};
+    border-radius: 20px;
+    border-width: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 `
 
 const RecipeNameTextInput = styled(TextInput)`
-    marginTop: 10px;
-    paddingBottom: 10px;
-    fontSize: 25px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
     color: ${(props) => props.theme.text};
-    textAlign: center;
-    borderBottomColor: ${(props) => props.theme.primary};
-    borderBottomWidth: 1px;
+    text-align: center;
+    border-bottom-color: ${(props) => props.theme.primary};
+    border-bottom-width: 1px;
 `
 
 const DescriptionTextInput = styled(TextInput)`
-    marginTop: 8px;
-    marginLeft: 8px;
-    marginRight: 8px;
-    marginBottom: 5px;
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 5px;
     color: ${(props) => props.theme.text}
 `
 
 const List = styled(FlatList)`
-    paddingTop: 5px;
-    flexDirection: column;
+    padding-top: 5px;
+    flex-direction: column;
 `

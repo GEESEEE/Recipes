@@ -1,6 +1,5 @@
 export default {
     primary: '#4ecdc4',
-    secondary: '#fc5c65',
 
     white: '#fff',
     lightergrey: '#d5d5d5',
@@ -12,6 +11,9 @@ export default {
     black: '#030303',
 
     red: '#f00',
+
+
+    secondary: '#fc5c65',
     green: '#0f0',
     blue: '#00f',
 }

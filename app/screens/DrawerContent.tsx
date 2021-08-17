@@ -4,10 +4,10 @@ import {View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
-import { Theme } from '../config/themes'
 import { ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
+import { Theme } from '../reducers/theme'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     <TouchableOpacity>
@@ -76,79 +76,79 @@ export function DrawerContent({navigation} : {navigation: any}
 
 const Container = styled(SafeAreaView)`
     flex: 1;
-    backgroundColor: ${(props) => props.theme.background};
+    background-color: ${(props) => props.theme.background};
 `
 
 const Header = styled(View)`
     flex: 1;
-    alignItems: center;
-    paddingBottom: 15px;
-    borderBottomWidth: 1px;
-    borderBottomColor: ${(props) => props.theme.primary};
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom-width: 1px;
+    border-bottom-color: ${(props) => props.theme.primary};
 `
 
 const Title = styled(Text)`
-    fontSize: 25px;
-    marginTop: 3px;
-    fontWeight: bold;
+    font-size: 25px;
+    margin-top: 3px;
+    font-weight: bold;
     color: ${(props) => props.theme.primary};
 `
 
 const Caption = styled(Text)`
-    fontSize: 15px;
+    font-size: 15px;
     color: ${(props) => props.theme.text};
 `
 
 const Paragraph = styled(Text)`
-    fontSize: 16px;
-    marginRight: 3px;
-    fontWeight: bold;
+    font-size: 16px;
+    margin-right: 3px;
+    font-weight: bold;
     color: ${(props) => props.theme.text};
 `
 
 const RoutesSection = styled(View)`
-    marginTop: 15px;
+    margin-top: 15px;
 `
 
 const Section = styled(View)`
-    flexDirection: row;
-    alignItems: center;
-    paddingTop: 10px;
-    paddingBottom: 10px;
-    paddingRight: 12px;
-    paddingLeft: 12px;
-    justifyContent: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 12px;
+    padding-left: 12px;
+    justify-content: space-between;
 
 `
 
 const PreferenceView = styled(View)`
-    flexDirection: row;
-    justifyContent: center;
-    paddingVertical: 12px;
-    paddingHorizontal: 16px;
-    borderTopColor: ${(props) => props.theme.primary};
-    borderTopWidth: 1px;
+    flex-direction: row;
+    justify-content: center;
+    padding-vertical: 12px;
+    padding-horizontal: 16px;
+    border-top-color: ${(props) => props.theme.primary};
+    border-top-width: 1px;
 `
 
 const PreferenceText = styled(Text)`
     color: ${(props) => props.theme.primary};
-    marginTop: 20px;
-    marginLeft: 10px;
-    marginBottom: 5px;
-    fontSize: 16px;
-    fontWeight: bold;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
 `
 
 const DarkThemeView = styled(View)`
     flex: 1;
-    flexDirection: row;
-    justifyContent: space-between;
+    flex-direction: row;
+    justify-content: space-between;
 `
 
 const Footer = styled(View)`
-    marginBottom: 15px;
-    borderTopColor: ${(props) => props.theme.primary};
-    borderTopWidth: 1px;
-    alignItems: center;
+    margin-bottom: 15px;
+    border-top-color: ${(props) => props.theme.primary};
+    border-top-width: 1px;
+    align-items: center;
 `
 

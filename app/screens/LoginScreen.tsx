@@ -158,9 +158,9 @@ const logoHeight = height * 0.15
 
 const Container = styled(View)`
     flex: 1;
-    justifyContent: center;
-    alignItems: center;
-    backgroundColor: ${(props) => props.theme.background}
+    justify-content: center;
+    align-items: center;
+    background-color: ${(props) => props.theme.background}
 `
 
 const Logo = styled(Image)`

@@ -32,30 +32,30 @@ export default function AddableListComponent({
 }
 
 const Container = styled(View)`
-    marginTop: 8px;
-    marginBottom: 8px;
-    paddingTop: 5px;
-    borderRadius: 12px;
-    flexDirection: column;
-    alignItems: center;
-    backgroundColor: ${(props) => props.theme.background};
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-top: 5px;
+    border-radius: 12px;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${(props) => props.theme.background};
     width: 85%;
-    borderWidth: 3px;
-    borderColor: ${(props) => props.theme.primary};
+    border-width: 3px;
+    border-color: ${(props) => props.theme.primary};
 `
 
 const Header = styled(View)`
-    flexDirection: row;
-    alignItems: flex-end;
-    justifyContent: center;
-    backgroundColor: ${(props) => props.theme.background};
-    borderBottomColor: ${(props) => props.theme.primary};
-    borderBottomWidth: 1px;
-    paddingBottom: 5px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: ${(props) => props.theme.background};
+    border-bottom-color: ${(props) => props.theme.primary};
+    border-bottom-width: 1px;
+    padding-bottom: 5px;
 `
 const HeaderText = styled(Text)`
     flex: 1px;
-    fontSize: 18px;
-    textAlign: center;
+    font-size: 18px;
+    text-align: center;
     color: ${(props) => props.theme.text};
 `

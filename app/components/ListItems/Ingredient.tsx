@@ -75,31 +75,31 @@ const IngredientListItem = (
 export default IngredientListItem
 
 const Container = styled(View)`
-    flexDirection: row;
-    justifyContent: center;
-    alignItems: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 `
 
 const NameText = styled(TextInput)`
     width: 50%;
-    paddingEnd: 5px;
+    padding-end: 5px;
     color: ${(props) => props.theme.text}
 `
 
 const AmountText = styled(TextInput)`
     width: 15%;
-    paddingEnd: 5px;
+    padding-end: 5px;
     color: ${(props) => props.theme.text}
 `
 
 const UnitText = styled(TextInput)`
     width: 25%;
-    paddingEnd: 5px;
+    padding-end: 5px;
     color: ${(props) => props.theme.text}
 `
 
 const RemoveButton = styled(TouchableOpacity)`
-    alignContent: flex-end;
+    align-content: flex-end;
 `
 

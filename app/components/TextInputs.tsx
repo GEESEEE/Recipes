@@ -43,27 +43,27 @@ export const InputFieldRounded = ({
 )}
 
 const Container = styled(View)`
-    flexDirection: column;
+    flex-direction: column;
     alignItems: center;
 `
 
 const InputFieldRoundedStyle = styled(View)`
-    flexDirection: row;
-    alignItems: center;
+    flex-direction: row;
+    align-items: center;
     width: 85%;
-    marginTop: 4px;
-    marginBottom: 2px;
-    paddingLeft: 10px;
-    paddingRight: 10px;
-    paddingBottom: 5px;
-    paddingTop: 5px;
-    borderRadius: 20px;
-    backgroundColor: ${(props) => props.theme.backgroundVariant}
+    margin-top: 4px;
+    margin-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.backgroundVariant}
 `
 
 const TextInputRounded = styled(TextInput)`
     flex: 1;
-    paddingLeft: 10px;
+    padding-left: 10px;
     color: ${(props) => props.theme.text}
 `
 
@@ -73,7 +73,7 @@ const BottomPadding = styled(View)`
 
 const ErrorMessage = styled(Text)`
     color: ${(props) => props.theme.error};
-    fontSize: 10px;
+    font-size: 10px;
     padding: 0px;
 
 `

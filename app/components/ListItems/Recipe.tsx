@@ -52,30 +52,30 @@ const RecipeListItem = ({
 export default RecipeListItem
 
 const Container = styled(View)`
-    alignSelf: center;
-    alignItems: center;
-    backgroundColor: ${(props) => props.theme.background};
+    align-self: center;
+    align-items: center;
+    background-color: ${(props) => props.theme.background};
     flex: 1;
-    marginTop: 5px;
-    borderWidth: 3px;
-    borderColor: ${(props) => props.theme.primary};
-    borderRadius: 20px;
+    margin-top: 5px;
+    border-width: 3px;
+    border-color: ${(props) => props.theme.primary};
+    border-radius: 20px;
     width: 80%;
 `
 
 const Name = styled(Text)`
     left: 5px;
-    fontSize: 30px;
+    font-size: 30px;
     color: ${(props) => props.theme.text};
 `
 
 const PropertiesContainer = styled(View)`
-    flexDirection: row;
-    alignItems: center;
+    flex-direction: row;
+    align-items: center;
 `
 
 const Property = styled(Text)`
     color: ${(props) => props.theme.text};
-    fontSize: 20px;
+    font-size: 20px;
     flex: 1;
 `

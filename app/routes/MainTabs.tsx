@@ -6,6 +6,7 @@ import { View } from 'react-native'
 import colors from '../config/colors'
 import MainStack from './MainStack'
 import RecipesStack from './RecipesStack'
+import { useAppSelector } from '../types/ReduxHooks'
 
 
 const screens = {

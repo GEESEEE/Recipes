@@ -28,26 +28,26 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
 
 const Container = styled(View)`
     height: 70px;
-    paddingTop: 30px;
-    backgroundColor: ${(props) => props.theme.primary};
+    padding-top: 30px;
+    background-color: ${(props) => props.theme.primary};
 `
 
 const Header = styled(View)`
     flex: 1;
-    flexDirection: row;
-    alignItems: center;
-    justifyContent: center;
-    marginLeft: 15px;
-    marginRight: 15px;
-    marginBottom: 0px;
-    backgroundColor: ${(props) => props.theme.primary};
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0px;
+    background-color: ${(props) => props.theme.primary};
 `
 
 const HeaderTitle = styled(Text)`
-    paddingLeft: 10px;
+    padding-left: 10px;
     flex: 1px;
-    fontWeight: bold;
-    fontSize: 20px;
+    font-weight: bold;
+    font-size: 20px;
     color: ${(props) => props.theme.background};
-    letterSpacing: 1px;
+    letter-spacing: 1px;
 `

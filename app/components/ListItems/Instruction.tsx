@@ -56,22 +56,22 @@ const InstructionListItem = ({
 export default InstructionListItem
 
 const Container = styled(View)`
-    flexDirection: row;
-    justifyContent: center;
-    alignItems: center;
-    alignContent: space-between;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
     width: 100%;
 `
 
 const Number = styled(Text)`
     width: 10%;
-    fontSize: 18px;
+    font-size: 18px;
     color: ${(props) => props.theme.text}
 `
 
 const InstructionText = styled(TextInput)`
     width: 80%;
-    paddingEnd: 5px;
+    padding-end: 5px;
     color: ${(props) => props.theme.text}
 `
 

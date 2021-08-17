@@ -1,10 +1,10 @@
-import * as SecureStore from 'expo-secure-store'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import {THEME_ACTIONS} from '../reducers/theme'
 
 export const retrieveTheme = () => async (dispatch: Dispatch): Promise<void> => {
     try {
-        const theme = await SecureStore.getItemAsync('theme')
+        const theme = await AsyncStorage.getItem('theme')
         if (theme) {
             dispatch({
                 type: THEME_ACTIONS.SET_THEME,
@@ -24,7 +24,7 @@ export const setTheme = (darkTheme: boolean) => async (dispatch: Dispatch): Prom
             type: THEME_ACTIONS.SET_THEME,
             payload: theme
         })
-        await SecureStore.setItemAsync('theme', theme)
+        await AsyncStorage.setItem('theme', theme)
     } catch (err) {
         console.log(err.message)
         console.error(err)
@@ -33,7 +33,7 @@ export const setTheme = (darkTheme: boolean) => async (dispatch: Dispatch): Prom
 
 export const retrieveColor = () => async (dispatch: Dispatch): Promise<void> => {
     try {
-        const color = await SecureStore.getItemAsync('color')
+        const color = await AsyncStorage.getItem('color')
         if (color) {
             dispatch({
                 type: THEME_ACTIONS.SET_COLOR,
@@ -52,7 +52,7 @@ export const setColor = (color: string) => async (dispatch: Dispatch): Promise<v
             type: THEME_ACTIONS.SET_COLOR,
             payload: color
         })
-        await SecureStore.setItemAsync('color', color)
+        await AsyncStorage.setItem('color', color)
     } catch (err) {
         console.log(err.message)
         console.error(err)
