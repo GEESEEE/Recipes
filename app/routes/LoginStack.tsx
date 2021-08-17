@@ -16,6 +16,10 @@ const screens = {
     }
 }
 
-const LoginStack = createStackNavigator(screens, { headerMode: 'none' })
+const stackConfig = {
+    headerMode: 'none',
+}
+
+const LoginStack = createStackNavigator(screens, stackConfig)
 
 export default createAppContainer(LoginStack)

@@ -1,8 +1,10 @@
 import React from 'react'
+import {View} from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import LoginNavigator from './routes/LoginStack'
+import colors from './config/colors'
 
 function AppWrapper(): JSX.Element {
     const dispatch = useDispatch()
@@ -21,3 +23,4 @@ function AppWrapper(): JSX.Element {
 }
 
 export default AppWrapper
+

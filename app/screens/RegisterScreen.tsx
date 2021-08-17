@@ -109,7 +109,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
     }
 
     function samePasswords(): boolean {
-        return  data.password1 === data.password2
+        return data.password1 === data.password2
     }
 
     function invalidPassWord(): JSX.Element | null{

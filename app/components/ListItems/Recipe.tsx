@@ -2,18 +2,23 @@ import React from 'react'
 import { StyleSheet,  View, Text } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { deleteRecipe } from '../actions/recipes'
-import Recipe from '../data/recipe'
-import { ButtonFilled } from './Buttons'
+import { deleteRecipe } from '../../actions/recipes'
+import Recipe from '../../data/recipe'
+import { ButtonFilled } from '../Buttons'
+import { MyFeather } from '../Icons'
 
-export default function RecipeListItemComponent({
+
+
+
+const RecipeListItem = ({
     recipe,
 }: {
     recipe: Recipe
-}): JSX.Element {
+}): JSX.Element => {
     const dispatch = useDispatch()
+    const theme = useSelector((state: any) => state.theme)
 
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
@@ -22,22 +27,22 @@ export default function RecipeListItemComponent({
     return (
         <Container>
             {/* Recipe Name */}
-            <Text style={styles.nameText}>{recipe.name}</Text>
+            <Name>{recipe.name}</Name>
 
             {/* Recipe Properties */}
-            <View style={styles.propertiesContainer}>
+            <PropertiesContainer>
                 {/* Prepare Time */}
                 <MaterialCommunityIcons
-                    style={styles.prepareTimeIcon}
                     name="timer-sand"
                     size={20}
+                    color={theme.text}
                 />
-                <Text style={styles.prepareTimeText}>{recipe.prepareTime}</Text>
+                <Property>{recipe.prepareTime}</Property>
 
                 {/* People Count */}
-                <Feather style={styles.peopleCountIcon} name="user" size={20} />
-                <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
-            </View>
+                <MyFeather name="user" color={theme.text} />
+                <Property>{recipe.peopleCount}</Property>
+            </PropertiesContainer>
 
             <ButtonFilled
                 text="Delete Recipe"
@@ -48,7 +53,10 @@ export default function RecipeListItemComponent({
     )
 }
 
+export default RecipeListItem
+
 const Container = styled(View)`
+    alignSelf: center;
     alignItems: center;
     backgroundColor: ${(props) => props.theme.background};
     flex: 1;
@@ -59,23 +67,19 @@ const Container = styled(View)`
     width: 80%;
 `
 
-const styles = StyleSheet.create({
-    nameText: {
-        left: 5,
-        fontSize: 30,
-    },
-    propertiesContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    prepareTimeIcon: {},
-    prepareTimeText: {
-        fontSize: 20,
-        flex: 1,
-    },
-    peopleCountIcon: {},
-    peopleCountText: {
-        fontSize: 20,
-        flex: 1,
-    },
-})
+const Name = styled(Text)`
+    left: 5px;
+    fontSize: 30px;
+    color: ${(props) => props.theme.text};
+`
+
+const PropertiesContainer = styled(View)`
+    flexDirection: row;
+    alignItems: center;
+`
+
+const Property = styled(Text)`
+    color: ${(props) => props.theme.text};
+    fontSize: 20px;
+    flex: 1;
+`

@@ -14,7 +14,7 @@ const screens = {
 }
 
 const drawerOptions = {
-    drawerWidth: 250,
+    drawerWidth: 200,
     contentComponent: DrawerContent,
 }
 

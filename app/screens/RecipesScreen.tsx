@@ -1,14 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, FlatList } from 'react-native'
+import {  FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { ButtonFilled } from '../components/Buttons'
-import RecipeListItemComponent from '../components/RecipeListItemComponent'
+import {RecipeListItem} from '../components/ListItems'
+import { Recipe } from '../data'
 
 function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>}): JSX.Element {
-    const recipes = useSelector((state: any) => state.recipes)
+    const recipes: Recipe[] = useSelector((state: any) => state.recipes)
 
     function handleCreateRecipe(): void {
         navigation.navigate('CreateRecipe')
@@ -16,14 +17,11 @@ function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>
 
     return (
         <Container>
-            <Text>recipes screen</Text>
             <ButtonFilled text="Create New Recipe" onPress={handleCreateRecipe}/>
-            <FlatList
-                style={styles.recipesList}
-                contentContainerStyle={styles.recipeListItemContainer}
+            <RecipesList
                 data={recipes}
                 renderItem={({ item }) => (
-                    <RecipeListItemComponent recipe={item} />
+                    <RecipeListItem recipe={item} />
                 )}
             />
         </Container>
@@ -40,13 +38,6 @@ const Container = styled(SafeAreaView)`
     backgroundColor: ${(props) => props.theme.background}
 `
 
-const styles = StyleSheet.create({
-    recipesList: {
-        width: '100%',
-    },
-    recipeListItemContainer: {
-        alignItems: 'center',
-        marginLeft: 10,
-        width: '100%',
-    },
-})
+const RecipesList = styled(FlatList)`
+    width: 100%;
+`

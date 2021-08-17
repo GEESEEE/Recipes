@@ -3,22 +3,36 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import {View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import Feather from 'react-native-vector-icons/Feather'
-import colors from '../config/colors'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
 import { Theme } from '../reducers/theme'
 import { ButtonFilled } from '../components/Buttons'
-
+import { MyFeather } from '../components/Icons'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
-        <TouchableOpacity>
-            <Section>
-                <Feather name={iconName} size={22} color={theme.text} />
-                <Paragraph>{text}</Paragraph>
-            </Section>
-        </TouchableOpacity>
-    )
+    <TouchableOpacity>
+        <Section>
+            <MyFeather name={iconName} color={theme.text} />
+            <Paragraph>{text}</Paragraph>
+        </Section>
+    </TouchableOpacity>
+)
+
+const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
+    const dispatch = useDispatch()
+    const theme = useSelector((state: any) => state.theme)
+
+    return (
+    <DarkThemeView>
+        <Paragraph>{text}</Paragraph>
+        <Switch
+            value={switchValue}
+            onValueChange={(value: boolean) => dispatch(setTheme(value))}
+            trackColor={{true: theme.backgroundVariant, false: theme.backgroundVariant}}
+            thumbColor={theme.primary}
+        />
+    </DarkThemeView>
+)}
 
 
 export function DrawerContent({navigation} : {navigation: any}
@@ -48,14 +62,7 @@ export function DrawerContent({navigation} : {navigation: any}
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
-                    <DarkThemeView>
-                        <Paragraph>Dark Theme</Paragraph>
-                        <Switch
-                            value={theme.mode === 'dark'}
-                            onValueChange={(value: boolean) => dispatch(setTheme(value))}
-                            trackColor={{true: colors.primary, false: colors.grey}}
-                        />
-                    </DarkThemeView>
+                    {PreferenceSwitch("Dark Theme", theme.mode === 'dark')}
                 </PreferenceView>
 
 
@@ -93,7 +100,7 @@ const Caption = styled(Text)`
 `
 
 const Paragraph = styled(Text)`
-    fontSize: 15px;
+    fontSize: 16px;
     marginRight: 3px;
     fontWeight: bold;
     color: ${(props) => props.theme.text};
@@ -106,9 +113,12 @@ const RoutesSection = styled(View)`
 const Section = styled(View)`
     flexDirection: row;
     alignItems: center;
-    marginRight: 15px;
-    marginLeft: 15px;
+    paddingTop: 10px;
+    paddingBottom: 10px;
+    paddingRight: 12px;
+    paddingLeft: 12px;
     justifyContent: space-between;
+
 `
 
 const PreferenceView = styled(View)`

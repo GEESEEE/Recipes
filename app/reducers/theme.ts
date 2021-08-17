@@ -1,39 +1,14 @@
 import colors from '../config/colors'
+import {Theme, DarkTheme, LightTheme} from '../config/themes'
 
 export const THEME_ACTIONS = {
     SET_THEME: 'setTheme',
     SET_COLOR: 'setColor',
 }
 
-export type Theme = {
-    mode: string
-    primary: string,
-    secondary: string,
-    background: string,
-    backgroundVariant: string,
-    text: string,
-    grey: string
-}
+const lightTheme = (): Theme => LightTheme
 
-const lightTheme = (): Theme => ({
-    mode: 'light',
-    primary: colors.primary,
-    secondary: colors.secondary,
-    background: colors.white,
-    backgroundVariant: colors.lightergrey,
-    text: colors.black,
-    grey: colors.grey,
-})
-
-const darkTheme = (): Theme => ({
-        mode: 'dark',
-        primary: colors.primary,
-        secondary: colors.secondary,
-        background: colors.darkergrey,
-        backgroundVariant: colors.darkgrey,
-        text: colors.lightergrey,
-        grey: colors.grey,
-    })
+const darkTheme = (): Theme => DarkTheme
 
 
 const theme = (state = darkTheme(), action: {type: string, payload: string}): Theme => {

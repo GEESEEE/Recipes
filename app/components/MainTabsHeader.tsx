@@ -17,11 +17,9 @@ export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element =
         <Container>
             <Header>
 
-                <View style={styles.drawerButton}>
-                    <TouchableOpacity onPress={handleDrawerButton}>
-                        <Feather name="menu" size={30} color={theme.background}/>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={handleDrawerButton}>
+                    <Feather name="menu" size={30} color={theme.background}/>
+                </TouchableOpacity>
 
                 <HeaderTitle>Header </HeaderTitle>
             </Header>
