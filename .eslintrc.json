@@ -32,6 +32,7 @@
         "@typescript-eslint/no-use-before-define": "off",
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
         "max-len": ["error", 120],
+        "no-nested-ternary": "off",
         "react-native/no-unused-styles": "warn",
         "react-native/split-platform-components": 2,
         "react-native/no-inline-styles": 2,

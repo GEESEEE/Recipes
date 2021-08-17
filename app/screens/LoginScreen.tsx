@@ -121,8 +121,8 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
                 onChangeText={handleUsernameInputChange}
                 onEndEditing={handleUsernameValidation}
                 placeholder="Your Username or Email"
+                errorMessage={!data.isValidUsername ? 'Invalid Username or Email' : undefined}
             />
-            {data.isValidUsername ? null : <ErrorMessage>Invalid Username</ErrorMessage>}
 
             {/* Password Input Field */}
             <InputFieldRounded
@@ -139,8 +139,8 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
                         <MyFeather name="eye" color={colors.grey} />
                     )}
                 </TouchableOpacity>}
+                errorMessage={!data.isValidPassword ? 'Invalid Password' : undefined}
             />
-            {data.isValidPassword ? null : <ErrorMessage>Invalid Password</ErrorMessage>}
 
             {/* Log in Button */}
             <ButtonFilled text="Sign in" onPress={handleLoginButton} />
@@ -171,7 +171,3 @@ const Logo = styled(Image)`
     top: ${height * 0.08}px;
 `
 
-const ErrorMessage = styled(Text)`
-    color: ${(props) => props.theme.error};
-    fontSize: 10px;
-`

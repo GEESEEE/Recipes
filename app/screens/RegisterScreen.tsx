@@ -133,19 +133,6 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
         return data.password1 === data.password2
     }
 
-    function invalidPassWord(): JSX.Element | null{
-        if (!data.isValidPassword1) {
-            return (<ErrorMessage>Invalid Password 1</ErrorMessage>)
-        }
-        if (!data.isValidPassword2) {
-            return (<ErrorMessage>Invalid Password 2</ErrorMessage>)
-        }
-        if (!samePasswords()) {
-            return (<ErrorMessage>Passwords are not the same</ErrorMessage>)
-        }
-        return null
-    }
-
     async function handleRegisterButton(): Promise<void> {
         if (data.isValidUsername &&
             data.isValidPassword1 &&
@@ -174,16 +161,17 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onChangeText={handleUsernameInputChange}
                 onEndEditing={handleUsernameValidation}
                 placeholder="Username"
+                errorMessage={!data.isValidUsername ? 'Invalid Username' : undefined}
             />
-            {data.isValidUsername ? null : <ErrorMessage>Invalid username</ErrorMessage>}
+            {}
 
             {/* Email Input Field */}
             <InputFieldRounded
                 onChangeText={handleEmailInputChange}
                 onEndEditing={handleEmailValidation}
                 placeholder="E-mail"
+                errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
             />
-            {data.isValidEmail ? null : <ErrorMessage>Invalid E-mail</ErrorMessage>}
 
             {/* Password 1 Input Field */}
             <InputFieldRounded
@@ -200,6 +188,7 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                         )}
                     </TouchableOpacity>
                 }
+                errorMessage={!data.isValidPassword1 ? 'Invalid Password' : undefined}
             />
 
             {/* Password 2 Input Field */}
@@ -208,8 +197,9 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
                 onChangeText={handlePassword2InputChange}
                 onEndEditing={(text) => handlePasswordValidation(false, text)}
                 placeholder="Password"
+                errorMessage={!data.isValidPassword2 ? 'Invalid Password' :
+                !samePasswords() ? 'Passwords are not the same' : undefined}
             />
-            {invalidPassWord()}
 
             {/* Register Button */}
             <ButtonFilled text="Register" onPress={handleRegisterButton} />
@@ -231,10 +221,3 @@ const Container = styled(View)`
     alignItems: center;
     backgroundColor: ${(props) => props.theme.background}
 `
-
-const ErrorMessage = styled(Text)`
-    color: ${(props) => props.theme.error};
-    fontSize: 10px;
-`
-
-
