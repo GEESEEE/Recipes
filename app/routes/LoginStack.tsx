@@ -16,7 +16,7 @@ const screens = {
     }
 }
 
-const stackConfig = {
+const stackConfig: any = {
     headerMode: 'none',
 }
 

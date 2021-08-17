@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
-import { Theme } from '../reducers/theme'
+import { Theme } from '../config/themes'
 import { ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
 
