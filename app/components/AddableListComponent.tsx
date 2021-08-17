@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import colors from '../config/colors'
-import MyButton from './MyButton'
+import { ButtonBorderless } from './Buttons'
 
 export default function AddableListComponent({
     children,
@@ -21,13 +20,12 @@ export default function AddableListComponent({
             <Header>
                 <HeaderText>{headerText}</HeaderText>
             </Header>
+
             {children}
 
-            <MyButton
+            <ButtonBorderless
                 text={buttonText}
                 onPress={onButtonClick}
-                inverted
-                viewStyle={styles.button}
             />
         </Container>
     )
@@ -61,11 +59,3 @@ const HeaderText = styled(Text)`
     textAlign: center;
     color: ${(props) => props.theme.text};
 `
-
-const styles = StyleSheet.create({
-    button: {
-        width: '50%',
-        marginTop: 10,
-        marginBottom: 0,
-    },
-})

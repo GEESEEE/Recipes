@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
-import MyFeather from '../components/MyFeather'
-import MyButton from '../components/MyButton'
 import { signUp } from '../actions/auth'
+import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
+import { MyFeather } from '../components/Icons'
 
 // #region Components
 
@@ -259,13 +259,12 @@ function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<strin
             {invalidPassWord()}
 
             {/* Register Button */}
-            <MyButton text="Register" onPress={handleRegisterButton} />
+            <ButtonFilled text="Register" onPress={handleRegisterButton} />
 
             {/* Already have an account/Go Back Button */}
-            <MyButton
+            <ButtonBorderless
                 text="Already have an account?"
                 onPress={handleGoBackButton}
-                inverted
             />
         </Container>
     )
@@ -281,12 +280,6 @@ const Container = styled(View)`
 `
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-    },
     userinput: {
         flexDirection: 'row',
         alignItems: 'center',

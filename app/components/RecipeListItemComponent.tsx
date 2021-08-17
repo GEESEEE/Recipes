@@ -5,9 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { deleteRecipe } from '../actions/recipes'
-import colors from '../config/colors'
 import Recipe from '../data/recipe'
-import MyButton from './MyButton'
+import { ButtonFilled } from './Buttons'
 
 export default function RecipeListItemComponent({
     recipe,
@@ -40,7 +39,10 @@ export default function RecipeListItemComponent({
                 <Text style={styles.peopleCountText}>{recipe.peopleCount}</Text>
             </View>
 
-            <MyButton text="Delete Recipe" onPress={removeRecipe} viewStyle={styles.deleteButton} />
+            <ButtonFilled
+                text="Delete Recipe"
+                onPress={removeRecipe}
+            />
 
         </Container>
     )
@@ -58,16 +60,6 @@ const Container = styled(View)`
 `
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        backgroundColor: colors.white,
-        flex: 1,
-        marginTop: 5,
-        borderWidth: 3,
-        borderColor: colors.primary,
-        borderRadius: 20,
-        width: '80%'
-    },
     nameText: {
         left: 5,
         fontSize: 30,
@@ -86,7 +78,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
         flex: 1,
     },
-    deleteButton: {
-        width: '50%'
-    }
 })

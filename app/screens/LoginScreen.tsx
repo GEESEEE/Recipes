@@ -12,61 +12,12 @@ import { NavigationScreenProp } from 'react-navigation'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import colors from '../config/colors'
-import MyFeather from '../components/MyFeather'
-import MyFontAwesome from '../components/MyFontAwesome'
-import MyButton from '../components/MyButton'
+import {MyFeather, MyFontAwesome} from '../components/Icons'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
+import { ButtonFilled, ButtonInverted } from '../components/Buttons'
+import { InputFieldRounded } from '../components/TextInputs'
 
-const EmailInputField = ({
-    onChangeText,
-    onEndEditing
-}: {
-    onChangeText: (text: string) => void
-    onEndEditing: (e: any) => void
-}): JSX.Element => (
-    <View style={{ ...styles.userinput }}>
-        <MyFontAwesome name="user-o" />
-        <TextInput
-            placeholder="Your Username or Email"
-            style={styles.textinput}
-            autoCapitalize="none"
-            onChangeText={(text) => onChangeText(text)}
-            onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
-        />
-    </View>
-)
-
-const PasswordInputField = ({
-    secureTextEntry,
-    onChangeText,
-    onEyePress,
-    onEndEditing,
-}: {
-    secureTextEntry: boolean
-    onChangeText: (text: string) => void
-    onEyePress: () => void
-    onEndEditing: (e: any) => void
-}): JSX.Element => (
-    <View style={{ ...styles.userinput }}>
-        <MyFontAwesome name="lock" />
-        <TextInput
-            placeholder="Your Password"
-            secureTextEntry={secureTextEntry}
-            style={styles.textinput}
-            autoCapitalize="none"
-            onChangeText={(text) => onChangeText(text)}
-            onEndEditing={(e) => onEndEditing(e.nativeEvent.text)}
-        />
-        <TouchableOpacity onPress={onEyePress}>
-            {secureTextEntry ? (
-                <MyFeather name="eye-off" color={colors.grey} />
-            ) : (
-                <MyFeather name="eye" color={colors.grey} />
-            )}
-        </TouchableOpacity>
-    </View>
-)
 
 function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
     const dispatch = useDispatch()
@@ -151,28 +102,38 @@ function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> 
             <Image style={styles.logo} source={logo} />
 
             {/* Email Input Field */}
-            <EmailInputField onChangeText={handleUsernameInputChange} onEndEditing={handleUsernameValidation}/>
+            <InputFieldRounded
+                leftIcon={<MyFontAwesome name="user-o" />}
+                onChangeText={handleUsernameInputChange}
+                onEndEditing={handleUsernameValidation}
+                placeholder="Your Username or Email"
+            />
             {data.isValidUsername ? null : <Text style={styles.errorMessage}>Invalid Username</Text>}
 
             {/* Password Input Field */}
-            <PasswordInputField
+            <InputFieldRounded
+                leftIcon={<MyFontAwesome name="lock" />}
                 secureTextEntry={data.securePasswordText}
                 onChangeText={handlePasswordInputChange}
-                onEyePress={handleSecurePasswordChange}
                 onEndEditing={handlePasswordValidation}
+                placeholder="Your Password"
+                rightIcon={
+                <TouchableOpacity onPress={handleSecurePasswordChange}>
+                    {data.securePasswordText ? (
+                        <MyFeather name="eye-off" color={colors.grey} />
+                    ) : (
+                        <MyFeather name="eye" color={colors.grey} />
+                    )}
+                </TouchableOpacity>}
             />
             {data.isValidPassword ? null : <Text style={styles.errorMessage}>Invalid Password</Text>}
 
             {/* Log in Button */}
-            <MyButton text="Sign in" onPress={handleLoginButton} />
+            <ButtonFilled text="Sign in" onPress={handleLoginButton} />
 
             {/* Register Button */}
-            <MyButton
-                text="Register"
-                onPress={handleRegisterButton}
-                viewStyle={styles.registerButtonView}
-                textStyle={styles.registerButtonText}
-            />
+            <ButtonInverted text="Register" onPress={handleRegisterButton}/>
+
         </Container>
     )
 }
@@ -190,37 +151,11 @@ const Container = styled(View)`
 `
 
 const styles = StyleSheet.create({
-    userinput: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '85%',
-        marginTop: 8,
-        marginBottom: 8,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 5,
-        paddingTop: 5,
-        borderRadius: 20,
-        backgroundColor: colors.lightergrey,
-    },
-    textinput: {
-        flex: 1,
-        paddingLeft: 10,
-        color: colors.black,
-    },
     logo: {
         width: logoHeight,
         height: logoHeight,
         position: 'absolute',
         top: height * 0.08,
-    },
-    registerButtonView: {
-        backgroundColor: colors.white,
-        borderColor: colors.primary,
-        borderWidth: 2,
-    },
-    registerButtonText: {
-        color: colors.primary,
     },
     errorMessage: {
         color: colors.red,

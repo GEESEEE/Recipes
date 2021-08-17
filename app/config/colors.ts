@@ -4,7 +4,7 @@ export default {
     lightergrey: '#e5e5e5',
     lightgrey: '#bbbbbb',
     darkgrey: '#333333',
-    darkergrey: '#212121',
+    darkergrey: '#111111',
     grey: '#777777',
     black: '#000',
     white: '#fff',

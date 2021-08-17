@@ -12,8 +12,8 @@ import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
 import AddableListComponent from '../components/AddableListComponent'
-import MyButton from '../components/MyButton'
-import MyFeather from '../components/MyFeather'
+import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
+import {MyFeather} from '../components/Icons'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 
 const IngredientListView = (
@@ -320,10 +320,10 @@ function NewRecipeScreen(): JSX.Element {
             </AddableListComponent>
 
             {/* Create Recipe Button */}
-            <MyButton text="Create Recipe" onPress={handleCreateRecipe} />
+            <ButtonFilled text="Create Recipe" onPress={handleCreateRecipe} />
 
             {/* Clear Recipe Button */}
-            <MyButton text="Clear Recipe" onPress={clearRecipeData} inverted viewStyle={styles.clearRecipeButton}/>
+            <ButtonBorderless text="Clear Recipe" onPress={clearRecipeData}/>
         </Container>
     )
 }
@@ -343,7 +343,7 @@ const Container = styled(View)`
 
 // Bottom height * 0.03
 const Header = styled(View)`
-    bottom: ${height * 0.03};
+    bottom: ${height * 0.03}px;
     width: 85%;
     backgroundColor: ${(props) => props.theme.background};
     borderColor: ${(props) => props.theme.primary};
@@ -419,10 +419,4 @@ const styles = StyleSheet.create({
         paddingEnd: 5,
     },
     removeInstructionButton: {},
-    clearRecipeButton: {
-        marginTop: 20,
-        paddingTop: 1,
-        paddingBottom: 1,
-        width: '35%'
-    },
 })

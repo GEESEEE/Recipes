@@ -10,6 +10,7 @@ export type Theme = {
     primary: string,
     secondary: string,
     background: string,
+    backgroundVariant: string,
     text: string,
     grey: string
 }
@@ -19,6 +20,7 @@ const lightTheme = (): Theme => ({
     primary: colors.primary,
     secondary: colors.secondary,
     background: colors.white,
+    backgroundVariant: colors.lightergrey,
     text: colors.black,
     grey: colors.grey,
 })
@@ -28,6 +30,7 @@ const darkTheme = (): Theme => ({
         primary: colors.primary,
         secondary: colors.secondary,
         background: colors.darkergrey,
+        backgroundVariant: colors.darkgrey,
         text: colors.lightergrey,
         grey: colors.grey,
     })

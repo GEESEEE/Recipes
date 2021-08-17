@@ -1,16 +1,14 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { NavigationScreenProp } from 'react-navigation'
 import {View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
-import {  } from 'react-navigation-drawer'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import colors from '../config/colors'
-import MyButton from '../components/MyButton'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
 import { Theme } from '../reducers/theme'
+import { ButtonFilled } from '../components/Buttons'
 
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
@@ -63,7 +61,7 @@ export function DrawerContent({navigation} : {navigation: any}
 
             </ScrollView>
             <Footer>
-                <MyButton text="Sign Out" onPress={handleSignOut}/>
+                <ButtonFilled text="Sign Out" onPress={handleSignOut}/>
             </Footer>
         </Container>
     )

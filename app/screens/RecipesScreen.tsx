@@ -4,9 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import MyButton from '../components/MyButton'
+import { ButtonFilled } from '../components/Buttons'
 import RecipeListItemComponent from '../components/RecipeListItemComponent'
-import colors from '../config/colors'
 
 function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>}): JSX.Element {
     const recipes = useSelector((state: any) => state.recipes)
@@ -18,7 +17,7 @@ function RecipesScreen({navigation }: { navigation: NavigationScreenProp<string>
     return (
         <Container>
             <Text>recipes screen</Text>
-            <MyButton text="Create New Recipe" onPress={handleCreateRecipe}/>
+            <ButtonFilled text="Create New Recipe" onPress={handleCreateRecipe}/>
             <FlatList
                 style={styles.recipesList}
                 contentContainerStyle={styles.recipeListItemContainer}

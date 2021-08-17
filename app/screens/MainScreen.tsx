@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import MyButton from '../components/MyButton'
-import colors from '../config/colors'
 import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
+import { ButtonFilled } from '../components/Buttons'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useSelector((state: any) => state.recipes)
@@ -52,9 +51,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     return (
         <Container>
             <Text>main screen</Text>
-            <MyButton text="Log recipes" onPress={logRecipes} />
-            <MyButton text="Drawer" onPress={handleDrawer} />
-            <MyButton text="Change Primary Color" onPress={changePrimaryColor} />
+            <ButtonFilled text="Log recipes" onPress={logRecipes} />
+            <ButtonFilled text="Drawer" onPress={handleDrawer} />
+            <ButtonFilled text="Change Primary Color" onPress={changePrimaryColor} />
         </Container>
     )
 }
@@ -67,12 +66,3 @@ const Container = styled(View)`
     alignItems: center;
     backgroundColor: ${(props) => props.theme.background}
 `
-
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-    },
-})
