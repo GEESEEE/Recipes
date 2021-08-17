@@ -1,12 +1,10 @@
 import React from 'react'
-
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import Feather from 'react-native-vector-icons/Feather'
 import { View } from 'react-native'
 import colors from '../config/colors'
 import MainStack from './MainStack'
 import RecipesStack from './RecipesStack'
-import { useAppSelector } from '../types/ReduxHooks'
 
 const screens = {
     Main: {

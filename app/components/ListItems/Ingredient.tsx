@@ -47,7 +47,7 @@ const IngredientListItem = ({
             <UnitText
                 onChangeText={(text: string) => onChangeUnit(item.key, text)}
                 // value={item.unit}
-                placeholder="Unit"
+                placeholder="Unit?"
                 placeholderTextColor={theme.grey}
             />
 
