@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, TextInput } from 'react-native'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { MyFeather } from '../Icons'
 import { Instruction } from '../../data'
+import { useAppSelector } from '../../types/ReduxHooks'
 
 const InstructionListItem = ({
     instructionsData,
@@ -19,7 +19,7 @@ const InstructionListItem = ({
     instructionsData: Instruction[]
     item: Instruction
 }): JSX.Element => {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
 
     return (
         <Container key={item.key} >

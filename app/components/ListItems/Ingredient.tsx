@@ -1,15 +1,14 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
-import { useSelector } from 'react-redux'
+import { View, TouchableOpacity, TextInput } from 'react-native'
 import styled from 'styled-components'
 
 import { MyFeather } from '../Icons'
 import { Ingredient } from '../../data'
+import { useAppSelector } from '../../types/ReduxHooks'
 
 
 const IngredientListItem = (
     {
-        ingredientsData,
         item,
         onChangeName,
         onChangeAmount,
@@ -22,11 +21,10 @@ const IngredientListItem = (
         onChangeAmount: (key: string, text: string) => void,
         onChangeUnit: (key: string, text: string) => void,
         onRemove: (key: string) => void
-        ingredientsData: Ingredient[]
         item: Ingredient
     }
 ): JSX.Element => {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
 
     return (
         <Container key={item.key}>

@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
-import { useDispatch } from 'react-redux'
+import { View, TouchableOpacity } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
@@ -8,6 +7,7 @@ import { signUp } from '../actions/auth'
 import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
 import { InputFieldRounded } from '../components/TextInputs'
+import { useAppDispatch } from '../types/ReduxHooks'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -75,7 +75,7 @@ function reducer(state: any, action: any): any {
 }
 
 function RegisterScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const initialState = {
         username: '',

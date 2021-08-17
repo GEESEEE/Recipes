@@ -1,14 +1,13 @@
 import React from 'react'
-import {View} from 'react-native'
-import { useDispatch, useSelector } from "react-redux"
-import styled, { ThemeProvider } from 'styled-components'
+import  { ThemeProvider } from 'styled-components'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import LoginNavigator from './routes/LoginStack'
-import colors from './config/colors'
+import { useAppDispatch, useAppSelector } from './types/ReduxHooks'
+
 
 function AppWrapper(): JSX.Element {
-    const dispatch = useDispatch()
-    const theme = useSelector((state: any) => state.theme)
+    const dispatch = useAppDispatch()
+    const theme = useAppSelector((state) => state.theme)
 
     React.useEffect(() => {
         dispatch(retrieveColor())

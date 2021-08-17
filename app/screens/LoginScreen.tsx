@@ -4,10 +4,8 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
-    Text,
 } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import {MyFeather, MyFontAwesome} from '../components/Icons'
@@ -15,6 +13,7 @@ import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
 import { ButtonFilled, ButtonInverted } from '../components/Buttons'
 import { InputFieldRounded } from '../components/TextInputs'
+import { useAppDispatch } from '../types/ReduxHooks'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -57,7 +56,7 @@ function reducer(state: any, action: any): any {
 }
 
 function LoginScreen({ navigation }: { navigation: NavigationScreenProp<string> }): JSX.Element {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     React.useEffect(() => {
         dispatch(retrieveToken(navigation))

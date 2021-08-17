@@ -1,13 +1,11 @@
 import React from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import styled from 'styled-components'
 import Feather from "react-native-vector-icons/Feather"
-import { useSelector } from "react-redux"
-
-
+import { useAppSelector } from "../types/ReduxHooks"
 
 export const MainTabsHeader = ({navigation} : { navigation: any}): JSX.Element => {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
 
     function handleDrawerButton(): void {
         navigation.toggleDrawer()
@@ -53,11 +51,3 @@ const HeaderTitle = styled(Text)`
     color: ${(props) => props.theme.background};
     letterSpacing: 1px;
 `
-
-
-const styles = StyleSheet.create({
-
-    drawerButton: {
-       // marginLeft: 10,
-    },
-})

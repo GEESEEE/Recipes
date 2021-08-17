@@ -1,7 +1,7 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useAppSelector } from '../types/ReduxHooks'
 
 export function MyFeather({
     name,
@@ -12,7 +12,7 @@ export function MyFeather({
     size?: number
     color?: string
 }): JSX.Element {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
     return (
         <Feather name={name} color={color || theme.grey} size={size || 20} />
     )
@@ -27,7 +27,7 @@ export function MyFontAwesome({
     color?: string
     size?: number
 }): JSX.Element {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
 
     return <FontAwesome name={name} color={color || theme.grey} size={size || 20} />
 }

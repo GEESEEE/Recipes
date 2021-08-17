@@ -1,11 +1,9 @@
 import React from 'react'
 import {
     Dimensions,
-    StyleSheet,
     View,
 } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
@@ -13,11 +11,12 @@ import AddableListComponent from '../components/AddableListComponent'
 import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
 import {InstructionListItem, IngredientListItem} from '../components/ListItems'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
+import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
 
 function NewRecipeScreen(): JSX.Element {
-    const theme = useSelector((state: any) => state.theme)
-    const dispatch = useDispatch()
+    const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
 
     function getInitialRecipe(): Recipe {
         return {
@@ -185,7 +184,6 @@ function NewRecipeScreen(): JSX.Element {
                     data={ingredientsData}
                     renderItem={({ item }) => (
                         <IngredientListItem
-                            ingredientsData={ingredientsData}
                             item={item}
                             onRemove={handleRemoveIngredient}
                             onChangeName={handleIngredientNameChange}

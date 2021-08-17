@@ -1,13 +1,13 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
 import { Theme } from '../config/themes'
 import { ButtonFilled } from '../components/Buttons'
 import { MyFeather } from '../components/Icons'
+import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     <TouchableOpacity>
@@ -19,8 +19,8 @@ const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
 )
 
 const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
-    const dispatch = useDispatch()
-    const theme = useSelector((state: any) => state.theme)
+    const dispatch = useAppDispatch()
+    const theme = useAppSelector((state) => state.theme)
 
     return (
     <DarkThemeView>
@@ -37,10 +37,10 @@ const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
 
 export function DrawerContent({navigation} : {navigation: any}
 ): JSX.Element {
-    const user = useSelector((state: any) => state.user)
-    const auth = useSelector((state: any) => state.auth)
-    const theme: Theme = useSelector((state: any) => state.theme)
-    const dispatch = useDispatch()
+    const user = useAppSelector((state) => state.user)
+    const auth = useAppSelector((state) => state.auth)
+    const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
 
     async function handleSignOut(): Promise<void> {
         dispatch(signOut(auth.token, navigation))

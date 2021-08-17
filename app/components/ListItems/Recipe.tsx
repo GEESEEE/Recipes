@@ -1,24 +1,20 @@
 import React from 'react'
-import { StyleSheet,  View, Text } from 'react-native'
-import Feather from 'react-native-vector-icons/Feather'
+import { View, Text } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
+import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
 import { ButtonFilled } from '../Buttons'
 import { MyFeather } from '../Icons'
-
-
-
 
 const RecipeListItem = ({
     recipe,
 }: {
     recipe: Recipe
 }): JSX.Element => {
-    const dispatch = useDispatch()
-    const theme = useSelector((state: any) => state.theme)
+    const dispatch = useAppDispatch()
+    const theme = useAppSelector((state) => state.theme)
 
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))

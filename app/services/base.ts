@@ -7,7 +7,6 @@ async function getTokenHeader(): Promise<{ token: string }> {
     if (token === null) {
         return { token: '' }
     }
-
     return { token }
 }
 

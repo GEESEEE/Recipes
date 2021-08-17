@@ -1,7 +1,8 @@
 import React from 'react'
 import {View, TextInput, Text } from 'react-native'
-import { useSelector } from 'react-redux'
+
 import styled from 'styled-components'
+import { useAppSelector } from '../types/ReduxHooks'
 
 export const InputFieldRounded = ({
     onChangeText,
@@ -21,7 +22,7 @@ export const InputFieldRounded = ({
     leftIcon?: JSX.Element
     rightIcon?: JSX.Element
 }): JSX.Element => {
-    const theme = useSelector((state: any) => state.theme)
+    const theme = useAppSelector((state) => state.theme)
 
     return (
     <Container>

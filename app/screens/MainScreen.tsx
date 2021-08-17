@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/Buttons'
+import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
-    const recipes = useSelector((state: any) => state.recipes)
-    const theme = useSelector((state: any) => state.theme)
-    const dispatch = useDispatch()
+    const recipes = useAppSelector((state) => state.recipes)
+    const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
 
 
     useEffect(() => {
