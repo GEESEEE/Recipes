@@ -10,6 +10,7 @@ function AppWrapper(): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     React.useEffect(() => {
+        console.log('Starting')
         dispatch(retrieveColor())
         dispatch(retrieveTheme())
     }, [])
