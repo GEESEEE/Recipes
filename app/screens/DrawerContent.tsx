@@ -1,6 +1,5 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Switch, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'

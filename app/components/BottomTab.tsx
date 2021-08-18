@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import styled from 'styled-components'
-import { useAppSelector } from '../types/ReduxHooks'
 import { ButtonFilled } from './Buttons'
 
 export const BottomTab = ({
@@ -9,7 +8,6 @@ export const BottomTab = ({
 }: {
     navigation: any
 }): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
 
     function mainButton(): void {
         navigation.navigate('Main')
