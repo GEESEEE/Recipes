@@ -1,4 +1,4 @@
-import BottomTab from './bottom-tab'
+import BottomTab from './tabs'
 import Header from './header'
 import Drawer from './drawer'
 

@@ -1,8 +1,22 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import { useAppSelector } from '../../types/ReduxHooks'
+
+
+const ButtonIcon = ({
+    onPress,
+    icon
+}: {
+    onPress: () => void
+    icon: JSX.Element
+}):JSX.Element => (
+    <TouchableOpacity onPress={onPress}>
+        {icon}
+    </TouchableOpacity>
+)
 
 const Header = ({
     navigation,
@@ -10,19 +24,33 @@ const Header = ({
     navigation: any
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
+    const { routeName } = navigation.state
 
     function handleDrawerButton(): void {
         navigation.toggleDrawer()
     }
 
+    function handleCreateRecipeButton(): void {
+        navigation.navigate('CreateRecipe')
+    }
+
     return (
         <Container>
             <HeaderContainer>
-                <TouchableOpacity onPress={handleDrawerButton}>
-                    <Feather name="menu" size={30} color={theme.background} />
-                </TouchableOpacity>
+                <ButtonIcon
+                    onPress={handleDrawerButton}
+                    icon={<Feather name="menu" size={30} color={theme.primary} />}
+                />
 
-                <HeaderTitle>Header </HeaderTitle>
+                <HeaderTitle>Header</HeaderTitle>
+
+                {routeName === 'RecipesScreen'
+                    ?   <ButtonIcon
+                            onPress={handleCreateRecipeButton}
+                            icon={<Feather name="plus" size={30} color={theme.primary} />}
+                        />
+                    : null
+                }
             </HeaderContainer>
         </Container>
     )
@@ -30,10 +58,13 @@ const Header = ({
 
 export default Header
 
+
 const Container = styled(View)`
-    height: 70px;
-    padding-top: 30px;
-    background-color: ${(props) => props.theme.primary};
+    height: 80px;
+    padding-top: 45px;
+    background-color: ${(props) => props.theme.background};
+    border-bottom-color: ${(props) => props.theme.primary};
+    border-bottom-width: 1px;
 `
 
 const HeaderContainer = styled(View)`
@@ -43,15 +74,14 @@ const HeaderContainer = styled(View)`
     justify-content: center;
     margin-left: 15px;
     margin-right: 15px;
-    margin-bottom: 0px;
-    background-color: ${(props) => props.theme.primary};
+    background-color: ${(props) => props.theme.background};
 `
 
 const HeaderTitle = styled(Text)`
     padding-left: 10px;
-    flex: 1px;
+    flex: 1;
     font-weight: bold;
     font-size: 20px;
-    color: ${(props) => props.theme.background};
+    color: ${(props) => props.theme.primary};
     letter-spacing: 1px;
 `

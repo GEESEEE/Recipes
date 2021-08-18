@@ -1,9 +1,8 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
-import { ButtonFilled } from '../components/buttons'
 import { RecipeListItem } from '../components/list-items'
 import { Recipe } from '../data'
 import { useAppSelector } from '../types/ReduxHooks'
@@ -15,20 +14,13 @@ function RecipesScreen({
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
 
-    function handleCreateRecipe(): void {
-        navigation.navigate('CreateRecipe')
-    }
-
     return (
         <Container>
-            <ButtonFilled
-                text="Create New Recipe"
-                onPress={handleCreateRecipe}
-            />
             <RecipesList
                 data={recipes}
+                contentContainerStyle={styles.recipeListItem}
                 renderItem={({ item }) => (
-                    <RecipeListItem recipe={item as Recipe} />
+                    <RecipeListItem recipe={item} />
                 )}
             />
         </Container>
@@ -37,13 +29,20 @@ function RecipesScreen({
 
 export default RecipesScreen
 
-const Container = styled(SafeAreaView)`
+const Container = styled(View)`
     flex: 1;
-    justify-content: center;
-    align-items: center;
     background-color: ${(props) => props.theme.background};
 `
 
-const RecipesList = styled(FlatList)`
-    width: 100%;
+const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
+
 `
+
+const styles = StyleSheet.create({
+    recipeListItem: {
+
+    }
+})
+
+
+

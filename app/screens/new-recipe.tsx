@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
 import ListButtonComponent from '../components/list-button'
-import { ButtonBorderless, ButtonFilled } from '../components/buttons'
+import { ButtonBorderless, ButtonFilled } from '../components/user-input/buttons'
 import {
     InstructionListItem,
     IngredientListItem,
@@ -181,9 +181,9 @@ function NewRecipeScreen(): JSX.Element {
                     <List
                         key={0}
                         data={ingredientsData}
-                        renderItem={({ item }) => (
+                        renderItem={({ item}) => (
                             <IngredientListItem
-                                item={item}
+                                item={item as Ingredient}
                                 onRemove={handleRemoveIngredient}
                                 onChangeName={handleIngredientNameChange}
                                 onChangeAmount={handleIngredientAmountChange}
@@ -207,7 +207,7 @@ function NewRecipeScreen(): JSX.Element {
                         renderItem={({ item }) => (
                             <InstructionListItem
                                 instructionsData={instructionsData}
-                                item={item}
+                                item={item as Instruction}
                                 onRemove={handleRemoveInstruction}
                                 onChangeText={handleInstructionTextChange}
                             />

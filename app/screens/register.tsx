@@ -4,9 +4,9 @@ import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import { signUp } from '../actions/auth'
-import { ButtonBorderless, ButtonFilled } from '../components/buttons'
+import { ButtonBorderless, ButtonFilled } from '../components/user-input/buttons'
 import { MyFeather } from '../components/icons'
-import { InputFieldRounded } from '../components/text-inputs'
+import { InputFieldRounded } from '../components/user-input/text-inputs'
 import { useAppDispatch } from '../types/ReduxHooks'
 
 const REGISTER_ACTIONS = {
@@ -36,7 +36,6 @@ function reducer(state: any, action: any): any {
 
         case REGISTER_ACTIONS.PASSWORD2_CHANGE: {
             const {password2, isValidPassword2} = action.payload
-            console.log(action.payload)
             return { ...state, password2, isValidPassword2 }
         }
 

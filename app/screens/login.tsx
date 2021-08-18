@@ -1,13 +1,13 @@
 import React, { useReducer } from 'react'
-import { View, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Dimensions, TouchableOpacity } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
-import { MyFeather, MyFontAwesome } from '../components/icons'
+import { MyFeather, MyFontAwesome, Logo } from '../components/icons'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
-import { ButtonFilled, ButtonInverted } from '../components/buttons'
-import { InputFieldRounded } from '../components/text-inputs'
+import { ButtonFilled, ButtonInverted } from '../components/user-input/buttons'
+import { InputFieldRounded } from '../components/user-input/text-inputs'
 import { useAppDispatch } from '../types/ReduxHooks'
 
 const LOGIN_ACTIONS = {
@@ -46,7 +46,7 @@ function LoginScreen({
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        // dispatch(retrieveToken(navigation))
+        dispatch(retrieveToken(navigation))
     }, [])
 
     const initialState = {
@@ -88,10 +88,16 @@ function LoginScreen({
         navigation.navigate('Register')
     }
 
+    const { height } = Dimensions.get('screen')
+    const logoHeight = height * 0.15
+
     return (
         <Container>
             {/* Logo */}
-            <Logo source={logo} />
+            <LogoView>
+                <Logo size={logoHeight}/>
+            </LogoView>
+
 
             {/* Email Input Field */}
             <InputFieldRounded
@@ -136,8 +142,7 @@ function LoginScreen({
 
 export default LoginScreen
 
-const { height } = Dimensions.get('screen')
-const logoHeight = height * 0.15
+
 
 const Container = styled(View)`
     flex: 1;
@@ -146,9 +151,7 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const Logo = styled(Image)`
-    width: ${logoHeight}px;
-    height: ${logoHeight}px;
+const LogoView = styled(View)`
     position: absolute;
-    top: ${height * 0.08}px;
+    top: 80px;
 `

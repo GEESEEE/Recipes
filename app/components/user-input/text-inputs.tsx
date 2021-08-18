@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, Text } from 'react-native'
 
 import styled from 'styled-components'
-import { useAppSelector } from '../types/ReduxHooks'
+import { useAppSelector } from '../../types/ReduxHooks'
 
 export const InputFieldRounded = ({
     onChangeText,

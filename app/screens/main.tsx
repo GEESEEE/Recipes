@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
-import { ButtonFilled } from '../components/buttons'
+import { ButtonFilled } from '../components/user-input/buttons'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {

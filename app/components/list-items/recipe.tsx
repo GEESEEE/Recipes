@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styled from 'styled-components'
 import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
-import { ButtonFilled } from '../buttons'
-import { MyFeather } from '../icons'
+import { ButtonFilled, ButtonOptions } from '../user-input/buttons'
+import { MyFeather, MyMaterialIcons } from '../icons'
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     const dispatch = useAppDispatch()
@@ -16,10 +16,17 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
         dispatch(deleteRecipe(recipe))
     }
 
+    async function options(): Promise<void> {
+        console.log('Recipe Options')
+    }
+
     return (
         <Container>
             {/* Recipe Name */}
             <Name>{recipe.name}</Name>
+            <ButtonOptions
+                onPress={options}
+            />
 
             {/* Recipe Properties */}
             <PropertiesContainer>
@@ -47,7 +54,6 @@ const Container = styled(View)`
     align-self: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
-    flex: 1;
     margin-top: 5px;
     border-width: 3px;
     border-color: ${(props) => props.theme.primary};
