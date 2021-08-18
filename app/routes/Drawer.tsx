@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from 'react-navigation-drawer'
-import { DrawerContent } from '../screens/DrawerContent'
-import MainTabs from './MainTabs'
-import RecipesStack from './RecipesStack'
+import { Drawer } from '../components/routes'
+import MainTabs from './main-tabs'
+import RecipesStack from './recipes-stack'
 
 const screens = {
     Main: {
@@ -14,7 +14,7 @@ const screens = {
 
 const drawerOptions = {
     drawerWidth: 200,
-    contentComponent: DrawerContent,
+    contentComponent: Drawer,
 }
 
 const DrawerNavigator = createDrawerNavigator(screens, drawerOptions)

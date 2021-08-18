@@ -4,12 +4,12 @@ import { FlatList, TextInput } from 'react-native-gesture-handler'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
-import AddableListComponent from '../components/AddableListComponent'
-import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
+import ListButtonComponent from '../components/list-button'
+import { ButtonBorderless, ButtonFilled } from '../components/buttons'
 import {
     InstructionListItem,
     IngredientListItem,
-} from '../components/ListItems'
+} from '../components/list-items'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
@@ -172,7 +172,7 @@ function NewRecipeScreen(): JSX.Element {
             </View> */}
 
             {/* Ingredients List Container */}
-            <AddableListComponent
+            <ListButtonComponent
                 headerText="Ingredients"
                 buttonText="Add Ingredient"
                 onButtonClick={handleAddIngredient}
@@ -192,10 +192,10 @@ function NewRecipeScreen(): JSX.Element {
                         )}
                     />,
                 ]}
-            </AddableListComponent>
+            </ListButtonComponent>
 
             {/* Instructions List Container */}
-            <AddableListComponent
+            <ListButtonComponent
                 buttonText="Add Instruction"
                 onButtonClick={handleAddInstruction}
                 headerText="Instructions"
@@ -214,7 +214,7 @@ function NewRecipeScreen(): JSX.Element {
                         )}
                     />,
                 ]}
-            </AddableListComponent>
+            </ListButtonComponent>
 
             {/* Create Recipe Button */}
             <ButtonFilled text="Create Recipe" onPress={handleCreateRecipe} />

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
-import { ButtonFilled } from '../components/Buttons'
+import { ButtonFilled } from '../components/buttons'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
@@ -21,7 +21,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function changePrimaryColor(): void {
-        console.log('Changing primary color')
         if (theme.primary === '#4ecdc4') {
             dispatch(setColor('#fc5c65'))
         } else {

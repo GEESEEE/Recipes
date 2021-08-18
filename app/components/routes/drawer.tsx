@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, ScrollView, Switch, Text, TouchableOpacity} from 'react-native'
+import { View, ScrollView, Switch, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import styled from 'styled-components'
-import { signOut } from '../actions/auth'
-import { setTheme } from '../actions/theme'
-import { ButtonFilled } from '../components/Buttons'
-import { MyFeather } from '../components/Icons'
-import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
-import { Theme } from '../reducers/theme'
+import { signOut } from '../../actions/auth'
+import { setTheme } from '../../actions/theme'
+import { ButtonFilled } from '../buttons'
+import { MyFeather } from '../icons'
+import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
+import { Theme } from '../../reducers/theme'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     <TouchableOpacity>
@@ -37,7 +37,7 @@ const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
     )
 }
 
-export function DrawerContent({
+export default function Drawer({
     navigation,
 }: {
     navigation: any
@@ -75,7 +75,7 @@ export function DrawerContent({
     )
 }
 
-const Container = styled(View)`
+const Container = styled(SafeAreaView)`
     flex: 1;
     background-color: ${(props) => props.theme.background};
 `

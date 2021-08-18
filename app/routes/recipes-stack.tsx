@@ -1,13 +1,12 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import RecipesScreen from '../screens/RecipesScreen'
-import NewRecipeScreen from '../screens/NewRecipeScreen'
-import { MainTabsHeader } from '../components/MainTabsHeader'
+import {RecipesScreen, NewRecipeScreen} from '../screens'
+import { Header } from '../components/routes'
 
 const screens = {
     RecipesScreen: {
         screen: RecipesScreen,
         navigationOptions: () => ({
-            header: MainTabsHeader,
+            header: Header,
             headerMode: 'screen',
         }),
     },

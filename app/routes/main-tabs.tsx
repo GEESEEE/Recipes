@@ -2,9 +2,9 @@ import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Feather from 'react-native-vector-icons/Feather'
 import { View } from 'react-native'
-import MainStack from './MainStack'
-import RecipesStack from './RecipesStack'
-import { BottomTab } from '../components/BottomTab'
+import MainStack from './main-stack'
+import RecipesStack from './recipes-stack'
+import { BottomTab } from '../components/routes'
 
 const screens = {
     Main: {

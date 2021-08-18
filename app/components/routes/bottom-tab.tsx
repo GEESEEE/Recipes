@@ -1,9 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import { ButtonFilled } from './Buttons'
+import { ButtonFilled } from '../buttons'
 
-export const BottomTab = ({
+const BottomTab = ({
     navigation,
 }: {
     navigation: any
@@ -24,6 +24,8 @@ export const BottomTab = ({
         </Container>
     )
 }
+
+export default BottomTab
 
 const RouteTab = (
     {text, onPress} : {

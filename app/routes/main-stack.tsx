@@ -1,12 +1,12 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import { MainTabsHeader } from '../components/MainTabsHeader'
-import MainScreen from '../screens/MainScreen'
+import { Header } from '../components/routes'
+import {MainScreen} from '../screens'
 
 const screens = {
     Main: {
         screen: MainScreen,
         navigationOptions: () => ({
-            header: MainTabsHeader,
+            header: Header,
             headerMode: 'screen',
         }),
     },

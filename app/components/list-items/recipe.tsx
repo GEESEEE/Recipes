@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
-import { ButtonFilled } from '../Buttons'
-import { MyFeather } from '../Icons'
+import { ButtonFilled } from '../buttons'
+import { MyFeather } from '../icons'
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     const dispatch = useAppDispatch()

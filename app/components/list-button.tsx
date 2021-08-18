@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { ButtonBorderless } from './Buttons'
+import { ButtonBorderless } from './buttons'
 
-export default function AddableListComponent({
+export default function ListButtonComponent({
     children,
     headerText,
     buttonText,

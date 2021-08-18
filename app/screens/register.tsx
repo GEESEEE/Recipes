@@ -4,9 +4,9 @@ import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import { signUp } from '../actions/auth'
-import { ButtonBorderless, ButtonFilled } from '../components/Buttons'
-import { MyFeather } from '../components/Icons'
-import { InputFieldRounded } from '../components/TextInputs'
+import { ButtonBorderless, ButtonFilled } from '../components/buttons'
+import { MyFeather } from '../components/icons'
+import { InputFieldRounded } from '../components/text-inputs'
 import { useAppDispatch } from '../types/ReduxHooks'
 
 const REGISTER_ACTIONS = {

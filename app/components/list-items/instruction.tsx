@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 import styled from 'styled-components'
 
-import { MyFeather } from '../Icons'
+import { MyFeather } from '../icons'
 import { Instruction } from '../../data'
 import { useAppSelector } from '../../types/ReduxHooks'
 

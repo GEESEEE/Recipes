@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
-import { useAppSelector } from '../types/ReduxHooks'
+import { useAppSelector } from '../../types/ReduxHooks'
 
-export const MainTabsHeader = ({
+const Header = ({
     navigation,
 }: {
     navigation: any
@@ -17,16 +17,18 @@ export const MainTabsHeader = ({
 
     return (
         <Container>
-            <Header>
+            <HeaderContainer>
                 <TouchableOpacity onPress={handleDrawerButton}>
                     <Feather name="menu" size={30} color={theme.background} />
                 </TouchableOpacity>
 
                 <HeaderTitle>Header </HeaderTitle>
-            </Header>
+            </HeaderContainer>
         </Container>
     )
 }
+
+export default Header
 
 const Container = styled(View)`
     height: 70px;
@@ -34,7 +36,7 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.primary};
 `
 
-const Header = styled(View)`
+const HeaderContainer = styled(View)`
     flex: 1;
     flex-direction: row;
     align-items: center;
