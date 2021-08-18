@@ -1,10 +1,10 @@
 import React from 'react'
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Feather from 'react-native-vector-icons/Feather'
 import { View } from 'react-native'
-import colors from '../config/colors'
 import MainStack from './MainStack'
 import RecipesStack from './RecipesStack'
+import { BottomTab } from '../components/BottomTab'
 
 const screens = {
     Main: {
@@ -33,12 +33,9 @@ const screens = {
 
 const tabConfig = {
     initialRouteName: 'Main',
-    barStyle: { backgroundColor: colors.primary },
-    activeColor: colors.white,
-    inactiveColor: colors.lightgrey,
-    shifting: true,
+    tabBarComponent: BottomTab
 }
 
-const MainTabs = createMaterialBottomTabNavigator(screens, tabConfig)
+const MainTabs = createBottomTabNavigator(screens, tabConfig)
 
 export default MainTabs
