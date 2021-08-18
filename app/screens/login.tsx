@@ -13,36 +13,24 @@ import { useAppDispatch } from '../types/ReduxHooks'
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
     PASSWORD_CHANGE: 'passwordChange',
-    USERNAME_VALIDATION: 'usernameValidation',
-    PASSWORD_VALIDATION: 'passwordValidation',
     PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
 }
 
 function reducer(state: any, action: any): any {
     switch (action.type) {
         case LOGIN_ACTIONS.USERNAME_CHANGE: {
-            const username = action.payload
-            return { ...state, username }
+            const {username, isValidUsername } = action.payload
+            return { ...state, username, isValidUsername }
         }
 
         case LOGIN_ACTIONS.PASSWORD_CHANGE: {
-            const password = action.payload
-            return { ...state, password }
+            const {password, isValidPassword} = action.payload
+            return { ...state, password, isValidPassword }
         }
 
         case LOGIN_ACTIONS.PASSWORD_SECURE_CHANGE: {
             const securePasswordText = action.payload
             return { ...state, securePasswordText }
-        }
-
-        case LOGIN_ACTIONS.USERNAME_VALIDATION: {
-            const isValidUsername = action.payload
-            return { ...state, isValidUsername }
-        }
-
-        case LOGIN_ACTIONS.PASSWORD_VALIDATION: {
-            const isValidPassword = action.payload
-            return { ...state, isValidPassword }
         }
 
         default:
@@ -58,7 +46,7 @@ function LoginScreen({
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        dispatch(retrieveToken(navigation))
+        // dispatch(retrieveToken(navigation))
     }, [])
 
     const initialState = {
@@ -71,27 +59,16 @@ function LoginScreen({
 
     const [data, localDispatch] = useReducer(reducer, initialState)
 
-    function handleUsernameInputChange(text: string): void {
-        localDispatch({ type: LOGIN_ACTIONS.USERNAME_CHANGE, payload: text })
-    }
-
-    function handleUsernameValidation(text: string): void {
+    function handleUsernameInputChange(username: string): void {
         const regex = /^[a-z0-9]+(@[a-z0-9]+\.[a-z0-9]+)?$/i
-        localDispatch({
-            type: LOGIN_ACTIONS.USERNAME_VALIDATION,
-            payload: regex.test(text) && text.length >= 4 && text.length <= 30,
-        })
+        const isValidUsername = (regex.test(username) && username.length >= 4 && username.length <= 30) ||
+                                username.length === 0
+        localDispatch({ type: LOGIN_ACTIONS.USERNAME_CHANGE, payload: {username, isValidUsername} })
     }
 
-    function handlePasswordInputChange(text: string): void {
-        localDispatch({ type: LOGIN_ACTIONS.PASSWORD_CHANGE, payload: text })
-    }
-
-    function handlePasswordValidation(text: string): void {
-        localDispatch({
-            type: LOGIN_ACTIONS.PASSWORD_VALIDATION,
-            payload: text.length >= 5 && text.length <= 50,
-        })
+    function handlePasswordInputChange(password: string): void {
+        const isValidPassword = (password.length >= 5 && password.length <= 50) || password.length === 0
+        localDispatch({ type: LOGIN_ACTIONS.PASSWORD_CHANGE, payload: {password, isValidPassword} })
     }
 
     function handleSecurePasswordChange(): void {
@@ -120,7 +97,6 @@ function LoginScreen({
             <InputFieldRounded
                 leftIcon={<MyFontAwesome name="user-o" />}
                 onChangeText={handleUsernameInputChange}
-                onEndEditing={handleUsernameValidation}
                 placeholder="Your Username or Email"
                 errorMessage={
                     !data.isValidUsername
@@ -134,7 +110,6 @@ function LoginScreen({
                 leftIcon={<MyFontAwesome name="lock" />}
                 secureTextEntry={data.securePasswordText}
                 onChangeText={handlePasswordInputChange}
-                onEndEditing={handlePasswordValidation}
                 placeholder="Your Password"
                 rightIcon={
                     <TouchableOpacity onPress={handleSecurePasswordChange}>

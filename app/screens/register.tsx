@@ -15,57 +15,34 @@ const REGISTER_ACTIONS = {
     PASSWORD1_CHANGE: 'password1Change',
     PASSWORD2_CHANGE: 'password2Change',
     PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
-    USERNAME_VALIDATION: 'usernameValidation',
-    PASSWORD1_VALIDATION: 'password1Validation',
-    PASSWORD2_VALIDATION: 'password2Validation',
-    EMAIL_VALIDATION: 'emailValidation',
 }
 
 function reducer(state: any, action: any): any {
     switch (action.type) {
         case REGISTER_ACTIONS.USERNAME_CHANGE: {
-            const username = action.payload
-            return { ...state, username }
+            const {username, isValidUsername} = action.payload
+            return { ...state, username, isValidUsername }
         }
 
         case REGISTER_ACTIONS.EMAIL_CHANGE: {
-            const email = action.payload
-            return { ...state, email }
+            const {email, isValidEmail} = action.payload
+            return { ...state, email, isValidEmail }
         }
 
         case REGISTER_ACTIONS.PASSWORD1_CHANGE: {
-            const password1 = action.payload
-            return { ...state, password1 }
+            const {password1, isValidPassword1} = action.payload
+            return { ...state, password1, isValidPassword1 }
         }
 
         case REGISTER_ACTIONS.PASSWORD2_CHANGE: {
-            const password2 = action.payload
-            return { ...state, password2 }
+            const {password2, isValidPassword2} = action.payload
+            console.log(action.payload)
+            return { ...state, password2, isValidPassword2 }
         }
 
         case REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE: {
-            const securePasswordText = action.payload
+            const {securePasswordText} = action.payload
             return { ...state, securePasswordText }
-        }
-
-        case REGISTER_ACTIONS.USERNAME_VALIDATION: {
-            const isValidUsername = action.payload
-            return { ...state, isValidUsername }
-        }
-
-        case REGISTER_ACTIONS.PASSWORD1_VALIDATION: {
-            const isValidPassword1 = action.payload
-            return { ...state, isValidPassword1 }
-        }
-
-        case REGISTER_ACTIONS.PASSWORD2_VALIDATION: {
-            const isValidPassword2 = action.payload
-            return { ...state, isValidPassword2 }
-        }
-
-        case REGISTER_ACTIONS.EMAIL_VALIDATION: {
-            const isValidEmail = action.payload
-            return { ...state, isValidEmail }
         }
 
         default:
@@ -94,56 +71,31 @@ function RegisterScreen({
 
     const [data, localDispatch] = useReducer(reducer, initialState)
 
-    function handleUsernameInputChange(text: string): void {
-        localDispatch({ type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: text })
+    function handleUsernameInputChange(username: string): void {
+    	const isValidUsername = (username.length >= 4 && username.length <= 30) || username.length === 0
+        localDispatch({ type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: {username, isValidUsername} })
     }
 
-    function handleUsernameValidation(text: string): void {
-        localDispatch({
-            type: REGISTER_ACTIONS.USERNAME_VALIDATION,
-            payload: text.length >= 4 && text.length <= 30,
-        })
-    }
-
-    function handleEmailInputChange(text: string): void {
-        localDispatch({ type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: text })
-    }
-
-    function handleEmailValidation(text: string): void {
+    function handleEmailInputChange(email: string): void {
         const regex = /^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/i
-        localDispatch({
-            type: REGISTER_ACTIONS.EMAIL_VALIDATION,
-            payload: regex.test(text),
-        })
+        const isValidEmail =  regex.test(email)
+        localDispatch({ type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: {email, isValidEmail} })
     }
 
-    function handlePassword1InputChange(text: string): void {
+    function handlePassword1InputChange(password1: string): void {
+        const isValidPassword1 = password1.length >= 5 && password1.length <= 50
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD1_CHANGE,
-            payload: text,
+            payload: {password1, isValidPassword1},
         })
     }
 
-    function handlePassword2InputChange(text: string): void {
+    function handlePassword2InputChange(password2: string): void {
+        const isValidPassword2 = password2.length >= 5 && password2.length <= 50
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD2_CHANGE,
-            payload: text,
+            payload: {password2, isValidPassword2},
         })
-    }
-
-    function handlePasswordValidation(password1: boolean, text: string): void {
-        const valid = text.length >= 5 && text.length <= 50
-        if (password1) {
-            localDispatch({
-                type: REGISTER_ACTIONS.PASSWORD1_VALIDATION,
-                payload: valid,
-            })
-        } else {
-            localDispatch({
-                type: REGISTER_ACTIONS.PASSWORD2_VALIDATION,
-                payload: valid,
-            })
-        }
     }
 
     function handleSecurePassword1Change(): void {
@@ -183,7 +135,6 @@ function RegisterScreen({
             {/* Username Input Field */}
             <InputFieldRounded
                 onChangeText={handleUsernameInputChange}
-                onEndEditing={handleUsernameValidation}
                 placeholder="Username"
                 errorMessage={
                     !data.isValidUsername ? 'Invalid Username' : undefined
@@ -194,7 +145,6 @@ function RegisterScreen({
             {/* Email Input Field */}
             <InputFieldRounded
                 onChangeText={handleEmailInputChange}
-                onEndEditing={handleEmailValidation}
                 placeholder="E-mail"
                 errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
             />
@@ -203,7 +153,6 @@ function RegisterScreen({
             <InputFieldRounded
                 secureTextEntry={data.securePasswordText}
                 onChangeText={handlePassword1InputChange}
-                onEndEditing={(text) => handlePasswordValidation(true, text)}
                 placeholder="Password"
                 rightIcon={
                     <TouchableOpacity onPress={handleSecurePassword1Change}>
@@ -223,7 +172,6 @@ function RegisterScreen({
             <InputFieldRounded
                 secureTextEntry
                 onChangeText={handlePassword2InputChange}
-                onEndEditing={(text) => handlePasswordValidation(false, text)}
                 placeholder="Password"
                 errorMessage={
                     !data.isValidPassword2
