@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Switch, Text, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, ScrollView, Switch, Text, TouchableOpacity} from 'react-native'
 import styled from 'styled-components'
 import { signOut } from '../actions/auth'
 import { setTheme } from '../actions/theme'
@@ -75,7 +75,7 @@ export function DrawerContent({
     )
 }
 
-const Container = styled(SafeAreaView)`
+const Container = styled(View)`
     flex: 1;
     background-color: ${(props) => props.theme.background};
 `
