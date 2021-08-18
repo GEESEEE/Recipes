@@ -21,16 +21,22 @@ export const BottomTab = ({
 
     return (
         <Container>
-            <ButtonContainer>
-                <ButtonFilled text="Main" onPress={mainButton}/>
-            </ButtonContainer>
-
-            <ButtonContainer>
-                <ButtonFilled text="Recipes" onPress={recipesButton}/>
-            </ButtonContainer>
+            <RouteTab text="Main" onPress={mainButton}/>
+            <RouteTab text="Recipes" onPress={recipesButton}/>
         </Container>
     )
 }
+
+const RouteTab = (
+    {text, onPress} : {
+        text: string
+        onPress: () => void
+    }
+): JSX.Element => (
+        <ButtonContainer>
+            <ButtonFilled text={text} onPress={onPress}/>
+        </ButtonContainer>
+    )
 
 const Container = styled(View)`
     height: 70px;
