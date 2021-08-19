@@ -1,18 +1,15 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { ButtonBorderless } from './user-input/buttons'
 
-export default function ListButtonComponent({
+export function HeaderBordered({
     children,
     headerText,
-    buttonText,
-    onButtonClick,
+
 }: {
     children: JSX.Element[]
     headerText: string
-    buttonText: string
-    onButtonClick: () => void
+
 }): JSX.Element {
     return (
         <Container>
@@ -22,7 +19,7 @@ export default function ListButtonComponent({
 
             {children}
 
-            <ButtonBorderless text={buttonText} onPress={onButtonClick} />
+
         </Container>
     )
 }

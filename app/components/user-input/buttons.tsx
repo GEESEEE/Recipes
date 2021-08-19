@@ -122,26 +122,32 @@ const ButtonText = styled(Text)`
 
 export function ButtonOptions({
     onPress,
-    size,
-    color
+    size = 25,
+    color,
+    offset = 5,
+    onLayout
 }: {
     onPress: () => void
     size?: number
     color?: string
+    offset?: number
+    onLayout?: (e: any) => void
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
+    const OptionsContainer = styled(TouchableOpacity)`
+        position: absolute;
+        padding-top: ${offset}px;
+        padding-end: ${offset}px;
+        align-self: flex-end;
+    `
+
     return (
-        <OptionsContainer onPress={onPress}>
-            <MyMaterialIcons name="dots-vertical" size={size || 25} color={color || theme.primary} />
+        <OptionsContainer onPress={onPress} onLayout={onLayout}>
+            <MyMaterialIcons name="dots-vertical" size={size} color={color || theme.primary} />
         </OptionsContainer>
     )
 }
 
 
-const OptionsContainer = styled(TouchableOpacity)`
-    position: absolute;
-    padding-top: 8px;
-    padding-end: 8px;
-    align-self: flex-end;
-`
+

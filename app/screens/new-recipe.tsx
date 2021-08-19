@@ -4,7 +4,7 @@ import { FlatList, TextInput } from 'react-native-gesture-handler'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
-import ListButtonComponent from '../components/list-button'
+import {HeaderBordered} from '../components/header-bordered'
 import { ButtonBorderless, ButtonFilled } from '../components/user-input/buttons'
 import {
     InstructionListItem,
@@ -167,54 +167,38 @@ function NewRecipeScreen(): JSX.Element {
                 />
             </Header>
 
-            {/* <View style={{...globalStyles.userinput, ...styles.description}}>
-
-            </View> */}
-
             {/* Ingredients List Container */}
-            <ListButtonComponent
-                headerText="Ingredients"
-                buttonText="Add Ingredient"
-                onButtonClick={handleAddIngredient}
-            >
-                {[
-                    <List
-                        key={0}
-                        data={ingredientsData}
-                        renderItem={({ item}) => (
-                            <IngredientListItem
-                                item={item as Ingredient}
-                                onRemove={handleRemoveIngredient}
-                                onChangeName={handleIngredientNameChange}
-                                onChangeAmount={handleIngredientAmountChange}
-                                onChangeUnit={handleIngredientUnitChange}
-                            />
-                        )}
-                    />,
-                ]}
-            </ListButtonComponent>
+            <HeaderBordered headerText="Ingredients">
+                <List
+                    data={ingredientsData}
+                    renderItem={({ item}) => (
+                        <IngredientListItem
+                            item={item as Ingredient}
+                            onRemove={handleRemoveIngredient}
+                            onChangeName={handleIngredientNameChange}
+                            onChangeAmount={handleIngredientAmountChange}
+                            onChangeUnit={handleIngredientUnitChange}
+                        />
+                    )}
+                />
+                <ButtonBorderless text="Add Ingredient" onPress={handleAddIngredient} />
+            </HeaderBordered>
 
             {/* Instructions List Container */}
-            <ListButtonComponent
-                buttonText="Add Instruction"
-                onButtonClick={handleAddInstruction}
-                headerText="Instructions"
-            >
-                {[
-                    <List
-                        key={0}
-                        data={instructionsData}
-                        renderItem={({ item }) => (
-                            <InstructionListItem
-                                instructionsData={instructionsData}
-                                item={item as Instruction}
-                                onRemove={handleRemoveInstruction}
-                                onChangeText={handleInstructionTextChange}
-                            />
-                        )}
-                    />,
-                ]}
-            </ListButtonComponent>
+            <HeaderBordered headerText="Instructions">
+                <List
+                    data={instructionsData}
+                    renderItem={({ item }) => (
+                        <InstructionListItem
+                            instructionsData={instructionsData}
+                            item={item as Instruction}
+                            onRemove={handleRemoveInstruction}
+                            onChangeText={handleInstructionTextChange}
+                        />
+                    )}
+                />
+                <ButtonBorderless  text="Add Instruction" onPress={handleAddInstruction} />
+            </HeaderBordered>
 
             {/* Create Recipe Button */}
             <ButtonFilled text="Create Recipe" onPress={handleCreateRecipe} />

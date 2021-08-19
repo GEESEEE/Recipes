@@ -1,35 +1,54 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styled from 'styled-components'
+import ModalDropdown from 'react-native-modal-dropdown'
 import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
 import { ButtonFilled, ButtonOptions } from '../user-input/buttons'
-import { MyFeather, MyMaterialIcons } from '../icons'
+import { MyFeather } from '../icons'
+import { DropDown, DropDownItem } from '../dropdown'
+
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
+
     const dispatch = useAppDispatch()
-    const theme = useAppSelector((state) => state.theme)
 
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
     }
 
-    async function options(): Promise<void> {
-        console.log('Recipe Options')
+    async function editRecipe(): Promise<void> {
+        console.log('Clicked Edit Recipe')
     }
+
+    const dropDownItems: DropDownItem[] = [{
+        text: 'Edit',
+        onPress: editRecipe,
+    }, {
+        text: 'Delete',
+        onPress: removeRecipe,
+    }, ]
 
     return (
         <Container>
-            {/* Recipe Name */}
-            <Name>{recipe.name}</Name>
-            <ButtonOptions
-                onPress={options}
-            />
+            <ItemContainer>
+                <Name>{recipe.name}</Name>
+                <Properties recipe={recipe}/>
+                <DropDown items={dropDownItems} />
+            </ItemContainer>
+        </Container>
+    )
+}
 
-            {/* Recipe Properties */}
-            <PropertiesContainer>
+export default RecipeListItem
+
+const Properties = ({ recipe }: {recipe: Recipe}): JSX.Element => {
+    const theme = useAppSelector((state) => state.theme)
+
+    return (
+        <PropertiesContainer>
                 {/* Prepare Time */}
                 <MaterialCommunityIcons
                     name="timer-sand"
@@ -42,28 +61,29 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
                 <MyFeather name="user" color={theme.text} />
                 <Property>{recipe.peopleCount}</Property>
             </PropertiesContainer>
-
-            <ButtonFilled text="Delete Recipe" onPress={removeRecipe} />
-        </Container>
     )
 }
 
-export default RecipeListItem
-
 const Container = styled(View)`
+   flex: 1;
+`
+
+const ItemContainer = styled(View)`
     align-self: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
     margin-top: 5px;
-    border-width: 3px;
+    border-width: 2px;
     border-color: ${(props) => props.theme.primary};
-    border-radius: 20px;
-    width: 80%;
+    width: 90%;
+    height: 100px;
+    border-radius: 15px;
 `
 
 const Name = styled(Text)`
-    left: 5px;
-    font-size: 30px;
+    margin-start: 15px;
+    margin-end: 15px;
+    font-size: 20px;
     color: ${(props) => props.theme.text};
 `
 
@@ -77,3 +97,5 @@ const Property = styled(Text)`
     font-size: 20px;
     flex: 1;
 `
+
+

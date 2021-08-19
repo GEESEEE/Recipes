@@ -5,6 +5,7 @@ import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/buttons'
 import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
+import { DropDown } from '../components/dropdown'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
@@ -16,8 +17,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [])
 
     function logRecipes(): void {
-        console.log('Logging Recipes')
-        console.log(recipes)
+        console.log(recipes.length, 'Recipes')
     }
 
     function changePrimaryColor(): void {
@@ -28,23 +28,13 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    // Makes the back button do absolutely nothing
-    // useEffect(() => {
-    //     BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-    // }, [])
-
-    // function handleBackButton(): boolean {
-    //     console.log('Back button pressed')
-    //     return true;
-    // }
-
     function handleDrawer(): void {
         navigation.openDrawer()
     }
 
     return (
         <Container>
-            <Text>main screen</Text>
+            <SampleText >Main Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={logRecipes} />
             <ButtonFilled text="Drawer" onPress={handleDrawer} />
             <ButtonFilled
@@ -62,4 +52,11 @@ const Container = styled(View)`
     justify-content: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
+`
+
+const SampleText = styled(Text)`
+    color: ${(props) => props.theme.primary}
+    font-size: 20px;
+    border-color: ${(props) => props.theme.primary}
+    border-width: 1px;
 `
