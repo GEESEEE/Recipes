@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
-import { useAppSelector } from '../../types/ReduxHooks'
+import { useAppSelector } from '../../hooks/redux'
 
 
 const ButtonIcon = ({

@@ -18,11 +18,17 @@ const BottomTab = ({
         navigation.navigate('RecipesScreen')
     }
 
+    function testButton(): void {
+        navigation.navigate('Test')
+    }
+
     return (
         <Container>
             <RouteTab text="Main" onPress={mainButton}/>
             <Separator/>
             <RouteTab text="Recipes" onPress={recipesButton}/>
+            <Separator/>
+            <RouteTab text="Test" onPress={testButton}/>
         </Container>
     )
 }

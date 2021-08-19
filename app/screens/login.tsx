@@ -8,7 +8,7 @@ import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
 import { ButtonFilled, ButtonInverted } from '../components/user-input/buttons'
 import { InputFieldRounded } from '../components/user-input/text-inputs'
-import { useAppDispatch } from '../types/ReduxHooks'
+import { useAppDispatch } from '../hooks/redux'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',

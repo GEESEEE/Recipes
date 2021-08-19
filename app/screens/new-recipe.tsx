@@ -11,7 +11,7 @@ import {
     IngredientListItem,
 } from '../components/list-items'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
-import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
 
 function NewRecipeScreen(): JSX.Element {
     const theme = useAppSelector((state) => state.theme)

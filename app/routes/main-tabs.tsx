@@ -4,6 +4,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { View } from 'react-native'
 import MainStack from './main-stack'
 import RecipesStack from './recipes-stack'
+import {TestScreen} from '../screens'
 import { BottomTab } from '../components/routes'
 
 const screens = {
@@ -29,6 +30,9 @@ const screens = {
             ),
         },
     },
+    Test: {
+        screen: TestScreen
+    }
 }
 
 const tabConfig = {

@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import {LoginStack} from './routes'
-import { useAppDispatch, useAppSelector } from './types/ReduxHooks'
+import { useAppDispatch, useAppSelector } from './hooks/redux'
 
 function AppWrapper(): JSX.Element {
     const dispatch = useAppDispatch()

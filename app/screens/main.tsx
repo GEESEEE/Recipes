@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/buttons'
-import { useAppDispatch, useAppSelector } from '../types/ReduxHooks'
-import { DropDown } from '../components/dropdown'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
@@ -37,10 +36,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
             <SampleText >Main Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={logRecipes} />
             <ButtonFilled text="Drawer" onPress={handleDrawer} />
-            <ButtonFilled
-                text="Change Primary Color"
-                onPress={changePrimaryColor}
-            />
+            <ButtonFilled text="Change Primary Color" onPress={changePrimaryColor} />
         </Container>
     )
 }

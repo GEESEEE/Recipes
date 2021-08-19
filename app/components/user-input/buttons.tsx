@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useAppSelector } from '../../types/ReduxHooks'
+import { useAppSelector } from '../../hooks/redux'
 import { MyMaterialIcons } from '../icons'
 
 export type ButtonProps = {

@@ -5,7 +5,7 @@ import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import { RecipeListItem } from '../components/list-items'
 import { Recipe } from '../data'
-import { useAppSelector } from '../types/ReduxHooks'
+import { useAppSelector } from '../hooks/redux'
 
 function RecipesScreen({
     navigation,

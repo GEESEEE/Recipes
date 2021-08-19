@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { View, TouchableOpacity, Text, Modal } from 'react-native'
 import styled from 'styled-components'
 import { ButtonOptions } from './user-input/buttons'
@@ -7,6 +7,8 @@ export type DropDownItem = {
     text: string
     onPress: () => void | Promise<void>
 }
+
+
 
 export function DropDown({
     items,
@@ -18,12 +20,10 @@ export function DropDown({
     iconOffset?: number
 }): JSX.Element {
     const [open, setOpen] = useState(false)
-
-
     const toggle = (): void => {
+        console.log("yes")
         setOpen(!open)
     }
-
     const offset = iconSize + iconOffset
 
     const Container = styled(View)`
@@ -37,9 +37,6 @@ export function DropDown({
         border-width: 1px;
     `
 
-    function handleLayout(): void {
-        console.log("Layout")
-    }
 
 
     return (
@@ -62,7 +59,7 @@ export function DropDown({
 
 const DropDownMenu = React.forwardRef(({
     items,
-    offset
+    offset,
 }: {
     items: DropDownItem[]
     offset: number
@@ -72,7 +69,6 @@ const DropDownMenu = React.forwardRef(({
         margin-top: ${offset}px;
         width: 100px;
         background-color: ${(props) => props.theme.background};
-
     `
 
     return (
@@ -98,29 +94,6 @@ const Item = styled(Text)`
     color: ${(props) => props.theme.primary}
 `
 
-// const CreateModal = (x: any): JSX.Element => {
-//     console.log("Modal", lay)
-//     const Mod = styled(Modal)`
-//         width: ${lay.width}px;
-//         height: ${lay.height}px;
-//         background-color: ${(props) => props.theme.background};
-//         border-color: ${(props) => props.theme.primary}
-//         border-width: 1px;
-//     `
 
-//     return (
-//         <Mod
-//             transparent={false}
-//         >
-//             <SampleText>
-//                 Modal
-//             </SampleText>
-//         </Mod>
-//     )
-// }
 
-const SampleText = styled(Text)`
-    color: ${(props) => props.theme.primary}
-    font-size: 20px;
 
-`

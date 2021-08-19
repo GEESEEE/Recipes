@@ -6,7 +6,7 @@ import { signOut } from '../../actions/auth'
 import { setTheme } from '../../actions/theme'
 import { ButtonFilled } from '../user-input/buttons'
 import { MyFeather } from '../icons'
-import { useAppDispatch, useAppSelector } from '../../types/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { Theme } from '../../reducers/theme'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (

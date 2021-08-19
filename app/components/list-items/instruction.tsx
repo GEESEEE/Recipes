@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { MyFeather } from '../icons'
 import { Instruction } from '../../data'
-import { useAppSelector } from '../../types/ReduxHooks'
+import { useAppSelector } from '../../hooks/redux'
 
 const InstructionListItem = ({
     instructionsData,

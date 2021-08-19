@@ -7,7 +7,7 @@ import { signUp } from '../actions/auth'
 import { ButtonBorderless, ButtonFilled } from '../components/user-input/buttons'
 import { MyFeather } from '../components/icons'
 import { InputFieldRounded } from '../components/user-input/text-inputs'
-import { useAppDispatch } from '../types/ReduxHooks'
+import { useAppDispatch } from '../hooks/redux'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useAppSelector } from '../types/ReduxHooks'
+import { useAppSelector } from '../hooks/redux'
 import logo from '../assets/temp_icon.png'
 
 export function Logo(
