@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { useLayout } from '../hooks'
-import { ButtonFilled } from '../components/user-input/buttons'
+import { ButtonFilled } from '../components/user-input/Buttons'
 
 const TestScreen = (): JSX.Element => {
     const [open, setOpen] = React.useState(false)
@@ -59,6 +59,7 @@ const CreateModal = React.forwardRef(({onPress}: {onPress: () => void}, ref: any
         margin-top: ${coords.pageY}px;
         border-color: ${(props) => props.theme.primary};
         border-width: 1px;
+        background-color: ${(props) => props.theme.background};
     `
 
     const Return = styled(TouchableOpacity)`

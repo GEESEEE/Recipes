@@ -1,5 +1,5 @@
-import InstructionListItem from './instruction'
-import IngredientListItem from './ingredient'
-import RecipeListItem from './recipe'
+import InstructionListItem from './Instruction'
+import IngredientListItem from './Ingredient'
+import RecipeListItem from './Recipe'
 
 export { InstructionListItem, IngredientListItem, RecipeListItem }

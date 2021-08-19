@@ -4,8 +4,8 @@ import { FlatList, TextInput } from 'react-native-gesture-handler'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { createRecipe } from '../actions/recipes'
-import {HeaderBordered} from '../components/header-bordered'
-import { ButtonBorderless, ButtonFilled } from '../components/user-input/buttons'
+import {HeaderBordered} from '../components/HeaderBordered'
+import { ButtonBorderless, ButtonFilled } from '../components/user-input/Buttons'
 import {
     InstructionListItem,
     IngredientListItem,

@@ -3,9 +3,9 @@ import { ThemeProvider } from 'styled-components'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import {LoginStack} from './routes'
-import { useAppDispatch, useAppSelector } from './hooks/redux'
+import { useAppDispatch, useAppSelector } from './hooks'
 
-function AppWrapper(): JSX.Element {
+function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
     const theme = useAppSelector((state) => state.theme)
 
@@ -24,4 +24,4 @@ function AppWrapper(): JSX.Element {
     )
 }
 
-export default AppWrapper
+export default Wrapper

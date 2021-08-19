@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 import {LoginScreen, RegisterScreen} from '../screens'
-import Drawer from './drawer'
+import Drawer from './Drawer'
 
 const screens = {
     Login: {

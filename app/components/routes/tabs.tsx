@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { ButtonProps, ButtonFlex } from '../user-input/buttons'
+import { ButtonProps, ButtonFlex } from '../user-input/Buttons'
 
 const BottomTab = ({
     navigation,

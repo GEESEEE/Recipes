@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { Drawer } from '../components/routes'
-import MainTabs from './main-tabs'
-import RecipesStack from './recipes-stack'
+import MainTabs from './MainTabs'
+import RecipesStack from './RecipesStack'
 
 const screens = {
     Main: {

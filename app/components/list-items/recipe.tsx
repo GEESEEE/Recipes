@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { MyFeather } from '../icons'
-import { DropDown, DropDownItem } from '../dropdown'
+import { MyFeather } from '../Icons'
+import { DropDown, DropDownItem } from '../DropdownMenu'
 
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {

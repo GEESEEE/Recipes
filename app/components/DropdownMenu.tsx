@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { View, TouchableOpacity, Text, Modal } from 'react-native'
 import styled from 'styled-components'
-import { ButtonOptions } from './user-input/buttons'
+import { ButtonOptions } from './user-input/Buttons'
 
 export type DropDownItem = {
     text: string
