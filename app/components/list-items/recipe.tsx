@@ -6,6 +6,7 @@ import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { MyFeather } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../DropdownMenu'
+import { deleteRecipe } from '../../actions/recipes'
 
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
@@ -13,7 +14,7 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
 
     async function removeRecipe(): Promise<void> {
         console.log("Deleting recipe")
-        // dispatch(deleteRecipe(recipe))
+        dispatch(deleteRecipe(recipe))
     }
 
     async function editRecipe(): Promise<void> {

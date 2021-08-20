@@ -18,8 +18,6 @@ export function HeaderBordered({
             </Header>
 
             {children}
-
-
         </Container>
     )
 }
