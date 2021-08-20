@@ -1,24 +1,27 @@
 import React from 'react'
-import { View, Text, Modal, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useLayout } from '../hooks'
-import { ButtonFilled } from '../components/user-input/Buttons'
+import { DropDownMenu } from '../components/DropdownMenu'
 
 const TestScreen = (): JSX.Element => {
-    const [open, setOpen] = React.useState(false)
-    const toggle = (): void => setOpen(!open)
+    console.log("Test Screen")
 
-    const [layoutRef, onLayout] = useLayout()
+    const items=[{
+        text: 'Test',
+        onPress: () => console.log("Test1")
+    }, {
+        text: 'Test2',
+        onPress: () => console.log("Test2")
+    }]
 
     return (
         <Container>
-            <SampleText onLayout={onLayout}>
+            <SampleText >
                 Test Screen
             </SampleText>
-            <ButtonFilled text="Button" onPress={toggle}/>
-            {open
-            ? <CreateModal ref={layoutRef} onPress={toggle}/>
-            : null}
+            <DropDownMenu
+                items={items}
+            />
         </Container>
     )
 }
@@ -26,9 +29,9 @@ const TestScreen = (): JSX.Element => {
 export default TestScreen
 
 const Container = styled(View)`
-    flex: 1px;
+    flex: 1;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     background-color: ${(props) => props.theme.background};
 `
 
@@ -40,42 +43,4 @@ const SampleText = styled(Text)`
     width: 100px;
     height: 100px;
 `
-
-const CreateModal = React.forwardRef(({onPress}: {onPress: () => void}, ref: any): JSX.Element => {
-    const coords = ref.current
-
-    const Mod = styled(Modal)`
-        background-color: ${(props) => props.theme.background};
-        border-color: ${(props) => props.theme.primary};
-        border-width: 1px;
-    `
-    const SampleT = styled(Text)`
-        color: ${(props) => props.theme.primary}
-        font-size: 20px;
-        position: absolute;
-        width: ${coords.width}px;
-        height: ${coords.height}px;
-        margin-left: ${coords.pageX}px;
-        margin-top: ${coords.pageY}px;
-        border-color: ${(props) => props.theme.primary};
-        border-width: 1px;
-        background-color: ${(props) => props.theme.background};
-    `
-
-    const Return = styled(TouchableOpacity)`
-        flex: 1;
-        border-color: ${(props) => props.theme.primary};
-        border-width: 1px;
-    `
-
-    return (
-            <Mod transparent>
-                <Return onPress={onPress}/>
-                <SampleT>
-                    Modal
-                </SampleT>
-            </Mod>
-
-    )
-})
 

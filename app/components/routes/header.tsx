@@ -58,7 +58,6 @@ const Header = ({
 
 export default Header
 
-
 const Container = styled(View)`
     height: 80px;
     padding-top: 45px;

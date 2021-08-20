@@ -2,19 +2,18 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styled from 'styled-components'
-import { deleteRecipe } from '../../actions/recipes'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { MyFeather } from '../Icons'
-import { DropDown, DropDownItem } from '../DropdownMenu'
+import { DropDownMenu, DropDownItem } from '../DropdownMenu'
 
 
 const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
-
     const dispatch = useAppDispatch()
 
     async function removeRecipe(): Promise<void> {
-        dispatch(deleteRecipe(recipe))
+        console.log("Deleting recipe")
+        // dispatch(deleteRecipe(recipe))
     }
 
     async function editRecipe(): Promise<void> {
@@ -22,9 +21,11 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     }
 
     const dropDownItems: DropDownItem[] = [{
+        id: 0,
         text: 'Edit',
         onPress: editRecipe,
     }, {
+        id: 1,
         text: 'Delete',
         onPress: removeRecipe,
     }, ]
@@ -34,7 +35,7 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
             <ItemContainer>
                 <Name>{recipe.name}</Name>
                 <Properties recipe={recipe}/>
-                <DropDown items={dropDownItems} />
+                <DropDownMenu items={dropDownItems} />
             </ItemContainer>
         </Container>
     )
@@ -74,7 +75,6 @@ const ItemContainer = styled(View)`
     border-width: 2px;
     border-color: ${(props) => props.theme.primary};
     width: 90%;
-    height: 100px;
     border-radius: 15px;
 `
 

@@ -1,30 +1,30 @@
 import React, { MutableRefObject } from 'react'
 import { LayoutChangeEvent } from 'react-native'
 
-export type Layout = {
+export type Position = {
     width: number, height: number, pageX: number, pageY: number
 }
 
-const useLayout = (): [
-    layoutRef: MutableRefObject<Layout>, onLayout: (event: LayoutChangeEvent) => void
+const usePosition = (): [
+    positionRef: MutableRefObject<Position>, setPosition: (event: LayoutChangeEvent) => void
 ] => {
-    const layoutRef = React.useRef<Layout>({
+    const positionRef = React.useRef<Position>({
         width: 0, height: 0, pageX: 0, pageY: 0,
     })
 
-    const setLayout = (lay: Layout): void => {
-        layoutRef.current = lay
+    const setPosition = (lay: Position): void => {
+        positionRef.current = lay
     }
 
     const onLayout = React.useCallback((event: LayoutChangeEvent): void => {
         (event.target as any).measure(
             (x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
-                setLayout({width, height, pageX, pageY})
+                setPosition({width, height, pageX, pageY})
             },
         );
     }, [])
 
-    return [layoutRef, onLayout]
+    return [positionRef, onLayout]
 }
 
-export default useLayout
+export default usePosition

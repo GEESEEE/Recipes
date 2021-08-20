@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, Modal } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
+import { Position, usePosition } from '../hooks'
 import { ButtonOptions } from './user-input/Buttons'
 
 export type DropDownItem = {
+    id: number
     text: string
     onPress: () => void | Promise<void>
 }
 
-
-
-export function DropDown({
+export function DropDownMenu({
     items,
     iconSize = 25,
     iconOffset = 5
@@ -20,11 +21,10 @@ export function DropDown({
     iconOffset?: number
 }): JSX.Element {
     const [open, setOpen] = useState(false)
-    const toggle = (): void => {
-        console.log("yes")
-        setOpen(!open)
-    }
-    const offset = iconSize + iconOffset
+    const toggle = (): void => setOpen(!open)
+    const offset = iconSize + iconOffset * 2
+
+    const [positionRef, onPosition] = usePosition()
 
     const Container = styled(View)`
         position: absolute;
@@ -32,24 +32,22 @@ export function DropDown({
         padding-end: ${iconOffset}px;
         align-self: flex-end;
         width: 101px;
-        height: ${offset + items.length * 25 + 2}px;
-        border-color: ${(props) => props.theme.primary}
-        border-width: 1px;
+        height: ${items.length * 30 + 2}px;
     `
 
-
-
     return (
-        <Container>
+        <Container onLayout={onPosition}>
             <ButtonOptions
                 onPress={toggle}
                 size={iconSize}
                 offset={iconOffset}
             />
             {open
-            ?   <DropDownMenu
+            ?   <Menu
+                    ref={positionRef}
                     items={items}
                     offset={offset}
+                    onPress={toggle}
                 />
             :   null}
         </Container>
@@ -57,43 +55,68 @@ export function DropDown({
 }
 
 
-const DropDownMenu = React.forwardRef(({
+const Menu = React.forwardRef(({
     items,
     offset,
+    onPress
 }: {
     items: DropDownItem[]
     offset: number
-}, ref): JSX.Element => {
-    const ContainerView = styled(View)`
+    onPress: () => void
+}, ref: any): JSX.Element => {
+    const coords: Position = ref.current
+    const insets = useSafeAreaInsets()
+
+    const PopupMenu = styled(View)`
         position: absolute;
-        margin-top: ${offset}px;
-        width: 100px;
-        background-color: ${(props) => props.theme.background};
+        width: ${coords.width}px;
+        margin-left: ${coords.pageX}px;
+        margin-top: ${coords.pageY - insets.top + offset}px;
+        border-radius: 10px;
+        background-color: ${(props) => props.theme.backgroundVariant};
     `
 
     return (
-        <ContainerView>
-            {items.map(item =>
-                <ItemView onPress={item.onPress} key={items.indexOf(item)}>
-                    <Item>{item.text}</Item>
-                </ItemView>
-            )}
-        </ContainerView>
+        <Modal transparent>
+            <PopupReturn onPress={onPress}/>
+            <PopupMenu>
+                {items.map(item => {
+                    const separator = items.indexOf(item) !== items.length - 1
+                    return (
+                        <View key={item.id}>
+                            <ItemView onPress={item.onPress}>
+                                <ItemText>{item.text}</ItemText>
+                            </ItemView>
+                            {separator ? <Separator /> : null}
+                        </View>
+
+                    )
+                })}
+            </PopupMenu>
+        </Modal>
     )})
 
+const PopupReturn = styled(TouchableOpacity)`
+    flex: 1;
+`
+
 const ItemView = styled(TouchableOpacity)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-    padding: 2px;
-    padding-left: 5px;
+    justify-content: center;
     height: 25px;
 `
 
-const Item = styled(Text)`
-    font-size: 14px;
-    color: ${(props) => props.theme.primary}
+const ItemText = styled(Text)`
+    font-size: 15px;
+    padding: 5px;
+    padding: 10px;
+    color: ${(props) => props.theme.text}
 `
 
+const Separator = styled(View)`
+    height: 1px;
+    width: 100%;
+    background-color: ${(props) => props.theme.grey};
+`
 
 
 

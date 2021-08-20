@@ -1,4 +1,4 @@
-import useLayout from './layout'
-import {useAppDispatch, useAppSelector } from './redux'
+import usePosition, { Position } from './position'
+import { useAppDispatch, useAppSelector } from './redux'
 
-export { useLayout, useAppDispatch, useAppSelector }
+export { usePosition, Position, useAppDispatch, useAppSelector }
