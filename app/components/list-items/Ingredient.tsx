@@ -3,7 +3,7 @@ import { View, TouchableOpacity, TextInput } from 'react-native'
 import styled from 'styled-components'
 
 import { MyFeather } from '../Icons'
-import { Ingredient } from '../../data'
+import { RecipeIngredient } from '../../data'
 import { useAppSelector } from '../../hooks/redux'
 
 const IngredientListItem = ({
@@ -17,38 +17,37 @@ const IngredientListItem = ({
     onChangeAmount: (key: string, text: string) => void
     onChangeUnit: (key: string, text: string) => void
     onRemove: (key: string) => void
-    item: Ingredient
+    item: RecipeIngredient
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
-
     return (
         <Container key={item.key}>
             {/* Ingredient Name Input */}
             <NameText
                 onChangeText={(text: string) => onChangeName(item.key, text)}
-                value={item.name}
+                value={item.ingredient?.name}
                 placeholder="New Ingredient"
                 placeholderTextColor={theme.grey}
+                multiline
             />
 
             {/* Ingredient Amount Input */}
             <AmountText
                 onChangeText={(text: string) => onChangeAmount(item.key, text)}
-                // value={
-                //     item.recipeIngredients![0].amount
-                //         ? item.recipeIngredients![0].amount.toString()
-                //         : ''
-                // }
+                keyboardType='decimal-pad'
+                // value={item.amount.toString()}
                 placeholder="0"
                 placeholderTextColor={theme.grey}
+                multiline
             />
 
             {/* Ingredient Unit Input */}
             <UnitText
                 onChangeText={(text: string) => onChangeUnit(item.key, text)}
-                // value={item.unit}
+                value={item.ingredient?.unit?.toString() ?? ''}
                 placeholder="Unit?"
                 placeholderTextColor={theme.grey}
+                multiline
             />
 
             {/* Remove Ingredient Button */}
@@ -69,7 +68,7 @@ const Container = styled(View)`
 `
 
 const NameText = styled(TextInput)`
-    width: 50%;
+    width: 55%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `
@@ -81,7 +80,7 @@ const AmountText = styled(TextInput)`
 `
 
 const UnitText = styled(TextInput)`
-    width: 25%;
+    width: 20%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `

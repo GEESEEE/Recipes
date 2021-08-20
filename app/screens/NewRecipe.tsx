@@ -34,14 +34,6 @@ function NewRecipeScreen(): JSX.Element {
         getInitialRecipe()
     )
 
-    const [ingredientsData, setIngredientData] = React.useState<Ingredient[]>(
-        []
-    )
-
-    const [instructionsData, setInstructionsData] = React.useState<
-        Instruction[]
-    >([])
-
     function handleNameChange(name: string): void {
         setRecipeData({ ...recipeData, name })
     }
@@ -62,85 +54,73 @@ function NewRecipeScreen(): JSX.Element {
         const ingredient = new Ingredient()
         ingredient.name = ''
         ingredient.unit = ''
-        ingredient.key = uuid()
 
         const recipeIngredient = new RecipeIngredient()
         recipeIngredient.amount = 0
+        recipeIngredient.key = uuid()
         recipeIngredient.ingredient = ingredient
-        ingredient.recipeIngredients = [recipeIngredient]
 
-        setIngredientData([...ingredientsData, ingredient])
         recipeData.recipeIngredients?.push(recipeIngredient)
+        setRecipeData({ ...recipeData })
     }
 
     function handleRemoveIngredient(key: string): void {
-        const ingredients = ingredientsData.filter((item) => item.key !== key)
-        setIngredientData([...ingredients])
+        const recipeIngredients = recipeData.recipeIngredients?.filter((item) => item.key !== key)
+        setRecipeData({ ...recipeData, recipeIngredients})
     }
 
     function handleIngredientNameChange(key: string, name: string): void {
-        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
-        ingredient.name = name
-        setIngredientData([...ingredientsData])
+        const recipeIngredient = recipeData.recipeIngredients?.filter((item) => item.key === key)[0]
+        recipeIngredient!.ingredient!.name = name
+        setRecipeData({...recipeData})
     }
 
     function handleIngredientUnitChange(key: string, unit: string): void {
-        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
-        ingredient.unit = unit
-        setIngredientData([...ingredientsData])
+        const recipeIngredient = recipeData.recipeIngredients?.filter((item) => item.key === key)[0]
+        recipeIngredient!.ingredient!.unit = unit
+        setRecipeData({...recipeData})
     }
 
     function handleIngredientAmountChange(key: string, amount: string): void {
-        const ingredient = ingredientsData.filter((item) => item.key === key)[0]
-        const recipeIngredient = ingredient
-            .recipeIngredients?.[0] as RecipeIngredient
-        recipeIngredient.amount = parseFloat(amount)
-        setIngredientData([...ingredientsData])
+        const recipeIngredient = recipeData.recipeIngredients?.filter((item) => item.key === key)[0]
+        const val = parseFloat(amount.replace(',', '.'))
+        if (val) {
+            recipeIngredient!.amount = val
+        } else {
+            recipeIngredient!.amount = 0
+        }
+        setRecipeData({...recipeData})
     }
 
     function handleAddInstruction(): void {
         const instruction = new Instruction()
         instruction.text = ''
         instruction.key = uuid()
-
-        setInstructionsData([...instructionsData, instruction])
         recipeData.instructions?.push(instruction)
+        setRecipeData({...recipeData})
     }
 
     function handleRemoveInstruction(key: string): void {
-        const instructions = instructionsData.filter((item) => item.key !== key)
-        setInstructionsData([...instructions])
+        const instructions = recipeData.instructions?.filter((item) => item.key !== key)
+        recipeData.instructions = instructions
+        setRecipeData({...recipeData})
     }
 
     function handleInstructionTextChange(key: string, text: string): void {
-        const instruction = instructionsData.filter(
+        const instruction = recipeData.instructions?.filter(
             (item) => item.key === key
         )[0]
-        instruction.text = text
-        setInstructionsData([...instructionsData])
+        instruction!.text = text
+        setRecipeData({...recipeData})
     }
 
     async function handleCreateRecipe(): Promise<void> {
-        const recipe = { ...recipeData }
-        const recipeIngredients: RecipeIngredient[] = []
-        // Set the recipe correctly without Cycles
-        recipeData.recipeIngredients?.forEach((recipeIngredient) => {
-            const ingredient = { ...recipeIngredient.ingredient } as Ingredient
-            ingredient.recipeIngredients = []
-            const newRecipeIngredient = new RecipeIngredient()
-            newRecipeIngredient.amount = recipeIngredient.amount
-            newRecipeIngredient.ingredient = ingredient
-            recipeIngredients.push(newRecipeIngredient)
-        })
-        recipe.recipeIngredients = recipeIngredients
-        dispatch(createRecipe(recipe))
+        dispatch(createRecipe(recipeData))
         clearRecipeData()
     }
 
     function clearRecipeData(): void {
         setRecipeData(getInitialRecipe())
-        setIngredientData([])
-        setInstructionsData([])
     }
 
     return (
@@ -170,10 +150,10 @@ function NewRecipeScreen(): JSX.Element {
             {/* Ingredients List Container */}
             <HeaderBordered headerText="Ingredients">
                 <List
-                    data={ingredientsData}
+                    data={recipeData.recipeIngredients}
                     renderItem={({ item}) => (
                         <IngredientListItem
-                            item={item as Ingredient}
+                            item={item}
                             onRemove={handleRemoveIngredient}
                             onChangeName={handleIngredientNameChange}
                             onChangeAmount={handleIngredientAmountChange}
@@ -187,10 +167,10 @@ function NewRecipeScreen(): JSX.Element {
             {/* Instructions List Container */}
             <HeaderBordered headerText="Instructions">
                 <List
-                    data={instructionsData}
+                    data={recipeData.instructions}
                     renderItem={({ item }) => (
                         <InstructionListItem
-                            instructionsData={instructionsData}
+                            number={(recipeData.instructions!.indexOf(item) + 1).toString()}
                             item={item as Instruction}
                             onRemove={handleRemoveInstruction}
                             onChangeText={handleInstructionTextChange}

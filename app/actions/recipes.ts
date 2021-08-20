@@ -8,7 +8,6 @@ import Ingredient from '../data/ingredient'
 export const createRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
-        // console.log("Creating Recipe", recipe)
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
@@ -32,7 +31,7 @@ export const createRecipe =
                         ingredientObjects.push({
                             name: i.name,
                             amount: ri.amount,
-                            key: i.key,
+                            key: ri.key,
                             unit: i.unit as string | undefined,
                         })
                     })

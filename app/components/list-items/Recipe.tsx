@@ -13,7 +13,6 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     const dispatch = useAppDispatch()
 
     async function removeRecipe(): Promise<void> {
-        console.log("Deleting recipe")
         dispatch(deleteRecipe(recipe))
     }
 

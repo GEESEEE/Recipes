@@ -7,22 +7,21 @@ import { Instruction } from '../../data'
 import { useAppSelector } from '../../hooks/redux'
 
 const InstructionListItem = ({
-    instructionsData,
+    number,
     item,
     onChangeText,
     onRemove,
 }: {
     onChangeText: (key: string, text: string) => void
     onRemove: (key: string) => void
-    instructionsData: Instruction[]
+    number: string
     item: Instruction
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
-
     return (
         <Container key={item.key}>
             {/* Instruction Number */}
-            <Number>{(instructionsData.indexOf(item) + 1).toString()}</Number>
+            <Number>{number}</Number>
 
             {/* Instruction Text Input */}
             <InstructionText
