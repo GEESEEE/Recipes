@@ -7,9 +7,11 @@ const TestScreen = (): JSX.Element => {
     console.log("Test Screen")
 
     const items=[{
+        id: 0,
         text: 'Test',
         onPress: () => console.log("Test1")
     }, {
+        id: 1,
         text: 'Test2',
         onPress: () => console.log("Test2")
     }]
