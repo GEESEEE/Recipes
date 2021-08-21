@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react'
-import { View, Dimensions, TouchableOpacity } from 'react-native'
+import React, { useReducer, useRef } from 'react'
+import { View, Dimensions, TouchableOpacity, Animated, Keyboard } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
-import { MyFeather, MyFontAwesome, Logo } from '../components/Icons'
+import { MyFeather, MyFontAwesome } from '../components/Icons'
 import logo from '../assets/temp_icon.png'
 import { retrieveToken, signIn } from '../actions/auth'
 import { ButtonFilled, ButtonInverted } from '../components/user-input/Buttons'
@@ -88,14 +88,11 @@ function LoginScreen({
         navigation.navigate('Register')
     }
 
-    const { height } = Dimensions.get('screen')
-    const logoHeight = height * 0.15
-
     return (
         <Container>
             {/* Logo */}
             <LogoView>
-                <Logo size={logoHeight}/>
+                <Logo source={logo}/>
             </LogoView>
 
 
@@ -142,7 +139,8 @@ function LoginScreen({
 
 export default LoginScreen
 
-
+const { height } = Dimensions.get('screen')
+const logoHeight = height * 0.2
 
 const Container = styled(View)`
     flex: 1;
@@ -154,4 +152,9 @@ const Container = styled(View)`
 const LogoView = styled(View)`
     position: absolute;
     top: 80px;
+`
+
+const Logo = styled(Animated.Image)`
+    height: ${logoHeight}px;
+    width: ${logoHeight}px;
 `

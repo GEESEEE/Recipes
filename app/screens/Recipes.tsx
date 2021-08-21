@@ -18,9 +18,10 @@ function RecipesScreen({
         <Container>
             <RecipesList
                 data={recipes}
+                keyExtractor={item => item.id.toString()}
                 contentContainerStyle={styles.recipeListItem}
                 renderItem={({ item }) => (
-                    <RecipeListItem recipe={item} />
+                    <RecipeListItem recipe={item} navigation={navigation}/>
                 )}
             />
         </Container>

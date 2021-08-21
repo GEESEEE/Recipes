@@ -16,7 +16,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [])
 
     function logRecipes(): void {
-        console.log(recipes.length, 'Recipes')
+        console.log('Recipes', recipes)
     }
 
     function changePrimaryColor(): void {

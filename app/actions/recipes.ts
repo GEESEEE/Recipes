@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import Recipe from '../data/recipe'
-import { RECIPEACTIONS } from '../reducers/recipes'
+import { RECIPE_ACTIONS } from '../reducers/recipes'
 import * as recipeService from '../services/recipe'
 import Ingredient from '../data/ingredient'
 
@@ -23,7 +23,6 @@ export const createRecipe =
                     const ingredientObjects: {
                         name: string
                         amount: number
-                        key: string
                         unit?: string
                     }[] = []
                     recipe.recipeIngredients.forEach((ri) => {
@@ -31,7 +30,6 @@ export const createRecipe =
                         ingredientObjects.push({
                             name: i.name,
                             amount: ri.amount,
-                            key: ri.key,
                             unit: i.unit as string | undefined,
                         })
                     })
@@ -42,7 +40,7 @@ export const createRecipe =
                     newRecipe.recipeIngredients = ingredients
                     // else set ingredients to empty array
                 } else {
-                    recipe.recipeIngredients = []
+                    newRecipe.recipeIngredients = []
                 }
 
                 // If instructions were set, put those in database too and set in newRecipe
@@ -57,7 +55,7 @@ export const createRecipe =
                     newRecipe.instructions = instructions
                     // else set instructions to empty array
                 } else {
-                    recipe.instructions = []
+                    newRecipe.instructions = []
                 }
 
                 // Add new recipe to local storage
@@ -68,7 +66,7 @@ export const createRecipe =
                 )
 
                 dispatch({
-                    type: RECIPEACTIONS.ADD_RECIPE,
+                    type: RECIPE_ACTIONS.ADD_RECIPE,
                     payload: { newRecipe },
                 })
             }
@@ -77,6 +75,19 @@ export const createRecipe =
             console.error(err)
         }
     }
+
+export const updateRecipe = (recipe: Recipe) => async (dispatch: Dispatch): Promise<void> => {
+    try {
+        const recipesString = await AsyncStorage.getItem('recipes')
+        if (recipesString !== null) {
+            const localRecipes = JSON.parse(recipesString)
+            console.log(localRecipes)
+        }
+    } catch (err) {
+        console.log(err.message)
+        console.error(err)
+    }
+}
 
 export const retrieveRecipes =
     () =>
@@ -91,16 +102,17 @@ export const retrieveRecipes =
             const recipes: Recipe[] = JSON.parse(rs)
 
             // Put recipes without a database id into the database
-            const localRecipes = recipes.filter((recipe) => recipe.id === 0)
+            const localRecipes = recipes.filter((recipe) => recipe.id <= 0)
             if (localRecipes.length > 0) {
                 await recipeService.createRecipes(localRecipes)
             }
 
             // Get all my recipes from database
             const newRecipes = await recipeService.getMyRecipes()
+
             await AsyncStorage.setItem('recipes', JSON.stringify(recipes))
             dispatch({
-                type: RECIPEACTIONS.SET_RECIPES,
+                type: RECIPE_ACTIONS.SET_RECIPES,
                 payload: { newRecipes },
             })
         } catch (err) {
@@ -121,7 +133,7 @@ export const deleteRecipe =
                 localRecipes.splice(index, 1)
             }
             await recipeService.deleteRecipe(recipe.id)
-            dispatch({ type: RECIPEACTIONS.DELETE_RECIPE, payload: { recipe } })
+            dispatch({ type: RECIPE_ACTIONS.DELETE_RECIPE, payload: { recipe } })
         } catch (err) {
             console.log(err.message)
             console.error(err)

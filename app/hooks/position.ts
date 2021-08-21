@@ -13,12 +13,14 @@ const usePosition = (): [
     })
 
     const setPosition = (lay: Position): void => {
+        console.log(lay)
         positionRef.current = lay
     }
 
     const onLayout = React.useCallback((event: LayoutChangeEvent): void => {
         (event.target as any).measure(
             (x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
+                console.log("Onlayout", x, y, width, height, pageX, pageY)
                 setPosition({width, height, pageX, pageY})
             },
         );

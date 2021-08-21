@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
@@ -98,9 +98,10 @@ function RegisterScreen({
     }
 
     function handleSecurePassword1Change(): void {
+        console.log(data.securePasswordText)
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE,
-            payload: !data.securePasswordText,
+            payload: {securePasswordText: !data.securePasswordText},
         })
     }
 
@@ -139,7 +140,6 @@ function RegisterScreen({
                     !data.isValidUsername ? 'Invalid Username' : undefined
                 }
             />
-            {}
 
             {/* Email Input Field */}
             <InputFieldRounded

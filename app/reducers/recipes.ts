@@ -1,6 +1,6 @@
 import Recipe from '../data/recipe'
 
-export const RECIPEACTIONS = {
+export const RECIPE_ACTIONS = {
     ADD_RECIPE: 'addRecipe',
     SET_RECIPES: 'setRecipes',
     DELETE_RECIPE: 'deleteRecipe',
@@ -13,19 +13,19 @@ const recipes = (
     action: { type: string; payload: any }
 ): Recipe[] => {
     switch (action.type) {
-        case RECIPEACTIONS.SET_RECIPES: {
+        case RECIPE_ACTIONS.SET_RECIPES: {
             const { newRecipes } = action.payload
             return newRecipes
         }
 
-        case RECIPEACTIONS.ADD_RECIPE: {
+        case RECIPE_ACTIONS.ADD_RECIPE: {
             const { newRecipe } = action.payload
             return [...state, newRecipe]
         }
 
-        case RECIPEACTIONS.DELETE_RECIPE: {
+        case RECIPE_ACTIONS.DELETE_RECIPE: {
             const { recipe } = action.payload
-            return state.filter((r) => r.key !== recipe.key)
+            return state.filter((r) => r.id !== recipe.id)
         }
 
         default:

@@ -64,9 +64,10 @@ const Menu = React.forwardRef(({
     offset: number
     onPress: () => void
 }, ref: any): JSX.Element => {
+    console.log(ref)
     const coords: Position = ref.current
     const insets = useSafeAreaInsets()
-
+    console.log(coords)
     const PopupMenu = styled(View)`
         position: absolute;
         width: ${coords.width}px;

@@ -4,12 +4,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { MyFeather } from '../Icons'
+import { MyFeather, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../DropdownMenu'
+import { ButtonFilled } from '../user-input/Buttons'
 import { deleteRecipe } from '../../actions/recipes'
 
 
-const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
+const RecipeListItem = ({ recipe, navigation }: { recipe: Recipe, navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
 
     async function removeRecipe(): Promise<void> {
@@ -18,6 +19,7 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
 
     async function editRecipe(): Promise<void> {
         console.log('Clicked Edit Recipe')
+        navigation.navigate('CreateRecipe', {recipe})
     }
 
     const dropDownItems: DropDownItem[] = [{
@@ -34,7 +36,8 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
         <Container>
             <ItemContainer>
                 <Name>{recipe.name}</Name>
-                <Properties recipe={recipe}/>
+                <RecipeProperties recipe={recipe}/>
+                {/* <ButtonFilled text="Delete" onPress={removeRecipe}/> */}
                 <DropDownMenu items={dropDownItems} />
             </ItemContainer>
         </Container>
@@ -43,23 +46,19 @@ const RecipeListItem = ({ recipe }: { recipe: Recipe }): JSX.Element => {
 
 export default RecipeListItem
 
-const Properties = ({ recipe }: {recipe: Recipe}): JSX.Element => {
+const RecipeProperties = ({ recipe }: {recipe: Recipe}): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
         <PropertiesContainer>
-                {/* Prepare Time */}
-                <MaterialCommunityIcons
-                    name="timer-sand"
-                    size={20}
-                    color={theme.text}
-                />
-                <Property>{recipe.prepareTime}</Property>
+            {/* Prepare Time */}
+            <MyMaterialIcons name="timer-sand" color={theme.text} />
+            <Property>{recipe.prepareTime}</Property>
 
-                {/* People Count */}
-                <MyFeather name="user" color={theme.text} />
-                <Property>{recipe.peopleCount}</Property>
-            </PropertiesContainer>
+            {/* People Count */}
+            <MyFeather name="user" color={theme.text} />
+            <Property>{recipe.peopleCount}</Property>
+        </PropertiesContainer>
     )
 }
 

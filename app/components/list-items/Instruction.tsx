@@ -1,46 +1,64 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native'
 import styled from 'styled-components'
 
 import { MyFeather } from '../Icons'
 import { Instruction } from '../../data'
 import { useAppSelector } from '../../hooks/redux'
+import { HeaderBordered } from '../HeaderBordered'
+import { ButtonBorderless } from '../user-input/Buttons'
 
-const InstructionListItem = ({
-    number,
-    item,
-    onChangeText,
-    onRemove,
+const InstructionsList = ({
+    instructions,
+    handleInstructionTextChange,
+    handleRemoveInstruction,
+    handleAddInstruction
 }: {
-    onChangeText: (key: string, text: string) => void
-    onRemove: (key: string) => void
-    number: string
-    item: Instruction
+    handleAddInstruction: () => void
+    handleInstructionTextChange: (key: string, text: string) => void
+    handleRemoveInstruction: (key: string) => void
+    instructions: Instruction[]
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     return (
-        <Container key={item.key}>
-            {/* Instruction Number */}
-            <Number>{number}</Number>
 
-            {/* Instruction Text Input */}
-            <InstructionText
-                onChangeText={(text: string) => onChangeText(item.key, text)}
-                value={item.text}
-                placeholder="Text"
-                placeholderTextColor={theme.grey}
-                multiline
+        <HeaderBordered headerText="Instructions">
+            <List
+                data={instructions}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item }) => (
+                    <Container >
+                        {/* Instruction Number */}
+                        <Number>{(instructions.indexOf(item) + 1).toString()}</Number>
+
+                        {/* Instruction Text Input */}
+                        <InstructionText
+                            onChangeText={(text: string) => handleInstructionTextChange(item.id.toString(), text)}
+                            value={item.text}
+                            placeholder="Text"
+                            placeholderTextColor={theme.grey}
+                            multiline
+                        />
+
+                        {/* Remove Instruction Button */}
+                        <RemoveButton onPress={() => handleRemoveInstruction(item.id.toString())}>
+                            <MyFeather name="minus" size={15} color={theme.text} />
+                        </RemoveButton>
+                    </Container>
+                )}
             />
+            <ButtonBorderless  text="Add Instruction" onPress={handleAddInstruction} />
+        </HeaderBordered>
 
-            {/* Remove Instruction Button */}
-            <RemoveButton onPress={() => onRemove(item.key)}>
-                <MyFeather name="minus" size={15} color={theme.text} />
-            </RemoveButton>
-        </Container>
     )
 }
 
-export default InstructionListItem
+export default InstructionsList
+
+const List = styled(FlatList as new () => FlatList<Instruction>)`
+    padding-top: 5px;
+    flex-direction: column;
+`
 
 const Container = styled(View)`
     flex-direction: row;
