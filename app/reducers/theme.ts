@@ -8,7 +8,6 @@ export const THEME_ACTIONS = {
 export type Theme = {
     mode: string
     primary: string
-    secondary: string
     background: string
     backgroundVariant: string
     text: string
@@ -19,7 +18,6 @@ export type Theme = {
 const lightTheme = (): Theme => ({
     mode: 'light',
     primary: colors.primary,
-    secondary: colors.secondary,
     background: colors.white,
     backgroundVariant: colors.lightergrey,
     text: colors.darkergrey,
@@ -30,7 +28,6 @@ const lightTheme = (): Theme => ({
 const darkTheme = (): Theme => ({
     mode: 'dark',
     primary: colors.primary,
-    secondary: colors.secondary,
     background: colors.darkestgrey,
     backgroundVariant: colors.darkergrey,
     text: colors.lightergrey,

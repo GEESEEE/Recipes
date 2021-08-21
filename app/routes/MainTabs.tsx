@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { View } from 'react-native'
 import MainStack from './MainStack'
 import RecipesStack from './RecipesStack'
-import {TestScreen} from '../screens'
+import { TestScreen } from '../screens'
 import { BottomTab } from '../components/routes'
 
 const screens = {
@@ -31,13 +31,13 @@ const screens = {
         },
     },
     Test: {
-        screen: TestScreen
-    }
+        screen: TestScreen,
+    },
 }
 
 const tabConfig = {
     initialRouteName: 'Main',
-    tabBarComponent: BottomTab
+    tabBarComponent: BottomTab,
 }
 
 const MainTabs = createBottomTabNavigator(screens, tabConfig)

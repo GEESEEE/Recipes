@@ -2,7 +2,7 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { retrieveTheme, retrieveColor } from './actions/theme'
-import {LoginStack} from './routes'
+import { LoginStack } from './routes'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { retrieveIndices } from './actions/indices'
 

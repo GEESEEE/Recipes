@@ -1,6 +1,5 @@
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import { RecipeListItem } from '../components/list-items'
@@ -18,10 +17,10 @@ function RecipesScreen({
         <Container>
             <RecipesList
                 data={recipes}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.recipeListItem}
                 renderItem={({ item }) => (
-                    <RecipeListItem recipe={item} navigation={navigation}/>
+                    <RecipeListItem recipe={item} navigation={navigation} />
                 )}
             />
         </Container>
@@ -35,15 +34,8 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
-
-`
+const RecipesList = styled(FlatList as new () => FlatList<Recipe>)``
 
 const styles = StyleSheet.create({
-    recipeListItem: {
-
-    }
+    recipeListItem: {},
 })
-
-
-

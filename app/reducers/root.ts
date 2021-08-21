@@ -10,5 +10,5 @@ export default combineReducers({
     recipes,
     user,
     theme,
-    indices
+    indices,
 })

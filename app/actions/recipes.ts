@@ -71,23 +71,23 @@ export const createRecipe =
                 })
             }
         } catch (err) {
-            console.log(err.message)
             console.error(err)
         }
     }
 
-export const updateRecipe = (recipe: Recipe) => async (dispatch: Dispatch): Promise<void> => {
-    try {
-        const recipesString = await AsyncStorage.getItem('recipes')
-        if (recipesString !== null) {
-            const localRecipes = JSON.parse(recipesString)
-            console.log(localRecipes)
+export const updateRecipe =
+    (recipe: Recipe) =>
+    async (dispatch: Dispatch): Promise<void> => {
+        try {
+            const recipesString = await AsyncStorage.getItem('recipes')
+            if (recipesString !== null) {
+                const localRecipes = JSON.parse(recipesString)
+                console.log(localRecipes)
+            }
+        } catch (err) {
+            console.error(err)
         }
-    } catch (err) {
-        console.log(err.message)
-        console.error(err)
     }
-}
 
 export const retrieveRecipes =
     () =>
@@ -116,7 +116,6 @@ export const retrieveRecipes =
                 payload: { newRecipes },
             })
         } catch (err) {
-            console.log(err.message)
             console.error(err)
         }
     }
@@ -133,9 +132,11 @@ export const deleteRecipe =
                 localRecipes.splice(index, 1)
             }
             await recipeService.deleteRecipe(recipe.id)
-            dispatch({ type: RECIPE_ACTIONS.DELETE_RECIPE, payload: { recipe } })
+            dispatch({
+                type: RECIPE_ACTIONS.DELETE_RECIPE,
+                payload: { recipe },
+            })
         } catch (err) {
-            console.log(err.message)
             console.error(err)
         }
     }

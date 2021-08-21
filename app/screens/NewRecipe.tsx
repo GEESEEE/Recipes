@@ -2,23 +2,30 @@ import React from 'react'
 import { Dimensions, View, TextInput } from 'react-native'
 import styled from 'styled-components'
 import { createRecipe } from '../actions/recipes'
-import { ButtonBorderless, ButtonFilled } from '../components/user-input/Buttons'
 import {
-    InstructionsList,
-    IngredientsList,
-} from '../components/list-items'
+    ButtonBorderless,
+    ButtonFilled,
+} from '../components/user-input/Buttons'
+import { InstructionsList, IngredientsList } from '../components/list-items'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { MyFeather, MyMaterialIcons } from '../components/Icons'
-import { decrementIngredientId, decrementInstructionId, decrementRecipeId } from '../actions/indices'
+import {
+    decrementIngredientId,
+    decrementInstructionId,
+    decrementRecipeId,
+} from '../actions/indices'
 
-function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
+function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
 
-    function handleNumericTextInput(number: string): number {
-        const val = parseFloat(number.replace(',', '.'))
+    function handleNumericTextInput(number: string, integer = false): number {
+        let val = parseFloat(number.replace(',', '.'))
+        if (integer) {
+            val = parseInt(number, 10)
+        }
         if (val) {
             return val
         }
@@ -30,21 +37,16 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
             name: '',
             description: '',
             prepareTime: 0,
-            peopleCount: 1,
+            peopleCount: 0,
             id: indices.recipeId,
             recipeIngredients: [],
-            instructions: []
+            instructions: [],
         }
     }
 
-    let recipe
-    if (navigation.state.params) {
-        recipe = navigation.state.params.recipe
-    }
+    const recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
-    const [recipeData, setRecipeData] = React.useState<Recipe>(
-        initialState
-    )
+    const [recipeData, setRecipeData] = React.useState<Recipe>(initialState)
 
     // #region State Altering Functions
     function handleNameChange(name: string): void {
@@ -57,14 +59,12 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
 
     function handlePrepareTimeChange(prepareTime: string): void {
         recipeData.prepareTime = handleNumericTextInput(prepareTime)
-        console.log("PrepareTime:", recipeData.prepareTime)
-        setRecipeData({ ...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handlePeopleCountChange(peopleCount: string): void {
-        recipeData.peopleCount = handleNumericTextInput(peopleCount)
-        console.log("PeopleCount:", recipeData.peopleCount)
-        setRecipeData({ ...recipeData})
+        recipeData.peopleCount = handleNumericTextInput(peopleCount, true)
+        setRecipeData({ ...recipeData })
     }
 
     function handleAddIngredient(): void {
@@ -72,49 +72,54 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
         const recipeIngredient = new RecipeIngredient(0, ingredient)
 
         recipeData.recipeIngredients?.push(recipeIngredient)
-        console.log(indices.ingredientId)
         dispatch(decrementIngredientId(indices.ingredientId))
         setRecipeData({ ...recipeData })
     }
 
     function handleRemoveIngredient(key: string): void {
-        const recipeIngredients = recipeData.recipeIngredients?.filter((item) => item.ingredient!.id.toString() !== key)
-        setRecipeData({ ...recipeData, recipeIngredients})
+        const recipeIngredients = recipeData.recipeIngredients?.filter(
+            (item) => item.ingredient!.id.toString() !== key
+        )
+        setRecipeData({ ...recipeData, recipeIngredients })
     }
 
     function handleIngredientAmountChange(key: string, amount: string): void {
         const recipeIngredient = recipeData.recipeIngredients?.filter(
-            (item) => item.ingredient!.id.toString() === key)[0]
+            (item) => item.ingredient!.id.toString() === key
+        )[0]
         recipeIngredient!.amount = handleNumericTextInput(amount)
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleIngredientNameChange(key: string, name: string): void {
         const recipeIngredient = recipeData.recipeIngredients?.filter(
-            (item) => item.ingredient!.id.toString() === key)[0]
+            (item) => item.ingredient!.id.toString() === key
+        )[0]
         recipeIngredient!.ingredient!.name = name
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleIngredientUnitChange(key: string, unit: string): void {
         const recipeIngredient = recipeData.recipeIngredients?.filter(
-            (item) => item.ingredient!.id.toString() === key)[0]
+            (item) => item.ingredient!.id.toString() === key
+        )[0]
         recipeIngredient!.ingredient!.unit = unit
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleAddInstruction(): void {
         const instruction = new Instruction(indices.instructionId, '')
         recipeData.instructions?.push(instruction)
-        console.log(indices.instructionId)
         dispatch(decrementInstructionId(indices.instructionId))
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleRemoveInstruction(key: string): void {
-        const instructions = recipeData.instructions?.filter((item) => item.id.toString() !== key)
+        const instructions = recipeData.instructions?.filter(
+            (item) => item.id.toString() !== key
+        )
         recipeData.instructions = instructions
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleInstructionTextChange(key: string, text: string): void {
@@ -122,7 +127,7 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
             (item) => item.id.toString() === key
         )[0]
         instruction!.text = text
-        setRecipeData({...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function cancelEditRecipe(): void {
@@ -137,13 +142,12 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
 
     async function handleCreateRecipe(): Promise<void> {
         dispatch(createRecipe(recipeData))
-        console.log(indices.recipeId)
         dispatch(decrementRecipeId(indices.recipeId))
         clearRecipeData()
     }
 
     async function handleEditRecipe(): Promise<void> {
-        console.log("Editing")
+        console.log('Editing')
     }
 
     return (
@@ -169,10 +173,16 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
                     multiline
                 />
                 <PropertiesContainer>
-                   {/* Prepare Time */}
+                    {/* Prepare Time */}
                     <PropertyView>
                         <MyMaterialIcons name="timer-sand" color={theme.text} />
                         <Property
+                            style={{
+                                color:
+                                    recipeData.prepareTime === 0
+                                        ? theme.grey
+                                        : theme.text,
+                            }}
                             onChangeText={handlePrepareTimeChange}
                             value={recipeData.prepareTime.toString()}
                             placeholder="0"
@@ -181,11 +191,16 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
                         />
                     </PropertyView>
 
-
                     {/* People Count */}
                     <PropertyView>
                         <MyFeather name="user" color={theme.text} />
                         <Property
+                            style={{
+                                color:
+                                    recipeData.peopleCount === 0
+                                        ? theme.grey
+                                        : theme.text,
+                            }}
                             onChangeText={handlePeopleCountChange}
                             value={recipeData.peopleCount.toString()}
                             placeholder="0"
@@ -193,7 +208,6 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
                             keyboardType="number-pad"
                         />
                     </PropertyView>
-
                 </PropertiesContainer>
             </Header>
 
@@ -217,13 +231,13 @@ function NewRecipeScreen({ navigation}: { navigation: any}): JSX.Element {
 
             {/* Create Recipe Button */}
             <ButtonFilled
-                text={recipe ? "Edit Recipe" : "Create Recipe"}
+                text={recipe ? 'Edit Recipe' : 'Create Recipe'}
                 onPress={recipe ? handleEditRecipe : handleCreateRecipe}
             />
 
             {/* Clear Recipe Button */}
             <ButtonBorderless
-                text={recipe ? "Cancel" : "Clear Recipe"}
+                text={recipe ? 'Cancel' : 'Clear Recipe'}
                 onPress={recipe ? cancelEditRecipe : clearRecipeData}
             />
         </Container>
@@ -285,7 +299,6 @@ const PropertyView = styled(View)`
     flex: 1;
     flex-direction: row;
 `
-
 
 const Property = styled(TextInput)`
     color: ${(props) => props.theme.text};

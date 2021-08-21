@@ -1,6 +1,6 @@
 import Recipe from './recipe'
 
-export default class Instruction{
+export default class Instruction {
     public id!: number
 
     public text!: string

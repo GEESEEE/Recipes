@@ -14,7 +14,7 @@ export type DropDownItem = {
 export function DropDownMenu({
     items,
     iconSize = 25,
-    iconOffset = 5
+    iconOffset = 5,
 }: {
     items: DropDownItem[]
     iconSize?: number
@@ -42,60 +42,64 @@ export function DropDownMenu({
                 size={iconSize}
                 offset={iconOffset}
             />
-            {open
-            ?   <Menu
+            {open ? (
+                <Menu
                     ref={positionRef}
                     items={items}
                     offset={offset}
                     onPress={toggle}
                 />
-            :   null}
+            ) : null}
         </Container>
     )
 }
 
+const Menu = React.forwardRef(
+    (
+        {
+            items,
+            offset,
+            onPress,
+        }: {
+            items: DropDownItem[]
+            offset: number
+            onPress: () => void
+        },
+        ref: any
+    ): JSX.Element => {
+        console.log(ref)
+        const coords: Position = ref.current
+        const insets = useSafeAreaInsets()
+        const PopupMenu = styled(View)`
+            position: absolute;
+            width: ${coords.width}px;
+            margin-left: ${coords.pageX}px;
+            margin-top: ${coords.pageY - insets.top + offset}px;
+            border-radius: 10px;
+            background-color: ${(props) => props.theme.backgroundVariant};
+        `
 
-const Menu = React.forwardRef(({
-    items,
-    offset,
-    onPress
-}: {
-    items: DropDownItem[]
-    offset: number
-    onPress: () => void
-}, ref: any): JSX.Element => {
-    console.log(ref)
-    const coords: Position = ref.current
-    const insets = useSafeAreaInsets()
-    console.log(coords)
-    const PopupMenu = styled(View)`
-        position: absolute;
-        width: ${coords.width}px;
-        margin-left: ${coords.pageX}px;
-        margin-top: ${coords.pageY - insets.top + offset}px;
-        border-radius: 10px;
-        background-color: ${(props) => props.theme.backgroundVariant};
-    `
-
-    return (
-        <Modal transparent>
-            <PopupReturn onPress={onPress}/>
-            <PopupMenu>
-                {items.map(item => {
-                    const separator = items.indexOf(item) !== items.length - 1
-                    return (
-                        <View key={item.id}>
-                            <ItemView onPress={item.onPress}>
-                                <ItemText>{item.text}</ItemText>
-                            </ItemView>
-                            {separator ? <Separator /> : null}
-                        </View>
-
-                    )
-                })}
-            </PopupMenu>
-        </Modal>
-    )})
+        return (
+            <Modal transparent>
+                <PopupReturn onPress={onPress} />
+                <PopupMenu>
+                    {items.map((item) => {
+                        const separator =
+                            items.indexOf(item) !== items.length - 1
+                        return (
+                            <View key={item.id}>
+                                <ItemView onPress={item.onPress}>
+                                    <ItemText>{item.text}</ItemText>
+                                </ItemView>
+                                {separator ? <Separator /> : null}
+                            </View>
+                        )
+                    })}
+                </PopupMenu>
+            </Modal>
+        )
+    }
+)
 
 const PopupReturn = styled(TouchableOpacity)`
     flex: 1;
@@ -110,7 +114,7 @@ const ItemText = styled(Text)`
     font-size: 15px;
     padding: 5px;
     padding: 10px;
-    color: ${(props) => props.theme.text}
+    color: ${(props) => props.theme.text};
 `
 
 const Separator = styled(View)`
@@ -118,6 +122,3 @@ const Separator = styled(View)`
     width: 100%;
     background-color: ${(props) => props.theme.grey};
 `
-
-
-

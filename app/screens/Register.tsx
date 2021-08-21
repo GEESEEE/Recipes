@@ -1,10 +1,13 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import { signUp } from '../actions/auth'
-import { ButtonBorderless, ButtonFilled } from '../components/user-input/Buttons'
+import {
+    ButtonBorderless,
+    ButtonFilled,
+} from '../components/user-input/Buttons'
 import { MyFeather } from '../components/Icons'
 import { InputFieldRounded } from '../components/user-input/TextInputs'
 import { useAppDispatch } from '../hooks/redux'
@@ -20,27 +23,27 @@ const REGISTER_ACTIONS = {
 function reducer(state: any, action: any): any {
     switch (action.type) {
         case REGISTER_ACTIONS.USERNAME_CHANGE: {
-            const {username, isValidUsername} = action.payload
+            const { username, isValidUsername } = action.payload
             return { ...state, username, isValidUsername }
         }
 
         case REGISTER_ACTIONS.EMAIL_CHANGE: {
-            const {email, isValidEmail} = action.payload
+            const { email, isValidEmail } = action.payload
             return { ...state, email, isValidEmail }
         }
 
         case REGISTER_ACTIONS.PASSWORD1_CHANGE: {
-            const {password1, isValidPassword1} = action.payload
+            const { password1, isValidPassword1 } = action.payload
             return { ...state, password1, isValidPassword1 }
         }
 
         case REGISTER_ACTIONS.PASSWORD2_CHANGE: {
-            const {password2, isValidPassword2} = action.payload
+            const { password2, isValidPassword2 } = action.payload
             return { ...state, password2, isValidPassword2 }
         }
 
         case REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE: {
-            const {securePasswordText} = action.payload
+            const { securePasswordText } = action.payload
             return { ...state, securePasswordText }
         }
 
@@ -71,21 +74,29 @@ function RegisterScreen({
     const [data, localDispatch] = useReducer(reducer, initialState)
 
     function handleUsernameInputChange(username: string): void {
-    	const isValidUsername = (username.length >= 4 && username.length <= 30) || username.length === 0
-        localDispatch({ type: REGISTER_ACTIONS.USERNAME_CHANGE, payload: {username, isValidUsername} })
+        const isValidUsername =
+            (username.length >= 4 && username.length <= 30) ||
+            username.length === 0
+        localDispatch({
+            type: REGISTER_ACTIONS.USERNAME_CHANGE,
+            payload: { username, isValidUsername },
+        })
     }
 
     function handleEmailInputChange(email: string): void {
         const regex = /^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/i
-        const isValidEmail =  regex.test(email)
-        localDispatch({ type: REGISTER_ACTIONS.EMAIL_CHANGE, payload: {email, isValidEmail} })
+        const isValidEmail = regex.test(email)
+        localDispatch({
+            type: REGISTER_ACTIONS.EMAIL_CHANGE,
+            payload: { email, isValidEmail },
+        })
     }
 
     function handlePassword1InputChange(password1: string): void {
         const isValidPassword1 = password1.length >= 5 && password1.length <= 50
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD1_CHANGE,
-            payload: {password1, isValidPassword1},
+            payload: { password1, isValidPassword1 },
         })
     }
 
@@ -93,7 +104,7 @@ function RegisterScreen({
         const isValidPassword2 = password2.length >= 5 && password2.length <= 50
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD2_CHANGE,
-            payload: {password2, isValidPassword2},
+            payload: { password2, isValidPassword2 },
         })
     }
 
@@ -101,7 +112,7 @@ function RegisterScreen({
         console.log(data.securePasswordText)
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE,
-            payload: {securePasswordText: !data.securePasswordText},
+            payload: { securePasswordText: !data.securePasswordText },
         })
     }
 

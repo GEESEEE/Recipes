@@ -33,10 +33,13 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <SampleText >Main Screen</SampleText>
+            <SampleText>Main Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={logRecipes} />
             <ButtonFilled text="Drawer" onPress={handleDrawer} />
-            <ButtonFilled text="Change Primary Color" onPress={changePrimaryColor} />
+            <ButtonFilled
+                text="Change Primary Color"
+                onPress={changePrimaryColor}
+            />
         </Container>
     )
 }

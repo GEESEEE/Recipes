@@ -5,4 +5,11 @@ import NewRecipeScreen from './NewRecipe'
 import RegisterScreen from './Register'
 import TestScreen from './Test'
 
-export {LoginScreen, NewRecipeScreen, RegisterScreen, MainScreen, RecipesScreen, TestScreen}
+export {
+    LoginScreen,
+    NewRecipeScreen,
+    RegisterScreen,
+    MainScreen,
+    RecipesScreen,
+    TestScreen,
+}

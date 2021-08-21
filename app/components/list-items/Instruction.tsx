@@ -12,7 +12,7 @@ const InstructionsList = ({
     instructions,
     handleInstructionTextChange,
     handleRemoveInstruction,
-    handleAddInstruction
+    handleAddInstruction,
 }: {
     handleAddInstruction: () => void
     handleInstructionTextChange: (key: string, text: string) => void
@@ -21,19 +21,25 @@ const InstructionsList = ({
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     return (
-
         <HeaderBordered headerText="Instructions">
             <List
                 data={instructions}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <Container >
+                    <Container>
                         {/* Instruction Number */}
-                        <Number>{(instructions.indexOf(item) + 1).toString()}</Number>
+                        <Number>
+                            {(instructions.indexOf(item) + 1).toString()}
+                        </Number>
 
                         {/* Instruction Text Input */}
                         <InstructionText
-                            onChangeText={(text: string) => handleInstructionTextChange(item.id.toString(), text)}
+                            onChangeText={(text: string) =>
+                                handleInstructionTextChange(
+                                    item.id.toString(),
+                                    text
+                                )
+                            }
                             value={item.text}
                             placeholder="Text"
                             placeholderTextColor={theme.grey}
@@ -41,15 +47,25 @@ const InstructionsList = ({
                         />
 
                         {/* Remove Instruction Button */}
-                        <RemoveButton onPress={() => handleRemoveInstruction(item.id.toString())}>
-                            <MyFeather name="minus" size={15} color={theme.text} />
+                        <RemoveButton
+                            onPress={() =>
+                                handleRemoveInstruction(item.id.toString())
+                            }
+                        >
+                            <MyFeather
+                                name="minus"
+                                size={15}
+                                color={theme.text}
+                            />
                         </RemoveButton>
                     </Container>
                 )}
             />
-            <ButtonBorderless  text="Add Instruction" onPress={handleAddInstruction} />
+            <ButtonBorderless
+                text="Add Instruction"
+                onPress={handleAddInstruction}
+            />
         </HeaderBordered>
-
     )
 }
 

@@ -1,5 +1,11 @@
 import React, { useReducer, useRef } from 'react'
-import { View, Dimensions, TouchableOpacity, Animated, Keyboard } from 'react-native'
+import {
+    View,
+    Dimensions,
+    TouchableOpacity,
+    Animated,
+    Keyboard,
+} from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
@@ -19,12 +25,12 @@ const LOGIN_ACTIONS = {
 function reducer(state: any, action: any): any {
     switch (action.type) {
         case LOGIN_ACTIONS.USERNAME_CHANGE: {
-            const {username, isValidUsername } = action.payload
+            const { username, isValidUsername } = action.payload
             return { ...state, username, isValidUsername }
         }
 
         case LOGIN_ACTIONS.PASSWORD_CHANGE: {
-            const {password, isValidPassword} = action.payload
+            const { password, isValidPassword } = action.payload
             return { ...state, password, isValidPassword }
         }
 
@@ -61,14 +67,25 @@ function LoginScreen({
 
     function handleUsernameInputChange(username: string): void {
         const regex = /^[a-z0-9]+(@[a-z0-9]+\.[a-z0-9]+)?$/i
-        const isValidUsername = (regex.test(username) && username.length >= 4 && username.length <= 30) ||
-                                username.length === 0
-        localDispatch({ type: LOGIN_ACTIONS.USERNAME_CHANGE, payload: {username, isValidUsername} })
+        const isValidUsername =
+            (regex.test(username) &&
+                username.length >= 4 &&
+                username.length <= 30) ||
+            username.length === 0
+        localDispatch({
+            type: LOGIN_ACTIONS.USERNAME_CHANGE,
+            payload: { username, isValidUsername },
+        })
     }
 
     function handlePasswordInputChange(password: string): void {
-        const isValidPassword = (password.length >= 5 && password.length <= 50) || password.length === 0
-        localDispatch({ type: LOGIN_ACTIONS.PASSWORD_CHANGE, payload: {password, isValidPassword} })
+        const isValidPassword =
+            (password.length >= 5 && password.length <= 50) ||
+            password.length === 0
+        localDispatch({
+            type: LOGIN_ACTIONS.PASSWORD_CHANGE,
+            payload: { password, isValidPassword },
+        })
     }
 
     function handleSecurePasswordChange(): void {
@@ -92,9 +109,8 @@ function LoginScreen({
         <Container>
             {/* Logo */}
             <LogoView>
-                <Logo source={logo}/>
+                <Logo source={logo} />
             </LogoView>
-
 
             {/* Email Input Field */}
             <InputFieldRounded

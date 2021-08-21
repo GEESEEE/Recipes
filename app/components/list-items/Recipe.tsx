@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
@@ -9,8 +8,13 @@ import { DropDownMenu, DropDownItem } from '../DropdownMenu'
 import { ButtonFilled } from '../user-input/Buttons'
 import { deleteRecipe } from '../../actions/recipes'
 
-
-const RecipeListItem = ({ recipe, navigation }: { recipe: Recipe, navigation: any }): JSX.Element => {
+const RecipeListItem = ({
+    recipe,
+    navigation,
+}: {
+    recipe: Recipe
+    navigation: any
+}): JSX.Element => {
     const dispatch = useAppDispatch()
 
     async function removeRecipe(): Promise<void> {
@@ -19,24 +23,27 @@ const RecipeListItem = ({ recipe, navigation }: { recipe: Recipe, navigation: an
 
     async function editRecipe(): Promise<void> {
         console.log('Clicked Edit Recipe')
-        navigation.navigate('CreateRecipe', {recipe})
+        navigation.navigate('CreateRecipe', { recipe })
     }
 
-    const dropDownItems: DropDownItem[] = [{
-        id: 0,
-        text: 'Edit',
-        onPress: editRecipe,
-    }, {
-        id: 1,
-        text: 'Delete',
-        onPress: removeRecipe,
-    }, ]
+    const dropDownItems: DropDownItem[] = [
+        {
+            id: 0,
+            text: 'Edit',
+            onPress: editRecipe,
+        },
+        {
+            id: 1,
+            text: 'Delete',
+            onPress: removeRecipe,
+        },
+    ]
 
     return (
         <Container>
             <ItemContainer>
                 <Name>{recipe.name}</Name>
-                <RecipeProperties recipe={recipe}/>
+                <RecipeProperties recipe={recipe} />
                 {/* <ButtonFilled text="Delete" onPress={removeRecipe}/> */}
                 <DropDownMenu items={dropDownItems} />
             </ItemContainer>
@@ -46,7 +53,7 @@ const RecipeListItem = ({ recipe, navigation }: { recipe: Recipe, navigation: an
 
 export default RecipeListItem
 
-const RecipeProperties = ({ recipe }: {recipe: Recipe}): JSX.Element => {
+const RecipeProperties = ({ recipe }: { recipe: Recipe }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
@@ -63,7 +70,7 @@ const RecipeProperties = ({ recipe }: {recipe: Recipe}): JSX.Element => {
 }
 
 const Container = styled(View)`
-   flex: 1;
+    flex: 1;
 `
 
 const ItemContainer = styled(View)`
@@ -94,5 +101,3 @@ const Property = styled(Text)`
     font-size: 20px;
     flex: 1;
 `
-
-

@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { Header } from '../components/routes'
-import {MainScreen} from '../screens'
+import { MainScreen } from '../screens'
 
 const screens = {
     Main: {

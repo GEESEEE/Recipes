@@ -4,12 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { ButtonProps, ButtonFlex } from '../user-input/Buttons'
 
-const BottomTab = ({
-    navigation,
-}: {
-    navigation: any
-}): JSX.Element => {
-
+const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     function mainButton(): void {
         navigation.navigate('Main')
     }
@@ -24,27 +19,22 @@ const BottomTab = ({
 
     return (
         <Container>
-            <RouteTab text="Main" onPress={mainButton}/>
-            <Separator/>
-            <RouteTab text="Recipes" onPress={recipesButton}/>
-            <Separator/>
-            <RouteTab text="Test" onPress={testButton}/>
+            <RouteTab text="Main" onPress={mainButton} />
+            <Separator />
+            <RouteTab text="Recipes" onPress={recipesButton} />
+            <Separator />
+            <RouteTab text="Test" onPress={testButton} />
         </Container>
     )
 }
 
 export default BottomTab
 
-const RouteTab = (
-    {text, onPress} : ButtonProps
-): JSX.Element => (
-        <ButtonContainer>
-            <ButtonFlex
-                onPress={onPress}
-                text={text}
-            />
-        </ButtonContainer>
-    )
+const RouteTab = ({ text, onPress }: ButtonProps): JSX.Element => (
+    <ButtonContainer>
+        <ButtonFlex onPress={onPress} text={text} />
+    </ButtonContainer>
+)
 
 const Container = styled(View)`
     height: 50px;
@@ -53,10 +43,10 @@ const Container = styled(View)`
     align-items: center;
     justify-content: center;
     border-top-width: 1px;
-    border-top-color: ${(props) => props.theme.primary}
+    border-top-color: ${(props) => props.theme.primary};
 `
 const ButtonContainer = styled(View)`
-   flex: 1
+    flex: 1;
 `
 
 const Separator = styled(View)`
@@ -64,6 +54,3 @@ const Separator = styled(View)`
     width: 1px;
     background-color: ${(props) => props.theme.primary};
 `
-
-
-

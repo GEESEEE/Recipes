@@ -5,24 +5,15 @@ import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import { useAppSelector } from '../../hooks/redux'
 
-
 const ButtonIcon = ({
     onPress,
-    icon
+    icon,
 }: {
     onPress: () => void
     icon: JSX.Element
-}):JSX.Element => (
-    <TouchableOpacity onPress={onPress}>
-        {icon}
-    </TouchableOpacity>
-)
+}): JSX.Element => <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
 
-const Header = ({
-    navigation,
-}: {
-    navigation: any
-}): JSX.Element => {
+const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const { routeName } = navigation.state
 
@@ -39,18 +30,25 @@ const Header = ({
             <HeaderContainer>
                 <ButtonIcon
                     onPress={handleDrawerButton}
-                    icon={<Feather name="menu" size={30} color={theme.primary} />}
+                    icon={
+                        <Feather name="menu" size={30} color={theme.primary} />
+                    }
                 />
 
                 <HeaderTitle>Header</HeaderTitle>
 
-                {routeName === 'RecipesScreen'
-                    ?   <ButtonIcon
-                            onPress={handleCreateRecipeButton}
-                            icon={<Feather name="plus" size={30} color={theme.primary} />}
-                        />
-                    : null
-                }
+                {routeName === 'RecipesScreen' ? (
+                    <ButtonIcon
+                        onPress={handleCreateRecipeButton}
+                        icon={
+                            <Feather
+                                name="plus"
+                                size={30}
+                                color={theme.primary}
+                            />
+                        }
+                    />
+                ) : null}
             </HeaderContainer>
         </Container>
     )

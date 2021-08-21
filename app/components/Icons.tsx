@@ -4,7 +4,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useAppSelector } from '../hooks/redux'
 
-
 export function MyFeather({
     name,
     size,
@@ -57,4 +56,3 @@ export function MyMaterialIcons({
         />
     )
 }
-

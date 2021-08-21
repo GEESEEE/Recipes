@@ -14,7 +14,7 @@ const IngredientsList = ({
     handleIngredientAmountChange,
     handleIngredientUnitChange,
     handleRemoveIngredient,
-    handleAddIngredient
+    handleAddIngredient,
 }: {
     handleAddIngredient: () => void
     handleIngredientNameChange: (key: string, text: string) => void
@@ -28,13 +28,17 @@ const IngredientsList = ({
         <HeaderBordered headerText="Ingredients">
             <List
                 data={ingredients}
-                keyExtractor={item => item.ingredient!.id.toString()}
-                renderItem={({ item}) => (
+                keyExtractor={(item) => item.ingredient!.id.toString()}
+                renderItem={({ item }) => (
                     <ItemContainer>
                         {/* Ingredient Name Input */}
                         <NameText
-                            onChangeText={
-                                (text: string) => handleIngredientNameChange(item.ingredient!.id.toString(), text)}
+                            onChangeText={(text: string) =>
+                                handleIngredientNameChange(
+                                    item.ingredient!.id.toString(),
+                                    text
+                                )
+                            }
                             value={item.ingredient?.name}
                             placeholder="New Ingredient"
                             placeholderTextColor={theme.grey}
@@ -43,9 +47,17 @@ const IngredientsList = ({
 
                         {/* Ingredient Amount Input */}
                         <AmountText
-                            onChangeText={
-                                (text: string) => handleIngredientAmountChange(item.ingredient!.id.toString(), text)}
-                            keyboardType='decimal-pad'
+                            style={{
+                                color:
+                                    item.amount === 0 ? theme.grey : theme.text,
+                            }}
+                            onChangeText={(text: string) =>
+                                handleIngredientAmountChange(
+                                    item.ingredient!.id.toString(),
+                                    text
+                                )
+                            }
+                            keyboardType="decimal-pad"
                             value={item.amount.toString()}
                             placeholder="0"
                             placeholderTextColor={theme.grey}
@@ -54,8 +66,12 @@ const IngredientsList = ({
 
                         {/* Ingredient Unit Input */}
                         <UnitText
-                            onChangeText={
-                                (text: string) => handleIngredientUnitChange(item.ingredient!.id.toString(), text)}
+                            onChangeText={(text: string) =>
+                                handleIngredientUnitChange(
+                                    item.ingredient!.id.toString(),
+                                    text
+                                )
+                            }
                             value={item.ingredient?.unit?.toString() ?? ''}
                             placeholder="Unit?"
                             placeholderTextColor={theme.grey}
@@ -63,17 +79,27 @@ const IngredientsList = ({
                         />
 
                         {/* Remove Ingredient Button */}
-                        <RemoveButton onPress={() => handleRemoveIngredient(item.ingredient!.id.toString())}>
-                            <MyFeather name="minus" size={15} color={theme.text} />
+                        <RemoveButton
+                            onPress={() =>
+                                handleRemoveIngredient(
+                                    item.ingredient!.id.toString()
+                                )
+                            }
+                        >
+                            <MyFeather
+                                name="minus"
+                                size={15}
+                                color={theme.text}
+                            />
                         </RemoveButton>
                     </ItemContainer>
                 )}
             />
-            <ButtonBorderless text="Add Ingredient" onPress={handleAddIngredient} />
+            <ButtonBorderless
+                text="Add Ingredient"
+                onPress={handleAddIngredient}
+            />
         </HeaderBordered>
-
-
-
     )
 }
 

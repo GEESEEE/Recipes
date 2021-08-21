@@ -1,4 +1,3 @@
-
 export const INDICES_ACTIONS = {
     SET_RECIPE_ID: 'decrementRecipe',
     SET_INGREDIENT_ID: 'decrementIngredient',
@@ -7,9 +6,9 @@ export const INDICES_ACTIONS = {
 }
 
 export type Indices = {
-    recipeId: number,
-    instructionId: number,
-    ingredientId: number,
+    recipeId: number
+    instructionId: number
+    ingredientId: number
 }
 
 const initialState: Indices = {
@@ -20,7 +19,7 @@ const initialState: Indices = {
 
 const indices = (
     state = initialState,
-    action: { type: string, payload: any }
+    action: { type: string; payload: any }
 ): Indices => {
     switch (action.type) {
         case INDICES_ACTIONS.SET_STATE: {
@@ -29,17 +28,17 @@ const indices = (
 
         case INDICES_ACTIONS.SET_RECIPE_ID: {
             const { recipeId } = action.payload
-            return {...state, recipeId}
+            return { ...state, recipeId }
         }
 
         case INDICES_ACTIONS.SET_INGREDIENT_ID: {
             const { ingredientId } = action.payload
-            return {...state, ingredientId}
+            return { ...state, ingredientId }
         }
 
         case INDICES_ACTIONS.SET_INSTRUCTION_ID: {
             const { instructionId } = action.payload
-            return {...state, instructionId}
+            return { ...state, instructionId }
         }
 
         default:

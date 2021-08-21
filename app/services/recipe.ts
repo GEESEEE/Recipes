@@ -82,7 +82,7 @@ export async function addIngredient(
 
 export async function addIngredients(
     recipeId: number,
-    body: Array<{ amount: number; name: string; unit?: string}>
+    body: Array<{ amount: number; name: string; unit?: string }>
 ): Promise<RecipeIngredient[]> {
     return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
         body,
@@ -107,14 +107,14 @@ export async function getRecipeIngredients(
 
 export async function addInstruction(
     recipeId: number,
-    body: { text: string}
+    body: { text: string }
 ): Promise<Instruction> {
     return handleError('POST', `/recipes/${recipeId}/instructions`, { body })
 }
 
 export async function addInstructions(
     recipeId: number,
-    body: Array<{ text: string}>
+    body: Array<{ text: string }>
 ): Promise<Instruction[]> {
     return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {
         body,

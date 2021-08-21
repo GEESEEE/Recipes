@@ -7,32 +7,37 @@ const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = (): JSX.Element => {
-    console.log("Test Screen")
+    console.log('Test Screen')
 
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
     const smallerLogo = (event: any): any => {
-        console.log("Smaller Logo")
+        console.log('Smaller Logo')
         Animated.timing(logoSize, {
             duration: event.duration,
             toValue: smallLogo,
-            useNativeDriver: true
+            useNativeDriver: true,
         }).start()
     }
 
     const biggerLogo = (event: any): void => {
-        console.log("Bigger Logo")
+        console.log('Bigger Logo')
         Animated.timing(logoSize, {
             duration: event.duration,
             toValue: bigLogo,
-            useNativeDriver: true
+            useNativeDriver: true,
         }).start()
     }
 
     React.useEffect(() => {
-
-        const keyboardWillShow = Keyboard.addListener('keyboardDidShow', smallerLogo)
-        const keyboardWillHide = Keyboard.addListener('keyboardDidHide', biggerLogo)
+        const keyboardWillShow = Keyboard.addListener(
+            'keyboardDidShow',
+            smallerLogo
+        )
+        const keyboardWillHide = Keyboard.addListener(
+            'keyboardDidHide',
+            biggerLogo
+        )
 
         return () => {
             keyboardWillShow.remove()
@@ -45,15 +50,12 @@ const TestScreen = (): JSX.Element => {
             <LogoView>
                 <Logo
                     source={logo}
-                    style={{transform: [
-                        {scaleY: logoSize},
-                        {scaleX: logoSize},
-                    ]}}
+                    style={{
+                        transform: [{ scaleY: logoSize }, { scaleX: logoSize }],
+                    }}
                 />
             </LogoView>
-            <SampleText >
-                Test Screen
-            </SampleText>
+            <SampleText>Test Screen</SampleText>
         </Container>
     )
 }

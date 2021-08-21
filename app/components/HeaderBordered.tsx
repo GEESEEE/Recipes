@@ -5,11 +5,9 @@ import styled from 'styled-components'
 export function HeaderBordered({
     children,
     headerText,
-
 }: {
     children: JSX.Element[]
     headerText: string
-
 }): JSX.Element {
     return (
         <Container>

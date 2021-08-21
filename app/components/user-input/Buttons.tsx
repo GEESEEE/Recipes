@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/redux'
 import { MyMaterialIcons } from '../Icons'
 
 export type ButtonProps = {
-    text: string,
+    text: string
     onPress: () => void
 }
 
@@ -27,10 +27,7 @@ const ButtonTextGeneric = styled(Text)`
     flex: 1;
 `
 
-export function ButtonFilled({
-    text,
-    onPress,
-}: ButtonProps): JSX.Element {
+export function ButtonFilled({ text, onPress }: ButtonProps): JSX.Element {
     return (
         <ButtonFilledStyle onPress={onPress}>
             <ButtonFilledText>{text}</ButtonFilledText>
@@ -49,10 +46,7 @@ const ButtonFilledText = styled(ButtonTextGeneric)`
     color: ${(props) => props.theme.background};
 `
 
-export function ButtonInverted({
-    text,
-    onPress,
-}: ButtonProps): JSX.Element {
+export function ButtonInverted({ text, onPress }: ButtonProps): JSX.Element {
     return (
         <ButtonInvertedStyle onPress={onPress}>
             <ButtonInvertedText>{text}</ButtonInvertedText>
@@ -73,10 +67,7 @@ const ButtonInvertedText = styled(ButtonTextGeneric)`
     color: ${(props) => props.theme.primary};
 `
 
-export function ButtonBorderless({
-    text,
-    onPress,
-}: ButtonProps): JSX.Element {
+export function ButtonBorderless({ text, onPress }: ButtonProps): JSX.Element {
     return (
         <ButtonBorderlessStyle onPress={onPress}>
             <ButtonBorderlessText>{text}</ButtonBorderlessText>
@@ -96,10 +87,7 @@ const ButtonBorderlessText = styled(ButtonTextGeneric)`
     color: ${(props) => props.theme.primary};
 `
 
-export function ButtonFlex({
-    text,
-    onPress,
-}: ButtonProps ): JSX.Element {
+export function ButtonFlex({ text, onPress }: ButtonProps): JSX.Element {
     return (
         <Button onPress={onPress}>
             <ButtonText>{text}</ButtonText>
@@ -125,7 +113,7 @@ export function ButtonOptions({
     size = 25,
     color,
     offset = 5,
-    onLayout
+    onLayout,
 }: {
     onPress: () => void
     size?: number
@@ -144,10 +132,11 @@ export function ButtonOptions({
 
     return (
         <OptionsContainer onPress={onPress} onLayout={onLayout}>
-            <MyMaterialIcons name="dots-vertical" size={size} color={color || theme.primary} />
+            <MyMaterialIcons
+                name="dots-vertical"
+                size={size}
+                color={color || theme.primary}
+            />
         </OptionsContainer>
     )
 }
-
-
-
