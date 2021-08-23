@@ -17,6 +17,10 @@ export function deleteElement<T>(arr: Array<T>, element: T): boolean {
     return index > -1
 }
 
+export function deleteElements<T>(arr: Array<T>, elements: Array<T>): void {
+    elements.forEach(element => deleteElement(arr, element))
+}
+
 export function replaceElement<T extends {id: number}>(arr: Array<T>, element: T): boolean {
     let res = false
     arr.map(el => {

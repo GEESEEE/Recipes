@@ -99,6 +99,17 @@ export async function removeIngredient(
     )
 }
 
+export async function removeIngredients(
+    recipeId: number,
+    ingredientIds: number[],
+): Promise<void> {
+    return handleError(
+        'DELETE',
+        `/recipes/${recipeId}/ingredients/bulk`,
+        { body: ingredientIds}
+    )
+}
+
 export async function getRecipeIngredients(
     recipeId: number
 ): Promise<RecipeIngredient[]> {
@@ -127,13 +138,24 @@ export async function getInstructions(
     return handleError('GET', `/recipes/${recipeId}/instructions`)
 }
 
-export async function removeInstruction(
+export async function deleteInstruction(
     recipeId: number,
     instructionId: number
 ): Promise<void> {
     return handleError(
         'DELETE',
         `/recipes/${recipeId}/instructions/${instructionId}`
+    )
+}
+
+export async function deleteInstructions(
+    recipeId: number,
+    instructionIds: number[]
+): Promise<void> {
+    return handleError(
+        'DELETE',
+        `/recipes/${recipeId}/instructions/bulk`,
+        { body: instructionIds }
     )
 }
 
