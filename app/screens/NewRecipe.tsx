@@ -121,7 +121,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function cancelEditRecipe(): void {
-        navigation.goBack()
+        navigation.navigate('RecipesScreen')
     }
 
     function clearRecipeData(): void {
@@ -134,6 +134,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(createRecipe(recipeData))
         dispatch(decrementRecipeId(indices.recipeId))
         clearRecipeData()
+        navigation.navigate('RecipesScreen')
     }
 
     async function handleEditRecipe(): Promise<void> {
