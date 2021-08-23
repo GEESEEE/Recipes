@@ -67,7 +67,6 @@ const Menu = React.forwardRef(
         },
         ref: any
     ): JSX.Element => {
-        console.log(ref)
         const coords: Position = ref.current
         const insets = useSafeAreaInsets()
         const PopupMenu = styled(View)`

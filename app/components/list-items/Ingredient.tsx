@@ -28,14 +28,14 @@ const IngredientsList = ({
         <HeaderBordered headerText="Ingredients">
             <List
                 data={ingredients}
-                keyExtractor={(item) => item.ingredient!.id.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <ItemContainer>
                         {/* Ingredient Name Input */}
                         <NameText
                             onChangeText={(text: string) =>
                                 handleIngredientNameChange(
-                                    item.ingredient!.id.toString(),
+                                    item.id.toString(),
                                     text
                                 )
                             }
@@ -53,7 +53,7 @@ const IngredientsList = ({
                             }}
                             onChangeText={(text: string) =>
                                 handleIngredientAmountChange(
-                                    item.ingredient!.id.toString(),
+                                    item.id.toString(),
                                     text
                                 )
                             }
@@ -68,7 +68,7 @@ const IngredientsList = ({
                         <UnitText
                             onChangeText={(text: string) =>
                                 handleIngredientUnitChange(
-                                    item.ingredient!.id.toString(),
+                                    item.id.toString(),
                                     text
                                 )
                             }
@@ -82,7 +82,7 @@ const IngredientsList = ({
                         <RemoveButton
                             onPress={() =>
                                 handleRemoveIngredient(
-                                    item.ingredient!.id.toString()
+                                    item.id.toString()
                                 )
                             }
                         >

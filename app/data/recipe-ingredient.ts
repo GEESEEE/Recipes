@@ -2,6 +2,8 @@ import Ingredient from './ingredient'
 import Recipe from './recipe'
 
 export default class RecipeIngredient {
+    public readonly id: number;
+
     public recipeId!: number
 
     public ingredientId!: number
@@ -12,7 +14,8 @@ export default class RecipeIngredient {
 
     public ingredient?: Ingredient
 
-    constructor(amount: number, ingredient: Ingredient) {
+    constructor(id: number, amount: number, ingredient: Ingredient) {
+        this.id = id
         this.amount = amount
         this.ingredient = ingredient
     }

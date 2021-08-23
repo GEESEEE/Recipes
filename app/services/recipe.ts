@@ -148,3 +148,14 @@ export async function updateInstruction(
         { body: { text } }
     )
 }
+
+export async function updateInstructions(
+    recipeId: number,
+    instructions: Array<{ instructionId: number, text: string }>
+): Promise<any> {
+    return handleError(
+        'PUT',
+        `/recipes/${recipeId}/instructions/bulk`,
+        { body: instructions}
+    )
+}
