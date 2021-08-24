@@ -1,4 +1,4 @@
-import {Recipe} from '../data'
+import { Recipe } from '../data'
 
 export const RECIPE_ACTIONS = {
     ADD_RECIPE: 'addRecipe',
@@ -31,7 +31,7 @@ const recipes = (
 
         case RECIPE_ACTIONS.EDIT_RECIPE: {
             const { newRecipe } = action.payload
-            return state.map(r => (r.id === newRecipe.id ? newRecipe : r))
+            return state.map((r) => (r.id === newRecipe.id ? newRecipe : r))
         }
 
         default:

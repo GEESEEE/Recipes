@@ -44,7 +44,7 @@ const RecipeListItem = ({
             <ItemContainer>
                 <Name>{recipe.name}</Name>
                 <RecipeProperties recipe={recipe} />
-                <ButtonFilled text="edit" onPress={editRecipe}/>
+                <ButtonFilled text="edit" onPress={editRecipe} />
                 <DropDownMenu items={dropDownItems} />
             </ItemContainer>
         </Container>

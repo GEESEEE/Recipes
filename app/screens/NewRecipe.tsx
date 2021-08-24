@@ -59,7 +59,11 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
-        const recipeIngredient = new RecipeIngredient(indices.ingredientId, 0, ingredient)
+        const recipeIngredient = new RecipeIngredient(
+            indices.ingredientId,
+            0,
+            ingredient
+        )
 
         recipeData.recipeIngredients?.push(recipeIngredient)
         dispatch(decrementIngredientId(indices.ingredientId))

@@ -101,24 +101,23 @@ export async function removeIngredient(
 
 export async function removeIngredients(
     recipeId: number,
-    ingredientIds: number[],
+    ingredientIds: number[]
 ): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/ingredients/bulk`,
-        { body: ingredientIds}
-    )
+    return handleError('DELETE', `/recipes/${recipeId}/ingredients/bulk`, {
+        body: ingredientIds,
+    })
 }
 
 export async function updateIngredients(
     recipeId: number,
-    body: Array<{recipeIngredientId: number, amount?: number, name?: string, unit?: string | null}>
+    body: Array<{
+        recipeIngredientId: number
+        amount?: number
+        name?: string
+        unit?: string | null
+    }>
 ): Promise<RecipeIngredient[]> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/ingredients/bulk`,
-        { body }
-    )
+    return handleError('PUT', `/recipes/${recipeId}/ingredients/bulk`, { body })
 }
 export async function getRecipeIngredients(
     recipeId: number
@@ -162,11 +161,9 @@ export async function deleteInstructions(
     recipeId: number,
     instructionIds: number[]
 ): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/instructions/bulk`,
-        { body: instructionIds }
-    )
+    return handleError('DELETE', `/recipes/${recipeId}/instructions/bulk`, {
+        body: instructionIds,
+    })
 }
 
 export async function updateInstruction(
@@ -183,11 +180,9 @@ export async function updateInstruction(
 
 export async function updateInstructions(
     recipeId: number,
-    instructions: Array<{ instructionId: number, text: string }>
+    instructions: Array<{ instructionId: number; text: string }>
 ): Promise<any> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/instructions/bulk`,
-        { body: instructions}
-    )
+    return handleError('PUT', `/recipes/${recipeId}/instructions/bulk`, {
+        body: instructions,
+    })
 }

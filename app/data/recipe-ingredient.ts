@@ -2,7 +2,7 @@ import Ingredient from './ingredient'
 import Recipe from './recipe'
 
 export default class RecipeIngredient {
-    public readonly id: number;
+    public readonly id: number
 
     public recipeId!: number
 

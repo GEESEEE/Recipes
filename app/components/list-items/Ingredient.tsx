@@ -81,9 +81,7 @@ const IngredientsList = ({
                         {/* Remove Ingredient Button */}
                         <RemoveButton
                             onPress={() =>
-                                handleRemoveIngredient(
-                                    item.id.toString()
-                                )
+                                handleRemoveIngredient(item.id.toString())
                             }
                         >
                             <MyFeather

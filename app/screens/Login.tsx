@@ -1,10 +1,5 @@
 import React, { useReducer } from 'react'
-import {
-    View,
-    Dimensions,
-    TouchableOpacity,
-    Animated,
-} from 'react-native'
+import { View, Dimensions, TouchableOpacity, Animated } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'

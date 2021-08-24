@@ -13,7 +13,9 @@ export const createRecipe =
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
-                const newRecipe = (await recipeService.createRecipes([recipe]))[0]
+                const newRecipe = (
+                    await recipeService.createRecipes([recipe])
+                )[0]
 
                 // If ingredients were set, put those in database too and set in newRecipe
                 if (
@@ -71,55 +73,85 @@ export const editRecipe =
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
-                const oldRecipe = localRecipes.filter(r => r.id === recipe.id)[0]
+                const oldRecipe = localRecipes.filter(
+                    (r) => r.id === recipe.id
+                )[0]
                 deleteElement(localRecipes, oldRecipe)
 
                 // If recipe edited, change in database
-                const newRecipe = await recipeService.updateRecipe(recipe, oldRecipe)
+                const newRecipe = await recipeService.updateRecipe(
+                    recipe,
+                    oldRecipe
+                )
 
-                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(i => i.id > 0)
-                newRecipe.instructions = recipe.instructions?.filter(i => i.id > 0)
+                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(
+                    (i) => i.id > 0
+                )
+                newRecipe.instructions = recipe.instructions?.filter(
+                    (i) => i.id > 0
+                )
 
                 const ingredientsToAdd: RecipeIngredient[] = []
                 const ingredientsToUpdate: RecipeIngredient[] = []
                 const ingredientsToDelete: RecipeIngredient[] = []
 
                 // If id <= 0 only exists locally, so add to db
-                recipe.recipeIngredients!.forEach(ingr => {
+                recipe.recipeIngredients!.forEach((ingr) => {
                     if (ingr.id <= 0) ingredientsToAdd.push(ingr)
                 })
 
-                oldRecipe.recipeIngredients!.forEach(oldIngr => {
+                oldRecipe.recipeIngredients!.forEach((oldIngr) => {
                     let toDelete = true
-                    recipe.recipeIngredients!.forEach(ingr => {
+                    recipe.recipeIngredients!.forEach((ingr) => {
                         // If id is the same or id <= 0, dont delete
-                        if (oldIngr.id === ingr.id || oldIngr.id <= 0) toDelete = false
+                        if (oldIngr.id === ingr.id || oldIngr.id <= 0)
+                            toDelete = false
 
                         // if id is the same and any property has changed, add to update list
-                        if (oldIngr.id === ingr.id && (oldIngr.amount !== ingr.amount
-                            || oldIngr.ingredient!.name !== ingr.ingredient!.name
-                            || oldIngr.ingredient!.unit !== ingr.ingredient!.unit)) {
-                                ingredientsToUpdate.push(ingr)
+                        if (
+                            oldIngr.id === ingr.id &&
+                            (oldIngr.amount !== ingr.amount ||
+                                oldIngr.ingredient!.name !==
+                                    ingr.ingredient!.name ||
+                                oldIngr.ingredient!.unit !==
+                                    ingr.ingredient!.unit)
+                        ) {
+                            ingredientsToUpdate.push(ingr)
                         }
                     })
                     if (toDelete) ingredientsToDelete.push(oldIngr)
                 })
-                console.log("Ingredients Lists:", ingredientsToAdd, ingredientsToUpdate, ingredientsToDelete)
+                console.log(
+                    'Ingredients Lists:',
+                    ingredientsToAdd,
+                    ingredientsToUpdate,
+                    ingredientsToDelete
+                )
 
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
-                    const updatedIngredients = await recipeService.updateIngredients(
-                        recipe.id,
-                        ingredientsToUpdate,
-                        oldRecipe.recipeIngredients!
+                    const updatedIngredients =
+                        await recipeService.updateIngredients(
+                            recipe.id,
+                            ingredientsToUpdate,
+                            oldRecipe.recipeIngredients!
+                        )
+                    newRecipe.recipeIngredients = replaceElements(
+                        newRecipe.recipeIngredients!,
+                        updatedIngredients
                     )
-                    newRecipe.recipeIngredients = replaceElements(newRecipe.recipeIngredients!, updatedIngredients)
                 }
 
                 // Delete ingredients if there are any
                 if (ingredientsToDelete.length > 0) {
-                    await recipeService.removeIngredients(recipe.id, ingredientsToDelete)
-                    deleteElements(newRecipe.recipeIngredients!, ingredientsToDelete)
+                    await recipeService.removeIngredients(
+                        recipe.id,
+                        ingredientsToDelete
+                    )
+                    deleteElements(
+                        newRecipe.recipeIngredients!,
+                        ingredientsToDelete
+                    )
                 }
 
                 // Add ingredients if there are any
@@ -137,29 +169,40 @@ export const editRecipe =
                 const instructionsToDelete: Instruction[] = []
 
                 // If id <= 0, only exists locally, so add to recipe in db
-                recipe.instructions!.forEach(ins => {
+                recipe.instructions!.forEach((ins) => {
                     if (ins.id <= 0) instructionsToAdd.push(ins)
                 })
 
-                oldRecipe.instructions!.forEach(oldIns => {
+                oldRecipe.instructions!.forEach((oldIns) => {
                     let toDelete = true
-                    recipe.instructions!.forEach(ins => {
+                    recipe.instructions!.forEach((ins) => {
                         // If id is the same or id <= 0, dont delete
-                        if (oldIns.id === ins.id || oldIns.id <= 0) toDelete = false
+                        if (oldIns.id === ins.id || oldIns.id <= 0)
+                            toDelete = false
 
                         // if id is the same and any property has changed, add to update list
-                        if (oldIns.id === ins.id && oldIns.text !== ins.text) instructionsToUpdate.push(ins)
+                        if (oldIns.id === ins.id && oldIns.text !== ins.text)
+                            instructionsToUpdate.push(ins)
                     })
                     if (toDelete) instructionsToDelete.push(oldIns)
                 })
-                console.log("Instructions Lists:", instructionsToAdd, instructionsToUpdate, instructionsToDelete)
+                console.log(
+                    'Instructions Lists:',
+                    instructionsToAdd,
+                    instructionsToUpdate,
+                    instructionsToDelete
+                )
                 // Update instructions if there are any
                 if (instructionsToUpdate.length > 0) {
-                    const updatedInstructions = await recipeService.updateInstructions(
-                        recipe.id,
-                        instructionsToUpdate
+                    const updatedInstructions =
+                        await recipeService.updateInstructions(
+                            recipe.id,
+                            instructionsToUpdate
+                        )
+                    newRecipe.instructions = replaceElements(
+                        newRecipe.instructions!,
+                        updatedInstructions
                     )
-                    newRecipe.instructions = replaceElements(newRecipe.instructions!, updatedInstructions)
                 }
 
                 // Delete instructions if there are any
@@ -168,15 +211,19 @@ export const editRecipe =
                         recipe.id,
                         instructionsToDelete
                     )
-                    deleteElements(newRecipe.instructions!, instructionsToDelete)
+                    deleteElements(
+                        newRecipe.instructions!,
+                        instructionsToDelete
+                    )
                 }
 
                 // Add Instructions if there are any
                 if (instructionsToAdd.length > 0) {
-                    const addedInstructions = await recipeService.addInstructions(
-                        recipe.id,
-                        instructionsToAdd
-                    )
+                    const addedInstructions =
+                        await recipeService.addInstructions(
+                            recipe.id,
+                            instructionsToAdd
+                        )
                     newRecipe.instructions!.push(...addedInstructions)
                 }
 
@@ -188,7 +235,7 @@ export const editRecipe =
 
                 dispatch({
                     type: RECIPE_ACTIONS.EDIT_RECIPE,
-                    payload: { newRecipe }
+                    payload: { newRecipe },
                 })
             }
         } catch (err) {
