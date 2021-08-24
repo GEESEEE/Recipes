@@ -25,22 +25,14 @@ export const createRecipe =
                     typeof recipe.recipeIngredients !== 'undefined' &&
                     recipe.recipeIngredients.length > 0
                 ) {
-                    const ingredientObjects: {
-                        name: string
-                        amount: number
-                        unit?: string
-                    }[] = []
-                    recipe.recipeIngredients.forEach((ri) => {
-                        const i = ri.ingredient as Ingredient
-                        ingredientObjects.push({
-                            name: i.name,
-                            amount: ri.amount,
-                            unit: i.unit as string | undefined,
-                        })
-                    })
+
                     const ingredients = await recipeService.addIngredients(
                         newRecipe.id,
-                        ingredientObjects
+                        recipe.recipeIngredients.map(ri => ({
+                            amount: ri.amount,
+                            unit: ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
+                            name: ri.ingredient!.name,
+                        }))
                     )
                     newRecipe.recipeIngredients = ingredients
                     // else set ingredients to empty array
@@ -76,6 +68,7 @@ export const createRecipe =
                 })
             }
         } catch (err) {
+            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -88,16 +81,10 @@ export const editRecipe =
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
-                // Replace in local storage
                 const oldRecipe = localRecipes.filter(r => r.id === recipe.id)[0]
                 deleteElement(localRecipes, oldRecipe)
-                localRecipes.push(recipe)
-                await AsyncStorage.setItem(
-                    'recipes',
-                    JSON.stringify(localRecipes)
-                )
 
-                // Update recipe in database
+                // If recipe edited, change in database
                 const newRecipe = await recipeService.updateRecipe(
                     recipe.id,
                     {
@@ -107,8 +94,8 @@ export const editRecipe =
                         prepareTime: recipe.prepareTime
                     },
                 )
-                newRecipe.recipeIngredients = recipe.recipeIngredients
-                newRecipe.instructions = recipe.instructions
+                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(i => i.id > 0)
+                newRecipe.instructions = recipe.instructions?.filter(i => i.id > 0)
 
                 const ingredientsToAdd: RecipeIngredient[] = []
                 const ingredientsToUpdate: RecipeIngredient[] = []
@@ -123,7 +110,7 @@ export const editRecipe =
                     let toDelete = true
                     recipe.recipeIngredients!.forEach(ingr => {
                         // If id is the same or id <= 0, dont delete
-                        if (oldIngr.id === ingr.id || ingr.id <= 0) toDelete = false
+                        if (oldIngr.id === ingr.id || oldIngr.id <= 0) toDelete = false
 
                         // if id is the same and any property has changed, add to update list
                         if (oldIngr.id === ingr.id && (oldIngr.amount !== ingr.amount
@@ -134,16 +121,40 @@ export const editRecipe =
                     })
                     if (toDelete) ingredientsToDelete.push(oldIngr)
                 })
+                console.log("Ingredients Lists:", ingredientsToAdd, ingredientsToUpdate, ingredientsToDelete)
 
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
-                    // TODO: Fix UpdateIngredients on API side
-                    newRecipe.recipeIngredients = replaceElements(newRecipe.recipeIngredients!, ingredientsToUpdate)
+                    type IngredientUpdateObject = {
+                        recipeIngredientId: number,
+                        amount?: number,
+                        unit?: string | null,
+                        name?: string
+                    }
+                    const updateObjects: IngredientUpdateObject[] = []
+                    ingredientsToUpdate.forEach(ingr => {
+                        const obj: IngredientUpdateObject = {recipeIngredientId: ingr.id}
+                        const oldIngr =  oldRecipe.recipeIngredients!.find(i => i.id === ingr.id)
+                        if (typeof oldIngr !== 'undefined') {
+                            if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
+                            if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit) obj.unit = ingr.ingredient!.unit
+                            if (oldIngr.ingredient!.name !== ingr.ingredient!.name) obj.name = ingr.ingredient!.name
+                        }
+
+                        if (Object.keys(obj).length > 1) updateObjects.push(obj)
+                    })
+
+                    const updatedIngredients = await recipeService.updateIngredients(
+                        recipe.id,
+                        updateObjects
+                    )
+                    newRecipe.recipeIngredients = replaceElements(newRecipe.recipeIngredients!, updatedIngredients)
                 }
 
                 // Delete ingredients if there are any
                 if (ingredientsToDelete.length > 0) {
                     await recipeService.removeIngredients(recipe.id, ingredientsToDelete.map(i => i.ingredient!.id))
+                    deleteElements(newRecipe.recipeIngredients!, ingredientsToDelete)
                 }
 
                 // Add ingredients if there are any
@@ -152,7 +163,7 @@ export const editRecipe =
                         recipe.id,
                         ingredientsToAdd.map(ri => ({
                             amount: ri.amount,
-                            unit: ri.ingredient!.unit ?? undefined,
+                            unit: ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
                             name: ri.ingredient!.name,
                         }))
                     )
@@ -169,19 +180,18 @@ export const editRecipe =
                     if (ins.id <= 0) instructionsToAdd.push(ins)
                 })
 
-
                 oldRecipe.instructions!.forEach(oldIns => {
                     let toDelete = true
                     recipe.instructions!.forEach(ins => {
                         // If id is the same or id <= 0, dont delete
-                        if (oldIns.id === ins.id || ins.id <= 0) toDelete = false
+                        if (oldIns.id === ins.id || oldIns.id <= 0) toDelete = false
 
                         // if id is the same and any property has changed, add to update list
                         if (oldIns.id === ins.id && oldIns.text !== ins.text) instructionsToUpdate.push(ins)
                     })
                     if (toDelete) instructionsToDelete.push(oldIns)
                 })
-
+                console.log("Instructions Lists:", instructionsToAdd, instructionsToUpdate, instructionsToDelete)
                 // Update instructions if there are any
                 if (instructionsToUpdate.length > 0) {
                     const updatedInstructions = await recipeService.updateInstructions(
@@ -208,12 +218,19 @@ export const editRecipe =
                     newRecipe.instructions!.push(...addedInstructions)
                 }
 
+                localRecipes.push(newRecipe)
+                await AsyncStorage.setItem(
+                    'recipes',
+                    JSON.stringify(localRecipes)
+                )
+
                 dispatch({
                     type: RECIPE_ACTIONS.EDIT_RECIPE,
                     payload: { newRecipe }
                 })
             }
         } catch (err) {
+            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -245,6 +262,7 @@ export const retrieveRecipes =
                 payload: { newRecipes },
             })
         } catch (err) {
+            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -264,6 +282,7 @@ export const deleteRecipe =
                 payload: { recipe },
             })
         } catch (err) {
+            console.log(err.response.data.errors)
             console.error(err)
         }
     }

@@ -5,11 +5,11 @@ export default class Ingredient {
 
     public name!: string
 
-    public unit?: string | null
+    public unit!: string | null
 
     public recipeIngredients?: RecipeIngredient[]
 
-    constructor(id: number, name: string, unit?: string | null) {
+    constructor(id: number, name: string, unit: string | null) {
         this.id = id
         this.name = name
         this.unit = unit
