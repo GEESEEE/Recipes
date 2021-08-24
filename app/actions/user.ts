@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { USERACTIONS } from '../reducers/user'
-import * as userService from '../services/user'
+import * as userService from '../rest/user'
 
 export const getUserData =
     (token: string): any =>

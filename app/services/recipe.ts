@@ -1,193 +1,106 @@
-import Recipe from '../data/recipe'
-import Ingredient from '../data/ingredient'
-import RecipeIngredient from '../data/recipe-ingredient'
-import Instruction from '../data/instruction'
-import { APIError } from '../config/constants'
-import handleError from './base'
+import * as recipeService from '../rest/recipe'
+import { Instruction, Recipe, RecipeIngredient } from '../data'
 
-export async function createIngredient(body: {
-    name: string
-    unit?: string
-}): Promise<Ingredient | APIError> {
-    return handleError('POST', '/ingredients', { body })
+type RecipeUpdateObject = {
+    name?: string,
+    description?: string,
+    peopleCount?: number,
+    prepareTime?: number,
 }
 
-export async function getIngredient(
-    ingredientId: number
-): Promise<Ingredient | APIError> {
-    return handleError('GET', `/ingredients/${ingredientId}`)
+type IngredientUpdateObject = {
+    recipeIngredientId: number,
+    amount?: number,
+    unit?: string | null,
+    name?: string
 }
 
-export async function deleteIngredient(
-    ingredientId: number
-): Promise<Ingredient | APIError> {
-    return handleError('DELETE', `/ingredients/${ingredientId}`)
+
+export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
+    return recipeService.createRecipes(recipes.map(recipe => ({
+        name: recipe.name,
+        description: recipe.description,
+        peopleCount: recipe.peopleCount,
+        prepareTime: recipe.prepareTime
+    })))
 }
 
-export async function createRecipe(body: {
-    name: string
-    description: string
-    prepareTime: number
-    peopleCount: number
-}): Promise<Recipe> {
-    return handleError('POST', '/recipes', { body })
-}
+export async function updateRecipe(recipe: Recipe, oldRecipe: Recipe): Promise<Recipe> {
+    const recipeObj: RecipeUpdateObject = {}
+    if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
+    if (recipe.description !== oldRecipe.description) recipeObj.description = recipe.description
+    if (recipe.peopleCount !== oldRecipe.peopleCount) recipeObj.peopleCount = recipe.peopleCount
+    if (recipe.prepareTime !== oldRecipe.prepareTime) recipeObj.prepareTime = recipe.prepareTime
 
-export async function createRecipes(
-    body: {
-        name: string
-        description: string
-        prepareTime: number
-        peopleCount: number
-    }[]
-): Promise<Recipe[]> {
-    return handleError('POST', '/recipes/bulk', { body })
+    if (Object.keys(recipeObj).length > 0) {
+        return recipeService.updateRecipe(
+            recipe.id,
+            recipeObj
+        )
+    }
+    return recipe
 }
 
 export async function getMyRecipes(): Promise<Recipe[]> {
-    return handleError('GET', '/recipes', {})
-}
-
-export async function getRecipe(recipeId: number): Promise<Recipe> {
-    return handleError('GET', `/recipes/${recipeId}`)
+    return recipeService.getMyRecipes()
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {
-    return handleError('DELETE', `/recipes/${recipeId}`)
+    await recipeService.deleteRecipe(recipeId)
 }
 
-export async function updateRecipe(
-    recipeId: number,
-    body: {
-        name?: string
-        description?: string
-        prepareTime?: number
-        peopleCount?: number
-    }
-): Promise<Recipe> {
-    return handleError('PUT', `/recipes/${recipeId}`, { body })
-}
 
-export async function addIngredient(
-    recipeId: number,
-    ingredientId: number,
-    amount: number
-): Promise<RecipeIngredient> {
-    return handleError(
-        'POST',
-        `/recipes/${recipeId}/ingredients/${ingredientId}`,
-        { body: { amount } }
-    )
-}
-
-export async function addIngredients(
-    recipeId: number,
-    body: Array<{ amount: number; name: string; unit: string | null }>
-): Promise<RecipeIngredient[]> {
-    return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
-        body,
-    })
-}
-
-export async function removeIngredient(
-    recipeId: number,
-    ingredientId: number
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/ingredients/${ingredientId}`
-    )
-}
-
-export async function removeIngredients(
-    recipeId: number,
-    ingredientIds: number[],
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/ingredients/bulk`,
-        { body: ingredientIds}
-    )
+export async function addIngredients(recipeId: number, ingredients: RecipeIngredient[]): Promise<RecipeIngredient[]> {
+    return recipeService.addIngredients(recipeId, ingredients.map(ri => ({
+        amount: ri.amount,
+        unit: ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
+        name: ri.ingredient!.name,
+    })))
 }
 
 export async function updateIngredients(
     recipeId: number,
-    body: Array<{recipeIngredientId: number, amount?: number, name?: string, unit?: string | null}>
+    ingredients: RecipeIngredient[],
+    oldIngredients: RecipeIngredient[]
 ): Promise<RecipeIngredient[]> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/ingredients/bulk`,
-        { body }
-    )
-}
-export async function getRecipeIngredients(
-    recipeId: number
-): Promise<RecipeIngredient[]> {
-    return handleError('GET', `/recipes/${recipeId}/ingredients`)
+
+    const updateObjects: IngredientUpdateObject[] = []
+        ingredients.forEach(ingr => {
+            const obj: IngredientUpdateObject = {recipeIngredientId: ingr.id}
+            const oldIngr = oldIngredients.find(i => i.id === ingr.id)
+            if (typeof oldIngr !== 'undefined') {
+                if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
+                if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit) obj.unit = ingr.ingredient!.unit
+                if (oldIngr.ingredient!.name !== ingr.ingredient!.name) obj.name = ingr.ingredient!.name
+            }
+
+            if (Object.keys(obj).length > 1) updateObjects.push(obj)
+        })
+
+        return recipeService.updateIngredients(recipeId, updateObjects)
 }
 
-export async function addInstruction(
-    recipeId: number,
-    body: { text: string }
-): Promise<Instruction> {
-    return handleError('POST', `/recipes/${recipeId}/instructions`, { body })
+export async function removeIngredients(recipeId: number, ingredients: RecipeIngredient[]): Promise<void> {
+    await recipeService.removeIngredients(recipeId, ingredients.map(i => i.ingredient!.id))
 }
 
-export async function addInstructions(
-    recipeId: number,
-    body: Array<{ text: string }>
-): Promise<Instruction[]> {
-    return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {
-        body,
-    })
-}
 
-export async function getInstructions(
-    recipeId: number
-): Promise<Instruction[]> {
-    return handleError('GET', `/recipes/${recipeId}/instructions`)
-}
-
-export async function deleteInstruction(
-    recipeId: number,
-    instructionId: number
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/instructions/${instructionId}`
+export async function addInstructions(recipeId: number, instructions: Instruction[]): Promise<Instruction[]> {
+    return recipeService.addInstructions(
+        recipeId,
+        instructions.map(i => ({text: i.text}))
     )
 }
 
-export async function deleteInstructions(
-    recipeId: number,
-    instructionIds: number[]
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/instructions/bulk`,
-        { body: instructionIds }
+export async function updateInstructions(recipeId: number, instructions: Instruction[]): Promise<Instruction[]> {
+    return recipeService.updateInstructions(
+        recipeId,
+        instructions.map(i => ({ text: i.text, instructionId: i.id}))
     )
 }
 
-export async function updateInstruction(
-    recipeId: number,
-    instructionId: number,
-    text: string
-): Promise<Instruction> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/instructions/${instructionId}`,
-        { body: { text } }
-    )
-}
-
-export async function updateInstructions(
-    recipeId: number,
-    instructions: Array<{ instructionId: number, text: string }>
-): Promise<any> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/instructions/bulk`,
-        { body: instructions}
-    )
+export async function deleteInstructions(recipeId: number, instructions: Instruction[]): Promise<void> {
+    await recipeService.deleteInstructions(
+        recipeId,
+        instructions.map(i => i.id))
 }

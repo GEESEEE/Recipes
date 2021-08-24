@@ -2,7 +2,7 @@ import * as SecureStore from 'expo-secure-store'
 import { NavigationScreenProp } from 'react-navigation'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS } from '../reducers/auth'
-import * as authService from '../services/auth'
+import * as authService from '../rest/auth'
 import { clearUserData, getUserData } from './user'
 
 export const retrieveToken =

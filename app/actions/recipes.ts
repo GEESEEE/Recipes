@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
-import { RECIPE_ACTIONS } from '../reducers/recipes'
 import * as recipeService from '../services/recipe'
-import { Instruction, Ingredient, Recipe, RecipeIngredient } from '../data'
+import { RECIPE_ACTIONS } from '../reducers/recipes'
+import { Instruction, Recipe, RecipeIngredient } from '../data'
 import { deleteElement, deleteElements, replaceElements } from '../config/utils'
 
 export const createRecipe =
@@ -13,26 +13,16 @@ export const createRecipe =
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
-                const newRecipe = await recipeService.createRecipe({
-                    name: recipe.name,
-                    description: recipe.description,
-                    peopleCount: recipe.peopleCount,
-                    prepareTime: recipe.prepareTime
-                })
+                const newRecipe = (await recipeService.createRecipes([recipe]))[0]
 
                 // If ingredients were set, put those in database too and set in newRecipe
                 if (
                     typeof recipe.recipeIngredients !== 'undefined' &&
                     recipe.recipeIngredients.length > 0
                 ) {
-
                     const ingredients = await recipeService.addIngredients(
                         newRecipe.id,
-                        recipe.recipeIngredients.map(ri => ({
-                            amount: ri.amount,
-                            unit: ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
-                            name: ri.ingredient!.name,
-                        }))
+                        recipe.recipeIngredients
                     )
                     newRecipe.recipeIngredients = ingredients
                     // else set ingredients to empty array
@@ -85,27 +75,7 @@ export const editRecipe =
                 deleteElement(localRecipes, oldRecipe)
 
                 // If recipe edited, change in database
-                let newRecipe
-                type RecipeUpdateObject = {
-                    name?: string,
-                    description?: string,
-                    peopleCount?: number,
-                    prepareTime?: number,
-                }
-                const recipeObj: RecipeUpdateObject = {}
-                if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
-                if (recipe.description !== oldRecipe.description) recipeObj.description = recipe.description
-                if (recipe.peopleCount !== oldRecipe.peopleCount) recipeObj.peopleCount = recipe.peopleCount
-                if (recipe.prepareTime !== oldRecipe.prepareTime) recipeObj.prepareTime = recipe.prepareTime
-
-                if (Object.keys(recipeObj).length > 0) {
-                    newRecipe = await recipeService.updateRecipe(
-                        recipe.id,
-                        recipeObj
-                    )
-                } else {
-                    newRecipe = recipe
-                }
+                const newRecipe = await recipeService.updateRecipe(recipe, oldRecipe)
 
                 newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(i => i.id > 0)
                 newRecipe.instructions = recipe.instructions?.filter(i => i.id > 0)
@@ -138,35 +108,17 @@ export const editRecipe =
 
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
-                    type IngredientUpdateObject = {
-                        recipeIngredientId: number,
-                        amount?: number,
-                        unit?: string | null,
-                        name?: string
-                    }
-                    const updateObjects: IngredientUpdateObject[] = []
-                    ingredientsToUpdate.forEach(ingr => {
-                        const obj: IngredientUpdateObject = {recipeIngredientId: ingr.id}
-                        const oldIngr =  oldRecipe.recipeIngredients!.find(i => i.id === ingr.id)
-                        if (typeof oldIngr !== 'undefined') {
-                            if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
-                            if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit) obj.unit = ingr.ingredient!.unit
-                            if (oldIngr.ingredient!.name !== ingr.ingredient!.name) obj.name = ingr.ingredient!.name
-                        }
-
-                        if (Object.keys(obj).length > 1) updateObjects.push(obj)
-                    })
-
                     const updatedIngredients = await recipeService.updateIngredients(
                         recipe.id,
-                        updateObjects
+                        ingredientsToUpdate,
+                        oldRecipe.recipeIngredients!
                     )
                     newRecipe.recipeIngredients = replaceElements(newRecipe.recipeIngredients!, updatedIngredients)
                 }
 
                 // Delete ingredients if there are any
                 if (ingredientsToDelete.length > 0) {
-                    await recipeService.removeIngredients(recipe.id, ingredientsToDelete.map(i => i.ingredient!.id))
+                    await recipeService.removeIngredients(recipe.id, ingredientsToDelete)
                     deleteElements(newRecipe.recipeIngredients!, ingredientsToDelete)
                 }
 
@@ -174,11 +126,7 @@ export const editRecipe =
                 if (ingredientsToAdd.length > 0) {
                     const addedIngredients = await recipeService.addIngredients(
                         recipe.id,
-                        ingredientsToAdd.map(ri => ({
-                            amount: ri.amount,
-                            unit: ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
-                            name: ri.ingredient!.name,
-                        }))
+                        ingredientsToAdd
                     )
                     newRecipe.recipeIngredients!.push(...addedIngredients)
                 }
@@ -209,7 +157,7 @@ export const editRecipe =
                 if (instructionsToUpdate.length > 0) {
                     const updatedInstructions = await recipeService.updateInstructions(
                         recipe.id,
-                        instructionsToUpdate.map(i => ({ text: i.text, instructionId: i.id}))
+                        instructionsToUpdate
                     )
                     newRecipe.instructions = replaceElements(newRecipe.instructions!, updatedInstructions)
                 }
@@ -218,7 +166,8 @@ export const editRecipe =
                 if (instructionsToDelete.length > 0) {
                     await recipeService.deleteInstructions(
                         recipe.id,
-                        instructionsToDelete.map(i => i.id))
+                        instructionsToDelete
+                    )
                     deleteElements(newRecipe.instructions!, instructionsToDelete)
                 }
 
@@ -226,7 +175,7 @@ export const editRecipe =
                 if (instructionsToAdd.length > 0) {
                     const addedInstructions = await recipeService.addInstructions(
                         recipe.id,
-                        instructionsToAdd.map(i => ({ text: i.text }))
+                        instructionsToAdd
                     )
                     newRecipe.instructions!.push(...addedInstructions)
                 }
