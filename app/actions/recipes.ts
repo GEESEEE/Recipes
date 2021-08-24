@@ -85,15 +85,28 @@ export const editRecipe =
                 deleteElement(localRecipes, oldRecipe)
 
                 // If recipe edited, change in database
-                const newRecipe = await recipeService.updateRecipe(
-                    recipe.id,
-                    {
-                        name: recipe.name,
-                        description: recipe.description,
-                        peopleCount: recipe.peopleCount,
-                        prepareTime: recipe.prepareTime
-                    },
-                )
+                let newRecipe
+                type RecipeUpdateObject = {
+                    name?: string,
+                    description?: string,
+                    peopleCount?: number,
+                    prepareTime?: number,
+                }
+                const recipeObj: RecipeUpdateObject = {}
+                if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
+                if (recipe.description !== oldRecipe.description) recipeObj.description = recipe.description
+                if (recipe.peopleCount !== oldRecipe.peopleCount) recipeObj.peopleCount = recipe.peopleCount
+                if (recipe.prepareTime !== oldRecipe.prepareTime) recipeObj.prepareTime = recipe.prepareTime
+
+                if (Object.keys(recipeObj).length > 0) {
+                    newRecipe = await recipeService.updateRecipe(
+                        recipe.id,
+                        recipeObj
+                    )
+                } else {
+                    newRecipe = recipe
+                }
+
                 newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(i => i.id > 0)
                 newRecipe.instructions = recipe.instructions?.filter(i => i.id > 0)
 
