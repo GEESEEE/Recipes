@@ -1,37 +1,7 @@
 import Recipe from '../data/recipe'
-import Ingredient from '../data/ingredient'
 import RecipeIngredient from '../data/recipe-ingredient'
 import Instruction from '../data/instruction'
-import { APIError } from '../config/constants'
 import handleError from './base'
-
-export async function createIngredient(body: {
-    name: string
-    unit?: string
-}): Promise<Ingredient | APIError> {
-    return handleError('POST', '/ingredients', { body })
-}
-
-export async function getIngredient(
-    ingredientId: number
-): Promise<Ingredient | APIError> {
-    return handleError('GET', `/ingredients/${ingredientId}`)
-}
-
-export async function deleteIngredient(
-    ingredientId: number
-): Promise<Ingredient | APIError> {
-    return handleError('DELETE', `/ingredients/${ingredientId}`)
-}
-
-export async function createRecipe(body: {
-    name: string
-    description: string
-    prepareTime: number
-    peopleCount: number
-}): Promise<Recipe> {
-    return handleError('POST', '/recipes', { body })
-}
 
 export async function createRecipes(
     body: {
@@ -68,18 +38,6 @@ export async function updateRecipe(
     return handleError('PUT', `/recipes/${recipeId}`, { body })
 }
 
-export async function addIngredient(
-    recipeId: number,
-    ingredientId: number,
-    amount: number
-): Promise<RecipeIngredient> {
-    return handleError(
-        'POST',
-        `/recipes/${recipeId}/ingredients/${ingredientId}`,
-        { body: { amount } }
-    )
-}
-
 export async function addIngredients(
     recipeId: number,
     body: Array<{ amount: number; name: string; unit: string | null }>
@@ -87,16 +45,6 @@ export async function addIngredients(
     return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
         body,
     })
-}
-
-export async function removeIngredient(
-    recipeId: number,
-    ingredientId: number
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/ingredients/${ingredientId}`
-    )
 }
 
 export async function removeIngredients(
@@ -119,18 +67,7 @@ export async function updateIngredients(
 ): Promise<RecipeIngredient[]> {
     return handleError('PUT', `/recipes/${recipeId}/ingredients/bulk`, { body })
 }
-export async function getRecipeIngredients(
-    recipeId: number
-): Promise<RecipeIngredient[]> {
-    return handleError('GET', `/recipes/${recipeId}/ingredients`)
-}
 
-export async function addInstruction(
-    recipeId: number,
-    body: { text: string }
-): Promise<Instruction> {
-    return handleError('POST', `/recipes/${recipeId}/instructions`, { body })
-}
 
 export async function addInstructions(
     recipeId: number,
@@ -141,22 +78,6 @@ export async function addInstructions(
     })
 }
 
-export async function getInstructions(
-    recipeId: number
-): Promise<Instruction[]> {
-    return handleError('GET', `/recipes/${recipeId}/instructions`)
-}
-
-export async function deleteInstruction(
-    recipeId: number,
-    instructionId: number
-): Promise<void> {
-    return handleError(
-        'DELETE',
-        `/recipes/${recipeId}/instructions/${instructionId}`
-    )
-}
-
 export async function deleteInstructions(
     recipeId: number,
     instructionIds: number[]
@@ -164,18 +85,6 @@ export async function deleteInstructions(
     return handleError('DELETE', `/recipes/${recipeId}/instructions/bulk`, {
         body: instructionIds,
     })
-}
-
-export async function updateInstruction(
-    recipeId: number,
-    instructionId: number,
-    text: string
-): Promise<Instruction> {
-    return handleError(
-        'PUT',
-        `/recipes/${recipeId}/instructions/${instructionId}`,
-        { body: { text } }
-    )
 }
 
 export async function updateInstructions(
