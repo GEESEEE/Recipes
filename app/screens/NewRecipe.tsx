@@ -1,28 +1,31 @@
 import React from 'react'
-import { Dimensions, View, TextInput } from 'react-native'
+import { View } from 'react-native'
 import styled from 'styled-components'
 import { createRecipe, editRecipe } from '../actions/recipes'
 import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
-import { InstructionsList, IngredientsList } from '../components/list-items'
+import { InstructionsList, IngredientsList, RecipeHeader } from '../components/data'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { MyFeather, MyMaterialIcons } from '../components/Icons'
 import {
     decrementIngredientId,
     decrementInstructionId,
     decrementRecipeId,
 } from '../actions/indices'
 import { handleNumericTextInput } from '../config/utils'
+import { ErrorMessage } from '../components/user-input/ErrorMessage'
+
+type RecipeValidity = {
+    validIngredients: boolean
+}
 
 function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
 
-    function getInitialRecipe(): Recipe {
+    function getInitialRecipe(): Recipe & RecipeValidity {
         return {
             name: '',
             description: '',
@@ -31,12 +34,13 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             id: indices.recipeId,
             recipeIngredients: [],
             instructions: [],
+            validIngredients: true,
         }
     }
 
     const recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
-    const [recipeData, setRecipeData] = React.useState<Recipe>(initialState)
+    const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(initialState)
 
     // #region State Altering Functions
     function handleNameChange(name: string): void {
@@ -90,7 +94,18 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             (item) => item.id.toString() === key
         )[0]
         recipeIngredient!.ingredient!.name = name
-        setRecipeData({ ...recipeData })
+
+        let validIngredients = true
+        recipeData.recipeIngredients!.forEach(ri1 => {
+            const sameName = recipeData.recipeIngredients!.find(ri2 =>
+                (ri1.id !== ri2.id
+                && ri1.ingredient!.name === ri2.ingredient!.name))
+            if (sameName) {
+               validIngredients = false
+            }
+        })
+
+        setRecipeData({ ...recipeData, validIngredients })
     }
 
     function handleIngredientUnitChange(key: string, unit: string): void {
@@ -124,88 +139,45 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData })
     }
 
-    function cancelEditRecipe(): void {
-        navigation.navigate('RecipesScreen')
+    // #endregion
+
+    function validRecipe(): boolean {
+        return recipeData.validIngredients
+    }
+
+    async function handleCreateRecipe(): Promise<void> {
+        if (validRecipe()) {
+            dispatch(createRecipe(recipeData))
+            dispatch(decrementRecipeId(indices.recipeId))
+            clearRecipeData()
+            navigation.navigate('RecipesScreen')
+        }
     }
 
     function clearRecipeData(): void {
         setRecipeData(getInitialRecipe())
     }
 
-    // #endregion
-
-    async function handleCreateRecipe(): Promise<void> {
-        dispatch(createRecipe(recipeData))
-        dispatch(decrementRecipeId(indices.recipeId))
-        clearRecipeData()
-        navigation.navigate('RecipesScreen')
+    async function handleEditRecipe(): Promise<void> {
+        dispatch(editRecipe(recipeData))
     }
 
-    async function handleEditRecipe(): Promise<void> {
-        console.log('Editing')
-        dispatch(editRecipe(recipeData))
+    function cancelEditRecipe(): void {
+        navigation.navigate('RecipesScreen')
     }
 
     return (
         <Container>
-            <Header>
-                {/* Recipe Name Input Field */}
-                <RecipeNameTextInput
-                    value={recipeData.name}
-                    placeholder="New Recipe"
-                    placeholderTextColor={theme.grey}
-                    onChangeText={(text: string) => handleNameChange(text)}
-                    multiline
-                />
 
-                {/* Recipe Description Input Field */}
-                <DescriptionTextInput
-                    placeholder="Description"
-                    value={recipeData.description}
-                    placeholderTextColor={theme.grey}
-                    onChangeText={(text: string) =>
-                        handleDescriptionChange(text)
-                    }
-                    multiline
-                />
-                <PropertiesContainer>
-                    {/* Prepare Time */}
-                    <PropertyView>
-                        <MyMaterialIcons name="timer-sand" color={theme.text} />
-                        <Property
-                            style={{
-                                color:
-                                    recipeData.prepareTime === 0
-                                        ? theme.grey
-                                        : theme.text,
-                            }}
-                            onChangeText={handlePrepareTimeChange}
-                            value={recipeData.prepareTime.toString()}
-                            placeholder="0"
-                            placeholderTextColor={theme.grey}
-                            keyboardType="number-pad"
-                        />
-                    </PropertyView>
-
-                    {/* People Count */}
-                    <PropertyView>
-                        <MyFeather name="user" color={theme.text} />
-                        <Property
-                            style={{
-                                color:
-                                    recipeData.peopleCount === 0
-                                        ? theme.grey
-                                        : theme.text,
-                            }}
-                            onChangeText={handlePeopleCountChange}
-                            value={recipeData.peopleCount.toString()}
-                            placeholder="0"
-                            placeholderTextColor={theme.grey}
-                            keyboardType="number-pad"
-                        />
-                    </PropertyView>
-                </PropertiesContainer>
-            </Header>
+            <RecipeHeader
+                recipe={recipeData}
+                navigation={navigation}
+                editable
+                handleNameChange={handleNameChange}
+                handleDescriptionChange={handleDescriptionChange}
+                handlePeopleCountChange={handlePeopleCountChange}
+                handlePrepareTimeChange={handlePrepareTimeChange}
+            />
 
             {/* Ingredients List Container */}
             <IngredientsList
@@ -216,6 +188,11 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 handleIngredientUnitChange={handleIngredientUnitChange}
                 handleAddIngredient={handleAddIngredient}
             />
+            <ErrorMessage errorMessage={
+                recipeData.validIngredients
+                ? undefined
+                : 'Can not use 2 ingredients with the same name'
+            }/>
 
             {/* Instructions List Container */}
             <InstructionsList
@@ -242,8 +219,6 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
 export default NewRecipeScreen
 
-const { height } = Dimensions.get('screen')
-
 const Container = styled(View)`
     flex: 1;
     flex-direction: column;
@@ -253,52 +228,4 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const Header = styled(View)`
-    bottom: ${height * 0.03}px;
-    width: 85%;
-    background-color: ${(props) => props.theme.background};
-    border-color: ${(props) => props.theme.primary};
-    border-radius: 20px;
-    border-width: 3px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-`
 
-const RecipeNameTextInput = styled(TextInput)`
-    margin-top: 10px;
-    padding-bottom: 10px;
-    font-size: 22px;
-    color: ${(props) => props.theme.text};
-    text-align: center;
-    border-bottom-color: ${(props) => props.theme.primary};
-    border-bottom-width: 1px;
-`
-
-const DescriptionTextInput = styled(TextInput)`
-    margin-top: 8px;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-bottom: 5px;
-    color: ${(props) => props.theme.text};
-`
-
-const PropertiesContainer = styled(View)`
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-`
-
-const PropertyView = styled(View)`
-    margin-left: 10px;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    flex-direction: row;
-`
-
-const Property = styled(TextInput)`
-    color: ${(props) => props.theme.text};
-    font-size: 20px;
-    padding-left: 5px;
-    flex: 1;
-`

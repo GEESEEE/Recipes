@@ -21,7 +21,7 @@ export default function applicationAdapter(
     // API_URL
     return axios({
         url: `${
-            'http://e033-5-132-11-58.ngrok.io' ?? '127.0.0.1'
+            'http://3440-5-132-11-58.ngrok.io' ?? '127.0.0.1'
         }/${V1}${pathName}`,
         method,
         data,

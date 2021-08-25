@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, Modal } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { Position, usePosition } from '../hooks'
-import { ButtonOptions } from './user-input/Buttons'
+import { Position, usePosition } from '../../hooks'
+import { ButtonOptions } from './Buttons'
 
 export type DropDownItem = {
     id: number

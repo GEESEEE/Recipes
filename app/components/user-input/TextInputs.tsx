@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, TextInput, Text } from 'react-native'
+import { View, TextInput } from 'react-native'
 
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
+import { ErrorMessage } from './ErrorMessage'
 
 export const InputFieldRounded = ({
     onChangeText,
@@ -39,11 +40,7 @@ export const InputFieldRounded = ({
                 />
                 {rightIcon ?? null}
             </InputFieldRoundedStyle>
-            {errorMessage ? (
-                <ErrorMessage>{errorMessage}</ErrorMessage>
-            ) : (
-                <BottomPadding />
-            )}
+            <ErrorMessage errorMessage={errorMessage}/>
         </Container>
     )
 }
@@ -73,12 +70,4 @@ const TextInputRounded = styled(TextInput)`
     color: ${(props) => props.theme.text};
 `
 
-const BottomPadding = styled(View)`
-    height: 14px;
-`
 
-const ErrorMessage = styled(Text)`
-    color: ${(props) => props.theme.error};
-    font-size: 10px;
-    padding: 0px;
-`

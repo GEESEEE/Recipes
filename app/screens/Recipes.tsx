@@ -2,9 +2,11 @@ import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
-import { RecipeListItem } from '../components/list-items'
+import { RecipeHeader } from '../components/data'
+import { ButtonFilled } from '../components/user-input/Buttons'
 import { Recipe } from '../data'
-import { useAppSelector } from '../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { deleteRecipe } from '../actions/recipes'
 
 function RecipesScreen({
     navigation,
@@ -12,6 +14,7 @@ function RecipesScreen({
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
+    const dispatch = useAppDispatch()
 
     return (
         <Container>
@@ -20,7 +23,21 @@ function RecipesScreen({
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.recipeListItem}
                 renderItem={({ item }) => (
-                    <RecipeListItem recipe={item} navigation={navigation} />
+                    <View>
+                        <RecipeHeader
+                            recipe={item}
+                            navigation={navigation}
+                            editable={false}
+                        >
+                            <ButtonFilled
+                                text="edit"
+                                onPress={() => navigation.navigate('CreateRecipe', { item })}
+                                />
+                            <ButtonFilled text="delete" onPress={dispatch(deleteRecipe(item))} />
+
+                        </RecipeHeader>
+                    </View>
+
                 )}
             />
         </Container>

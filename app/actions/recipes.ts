@@ -60,7 +60,6 @@ export const createRecipe =
                 })
             }
         } catch (err) {
-            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -84,6 +83,7 @@ export const editRecipe =
                     oldRecipe
                 )
 
+                // Set ingredients and recipes so they only include old ones, because new ones will be added
                 newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(
                     (i) => i.id > 0
                 )
@@ -121,12 +121,6 @@ export const editRecipe =
                     })
                     if (toDelete) ingredientsToDelete.push(oldIngr)
                 })
-                console.log(
-                    'Ingredients Lists:',
-                    ingredientsToAdd,
-                    ingredientsToUpdate,
-                    ingredientsToDelete
-                )
 
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
@@ -186,12 +180,7 @@ export const editRecipe =
                     })
                     if (toDelete) instructionsToDelete.push(oldIns)
                 })
-                console.log(
-                    'Instructions Lists:',
-                    instructionsToAdd,
-                    instructionsToUpdate,
-                    instructionsToDelete
-                )
+
                 // Update instructions if there are any
                 if (instructionsToUpdate.length > 0) {
                     const updatedInstructions =
@@ -239,7 +228,6 @@ export const editRecipe =
                 })
             }
         } catch (err) {
-            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -271,7 +259,6 @@ export const retrieveRecipes =
                 payload: { newRecipes },
             })
         } catch (err) {
-            console.log(err.response.data.errors)
             console.error(err)
         }
     }
@@ -291,7 +278,6 @@ export const deleteRecipe =
                 payload: { recipe },
             })
         } catch (err) {
-            console.log(err.response.data.errors)
             console.error(err)
         }
     }
