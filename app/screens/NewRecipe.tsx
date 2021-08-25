@@ -162,7 +162,10 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
-        dispatch(editRecipe(recipeData))
+        console.log("Editing", recipeData.recipeIngredients)
+        if (validRecipe()) {
+            dispatch(editRecipe(recipeData as Recipe))
+        }
     }
 
     function cancelEditRecipe(): void {
