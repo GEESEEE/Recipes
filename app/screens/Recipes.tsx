@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, View, StyleSheet } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import { RecipeHeader } from '../components/data'
@@ -15,29 +15,27 @@ function RecipesScreen({
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
     const dispatch = useAppDispatch()
-
+    // dispatch(deleteRecipe(item))
     return (
         <Container>
             <RecipesList
                 data={recipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={styles.recipeListItem}
+                contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (
-                    <View>
-                        <RecipeHeader
-                            recipe={item}
-                            navigation={navigation}
-                            editable={false}
-                        >
-                            <ButtonFilled
-                                text="edit"
-                                onPress={() => navigation.navigate('CreateRecipe', { item })}
-                                />
-                            <ButtonFilled text="delete" onPress={dispatch(deleteRecipe(item))} />
+                    <RecipeHeader
+                        recipe={item}
+                        navigation={navigation}
+                        editable={false}
+                        dropdown
+                    >
+                        <ButtonFilled
+                            text="edit"
+                            onPress={() => navigation.navigate('CreateRecipe', { recipe: item })}
+                        />
+                        <ButtonFilled text="delete" onPress={() => dispatch(deleteRecipe(item))} />
 
-                        </RecipeHeader>
-                    </View>
-
+                    </RecipeHeader>
                 )}
             />
         </Container>
@@ -49,10 +47,16 @@ export default RecipesScreen
 const Container = styled(View)`
     flex: 1;
     background-color: ${(props) => props.theme.background};
+    align-items: center;
 `
 
-const RecipesList = styled(FlatList as new () => FlatList<Recipe>)``
+const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
+    width: 100%;
+`
 
 const styles = StyleSheet.create({
-    recipeListItem: {},
+    contentContainer: {
+        // alignItems: 'center',
+        paddingTop: 25,
+    }
 })

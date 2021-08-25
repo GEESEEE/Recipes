@@ -68,24 +68,28 @@ const RecipeHeader = ({
             {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
 
             {/* Recipe Name Input Field */}
-            <RecipeNameTextInput
-                editable={editable}
-                value={recipe.name}
-                placeholder="New Recipe"
-                placeholderTextColor={theme.grey}
-                onChangeText={handleNameChange}
-                multiline
-            />
+            <RecipeNameView>
+                <RecipeNameTextInput
+                    editable={editable}
+                    value={recipe.name}
+                    placeholder="New Recipe"
+                    placeholderTextColor={theme.grey}
+                    onChangeText={handleNameChange}
+                    multiline
+                />
+            </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-            <DescriptionTextInput
-                editable={editable}
-                placeholder="Description"
-                value={recipe.description}
-                placeholderTextColor={theme.grey}
-                onChangeText={handleDescriptionChange}
-                multiline
-            />
+           {!editable && recipe.description.length === 0
+            ? null
+            :    <DescriptionTextInput
+                        editable={editable}
+                        placeholder="Description"
+                        value={recipe.description}
+                        placeholderTextColor={theme.grey}
+                        onChangeText={handleDescriptionChange}
+                        multiline
+                    />}
             <PropertiesContainer>
                 {/* Prepare Time */}
                 <PropertyView>
@@ -126,6 +130,8 @@ export default RecipeHeader
 const { height } = Dimensions.get('screen')
 
 const Header = styled(View)`
+    align-self: center;
+    align-items: center;
     bottom: ${height * 0.03}px;
     width: 85%;
     background-color: ${(props) => props.theme.background};
@@ -134,23 +140,30 @@ const Header = styled(View)`
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-top: 5px;
 `
 
-const RecipeNameTextInput = styled(TextInput)`
-    margin-top: 10px;
-    padding-bottom: 10px;
-    font-size: 22px;
-    color: ${(props) => props.theme.text};
-    text-align: center;
+const RecipeNameView = styled(View)`
+    width: 100%;
     border-bottom-color: ${(props) => props.theme.primary};
     border-bottom-width: 1px;
 `
 
+const RecipeNameTextInput = styled(TextInput)`
+    width: 90%;
+    padding-bottom: 10px;
+    font-size: 22px;
+    color: ${(props) => props.theme.text};
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+`
+
 const DescriptionTextInput = styled(TextInput)`
+    width: 90%;
     margin-top: 8px;
     margin-left: 8px;
     margin-right: 8px;
-    margin-bottom: 5px;
     color: ${(props) => props.theme.text};
 `
 
@@ -158,6 +171,7 @@ const PropertiesContainer = styled(View)`
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    padding-top: 5px;
 `
 
 const PropertyView = styled(View)`

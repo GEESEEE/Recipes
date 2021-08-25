@@ -25,7 +25,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
 
-    function getInitialRecipe(): Recipe & RecipeValidity {
+    function getInitialRecipe(): Recipe {
         return {
             name: '',
             description: '',
@@ -34,13 +34,16 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             id: indices.recipeId,
             recipeIngredients: [],
             instructions: [],
-            validIngredients: true,
         }
+    }
+
+    const initialValidity: RecipeValidity = {
+        validIngredients: true,
     }
 
     const recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
-    const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(initialState)
+    const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>({...initialState, ...initialValidity})
 
     // #region State Altering Functions
     function handleNameChange(name: string): void {
@@ -155,7 +158,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function clearRecipeData(): void {
-        setRecipeData(getInitialRecipe())
+        setRecipeData({...getInitialRecipe(), ...initialValidity})
     }
 
     async function handleEditRecipe(): Promise<void> {
