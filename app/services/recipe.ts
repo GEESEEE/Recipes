@@ -75,7 +75,6 @@ export async function updateIngredients(
 ): Promise<RecipeIngredient[]> {
     const updateObjects: IngredientUpdateObject[] = []
     ingredients.forEach((ingr) => {
-        console.log("sevice", ingr)
         const obj: IngredientUpdateObject = { recipeIngredientId: ingr.id }
         const oldIngr = oldIngredients.find((i) => i.id === ingr.id)
         if (typeof oldIngr !== 'undefined') {
@@ -85,7 +84,6 @@ export async function updateIngredients(
             if (oldIngr.ingredient!.name !== ingr.ingredient!.name)
                 obj.name = ingr.ingredient!.name
         }
-        console.log("updateObj", obj)
         if (Object.keys(obj).length > 1) updateObjects.push(obj)
     })
 

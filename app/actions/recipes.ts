@@ -84,10 +84,13 @@ export const editRecipe =
                 )
 
                 // Set ingredients and recipes so they only include old ones, because new ones will be added
-                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(
+                newRecipe.recipeIngredients = recipe.recipeIngredients
+                newRecipe.recipeIngredients?.filter(
                     (i) => i.id > 0
                 )
-                newRecipe.instructions = recipe.instructions?.filter(
+
+                newRecipe.instructions = recipe.instructions
+                newRecipe.instructions?.filter(
                     (i) => i.id > 0
                 )
 
@@ -95,10 +98,8 @@ export const editRecipe =
                 const ingredientsToUpdate: RecipeIngredient[] = []
                 const ingredientsToDelete: RecipeIngredient[] = []
 
-                console.log("Inside actions", recipe.recipeIngredients)
                 // If id <= 0 only exists locally, so add to db
                 recipe.recipeIngredients!.forEach((ingr) => {
-                    console.log(ingr)
                     if (ingr.id <= 0) ingredientsToAdd.push(ingr)
                 })
                 oldRecipe.recipeIngredients!.forEach((oldIngr) => {
@@ -122,7 +123,7 @@ export const editRecipe =
                     })
                     if (toDelete) ingredientsToDelete.push(oldIngr)
                 })
-                console.log("ingr", ingredientsToAdd, ingredientsToUpdate, ingredientsToDelete)
+
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
                     const updatedIngredients =
