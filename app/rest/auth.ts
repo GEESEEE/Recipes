@@ -1,7 +1,9 @@
+// eslint-disable-next-line import/no-unresolved
+import { APPLICATION_ID } from '@env'
 import handleError from './base'
 
 type TokenBody = {
-    client_id: number
+    client_id: string
     username: string
     password: string
     scope: string
@@ -21,7 +23,7 @@ export async function signIn(
     password: string
 ): Promise<string> {
     const tokenBody: TokenBody = {
-        client_id: 1,
+        client_id: APPLICATION_ID,
         username,
         password,
         scope: 'create delete',
