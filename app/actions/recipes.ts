@@ -85,14 +85,10 @@ export const editRecipe =
 
                 // Set ingredients and recipes so they only include old ones, because new ones will be added
                 newRecipe.recipeIngredients = recipe.recipeIngredients
-                newRecipe.recipeIngredients?.filter(
-                    (i) => i.id > 0
-                )
+                newRecipe.recipeIngredients?.filter((i) => i.id > 0)
 
                 newRecipe.instructions = recipe.instructions
-                newRecipe.instructions?.filter(
-                    (i) => i.id > 0
-                )
+                newRecipe.instructions?.filter((i) => i.id > 0)
 
                 const ingredientsToAdd: RecipeIngredient[] = []
                 const ingredientsToUpdate: RecipeIngredient[] = []

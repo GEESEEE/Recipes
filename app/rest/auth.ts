@@ -27,9 +27,11 @@ export async function signIn(
         username,
         password,
         scope: 'create delete',
-        grant_type: 'password'
+        grant_type: 'password',
     }
-    const tokenObject: any = await handleError('POST', `/auth/token`, { body: tokenBody })
+    const tokenObject: any = await handleError('POST', `/auth/token`, {
+        body: tokenBody,
+    })
     return tokenObject.access_token
 }
 

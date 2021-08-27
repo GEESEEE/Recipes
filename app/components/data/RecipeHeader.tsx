@@ -16,7 +16,7 @@ const RecipeHeader = ({
     handleNameChange,
     handleDescriptionChange,
     handlePeopleCountChange,
-    handlePrepareTimeChange
+    handlePrepareTimeChange,
 }: {
     children?: JSX.Element[]
     recipe: Recipe
@@ -52,13 +52,13 @@ const RecipeHeader = ({
         },
     ]
 
-    const prepareTimeStyle = (): {color: string} => {
-        if (!editable || recipe.prepareTime > 0) return { color: theme.text}
+    const prepareTimeStyle = (): { color: string } => {
+        if (!editable || recipe.prepareTime > 0) return { color: theme.text }
         return { color: theme.grey }
     }
 
-    const peopleCountStyle = (): {color: string} => {
-        if (!editable || recipe.peopleCount > 0) return { color: theme.text}
+    const peopleCountStyle = (): { color: string } => {
+        if (!editable || recipe.peopleCount > 0) return { color: theme.text }
         return { color: theme.grey }
     }
 
@@ -80,16 +80,16 @@ const RecipeHeader = ({
             </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-           {!editable && recipe.description.length === 0
-            ? null
-            :    <DescriptionTextInput
-                        editable={editable}
-                        placeholder="Description"
-                        value={recipe.description}
-                        placeholderTextColor={theme.grey}
-                        onChangeText={handleDescriptionChange}
-                        multiline
-                    />}
+            {!editable && recipe.description.length === 0 ? null : (
+                <DescriptionTextInput
+                    editable={editable}
+                    placeholder="Description"
+                    value={recipe.description}
+                    placeholderTextColor={theme.grey}
+                    onChangeText={handleDescriptionChange}
+                    multiline
+                />
+            )}
             <PropertiesContainer>
                 {/* Prepare Time */}
                 <PropertyView>
@@ -121,7 +121,6 @@ const RecipeHeader = ({
             </PropertiesContainer>
             {children}
         </Header>
-
     )
 }
 

@@ -40,7 +40,7 @@ export const InputFieldRounded = ({
                 />
                 {rightIcon ?? null}
             </InputFieldRoundedStyle>
-            <ErrorMessage errorMessage={errorMessage}/>
+            <ErrorMessage errorMessage={errorMessage} />
         </Container>
     )
 }
@@ -69,5 +69,3 @@ const TextInputRounded = styled(TextInput)`
     padding-left: 10px;
     color: ${(props) => props.theme.text};
 `
-
-

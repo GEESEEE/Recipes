@@ -68,7 +68,6 @@ export async function updateIngredients(
     return handleError('PUT', `/recipes/${recipeId}/ingredients/bulk`, { body })
 }
 
-
 export async function addInstructions(
     recipeId: number,
     body: Array<{ text: string }>

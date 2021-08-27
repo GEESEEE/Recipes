@@ -6,7 +6,11 @@ import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
-import { InstructionsList, IngredientsList, RecipeHeader } from '../components/data'
+import {
+    InstructionsList,
+    IngredientsList,
+    RecipeHeader,
+} from '../components/data'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import {
@@ -43,7 +47,9 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
-    const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>({...initialState, ...initialValidity})
+    const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(
+        { ...initialState, ...initialValidity }
+    )
 
     // #region State Altering Functions
     function handleNameChange(name: string): void {
@@ -99,12 +105,14 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         recipeIngredient!.ingredient!.name = name
 
         let validIngredients = true
-        recipeData.recipeIngredients!.forEach(ri1 => {
-            const sameName = recipeData.recipeIngredients!.find(ri2 =>
-                (ri1.id !== ri2.id
-                && ri1.ingredient!.name === ri2.ingredient!.name))
+        recipeData.recipeIngredients!.forEach((ri1) => {
+            const sameName = recipeData.recipeIngredients!.find(
+                (ri2) =>
+                    ri1.id !== ri2.id &&
+                    ri1.ingredient!.name === ri2.ingredient!.name
+            )
             if (sameName) {
-               validIngredients = false
+                validIngredients = false
             }
         })
 
@@ -158,11 +166,11 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function clearRecipeData(): void {
-        setRecipeData({...getInitialRecipe(), ...initialValidity})
+        setRecipeData({ ...getInitialRecipe(), ...initialValidity })
     }
 
     async function handleEditRecipe(): Promise<void> {
-        console.log("Editing", recipeData.recipeIngredients)
+        console.log('Editing', recipeData.recipeIngredients)
         if (validRecipe()) {
             dispatch(editRecipe(recipeData as Recipe))
         }
@@ -174,7 +182,6 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-
             <RecipeHeader
                 recipe={recipeData}
                 navigation={navigation}
@@ -194,11 +201,13 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 handleIngredientUnitChange={handleIngredientUnitChange}
                 handleAddIngredient={handleAddIngredient}
             />
-            <ErrorMessage errorMessage={
-                recipeData.validIngredients
-                ? undefined
-                : 'Can not use 2 ingredients with the same name'
-            }/>
+            <ErrorMessage
+                errorMessage={
+                    recipeData.validIngredients
+                        ? undefined
+                        : 'Can not use 2 ingredients with the same name'
+                }
+            />
 
             {/* Instructions List Container */}
             <InstructionsList
@@ -233,5 +242,3 @@ const Container = styled(View)`
     align-content: center;
     background-color: ${(props) => props.theme.background};
 `
-
-

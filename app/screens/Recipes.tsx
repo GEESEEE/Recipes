@@ -31,10 +31,16 @@ function RecipesScreen({
                     >
                         <ButtonFilled
                             text="edit"
-                            onPress={() => navigation.navigate('CreateRecipe', { recipe: item })}
+                            onPress={() =>
+                                navigation.navigate('CreateRecipe', {
+                                    recipe: item,
+                                })
+                            }
                         />
-                        <ButtonFilled text="delete" onPress={() => dispatch(deleteRecipe(item))} />
-
+                        <ButtonFilled
+                            text="delete"
+                            onPress={() => dispatch(deleteRecipe(item))}
+                        />
                     </RecipeHeader>
                 )}
             />
@@ -58,5 +64,5 @@ const styles = StyleSheet.create({
     contentContainer: {
         // alignItems: 'center',
         paddingTop: 25,
-    }
+    },
 })

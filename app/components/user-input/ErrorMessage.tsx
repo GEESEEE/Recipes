@@ -1,24 +1,20 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import { View, Text } from 'react-native'
 import styled from 'styled-components'
 
 export const ErrorMessage = ({
-    errorMessage
+    errorMessage,
 }: {
     errorMessage?: string
 }): JSX.Element => (
-        <View>
-            {errorMessage ? (
-                <ErrorMessageView>{errorMessage}</ErrorMessageView>
-            ) : (
-                <BottomPadding />
-            )}
-        </View>
-
+    <View>
+        {errorMessage ? (
+            <ErrorMessageView>{errorMessage}</ErrorMessageView>
+        ) : (
+            <BottomPadding />
+        )}
+    </View>
 )
-
-
-
 
 const BottomPadding = styled(View)`
     height: 14px;
