@@ -60,6 +60,7 @@
         "react-hooks/exhaustive-deps": "warn",
         "import/prefer-default-export": "off",
         "react/prop-types": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "camelcase": "off"
     }
 }

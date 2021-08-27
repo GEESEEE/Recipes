@@ -65,7 +65,7 @@ export const signIn =
     ): any =>
     async (dispatch: Dispatch) => {
         try {
-            const token = await authService.signIn({ username, password })
+            const token = await authService.signIn(username, password)
             await SecureStore.setItemAsync('token', token)
             dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
             dispatch(getUserData(token))
