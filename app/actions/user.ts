@@ -5,6 +5,7 @@ import * as userService from '../rest/user'
 export const getUserData =
     (token: string): any =>
     async (dispatch: Dispatch) => {
+        dispatch({ type: USERACTIONS.GET_USER_START, payload: {} })
         try {
             const user = await userService.getUser({ token })
             dispatch({ type: USERACTIONS.GET_USER_SUCCES, payload: user })
