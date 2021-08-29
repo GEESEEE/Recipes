@@ -50,8 +50,6 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err) {
-            console.log(err)
-            console.log("Signup Error", err.message)
             dispatch({
                 type: AUTH_ACTIONS.SIGN_UP_ERROR,
                 payload: { error: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
@@ -73,9 +71,10 @@ export const signIn =
             dispatch(getUserData(token))
             navigation.navigate('Main')
         } catch (err) {
+            console.log(err?.response?.data?.errors)
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,
-                payload: { error: err.message },
+                payload: { error: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
             })
         }
     }
