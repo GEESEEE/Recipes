@@ -8,6 +8,7 @@ export const AUTH_ACTIONS = {
     RETRIEVE_TOKEN_START: 'retrieveToken',
     RETRIEVE_TOKEN_SUCCES: 'retrieveTokenSucces',
     RETRIEVE_TOKEN_ERROR: 'retrieveTokenError',
+    CLEAR_ERROR: 'clearError',
 }
 
 export type Auth = {
@@ -38,7 +39,7 @@ const auth = (
 
         case AUTH_ACTIONS.SIGN_IN_SUCCES: {
             const { token } = action.payload
-            return { ...state, token }
+            return { ...state, token, error: '' }
         }
 
         case AUTH_ACTIONS.SIGN_IN_ERROR: {
@@ -67,6 +68,10 @@ const auth = (
         case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {
             const { error } = action.payload
             return { ...state, error, loading: false }
+        }
+
+        case AUTH_ACTIONS.CLEAR_ERROR: {
+            return { ...state, error: ''}
         }
 
         default:

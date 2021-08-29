@@ -50,9 +50,11 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err) {
+            console.log(err)
+            console.log("Signup Error", err.message)
             dispatch({
                 type: AUTH_ACTIONS.SIGN_UP_ERROR,
-                payload: { error: err.message },
+                payload: { error: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
             })
         }
     }
@@ -93,4 +95,8 @@ export const signOut =
                 payload: { error: err.message },
             })
         }
+    }
+
+    export const clearError = (): any => async (dispatch: Dispatch): Promise<any> => {
+        dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }
