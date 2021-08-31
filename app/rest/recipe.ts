@@ -40,7 +40,7 @@ export async function updateRecipe(
 
 export async function addIngredients(
     recipeId: number,
-    body: Array<{ amount: number; name: string; unit: string | null }>
+    body: Array<{ amount: number; position: number; name: string; unit: string | null }>
 ): Promise<RecipeIngredient[]> {
     return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
         body,
@@ -61,6 +61,7 @@ export async function updateIngredients(
     body: Array<{
         recipeIngredientId: number
         amount?: number
+        position?: number
         name?: string
         unit?: string | null
     }>
@@ -70,7 +71,7 @@ export async function updateIngredients(
 
 export async function addInstructions(
     recipeId: number,
-    body: Array<{ text: string }>
+    body: Array<{ text: string, position: number }>
 ): Promise<Instruction[]> {
     return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {
         body,
@@ -88,7 +89,7 @@ export async function deleteInstructions(
 
 export async function updateInstructions(
     recipeId: number,
-    instructions: Array<{ instructionId: number; text: string }>
+    instructions: Array<{ instructionId: number; text?: string, position?: number }>
 ): Promise<any> {
     return handleError('PUT', `/recipes/${recipeId}/instructions/bulk`, {
         body: instructions,

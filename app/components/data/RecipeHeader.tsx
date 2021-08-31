@@ -64,8 +64,6 @@ const RecipeHeader = ({
 
     return (
         <Header>
-            {/* Dropdown Menu */}
-            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
 
             {/* Recipe Name Input Field */}
             <RecipeNameView>
@@ -119,6 +117,9 @@ const RecipeHeader = ({
                     />
                 </PropertyView>
             </PropertiesContainer>
+            {/* Dropdown Menu */}
+            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
+
             {children}
         </Header>
     )

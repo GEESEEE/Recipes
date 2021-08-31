@@ -75,6 +75,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
+            recipeData.recipeIngredients!.length,
             ingredient
         )
 
@@ -128,7 +129,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const instruction = new Instruction(indices.instructionId, '')
+        const instruction = new Instruction(indices.instructionId, '', recipeData.instructions!.length)
         recipeData.instructions?.push(instruction)
         dispatch(decrementInstructionId(indices.instructionId))
         setRecipeData({ ...recipeData })
@@ -170,6 +171,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
+        console.log("Editing")
         if (validRecipe()) {
             dispatch(editRecipe(recipeData))
         }

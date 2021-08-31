@@ -11,8 +11,15 @@ type RecipeUpdateObject = {
 type IngredientUpdateObject = {
     recipeIngredientId: number
     amount?: number
+    position?: number
     unit?: string | null
     name?: string
+}
+
+type InstructionUpdateObject = {
+    instructionId: number
+    text?: string
+    position?: number
 }
 
 export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
@@ -42,7 +49,8 @@ export async function updateRecipe(
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)
     }
-    return recipe
+    // Deepcopy input recipe if nothing changed, so will always be a new Recipe than what was put in
+    return JSON.parse(JSON.stringify(recipe))
 }
 
 export async function getMyRecipes(): Promise<Recipe[]> {
@@ -61,6 +69,7 @@ export async function addIngredients(
         recipeId,
         ingredients.map((ri) => ({
             amount: ri.amount,
+            position: ri.position,
             unit:
                 ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
             name: ri.ingredient!.name,
@@ -79,6 +88,7 @@ export async function updateIngredients(
         const oldIngr = oldIngredients.find((i) => i.id === ingr.id)
         if (typeof oldIngr !== 'undefined') {
             if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
+            if (oldIngr.position !== ingr.position) obj.position = ingr.position
             if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit)
                 obj.unit = ingr.ingredient!.unit
             if (oldIngr.ingredient!.name !== ingr.ingredient!.name)
@@ -106,18 +116,27 @@ export async function addInstructions(
 ): Promise<Instruction[]> {
     return recipeService.addInstructions(
         recipeId,
-        instructions.map((i) => ({ text: i.text }))
+        instructions.map((i) => ({ text: i.text, position: i.position }))
     )
 }
 
 export async function updateInstructions(
     recipeId: number,
-    instructions: Instruction[]
+    instructions: Instruction[],
+    oldInstructions: Instruction[]
 ): Promise<Instruction[]> {
-    return recipeService.updateInstructions(
-        recipeId,
-        instructions.map((i) => ({ text: i.text, instructionId: i.id }))
-    )
+        const updateObjects: InstructionUpdateObject[] = []
+        instructions.forEach((instr) => {
+        const obj: InstructionUpdateObject = { instructionId: instr.id }
+        const oldInstr = oldInstructions.find((i) => i.id === instr.id)
+        if (typeof oldInstr !== 'undefined') {
+            if (oldInstr.text !== instr.text) obj.text = instr.text
+            if (oldInstr.position !== instr.position) obj.position = instr.position
+        }
+        if (Object.keys(obj).length > 1) updateObjects.push(obj)
+    })
+
+    return recipeService.updateInstructions(recipeId, updateObjects)
 }
 
 export async function deleteInstructions(
