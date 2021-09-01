@@ -24,7 +24,9 @@ const screens = {
     }
 }
 
-const stackConfig = {}
+const stackConfig = {
+    detachInactiveScreens: true,
+}
 
 const RecipesStack = createStackNavigator(screens, stackConfig)
 

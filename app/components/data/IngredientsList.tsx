@@ -115,13 +115,13 @@ const List = styled(FlatList as new () => FlatList<RecipeIngredient>)`
 
 const ItemContainer = styled(View)`
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
 `
 
 const NameText = styled(TextInput)`
-    width: 55%;
+    width: 60%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `
@@ -133,7 +133,7 @@ const AmountText = styled(TextInput)`
 `
 
 const UnitText = styled(TextInput)`
-    width: 20%;
+    width: 15%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `
