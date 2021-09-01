@@ -10,14 +10,16 @@ import { ButtonBorderless } from '../user-input/Buttons'
 
 const InstructionsList = ({
     instructions,
+    editable,
     handleInstructionTextChange,
     handleRemoveInstruction,
     handleAddInstruction,
 }: {
-    handleAddInstruction: () => void
-    handleInstructionTextChange: (key: string, text: string) => void
-    handleRemoveInstruction: (key: string) => void
     instructions: Instruction[]
+    editable: boolean
+    handleAddInstruction?: () => void
+    handleInstructionTextChange?: (key: string, text: string) => void
+    handleRemoveInstruction?: (key: string) => void
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     return (
@@ -35,21 +37,22 @@ const InstructionsList = ({
                         {/* Instruction Text Input */}
                         <InstructionText
                             onChangeText={(text: string) =>
-                                handleInstructionTextChange(
+                                handleInstructionTextChange ? handleInstructionTextChange(
                                     item.id.toString(),
                                     text
-                                )
+                                ) : undefined
                             }
                             value={item.text}
                             placeholder="Text"
                             placeholderTextColor={theme.grey}
                             multiline
+                            editable={editable}
                         />
 
                         {/* Remove Instruction Button */}
-                        <RemoveButton
+                        { editable ? <RemoveButton
                             onPress={() =>
-                                handleRemoveInstruction(item.id.toString())
+                                handleRemoveInstruction ? handleRemoveInstruction(item.id.toString()) : undefined
                             }
                         >
                             <MyFeather
@@ -57,14 +60,17 @@ const InstructionsList = ({
                                 size={15}
                                 color={theme.text}
                             />
-                        </RemoveButton>
+                        </RemoveButton> : null}
                     </Container>
                 )}
             />
-            <ButtonBorderless
-                text="Add Instruction"
-                onPress={handleAddInstruction}
-            />
+
+            {editable
+                ? <ButtonBorderless
+                    text="Add Instruction"
+                    onPress={ () => handleAddInstruction ? handleAddInstruction() : undefined}
+                />
+                : <BottomPadding/>}
         </HeaderBordered>
     )
 }
@@ -97,3 +103,7 @@ const InstructionText = styled(TextInput)`
 `
 
 const RemoveButton = styled(TouchableOpacity)``
+
+const BottomPadding = styled(View)`
+    height: 10px;
+`

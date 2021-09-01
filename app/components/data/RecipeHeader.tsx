@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, Dimensions } from 'react-native'
+import { View, TextInput, Dimensions, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
@@ -7,36 +7,41 @@ import { MyFeather, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { deleteRecipe } from '../../actions/recipes'
 
+interface RecipeHeaderOptions {
+    children?: JSX.Element[]
+    recipe: Recipe
+    navigation: any
+    editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
+    dropdown?: boolean
+    onPress?: () => void
+    handleNameChange?: (text: string) => void
+    handleDescriptionChange?: (text: string) => void
+    handlePeopleCountChange?: (text: string) => void
+    handlePrepareTimeChange?: (text: string) => void
+}
+
 const RecipeHeader = ({
     children,
     recipe,
     navigation,
     editable,
     dropdown,
+    onPress,
     handleNameChange,
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
-}: {
-    children?: JSX.Element[]
-    recipe: Recipe
-    navigation: any
-    editable: boolean
-    dropdown?: boolean
-    handleNameChange?: (text: string) => void
-    handleDescriptionChange?: (text: string) => void
-    handlePeopleCountChange?: (text: string) => void
-    handlePrepareTimeChange?: (text: string) => void
-}): JSX.Element => {
+}: RecipeHeaderOptions ): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
-
+    console.log('Editable:', editable)
+    console.log(['Edit-all', 'Edit-people'].includes(editable) )
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
     }
 
     async function editRecipe(): Promise<void> {
-        navigation.navigate('CreateRecipe', { recipe })
+        navigation.navigate('EditRecipe', { recipe })
     }
 
     const dropDownItems: DropDownItem[] = [
@@ -63,12 +68,15 @@ const RecipeHeader = ({
     }
 
     return (
-        <Header>
+        <Header
+            onPress={onPress ?? undefined}
+            disabled={!onPress}
+        >
 
             {/* Recipe Name Input Field */}
             <RecipeNameView>
                 <RecipeNameTextInput
-                    editable={editable}
+                    editable={editable === 'Edit-all'}
                     value={recipe.name}
                     placeholder="New Recipe"
                     placeholderTextColor={theme.grey}
@@ -80,7 +88,7 @@ const RecipeHeader = ({
             {/* Recipe Description Input Field */}
             {!editable && recipe.description.length === 0 ? null : (
                 <DescriptionTextInput
-                    editable={editable}
+                    editable={editable === 'Edit-all'}
                     placeholder="Description"
                     value={recipe.description}
                     placeholderTextColor={theme.grey}
@@ -94,7 +102,7 @@ const RecipeHeader = ({
                     <MyMaterialIcons name="timer-sand" color={theme.text} />
                     <Property
                         style={prepareTimeStyle()}
-                        editable={editable}
+                        editable={editable === 'Edit-all'}
                         onChangeText={handlePrepareTimeChange}
                         value={recipe.prepareTime.toString()}
                         placeholder="0"
@@ -108,7 +116,7 @@ const RecipeHeader = ({
                     <MyFeather name="user" color={theme.text} />
                     <Property
                         style={peopleCountStyle()}
-                        editable={editable}
+                        editable={['Edit-all', 'Edit-people'].includes(editable) }
                         onChangeText={handlePeopleCountChange}
                         value={recipe.peopleCount.toString()}
                         placeholder="0"
@@ -129,7 +137,7 @@ export default RecipeHeader
 
 const { height } = Dimensions.get('screen')
 
-const Header = styled(View)`
+const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
     bottom: ${height * 0.03}px;

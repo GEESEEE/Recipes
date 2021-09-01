@@ -10,18 +10,20 @@ import { ButtonBorderless } from '../user-input/Buttons'
 
 const IngredientsList = ({
     ingredients,
+    editable,
     handleIngredientNameChange,
     handleIngredientAmountChange,
     handleIngredientUnitChange,
     handleRemoveIngredient,
     handleAddIngredient,
 }: {
-    handleAddIngredient: () => void
-    handleIngredientNameChange: (key: string, text: string) => void
-    handleIngredientAmountChange: (key: string, text: string) => void
-    handleIngredientUnitChange: (key: string, text: string) => void
-    handleRemoveIngredient: (key: string) => void
     ingredients: RecipeIngredient[]
+    editable: boolean
+    handleAddIngredient?: () => void
+    handleIngredientNameChange?: (key: string, text: string) => void
+    handleIngredientAmountChange?: (key: string, text: string) => void
+    handleIngredientUnitChange?: (key: string, text: string) => void
+    handleRemoveIngredient?: (key: string) => void
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     return (
@@ -33,16 +35,17 @@ const IngredientsList = ({
                     <ItemContainer>
                         {/* Ingredient Name Input */}
                         <NameText
-                            onChangeText={(text: string) =>
-                                handleIngredientNameChange(
+                            onChangeText={ (text: string) =>
+                                handleIngredientNameChange ? handleIngredientNameChange(
                                     item.id.toString(),
                                     text
-                                )
+                                ) : undefined
                             }
                             value={item.ingredient?.name}
                             placeholder="New Ingredient"
                             placeholderTextColor={theme.grey}
                             multiline
+                            editable={editable}
                         />
 
                         {/* Ingredient Amount Input */}
@@ -52,36 +55,38 @@ const IngredientsList = ({
                                     item.amount === 0 ? theme.grey : theme.text,
                             }}
                             onChangeText={(text: string) =>
-                                handleIngredientAmountChange(
+                                handleIngredientAmountChange ? handleIngredientAmountChange(
                                     item.id.toString(),
                                     text
-                                )
+                                ) : undefined
                             }
                             keyboardType="decimal-pad"
                             value={item.amount.toString()}
                             placeholder="0"
                             placeholderTextColor={theme.grey}
                             multiline
+                            editable={editable}
                         />
 
                         {/* Ingredient Unit Input */}
-                        <UnitText
+                        {editable || item.ingredient?.unit ? <UnitText
                             onChangeText={(text: string) =>
-                                handleIngredientUnitChange(
+                                handleIngredientUnitChange ? handleIngredientUnitChange(
                                     item.id.toString(),
                                     text
-                                )
+                                ) : undefined
                             }
                             value={item.ingredient?.unit?.toString() ?? ''}
                             placeholder="Unit?"
                             placeholderTextColor={theme.grey}
                             multiline
-                        />
+                            editable={editable}
+                        /> : null}
 
                         {/* Remove Ingredient Button */}
-                        <RemoveButton
+                        {editable ? <RemoveButton
                             onPress={() =>
-                                handleRemoveIngredient(item.id.toString())
+                                handleRemoveIngredient ? handleRemoveIngredient(item.id.toString()) : undefined
                             }
                         >
                             <MyFeather
@@ -89,14 +94,14 @@ const IngredientsList = ({
                                 size={15}
                                 color={theme.text}
                             />
-                        </RemoveButton>
+                        </RemoveButton> : null}
                     </ItemContainer>
                 )}
             />
-            <ButtonBorderless
+            {editable ? <ButtonBorderless
                 text="Add Ingredient"
-                onPress={handleAddIngredient}
-            />
+                onPress={() => handleAddIngredient ? handleAddIngredient() : undefined}
+            /> : <BottomPadding/>}
         </HeaderBordered>
     )
 }
@@ -135,4 +140,8 @@ const UnitText = styled(TextInput)`
 
 const RemoveButton = styled(TouchableOpacity)`
     align-content: flex-end;
+`
+
+const BottomPadding = styled(View)`
+    height: 10px;
 `

@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import { RecipesScreen, NewRecipeScreen } from '../screens'
+import { RecipesScreen, EditRecipeScreen, ShowRecipeScreen } from '../screens'
 import { Header } from '../components/routes'
 
 const screens = {
@@ -10,12 +10,18 @@ const screens = {
             headerMode: 'screen',
         }),
     },
-    CreateRecipe: {
-        screen: NewRecipeScreen,
+    EditRecipe: {
+        screen: EditRecipeScreen,
         navigationOptions: () => ({
             header: () => null,
         }),
     },
+    ShowRecipe: {
+        screen: ShowRecipeScreen,
+        navigationOptions: () => ({
+            header: () => null,
+        }),
+    }
 }
 
 const stackConfig = {}

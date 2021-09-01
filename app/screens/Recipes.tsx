@@ -15,7 +15,7 @@ function RecipesScreen({
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
     const dispatch = useAppDispatch()
-    // dispatch(deleteRecipe(item))
+
     return (
         <Container>
             <RecipesList
@@ -26,13 +26,14 @@ function RecipesScreen({
                     <RecipeHeader
                         recipe={item}
                         navigation={navigation}
-                        editable={false}
+                        editable='Edit-none'
                         dropdown
+                        onPress={() => navigation.navigate('ShowRecipe', { recipe: item })}
                     >
                         <ButtonFilled
                             text="edit"
                             onPress={() =>
-                                navigation.navigate('CreateRecipe', {
+                                navigation.navigate('EditRecipe', {
                                     recipe: item,
                                 })
                             }

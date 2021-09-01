@@ -22,7 +22,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleCreateRecipeButton(): void {
-        navigation.navigate('CreateRecipe')
+        navigation.navigate('EditRecipe')
     }
 
     return (

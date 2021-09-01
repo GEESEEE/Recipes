@@ -25,7 +25,7 @@ type RecipeValidity = {
     validIngredients: boolean
 }
 
-function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
+function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
 
@@ -173,7 +173,6 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
-        console.log("Editing")
         if (validRecipe()) {
             dispatch(editRecipe(recipeData))
         }
@@ -188,7 +187,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipeHeader
                 recipe={recipeData}
                 navigation={navigation}
-                editable
+                editable='Edit-all'
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}
@@ -198,6 +197,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             {/* Ingredients List Container */}
             <IngredientsList
                 ingredients={recipeData.recipeIngredients!}
+                editable
                 handleRemoveIngredient={handleRemoveIngredient}
                 handleIngredientNameChange={handleIngredientNameChange}
                 handleIngredientAmountChange={handleIngredientAmountChange}
@@ -215,6 +215,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             {/* Instructions List Container */}
             <InstructionsList
                 instructions={recipeData.instructions!}
+                editable
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
@@ -235,7 +236,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     )
 }
 
-export default NewRecipeScreen
+export default EditRecipeScreen
 
 const Container = styled(View)`
     flex: 1;
