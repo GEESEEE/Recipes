@@ -6,7 +6,7 @@ import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
 
-function ShowRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
+function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipe: Recipe = navigation.state.params?.recipe
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
@@ -46,7 +46,7 @@ function ShowRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     )
 }
 
-export default ShowRecipeScreen
+export default ViewRecipeScreen
 
 const Container = styled(View)`
     flex: 1;

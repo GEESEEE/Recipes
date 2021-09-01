@@ -4,12 +4,12 @@ import RecipesScreen from './Recipes'
 import EditRecipeScreen from './EditRecipe'
 import RegisterScreen from './Register'
 import TestScreen from './Test'
-import ShowRecipeScreen from './ShowRecipe'
+import ViewRecipeScreen from './ViewRecipe'
 
 export {
     LoginScreen,
     EditRecipeScreen,
-    ShowRecipeScreen,
+    ViewRecipeScreen,
     RegisterScreen,
     MainScreen,
     RecipesScreen,

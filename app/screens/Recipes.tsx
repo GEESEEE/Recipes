@@ -28,7 +28,7 @@ function RecipesScreen({
                         navigation={navigation}
                         editable='Edit-none'
                         dropdown
-                        onPress={() => navigation.navigate('ShowRecipe', { recipe: item })}
+                        onPress={() => navigation.navigate('ViewRecipe', { recipe: item })}
                     >
                         <ButtonFilled
                             text="edit"
