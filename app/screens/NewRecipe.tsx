@@ -18,7 +18,7 @@ import {
     decrementInstructionId,
     decrementRecipeId,
 } from '../actions/indices'
-import { handleNumericTextInput } from '../config/utils'
+import { handleNumericTextInput, maxOfArrayProperty } from '../config/utils'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
 
 type RecipeValidity = {
@@ -72,10 +72,11 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
+        const position = maxOfArrayProperty(recipeData.recipeIngredients!, 'position')
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
-            recipeData.recipeIngredients!.length,
+            position + 1,
             ingredient
         )
 
@@ -129,7 +130,8 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const instruction = new Instruction(indices.instructionId, '', recipeData.instructions!.length)
+        const position = maxOfArrayProperty(recipeData.instructions!, 'position')
+        const instruction = new Instruction(indices.instructionId, '', position + 1)
         recipeData.instructions?.push(instruction)
         dispatch(decrementInstructionId(indices.instructionId))
         setRecipeData({ ...recipeData })

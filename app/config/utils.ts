@@ -46,3 +46,11 @@ export function replaceElements<T extends { id: number }>(
     arr.map((el) => arr2.find((el2) => el.id === el2.id) || el)
     return arr
 }
+
+export function maxOfArrayProperty(arr: Array<any>, property: string): number {
+    let max = 0
+    arr.forEach((el) => {
+        if (el[property] > max ) max = el[property]
+    })
+    return max
+}
