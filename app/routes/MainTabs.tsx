@@ -41,7 +41,7 @@ const tabConfig: any = {
     tabBarComponent: BottomTab,
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimation
+        cardStyleInterpolator: routeUtils.slideAnimationHorizontal
     },
 }
 

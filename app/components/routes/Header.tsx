@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import { useAppSelector } from '../../hooks/redux'
@@ -16,6 +16,7 @@ const ButtonIcon = ({
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const { routeName } = navigation.state
+    const insets = useSafeAreaInsets()
 
     function handleDrawerButton(): void {
         navigation.toggleDrawer()
@@ -26,8 +27,14 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     return (
-        <Container>
-            <HeaderContainer>
+        <Container style={{ height: insets.top + 30}}>
+            <HeaderContainer
+                style={{
+                    paddingTop: insets.top,
+                    paddingLeft: insets.left + 5,
+                    paddingRight: insets.right + 5
+                }}>
+
                 <ButtonIcon
                     onPress={handleDrawerButton}
                     icon={
@@ -57,8 +64,6 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 export default Header
 
 const Container = styled(View)`
-    height: 80px;
-    padding-top: 45px;
     background-color: ${(props) => props.theme.background};
     border-bottom-color: ${(props) => props.theme.primary};
     border-bottom-width: 1px;
@@ -69,14 +74,12 @@ const HeaderContainer = styled(View)`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-left: 15px;
-    margin-right: 15px;
     background-color: ${(props) => props.theme.background};
 `
 
 const HeaderTitle = styled(Text)`
-    padding-left: 10px;
     flex: 1;
+    padding-left: 10px;
     font-weight: bold;
     font-size: 20px;
     color: ${(props) => props.theme.primary};

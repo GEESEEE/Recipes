@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
 import { MyMaterialIcons } from '../Icons'
@@ -85,27 +85,6 @@ const ButtonBorderlessText = styled(ButtonTextGeneric)`
     text-transform: none;
     font-size: 12px;
     color: ${(props) => props.theme.primary};
-`
-
-export function ButtonFlex({ text, onPress }: ButtonProps): JSX.Element {
-    return (
-        <Button onPress={onPress}>
-            <ButtonText>{text}</ButtonText>
-        </Button>
-    )
-}
-
-const Button = styled(TouchableOpacity)`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-`
-
-const ButtonText = styled(Text)`
-    color: ${(props) => props.theme.primary}
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
 `
 
 export function ButtonOptions({
