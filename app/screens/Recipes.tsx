@@ -1,12 +1,13 @@
 import React from 'react'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
+import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
 import { RecipeHeader } from '../components/data'
-import { ButtonFilled } from '../components/user-input/Buttons'
 import { Recipe } from '../data'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { deleteRecipe } from '../actions/recipes'
+import { useAppSelector } from '../hooks/redux'
+
 
 function RecipesScreen({
     navigation,
@@ -14,14 +15,15 @@ function RecipesScreen({
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
-    const dispatch = useAppDispatch()
+    const insets = useSafeAreaInsets()
+    const headerHeight = useHeaderHeight() - insets.top
 
     return (
         <Container>
             <RecipesList
                 data={recipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={styles.contentContainer}
+                contentContainerStyle={{paddingTop: headerHeight}}
                 renderItem={({ item }) => (
                     <RecipeHeader
                         recipe={item}
@@ -47,10 +49,3 @@ const Container = styled(View)`
 const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
 `
-
-const styles = StyleSheet.create({
-    contentContainer: {
-        // alignItems: 'center',
-        paddingTop: 25,
-    },
-})
