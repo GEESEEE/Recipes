@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { RecipesScreen, EditRecipeScreen, ViewRecipeScreen } from '../screens'
 import { Header } from '../components/routes'
+import * as routeUtils from '../config/routes'
 
 const screens = {
     RecipesScreen: {
@@ -24,8 +25,13 @@ const screens = {
     }
 }
 
-const stackConfig = {
+const stackConfig: any = {
     detachInactiveScreens: true,
+    mode: 'modal',
+    defaultNavigationOptions: {
+        cardStyle: { backgroundColor: 'transparent' },
+        cardStyleInterpolator: routeUtils.slideAnimation
+    },
 }
 
 const RecipesStack = createStackNavigator(screens, stackConfig)

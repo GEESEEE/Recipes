@@ -29,20 +29,7 @@ function RecipesScreen({
                         editable='Edit-none'
                         dropdown
                         onPress={() => navigation.navigate('ViewRecipe', { recipe: item })}
-                    >
-                        <ButtonFilled
-                            text="edit"
-                            onPress={() =>
-                                navigation.navigate('EditRecipe', {
-                                    recipe: item,
-                                })
-                            }
-                        />
-                        <ButtonFilled
-                            text="delete"
-                            onPress={() => dispatch(deleteRecipe(item))}
-                        />
-                    </RecipeHeader>
+                    />
                 )}
             />
         </Container>

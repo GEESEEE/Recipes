@@ -6,6 +6,7 @@ import MainStack from './MainStack'
 import RecipesStack from './RecipesStack'
 import { TestScreen } from '../screens'
 import { BottomTab } from '../components/routes'
+import * as routeUtils from '../config/routes'
 
 const screens = {
     Main: {
@@ -35,9 +36,13 @@ const screens = {
     },
 }
 
-const tabConfig = {
+const tabConfig: any = {
     initialRouteName: 'Main',
     tabBarComponent: BottomTab,
+    defaultNavigationOptions: {
+        cardStyle: { backgroundColor: 'transparent' },
+        cardStyleInterpolator: routeUtils.slideAnimation
+    },
 }
 
 const MainTabs = createBottomTabNavigator(screens, tabConfig)

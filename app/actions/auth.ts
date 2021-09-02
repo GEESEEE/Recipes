@@ -1,5 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
-import { NavigationScreenProp } from 'react-navigation'
+import { NavigationScreenProp, NavigationActions, StackActions } from 'react-navigation'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS } from '../reducers/auth'
 import * as authService from '../rest/auth'
@@ -72,7 +72,15 @@ export const signIn =
             await SecureStore.setItemAsync('token', token)
             dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
             dispatch(getUserData(token))
-            navigation.navigate('Main')
+
+            // navigation.navigate('Main')
+            const resetActions = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Main'})],
+                key: null
+            })
+            navigation.dispatch(resetActions)
+
         } catch (err) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,
