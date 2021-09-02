@@ -129,7 +129,7 @@ const TabSlider = styled(Animated.View)`
     left: 10px;
     top: -2px;
     background-color: ${(props) => props.theme.primary};
-    borderradius: 10px;
+    border-radius: 10px;
 `
 
 const TabContainer = styled(TouchableOpacity)`
