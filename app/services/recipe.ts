@@ -125,13 +125,14 @@ export async function updateInstructions(
     instructions: Instruction[],
     oldInstructions: Instruction[]
 ): Promise<Instruction[]> {
-        const updateObjects: InstructionUpdateObject[] = []
-        instructions.forEach((instr) => {
+    const updateObjects: InstructionUpdateObject[] = []
+    instructions.forEach((instr) => {
         const obj: InstructionUpdateObject = { instructionId: instr.id }
         const oldInstr = oldInstructions.find((i) => i.id === instr.id)
         if (typeof oldInstr !== 'undefined') {
             if (oldInstr.text !== instr.text) obj.text = instr.text
-            if (oldInstr.position !== instr.position) obj.position = instr.position
+            if (oldInstr.position !== instr.position)
+                obj.position = instr.position
         }
         if (Object.keys(obj).length > 1) updateObjects.push(obj)
     })

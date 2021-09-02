@@ -46,6 +46,7 @@ export function DropDownMenu({
                 <Menu
                     ref={positionRef}
                     items={items}
+                    toggle={toggle}
                     offset={offset}
                     onPress={toggle}
                 />
@@ -60,10 +61,12 @@ const Menu = React.forwardRef(
             items,
             offset,
             onPress,
+            toggle,
         }: {
             items: DropDownItem[]
             offset: number
             onPress: () => void
+            toggle: () => void
         },
         ref: any
     ): JSX.Element => {
@@ -87,7 +90,12 @@ const Menu = React.forwardRef(
                             items.indexOf(item) !== items.length - 1
                         return (
                             <View key={item.id}>
-                                <ItemView onPress={item.onPress}>
+                                <ItemView
+                                    onPress={() => {
+                                        item.onPress()
+                                        toggle()
+                                    }}
+                                >
                                     <ItemText>{item.text}</ItemText>
                                 </ItemView>
                                 {separator ? <Separator /> : null}

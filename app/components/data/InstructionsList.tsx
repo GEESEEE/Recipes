@@ -37,10 +37,12 @@ const InstructionsList = ({
                         {/* Instruction Text Input */}
                         <InstructionText
                             onChangeText={(text: string) =>
-                                handleInstructionTextChange ? handleInstructionTextChange(
-                                    item.id.toString(),
-                                    text
-                                ) : undefined
+                                handleInstructionTextChange
+                                    ? handleInstructionTextChange(
+                                          item.id.toString(),
+                                          text
+                                      )
+                                    : undefined
                             }
                             value={item.text}
                             placeholder="Text"
@@ -50,27 +52,39 @@ const InstructionsList = ({
                         />
 
                         {/* Remove Instruction Button */}
-                        { editable ? <RemoveButton
-                            onPress={() =>
-                                handleRemoveInstruction ? handleRemoveInstruction(item.id.toString()) : undefined
-                            }
-                        >
-                            <MyFeather
-                                name="minus"
-                                size={15}
-                                color={theme.text}
-                            />
-                        </RemoveButton> : null}
+                        {editable ? (
+                            <RemoveButton
+                                onPress={() =>
+                                    handleRemoveInstruction
+                                        ? handleRemoveInstruction(
+                                              item.id.toString()
+                                          )
+                                        : undefined
+                                }
+                            >
+                                <MyFeather
+                                    name="minus"
+                                    size={15}
+                                    color={theme.text}
+                                />
+                            </RemoveButton>
+                        ) : null}
                     </Container>
                 )}
             />
 
-            {editable
-                ? <ButtonBorderless
+            {editable ? (
+                <ButtonBorderless
                     text="Add Instruction"
-                    onPress={ () => handleAddInstruction ? handleAddInstruction() : undefined}
+                    onPress={() =>
+                        handleAddInstruction
+                            ? handleAddInstruction()
+                            : undefined
+                    }
                 />
-                : <BottomPadding/>}
+            ) : (
+                <BottomPadding />
+            )}
         </HeaderBordered>
     )
 }

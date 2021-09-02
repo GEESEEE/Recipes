@@ -101,12 +101,13 @@ export function ButtonOptions({
     onLayout?: (e: any) => void
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
-
     const OptionsContainer = styled(TouchableOpacity)`
         position: absolute;
-        padding-top: ${offset}px;
-        padding-end: ${offset}px;
         align-self: flex-end;
+        padding-top: ${offset}px;
+        padding-right: ${offset}px;
+        border-width: 1px;
+        border-color: ${(props) => props.theme.primary};
     `
 
     return (

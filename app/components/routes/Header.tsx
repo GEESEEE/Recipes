@@ -27,14 +27,14 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     return (
-        <Container style={{ height: insets.top + 30}}>
+        <Container style={{ height: insets.top + 30 }}>
             <HeaderContainer
                 style={{
                     paddingTop: insets.top,
                     paddingLeft: insets.left + 5,
-                    paddingRight: insets.right + 5
-                }}>
-
+                    paddingRight: insets.right + 5,
+                }}
+            >
                 <ButtonIcon
                     onPress={handleDrawerButton}
                     icon={

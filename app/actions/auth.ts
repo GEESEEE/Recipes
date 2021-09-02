@@ -1,5 +1,9 @@
 import * as SecureStore from 'expo-secure-store'
-import { NavigationScreenProp, NavigationActions, StackActions } from 'react-navigation'
+import {
+    NavigationScreenProp,
+    NavigationActions,
+    StackActions,
+} from 'react-navigation'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS } from '../reducers/auth'
 import * as authService from '../rest/auth'
@@ -29,7 +33,11 @@ export const retrieveToken =
         } catch (err) {
             dispatch({
                 type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
-                payload: { err: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
+                payload: {
+                    err:
+                        err?.response?.data?.errors?.[0]?.message ??
+                        'Could not connect to server',
+                },
             })
         }
     }
@@ -51,7 +59,11 @@ export const signUp =
         } catch (err) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_UP_ERROR,
-                payload: { error: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
+                payload: {
+                    error:
+                        err?.response?.data?.errors?.[0]?.message ??
+                        'Could not connect to server',
+                },
             })
         }
     }
@@ -76,15 +88,18 @@ export const signIn =
             // navigation.navigate('Main')
             const resetActions = StackActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'Main'})],
-                key: null
+                actions: [NavigationActions.navigate({ routeName: 'Main' })],
+                key: null,
             })
             navigation.dispatch(resetActions)
-
         } catch (err) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,
-                payload: { error: err?.response?.data?.errors?.[0]?.message ?? 'Could not connect to server' },
+                payload: {
+                    error:
+                        err?.response?.data?.errors?.[0]?.message ??
+                        'Could not connect to server',
+                },
             })
         }
     }
@@ -92,23 +107,26 @@ export const signIn =
 export const signOut =
     (token: string, navigation: NavigationScreenProp<string>): any =>
     async (dispatch: Dispatch): Promise<any> => {
-        dispatch({ type: AUTH_ACTIONS.SIGN_OUT_START, payload: {}})
+        dispatch({ type: AUTH_ACTIONS.SIGN_OUT_START, payload: {} })
         try {
             await authService.signOut({ token })
             await SecureStore.deleteItemAsync('token')
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             dispatch(clearUserData())
             navigation.navigate('Login')
-
         } catch (err) {
             console.error(err)
             dispatch({
                 type: AUTH_ACTIONS.SIGN_OUT_ERROR,
-                payload: {error: 'Could not connect to server, but signed out anyway'}
+                payload: {
+                    error: 'Could not connect to server, but signed out anyway',
+                },
             })
         }
     }
 
-    export const clearError = (): any => async (dispatch: Dispatch): Promise<any> => {
+export const clearError =
+    (): any =>
+    async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }

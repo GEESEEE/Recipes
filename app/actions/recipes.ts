@@ -84,8 +84,12 @@ export const editRecipe =
                 )
 
                 // Set ingredients and recipes so they only include old ones, because new ones will be added
-                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter((i) => i.id > 0)
-                newRecipe.instructions = recipe.instructions?.filter((i) => i.id > 0)
+                newRecipe.recipeIngredients = recipe.recipeIngredients?.filter(
+                    (i) => i.id > 0
+                )
+                newRecipe.instructions = recipe.instructions?.filter(
+                    (i) => i.id > 0
+                )
 
                 const ingredientsToAdd: RecipeIngredient[] = []
                 const ingredientsToUpdate: RecipeIngredient[] = []
@@ -170,7 +174,11 @@ export const editRecipe =
                             toDelete = false
 
                         // if id is the same and any property has changed, add to update list
-                        if (oldIns.id === ins.id && (oldIns.text !== ins.text || oldIns.position !== ins.position))
+                        if (
+                            oldIns.id === ins.id &&
+                            (oldIns.text !== ins.text ||
+                                oldIns.position !== ins.position)
+                        )
                             instructionsToUpdate.push(ins)
                     })
                     if (toDelete) instructionsToDelete.push(oldIns)

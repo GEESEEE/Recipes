@@ -31,7 +31,7 @@ const RecipeHeader = ({
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
-}: RecipeHeaderOptions ): JSX.Element => {
+}: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -67,11 +67,7 @@ const RecipeHeader = ({
     }
 
     return (
-        <Header
-            onPress={onPress ?? undefined}
-            disabled={!onPress}
-        >
-
+        <Header onPress={onPress ?? undefined} disabled={!onPress}>
             {/* Recipe Name Input Field */}
             <RecipeNameView>
                 <RecipeNameTextInput
@@ -115,7 +111,9 @@ const RecipeHeader = ({
                     <MyFeather name="user" color={theme.text} />
                     <Property
                         style={peopleCountStyle()}
-                        editable={['Edit-all', 'Edit-people'].includes(editable) }
+                        editable={['Edit-all', 'Edit-people'].includes(
+                            editable
+                        )}
                         onChangeText={handlePeopleCountChange}
                         value={recipe.peopleCount.toString()}
                         placeholder="0"
@@ -124,10 +122,10 @@ const RecipeHeader = ({
                     />
                 </PropertyView>
             </PropertiesContainer>
-            {/* Dropdown Menu */}
-            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
 
             {children}
+            {/* Dropdown Menu */}
+            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
         </Header>
     )
 }

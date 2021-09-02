@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, View, Text, Animated, Dimensions } from 'react-native'
+import {
+    TouchableOpacity,
+    View,
+    Text,
+    Animated,
+    Dimensions,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../hooks'
 import { MyMaterialIcons } from '../Icons'
-
 
 const routeIconMap = {
     Main: 'book-search',
     RecipesScreen: 'book-open-page-variant',
-    Test: 'test-tube'
+    Test: 'test-tube',
 }
 
 const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
-    const {state} = navigation
-    const {routes} = state
-    const totalWidth = Dimensions.get("window").width;
-    const tabWidth = totalWidth / routes.length;
+    const { state } = navigation
+    const { routes } = state
+    const totalWidth = Dimensions.get('window').width
+    const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
     function navigate(routeName: string): void {
@@ -28,25 +33,31 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const animateSlider = (index: number): any => {
         Animated.spring(translateValue, {
-          toValue: index * tabWidth,
-          velocity: 10,
-          useNativeDriver: true,
-        }).start();
-      };
+            toValue: index * tabWidth,
+            velocity: 10,
+            useNativeDriver: true,
+        }).start()
+    }
 
     useEffect(() => {
-        animateSlider(state.index);
-    }, [state.index]);
+        animateSlider(state.index)
+    }, [state.index])
 
     return (
-        <Container style={{height: insets.bottom + 50}}>
-            <SafeContainer style={{paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right}}>
-
-                <TabSlider key={uuid()}
+        <Container style={{ height: insets.bottom + 50 }}>
+            <SafeContainer
+                style={{
+                    paddingBottom: insets.bottom,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                }}
+            >
+                <TabSlider
+                    key={uuid()}
                     style={[
                         {
-                        transform: [{ translateX: translateValue }],
-                        width: tabWidth - 20,
+                            transform: [{ translateX: translateValue }],
+                            width: tabWidth - 20,
                         },
                     ]}
                 />
@@ -63,8 +74,7 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
                             isCurrent={isFocused}
                         />
                     )
-                }) }
-
+                })}
             </SafeContainer>
         </Container>
     )
@@ -73,22 +83,32 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
 export default BottomTab
 
 type TabProps = {
-    icon: string,
-    text: string,
-    onPress: () => void,
+    icon: string
+    text: string
+    onPress: () => void
     isCurrent?: boolean
 }
 
-const RouteTab = ({ icon, text, onPress, isCurrent }: TabProps): JSX.Element => {
+const RouteTab = ({
+    icon,
+    text,
+    onPress,
+    isCurrent,
+}: TabProps): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
-    <TabContainer onPress={onPress}>
-        <MyMaterialIcons name={icon} color={isCurrent ? theme.primary : theme.grey}/>
-        <TabText style={{ color: isCurrent ? theme.primary : theme.grey}}
-        >{text}</TabText>
-    </TabContainer>
-)}
+        <TabContainer onPress={onPress}>
+            <MyMaterialIcons
+                name={icon}
+                color={isCurrent ? theme.primary : theme.grey}
+            />
+            <TabText style={{ color: isCurrent ? theme.primary : theme.grey }}>
+                {text}
+            </TabText>
+        </TabContainer>
+    )
+}
 
 const Container = styled(View)`
     width: 100%;
@@ -109,7 +129,7 @@ const TabSlider = styled(Animated.View)`
     left: 10px;
     top: -2px;
     background-color: ${(props) => props.theme.primary};
-    borderRadius: 10px;
+    borderradius: 10px;
 `
 
 const TabContainer = styled(TouchableOpacity)`

@@ -35,11 +35,13 @@ const IngredientsList = ({
                     <ItemContainer>
                         {/* Ingredient Name Input */}
                         <NameText
-                            onChangeText={ (text: string) =>
-                                handleIngredientNameChange ? handleIngredientNameChange(
-                                    item.id.toString(),
-                                    text
-                                ) : undefined
+                            onChangeText={(text: string) =>
+                                handleIngredientNameChange
+                                    ? handleIngredientNameChange(
+                                          item.id.toString(),
+                                          text
+                                      )
+                                    : undefined
                             }
                             value={item.ingredient?.name}
                             placeholder="New Ingredient"
@@ -55,10 +57,12 @@ const IngredientsList = ({
                                     item.amount === 0 ? theme.grey : theme.text,
                             }}
                             onChangeText={(text: string) =>
-                                handleIngredientAmountChange ? handleIngredientAmountChange(
-                                    item.id.toString(),
-                                    text
-                                ) : undefined
+                                handleIngredientAmountChange
+                                    ? handleIngredientAmountChange(
+                                          item.id.toString(),
+                                          text
+                                      )
+                                    : undefined
                             }
                             keyboardType="decimal-pad"
                             value={item.amount.toString()}
@@ -69,39 +73,55 @@ const IngredientsList = ({
                         />
 
                         {/* Ingredient Unit Input */}
-                        {editable || item.ingredient?.unit ? <UnitText
-                            onChangeText={(text: string) =>
-                                handleIngredientUnitChange ? handleIngredientUnitChange(
-                                    item.id.toString(),
-                                    text
-                                ) : undefined
-                            }
-                            value={item.ingredient?.unit?.toString() ?? ''}
-                            placeholder="Unit?"
-                            placeholderTextColor={theme.grey}
-                            multiline
-                            editable={editable}
-                        /> : null}
+                        {editable || item.ingredient?.unit ? (
+                            <UnitText
+                                onChangeText={(text: string) =>
+                                    handleIngredientUnitChange
+                                        ? handleIngredientUnitChange(
+                                              item.id.toString(),
+                                              text
+                                          )
+                                        : undefined
+                                }
+                                value={item.ingredient?.unit?.toString() ?? ''}
+                                placeholder="Unit?"
+                                placeholderTextColor={theme.grey}
+                                multiline
+                                editable={editable}
+                            />
+                        ) : null}
 
                         {/* Remove Ingredient Button */}
-                        {editable ? <RemoveButton
-                            onPress={() =>
-                                handleRemoveIngredient ? handleRemoveIngredient(item.id.toString()) : undefined
-                            }
-                        >
-                            <MyFeather
-                                name="minus"
-                                size={15}
-                                color={theme.text}
-                            />
-                        </RemoveButton> : null}
+                        {editable ? (
+                            <RemoveButton
+                                onPress={() =>
+                                    handleRemoveIngredient
+                                        ? handleRemoveIngredient(
+                                              item.id.toString()
+                                          )
+                                        : undefined
+                                }
+                            >
+                                <MyFeather
+                                    name="minus"
+                                    size={15}
+                                    color={theme.text}
+                                />
+                            </RemoveButton>
+                        ) : null}
                     </ItemContainer>
                 )}
             />
-            {editable ? <ButtonBorderless
-                text="Add Ingredient"
-                onPress={() => handleAddIngredient ? handleAddIngredient() : undefined}
-            /> : <BottomPadding/>}
+            {editable ? (
+                <ButtonBorderless
+                    text="Add Ingredient"
+                    onPress={() =>
+                        handleAddIngredient ? handleAddIngredient() : undefined
+                    }
+                />
+            ) : (
+                <BottomPadding />
+            )}
         </HeaderBordered>
     )
 }

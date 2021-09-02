@@ -119,16 +119,19 @@ function RegisterScreen({
     }
 
     function isValidData(): boolean {
-        const isEmpty = data.username.length === 0
-            || data.email.length === 0
-            || data.password1.length === 0
-            || data.password2.length === 0
-        return !isEmpty &&
+        const isEmpty =
+            data.username.length === 0 ||
+            data.email.length === 0 ||
+            data.password1.length === 0 ||
+            data.password2.length === 0
+        return (
+            !isEmpty &&
             data.isValidUsername &&
             data.isValidPassword1 &&
             data.isValidPassword2 &&
             data.isValidUsername &&
             samePasswords()
+        )
     }
 
     function samePasswords(): boolean {
@@ -136,9 +139,7 @@ function RegisterScreen({
     }
 
     async function handleRegisterButton(): Promise<void> {
-        if (
-            isValidData()
-        ) {
+        if (isValidData()) {
             const userData = {
                 name: data.username,
                 password: data.password1,
@@ -206,7 +207,7 @@ function RegisterScreen({
 
             {/* Register Button */}
             <ButtonFilled text="Register" onPress={handleRegisterButton} />
-            <ErrorMessage errorMessage={auth.error}  />
+            <ErrorMessage errorMessage={auth.error} />
             {/* Already have an account/Go Back Button */}
             <ButtonBorderless
                 text="Already have an account?"

@@ -39,7 +39,7 @@ const auth = (
     switch (action.type) {
         // SIGN UP ACTIONS
         case AUTH_ACTIONS.SIGN_UP_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case AUTH_ACTIONS.SIGN_UP_SUCCES: {
@@ -53,7 +53,7 @@ const auth = (
 
         // SIGN IN ACTIONS
         case AUTH_ACTIONS.SIGN_IN_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case AUTH_ACTIONS.SIGN_IN_SUCCES: {
@@ -68,7 +68,7 @@ const auth = (
 
         // SIGN OUT ACTIONS
         case AUTH_ACTIONS.SIGN_OUT_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case AUTH_ACTIONS.SIGN_OUT_SUCCES: {
@@ -87,7 +87,7 @@ const auth = (
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
-            return {...state, token, retrieveLoading: false, error: '' }
+            return { ...state, token, retrieveLoading: false, error: '' }
         }
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {
@@ -97,7 +97,7 @@ const auth = (
 
         // CLEAR ERROR AND DEFAULT
         case AUTH_ACTIONS.CLEAR_ERROR: {
-            return { ...state, error: ''}
+            return { ...state, error: '' }
         }
 
         default:

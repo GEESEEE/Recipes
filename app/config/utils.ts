@@ -50,7 +50,7 @@ export function replaceElements<T extends { id: number }>(
 export function maxOfArrayProperty(arr: Array<any>, property: string): number {
     let max = 0
     arr.forEach((el) => {
-        if (el[property] > max ) max = el[property]
+        if (el[property] > max) max = el[property]
     })
     return max
 }

@@ -18,7 +18,7 @@ const initialState = {
     name: '',
     email: '',
     error: '',
-    loading: false
+    loading: false,
 }
 
 const auth = (
@@ -27,7 +27,7 @@ const auth = (
 ): User => {
     switch (action.type) {
         case USERACTIONS.GET_USER_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case USERACTIONS.GET_USER_SUCCES: {

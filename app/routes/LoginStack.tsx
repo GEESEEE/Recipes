@@ -21,9 +21,8 @@ const stackConfig: any = {
     mode: 'modal',
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimationHorizontal
+        cardStyleInterpolator: routeUtils.slideAnimationHorizontal,
     },
-
 }
 
 const LoginStack = createStackNavigator(screens, stackConfig)

@@ -39,10 +39,6 @@ const screens = {
 const tabConfig: any = {
     initialRouteName: 'Main',
     tabBarComponent: BottomTab,
-    defaultNavigationOptions: {
-        cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimationHorizontal
-    },
 }
 
 const MainTabs = createBottomTabNavigator(screens, tabConfig)

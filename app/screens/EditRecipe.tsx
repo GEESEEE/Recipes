@@ -72,7 +72,10 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
-        const position = maxOfArrayProperty(recipeData.recipeIngredients!, 'position')
+        const position = maxOfArrayProperty(
+            recipeData.recipeIngredients!,
+            'position'
+        )
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
@@ -130,8 +133,15 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const position = maxOfArrayProperty(recipeData.instructions!, 'position')
-        const instruction = new Instruction(indices.instructionId, '', position + 1)
+        const position = maxOfArrayProperty(
+            recipeData.instructions!,
+            'position'
+        )
+        const instruction = new Instruction(
+            indices.instructionId,
+            '',
+            position + 1
+        )
         recipeData.instructions?.push(instruction)
         dispatch(decrementInstructionId(indices.instructionId))
         setRecipeData({ ...recipeData })
@@ -187,7 +197,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipeHeader
                 recipe={recipeData}
                 navigation={navigation}
-                editable='Edit-all'
+                editable="Edit-all"
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}

@@ -8,7 +8,6 @@ import { RecipeHeader } from '../components/data'
 import { Recipe } from '../data'
 import { useAppSelector } from '../hooks/redux'
 
-
 function RecipesScreen({
     navigation,
 }: {
@@ -23,14 +22,16 @@ function RecipesScreen({
             <RecipesList
                 data={recipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{paddingTop: headerHeight}}
+                contentContainerStyle={{ paddingTop: headerHeight }}
                 renderItem={({ item }) => (
                     <RecipeHeader
                         recipe={item}
                         navigation={navigation}
-                        editable='Edit-none'
+                        editable="Edit-none"
                         dropdown
-                        onPress={() => navigation.navigate('ViewRecipe', { recipe: item })}
+                        onPress={() =>
+                            navigation.navigate('ViewRecipe', { recipe: item })
+                        }
                     />
                 )}
             />

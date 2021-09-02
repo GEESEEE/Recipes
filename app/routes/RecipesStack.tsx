@@ -22,7 +22,7 @@ const screens = {
         navigationOptions: () => ({
             header: () => null,
         }),
-    }
+    },
 }
 
 const stackConfig: any = {
@@ -30,7 +30,7 @@ const stackConfig: any = {
     mode: 'modal',
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimationVertical
+        cardStyleInterpolator: routeUtils.slideAnimationVertical,
     },
 }
 

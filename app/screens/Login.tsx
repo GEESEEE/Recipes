@@ -11,7 +11,6 @@ import { InputFieldRounded } from '../components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
 
-
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
     PASSWORD_CHANGE: 'passwordChange',
@@ -152,7 +151,7 @@ function LoginScreen({
 
             {/* Register Button */}
             <ButtonInverted text="Register" onPress={handleRegisterButton} />
-            <ErrorMessage errorMessage={auth.error}/>
+            <ErrorMessage errorMessage={auth.error} />
         </Container>
     )
 }

@@ -16,7 +16,12 @@ export default class RecipeIngredient {
 
     public ingredient?: Ingredient
 
-    constructor(id: number, amount: number, position: number, ingredient: Ingredient) {
+    constructor(
+        id: number,
+        amount: number,
+        position: number,
+        ingredient: Ingredient
+    ) {
         this.id = id
         this.amount = amount
         this.position = position
