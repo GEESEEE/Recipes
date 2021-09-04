@@ -1,5 +1,6 @@
-import InstructionsList from './InstructionsList'
-import IngredientsList from './IngredientsList'
-import RecipeHeader from './RecipeHeader'
 
-export { InstructionsList, IngredientsList, RecipeHeader }
+import RecipeHeader from './RecipeHeader'
+import IngredientListItem from './IngredientListItem'
+import InstructionListItem from './InstructionListItem'
+
+export { RecipeHeader, IngredientListItem, InstructionListItem }

@@ -6,11 +6,6 @@ import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
-import {
-    InstructionsList,
-    IngredientsList,
-    RecipeHeader,
-} from '../components/data'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import {
@@ -20,6 +15,7 @@ import {
 } from '../actions/indices'
 import { handleNumericTextInput, maxOfArrayProperty } from '../config/utils'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
+import RecipeSectionList from '../components/data/RecipeSectionList'
 
 type RecipeValidity = {
     validIngredients: boolean
@@ -194,7 +190,43 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <RecipeHeader
+            <RecipeSectionList
+                recipe={recipeData}
+                navigation={navigation}
+                action='Create'
+
+                handleNameChange={handleNameChange}
+                handleDescriptionChange={handleDescriptionChange}
+                handlePeopleCountChange={handlePeopleCountChange}
+                handlePrepareTimeChange={handlePrepareTimeChange}
+
+                handleRemoveIngredient={handleRemoveIngredient}
+                handleIngredientNameChange={handleIngredientNameChange}
+                handleIngredientAmountChange={handleIngredientAmountChange}
+                handleIngredientUnitChange={handleIngredientUnitChange}
+                handleAddIngredient={handleAddIngredient}
+
+                handleRemoveInstruction={handleRemoveInstruction}
+                handleInstructionTextChange={handleInstructionTextChange}
+                handleAddInstruction={handleAddInstruction}
+
+                FooterComponent={
+
+                    <FooterView>
+                        <ButtonFilled
+                            text={recipe ? 'Save' : 'Create Recipe'}
+                            onPress={recipe ? handleEditRecipe : handleCreateRecipe}
+                        />
+
+                        <ButtonBorderless
+                            text={recipe ? 'Cancel' : 'Clear Recipe'}
+                            onPress={recipe ? cancelEditRecipe : clearRecipeData}
+                        />
+                    </FooterView>
+                }
+            />
+
+            {/* <RecipeHeader
                 recipe={recipeData}
                 navigation={navigation}
                 editable="Edit-all"
@@ -204,7 +236,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 handlePrepareTimeChange={handlePrepareTimeChange}
             />
 
-            {/* Ingredients List Container */}
+
             <IngredientsList
                 ingredients={recipeData.recipeIngredients!}
                 editable
@@ -222,26 +254,17 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 }
             />
 
-            {/* Instructions List Container */}
+
             <InstructionsList
                 instructions={recipeData.instructions!}
                 editable
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
-            />
+            /> */}
 
             {/* Create Recipe Button */}
-            <ButtonFilled
-                text={recipe ? 'Save' : 'Create Recipe'}
-                onPress={recipe ? handleEditRecipe : handleCreateRecipe}
-            />
 
-            {/* Clear Recipe Button */}
-            <ButtonBorderless
-                text={recipe ? 'Cancel' : 'Clear Recipe'}
-                onPress={recipe ? cancelEditRecipe : clearRecipeData}
-            />
         </Container>
     )
 }
@@ -255,4 +278,10 @@ const Container = styled(View)`
     align-items: center;
     align-content: center;
     background-color: ${(props) => props.theme.background};
+`
+
+const FooterView = styled(View)`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `

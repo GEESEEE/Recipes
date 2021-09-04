@@ -1,7 +1,8 @@
 import Ingredient from './ingredient'
 import Recipe from './recipe'
+import ListItem from './list-item'
 
-export default class RecipeIngredient {
+export default class RecipeIngredient implements ListItem {
     public readonly id: number
 
     public recipeId!: number

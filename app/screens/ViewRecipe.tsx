@@ -1,11 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import {
-    IngredientsList,
-    InstructionsList,
-    RecipeHeader,
-} from '../components/data'
+import RecipeSectionList from '../components/data/RecipeSectionList'
 import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
@@ -34,20 +30,11 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <RecipeHeader
+            <RecipeSectionList
                 recipe={recipeData}
                 navigation={navigation}
-                editable="Edit-people"
+                action='View'
                 handlePeopleCountChange={handlePeopleCountChange}
-            />
-
-            <IngredientsList
-                ingredients={recipeData.recipeIngredients!}
-                editable={false}
-            />
-            <InstructionsList
-                instructions={recipeData.instructions!}
-                editable={false}
             />
         </Container>
     )

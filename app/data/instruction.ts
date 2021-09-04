@@ -1,6 +1,7 @@
 import Recipe from './recipe'
+import ListItem from './list-item'
 
-export default class Instruction {
+export default class Instruction implements ListItem{
     public id!: number
 
     public text!: string

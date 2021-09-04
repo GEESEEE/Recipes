@@ -67,7 +67,7 @@ const RecipeHeader = ({
     }
 
     return (
-        <Header onPress={onPress ?? undefined} disabled={!onPress}>
+        <Header onPress={onPress} disabled={!onPress}>
             {/* Recipe Name Input Field */}
             <RecipeNameView>
                 <RecipeNameTextInput
@@ -138,14 +138,13 @@ const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
     bottom: ${height * 0.03}px;
-    width: 85%;
+    width: 100%;
     background-color: ${(props) => props.theme.background};
     border-color: ${(props) => props.theme.primary};
     border-radius: 20px;
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-top: 5px;
 `
 
 const RecipeNameView = styled(View)`

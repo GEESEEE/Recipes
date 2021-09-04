@@ -1,13 +1,13 @@
 import React, { useRef } from 'react'
-import { View, Text, Animated, Keyboard, TextInput } from 'react-native'
+import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
 import logo from '../assets/temp_icon.png'
 
 const bigLogo = 1
 const smallLogo = 0.5
 
-const TestScreen = (): JSX.Element => {
-    console.log('Test Screen')
+const TestScreen = ({ navigation }: { navigation: any}): JSX.Element => {
+
 
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
@@ -56,6 +56,7 @@ const TestScreen = (): JSX.Element => {
                 />
             </LogoView>
             <SampleText>Test Screen</SampleText>
+
         </Container>
     )
 }
@@ -70,13 +71,12 @@ const Container = styled(View)`
 `
 
 const SampleText = styled(TextInput)`
-    color: ${(props) => props.theme.primary}
-    background-color: ${(props) => props.theme.background};
-    font-size: 20px;
-    border-color: ${(props) => props.theme.primary}
-    border-width: 1px;
+    height: 50px;
     width: 100px;
-    height: 100px;
+    font-size: 16px;
+    color: ${(props) => props.theme.primary}
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary}
 `
 
 const LogoView = styled(View)`
