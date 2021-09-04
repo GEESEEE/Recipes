@@ -8,11 +8,12 @@ import { deleteElement, deleteElements, replaceElements } from '../config/utils'
 export const createRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
+        console.log("Creating Recipe")
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
-
+                console.log("LocalRecipes", localRecipes)
                 const newRecipe = (
                     await recipeService.createRecipes([recipe])
                 )[0]
@@ -53,7 +54,7 @@ export const createRecipe =
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
-
+                console.log("New LocalRecipes", localRecipes)
                 dispatch({
                     type: RECIPE_ACTIONS.ADD_RECIPE,
                     payload: { newRecipe },
@@ -67,11 +68,12 @@ export const createRecipe =
 export const editRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
+        console.log("Editing Recipe")
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
-
+                console.log("LocalRecipes", localRecipes)
                 const oldRecipe = localRecipes.filter(
                     (r) => r.id === recipe.id
                 )[0]
@@ -90,7 +92,7 @@ export const editRecipe =
                 newRecipe.instructions = recipe.instructions?.filter(
                     (i) => i.id > 0
                 )
-
+                console.log("Old and new recipe ingredients", oldRecipe.recipeIngredients, newRecipe.recipeIngredients)
                 const ingredientsToAdd: RecipeIngredient[] = []
                 const ingredientsToUpdate: RecipeIngredient[] = []
                 const ingredientsToDelete: RecipeIngredient[] = []
@@ -121,6 +123,7 @@ export const editRecipe =
                     if (toDelete) ingredientsToDelete.push(oldIngr)
                 })
 
+                console.log("Ingredients", ingredientsToAdd, ingredientsToUpdate, ingredientsToDelete)
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
                     const updatedIngredients =
@@ -225,7 +228,7 @@ export const editRecipe =
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
-
+                console.log("New Local Recipes", localRecipes)
                 dispatch({
                     type: RECIPE_ACTIONS.EDIT_RECIPE,
                     payload: { newRecipe },
@@ -239,6 +242,7 @@ export const editRecipe =
 export const retrieveRecipes =
     () =>
     async (dispatch: Dispatch): Promise<void> => {
+        console.log("Retrieving Recipes")
         try {
             // Check local storage for recipes
             let rs = await AsyncStorage.getItem('recipes')
@@ -247,7 +251,7 @@ export const retrieveRecipes =
                 rs = '[]'
             }
             const recipes: Recipe[] = JSON.parse(rs)
-
+            console.log("Local Recipes", recipes)
             // Put recipes without a database id into the database
             const localRecipes = recipes.filter((recipe) => recipe.id <= 0)
             if (localRecipes.length > 0) {
@@ -256,8 +260,8 @@ export const retrieveRecipes =
 
             // Get all my recipes from database
             const newRecipes = await recipeService.getMyRecipes()
-
-            await AsyncStorage.setItem('recipes', JSON.stringify(recipes))
+            console.log("Database Recipes", newRecipes)
+            await AsyncStorage.setItem('recipes', JSON.stringify(newRecipes))
             dispatch({
                 type: RECIPE_ACTIONS.SET_RECIPES,
                 payload: { newRecipes },
@@ -270,12 +274,15 @@ export const retrieveRecipes =
 export const deleteRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
+        console.log("Deleting Recipe")
         try {
             const rs = (await AsyncStorage.getItem('recipes')) as string
             const localRecipes: Recipe[] = JSON.parse(rs)
+            console.log("LocalRecipes", localRecipes)
+            deleteElements(localRecipes, [recipe])
 
-            deleteElement(localRecipes, recipe)
-
+            await AsyncStorage.setItem('recipes', JSON.stringify(localRecipes))
+            console.log("New LocalRecipes", localRecipes)
             await recipeService.deleteRecipe(recipe.id)
             dispatch({
                 type: RECIPE_ACTIONS.DELETE_RECIPE,

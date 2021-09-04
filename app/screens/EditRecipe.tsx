@@ -1,6 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { createRecipe, editRecipe } from '../actions/recipes'
 import {
     ButtonBorderless,
@@ -13,7 +14,7 @@ import {
     decrementInstructionId,
     decrementRecipeId,
 } from '../actions/indices'
-import { handleNumericTextInput, maxOfArrayProperty } from '../config/utils'
+import { handleNumericTextInput } from '../config/utils'
 import {RecipeSectionList} from '../components/data'
 
 type RecipeValidity = {
@@ -67,14 +68,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
-        const position = maxOfArrayProperty(
+        const ri = _.maxBy(
             recipeData.recipeIngredients!,
             'position'
         )
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
-            position + 1,
+            ri ? ri.position + 1 : 0,
             ingredient
         )
 
@@ -130,14 +131,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const position = maxOfArrayProperty(
+        const i = _.maxBy(
             recipeData.instructions!,
             'position'
         )
         const instruction = new Instruction(
             indices.instructionId,
             '',
-            position + 1
+            i ? i.position + 1 : 0
         )
         recipeData.instructions?.push(instruction)
         dispatch(decrementInstructionId(indices.instructionId))

@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export function handleNumericTextInput(
     number: string,
     integer = false
@@ -13,7 +15,9 @@ export function handleNumericTextInput(
 }
 
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {
-    const index = arr.indexOf(element)
+    const sameElement = arr.find(e => _.isEqual(e, element))
+    if (!sameElement) return false
+    const index = arr.indexOf(sameElement)
     if (index > -1) {
         arr.splice(index, 1)
     }
@@ -47,10 +51,3 @@ export function replaceElements<T extends { id: number }>(
     return arr
 }
 
-export function maxOfArrayProperty(arr: Array<any>, property: string): number {
-    let max = 0
-    arr.forEach((el) => {
-        if (el[property] > max) max = el[property]
-    })
-    return max
-}
