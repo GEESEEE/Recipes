@@ -34,7 +34,7 @@ const RecipeHeader = ({
 }: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
-    console.log("Editable", editable)
+
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
     }

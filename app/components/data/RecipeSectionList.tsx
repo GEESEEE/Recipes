@@ -3,7 +3,9 @@ import { SectionList, StyleSheet, View, Text, StatusBar } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
-import { IngredientListItem, InstructionListItem, RecipeHeader } from '.'
+import IngredientListItem from './IngredientListItem'
+import InstructionListItem from './InstructionListItem'
+import RecipeHeader from './RecipeHeader'
 import { Recipe, ListItem, Instruction, RecipeIngredient } from '../../data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
@@ -68,12 +70,9 @@ const RecipeSectionList = ({
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
     const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 0
-    console.log(statusBarHeight)
     const headerHeight = useHeaderHeight()
 
     const editable = ['Edit', 'Create'].includes(action)
-
-    console.log("Heights", insets.top, headerHeight)
 
     const sections = [{
         key: 'Ingredients',
@@ -130,9 +129,10 @@ const RecipeSectionList = ({
                     <SectionHeaderText>{section.key}</SectionHeaderText>
                 </SectionHeader>
             }
-            renderSectionFooter={({section}: any) =>
-                editable
-                ?   <SectionSeparatorView>
+            renderSectionFooter={({section}: any) => {
+                if (editable) {
+                    return (
+                    <SectionSeparatorView>
                         <SectionFooter>
                             <ButtonBorderless
                                 text={section.footerText}
@@ -143,10 +143,21 @@ const RecipeSectionList = ({
                             errorMessage={section.key === 'Ingredients' ? ingredientError : undefined}
                             size='Medium'
                         />
-                    </SectionSeparatorView>
-                :   <FooterPadding/>
-            }
+                    </SectionSeparatorView>)
+                }
 
+                return (
+                    <SectionSeparatorView>
+                        {section.data.length === 0
+                        ?
+                            <SectionFooter>
+                                <FooterPadding/>
+                            </SectionFooter>
+                        : undefined}
+                        <FooterPadding/>
+                    </SectionSeparatorView>
+                )
+            }}
         />
     )
 }
@@ -205,5 +216,5 @@ const SectionSeparatorView = styled(View)`
 `
 
 const FooterPadding = styled(View)`
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 `

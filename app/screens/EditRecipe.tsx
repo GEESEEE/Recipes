@@ -1,7 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { createRecipe, editRecipe } from '../actions/recipes'
 import {
     ButtonBorderless,
@@ -15,7 +14,7 @@ import {
     decrementRecipeId,
 } from '../actions/indices'
 import { handleNumericTextInput, maxOfArrayProperty } from '../config/utils'
-import RecipeSectionList from '../components/data/RecipeSectionList'
+import {RecipeSectionList} from '../components/data'
 
 type RecipeValidity = {
     validIngredients: boolean
@@ -41,7 +40,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         validIngredients: true,
     }
 
-    const recipe = navigation.state.params?.recipe
+    let recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
     const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(
         { ...initialState, ...initialValidity }
@@ -91,14 +90,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData, recipeIngredients })
     }
 
-    function handleIngredientAmountChange(key: string, amount: string): void {
-        const recipeIngredient = recipeData.recipeIngredients?.filter(
-            (item) => item.id.toString() === key
-        )[0]
-        recipeIngredient!.amount = handleNumericTextInput(amount)
-        setRecipeData({ ...recipeData })
-    }
-
     function handleIngredientNameChange(key: string, name: string): void {
         const recipeIngredient = recipeData.recipeIngredients?.filter(
             (item) => item.id.toString() === key
@@ -120,7 +111,17 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData, validIngredients })
     }
 
+    function handleIngredientAmountChange(key: string, amount: string): void {
+        if (amount.length > 5) return
+        const recipeIngredient = recipeData.recipeIngredients?.filter(
+            (item) => item.id.toString() === key
+        )[0]
+        recipeIngredient!.amount = handleNumericTextInput(amount)
+        setRecipeData({ ...recipeData })
+    }
+
     function handleIngredientUnitChange(key: string, unit: string): void {
+        if (unit.length > 8) return
         const recipeIngredient = recipeData.recipeIngredients?.filter(
             (item) => item.id.toString() === key
         )[0]
@@ -179,8 +180,10 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
+        console.log(recipeData, validRecipe())
         if (validRecipe()) {
             dispatch(editRecipe(recipeData))
+            recipe = recipeData
         }
     }
 
@@ -212,7 +215,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 handleAddInstruction={handleAddInstruction}
 
                 FooterComponent={
-
                     <FooterView>
                         <ButtonFilled
                             text={recipe ? 'Save' : 'Create Recipe'}

@@ -56,6 +56,7 @@ const InstructionListItem = ({
                     placeholderTextColor={theme.grey}
                     multiline
                     editable={editable}
+                    maxLength={255}
                 />
             </ItemContainer>
 

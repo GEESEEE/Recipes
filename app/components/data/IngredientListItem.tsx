@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React, { useState } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { RecipeIngredient } from '../../data'
@@ -56,6 +56,7 @@ const IngredientListItem = ({
                     placeholderTextColor={theme.grey}
                     multiline
                     editable={editable}
+                    maxLength={255}
                 />
 
                 {/* Ingredient Amount Input */}
@@ -78,6 +79,7 @@ const IngredientListItem = ({
                     placeholderTextColor={theme.grey}
                     multiline
                     editable={editable}
+                    maxLength={5}
                 />
 
                 {/* Ingredient Unit Input */}
@@ -96,6 +98,7 @@ const IngredientListItem = ({
                         placeholderTextColor={theme.grey}
                         multiline
                         editable={editable}
+                        maxLength={8}
                     />
                 ) : null}
 
@@ -145,7 +148,7 @@ const ItemContainer = styled(View)`
 `
 
 const NameText = styled(TextInput)`
-    width: 70%;
+    width: 60%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `
@@ -157,7 +160,7 @@ const AmountText = styled(TextInput)`
 `
 
 const UnitText = styled(TextInput)`
-    width: 15%;
+    width: 25%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
 `
