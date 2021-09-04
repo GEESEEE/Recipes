@@ -34,7 +34,7 @@ const RecipeHeader = ({
 }: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
-
+    console.log("Editable", editable)
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
     }
@@ -101,7 +101,7 @@ const RecipeHeader = ({
                         onChangeText={handlePrepareTimeChange}
                         value={recipe.prepareTime.toString()}
                         placeholder="0"
-                        placeholderTextColor={theme.grey}
+                        placeholderTextColor={ editable === 'Edit-people' ? theme.text : theme.grey}
                         keyboardType="number-pad"
                     />
                 </PropertyView>
@@ -145,6 +145,7 @@ const Header = styled(TouchableOpacity)`
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-bottom: -10px;
 `
 
 const RecipeNameView = styled(View)`

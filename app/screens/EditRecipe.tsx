@@ -1,6 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { createRecipe, editRecipe } from '../actions/recipes'
 import {
     ButtonBorderless,
@@ -24,6 +25,7 @@ type RecipeValidity = {
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
+    const insets = useSafeAreaInsets()
 
     function getInitialRecipe(): Recipe {
         return {
@@ -225,45 +227,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     </FooterView>
                 }
             />
-
-            {/* <RecipeHeader
-                recipe={recipeData}
-                navigation={navigation}
-                editable="Edit-all"
-                handleNameChange={handleNameChange}
-                handleDescriptionChange={handleDescriptionChange}
-                handlePeopleCountChange={handlePeopleCountChange}
-                handlePrepareTimeChange={handlePrepareTimeChange}
-            />
-
-
-            <IngredientsList
-                ingredients={recipeData.recipeIngredients!}
-                editable
-                handleRemoveIngredient={handleRemoveIngredient}
-                handleIngredientNameChange={handleIngredientNameChange}
-                handleIngredientAmountChange={handleIngredientAmountChange}
-                handleIngredientUnitChange={handleIngredientUnitChange}
-                handleAddIngredient={handleAddIngredient}
-            />
-            <ErrorMessage
-                errorMessage={
-                    recipeData.validIngredients
-                        ? undefined
-                        : 'Can not use 2 ingredients with the same name'
-                }
-            />
-
-
-            <InstructionsList
-                instructions={recipeData.instructions!}
-                editable
-                handleRemoveInstruction={handleRemoveInstruction}
-                handleInstructionTextChange={handleInstructionTextChange}
-                handleAddInstruction={handleAddInstruction}
-            /> */}
-
-            {/* Create Recipe Button */}
 
         </Container>
     )

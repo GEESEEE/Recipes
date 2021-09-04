@@ -24,15 +24,18 @@ function RecipesScreen({
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{ paddingTop: headerHeight }}
                 renderItem={({ item }) => (
-                    <RecipeHeader
-                        recipe={item}
-                        navigation={navigation}
-                        editable="Edit-none"
-                        dropdown
-                        onPress={() =>
-                            navigation.navigate('ViewRecipe', { recipe: item })
-                        }
-                    />
+                    <RecipeHeaderView>
+                        <RecipeHeader
+                            recipe={item}
+                            navigation={navigation}
+                            editable="Edit-none"
+                            dropdown
+                            onPress={() =>
+                                navigation.navigate('ViewRecipe', { recipe: item })
+                            }
+                        />
+                        <Separator/>
+                    </RecipeHeaderView>
                 )}
             />
         </Container>
@@ -49,4 +52,12 @@ const Container = styled(View)`
 
 const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
+`
+
+const RecipeHeaderView = styled(View)`
+    width: 90%;
+    align-self: center;
+`
+const Separator = styled(View)`
+    height: 20px;
 `

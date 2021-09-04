@@ -13,8 +13,8 @@ import { useAppSelector } from '../../hooks'
 import { MyMaterialIcons } from '../Icons'
 
 const routeIconMap = {
-    Main: 'book-search',
-    RecipesScreen: 'book-open-page-variant',
+    Browse: 'book-search',
+    Recipes: 'book-open-page-variant',
     Test: 'test-tube',
 }
 
@@ -144,10 +144,4 @@ const TabText = styled(Text)`
     font-size: 16px;
     font-weight: bold;
 
-`
-
-const TabSeparator = styled(View)`
-    height: 100%;
-    width: 1px;
-    background-color: ${(props) => props.theme.primary};
 `

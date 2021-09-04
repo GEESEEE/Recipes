@@ -1,5 +1,5 @@
 import React from 'react'
-import { SectionList, StyleSheet, View, Text } from 'react-native'
+import { SectionList, StyleSheet, View, Text, StatusBar } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
@@ -64,6 +64,8 @@ const RecipeSectionList = ({
     FooterComponent
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
+    const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 0
+    console.log(statusBarHeight)
     const headerHeight = useHeaderHeight()
 
     const editable = ['Edit', 'Create'].includes(action)
@@ -104,9 +106,9 @@ const RecipeSectionList = ({
 
     return (
         <List
-            style={{paddingTop: insets.top}}
             sections={sections}
-            contentContainerStyle={[styles.contentContainer, { paddingTop: insets.top}]}
+            contentContainerStyle={[styles.contentContainer, { paddingTop: insets.top + 10}]}
+
             ListHeaderComponent={
                 <RecipeHeader
                     recipe={recipe}
@@ -133,15 +135,16 @@ const RecipeSectionList = ({
                             onPress={section.footerOnPress}
                         />
                     </SectionFooter>
-                :   null
+                :   <FooterPadding/>
             }
+
         />
     )
 }
 
 export default RecipeSectionList
 
-const List = styled(SectionList)`
+const List = styled(SectionList as new () => SectionList<ListItem>)`
     width: 100%;
 `
 
@@ -186,7 +189,9 @@ const SectionFooter = styled(View)`
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-width: 3px;
+    margin-bottom: 12px;
 `
+
 const FooterPadding = styled(View)`
-    height: 20px;
+    margin-bottom: 12px;
 `
