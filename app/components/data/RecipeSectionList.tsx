@@ -6,26 +6,28 @@ import styled from 'styled-components'
 import { IngredientListItem, InstructionListItem, RecipeHeader } from '.'
 import { Recipe, ListItem, Instruction, RecipeIngredient } from '../../data'
 import { ButtonBorderless } from '../user-input/Buttons'
+import { ErrorMessage } from '../user-input/ErrorMessage'
 
 type RecipeSectionListProps= {
     navigation: any
     recipe: Recipe
     action: 'Edit' | 'Create' | 'View'
 
-    // Recipe Handlers
+    // Recipe related
     handleNameChange?: (text: string) => void
     handleDescriptionChange?: (text: string) => void
     handlePeopleCountChange?: (text: string) => void
     handlePrepareTimeChange?: (text: string) => void
 
-    // Ingredients Handlers
+    // Ingredient related
     handleIngredientNameChange?: (key: string, text: string) => void
     handleIngredientAmountChange?: (key: string, text: string) => void
     handleIngredientUnitChange?: (key: string, text: string) => void
     handleRemoveIngredient?: (key: string) => void
     handleAddIngredient?: () => void
+    ingredientError?: string
 
-    // Instruction Handlers
+    // Instruction related
     handleInstructionTextChange?: (key: string, text: string) => void
     handleRemoveInstruction?: (key: string) => void
     handleAddInstruction?: () => void
@@ -56,6 +58,7 @@ const RecipeSectionList = ({
     handleIngredientUnitChange,
     handleRemoveIngredient,
     handleAddIngredient,
+    ingredientError,
 
     handleInstructionTextChange,
     handleRemoveInstruction,
@@ -129,12 +132,18 @@ const RecipeSectionList = ({
             }
             renderSectionFooter={({section}: any) =>
                 editable
-                ?   <SectionFooter>
-                        <ButtonBorderless
-                            text={section.footerText}
-                            onPress={section.footerOnPress}
+                ?   <SectionSeparatorView>
+                        <SectionFooter>
+                            <ButtonBorderless
+                                text={section.footerText}
+                                onPress={section.footerOnPress}
+                            />
+                        </SectionFooter>
+                        <ErrorMessage
+                            errorMessage={section.key === 'Ingredients' ? ingredientError : undefined}
+                            size='Medium'
                         />
-                    </SectionFooter>
+                    </SectionSeparatorView>
                 :   <FooterPadding/>
             }
 
@@ -189,7 +198,10 @@ const SectionFooter = styled(View)`
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-width: 3px;
-    margin-bottom: 12px;
+`
+
+const SectionSeparatorView = styled(View)`
+
 `
 
 const FooterPadding = styled(View)`

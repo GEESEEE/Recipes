@@ -15,7 +15,6 @@ import {
     decrementRecipeId,
 } from '../actions/indices'
 import { handleNumericTextInput, maxOfArrayProperty } from '../config/utils'
-import { ErrorMessage } from '../components/user-input/ErrorMessage'
 import RecipeSectionList from '../components/data/RecipeSectionList'
 
 type RecipeValidity = {
@@ -25,7 +24,6 @@ type RecipeValidity = {
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
-    const insets = useSafeAreaInsets()
 
     function getInitialRecipe(): Recipe {
         return {
@@ -207,6 +205,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 handleIngredientAmountChange={handleIngredientAmountChange}
                 handleIngredientUnitChange={handleIngredientUnitChange}
                 handleAddIngredient={handleAddIngredient}
+                ingredientError={recipeData.validIngredients ? undefined : 'Invalid Ingredients'}
 
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}

@@ -12,7 +12,7 @@ export type ButtonProps = {
 const ButtonStyleGeneric = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
-    width: 85%;
+    width: 80%;
     margin-top: 8px;
     margin-bottom: 8px;
     padding-left: 10px;
@@ -78,6 +78,8 @@ export function ButtonBorderless({ text, onPress }: ButtonProps): JSX.Element {
 const ButtonBorderlessStyle = styled(ButtonStyleGeneric)`
     width: 50%;
     background-color: ${(props) => props.theme.background};
+    margin-top: 4px;
+    margin-bottom: 4px;
 `
 
 const ButtonBorderlessText = styled(ButtonTextGeneric)`
