@@ -175,7 +175,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
-        console.log(recipeData, validRecipe())
         if (validRecipe()) {
             dispatch(editRecipe(recipeData))
             recipe = recipeData

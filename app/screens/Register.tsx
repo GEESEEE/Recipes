@@ -111,7 +111,6 @@ function RegisterScreen({
     }
 
     function handleSecurePassword1Change(): void {
-        console.log(data.securePasswordText)
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE,
             payload: { securePasswordText: !data.securePasswordText },
