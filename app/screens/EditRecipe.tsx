@@ -15,7 +15,7 @@ import {
     decrementRecipeId,
 } from '../actions/indices'
 import { handleNumericTextInput } from '../config/utils'
-import {RecipeSectionList} from '../components/data'
+import { RecipeSectionList } from '../components/data'
 
 type RecipeValidity = {
     validIngredients: boolean
@@ -68,10 +68,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
-        const ri = _.maxBy(
-            recipeData.recipeIngredients!,
-            'position'
-        )
+        const ri = _.maxBy(recipeData.recipeIngredients!, 'position')
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
@@ -131,10 +128,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const i = _.maxBy(
-            recipeData.instructions!,
-            'position'
-        )
+        const i = _.maxBy(recipeData.instructions!, 'position')
         const instruction = new Instruction(
             indices.instructionId,
             '',
@@ -197,39 +191,42 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipeSectionList
                 recipe={recipeData}
                 navigation={navigation}
-                action='Create'
-
+                action="Create"
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}
                 handlePrepareTimeChange={handlePrepareTimeChange}
-
                 handleRemoveIngredient={handleRemoveIngredient}
                 handleIngredientNameChange={handleIngredientNameChange}
                 handleIngredientAmountChange={handleIngredientAmountChange}
                 handleIngredientUnitChange={handleIngredientUnitChange}
                 handleAddIngredient={handleAddIngredient}
-                ingredientError={recipeData.validIngredients ? undefined : 'Invalid Ingredients'}
-
+                ingredientError={
+                    recipeData.validIngredients
+                        ? undefined
+                        : 'Invalid Ingredients'
+                }
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
-
                 FooterComponent={
                     <FooterView>
                         <ButtonFilled
                             text={recipe ? 'Save' : 'Create Recipe'}
-                            onPress={recipe ? handleEditRecipe : handleCreateRecipe}
+                            onPress={
+                                recipe ? handleEditRecipe : handleCreateRecipe
+                            }
                         />
 
                         <ButtonBorderless
                             text={recipe ? 'Cancel' : 'Clear Recipe'}
-                            onPress={recipe ? cancelEditRecipe : clearRecipeData}
+                            onPress={
+                                recipe ? cancelEditRecipe : clearRecipeData
+                            }
                         />
                     </FooterView>
                 }
             />
-
         </Container>
     )
 }

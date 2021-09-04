@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import {RecipeSectionList} from '../components/data'
+import { RecipeSectionList } from '../components/data'
 import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
@@ -33,7 +33,7 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipeSectionList
                 recipe={recipeData}
                 navigation={navigation}
-                action='View'
+                action="View"
                 handlePeopleCountChange={handlePeopleCountChange}
             />
         </Container>

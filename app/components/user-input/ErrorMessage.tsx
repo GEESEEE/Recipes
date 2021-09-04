@@ -13,7 +13,7 @@ export const ErrorMessage = ({
 }: ErrorMessageProps): JSX.Element => {
     let fontSize
     let paddingHeight
-    switch(size) {
+    switch (size) {
         case 'Small': {
             fontSize = 10
             paddingHeight = 16
@@ -50,17 +50,16 @@ export const ErrorMessage = ({
     `
 
     return (
-    <Container>
-        {errorMessage ? (
-            <ErrorMessageView>{errorMessage}</ErrorMessageView>
-        ) : (
-            <BottomPadding/>
-        )}
-    </Container>
-)}
+        <Container>
+            {errorMessage ? (
+                <ErrorMessageView>{errorMessage}</ErrorMessageView>
+            ) : (
+                <BottomPadding />
+            )}
+        </Container>
+    )
+}
 
 const Container = styled(View)`
     align-self: center;
 `
-
-

@@ -42,7 +42,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     }
                 />
 
-                <HeaderTitle/>
+                <HeaderTitle />
 
                 {routeName === 'RecipesScreen' ? (
                     <ButtonIcon

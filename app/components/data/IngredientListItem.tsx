@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { RecipeIngredient } from '../../data'
-import { useAppSelector } from "../../hooks"
+import { useAppSelector } from '../../hooks'
 import { MyFeather } from '../Icons'
 
 type IngredientListItemProps = {
@@ -24,7 +24,7 @@ const IngredientListItem = ({
     handleIngredientAmountChange,
     handleIngredientUnitChange,
     handleRemoveIngredient,
-}: IngredientListItemProps ): JSX.Element => {
+}: IngredientListItemProps): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const index = ingredients.indexOf(ingredient)
     let listSize = ingredients.length - 1
@@ -40,15 +40,14 @@ const IngredientListItem = ({
             }}
         >
             <ItemContainer>
-
                 {/* Ingredient Name Input */}
                 <NameText
                     onChangeText={(text: string) =>
                         handleIngredientNameChange
                             ? handleIngredientNameChange(
-                                    ingredient.id.toString(),
-                                    text
-                                )
+                                  ingredient.id.toString(),
+                                  text
+                              )
                             : undefined
                     }
                     value={ingredient.ingredient?.name}
@@ -68,9 +67,9 @@ const IngredientListItem = ({
                     onChangeText={(text: string) =>
                         handleIngredientAmountChange
                             ? handleIngredientAmountChange(
-                                    ingredient.id.toString(),
-                                    text
-                                )
+                                  ingredient.id.toString(),
+                                  text
+                              )
                             : undefined
                     }
                     keyboardType="decimal-pad"
@@ -88,9 +87,9 @@ const IngredientListItem = ({
                         onChangeText={(text: string) =>
                             handleIngredientUnitChange
                                 ? handleIngredientUnitChange(
-                                        ingredient.id.toString(),
-                                        text
-                                    )
+                                      ingredient.id.toString(),
+                                      text
+                                  )
                                 : undefined
                         }
                         value={ingredient.ingredient?.unit?.toString() ?? ''}
@@ -101,7 +100,6 @@ const IngredientListItem = ({
                         maxLength={8}
                     />
                 ) : null}
-
             </ItemContainer>
 
             {/* Remove Ingredient Button */}
@@ -109,17 +107,11 @@ const IngredientListItem = ({
                 <RemoveButton
                     onPress={() =>
                         handleRemoveIngredient
-                            ? handleRemoveIngredient(
-                                    ingredient.id.toString()
-                                )
+                            ? handleRemoveIngredient(ingredient.id.toString())
                             : undefined
                     }
                 >
-                    <MyFeather
-                        name="minus"
-                        size={20}
-                        color={theme.text}
-                    />
+                    <MyFeather name="minus" size={20} color={theme.text} />
                 </RemoveButton>
             ) : null}
         </Container>

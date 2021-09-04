@@ -101,7 +101,9 @@ const RecipeHeader = ({
                         onChangeText={handlePrepareTimeChange}
                         value={recipe.prepareTime.toString()}
                         placeholder="0"
-                        placeholderTextColor={ editable === 'Edit-people' ? theme.text : theme.grey}
+                        placeholderTextColor={
+                            editable === 'Edit-people' ? theme.text : theme.grey
+                        }
                         keyboardType="number-pad"
                     />
                 </PropertyView>

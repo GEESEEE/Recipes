@@ -15,7 +15,7 @@ export function handleNumericTextInput(
 }
 
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {
-    const sameElement = arr.find(e => _.isEqual(e, element))
+    const sameElement = arr.find((e) => _.isEqual(e, element))
     if (!sameElement) return false
     const index = arr.indexOf(sameElement)
     if (index > -1) {
@@ -50,4 +50,3 @@ export function replaceElements<T extends { id: number }>(
     arr.map((el) => arr2.find((el2) => el.id === el2.id) || el)
     return arr
 }
-

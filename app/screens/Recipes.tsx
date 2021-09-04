@@ -31,10 +31,12 @@ function RecipesScreen({
                             editable="Edit-none"
                             dropdown
                             onPress={() =>
-                                navigation.navigate('ViewRecipe', { recipe: item })
+                                navigation.navigate('ViewRecipe', {
+                                    recipe: item,
+                                })
                             }
                         />
-                        <Separator/>
+                        <Separator />
                     </RecipeHeaderView>
                 )}
             />

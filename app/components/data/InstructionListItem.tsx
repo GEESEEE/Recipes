@@ -20,7 +20,7 @@ const InstructionListItem = ({
     editable,
     handleInstructionTextChange,
     handleRemoveInstruction,
-}: InstructionListItemProps ): JSX.Element => {
+}: InstructionListItemProps): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const index = instructions.indexOf(instruction)
     let listSize = instructions.length - 1
@@ -37,18 +37,16 @@ const InstructionListItem = ({
         >
             <ItemContainer>
                 {/* Instruction Number */}
-                <Number>
-                    {(index + 1).toString()}
-                </Number>
+                <Number>{(index + 1).toString()}</Number>
 
                 {/* Instruction Text Input */}
                 <InstructionText
                     onChangeText={(text: string) =>
                         handleInstructionTextChange
                             ? handleInstructionTextChange(
-                                    instruction.id.toString(),
-                                    text
-                                )
+                                  instruction.id.toString(),
+                                  text
+                              )
                             : undefined
                     }
                     value={instruction.text}
@@ -65,17 +63,11 @@ const InstructionListItem = ({
                 <RemoveButton
                     onPress={() =>
                         handleRemoveInstruction
-                            ? handleRemoveInstruction(
-                                    instruction.id.toString()
-                                )
+                            ? handleRemoveInstruction(instruction.id.toString())
                             : undefined
                     }
                 >
-                    <MyFeather
-                        name="minus"
-                        size={20}
-                        color={theme.text}
-                    />
+                    <MyFeather name="minus" size={20} color={theme.text} />
                 </RemoveButton>
             ) : null}
         </Container>

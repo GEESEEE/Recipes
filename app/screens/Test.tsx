@@ -6,9 +6,7 @@ import logo from '../assets/temp_icon.png'
 const bigLogo = 1
 const smallLogo = 0.5
 
-const TestScreen = ({ navigation }: { navigation: any}): JSX.Element => {
-
-
+const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
     const smallerLogo = (event: any): any => {
@@ -56,7 +54,6 @@ const TestScreen = ({ navigation }: { navigation: any}): JSX.Element => {
                 />
             </LogoView>
             <SampleText>Test Screen</SampleText>
-
         </Container>
     )
 }

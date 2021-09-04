@@ -10,7 +10,7 @@ import { Recipe, ListItem, Instruction, RecipeIngredient } from '../../data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
 
-type RecipeSectionListProps= {
+type RecipeSectionListProps = {
     navigation: any
     recipe: Recipe
     action: 'Edit' | 'Create' | 'View'
@@ -42,7 +42,7 @@ type Section = {
     footerText: string
     footerOnPress: () => void
     data: ListItem[]
-    renderItem: ({item}: {item: ListItem}) => JSX.Element
+    renderItem: ({ item }: { item: ListItem }) => JSX.Element
 }
 
 const RecipeSectionList = ({
@@ -66,51 +66,58 @@ const RecipeSectionList = ({
     handleRemoveInstruction,
     handleAddInstruction,
 
-    FooterComponent
+    FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
-    const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 0
+    const statusBarHeight = StatusBar.currentHeight
+        ? StatusBar.currentHeight
+        : 0
     const headerHeight = useHeaderHeight()
 
     const editable = ['Edit', 'Create'].includes(action)
 
-    const sections = [{
-        key: 'Ingredients',
-        footerText: 'Add Ingredient',
-        footerOnPress: handleAddIngredient,
-        data: recipe.recipeIngredients as ListItem[],
-        renderItem: ({item}: {item: ListItem}) =>(
-            <IngredientListItem
-                ingredient={item as RecipeIngredient}
-                ingredients={recipe.recipeIngredients!}
-                editable={editable}
-                handleIngredientNameChange={handleIngredientNameChange}
-                handleIngredientAmountChange={handleIngredientAmountChange}
-                handleIngredientUnitChange={handleIngredientUnitChange}
-                handleRemoveIngredient={handleRemoveIngredient}
-            />
-        )
-    }, {
-        key: 'Instructions',
-        footerText: 'Add Instruction',
-        footerOnPress: handleAddInstruction,
-        data: recipe.instructions as ListItem[],
-        renderItem: ({item}: {item: ListItem}) => (
-            <InstructionListItem
-                instruction={item as Instruction}
-                instructions={recipe.instructions!}
-                editable={editable}
-                handleInstructionTextChange={handleInstructionTextChange}
-                handleRemoveInstruction={handleRemoveInstruction}
-            />
-        )
-    }]
+    const sections = [
+        {
+            key: 'Ingredients',
+            footerText: 'Add Ingredient',
+            footerOnPress: handleAddIngredient,
+            data: recipe.recipeIngredients as ListItem[],
+            renderItem: ({ item }: { item: ListItem }) => (
+                <IngredientListItem
+                    ingredient={item as RecipeIngredient}
+                    ingredients={recipe.recipeIngredients!}
+                    editable={editable}
+                    handleIngredientNameChange={handleIngredientNameChange}
+                    handleIngredientAmountChange={handleIngredientAmountChange}
+                    handleIngredientUnitChange={handleIngredientUnitChange}
+                    handleRemoveIngredient={handleRemoveIngredient}
+                />
+            ),
+        },
+        {
+            key: 'Instructions',
+            footerText: 'Add Instruction',
+            footerOnPress: handleAddInstruction,
+            data: recipe.instructions as ListItem[],
+            renderItem: ({ item }: { item: ListItem }) => (
+                <InstructionListItem
+                    instruction={item as Instruction}
+                    instructions={recipe.instructions!}
+                    editable={editable}
+                    handleInstructionTextChange={handleInstructionTextChange}
+                    handleRemoveInstruction={handleRemoveInstruction}
+                />
+            ),
+        },
+    ]
 
     return (
         <List
             sections={sections}
-            contentContainerStyle={[styles.contentContainer, { paddingTop: insets.top + 10}]}
-
+            contentContainerStyle={[
+                styles.contentContainer,
+                { paddingTop: insets.top + 10 },
+            ]}
             ListHeaderComponent={
                 <RecipeHeader
                     recipe={recipe}
@@ -123,38 +130,41 @@ const RecipeSectionList = ({
                 />
             }
             ListFooterComponent={FooterComponent}
-
-            renderSectionHeader={({section}: any) =>
+            renderSectionHeader={({ section }: any) => (
                 <SectionHeader>
                     <SectionHeaderText>{section.key}</SectionHeaderText>
                 </SectionHeader>
-            }
-            renderSectionFooter={({section}: any) => {
+            )}
+            renderSectionFooter={({ section }: any) => {
                 if (editable) {
                     return (
-                    <SectionSeparatorView>
-                        <SectionFooter>
-                            <ButtonBorderless
-                                text={section.footerText}
-                                onPress={section.footerOnPress}
+                        <SectionSeparatorView>
+                            <SectionFooter>
+                                <ButtonBorderless
+                                    text={section.footerText}
+                                    onPress={section.footerOnPress}
+                                />
+                            </SectionFooter>
+                            <ErrorMessage
+                                errorMessage={
+                                    section.key === 'Ingredients'
+                                        ? ingredientError
+                                        : undefined
+                                }
+                                size="Medium"
                             />
-                        </SectionFooter>
-                        <ErrorMessage
-                            errorMessage={section.key === 'Ingredients' ? ingredientError : undefined}
-                            size='Medium'
-                        />
-                    </SectionSeparatorView>)
+                        </SectionSeparatorView>
+                    )
                 }
 
                 return (
                     <SectionSeparatorView>
-                        {section.data.length === 0
-                        ?
+                        {section.data.length === 0 ? (
                             <SectionFooter>
-                                <FooterPadding/>
+                                <FooterPadding />
                             </SectionFooter>
-                        : undefined}
-                        <FooterPadding/>
+                        ) : undefined}
+                        <FooterPadding />
                     </SectionSeparatorView>
                 )
             }}
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         width: '90%',
         alignSelf: 'center',
-    }
+    },
 })
 
 const SectionHeader = styled(View)`
@@ -211,9 +221,7 @@ const SectionFooter = styled(View)`
     border-bottom-width: 3px;
 `
 
-const SectionSeparatorView = styled(View)`
-
-`
+const SectionSeparatorView = styled(View)``
 
 const FooterPadding = styled(View)`
     margin-bottom: 16px;
