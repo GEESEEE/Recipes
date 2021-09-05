@@ -5,14 +5,7 @@ import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppSelector } from '../../hooks/redux'
-
-const ButtonIcon = ({
-    onPress,
-    icon,
-}: {
-    onPress: () => void
-    icon: JSX.Element
-}): JSX.Element => <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
+import { ButtonIcon } from '../user-input/Buttons'
 
 const FeatherButton = ({
     iconName,

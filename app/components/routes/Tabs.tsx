@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../hooks'
-import { MyMaterialIcons } from '../Icons'
+import { MyMaterialCommunityIcons } from '../Icons'
 
 const routeIconMap = {
     Browse: 'book-search',
@@ -99,7 +99,7 @@ const RouteTab = ({
 
     return (
         <TabContainer onPress={onPress}>
-            <MyMaterialIcons
+            <MyMaterialCommunityIcons
                 name={icon}
                 color={isCurrent ? theme.primary : theme.grey}
             />

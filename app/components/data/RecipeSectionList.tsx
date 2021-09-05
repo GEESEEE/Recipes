@@ -20,6 +20,7 @@ type RecipeSectionListProps = {
     handleDescriptionChange?: (text: string) => void
     handlePeopleCountChange?: (text: string) => void
     handlePrepareTimeChange?: (text: string) => void
+    handlePublishedAtChange?: () => void
 
     // Ingredient related
     handleIngredientNameChange?: (key: string, text: string) => void
@@ -46,6 +47,7 @@ const RecipeSectionList = ({
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
+    handlePublishedAtChange,
 
     handleIngredientNameChange,
     handleIngredientAmountChange,
@@ -115,6 +117,7 @@ const RecipeSectionList = ({
                     handleDescriptionChange={handleDescriptionChange}
                     handlePeopleCountChange={handlePeopleCountChange}
                     handlePrepareTimeChange={handlePrepareTimeChange}
+                    handlePublishedAtChange={handlePublishedAtChange}
                 />
             }
             ListFooterComponent={FooterComponent}

@@ -2,6 +2,7 @@ import React from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppSelector } from '../hooks/redux'
 
 export function MyFeather({
@@ -37,7 +38,7 @@ export function MyFontAwesome({
     )
 }
 
-export function MyMaterialIcons({
+export function MyMaterialCommunityIcons({
     name,
     color,
     size,
@@ -50,6 +51,26 @@ export function MyMaterialIcons({
 
     return (
         <MaterialCommunityIcons
+            name={name}
+            color={color || theme.grey}
+            size={size || 20}
+        />
+    )
+}
+
+export function MyMaterialIcons({
+    name,
+    color,
+    size,
+}: {
+    name: string
+    color?: string
+    size?: number
+}): JSX.Element {
+    const theme = useAppSelector((state) => state.theme)
+
+    return (
+        <MaterialIcons
             name={name}
             color={color || theme.grey}
             size={size || 20}

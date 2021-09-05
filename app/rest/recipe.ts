@@ -34,6 +34,7 @@ export async function updateRecipe(
         description?: string
         prepareTime?: number
         peopleCount?: number
+        publishedAt?: Date | null
     }
 ): Promise<Recipe> {
     return handleError('PUT', `/recipes/${recipeId}`, { body })

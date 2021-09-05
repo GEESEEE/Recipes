@@ -67,6 +67,24 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData })
     }
 
+    function recipeComplete(): boolean {
+        return recipeData.name.length > 0
+        && recipeData.description.length > 0
+        && recipeData.prepareTime > 0
+        && recipeData.peopleCount > 0
+        && recipe.recipeIngredients!.length > 0
+        && recipe.instructions.length > 0
+    }
+
+    function handlePublishedAtChange(): void {
+        if (recipeData.publishedAt === null && recipeComplete()) {
+            recipeData.publishedAt = new Date()
+        } else {
+            recipeData.publishedAt = null
+        }
+        setRecipeData({ ...recipeData})
+    }
+
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
         const ri = _.maxBy(recipeData.recipeIngredients!, 'position')
@@ -192,10 +210,13 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipe={recipeData}
                 navigation={navigation}
                 action="Create"
+
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}
                 handlePrepareTimeChange={handlePrepareTimeChange}
+                handlePublishedAtChange={handlePublishedAtChange}
+
                 handleRemoveIngredient={handleRemoveIngredient}
                 handleIngredientNameChange={handleIngredientNameChange}
                 handleIngredientAmountChange={handleIngredientAmountChange}
@@ -206,9 +227,11 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         ? undefined
                         : 'Invalid Ingredients'
                 }
+
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
+
                 FooterComponent={
                     <FooterView>
                         <ButtonFilled

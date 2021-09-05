@@ -47,10 +47,13 @@ export async function updateRecipe(
         recipeObj.peopleCount = recipe.peopleCount
     if (recipe.prepareTime !== oldRecipe.prepareTime)
         recipeObj.prepareTime = recipe.prepareTime
-    if (recipe.publishedAt !== oldRecipe.publishedAt)
+    if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
         recipeObj.publishedAt = recipe.publishedAt
-
-
+    console.log(
+        recipe.publishedAt,
+        oldRecipe.publishedAt,
+        typeof recipe.publishedAt,
+        Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)
     }

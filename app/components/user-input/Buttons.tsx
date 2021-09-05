@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
-import { MyMaterialIcons } from '../Icons'
+import { MyMaterialCommunityIcons } from '../Icons'
 
 export type ButtonProps = {
     text: string
@@ -114,11 +114,21 @@ export function ButtonOptions({
 
     return (
         <OptionsContainer onPress={onPress} onLayout={onLayout}>
-            <MyMaterialIcons
+            <MyMaterialCommunityIcons
                 name="dots-vertical"
                 size={size}
                 color={color || theme.primary}
             />
         </OptionsContainer>
     )
+}
+
+export function ButtonIcon({
+    onPress,
+    icon,
+}: {
+    onPress: () => void
+    icon: JSX.Element
+}): JSX.Element {
+    return <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
 }

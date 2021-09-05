@@ -3,9 +3,10 @@ import { View, TextInput, Dimensions, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { MyFeather, MyMaterialIcons } from '../Icons'
+import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { deleteRecipe } from '../../actions/recipes'
+import { ButtonIcon } from '../user-input/Buttons'
 
 interface RecipeHeaderOptions {
     children?: JSX.Element[]
@@ -18,6 +19,7 @@ interface RecipeHeaderOptions {
     handleDescriptionChange?: (text: string) => void
     handlePeopleCountChange?: (text: string) => void
     handlePrepareTimeChange?: (text: string) => void
+    handlePublishedAtChange?: () => void
 }
 
 const RecipeHeader = ({
@@ -31,6 +33,7 @@ const RecipeHeader = ({
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
+    handlePublishedAtChange
 }: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
@@ -81,7 +84,7 @@ const RecipeHeader = ({
             </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-            {!editable && recipe.description.length === 0 ? null : (
+            {editable === 'Edit-none' && recipe.description.length === 0 ? null : (
                 <DescriptionTextInput
                     editable={editable === 'Edit-all'}
                     placeholder="Description"
@@ -92,37 +95,56 @@ const RecipeHeader = ({
                 />
             )}
             <PropertiesContainer>
-                {/* Prepare Time */}
-                <PropertyView>
-                    <MyMaterialIcons name="timer-sand" color={theme.text} />
-                    <Property
-                        style={prepareTimeStyle()}
-                        editable={editable === 'Edit-all'}
-                        onChangeText={handlePrepareTimeChange}
-                        value={recipe.prepareTime.toString()}
-                        placeholder="0"
-                        placeholderTextColor={
-                            editable === 'Edit-people' ? theme.text : theme.grey
-                        }
-                        keyboardType="number-pad"
-                    />
-                </PropertyView>
 
-                {/* People Count */}
-                <PropertyView>
-                    <MyFeather name="user" color={theme.text} />
-                    <Property
-                        style={peopleCountStyle()}
-                        editable={['Edit-all', 'Edit-people'].includes(
-                            editable
-                        )}
-                        onChangeText={handlePeopleCountChange}
-                        value={recipe.peopleCount.toString()}
-                        placeholder="0"
-                        placeholderTextColor={theme.grey}
-                        keyboardType="number-pad"
-                    />
-                </PropertyView>
+
+                    {/* Prepare Time */}
+                    <PropertyView>
+                        <MyMaterialCommunityIcons name="timer-sand" color={theme.text} />
+                        <Property
+                            style={prepareTimeStyle()}
+                            editable={editable === 'Edit-all'}
+                            onChangeText={handlePrepareTimeChange}
+                            value={recipe.prepareTime.toString()}
+                            placeholder="0"
+                            placeholderTextColor={
+                                editable === 'Edit-people' ? theme.text : theme.grey
+                            }
+                            keyboardType="number-pad"
+                        />
+                    </PropertyView>
+
+                    {/* People Count */}
+                    <PropertyView>
+                        <MyFeather name="user" color={theme.text} />
+                        <Property
+                            style={peopleCountStyle()}
+                            editable={['Edit-all', 'Edit-people'].includes(
+                                editable
+                            )}
+                            onChangeText={handlePeopleCountChange}
+                            value={recipe.peopleCount.toString()}
+                            placeholder="0"
+                            placeholderTextColor={theme.grey}
+                            keyboardType="number-pad"
+                        />
+                    </PropertyView>
+
+
+                <PublishedView>
+                    {editable === 'Edit-all' || recipe.publishedAt !== null
+                    ?   <ButtonIcon
+                            onPress={() => handlePublishedAtChange ? handlePublishedAtChange() : undefined}
+                            icon={
+                                <MyMaterialIcons
+                                    name={recipe.publishedAt === null ? "publish" : "published-with-changes"}
+                                    color={recipe.publishedAt === null ? theme.text : theme.primary}
+                                    size={25}
+                                />
+                            }
+                        />
+                    : undefined
+                    }
+                </PublishedView>
             </PropertiesContainer>
 
             {children}
@@ -182,11 +204,11 @@ const PropertiesContainer = styled(View)`
 `
 
 const PropertyView = styled(View)`
-    margin-left: 10px;
+    flex: 4;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    flex-direction: row;
+    margin-left: 10px;
 `
 
 const Property = styled(TextInput)`
@@ -194,4 +216,11 @@ const Property = styled(TextInput)`
     font-size: 20px;
     padding-left: 5px;
     flex: 1;
+`
+
+const PublishedView = styled(View)`
+    flex: 1;
+    margin-end: 10px;
+    align-items: flex-end;
+    justify-content: flex-end;
 `
