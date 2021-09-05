@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
-import { LoginScreen, RegisterScreen } from '../screens'
+import { LoginScreen, RegisterScreen, Popup } from '../screens'
 import Drawer from './Drawer'
 import * as routeUtils from '../config/routes'
 
@@ -14,6 +14,15 @@ const screens = {
     Main: {
         screen: Drawer,
     },
+    Popup: {
+        screen: Popup,
+        navigationOptions: {
+            cardStyle: { backgroundColor: 'rgba(0,0,0,0.25)' },
+            cardStyleInterpolator: () => ({
+                cardStyle: {}
+            }),
+        }
+    }
 }
 
 const stackConfig: any = {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { createRecipe, editRecipe } from '../actions/recipes'
@@ -77,8 +77,13 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handlePublishedAtChange(): void {
-        if (recipeData.publishedAt === null && recipeComplete()) {
-            recipeData.publishedAt = new Date()
+        if (recipeData.publishedAt === null) {
+            if (recipeComplete()) {
+                recipeData.publishedAt = new Date()
+            } else {
+                console.log("Not complete")
+                navigation.navigate('Popup', { title: 'Incomplete Recipe'})
+            }
         } else {
             recipeData.publishedAt = null
         }

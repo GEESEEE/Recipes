@@ -5,6 +5,7 @@ import EditRecipeScreen from './EditRecipe'
 import RegisterScreen from './Register'
 import TestScreen from './Test'
 import ViewRecipeScreen from './ViewRecipe'
+import Popup from './Popup'
 
 export {
     LoginScreen,
@@ -14,4 +15,5 @@ export {
     MainScreen,
     RecipesScreen,
     TestScreen,
+    Popup
 }
