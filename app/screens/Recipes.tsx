@@ -5,6 +5,7 @@ import { NavigationScreenProp } from 'react-navigation'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
 import { RecipeHeader } from '../components/data'
+import { filterRecipes } from '../config/utils'
 import { Recipe } from '../data'
 import { useAppSelector } from '../hooks/redux'
 
@@ -17,10 +18,14 @@ function RecipesScreen({
     const insets = useSafeAreaInsets()
     const headerHeight = useHeaderHeight() - insets.top
 
+    const search = navigation.state.params?.search
+
+    const filteredRecipes = filterRecipes(recipes, search)
+
     return (
         <Container>
             <RecipesList
-                data={recipes}
+                data={filteredRecipes}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{ paddingTop: headerHeight }}
                 renderItem={({ item }) => (

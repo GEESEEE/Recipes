@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { Recipe } from '../data'
 
 export function handleNumericTextInput(
     number: string,
@@ -12,6 +13,24 @@ export function handleNumericTextInput(
         return val
     }
     return 0
+}
+
+export function filterRecipes(recipes: Recipe[], search: string | undefined): Recipe[] {
+    if (typeof search !== 'undefined' && search.length > 0) {
+        const searchRegex = new RegExp(search, 'i')
+
+        return recipes.filter(recipe => {
+            if (recipe.name.match(searchRegex)) return true
+            if (recipe.description.match(searchRegex)) return true
+
+            let included = false
+            recipe.recipeIngredients!.forEach(ingr => {
+                if (ingr.ingredient!.name.match(searchRegex)) included = true
+            })
+            return included
+        })
+    }
+    return recipes
 }
 
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {

@@ -37,14 +37,6 @@ type RecipeSectionListProps = {
     FooterComponent?: JSX.Element
 }
 
-type Section = {
-    key: string
-    footerText: string
-    footerOnPress: () => void
-    data: ListItem[]
-    renderItem: ({ item }: { item: ListItem }) => JSX.Element
-}
-
 const RecipeSectionList = ({
     navigation,
     recipe,
@@ -69,10 +61,6 @@ const RecipeSectionList = ({
     FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
-    const statusBarHeight = StatusBar.currentHeight
-        ? StatusBar.currentHeight
-        : 0
-    const headerHeight = useHeaderHeight()
 
     const editable = ['Edit', 'Create'].includes(action)
 
@@ -159,11 +147,13 @@ const RecipeSectionList = ({
 
                 return (
                     <SectionSeparatorView>
-                        {section.data.length === 0 ? (
+                        {section.data.length === 0
+                        ?   (
                             <SectionFooter>
                                 <FooterPadding />
                             </SectionFooter>
-                        ) : undefined}
+                        )
+                        : undefined}
                         <FooterPadding />
                     </SectionSeparatorView>
                 )
