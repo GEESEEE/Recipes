@@ -6,6 +6,7 @@ type RecipeUpdateObject = {
     description?: string
     peopleCount?: number
     prepareTime?: number
+    publishedAt?: Date | null
 }
 
 type IngredientUpdateObject = {
@@ -29,6 +30,7 @@ export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
             description: recipe.description,
             peopleCount: recipe.peopleCount,
             prepareTime: recipe.prepareTime,
+            publishedAt: recipe.publishedAt
         }))
     )
 }
@@ -45,6 +47,9 @@ export async function updateRecipe(
         recipeObj.peopleCount = recipe.peopleCount
     if (recipe.prepareTime !== oldRecipe.prepareTime)
         recipeObj.prepareTime = recipe.prepareTime
+    if (recipe.publishedAt !== oldRecipe.publishedAt)
+        recipeObj.publishedAt = recipe.publishedAt
+
 
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)

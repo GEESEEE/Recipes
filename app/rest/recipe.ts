@@ -9,6 +9,7 @@ export async function createRecipes(
         description: string
         prepareTime: number
         peopleCount: number
+        publishedAt: Date | null
     }[]
 ): Promise<Recipe[]> {
     return handleError('POST', '/recipes/bulk', { body })

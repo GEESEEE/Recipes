@@ -19,7 +19,6 @@ function RecipesScreen({
     const headerHeight = useHeaderHeight() - insets.top
 
     const search = navigation.state.params?.search
-
     const filteredRecipes = filterRecipes(recipes, search)
 
     return (

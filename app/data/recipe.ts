@@ -15,4 +15,6 @@ export default class Recipe {
     public recipeIngredients?: RecipeIngredient[]
 
     public instructions?: Instruction[]
+
+    public publishedAt!: Date | null
 }

@@ -34,6 +34,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             id: indices.recipeId,
             recipeIngredients: [],
             instructions: [],
+            publishedAt: null
         }
     }
 

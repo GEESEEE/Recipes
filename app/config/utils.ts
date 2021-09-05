@@ -17,15 +17,15 @@ export function handleNumericTextInput(
 
 export function filterRecipes(recipes: Recipe[], search: string | undefined): Recipe[] {
     if (typeof search !== 'undefined' && search.length > 0) {
-        const searchRegex = new RegExp(search, 'i')
+        const query = search.toLowerCase()
 
         return recipes.filter(recipe => {
-            if (recipe.name.match(searchRegex)) return true
-            if (recipe.description.match(searchRegex)) return true
+            if (recipe.name.toLowerCase().includes(query)) return true
+            if (recipe.description.toLowerCase().includes(query)) return true
 
             let included = false
             recipe.recipeIngredients!.forEach(ingr => {
-                if (ingr.ingredient!.name.match(searchRegex)) included = true
+                if (ingr.ingredient!.name.toLowerCase().includes(query)) included = true
             })
             return included
         })
