@@ -48,10 +48,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 
     function toggleSearchButton(): void {
         if (openSearchBar) {
-            navigation.setParams({ search: ''})
+            navigation.setParams({ search: '' })
         }
         setOpenSearchBar(!openSearchBar)
-
     }
 
     return (
@@ -65,13 +64,12 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
             >
                 <FeatherButton iconName="menu" onPress={handleDrawerButton} />
 
-
                 {/* Search Bar */}
-                {openSearchBar
-                ?   <SearchBarComponent
-                        navigation={navigation}
-                    />
-                : <HeaderTitle />}
+                {openSearchBar ? (
+                    <SearchBarComponent navigation={navigation} />
+                ) : (
+                    <HeaderTitle />
+                )}
 
                 {/* Search Button */}
                 <ButtonIcon
@@ -87,7 +85,10 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 
                 {/* Create Recipe Button */}
                 {routeName === 'RecipesScreen' ? (
-                   <FeatherButton iconName="plus" onPress={handleCreateRecipeButton}/>
+                    <FeatherButton
+                        iconName="plus"
+                        onPress={handleCreateRecipeButton}
+                    />
                 ) : null}
             </HeaderContainer>
         </Container>
@@ -96,7 +97,11 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 
 export default Header
 
-const SearchBarComponent = ({ navigation }: { navigation: any}): JSX.Element => {
+const SearchBarComponent = ({
+    navigation,
+}: {
+    navigation: any
+}): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     const [text, setText] = useState('')

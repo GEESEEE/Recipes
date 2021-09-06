@@ -15,5 +15,5 @@ export {
     MainScreen,
     RecipesScreen,
     TestScreen,
-    Popup
+    Popup,
 }

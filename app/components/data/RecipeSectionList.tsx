@@ -150,13 +150,11 @@ const RecipeSectionList = ({
 
                 return (
                     <SectionSeparatorView>
-                        {section.data.length === 0
-                        ?   (
+                        {section.data.length === 0 ? (
                             <SectionFooter>
                                 <FooterPadding />
                             </SectionFooter>
-                        )
-                        : undefined}
+                        ) : undefined}
                         <FooterPadding />
                     </SectionSeparatorView>
                 )

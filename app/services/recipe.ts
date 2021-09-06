@@ -30,7 +30,7 @@ export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
             description: recipe.description,
             peopleCount: recipe.peopleCount,
             prepareTime: recipe.prepareTime,
-            publishedAt: recipe.publishedAt
+            publishedAt: recipe.publishedAt,
         }))
     )
 }
@@ -53,7 +53,8 @@ export async function updateRecipe(
         recipe.publishedAt,
         oldRecipe.publishedAt,
         typeof recipe.publishedAt,
-        Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
+        Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt)
+    )
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)
     }

@@ -1,19 +1,21 @@
 import { Animated } from 'react-native'
 
-export const showPopup = (navigation: any, title: string, description?: string): void => {
+export const showPopup = (
+    navigation: any,
+    title: string,
+    description?: string
+): void => {
     navigation.navigate('Popup', {
         title,
-        description
+        description,
     })
 }
 
-export const fade = ({
-    current
-}: any): any => ({
-        cardStyle: {
-            opacity: current.progress
-        }
-    })
+export const fade = ({ current }: any): any => ({
+    cardStyle: {
+        opacity: current.progress,
+    },
+})
 
 export const slideHorizontal = ({
     current,

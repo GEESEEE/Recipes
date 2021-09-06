@@ -35,7 +35,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             id: indices.recipeId,
             recipeIngredients: [],
             instructions: [],
-            publishedAt: null
+            publishedAt: null,
         }
     }
 
@@ -69,12 +69,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function recipeComplete(): boolean {
-        return recipeData.name.length > 0
-        && recipeData.description.length > 0
-        && recipeData.prepareTime > 0
-        && recipeData.peopleCount > 0
-        && recipe.recipeIngredients!.length > 0
-        && recipe.instructions.length > 0
+        return (
+            recipeData.name.length > 0 &&
+            recipeData.description.length > 0 &&
+            recipeData.prepareTime > 0 &&
+            recipeData.peopleCount > 0 &&
+            recipe.recipeIngredients!.length > 0 &&
+            recipe.instructions.length > 0
+        )
     }
 
     function handlePublishedAtChange(): void {
@@ -82,12 +84,16 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             if (recipeComplete()) {
                 recipeData.publishedAt = new Date()
             } else {
-                showPopup(navigation, 'Incomplete Recipe', 'Can not publish an incomplete recipe')
+                showPopup(
+                    navigation,
+                    'Incomplete Recipe',
+                    'Can not publish an incomplete recipe'
+                )
             }
         } else {
             recipeData.publishedAt = null
         }
-        setRecipeData({ ...recipeData})
+        setRecipeData({ ...recipeData })
     }
 
     function handleAddIngredient(): void {
@@ -215,13 +221,11 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipe={recipeData}
                 navigation={navigation}
                 action="Create"
-
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}
                 handlePrepareTimeChange={handlePrepareTimeChange}
                 handlePublishedAtChange={handlePublishedAtChange}
-
                 handleRemoveIngredient={handleRemoveIngredient}
                 handleIngredientNameChange={handleIngredientNameChange}
                 handleIngredientAmountChange={handleIngredientAmountChange}
@@ -232,11 +236,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         ? undefined
                         : 'Invalid Ingredients'
                 }
-
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
-
                 FooterComponent={
                     <FooterView>
                         <ButtonFilled

@@ -33,7 +33,7 @@ const RecipeHeader = ({
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
-    handlePublishedAtChange
+    handlePublishedAtChange,
 }: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
@@ -84,7 +84,8 @@ const RecipeHeader = ({
             </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-            {editable === 'Edit-none' && recipe.description.length === 0 ? null : (
+            {editable === 'Edit-none' &&
+            recipe.description.length === 0 ? null : (
                 <DescriptionTextInput
                     editable={editable === 'Edit-all'}
                     placeholder="Description"
@@ -95,55 +96,66 @@ const RecipeHeader = ({
                 />
             )}
             <PropertiesContainer>
+                {/* Prepare Time */}
+                <PropertyView>
+                    <MyMaterialCommunityIcons
+                        name="timer-sand"
+                        color={theme.text}
+                    />
+                    <Property
+                        style={prepareTimeStyle()}
+                        editable={editable === 'Edit-all'}
+                        onChangeText={handlePrepareTimeChange}
+                        value={recipe.prepareTime.toString()}
+                        placeholder="0"
+                        placeholderTextColor={
+                            editable === 'Edit-people' ? theme.text : theme.grey
+                        }
+                        keyboardType="number-pad"
+                    />
+                </PropertyView>
 
-
-                    {/* Prepare Time */}
-                    <PropertyView>
-                        <MyMaterialCommunityIcons name="timer-sand" color={theme.text} />
-                        <Property
-                            style={prepareTimeStyle()}
-                            editable={editable === 'Edit-all'}
-                            onChangeText={handlePrepareTimeChange}
-                            value={recipe.prepareTime.toString()}
-                            placeholder="0"
-                            placeholderTextColor={
-                                editable === 'Edit-people' ? theme.text : theme.grey
-                            }
-                            keyboardType="number-pad"
-                        />
-                    </PropertyView>
-
-                    {/* People Count */}
-                    <PropertyView>
-                        <MyFeather name="user" color={theme.text} />
-                        <Property
-                            style={peopleCountStyle()}
-                            editable={['Edit-all', 'Edit-people'].includes(
-                                editable
-                            )}
-                            onChangeText={handlePeopleCountChange}
-                            value={recipe.peopleCount.toString()}
-                            placeholder="0"
-                            placeholderTextColor={theme.grey}
-                            keyboardType="number-pad"
-                        />
-                    </PropertyView>
-
+                {/* People Count */}
+                <PropertyView>
+                    <MyFeather name="user" color={theme.text} />
+                    <Property
+                        style={peopleCountStyle()}
+                        editable={['Edit-all', 'Edit-people'].includes(
+                            editable
+                        )}
+                        onChangeText={handlePeopleCountChange}
+                        value={recipe.peopleCount.toString()}
+                        placeholder="0"
+                        placeholderTextColor={theme.grey}
+                        keyboardType="number-pad"
+                    />
+                </PropertyView>
 
                 <PublishedView>
-                    {editable === 'Edit-all' || recipe.publishedAt !== null
-                    ?   <ButtonIcon
-                            onPress={() => handlePublishedAtChange ? handlePublishedAtChange() : undefined}
+                    {editable === 'Edit-all' || recipe.publishedAt !== null ? (
+                        <ButtonIcon
+                            onPress={() =>
+                                handlePublishedAtChange
+                                    ? handlePublishedAtChange()
+                                    : undefined
+                            }
                             icon={
                                 <MyMaterialIcons
-                                    name={recipe.publishedAt === null ? "publish" : "published-with-changes"}
-                                    color={recipe.publishedAt === null ? theme.text : theme.primary}
+                                    name={
+                                        recipe.publishedAt === null
+                                            ? 'publish'
+                                            : 'published-with-changes'
+                                    }
+                                    color={
+                                        recipe.publishedAt === null
+                                            ? theme.text
+                                            : theme.primary
+                                    }
                                     size={25}
                                 />
                             }
                         />
-                    : undefined
-                    }
+                    ) : undefined}
                 </PublishedView>
             </PropertiesContainer>
 

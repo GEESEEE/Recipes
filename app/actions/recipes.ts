@@ -67,7 +67,6 @@ export const createRecipe =
 export const editRecipe =
     (recipe: Recipe) =>
     async (dispatch: Dispatch): Promise<void> => {
-
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
@@ -240,7 +239,6 @@ export const editRecipe =
 export const retrieveRecipes =
     () =>
     async (dispatch: Dispatch): Promise<void> => {
-
         try {
             // Check local storage for recipes
             let rs = await AsyncStorage.getItem('recipes')

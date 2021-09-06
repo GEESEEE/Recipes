@@ -18,9 +18,9 @@ const screens = {
         screen: Popup,
         navigationOptions: {
             cardStyle: { backgroundColor: 'rgba(0,0,0,0.4)' },
-            cardStyleInterpolator: routeUtils.fade
-        }
-    }
+            cardStyleInterpolator: routeUtils.fade,
+        },
+    },
 }
 
 const stackConfig: any = {
