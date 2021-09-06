@@ -16,6 +16,7 @@ import {
 } from '../actions/indices'
 import { handleNumericTextInput } from '../config/utils'
 import { RecipeSectionList } from '../components/data'
+import { showPopup } from '../config/routes'
 
 type RecipeValidity = {
     validIngredients: boolean
@@ -81,8 +82,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             if (recipeComplete()) {
                 recipeData.publishedAt = new Date()
             } else {
-                console.log("Not complete")
-                navigation.navigate('Popup', { title: 'Incomplete Recipe'})
+                showPopup(navigation, 'Incomplete Recipe', 'Can not publish an incomplete recipe')
             }
         } else {
             recipeData.publishedAt = null

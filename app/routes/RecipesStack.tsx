@@ -30,7 +30,7 @@ const stackConfig: any = {
     mode: 'modal',
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimationVertical,
+        cardStyleInterpolator: routeUtils.slideVertical,
     },
 }
 

@@ -17,10 +17,8 @@ const screens = {
     Popup: {
         screen: Popup,
         navigationOptions: {
-            cardStyle: { backgroundColor: 'rgba(0,0,0,0.25)' },
-            cardStyleInterpolator: () => ({
-                cardStyle: {}
-            }),
+            cardStyle: { backgroundColor: 'rgba(0,0,0,0.4)' },
+            cardStyleInterpolator: routeUtils.fade
         }
     }
 }
@@ -30,7 +28,7 @@ const stackConfig: any = {
     mode: 'modal',
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideAnimationHorizontal,
+        cardStyleInterpolator: routeUtils.slideHorizontal,
     },
 }
 

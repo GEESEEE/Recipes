@@ -1,6 +1,21 @@
 import { Animated } from 'react-native'
 
-export const slideAnimationHorizontal = ({
+export const showPopup = (navigation: any, title: string, description?: string): void => {
+    navigation.navigate('Popup', {
+        title,
+        description
+    })
+}
+
+export const fade = ({
+    current
+}: any): any => ({
+        cardStyle: {
+            opacity: current.progress
+        }
+    })
+
+export const slideHorizontal = ({
     current,
     next,
     inverted,
@@ -43,7 +58,7 @@ export const slideAnimationHorizontal = ({
     }
 }
 
-export const slideAnimationVertical = ({
+export const slideVertical = ({
     current,
     next,
     inverted,
