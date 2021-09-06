@@ -163,9 +163,12 @@ const RecipeHeader = ({
 
             {children}
             {/* Dropdown Menu */}
-            {dropdown
-            ? <DropDownMenu items={dropDownItems} dropdownDependencies={dropdownDependencies}/>
-            : null}
+            {dropdown ? (
+                <DropDownMenu
+                    items={dropDownItems}
+                    dropdownDependencies={dropdownDependencies}
+                />
+            ) : null}
         </Header>
     )
 }

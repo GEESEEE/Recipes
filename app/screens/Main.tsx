@@ -47,7 +47,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                 text="Change Primary Color"
                 onPress={changePrimaryColor}
             />
-            <ButtonFilled text="do some scopes" onPress={scopes}/>
+            <ButtonFilled text="do some scopes" onPress={scopes} />
         </Container>
     )
 }
