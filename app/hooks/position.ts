@@ -8,7 +8,7 @@ export type Position = {
     pageY: number
 }
 
-const usePosition = (): [
+const usePosition = (callbackDependencies?: any[]): [
     positionRef: MutableRefObject<Position>,
     setPosition: (event: LayoutChangeEvent) => void
 ] => {
@@ -37,7 +37,7 @@ const usePosition = (): [
                 setPosition({ width, height, pageX, pageY })
             }
         )
-    }, [])
+    }, callbackDependencies ?? [])
 
     return [positionRef, onLayout]
 }

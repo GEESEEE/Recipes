@@ -3,6 +3,8 @@ import RecipeIngredient from '../data/recipe-ingredient'
 import Instruction from '../data/instruction'
 import handleError from './base'
 
+type Scope = 'published' | 'author'
+
 export async function createRecipes(
     body: {
         name: string
@@ -15,12 +17,16 @@ export async function createRecipes(
     return handleError('POST', '/recipes/bulk', { body })
 }
 
-export async function getMyRecipes(): Promise<Recipe[]> {
-    return handleError('GET', '/recipes', {})
-}
-
 export async function getRecipe(recipeId: number): Promise<Recipe> {
     return handleError('GET', `/recipes/${recipeId}`)
+}
+
+export async function getRecipes(scopes?: Scope[]): Promise<Recipe[]> {
+    let suffix = ''
+    if (typeof scopes !== 'undefined') {
+        suffix = suffix.concat('?scopes=', scopes.join(','))
+    }
+    return handleError('GET', `/recipes${suffix}`)
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {

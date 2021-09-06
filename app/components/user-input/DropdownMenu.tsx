@@ -15,16 +15,18 @@ export function DropDownMenu({
     items,
     iconSize = 25,
     iconOffset = 5,
+    dropdownDependencies,
 }: {
     items: DropDownItem[]
     iconSize?: number
     iconOffset?: number
+    dropdownDependencies?: number[]
 }): JSX.Element {
     const [open, setOpen] = useState(false)
     const toggle = (): void => setOpen(!open)
     const offset = iconSize + iconOffset * 2
 
-    const [positionRef, onPosition] = usePosition()
+    const [positionRef, onPosition] = usePosition(dropdownDependencies)
 
     const Container = styled(View)`
         position: absolute;

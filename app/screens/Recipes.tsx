@@ -21,6 +21,12 @@ function RecipesScreen({
     const search = navigation.state.params?.search
     const filteredRecipes = filterRecipes(recipes, search)
 
+    const [scrollPosition, setScrollPosition] = React.useState(0)
+
+    function handleScroll(event: any): void {
+        setScrollPosition(event.nativeEvent.contentOffset.y)
+    }
+
     return (
         <Container>
             <RecipesList
@@ -34,6 +40,7 @@ function RecipesScreen({
                             navigation={navigation}
                             editable="Edit-none"
                             dropdown
+                            dropdownDependencies={[scrollPosition]}
                             onPress={() =>
                                 navigation.navigate('ViewRecipe', {
                                     recipe: item,
@@ -43,6 +50,7 @@ function RecipesScreen({
                         <Separator />
                     </RecipeHeaderView>
                 )}
+                onScroll={handleScroll}
             />
         </Container>
     )

@@ -14,6 +14,7 @@ interface RecipeHeaderOptions {
     navigation: any
     editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
     dropdown?: boolean
+    dropdownDependencies?: number[]
     onPress?: () => void
     handleNameChange?: (text: string) => void
     handleDescriptionChange?: (text: string) => void
@@ -28,6 +29,7 @@ const RecipeHeader = ({
     navigation,
     editable,
     dropdown,
+    dropdownDependencies,
     onPress,
     handleNameChange,
     handleDescriptionChange,
@@ -161,7 +163,9 @@ const RecipeHeader = ({
 
             {children}
             {/* Dropdown Menu */}
-            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
+            {dropdown
+            ? <DropDownMenu items={dropDownItems} dropdownDependencies={dropdownDependencies}/>
+            : null}
         </Header>
     )
 }

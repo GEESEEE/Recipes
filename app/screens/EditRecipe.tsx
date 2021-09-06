@@ -74,8 +74,8 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             recipeData.description.length > 0 &&
             recipeData.prepareTime > 0 &&
             recipeData.peopleCount > 0 &&
-            recipe.recipeIngredients!.length > 0 &&
-            recipe.instructions.length > 0
+            recipeData.recipeIngredients!.length > 0 &&
+            recipeData.instructions!.length > 0
         )
     }
 

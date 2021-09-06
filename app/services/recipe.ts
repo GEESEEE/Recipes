@@ -49,12 +49,7 @@ export async function updateRecipe(
         recipeObj.prepareTime = recipe.prepareTime
     if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
         recipeObj.publishedAt = recipe.publishedAt
-    console.log(
-        recipe.publishedAt,
-        oldRecipe.publishedAt,
-        typeof recipe.publishedAt,
-        Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt)
-    )
+
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)
     }
@@ -63,7 +58,7 @@ export async function updateRecipe(
 }
 
 export async function getMyRecipes(): Promise<Recipe[]> {
-    return recipeService.getMyRecipes()
+    return recipeService.getRecipes(['author'])
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {
