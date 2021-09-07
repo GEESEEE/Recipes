@@ -131,9 +131,13 @@ export function ButtonIcon({
 }: {
     onPress: () => void
     icon: JSX.Element
-    disabled?:boolean
+    disabled?: boolean
 }): JSX.Element {
-    return <TouchableOpacity onPress={onPress} disabled={disabled ?? false}>{icon}</TouchableOpacity>
+    return (
+        <TouchableOpacity onPress={onPress} disabled={disabled ?? false}>
+            {icon}
+        </TouchableOpacity>
+    )
 }
 
 export function FeatherButton({

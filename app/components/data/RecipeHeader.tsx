@@ -176,7 +176,6 @@ const RecipeHeader = ({
 
 export default RecipeHeader
 
-
 const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;

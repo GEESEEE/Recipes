@@ -8,8 +8,6 @@ import { useAppSelector } from '../../../hooks/redux'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 
-
-
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const { routeName } = navigation.state
@@ -18,8 +16,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const searchRoutes = ['Main', 'RecipesScreen']
     const [openSearchBar, setOpenSearchBar] = useState(false)
 
-    const displaySearch = searchRoutes.includes(routeName)
-    && (routeName === 'Main' || !openSearchBar)
+    const displaySearch =
+        searchRoutes.includes(routeName) &&
+        (routeName === 'Main' || !openSearchBar)
 
     const displayFilter = searchRoutes.includes(routeName)
     const displayAdd = ['RecipesScreen'].includes(routeName) && !openSearchBar
@@ -40,16 +39,15 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleSearch(): void {
-        console.log("Handle Search")
+        console.log('Handle Search')
     }
 
     function handleFilter(): void {
-        console.log("Filterr")
+        console.log('Filterr')
     }
 
     return (
         <Container style={{ height: insets.top + 35 }}>
-
             <HeaderContainer
                 style={{
                     paddingTop: insets.top,
@@ -57,19 +55,19 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     paddingRight: insets.right + 5,
                 }}
             >
-
-                {openSearchBar
-                ?   <SearchBarComponent
+                {openSearchBar ? (
+                    <SearchBarComponent
                         navigation={navigation}
                         toggle={toggleSearch}
                     />
-                :   <HeaderFlex>
+                ) : (
+                    <HeaderFlex>
                         <FeatherButton iconName="menu" onPress={handleDrawer} />
                     </HeaderFlex>
-                }
+                )}
 
                 {/* Search Button */}
-                {displaySearch ?
+                {displaySearch ? (
                     <ButtonIcon
                         onPress={openSearchBar ? handleSearch : toggleSearch}
                         icon={
@@ -80,20 +78,18 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                             />
                         }
                     />
-                : null}
+                ) : null}
 
-                {displayFilter
-                ? <FeatherButton
-                    iconName="filter"
-                    onPress={handleFilter}
-                    size={25}
-                />
-                : null}
-
+                {displayFilter ? (
+                    <FeatherButton
+                        iconName="filter"
+                        onPress={handleFilter}
+                        size={25}
+                    />
+                ) : null}
 
                 {/* Create Recipe Button */}
-                {displayAdd
-                ? (
+                {displayAdd ? (
                     <FeatherButton
                         iconName="plus"
                         onPress={handleCreateRecipe}
@@ -105,8 +101,6 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 }
 
 export default Header
-
-
 
 const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
@@ -126,5 +120,3 @@ const HeaderFlex = styled(View)`
     flex: 1;
     align-items: flex-start;
 `
-
-

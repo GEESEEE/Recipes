@@ -32,7 +32,7 @@ function RecipesScreen({
             <RecipesList
                 data={filteredRecipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{  }}
+                contentContainerStyle={{}}
                 renderItem={({ item }) => (
                     <RecipeHeaderView>
                         <RecipeHeader

@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import styled from 'styled-components'
-import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import {
+    RecyclerListView,
+    DataProvider,
+    LayoutProvider,
+} from 'recyclerlistview'
 import { retrieveRecipes } from '../actions/recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { RecipeHeader } from '../components/data'
@@ -9,22 +13,24 @@ import { Recipe } from '../data'
 import { applySearch } from '../config/utils'
 
 const ViewTypes = {
-    RecipeHeader: 0
+    RecipeHeader: 0,
 }
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
     console.log(recipes.length)
     const dispatch = useAppDispatch()
-    const { width } = Dimensions.get("window");
+    const { width } = Dimensions.get('window')
 
     const search = navigation.state.params?.search
     const filteredRecipes = applySearch(recipes, search)
 
-    const dataProvider = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(filteredRecipes)
+    const dataProvider = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
+        filteredRecipes
+    )
 
     const layoutProvider = new LayoutProvider(
-        _index => ViewTypes.RecipeHeader,
+        (_index) => ViewTypes.RecipeHeader,
         (type, dim) => {
             switch (type) {
                 case ViewTypes.RecipeHeader:
@@ -48,9 +54,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                         <RecipeHeader
                             recipe={data}
                             navigation={navigation}
-                            editable='Edit-none'
+                            editable="Edit-none"
                         />
-                        <RecipeHeaderBottomPadding/>
+                        <RecipeHeaderBottomPadding />
                     </RecipeHeaderContainer>
                 )
 
@@ -63,12 +69,10 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(retrieveRecipes())
     }, [])
 
-
-
     return (
         <Container>
-            {filteredRecipes.length > 0
-            ?   <RecyclerListView
+            {filteredRecipes.length > 0 ? (
+                <RecyclerListView
                     style={styles.recyclerList}
                     layoutProvider={layoutProvider}
                     dataProvider={dataProvider}
@@ -76,7 +80,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                     forceNonDeterministicRendering
                     canChangeSize
                 />
-            : null}
+            ) : null}
         </Container>
     )
 }
@@ -95,11 +99,11 @@ const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         paddingTop: 5,
-    }
+    },
 })
 
 const RecipeHeaderContainer = styled(View)`
-    flex: 1
+    flex: 1;
 `
 
 const RecipeHeaderBottomPadding = styled(View)`

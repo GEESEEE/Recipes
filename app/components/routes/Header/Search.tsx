@@ -4,10 +4,9 @@ import { View, TextInput } from 'react-native'
 import { useAppSelector } from '../../../hooks'
 import { FeatherButton } from '../../user-input/Buttons'
 
-
 const SearchBarComponent = ({
     navigation,
-    toggle
+    toggle,
 }: {
     navigation: any
     toggle: () => void
