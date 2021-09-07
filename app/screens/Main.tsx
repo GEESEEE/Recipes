@@ -59,7 +59,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <SampleText>Main Screen</SampleText>
             {recipes.length > 0
             ?   <RecyclerListView
                     style={styles.recyclerList}
@@ -76,7 +75,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 export default MainScreen
 
 const Container = styled(View)`
-    flex: 1px;
+    flex: 1;
     justify-content: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
@@ -85,7 +84,8 @@ const Container = styled(View)`
 const styles = StyleSheet.create({
     recyclerList: {
         flex: 1,
-        width: '100%',
+        width: '90%',
+        alignSelf: 'center',
     }
 })
 
