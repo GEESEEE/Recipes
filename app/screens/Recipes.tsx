@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
@@ -32,7 +32,7 @@ function RecipesScreen({
             <RecipesList
                 data={filteredRecipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{ paddingTop: headerHeight }}
+                contentContainerStyle={{  }}
                 renderItem={({ item }) => (
                     <RecipeHeaderView>
                         <RecipeHeader

@@ -1,6 +1,7 @@
 import React from 'react'
-import { SectionList, StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SectionList } from 'react-navigation'
 import { v4 as uuid } from 'uuid'
 import styled from 'styled-components'
 import IngredientListItem from './IngredientListItem'

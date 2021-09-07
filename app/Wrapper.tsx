@@ -1,6 +1,5 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { retrieveTheme, retrieveColor } from './actions/theme'
 import { LoginStack } from './routes'
 import { useAppDispatch, useAppSelector } from './hooks'
@@ -19,9 +18,7 @@ function Wrapper(): JSX.Element {
 
     return (
         <ThemeProvider theme={theme}>
-            <SafeAreaProvider>
-                <LoginStack />
-            </SafeAreaProvider>
+            <LoginStack />
         </ThemeProvider>
     )
 }

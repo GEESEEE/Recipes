@@ -108,8 +108,6 @@ export function ButtonOptions({
         align-self: flex-end;
         padding-top: ${offset}px;
         padding-right: ${offset}px;
-        border-width: 1px;
-        border-color: ${(props) => props.theme.primary};
     `
 
     return (
@@ -126,9 +124,11 @@ export function ButtonOptions({
 export function ButtonIcon({
     onPress,
     icon,
+    disabled,
 }: {
     onPress: () => void
     icon: JSX.Element
+    disabled?:boolean
 }): JSX.Element {
-    return <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
+    return <TouchableOpacity onPress={onPress} disabled={disabled ?? false}>{icon}</TouchableOpacity>
 }

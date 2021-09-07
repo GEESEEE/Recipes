@@ -1,12 +1,19 @@
 import React, { useRef } from 'react'
 import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
+import { setColor } from '../actions/theme'
 import logo from '../assets/temp_icon.png'
+import { ButtonFilled } from '../components/user-input/Buttons'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import * as recipeService from '../rest/recipe'
 
 const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
+    const recipes = useAppSelector((state) => state.recipes)
+    const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
     const smallerLogo = (event: any): any => {
@@ -43,17 +50,46 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         }
     }, [])
 
+    function logRecipes(): void {
+        console.log('Recipes', recipes)
+    }
+
+    function changePrimaryColor(): void {
+        if (theme.primary === '#4ecdc4') {
+            dispatch(setColor('#fc5c65'))
+        } else {
+            dispatch(setColor('#4ecdc4'))
+        }
+    }
+
+    function handleDrawer(): void {
+        navigation.openDrawer()
+    }
+
+    async function scopes(): Promise<void> {
+        console.log('Scopes')
+        const r = await recipeService.getRecipes(['published'])
+        console.log(r.length)
+    }
+
     return (
         <Container>
-            <LogoView>
+            {/* <LogoView>
                 <Logo
                     source={logo}
                     style={{
                         transform: [{ scaleY: logoSize }, { scaleX: logoSize }],
                     }}
                 />
-            </LogoView>
+            </LogoView> */}
             <SampleText>Test Screen</SampleText>
+            <ButtonFilled text="Log recipes" onPress={logRecipes} />
+            <ButtonFilled text="Drawer" onPress={handleDrawer} />
+            <ButtonFilled
+                text="Change Primary Color"
+                onPress={changePrimaryColor}
+            />
+            <ButtonFilled text="do some scopes" onPress={scopes} />
         </Container>
     )
 }
