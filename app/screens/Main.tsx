@@ -23,7 +23,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         (type, dim) => {
             switch (type) {
                 case ViewTypes.RecipeHeader:
-                    dim.width = width * 0.8
+                    dim.width = width
                     dim.height = 180
                     break
 
@@ -35,7 +35,8 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     )
 
-    const rowRenderer = (type: any, data: Recipe): JSX.Element | null => {
+    const rowRenderer = (type: any, data: any): JSX.Element | null => {
+        console.log("Data", data)
         switch (type) {
             case ViewTypes.RecipeHeader:
                 return (
@@ -83,16 +84,7 @@ const Container = styled(View)`
 
 const styles = StyleSheet.create({
     recyclerList: {
-        flex: 1,
         width: '90%',
         alignSelf: 'center',
     }
 })
-
-
-const SampleText = styled(Text)`
-    color: ${(props) => props.theme.primary}
-    font-size: 20px;
-    border-color: ${(props) => props.theme.primary}
-    border-width: 1px;
-`
