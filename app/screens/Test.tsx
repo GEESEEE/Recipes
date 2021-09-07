@@ -68,7 +68,9 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     async function scopes(): Promise<void> {
         console.log('Scopes')
-        const r = await recipeService.getRecipes(['published'])
+        const r = await recipeService.getRecipes({
+            scopes: ['published']
+        })
         console.log(r.length)
     }
 

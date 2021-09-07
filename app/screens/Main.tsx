@@ -19,17 +19,17 @@ const ViewTypes = {
 
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
-    const recipes = useAppSelector((state) => state.myRecipes)
+    const recipes = useAppSelector((state) => state.browseRecipes)
     console.log(recipes.length)
     const dispatch = useAppDispatch()
     const { width } = Dimensions.get('window')
 
     const search = navigation.state.params?.search
-    const filteredRecipes = applySearch(recipes, search)
+    // const filteredRecipes = applySearch(recipes, search)
 
     const dataProvider = new DataProvider(
         (r1, r2) => r1.id !== r2.id
-    ).cloneWithRows(filteredRecipes)
+    ).cloneWithRows(recipes)
 
     const layoutProvider = new LayoutProvider(
         (_index) => ViewTypes.RecipeHeader,

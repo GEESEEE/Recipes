@@ -3,7 +3,15 @@ import RecipeIngredient from '../data/recipe-ingredient'
 import Instruction from '../data/instruction'
 import handleError from './base'
 
-type Scope = 'published' | 'author'
+export type Scope = 'published' | 'author'
+
+interface GetRecipeParams {
+    scopes?: Scope[]
+    search?: string
+    body?: {
+        authorId?: number
+    }
+}
 
 export async function createRecipes(
     body: {
@@ -21,12 +29,21 @@ export async function getRecipe(recipeId: number): Promise<Recipe> {
     return handleError('GET', `/recipes/${recipeId}`)
 }
 
-export async function getRecipes(scopes?: Scope[]): Promise<Recipe[]> {
+export async function getRecipes({
+    scopes,
+    search,
+    body
+}: GetRecipeParams): Promise<Recipe[]> {
     let suffix = ''
     if (typeof scopes !== 'undefined') {
         suffix = suffix.concat('?scopes=', scopes.join(','))
     }
-    return handleError('GET', `/recipes${suffix}`)
+
+    if (typeof search !== 'undefined') {
+        suffix = suffix.concat(`&?search=${search}`)
+    }
+
+    return handleError('GET', `/recipes${suffix}`, { body })
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {

@@ -58,7 +58,9 @@ export async function updateRecipe(
 }
 
 export async function getMyRecipes(): Promise<Recipe[]> {
-    return recipeService.getRecipes(['author'])
+    return recipeService.getRecipes({
+        scopes: ['author']
+    })
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {
