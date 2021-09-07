@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import * as recipeService from '../services/recipe'
-import { RECIPE_ACTIONS } from '../reducers/recipes'
+import { MY_RECIPE_ACTIONS } from '../reducers/my-recipes'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
 import { deleteElement, deleteElements, replaceElements } from '../config/utils'
 
@@ -55,7 +55,7 @@ export const createRecipe =
                 )
 
                 dispatch({
-                    type: RECIPE_ACTIONS.ADD_RECIPE,
+                    type: MY_RECIPE_ACTIONS.ADD_RECIPE,
                     payload: { newRecipe },
                 })
             }
@@ -227,7 +227,7 @@ export const editRecipe =
                 )
 
                 dispatch({
-                    type: RECIPE_ACTIONS.EDIT_RECIPE,
+                    type: MY_RECIPE_ACTIONS.EDIT_RECIPE,
                     payload: { newRecipe },
                 })
             }
@@ -259,7 +259,7 @@ export const retrieveRecipes =
 
             await AsyncStorage.setItem('recipes', JSON.stringify(newRecipes))
             dispatch({
-                type: RECIPE_ACTIONS.SET_RECIPES,
+                type: MY_RECIPE_ACTIONS.SET_RECIPES,
                 payload: { newRecipes },
             })
         } catch (err) {
@@ -279,7 +279,7 @@ export const deleteRecipe =
             await AsyncStorage.setItem('recipes', JSON.stringify(localRecipes))
             await recipeService.deleteRecipe(recipe.id)
             dispatch({
-                type: RECIPE_ACTIONS.DELETE_RECIPE,
+                type: MY_RECIPE_ACTIONS.DELETE_RECIPE,
                 payload: { recipe },
             })
         } catch (err) {

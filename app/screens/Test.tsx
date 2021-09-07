@@ -11,7 +11,7 @@ const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
-    const recipes = useAppSelector((state) => state.recipes)
+    const recipes = useAppSelector((state) => state.myRecipes)
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
     const logoSize = useRef(new Animated.Value(bigLogo)).current

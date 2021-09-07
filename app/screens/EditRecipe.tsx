@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { createRecipe, editRecipe } from '../actions/recipes'
+import { createRecipe, editRecipe } from '../actions/my-recipes'
 import {
     ButtonBorderless,
     ButtonFilled,

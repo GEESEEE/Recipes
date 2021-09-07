@@ -14,7 +14,7 @@ function RecipesScreen({
 }: {
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
-    const recipes = useAppSelector((state) => state.recipes)
+    const recipes = useAppSelector((state) => state.myRecipes)
     const insets = useSafeAreaInsets()
     const headerHeight = useHeaderHeight() - insets.top
 

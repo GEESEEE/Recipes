@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
 import auth from './auth'
-import recipes from './recipes'
+import myRecipes from './my-recipes'
 import user from './user'
 import theme from './theme'
 import indices from './indices'
 
 export default combineReducers({
     auth,
-    recipes,
+    myRecipes,
     user,
     theme,
     indices,

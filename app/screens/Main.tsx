@@ -6,7 +6,8 @@ import {
     DataProvider,
     LayoutProvider,
 } from 'recyclerlistview'
-import { retrieveRecipes } from '../actions/recipes'
+
+import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { RecipeHeader } from '../components/data'
 import { Recipe } from '../data'
@@ -16,8 +17,9 @@ const ViewTypes = {
     RecipeHeader: 0,
 }
 
+
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
-    const recipes = useAppSelector((state) => state.recipes)
+    const recipes = useAppSelector((state) => state.myRecipes)
     console.log(recipes.length)
     const dispatch = useAppDispatch()
     const { width } = Dimensions.get('window')
@@ -25,9 +27,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const search = navigation.state.params?.search
     const filteredRecipes = applySearch(recipes, search)
 
-    const dataProvider = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
-        filteredRecipes
-    )
+    const dataProvider = new DataProvider(
+        (r1, r2) => r1.id !== r2.id
+    ).cloneWithRows(filteredRecipes)
 
     const layoutProvider = new LayoutProvider(
         (_index) => ViewTypes.RecipeHeader,
@@ -35,7 +37,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
             switch (type) {
                 case ViewTypes.RecipeHeader:
                     dim.width = width
-                    dim.height = 170
+                    dim.height = 150
                     break
 
                 default:
@@ -78,7 +80,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                     dataProvider={dataProvider}
                     rowRenderer={rowRenderer}
                     forceNonDeterministicRendering
-                    canChangeSize
                 />
             ) : null}
         </Container>
@@ -92,6 +93,7 @@ const Container = styled(View)`
     justify-content: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
+    padding-bottom: 5px;
 `
 
 const styles = StyleSheet.create({
@@ -108,4 +110,9 @@ const RecipeHeaderContainer = styled(View)`
 
 const RecipeHeaderBottomPadding = styled(View)`
     height: 20px;
+`
+
+const SampleText = styled(Text)`
+    color: ${(props) => props.theme.primary};
+    font-size: 16px;
 `

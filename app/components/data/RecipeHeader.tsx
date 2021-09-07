@@ -5,7 +5,7 @@ import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
-import { deleteRecipe } from '../../actions/recipes'
+import { deleteRecipe } from '../../actions/my-recipes'
 import { ButtonIcon } from '../user-input/Buttons'
 
 interface RecipeHeaderOptions {
