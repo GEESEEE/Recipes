@@ -1,11 +1,27 @@
 import React from 'react'
-import { View, TextInput, Dimensions } from 'react-native'
+import { View, TextInput, Dimensions, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { MyFeather, MyMaterialIcons } from '../Icons'
+import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { deleteRecipe } from '../../actions/recipes'
+import { ButtonIcon } from '../user-input/Buttons'
+
+interface RecipeHeaderOptions {
+    children?: JSX.Element[]
+    recipe: Recipe
+    navigation: any
+    editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
+    dropdown?: boolean
+    dropdownDependencies?: number[]
+    onPress?: () => void
+    handleNameChange?: (text: string) => void
+    handleDescriptionChange?: (text: string) => void
+    handlePeopleCountChange?: (text: string) => void
+    handlePrepareTimeChange?: (text: string) => void
+    handlePublishedAtChange?: () => void
+}
 
 const RecipeHeader = ({
     children,
@@ -13,21 +29,14 @@ const RecipeHeader = ({
     navigation,
     editable,
     dropdown,
+    dropdownDependencies,
+    onPress,
     handleNameChange,
     handleDescriptionChange,
     handlePeopleCountChange,
     handlePrepareTimeChange,
-}: {
-    children?: JSX.Element[]
-    recipe: Recipe
-    navigation: any
-    editable: boolean
-    dropdown?: boolean
-    handleNameChange?: (text: string) => void
-    handleDescriptionChange?: (text: string) => void
-    handlePeopleCountChange?: (text: string) => void
-    handlePrepareTimeChange?: (text: string) => void
-}): JSX.Element => {
+    handlePublishedAtChange,
+}: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -36,7 +45,7 @@ const RecipeHeader = ({
     }
 
     async function editRecipe(): Promise<void> {
-        navigation.navigate('CreateRecipe', { recipe })
+        navigation.navigate('EditRecipe', { recipe })
     }
 
     const dropDownItems: DropDownItem[] = [
@@ -63,14 +72,11 @@ const RecipeHeader = ({
     }
 
     return (
-        <Header>
-            {/* Dropdown Menu */}
-            {dropdown ? <DropDownMenu items={dropDownItems} /> : null}
-
+        <Header onPress={onPress} disabled={!onPress}>
             {/* Recipe Name Input Field */}
             <RecipeNameView>
                 <RecipeNameTextInput
-                    editable={editable}
+                    editable={editable === 'Edit-all'}
                     value={recipe.name}
                     placeholder="New Recipe"
                     placeholderTextColor={theme.grey}
@@ -80,9 +86,10 @@ const RecipeHeader = ({
             </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-            {!editable && recipe.description.length === 0 ? null : (
+            {editable === 'Edit-none' &&
+            recipe.description.length === 0 ? null : (
                 <DescriptionTextInput
-                    editable={editable}
+                    editable={editable === 'Edit-all'}
                     placeholder="Description"
                     value={recipe.description}
                     placeholderTextColor={theme.grey}
@@ -93,14 +100,19 @@ const RecipeHeader = ({
             <PropertiesContainer>
                 {/* Prepare Time */}
                 <PropertyView>
-                    <MyMaterialIcons name="timer-sand" color={theme.text} />
+                    <MyMaterialCommunityIcons
+                        name="timer-sand"
+                        color={theme.text}
+                    />
                     <Property
                         style={prepareTimeStyle()}
-                        editable={editable}
+                        editable={editable === 'Edit-all'}
                         onChangeText={handlePrepareTimeChange}
                         value={recipe.prepareTime.toString()}
                         placeholder="0"
-                        placeholderTextColor={theme.grey}
+                        placeholderTextColor={
+                            editable === 'Edit-people' ? theme.text : theme.grey
+                        }
                         keyboardType="number-pad"
                     />
                 </PropertyView>
@@ -110,7 +122,9 @@ const RecipeHeader = ({
                     <MyFeather name="user" color={theme.text} />
                     <Property
                         style={peopleCountStyle()}
-                        editable={editable}
+                        editable={['Edit-all', 'Edit-people'].includes(
+                            editable
+                        )}
                         onChangeText={handlePeopleCountChange}
                         value={recipe.peopleCount.toString()}
                         placeholder="0"
@@ -118,8 +132,43 @@ const RecipeHeader = ({
                         keyboardType="number-pad"
                     />
                 </PropertyView>
+
+                <PublishedView>
+                    {editable === 'Edit-all' || recipe.publishedAt !== null ? (
+                        <ButtonIcon
+                            onPress={() =>
+                                handlePublishedAtChange
+                                    ? handlePublishedAtChange()
+                                    : undefined
+                            }
+                            icon={
+                                <MyMaterialIcons
+                                    name={
+                                        recipe.publishedAt === null
+                                            ? 'publish'
+                                            : 'published-with-changes'
+                                    }
+                                    color={
+                                        recipe.publishedAt === null
+                                            ? theme.text
+                                            : theme.primary
+                                    }
+                                    size={25}
+                                />
+                            }
+                        />
+                    ) : undefined}
+                </PublishedView>
             </PropertiesContainer>
+
             {children}
+            {/* Dropdown Menu */}
+            {dropdown ? (
+                <DropDownMenu
+                    items={dropDownItems}
+                    dropdownDependencies={dropdownDependencies}
+                />
+            ) : null}
         </Header>
     )
 }
@@ -128,18 +177,18 @@ export default RecipeHeader
 
 const { height } = Dimensions.get('screen')
 
-const Header = styled(View)`
+const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
     bottom: ${height * 0.03}px;
-    width: 85%;
+    width: 100%;
     background-color: ${(props) => props.theme.background};
     border-color: ${(props) => props.theme.primary};
     border-radius: 20px;
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-top: 5px;
+    margin-bottom: -10px;
 `
 
 const RecipeNameView = styled(View)`
@@ -174,11 +223,11 @@ const PropertiesContainer = styled(View)`
 `
 
 const PropertyView = styled(View)`
-    margin-left: 10px;
+    flex: 4;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    flex-direction: row;
+    margin-left: 10px;
 `
 
 const Property = styled(TextInput)`
@@ -186,4 +235,11 @@ const Property = styled(TextInput)`
     font-size: 20px;
     padding-left: 5px;
     flex: 1;
+`
+
+const PublishedView = styled(View)`
+    flex: 1;
+    margin-end: 10px;
+    align-items: flex-end;
+    justify-content: flex-end;
 `

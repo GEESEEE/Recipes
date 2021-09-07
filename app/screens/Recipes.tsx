@@ -1,12 +1,13 @@
 import React from 'react'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
+import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
 import { RecipeHeader } from '../components/data'
-import { ButtonFilled } from '../components/user-input/Buttons'
+import { filterRecipes } from '../config/utils'
 import { Recipe } from '../data'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { deleteRecipe } from '../actions/recipes'
+import { useAppSelector } from '../hooks/redux'
 
 function RecipesScreen({
     navigation,
@@ -14,35 +15,42 @@ function RecipesScreen({
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
-    const dispatch = useAppDispatch()
-    // dispatch(deleteRecipe(item))
+    const insets = useSafeAreaInsets()
+    const headerHeight = useHeaderHeight() - insets.top
+
+    const search = navigation.state.params?.search
+    const filteredRecipes = filterRecipes(recipes, search)
+
+    const [scrollPosition, setScrollPosition] = React.useState(0)
+
+    function handleScroll(event: any): void {
+        setScrollPosition(event.nativeEvent.contentOffset.y)
+    }
+
     return (
         <Container>
             <RecipesList
-                data={recipes}
+                data={filteredRecipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={styles.contentContainer}
+                contentContainerStyle={{ paddingTop: headerHeight }}
                 renderItem={({ item }) => (
-                    <RecipeHeader
-                        recipe={item}
-                        navigation={navigation}
-                        editable={false}
-                        dropdown
-                    >
-                        <ButtonFilled
-                            text="edit"
+                    <RecipeHeaderView>
+                        <RecipeHeader
+                            recipe={item}
+                            navigation={navigation}
+                            editable="Edit-none"
+                            dropdown
+                            dropdownDependencies={[scrollPosition]}
                             onPress={() =>
-                                navigation.navigate('CreateRecipe', {
+                                navigation.navigate('ViewRecipe', {
                                     recipe: item,
                                 })
                             }
                         />
-                        <ButtonFilled
-                            text="delete"
-                            onPress={() => dispatch(deleteRecipe(item))}
-                        />
-                    </RecipeHeader>
+                        <Separator />
+                    </RecipeHeaderView>
                 )}
+                onScroll={handleScroll}
             />
         </Container>
     )
@@ -60,9 +68,10 @@ const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
 `
 
-const styles = StyleSheet.create({
-    contentContainer: {
-        // alignItems: 'center',
-        paddingTop: 25,
-    },
-})
+const RecipeHeaderView = styled(View)`
+    width: 90%;
+    align-self: center;
+`
+const Separator = styled(View)`
+    height: 20px;
+`

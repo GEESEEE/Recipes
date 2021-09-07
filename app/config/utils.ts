@@ -1,3 +1,6 @@
+import _ from 'lodash'
+import { Recipe } from '../data'
+
 export function handleNumericTextInput(
     number: string,
     integer = false
@@ -12,8 +15,32 @@ export function handleNumericTextInput(
     return 0
 }
 
+export function filterRecipes(
+    recipes: Recipe[],
+    search: string | undefined
+): Recipe[] {
+    if (typeof search !== 'undefined' && search.length > 0) {
+        const query = search.toLowerCase()
+
+        return recipes.filter((recipe) => {
+            if (recipe.name.toLowerCase().includes(query)) return true
+            if (recipe.description.toLowerCase().includes(query)) return true
+
+            let included = false
+            recipe.recipeIngredients!.forEach((ingr) => {
+                if (ingr.ingredient!.name.toLowerCase().includes(query))
+                    included = true
+            })
+            return included
+        })
+    }
+    return recipes
+}
+
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {
-    const index = arr.indexOf(element)
+    const sameElement = arr.find((e) => _.isEqual(e, element))
+    if (!sameElement) return false
+    const index = arr.indexOf(sameElement)
     if (index > -1) {
         arr.splice(index, 1)
     }

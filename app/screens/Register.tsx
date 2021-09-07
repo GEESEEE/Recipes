@@ -3,14 +3,15 @@ import { View, TouchableOpacity } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
-import { signUp } from '../actions/auth'
+import { clearError, signUp } from '../actions/auth'
 import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
 import { MyFeather } from '../components/Icons'
 import { InputFieldRounded } from '../components/user-input/TextInputs'
-import { useAppDispatch } from '../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { ErrorMessage } from '../components/user-input/ErrorMessage'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -57,6 +58,7 @@ function RegisterScreen({
 }: {
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
+    const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 
     const initialState = {
@@ -109,11 +111,26 @@ function RegisterScreen({
     }
 
     function handleSecurePassword1Change(): void {
-        console.log(data.securePasswordText)
         localDispatch({
             type: REGISTER_ACTIONS.PASSWORD_SECURE_CHANGE,
             payload: { securePasswordText: !data.securePasswordText },
         })
+    }
+
+    function isValidData(): boolean {
+        const isEmpty =
+            data.username.length === 0 ||
+            data.email.length === 0 ||
+            data.password1.length === 0 ||
+            data.password2.length === 0
+        return (
+            !isEmpty &&
+            data.isValidUsername &&
+            data.isValidPassword1 &&
+            data.isValidPassword2 &&
+            data.isValidUsername &&
+            samePasswords()
+        )
     }
 
     function samePasswords(): boolean {
@@ -121,13 +138,7 @@ function RegisterScreen({
     }
 
     async function handleRegisterButton(): Promise<void> {
-        if (
-            data.isValidUsername &&
-            data.isValidPassword1 &&
-            data.isValidPassword2 &&
-            data.isValidUsername &&
-            samePasswords()
-        ) {
+        if (isValidData()) {
             const userData = {
                 name: data.username,
                 password: data.password1,
@@ -139,6 +150,7 @@ function RegisterScreen({
 
     function handleGoBackButton(): void {
         navigation.goBack()
+        dispatch(clearError())
     }
 
     return (
@@ -194,7 +206,7 @@ function RegisterScreen({
 
             {/* Register Button */}
             <ButtonFilled text="Register" onPress={handleRegisterButton} />
-
+            <ErrorMessage errorMessage={auth.error} />
             {/* Already have an account/Go Back Button */}
             <ButtonBorderless
                 text="Already have an account?"

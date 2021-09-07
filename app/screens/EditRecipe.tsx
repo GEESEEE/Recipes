@@ -1,16 +1,12 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { createRecipe, editRecipe } from '../actions/recipes'
 import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
-import {
-    InstructionsList,
-    IngredientsList,
-    RecipeHeader,
-} from '../components/data'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import {
@@ -19,13 +15,14 @@ import {
     decrementRecipeId,
 } from '../actions/indices'
 import { handleNumericTextInput } from '../config/utils'
-import { ErrorMessage } from '../components/user-input/ErrorMessage'
+import { RecipeSectionList } from '../components/data'
+import { showPopup } from '../config/routes'
 
 type RecipeValidity = {
     validIngredients: boolean
 }
 
-function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
+function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const indices = useAppSelector((state) => state.indices)
     const dispatch = useAppDispatch()
 
@@ -38,6 +35,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             id: indices.recipeId,
             recipeIngredients: [],
             instructions: [],
+            publishedAt: null,
         }
     }
 
@@ -45,7 +43,7 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         validIngredients: true,
     }
 
-    const recipe = navigation.state.params?.recipe
+    let recipe = navigation.state.params?.recipe
     const initialState = recipe || getInitialRecipe()
     const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(
         { ...initialState, ...initialValidity }
@@ -70,11 +68,41 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData })
     }
 
+    function recipeComplete(): boolean {
+        return (
+            recipeData.name.length > 0 &&
+            recipeData.description.length > 0 &&
+            recipeData.prepareTime > 0 &&
+            recipeData.peopleCount > 0 &&
+            recipeData.recipeIngredients!.length > 0 &&
+            recipeData.instructions!.length > 0
+        )
+    }
+
+    function handlePublishedAtChange(): void {
+        if (recipeData.publishedAt === null) {
+            if (recipeComplete()) {
+                recipeData.publishedAt = new Date()
+            } else {
+                showPopup(
+                    navigation,
+                    'Incomplete Recipe',
+                    'Can not publish an incomplete recipe'
+                )
+            }
+        } else {
+            recipeData.publishedAt = null
+        }
+        setRecipeData({ ...recipeData })
+    }
+
     function handleAddIngredient(): void {
         const ingredient = new Ingredient(indices.ingredientId, '', '')
+        const ri = _.maxBy(recipeData.recipeIngredients!, 'position')
         const recipeIngredient = new RecipeIngredient(
             indices.ingredientId,
             0,
+            ri ? ri.position + 1 : 0,
             ingredient
         )
 
@@ -88,14 +116,6 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             (item) => item.id.toString() !== key
         )
         setRecipeData({ ...recipeData, recipeIngredients })
-    }
-
-    function handleIngredientAmountChange(key: string, amount: string): void {
-        const recipeIngredient = recipeData.recipeIngredients?.filter(
-            (item) => item.id.toString() === key
-        )[0]
-        recipeIngredient!.amount = handleNumericTextInput(amount)
-        setRecipeData({ ...recipeData })
     }
 
     function handleIngredientNameChange(key: string, name: string): void {
@@ -119,7 +139,17 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         setRecipeData({ ...recipeData, validIngredients })
     }
 
+    function handleIngredientAmountChange(key: string, amount: string): void {
+        if (amount.length > 5) return
+        const recipeIngredient = recipeData.recipeIngredients?.filter(
+            (item) => item.id.toString() === key
+        )[0]
+        recipeIngredient!.amount = handleNumericTextInput(amount)
+        setRecipeData({ ...recipeData })
+    }
+
     function handleIngredientUnitChange(key: string, unit: string): void {
+        if (unit.length > 8) return
         const recipeIngredient = recipeData.recipeIngredients?.filter(
             (item) => item.id.toString() === key
         )[0]
@@ -128,7 +158,12 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleAddInstruction(): void {
-        const instruction = new Instruction(indices.instructionId, '')
+        const i = _.maxBy(recipeData.instructions!, 'position')
+        const instruction = new Instruction(
+            indices.instructionId,
+            '',
+            i ? i.position + 1 : 0
+        )
         recipeData.instructions?.push(instruction)
         dispatch(decrementInstructionId(indices.instructionId))
         setRecipeData({ ...recipeData })
@@ -170,9 +205,9 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     async function handleEditRecipe(): Promise<void> {
-        console.log('Editing', recipeData.recipeIngredients)
         if (validRecipe()) {
-            dispatch(editRecipe(recipeData as Recipe))
+            dispatch(editRecipe(recipeData))
+            recipe = recipeData
         }
     }
 
@@ -182,57 +217,51 @@ function NewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <RecipeHeader
+            <RecipeSectionList
                 recipe={recipeData}
                 navigation={navigation}
-                editable
+                action="Create"
                 handleNameChange={handleNameChange}
                 handleDescriptionChange={handleDescriptionChange}
                 handlePeopleCountChange={handlePeopleCountChange}
                 handlePrepareTimeChange={handlePrepareTimeChange}
-            />
-
-            {/* Ingredients List Container */}
-            <IngredientsList
-                ingredients={recipeData.recipeIngredients!}
+                handlePublishedAtChange={handlePublishedAtChange}
                 handleRemoveIngredient={handleRemoveIngredient}
                 handleIngredientNameChange={handleIngredientNameChange}
                 handleIngredientAmountChange={handleIngredientAmountChange}
                 handleIngredientUnitChange={handleIngredientUnitChange}
                 handleAddIngredient={handleAddIngredient}
-            />
-            <ErrorMessage
-                errorMessage={
+                ingredientError={
                     recipeData.validIngredients
                         ? undefined
-                        : 'Can not use 2 ingredients with the same name'
+                        : 'Invalid Ingredients'
                 }
-            />
-
-            {/* Instructions List Container */}
-            <InstructionsList
-                instructions={recipeData.instructions!}
                 handleRemoveInstruction={handleRemoveInstruction}
                 handleInstructionTextChange={handleInstructionTextChange}
                 handleAddInstruction={handleAddInstruction}
-            />
+                FooterComponent={
+                    <FooterView>
+                        <ButtonFilled
+                            text={recipe ? 'Save' : 'Create Recipe'}
+                            onPress={
+                                recipe ? handleEditRecipe : handleCreateRecipe
+                            }
+                        />
 
-            {/* Create Recipe Button */}
-            <ButtonFilled
-                text={recipe ? 'Save' : 'Create Recipe'}
-                onPress={recipe ? handleEditRecipe : handleCreateRecipe}
-            />
-
-            {/* Clear Recipe Button */}
-            <ButtonBorderless
-                text={recipe ? 'Cancel' : 'Clear Recipe'}
-                onPress={recipe ? cancelEditRecipe : clearRecipeData}
+                        <ButtonBorderless
+                            text={recipe ? 'Cancel' : 'Clear Recipe'}
+                            onPress={
+                                recipe ? cancelEditRecipe : clearRecipeData
+                            }
+                        />
+                    </FooterView>
+                }
             />
         </Container>
     )
 }
 
-export default NewRecipeScreen
+export default EditRecipeScreen
 
 const Container = styled(View)`
     flex: 1;
@@ -241,4 +270,10 @@ const Container = styled(View)`
     align-items: center;
     align-content: center;
     background-color: ${(props) => props.theme.background};
+`
+
+const FooterView = styled(View)`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `

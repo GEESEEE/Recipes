@@ -5,10 +5,11 @@ import styled from 'styled-components'
 import colors from '../config/colors'
 import { MyFeather, MyFontAwesome } from '../components/Icons'
 import logo from '../assets/temp_icon.png'
-import { retrieveToken, signIn } from '../actions/auth'
+import { clearError, retrieveToken, signIn } from '../actions/auth'
 import { ButtonFilled, ButtonInverted } from '../components/user-input/Buttons'
 import { InputFieldRounded } from '../components/user-input/TextInputs'
-import { useAppDispatch } from '../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { ErrorMessage } from '../components/user-input/ErrorMessage'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -43,6 +44,7 @@ function LoginScreen({
 }: {
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
+    const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
@@ -89,14 +91,20 @@ function LoginScreen({
         })
     }
 
+    function isValidData(): boolean {
+        const isEmpty = data.username.length === 0 && data.password.length === 0
+        return !isEmpty && data.isValidUsername && data.isValidPassword
+    }
+
     async function handleLoginButton(): Promise<void> {
-        if (data.isValidUsername && data.isValidPassword) {
+        if (isValidData()) {
             dispatch(signIn(data.username, data.password, navigation))
         }
     }
 
     function handleRegisterButton(): void {
         navigation.navigate('Register')
+        dispatch(clearError())
     }
 
     return (
@@ -143,6 +151,7 @@ function LoginScreen({
 
             {/* Register Button */}
             <ButtonInverted text="Register" onPress={handleRegisterButton} />
+            <ErrorMessage errorMessage={auth.error} />
         </Container>
     )
 }

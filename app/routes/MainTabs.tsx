@@ -8,7 +8,7 @@ import { TestScreen } from '../screens'
 import { BottomTab } from '../components/routes'
 
 const screens = {
-    Main: {
+    Browse: {
         screen: MainStack,
         navigationOptions: {
             tabBarLabel: 'Browse',
@@ -19,7 +19,7 @@ const screens = {
             ),
         },
     },
-    RecipesScreen: {
+    Recipes: {
         screen: RecipesStack,
         navigationOptions: {
             tabBarLabel: 'My Recipes',
@@ -35,8 +35,8 @@ const screens = {
     },
 }
 
-const tabConfig = {
-    initialRouteName: 'Main',
+const tabConfig: any = {
+    initialRouteName: 'Browse',
     tabBarComponent: BottomTab,
 }
 

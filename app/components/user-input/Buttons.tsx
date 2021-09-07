@@ -1,8 +1,8 @@
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
-import { MyMaterialIcons } from '../Icons'
+import { MyMaterialCommunityIcons } from '../Icons'
 
 export type ButtonProps = {
     text: string
@@ -12,7 +12,7 @@ export type ButtonProps = {
 const ButtonStyleGeneric = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
-    width: 85%;
+    width: 80%;
     margin-top: 8px;
     margin-bottom: 8px;
     padding-left: 10px;
@@ -78,6 +78,8 @@ export function ButtonBorderless({ text, onPress }: ButtonProps): JSX.Element {
 const ButtonBorderlessStyle = styled(ButtonStyleGeneric)`
     width: 50%;
     background-color: ${(props) => props.theme.background};
+    margin-top: 4px;
+    margin-bottom: 4px;
 `
 
 const ButtonBorderlessText = styled(ButtonTextGeneric)`
@@ -85,27 +87,6 @@ const ButtonBorderlessText = styled(ButtonTextGeneric)`
     text-transform: none;
     font-size: 12px;
     color: ${(props) => props.theme.primary};
-`
-
-export function ButtonFlex({ text, onPress }: ButtonProps): JSX.Element {
-    return (
-        <Button onPress={onPress}>
-            <ButtonText>{text}</ButtonText>
-        </Button>
-    )
-}
-
-const Button = styled(TouchableOpacity)`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-`
-
-const ButtonText = styled(Text)`
-    color: ${(props) => props.theme.primary}
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
 `
 
 export function ButtonOptions({
@@ -122,21 +103,32 @@ export function ButtonOptions({
     onLayout?: (e: any) => void
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
-
     const OptionsContainer = styled(TouchableOpacity)`
         position: absolute;
-        padding-top: ${offset}px;
-        padding-end: ${offset}px;
         align-self: flex-end;
+        padding-top: ${offset}px;
+        padding-right: ${offset}px;
+        border-width: 1px;
+        border-color: ${(props) => props.theme.primary};
     `
 
     return (
         <OptionsContainer onPress={onPress} onLayout={onLayout}>
-            <MyMaterialIcons
+            <MyMaterialCommunityIcons
                 name="dots-vertical"
                 size={size}
                 color={color || theme.primary}
             />
         </OptionsContainer>
     )
+}
+
+export function ButtonIcon({
+    onPress,
+    icon,
+}: {
+    onPress: () => void
+    icon: JSX.Element
+}): JSX.Element {
+    return <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
 }

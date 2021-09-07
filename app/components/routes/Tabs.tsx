@@ -1,56 +1,147 @@
-import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useEffect, useState } from 'react'
+import {
+    TouchableOpacity,
+    View,
+    Text,
+    Animated,
+    Dimensions,
+} from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { ButtonProps, ButtonFlex } from '../user-input/Buttons'
+import { v4 as uuid } from 'uuid'
+import { useAppSelector } from '../../hooks'
+import { MyMaterialCommunityIcons } from '../Icons'
+
+const routeIconMap = {
+    Browse: 'book-search',
+    Recipes: 'book-open-page-variant',
+    Test: 'test-tube',
+}
 
 const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
-    function mainButton(): void {
-        navigation.navigate('Main')
+    const { state } = navigation
+    const { routes } = state
+    const totalWidth = Dimensions.get('window').width
+    const tabWidth = totalWidth / routes.length
+    const insets = useSafeAreaInsets()
+
+    function navigate(routeName: string): void {
+        navigation.navigate(routeName)
     }
 
-    function recipesButton(): void {
-        navigation.navigate('RecipesScreen')
+    const [translateValue] = useState(new Animated.Value(0))
+
+    const animateSlider = (index: number): any => {
+        Animated.spring(translateValue, {
+            toValue: index * tabWidth,
+            velocity: 10,
+            useNativeDriver: true,
+        }).start()
     }
 
-    function testButton(): void {
-        navigation.navigate('Test')
-    }
+    useEffect(() => {
+        animateSlider(state.index)
+    }, [state.index])
 
     return (
-        <Container>
-            <RouteTab text="Main" onPress={mainButton} />
-            <Separator />
-            <RouteTab text="Recipes" onPress={recipesButton} />
-            <Separator />
-            <RouteTab text="Test" onPress={testButton} />
+        <Container style={{ height: insets.bottom + 50 }}>
+            <SafeContainer
+                style={{
+                    paddingBottom: insets.bottom,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                }}
+            >
+                <TabSlider
+                    key={uuid()}
+                    style={[
+                        {
+                            transform: [{ translateX: translateValue }],
+                            width: tabWidth - 20,
+                        },
+                    ]}
+                />
+
+                {routes.map((route: any, index: any) => {
+                    const routeName: string = route.key
+                    const isFocused = state.index === index
+                    return (
+                        <RouteTab
+                            key={uuid()}
+                            icon={(routeIconMap as any)[routeName]}
+                            text={routeName}
+                            onPress={() => navigate(routeName)}
+                            isCurrent={isFocused}
+                        />
+                    )
+                })}
+            </SafeContainer>
         </Container>
     )
 }
 
 export default BottomTab
 
-const RouteTab = ({ text, onPress }: ButtonProps): JSX.Element => (
-    <ButtonContainer>
-        <ButtonFlex onPress={onPress} text={text} />
-    </ButtonContainer>
-)
+type TabProps = {
+    icon: string
+    text: string
+    onPress: () => void
+    isCurrent?: boolean
+}
+
+const RouteTab = ({
+    icon,
+    text,
+    onPress,
+    isCurrent,
+}: TabProps): JSX.Element => {
+    const theme = useAppSelector((state) => state.theme)
+
+    return (
+        <TabContainer onPress={onPress}>
+            <MyMaterialCommunityIcons
+                name={icon}
+                color={isCurrent ? theme.primary : theme.grey}
+            />
+            <TabText style={{ color: isCurrent ? theme.primary : theme.grey }}>
+                {text}
+            </TabText>
+        </TabContainer>
+    )
+}
 
 const Container = styled(View)`
-    height: 50px;
+    width: 100%;
     background-color: ${(props) => props.theme.background};
+    align-items: flex-start;
+`
+
+const SafeContainer = styled(View)`
+    flex: 1;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-top-width: 1px;
-    border-top-color: ${(props) => props.theme.primary};
-`
-const ButtonContainer = styled(View)`
-    flex: 1;
 `
 
-const Separator = styled(View)`
-    height: 100%;
-    width: 1px;
+const TabSlider = styled(Animated.View)`
+    height: 4px;
+    position: absolute;
+    left: 10px;
+    top: -2px;
     background-color: ${(props) => props.theme.primary};
+    border-radius: 10px;
+`
+
+const TabContainer = styled(TouchableOpacity)`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+`
+
+const TabText = styled(Text)`
+    color: ${(props) => props.theme.primary}
+    font-size: 16px;
+    font-weight: bold;
+
 `

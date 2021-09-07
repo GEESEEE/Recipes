@@ -3,23 +3,30 @@ import RecipeIngredient from '../data/recipe-ingredient'
 import Instruction from '../data/instruction'
 import handleError from './base'
 
+type Scope = 'published' | 'author'
+
 export async function createRecipes(
     body: {
         name: string
         description: string
         prepareTime: number
         peopleCount: number
+        publishedAt: Date | null
     }[]
 ): Promise<Recipe[]> {
     return handleError('POST', '/recipes/bulk', { body })
 }
 
-export async function getMyRecipes(): Promise<Recipe[]> {
-    return handleError('GET', '/recipes', {})
-}
-
 export async function getRecipe(recipeId: number): Promise<Recipe> {
     return handleError('GET', `/recipes/${recipeId}`)
+}
+
+export async function getRecipes(scopes?: Scope[]): Promise<Recipe[]> {
+    let suffix = ''
+    if (typeof scopes !== 'undefined') {
+        suffix = suffix.concat('?scopes=', scopes.join(','))
+    }
+    return handleError('GET', `/recipes${suffix}`)
 }
 
 export async function deleteRecipe(recipeId: number): Promise<void> {
@@ -33,6 +40,7 @@ export async function updateRecipe(
         description?: string
         prepareTime?: number
         peopleCount?: number
+        publishedAt?: Date | null
     }
 ): Promise<Recipe> {
     return handleError('PUT', `/recipes/${recipeId}`, { body })
@@ -40,7 +48,12 @@ export async function updateRecipe(
 
 export async function addIngredients(
     recipeId: number,
-    body: Array<{ amount: number; name: string; unit: string | null }>
+    body: Array<{
+        amount: number
+        position: number
+        name: string
+        unit: string | null
+    }>
 ): Promise<RecipeIngredient[]> {
     return handleError('POST', `/recipes/${recipeId}/ingredients/bulk`, {
         body,
@@ -61,6 +74,7 @@ export async function updateIngredients(
     body: Array<{
         recipeIngredientId: number
         amount?: number
+        position?: number
         name?: string
         unit?: string | null
     }>
@@ -70,7 +84,7 @@ export async function updateIngredients(
 
 export async function addInstructions(
     recipeId: number,
-    body: Array<{ text: string }>
+    body: Array<{ text: string; position: number }>
 ): Promise<Instruction[]> {
     return handleError('POST', `/recipes/${recipeId}/instructions/bulk`, {
         body,
@@ -88,7 +102,11 @@ export async function deleteInstructions(
 
 export async function updateInstructions(
     recipeId: number,
-    instructions: Array<{ instructionId: number; text: string }>
+    instructions: Array<{
+        instructionId: number
+        text?: string
+        position?: number
+    }>
 ): Promise<any> {
     return handleError('PUT', `/recipes/${recipeId}/instructions/bulk`, {
         body: instructions,

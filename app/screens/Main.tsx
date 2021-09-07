@@ -5,6 +5,7 @@ import { retrieveRecipes } from '../actions/recipes'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import * as recipeService from '../rest/recipe'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useAppSelector((state) => state.recipes)
@@ -31,6 +32,12 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         navigation.openDrawer()
     }
 
+    async function scopes(): Promise<void> {
+        console.log('Scopes')
+        const r = await recipeService.getRecipes(['published'])
+        console.log(r.length)
+    }
+
     return (
         <Container>
             <SampleText>Main Screen</SampleText>
@@ -40,6 +47,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                 text="Change Primary Color"
                 onPress={changePrimaryColor}
             />
+            <ButtonFilled text="do some scopes" onPress={scopes} />
         </Container>
     )
 }
