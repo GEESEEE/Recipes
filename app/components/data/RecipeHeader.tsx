@@ -141,6 +141,7 @@ const RecipeHeader = ({
                                     ? handlePublishedAtChange()
                                     : undefined
                             }
+                            disabled={editable !== 'Edit-all'}
                             icon={
                                 <MyMaterialIcons
                                     name={
