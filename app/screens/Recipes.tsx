@@ -5,7 +5,7 @@ import { NavigationScreenProp } from 'react-navigation'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
 import { RecipeHeader } from '../components/data'
-import { filterRecipes } from '../config/utils'
+import { applySearch } from '../config/utils'
 import { Recipe } from '../data'
 import { useAppSelector } from '../hooks/redux'
 
@@ -19,7 +19,7 @@ function RecipesScreen({
     const headerHeight = useHeaderHeight() - insets.top
 
     const search = navigation.state.params?.search
-    const filteredRecipes = filterRecipes(recipes, search)
+    const filteredRecipes = applySearch(recipes, search)
 
     const [scrollPosition, setScrollPosition] = React.useState(0)
 
@@ -66,6 +66,7 @@ const Container = styled(View)`
 
 const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
+    padding-top: 5px;
 `
 
 const RecipeHeaderView = styled(View)`

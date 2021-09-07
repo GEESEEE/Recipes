@@ -15,7 +15,7 @@ export function handleNumericTextInput(
     return 0
 }
 
-export function filterRecipes(
+export function applySearch(
     recipes: Recipe[],
     search: string | undefined
 ): Recipe[] {

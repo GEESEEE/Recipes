@@ -1,5 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
+import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
 import { MyMaterialCommunityIcons } from '../Icons'
@@ -133,4 +134,28 @@ export function ButtonIcon({
     disabled?:boolean
 }): JSX.Element {
     return <TouchableOpacity onPress={onPress} disabled={disabled ?? false}>{icon}</TouchableOpacity>
+}
+
+export function FeatherButton({
+    iconName,
+    onPress,
+    size,
+}: {
+    iconName: string
+    onPress: () => void
+    size?: number
+}): JSX.Element {
+    const theme = useAppSelector((state) => state.theme)
+    return (
+        <ButtonIcon
+            onPress={onPress}
+            icon={
+                <Feather
+                    name={iconName}
+                    size={size || 30}
+                    color={theme.primary}
+                />
+            }
+        />
+    )
 }
