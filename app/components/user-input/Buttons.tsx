@@ -106,8 +106,10 @@ export function ButtonOptions({
     const OptionsContainer = styled(TouchableOpacity)`
         position: absolute;
         align-self: flex-end;
-        padding-top: ${offset}px;
-        padding-right: ${offset}px;
+        top: 0px;
+        right: 0px;
+        margin-top: ${offset}px;
+        margin-end: ${offset}px;
     `
 
     return (

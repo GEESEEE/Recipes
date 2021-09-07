@@ -30,7 +30,7 @@ export const retrieveToken =
                     navigation.navigate('Main')
                 }
             }
-        } catch (err) {
+        } catch (err: any) {
             dispatch({
                 type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
                 payload: {
@@ -56,7 +56,7 @@ export const signUp =
             await authService.signUp(userData)
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
-        } catch (err) {
+        } catch (err: any) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_UP_ERROR,
                 payload: {
@@ -92,7 +92,7 @@ export const signIn =
                 key: null,
             })
             navigation.dispatch(resetActions)
-        } catch (err) {
+        } catch (err: any) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,
                 payload: {

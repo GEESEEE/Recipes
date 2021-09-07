@@ -36,7 +36,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     )
 
     const rowRenderer = (type: any, data: any): JSX.Element | null => {
-        console.log("Data", data)
         switch (type) {
             case ViewTypes.RecipeHeader:
                 return (
@@ -67,6 +66,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                     dataProvider={dataProvider}
                     rowRenderer={rowRenderer}
                     forceNonDeterministicRendering
+                    canChangeSize
                 />
             : null}
         </Container>

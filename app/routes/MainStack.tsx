@@ -7,7 +7,7 @@ const screens = {
         screen: MainScreen,
         navigationOptions: () => ({
             header: Header,
-            headerMode: 'screen',
+            headerMode: 'none',
         }),
     },
 }

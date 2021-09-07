@@ -176,12 +176,10 @@ const RecipeHeader = ({
 
 export default RecipeHeader
 
-const { height } = Dimensions.get('screen')
 
 const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
-    bottom: ${height * 0.03}px;
     width: 100%;
     background-color: ${(props) => props.theme.background};
     border-color: ${(props) => props.theme.primary};

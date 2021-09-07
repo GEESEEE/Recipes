@@ -9,7 +9,7 @@ export const getUserData =
         try {
             const user = await userService.getUser({ token })
             dispatch({ type: USERACTIONS.GET_USER_SUCCES, payload: user })
-        } catch (err) {
+        } catch (err: any) {
             console.error(err)
             dispatch({
                 type: USERACTIONS.GET_USER_ERROR,
