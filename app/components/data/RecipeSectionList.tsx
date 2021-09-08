@@ -109,16 +109,19 @@ const RecipeSectionList = ({
                 { paddingTop: insets.top + 10 },
             ]}
             ListHeaderComponent={
-                <RecipeHeader
-                    recipe={recipe}
-                    navigation={navigation}
-                    editable={editable ? 'Edit-all' : 'Edit-people'}
-                    handleNameChange={handleNameChange}
-                    handleDescriptionChange={handleDescriptionChange}
-                    handlePeopleCountChange={handlePeopleCountChange}
-                    handlePrepareTimeChange={handlePrepareTimeChange}
-                    handlePublishedAtChange={handlePublishedAtChange}
-                />
+                <View>
+                    <RecipeHeader
+                        recipe={recipe}
+                        navigation={navigation}
+                        editable={editable ? 'Edit-all' : 'Edit-people'}
+                        handleNameChange={handleNameChange}
+                        handleDescriptionChange={handleDescriptionChange}
+                        handlePeopleCountChange={handlePeopleCountChange}
+                        handlePrepareTimeChange={handlePrepareTimeChange}
+                        handlePublishedAtChange={handlePublishedAtChange}
+                    />
+                    <RecipeHeaderBottomPadding/>
+                </View>
             }
             ListFooterComponent={FooterComponent}
             renderSectionHeader={({ section }: any) => (
@@ -216,4 +219,8 @@ const SectionSeparatorView = styled(View)``
 
 const FooterPadding = styled(View)`
     margin-bottom: 16px;
+`
+
+const RecipeHeaderBottomPadding = styled(View)`
+    height: 20px;
 `

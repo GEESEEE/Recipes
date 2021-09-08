@@ -44,22 +44,13 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipe={recipeData}
                 navigation={navigation}
                 action="View"
-                handlePeopleCountChange={handlePeopleCountChange}
+                handlePeopleCountChange={(text: string) => handlePeopleCountChange(text)}
             />
         </Container>
     )
 }
 
 export default ViewRecipeScreen
-
-export const ViewRecipeConfig = {
-    ViewRecipe: {
-        screen: ViewRecipeScreen,
-        navigationOptions: () => ({
-            header: () => null,
-        }),
-    },
-}
 
 const Container = styled(View)`
     flex: 1;

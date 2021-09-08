@@ -1,7 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import { RecipesScreen, EditRecipeScreen, ViewRecipeConfig } from '../screens'
+import { RecipesScreen, EditRecipeScreen } from '../screens'
 import { Header } from '../components/routes'
 import * as routeUtils from '../config/routes'
+import { ViewRecipeConfig } from './config'
 
 const screens = {
     Recipes: {

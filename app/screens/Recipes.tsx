@@ -4,7 +4,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { NavigationScreenProp } from 'react-navigation'
 import { useHeaderHeight } from 'react-navigation-stack'
 import styled from 'styled-components'
-import { RecipeHeader } from '../components/data'
+import { RecipeHeader, RecipesRecyclerListView } from '../components/data'
 import { applySearch } from '../config/utils'
 import { Recipe } from '../data'
 import { useAppSelector } from '../hooks/redux'
@@ -16,7 +16,6 @@ function RecipesScreen({
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.myRecipes)
     const insets = useSafeAreaInsets()
-    const headerHeight = useHeaderHeight() - insets.top
 
     const search = navigation.state.params?.search
     const filteredRecipes = applySearch(recipes, search)
@@ -29,7 +28,11 @@ function RecipesScreen({
 
     return (
         <Container>
-            <RecipesList
+            <RecipesRecyclerListView
+                recipes={filteredRecipes}
+                navigation={navigation}
+            />
+            {/* <RecipesList
                 data={filteredRecipes}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{}}
@@ -39,7 +42,6 @@ function RecipesScreen({
                             recipe={item}
                             navigation={navigation}
                             editable="Edit-none"
-                            dropdown
                             dropdownDependencies={[scrollPosition]}
                             onPress={() =>
                                 navigation.navigate('ViewRecipe', {
@@ -51,7 +53,7 @@ function RecipesScreen({
                     </RecipeHeaderView>
                 )}
                 onScroll={handleScroll}
-            />
+            /> */}
         </Container>
     )
 }
