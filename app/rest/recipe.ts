@@ -40,7 +40,7 @@ export async function getRecipes({
     }
 
     if (typeof search !== 'undefined') {
-        suffix = suffix.concat(`&?search=${search}`)
+        suffix = suffix.concat(`&search=${search}`)
     }
 
     return handleError('GET', `/recipes${suffix}`, { body })

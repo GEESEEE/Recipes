@@ -4,24 +4,27 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useAppSelector } from '../../../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
+import { getRecipes } from '../../../actions/browse-recipes'
 
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
 
-    const searchRoutes = ['Main', 'RecipesScreen']
+    const searchRoutes = ['Main', 'Recipes']
     const [openSearchBar, setOpenSearchBar] = useState(false)
+    const [search, setSearch] = useState('')
 
     const displaySearch =
         searchRoutes.includes(routeName) &&
         (routeName === 'Main' || !openSearchBar)
 
     const displayFilter = searchRoutes.includes(routeName)
-    const displayAdd = ['RecipesScreen'].includes(routeName) && !openSearchBar
+    const displayAdd = ['Recipes'].includes(routeName) && !openSearchBar
 
     function handleDrawer(): void {
         navigation.toggleDrawer()
@@ -39,7 +42,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleSearch(): void {
-        console.log('Handle Search')
+        dispatch(getRecipes(['published'],  search))
     }
 
     function handleFilter(): void {
@@ -59,6 +62,8 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     <SearchBarComponent
                         navigation={navigation}
                         toggle={toggleSearch}
+                        searchText={search}
+                        setText={setSearch}
                     />
                 ) : (
                     <HeaderFlex>

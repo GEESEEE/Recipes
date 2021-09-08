@@ -10,8 +10,7 @@ import {
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { RecipeHeader } from '../components/data'
-import { Recipe } from '../data'
-import { applySearch } from '../config/utils'
+
 
 const ViewTypes = {
     RecipeHeader: 0,
@@ -19,17 +18,16 @@ const ViewTypes = {
 
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
-    const recipes = useAppSelector((state) => state.browseRecipes)
+    const browseRecipes = useAppSelector((state) => state.browseRecipes)
+    console.log(browseRecipes.length)
+    const recipes = useAppSelector((state) => state.myRecipes)
     console.log(recipes.length)
     const dispatch = useAppDispatch()
     const { width } = Dimensions.get('window')
 
-    const search = navigation.state.params?.search
-    // const filteredRecipes = applySearch(recipes, search)
-
     const dataProvider = new DataProvider(
         (r1, r2) => r1.id !== r2.id
-    ).cloneWithRows(recipes)
+    ).cloneWithRows(browseRecipes)
 
     const layoutProvider = new LayoutProvider(
         (_index) => ViewTypes.RecipeHeader,
@@ -57,6 +55,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                             recipe={data}
                             navigation={navigation}
                             editable="Edit-none"
+                            onPress={() => navigation.navigate('ViewRecipe', {
+                                recipe: data,
+                            })}
                         />
                         <RecipeHeaderBottomPadding />
                     </RecipeHeaderContainer>
@@ -73,7 +74,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            {filteredRecipes.length > 0 ? (
+            {browseRecipes.length > 0 ? (
                 <RecyclerListView
                     style={styles.recyclerList}
                     layoutProvider={layoutProvider}

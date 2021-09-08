@@ -1,10 +1,10 @@
 import { Recipe } from '../data'
 
 export const MY_RECIPE_ACTIONS = {
-    ADD_RECIPE: 'addRecipe',
-    SET_RECIPES: 'setRecipes',
-    DELETE_RECIPE: 'deleteRecipe',
-    EDIT_RECIPE: 'editRecipe',
+    ADD_RECIPE: 'addMyRecipe',
+    SET_RECIPES: 'setMyRecipes',
+    DELETE_RECIPE: 'deleteMyRecipe',
+    EDIT_RECIPE: 'editMyRecipe',
 }
 
 const initialState: Recipe[] = []

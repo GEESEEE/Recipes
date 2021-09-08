@@ -1,5 +1,5 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useEffect } from 'react'
+import { BackHandler, View } from 'react-native'
 import styled from 'styled-components'
 import { RecipeSectionList } from '../components/data'
 import { handleNumericTextInput } from '../config/utils'
@@ -12,6 +12,16 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const [recipeData, setRecipeData] = React.useState<Recipe>(
         JSON.parse(JSON.stringify(recipe))
     )
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+            navigation.pop()
+            return true
+        })
+
+        return () => backHandler.remove()
+    }, [])
+
 
     function handlePeopleCountChange(peopleCount: string): void {
         const val = handleNumericTextInput(peopleCount, true)
@@ -41,6 +51,15 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 }
 
 export default ViewRecipeScreen
+
+export const ViewRecipeConfig = {
+    ViewRecipe: {
+        screen: ViewRecipeScreen,
+        navigationOptions: () => ({
+            header: () => null,
+        }),
+    },
+}
 
 const Container = styled(View)`
     flex: 1;

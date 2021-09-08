@@ -1,8 +1,8 @@
 import { Recipe } from '../data'
 
 export const BROWSE_RECIPE_ACTIONS = {
-    ADD_RECIPES: 'addRecipes',
-    SET_RECIPES: 'setRecipes',
+    ADD_RECIPES: 'addBrowseRecipes',
+    SET_RECIPES: 'setBrowseRecipes',
 
 }
 

@@ -7,7 +7,7 @@ const screens = {
     Main: {
         screen: MainTabs,
     },
-    RecipesScreen: {
+    Recipes: {
         screen: RecipesStack,
     },
 }

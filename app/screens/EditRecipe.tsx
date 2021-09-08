@@ -196,7 +196,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             dispatch(createRecipe(recipeData))
             dispatch(decrementRecipeId(indices.recipeId))
             clearRecipeData()
-            navigation.navigate('RecipesScreen')
+            navigation.navigate('Recipes')
         }
     }
 
@@ -212,7 +212,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function cancelEditRecipe(): void {
-        navigation.navigate('RecipesScreen')
+        navigation.navigate('Recipes')
     }
 
     return (

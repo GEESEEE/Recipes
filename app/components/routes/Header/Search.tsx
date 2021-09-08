@@ -7,13 +7,16 @@ import { FeatherButton } from '../../user-input/Buttons'
 const SearchBarComponent = ({
     navigation,
     toggle,
+    searchText,
+    setText
 }: {
     navigation: any
     toggle: () => void
+    searchText: string
+    setText(text: string): void
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
-
-    const [text, setText] = useState('')
+    const { routeName } = navigation.state
 
     function handleText(search: string): void {
         setText(search)
@@ -28,10 +31,10 @@ const SearchBarComponent = ({
                 size={25}
             />
             <SearchBar
-                placeholder="Search"
+                placeholder={routeName === 'Main' ? "Search" : 'Filter'}
                 placeholderTextColor={theme.grey}
                 onChangeText={(t: string) => handleText(t)}
-                value={text}
+                value={searchText}
             />
             <ClearSearchBarButton
                 iconName="x"

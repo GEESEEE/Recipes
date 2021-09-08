@@ -4,7 +4,7 @@ import RecipesScreen from './Recipes'
 import EditRecipeScreen from './EditRecipe'
 import RegisterScreen from './Register'
 import TestScreen from './Test'
-import ViewRecipeScreen from './ViewRecipe'
+import ViewRecipeScreen, { ViewRecipeConfig } from './ViewRecipe'
 import Popup from './Popup'
 
 export {
@@ -16,4 +16,5 @@ export {
     RecipesScreen,
     TestScreen,
     Popup,
+    ViewRecipeConfig
 }
