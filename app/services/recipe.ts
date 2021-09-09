@@ -23,7 +23,10 @@ type RecipeDifferenceObject = {
     publishedAt?: Date | null
 }
 
-export function recipeDifference(oldRecipe: Recipe, recipe: Recipe): RecipeDifferenceObject {
+export function recipeDifference(
+    oldRecipe: Recipe,
+    recipe: Recipe
+): RecipeDifferenceObject {
     const recipeObj: RecipeDifferenceObject = {}
     if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
     if (recipe.description !== oldRecipe.description)
@@ -65,7 +68,7 @@ export async function updateRecipe(
 
 export async function getMyRecipes(): Promise<Recipe[]> {
     return recipeService.getRecipes({
-        scopes: ['author']
+        scopes: ['author'],
     })
 }
 

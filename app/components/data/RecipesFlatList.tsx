@@ -5,7 +5,6 @@ import { RecipeHeader } from '.'
 import { Recipe } from '../../data'
 import { recipeHeaderPropsChanged } from './RecipeHeader'
 
-
 interface RecipesFlatListProps {
     recipes: Recipe[]
     navigation: any
@@ -32,7 +31,6 @@ function RecipesFlatList({
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{}}
             renderItem={({ item }) => (
-
                 <MemoizedRecipeHeader
                     recipe={item}
                     navigation={navigation}
@@ -44,12 +42,10 @@ function RecipesFlatList({
                         })
                     }
                 />
-
             )}
-            onScroll={(e) => dropdown ? handleScroll(e) : undefined}
+            onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
         />
     )
-
 }
 
 export default RecipesFlatList

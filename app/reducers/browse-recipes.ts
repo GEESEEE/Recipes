@@ -3,7 +3,6 @@ import { Recipe } from '../data'
 export const BROWSE_RECIPE_ACTIONS = {
     ADD_RECIPES: 'addBrowseRecipes',
     SET_RECIPES: 'setBrowseRecipes',
-
 }
 
 const initialState: Recipe[] = []
@@ -22,7 +21,6 @@ const browseRecipes = (
             const { newRecipes } = action.payload
             return [...state, ...newRecipes]
         }
-
 
         default:
             return state

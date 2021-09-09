@@ -73,4 +73,3 @@ export function replaceElements<T extends { id: number }>(
     arr.map((el) => arr2.find((el2) => el.id === el2.id) || el)
     return arr
 }
-

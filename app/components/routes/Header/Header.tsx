@@ -41,7 +41,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleSearch(): void {
-        dispatch(getRecipes(['published'],  search))
+        dispatch(getRecipes(['published'], search))
     }
 
     function handleFilter(): void {
@@ -66,7 +66,10 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     />
                 ) : (
                     <HeaderFlex>
-                        <FeatherButton iconName="menu" onPress={() => handleDrawer()} />
+                        <FeatherButton
+                            iconName="menu"
+                            onPress={() => handleDrawer()}
+                        />
                     </HeaderFlex>
                 )}
 

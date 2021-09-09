@@ -18,7 +18,7 @@ const screens = {
             header: () => null,
         }),
     },
-    ...ViewRecipeConfig
+    ...ViewRecipeConfig,
 }
 
 const stackConfig: any = {

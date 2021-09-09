@@ -1,14 +1,17 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react'
 
-export default function useUpdateEffect(callback: () => any, dependencies: any[]): void {
-  const firstRenderRef = useRef(true)
+export default function useUpdateEffect(
+    callback: () => any,
+    dependencies: any[]
+): void {
+    const firstRenderRef = useRef(true)
 
-  useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false
-      return undefined
-    }
+    useEffect(() => {
+        if (firstRenderRef.current) {
+            firstRenderRef.current = false
+            return undefined
+        }
 
-    return callback()
-  }, dependencies)
+        return callback()
+    }, dependencies)
 }

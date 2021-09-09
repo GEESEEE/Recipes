@@ -16,10 +16,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <RecipesFlatList
-                recipes={browseRecipes}
-                navigation={navigation}
-            />
+            <RecipesFlatList recipes={browseRecipes} navigation={navigation} />
         </Container>
     )
 }

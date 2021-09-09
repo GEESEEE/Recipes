@@ -34,7 +34,9 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipe={recipeData}
                 navigation={navigation}
                 action="View"
-                handlePeopleCountChange={(text: string) => handlePeopleCountChange(text)}
+                handlePeopleCountChange={(text: string) =>
+                    handlePeopleCountChange(text)
+                }
             />
         </Container>
     )

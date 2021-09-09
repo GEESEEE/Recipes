@@ -12,7 +12,7 @@ const screens = {
             headerMode: 'screen',
         }),
     },
-    ...ViewRecipeConfig
+    ...ViewRecipeConfig,
 }
 
 const stackConfig: any = {

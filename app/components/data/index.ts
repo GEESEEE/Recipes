@@ -9,5 +9,5 @@ export {
     IngredientListItem,
     InstructionListItem,
     RecipeSectionList,
-    RecipesRecyclerListView
+    RecipesRecyclerListView,
 }

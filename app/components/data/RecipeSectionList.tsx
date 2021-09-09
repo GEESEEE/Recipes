@@ -120,7 +120,7 @@ const RecipeSectionList = ({
                         handlePrepareTimeChange={handlePrepareTimeChange}
                         handlePublishedAtChange={handlePublishedAtChange}
                     />
-                    <RecipeHeaderBottomPadding/>
+                    <RecipeHeaderBottomPadding />
                 </View>
             }
             ListFooterComponent={FooterComponent}

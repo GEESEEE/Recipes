@@ -10,7 +10,6 @@ import styled from 'styled-components'
 import RecipeHeader from './RecipeHeader'
 import { Recipe } from '../../data'
 
-
 const ViewTypes = {
     RecipeHeader: 0,
 }
@@ -22,14 +21,18 @@ interface RecipesRecyclerListViewProps {
 
 function RecipesRecyclerListView({
     recipes,
-    navigation
+    navigation,
 }: RecipesRecyclerListViewProps): JSX.Element {
     const { width } = Dimensions.get('window')
     const { routeName } = navigation.state
 
     const [scrollPosition, setScrollPosition] = React.useState(0)
 
-    function handleScroll(_event: ScrollEvent, _offsetX: number, offsetY: number): void {
+    function handleScroll(
+        _event: ScrollEvent,
+        _offsetX: number,
+        offsetY: number
+    ): void {
         setScrollPosition(offsetY)
     }
 
@@ -41,10 +44,11 @@ function RecipesRecyclerListView({
         (_index) => ViewTypes.RecipeHeader,
         async (type, dim) => {
             switch (type) {
-                case ViewTypes.RecipeHeader:{
+                case ViewTypes.RecipeHeader: {
                     dim.width = width * 0.81
                     dim.height = 150
-                    break}
+                    break
+                }
 
                 default:
                     dim.width = 0
@@ -65,10 +69,16 @@ function RecipesRecyclerListView({
                             recipe={data}
                             navigation={navigation}
                             editable="Edit-none"
-                            onPress={() => navigation.navigate('ViewRecipe', {
-                                recipe: data,
-                            })}
-                            dropDownDependencies={routeName === 'Recipes'? [scrollPosition] : undefined}
+                            onPress={() =>
+                                navigation.navigate('ViewRecipe', {
+                                    recipe: data,
+                                })
+                            }
+                            dropDownDependencies={
+                                routeName === 'Recipes'
+                                    ? [scrollPosition]
+                                    : undefined
+                            }
                         />
                         <RecipeHeaderBottomPadding />
                     </RecipeHeaderContainer>
@@ -94,7 +104,6 @@ function RecipesRecyclerListView({
             ) : null}
         </Container>
     )
-
 }
 
 export default RecipesRecyclerListView

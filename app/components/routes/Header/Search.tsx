@@ -8,7 +8,7 @@ const SearchBarComponent = ({
     navigation,
     toggle,
     searchText,
-    setText
+    setText,
 }: {
     navigation: any
     toggle: () => void
@@ -31,7 +31,7 @@ const SearchBarComponent = ({
                 size={25}
             />
             <SearchBar
-                placeholder={routeName === 'Main' ? "Search" : 'Filter'}
+                placeholder={routeName === 'Main' ? 'Search' : 'Filter'}
                 placeholderTextColor={theme.grey}
                 onChangeText={(t: string) => handleText(t)}
                 value={searchText}

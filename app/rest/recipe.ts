@@ -32,7 +32,7 @@ export async function getRecipe(recipeId: number): Promise<Recipe> {
 export async function getRecipes({
     scopes,
     search,
-    body
+    body,
 }: GetRecipeParams): Promise<Recipe[]> {
     let suffix = ''
     if (typeof scopes !== 'undefined') {
