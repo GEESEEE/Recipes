@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import RecipesRecyclerListView from '../components/data/RecipesRecyclerListView'
+import RecipesFlatList from '../components/data/RecipesFlatList'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
-    console.log(browseRecipes.length)
 
     const dispatch = useAppDispatch()
 
@@ -18,7 +16,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <RecipesRecyclerListView
+            <RecipesFlatList
                 recipes={browseRecipes}
                 navigation={navigation}
             />

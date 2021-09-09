@@ -39,12 +39,12 @@ function RecipesRecyclerListView({
 
     const layoutProvider = new LayoutProvider(
         (_index) => ViewTypes.RecipeHeader,
-        (type, dim) => {
+        async (type, dim) => {
             switch (type) {
-                case ViewTypes.RecipeHeader:
-                    dim.width = width
+                case ViewTypes.RecipeHeader:{
+                    dim.width = width * 0.81
                     dim.height = 150
-                    break
+                    break}
 
                 default:
                     dim.width = 0
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 })
 
 const RecipeHeaderContainer = styled(View)`
-    width: 100%;
+    flex: 1;
     align-items: center;
     justify-content: center;
 `

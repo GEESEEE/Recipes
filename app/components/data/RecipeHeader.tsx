@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, Dimensions, TouchableOpacity } from 'react-native'
+import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
@@ -184,7 +184,6 @@ const Header = styled(TouchableOpacity)`
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-bottom: -10px;
 `
 
 const RecipeNameView = styled(View)`
