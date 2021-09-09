@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, Props } from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
@@ -7,9 +7,9 @@ import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { deleteRecipe } from '../../actions/my-recipes'
 import { ButtonIcon } from '../user-input/Buttons'
+import { recipeDifference } from '../../services/recipe'
 
 interface RecipeHeaderOptions {
-    children?: JSX.Element[]
     recipe: Recipe
     navigation: any
     editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
@@ -23,7 +23,6 @@ interface RecipeHeaderOptions {
 }
 
 const RecipeHeader = ({
-    children,
     recipe,
     navigation,
     editable,
@@ -160,7 +159,6 @@ const RecipeHeader = ({
                 </PublishedView>
             </PropertiesContainer>
 
-            {children}
             {/* Dropdown Menu */}
             {dropdownDependencies ? (
                 <DropDownMenu
@@ -172,18 +170,27 @@ const RecipeHeader = ({
     )
 }
 
-export default RecipeHeader
+function propsChanged(prevProps: any, nextProps: any): boolean {
+    const oldRecipe = prevProps.recipe
+    const newRecipe = nextProps.recipe
+    const recipeDifferenceObject = recipeDifference(oldRecipe, newRecipe);
+
+    return Object.keys(recipeDifferenceObject).length > 0
+}
+
+export default memo(RecipeHeader, propsChanged)
 
 const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
     background-color: ${(props) => props.theme.background};
     border-color: ${(props) => props.theme.primary};
     border-radius: 20px;
     border-width: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-bottom: 10px;
 `
 
 const RecipeNameView = styled(View)`

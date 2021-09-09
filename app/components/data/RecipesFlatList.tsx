@@ -29,20 +29,19 @@ function RecipesFlatList({
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{}}
             renderItem={({ item }) => (
-                <RecipeHeaderView>
-                    <RecipeHeader
-                        recipe={item}
-                        navigation={navigation}
-                        editable="Edit-none"
-                        dropdownDependencies={dropdown ? [scrollPosition] : undefined}
-                        onPress={() =>
-                            navigation.navigate('ViewRecipe', {
-                                recipe: item,
-                            })
-                        }
-                    />
-                    <Separator />
-                </RecipeHeaderView>
+
+                <RecipeHeader
+                    recipe={item}
+                    navigation={navigation}
+                    editable="Edit-none"
+                    dropdownDependencies={dropdown ? [scrollPosition] : undefined}
+                    onPress={() =>
+                        navigation.navigate('ViewRecipe', {
+                            recipe: item,
+                        })
+                    }
+                />
+
             )}
             onScroll={(e) => handleScroll(e)}
         />
@@ -55,12 +54,4 @@ export default RecipesFlatList
 const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
     padding-top: 5px;
-`
-
-const RecipeHeaderView = styled(View)`
-    width: 90%;
-    align-self: center;
-`
-const Separator = styled(View)`
-    height: 10px;
 `

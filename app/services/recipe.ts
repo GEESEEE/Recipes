@@ -1,15 +1,7 @@
 import * as recipeService from '../rest/recipe'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
 
-type RecipeUpdateObject = {
-    name?: string
-    description?: string
-    peopleCount?: number
-    prepareTime?: number
-    publishedAt?: Date | null
-}
-
-type IngredientUpdateObject = {
+type IngredientDifferenceObject = {
     recipeIngredientId: number
     amount?: number
     position?: number
@@ -17,10 +9,33 @@ type IngredientUpdateObject = {
     name?: string
 }
 
-type InstructionUpdateObject = {
+type InstructionDifferenceObject = {
     instructionId: number
     text?: string
     position?: number
+}
+
+type RecipeDifferenceObject = {
+    name?: string
+    description?: string
+    peopleCount?: number
+    prepareTime?: number
+    publishedAt?: Date | null
+}
+
+export function recipeDifference(oldRecipe: Recipe, recipe: Recipe): RecipeDifferenceObject {
+    const recipeObj: RecipeDifferenceObject = {}
+    if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
+    if (recipe.description !== oldRecipe.description)
+        recipeObj.description = recipe.description
+    if (recipe.peopleCount !== oldRecipe.peopleCount)
+        recipeObj.peopleCount = recipe.peopleCount
+    if (recipe.prepareTime !== oldRecipe.prepareTime)
+        recipeObj.prepareTime = recipe.prepareTime
+    if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
+        recipeObj.publishedAt = recipe.publishedAt
+
+    return recipeObj
 }
 
 export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
@@ -39,16 +54,7 @@ export async function updateRecipe(
     recipe: Recipe,
     oldRecipe: Recipe
 ): Promise<Recipe> {
-    const recipeObj: RecipeUpdateObject = {}
-    if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
-    if (recipe.description !== oldRecipe.description)
-        recipeObj.description = recipe.description
-    if (recipe.peopleCount !== oldRecipe.peopleCount)
-        recipeObj.peopleCount = recipe.peopleCount
-    if (recipe.prepareTime !== oldRecipe.prepareTime)
-        recipeObj.prepareTime = recipe.prepareTime
-    if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
-        recipeObj.publishedAt = recipe.publishedAt
+    const recipeObj = recipeDifference(oldRecipe, recipe)
 
     if (Object.keys(recipeObj).length > 0) {
         return recipeService.updateRecipe(recipe.id, recipeObj)
@@ -88,9 +94,9 @@ export async function updateIngredients(
     ingredients: RecipeIngredient[],
     oldIngredients: RecipeIngredient[]
 ): Promise<RecipeIngredient[]> {
-    const updateObjects: IngredientUpdateObject[] = []
+    const updateObjects: IngredientDifferenceObject[] = []
     ingredients.forEach((ingr) => {
-        const obj: IngredientUpdateObject = { recipeIngredientId: ingr.id }
+        const obj: IngredientDifferenceObject = { recipeIngredientId: ingr.id }
         const oldIngr = oldIngredients.find((i) => i.id === ingr.id)
         if (typeof oldIngr !== 'undefined') {
             if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
@@ -131,9 +137,9 @@ export async function updateInstructions(
     instructions: Instruction[],
     oldInstructions: Instruction[]
 ): Promise<Instruction[]> {
-    const updateObjects: InstructionUpdateObject[] = []
+    const updateObjects: InstructionDifferenceObject[] = []
     instructions.forEach((instr) => {
-        const obj: InstructionUpdateObject = { instructionId: instr.id }
+        const obj: InstructionDifferenceObject = { instructionId: instr.id }
         const oldInstr = oldInstructions.find((i) => i.id === instr.id)
         if (typeof oldInstr !== 'undefined') {
             if (oldInstr.text !== instr.text) obj.text = instr.text

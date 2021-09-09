@@ -22,7 +22,6 @@ const screens = {
 }
 
 const stackConfig: any = {
-    detachInactiveScreens: true,
     mode: 'modal',
     defaultNavigationOptions: {
         cardStyle: { backgroundColor: 'transparent' },

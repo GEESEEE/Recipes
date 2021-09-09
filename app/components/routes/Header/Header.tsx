@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
@@ -61,13 +60,13 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {openSearchBar ? (
                     <SearchBarComponent
                         navigation={navigation}
-                        toggle={toggleSearch}
+                        toggle={() => toggleSearch()}
                         searchText={search}
                         setText={setSearch}
                     />
                 ) : (
                     <HeaderFlex>
-                        <FeatherButton iconName="menu" onPress={handleDrawer} />
+                        <FeatherButton iconName="menu" onPress={() => handleDrawer()} />
                     </HeaderFlex>
                 )}
 
@@ -88,7 +87,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"
-                        onPress={handleFilter}
+                        onPress={() => handleFilter()}
                         size={25}
                     />
                 ) : null}
@@ -97,7 +96,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayAdd ? (
                     <FeatherButton
                         iconName="plus"
-                        onPress={handleCreateRecipe}
+                        onPress={() => handleCreateRecipe()}
                     />
                 ) : null}
             </HeaderContainer>
