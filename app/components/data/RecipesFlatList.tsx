@@ -1,21 +1,25 @@
-import React from 'react'
-import { FlatList, View } from 'react-native'
+import React, { memo } from 'react'
+import { FlatList } from 'react-native'
 import styled from 'styled-components'
 import { RecipeHeader } from '.'
 import { Recipe } from '../../data'
-import { useAppSelector } from '../../hooks'
+import { recipeHeaderPropsChanged } from './RecipeHeader'
 
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
     navigation: any
     dropdown?: boolean
+    extraData?: any
 }
+
+const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
 
 function RecipesFlatList({
     recipes,
     navigation,
-    dropdown
+    dropdown,
+    extraData,
 }: RecipesFlatListProps): JSX.Element {
     const [scrollPosition, setScrollPosition] = React.useState(0)
 
@@ -26,11 +30,12 @@ function RecipesFlatList({
     return (
         <RecipesList
             data={recipes}
+            extraData={extraData}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{}}
             renderItem={({ item }) => (
 
-                <RecipeHeader
+                <MemoizedRecipeHeader
                     recipe={item}
                     navigation={navigation}
                     editable="Edit-none"

@@ -31,7 +31,8 @@ const myRecipes = (
 
         case MY_RECIPE_ACTIONS.EDIT_RECIPE: {
             const { newRecipe } = action.payload
-            return state.map((r) => (r.id === newRecipe.id ? newRecipe : r))
+            const newerRecipe = JSON.parse(JSON.stringify(newRecipe))
+            return state.map((r) => (r.id === newerRecipe.id ? newerRecipe : r))
         }
 
         default:

@@ -1,4 +1,4 @@
-import React, { memo, Props } from 'react'
+import React, { memo} from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import Recipe from '../../data/recipe'
@@ -170,15 +170,15 @@ const RecipeHeader = ({
     )
 }
 
-function propsChanged(prevProps: any, nextProps: any): boolean {
+export function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     const oldRecipe = prevProps.recipe
     const newRecipe = nextProps.recipe
     const recipeDifferenceObject = recipeDifference(oldRecipe, newRecipe);
-
+    console.log("Props |", newRecipe.name, recipeDifferenceObject, Object.keys(recipeDifferenceObject).length > 0)
     return Object.keys(recipeDifferenceObject).length > 0
 }
 
-export default memo(RecipeHeader, propsChanged)
+export default RecipeHeader
 
 const Header = styled(TouchableOpacity)`
     align-self: center;

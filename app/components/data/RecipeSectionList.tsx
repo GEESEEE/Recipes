@@ -72,7 +72,7 @@ const RecipeSectionList = ({
             footerText: 'Add Ingredient',
             footerOnPress: handleAddIngredient,
             data: recipe.recipeIngredients as ListItem[],
-            renderItem: ({ item }: { item: ListItem }) => (
+            renderItem: ({ item }: any) => (
                 <IngredientListItem
                     ingredient={item as RecipeIngredient}
                     ingredients={recipe.recipeIngredients!}
@@ -89,7 +89,7 @@ const RecipeSectionList = ({
             footerText: 'Add Instruction',
             footerOnPress: handleAddInstruction,
             data: recipe.instructions as ListItem[],
-            renderItem: ({ item }: { item: ListItem }) => (
+            renderItem: ({ item }: any) => (
                 <InstructionListItem
                     instruction={item as Instruction}
                     instructions={recipe.instructions!}
