@@ -1,6 +1,7 @@
 import React, { memo} from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
+import _ from 'lodash'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
@@ -13,7 +14,7 @@ interface RecipeHeaderOptions {
     recipe: Recipe
     navigation: any
     editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
-    dropdownDependencies?: number[]
+    dropDownDependencies?: any[]
     onPress?: () => void
     handleNameChange?: (text: string) => void
     handleDescriptionChange?: (text: string) => void
@@ -26,7 +27,7 @@ const RecipeHeader = ({
     recipe,
     navigation,
     editable,
-    dropdownDependencies,
+    dropDownDependencies,
     onPress,
     handleNameChange,
     handleDescriptionChange,
@@ -36,6 +37,7 @@ const RecipeHeader = ({
 }: RecipeHeaderOptions): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
+
 
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
@@ -68,6 +70,12 @@ const RecipeHeader = ({
         return { color: theme.grey }
     }
 
+    const dropDown = typeof dropDownDependencies === 'undefined'
+    ? null
+    :   (<DropDownMenu
+            items={dropDownItems}
+            dependencies={dropDownDependencies}
+        />)
     return (
         <Header onPress={onPress} disabled={!onPress}>
             {/* Recipe Name Input Field */}
@@ -160,22 +168,18 @@ const RecipeHeader = ({
             </PropertiesContainer>
 
             {/* Dropdown Menu */}
-            {dropdownDependencies ? (
-                <DropDownMenu
-                    items={dropDownItems}
-                    dropdownDependencies={dropdownDependencies}
-                />
-            ) : null}
+            {dropDown}
         </Header>
     )
 }
 
 export function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
+    if (!_.isEqual(prevProps.dropDownDependencies, nextProps.dropDownDependencies)) return false
     const oldRecipe = prevProps.recipe
     const newRecipe = nextProps.recipe
+
     const recipeDifferenceObject = recipeDifference(oldRecipe, newRecipe);
-    console.log("Props |", newRecipe.name, recipeDifferenceObject, Object.keys(recipeDifferenceObject).length > 0)
-    return Object.keys(recipeDifferenceObject).length > 0
+    return  Object.keys(recipeDifferenceObject).length === 0
 }
 
 export default RecipeHeader

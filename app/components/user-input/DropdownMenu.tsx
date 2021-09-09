@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, TouchableOpacity, Text, Modal } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { Position, usePosition } from '../../hooks'
+import { Position, usePosition, useToggle } from '../../hooks'
 import { ButtonOptions } from './Buttons'
 
 export type DropDownItem = {
@@ -15,18 +15,16 @@ export function DropDownMenu({
     items,
     iconSize = 25,
     iconOffset = 5,
-    dropdownDependencies,
+    dependencies,
 }: {
     items: DropDownItem[]
     iconSize?: number
     iconOffset?: number
-    dropdownDependencies?: number[]
+    dependencies?: number[]
 }): JSX.Element {
-    const [open, setOpen] = useState(false)
-    const toggle = (): void => setOpen(!open)
+    const [open, toggle] = useToggle(false)
     const offset = iconSize + iconOffset * 2
-
-    const [positionRef, onPosition] = usePosition(dropdownDependencies)
+    const [positionRef, onPosition] = usePosition(dependencies)
 
     const Container = styled(View)`
         position: absolute;
@@ -40,7 +38,7 @@ export function DropDownMenu({
     return (
         <Container onLayout={onPosition}>
             <ButtonOptions
-                onPress={toggle}
+                onPress={() => toggle()}
                 size={iconSize}
                 offset={iconOffset}
             />
@@ -48,9 +46,9 @@ export function DropDownMenu({
                 <Menu
                     ref={positionRef}
                     items={items}
-                    toggle={toggle}
+                    toggle={() => toggle()}
                     offset={offset}
-                    onPress={toggle}
+                    onPress={() => toggle()}
                 />
             ) : null}
         </Container>

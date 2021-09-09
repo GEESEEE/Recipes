@@ -10,7 +10,6 @@ interface RecipesFlatListProps {
     recipes: Recipe[]
     navigation: any
     dropdown?: boolean
-    extraData?: any
 }
 
 const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
@@ -19,18 +18,17 @@ function RecipesFlatList({
     recipes,
     navigation,
     dropdown,
-    extraData,
 }: RecipesFlatListProps): JSX.Element {
     const [scrollPosition, setScrollPosition] = React.useState(0)
 
     function handleScroll(event: any): void {
         setScrollPosition(event.nativeEvent.contentOffset.y)
     }
+    const dropDownDependencies = dropdown ? [scrollPosition] : undefined
 
     return (
         <RecipesList
             data={recipes}
-            extraData={extraData}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{}}
             renderItem={({ item }) => (
@@ -39,7 +37,7 @@ function RecipesFlatList({
                     recipe={item}
                     navigation={navigation}
                     editable="Edit-none"
-                    dropdownDependencies={dropdown ? [scrollPosition] : undefined}
+                    dropDownDependencies={dropDownDependencies}
                     onPress={() =>
                         navigation.navigate('ViewRecipe', {
                             recipe: item,
@@ -48,7 +46,7 @@ function RecipesFlatList({
                 />
 
             )}
-            onScroll={(e) => handleScroll(e)}
+            onScroll={(e) => dropdown ? handleScroll(e) : undefined}
         />
     )
 

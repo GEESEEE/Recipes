@@ -68,7 +68,7 @@ function RecipesRecyclerListView({
                             onPress={() => navigation.navigate('ViewRecipe', {
                                 recipe: data,
                             })}
-                            dropdownDependencies={routeName === 'Recipes'? [scrollPosition] : undefined}
+                            dropDownDependencies={routeName === 'Recipes'? [scrollPosition] : undefined}
                         />
                         <RecipeHeaderBottomPadding />
                     </RecipeHeaderContainer>

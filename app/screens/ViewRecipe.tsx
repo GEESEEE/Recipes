@@ -13,16 +13,6 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         JSON.parse(JSON.stringify(recipe))
     )
 
-    useEffect(() => {
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
-            navigation.pop()
-            return true
-        })
-
-        return () => backHandler.remove()
-    }, [])
-
-
     function handlePeopleCountChange(peopleCount: string): void {
         const val = handleNumericTextInput(peopleCount, true)
         recipeData.peopleCount = val

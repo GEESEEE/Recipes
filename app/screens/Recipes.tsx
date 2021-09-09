@@ -20,7 +20,6 @@ function RecipesScreen({
         <Container>
             <RecipesFlatList
                 recipes={filteredRecipes}
-                extraData={recipes}
                 navigation={navigation}
                 dropdown
             />
