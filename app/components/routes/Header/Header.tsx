@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
+import { useDebounce } from '../../../hooks'
 
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
@@ -17,10 +18,6 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const searchRoutes = ['Main', 'Recipes']
     const [openSearchBar, setOpenSearchBar] = useState(false)
     const [search, setSearch] = useState('')
-
-    const displaySearch =
-        searchRoutes.includes(routeName) &&
-        (routeName === 'Main' || !openSearchBar)
 
     const displayFilter = searchRoutes.includes(routeName)
     const displayAdd = ['Recipes'].includes(routeName) && !openSearchBar
@@ -38,10 +35,6 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
             navigation.setParams({ search: '' })
         }
         setOpenSearchBar(!openSearchBar)
-    }
-
-    function handleSearch(): void {
-        dispatch(getRecipes(['published'], search))
     }
 
     function handleFilter(): void {
@@ -74,9 +67,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 )}
 
                 {/* Search Button */}
-                {displaySearch ? (
+                {!openSearchBar ? (
                     <ButtonIcon
-                        onPress={openSearchBar ? handleSearch : toggleSearch}
+                        onPress={() => toggleSearch()}
                         icon={
                             <MaterialIcons
                                 name="search"
@@ -87,6 +80,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     />
                 ) : null}
 
+                {/* Filter button */}
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"

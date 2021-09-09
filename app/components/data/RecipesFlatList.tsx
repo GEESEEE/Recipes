@@ -13,11 +13,11 @@ interface RecipesFlatListProps {
 
 const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
 
-function RecipesFlatList({
+const RecipesFlatList = React.forwardRef(({
     recipes,
     navigation,
     dropdown,
-}: RecipesFlatListProps): JSX.Element {
+}: RecipesFlatListProps, ref: any): JSX.Element => {
     const [scrollPosition, setScrollPosition] = React.useState(0)
 
     function handleScroll(event: any): void {
@@ -27,6 +27,7 @@ function RecipesFlatList({
 
     return (
         <RecipesList
+            ref={ref}
             data={recipes}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{}}
@@ -46,7 +47,7 @@ function RecipesFlatList({
             onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
         />
     )
-}
+})
 
 export default RecipesFlatList
 
