@@ -16,11 +16,11 @@ export function handleNumericTextInput(
 }
 
 export function inElementOf(arr: string[], val: string): boolean {
-    return arr.some(el => el.includes(val))
+    return arr.some((el) => el.includes(val))
 }
 
 export function indexOfIncludedElement(arr: string[], val: string): number {
-    const found = arr.find(el => el.includes(val))
+    const found = arr.find((el) => el.includes(val))
     if (typeof found === 'undefined') {
         return -1
     }

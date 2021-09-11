@@ -19,5 +19,5 @@ export {
     useDebounce,
     useAsync,
     usePrevious,
-    useArray
+    useArray,
 }

@@ -13,41 +13,42 @@ interface RecipesFlatListProps {
 
 const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
 
-const RecipesFlatList = React.forwardRef(({
-    recipes,
-    navigation,
-    dropdown,
-}: RecipesFlatListProps, ref: any): JSX.Element => {
-    const [scrollPosition, setScrollPosition] = React.useState(0)
+const RecipesFlatList = React.forwardRef(
+    (
+        { recipes, navigation, dropdown }: RecipesFlatListProps,
+        ref: any
+    ): JSX.Element => {
+        const [scrollPosition, setScrollPosition] = React.useState(0)
 
-    function handleScroll(event: any): void {
-        setScrollPosition(event.nativeEvent.contentOffset.y)
+        function handleScroll(event: any): void {
+            setScrollPosition(event.nativeEvent.contentOffset.y)
+        }
+        const dropDownDependencies = dropdown ? [scrollPosition] : undefined
+
+        return (
+            <RecipesList
+                ref={ref}
+                data={recipes}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{}}
+                renderItem={({ item }) => (
+                    <MemoizedRecipeHeader
+                        recipe={item}
+                        navigation={navigation}
+                        editable="Edit-none"
+                        dropDownDependencies={dropDownDependencies}
+                        onPress={() =>
+                            navigation.navigate('ViewRecipe', {
+                                recipe: item,
+                            })
+                        }
+                    />
+                )}
+                onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
+            />
+        )
     }
-    const dropDownDependencies = dropdown ? [scrollPosition] : undefined
-
-    return (
-        <RecipesList
-            ref={ref}
-            data={recipes}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{}}
-            renderItem={({ item }) => (
-                <MemoizedRecipeHeader
-                    recipe={item}
-                    navigation={navigation}
-                    editable="Edit-none"
-                    dropDownDependencies={dropDownDependencies}
-                    onPress={() =>
-                        navigation.navigate('ViewRecipe', {
-                            recipe: item,
-                        })
-                    }
-                />
-            )}
-            onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
-        />
-    )
-})
+)
 
 export default RecipesFlatList
 

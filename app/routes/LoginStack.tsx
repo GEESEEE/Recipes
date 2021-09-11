@@ -26,7 +26,7 @@ const screens = {
         navigationOptions: {
             cardStyleInterpolator: routeUtils.fade,
         },
-    }
+    },
 }
 
 const stackConfig: any = {

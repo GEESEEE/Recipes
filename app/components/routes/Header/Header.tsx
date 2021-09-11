@@ -35,7 +35,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleFilter(): void {
-        navigation.navigate('Sort', { route: routeName})
+        navigation.navigate('Sort', { route: routeName })
     }
 
     return (

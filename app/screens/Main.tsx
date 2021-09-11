@@ -8,7 +8,6 @@ import { useDebounce } from '../hooks'
 import { getRecipes } from '../actions/browse-recipes'
 import SortHeader from '../components/user-input/SortHeader'
 
-
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
     const dispatch = useAppDispatch()
@@ -21,21 +20,21 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     useEffect(() => {
         dispatch(retrieveRecipes())
-        dispatch(getRecipes({scopes: ['published'], sort: ['publishtime']}))
+        dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])
 
     const onSearch = (): void => {
         if (typeof listRef.current !== 'undefined') {
             listRef.current.scrollToOffset({ animated: true, offset: 0 })
         }
-        dispatch(getRecipes({scopes: ['published'], search, sort}))
+        dispatch(getRecipes({ scopes: ['published'], search, sort }))
     }
 
     useDebounce(onSearch, 1000, [search, sort])
 
     return (
         <Container>
-            <SortHeader route='Main'/>
+            <SortHeader route="Main" />
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes}

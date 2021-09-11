@@ -7,14 +7,18 @@ export const getRecipes =
     ({
         scopes,
         search,
-        sort
-    }:{
+        sort,
+    }: {
         scopes: Scope[]
         search?: string
         sort?: string[]
     }) =>
     async (dispatch: Dispatch): Promise<void> => {
-        const newRecipes = await recipeService.getRecipes({ scopes, search, sort })
+        const newRecipes = await recipeService.getRecipes({
+            scopes,
+            search,
+            sort,
+        })
 
         dispatch({
             type: BROWSE_RECIPE_ACTIONS.SET_RECIPES,

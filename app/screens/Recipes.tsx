@@ -23,7 +23,7 @@ function RecipesScreen({
 
     return (
         <Container>
-            <SortHeader route='Recipes'/>
+            <SortHeader route="Recipes" />
             <RecipesFlatList
                 recipes={sortedRecipes}
                 navigation={navigation}

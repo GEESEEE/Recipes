@@ -1,7 +1,13 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { removeSort, addSort, swapSort, toggleSort, SortType } from '../../actions/sort'
+import {
+    removeSort,
+    addSort,
+    swapSort,
+    toggleSort,
+    SortType,
+} from '../../actions/sort'
 import { inElementOf, indexOfIncludedElement } from '../../config/utils'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { BROWSE_SORT_ACTIONS } from '../../reducers/browse'
@@ -9,24 +15,36 @@ import { MY_SORT_ACTIONS } from '../../reducers/my'
 import { MyMaterialCommunityIcons } from '../Icons'
 import { ButtonIcon, FeatherButton } from './Buttons'
 
-
 function SortRow({
     type,
     name,
     options,
-    routeName
-}: SortType & {routeName: string}): JSX.Element {
+    routeName,
+}: SortType & { routeName: string }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
     const globalState = useAppSelector((state) => state)
 
-    const sortState = routeName === 'Main' ? globalState.browseSort : globalState.mySort
+    const sortState =
+        routeName === 'Main' ? globalState.browseSort : globalState.mySort
 
-    const addType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.ADD_SORT : MY_SORT_ACTIONS.ADD_SORT
-    const removeType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.REMOVE_SORT : MY_SORT_ACTIONS.REMOVE_SORT
-    const swapType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.SWAP_SORT : MY_SORT_ACTIONS.SWAP_SORT
-    const toggleType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.TOGGLE_SORT : MY_SORT_ACTIONS.TOGGLE_SORT
+    const addType =
+        routeName === 'Main'
+            ? BROWSE_SORT_ACTIONS.ADD_SORT
+            : MY_SORT_ACTIONS.ADD_SORT
+    const removeType =
+        routeName === 'Main'
+            ? BROWSE_SORT_ACTIONS.REMOVE_SORT
+            : MY_SORT_ACTIONS.REMOVE_SORT
+    const swapType =
+        routeName === 'Main'
+            ? BROWSE_SORT_ACTIONS.SWAP_SORT
+            : MY_SORT_ACTIONS.SWAP_SORT
+    const toggleType =
+        routeName === 'Main'
+            ? BROWSE_SORT_ACTIONS.TOGGLE_SORT
+            : MY_SORT_ACTIONS.TOGGLE_SORT
 
     const selected = inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]
@@ -41,30 +59,41 @@ function SortRow({
 
     return (
         <FilterContainer>
-            <FilterPosition>{selected ? indexOfIncludedElement(sortState.sortState, type) + 1 : null}</FilterPosition>
+            <FilterPosition>
+                {selected
+                    ? indexOfIncludedElement(sortState.sortState, type) + 1
+                    : null}
+            </FilterPosition>
             <FilterRowContainer>
-                <FilterText style={{color: selected ? theme.primary : theme.text}} >{name}</FilterText>
+                <FilterText
+                    style={{ color: selected ? theme.primary : theme.text }}
+                >
+                    {name}
+                </FilterText>
 
                 <FilterOptionsView>
-                    <FilterOptions>{order ? options[0] : options[1]}</FilterOptions>
+                    <FilterOptions>
+                        {order ? options[0] : options[1]}
+                    </FilterOptions>
                     <ButtonIcon
-                        icon={<MyMaterialCommunityIcons
-                            name="swap-vertical"
-                            color={theme.primary}
-                            size={25}
-                        />}
+                        icon={
+                            <MyMaterialCommunityIcons
+                                name="swap-vertical"
+                                color={theme.primary}
+                                size={25}
+                            />
+                        }
                         onPress={toggleOrder}
                     />
                 </FilterOptionsView>
 
                 <FinalButtonView>
                     <FeatherButton
-                        iconName={selected ? "x" : "plus"}
+                        iconName={selected ? 'x' : 'plus'}
                         onPress={() => dispatch(callback)}
                     />
                 </FinalButtonView>
             </FilterRowContainer>
-
         </FilterContainer>
     )
 }

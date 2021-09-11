@@ -17,5 +17,5 @@ export {
     RecipesScreen,
     TestScreen,
     Popup,
-    Sort
+    Sort,
 }
