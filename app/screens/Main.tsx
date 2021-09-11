@@ -19,8 +19,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const sortState = useAppSelector((state) => state.browseSort)
     const sort = sortState.sortState
 
-    console.log("Main", sort)
-
     useEffect(() => {
         dispatch(retrieveRecipes())
         dispatch(getRecipes({scopes: ['published'], sort: ['publishtime']}))

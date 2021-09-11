@@ -1,10 +1,11 @@
+import { filter } from 'lodash'
 import React from 'react'
 import { View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import SortHeader from '../components/user-input/SortHeader'
-import { applySearch } from '../config/utils'
+import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 
 function RecipesScreen({
@@ -14,15 +15,17 @@ function RecipesScreen({
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.myRecipes)
     const sortState = useAppSelector((state) => state.mySort)
-    console.log("Recipes", sortState.sortState)
+    const sort = sortState.sortState
+
     const search = navigation.state.params?.search
     const filteredRecipes = applySearch(recipes, search)
+    const sortedRecipes = applySort(filteredRecipes, sort)
 
     return (
         <Container>
             <SortHeader route='Recipes'/>
             <RecipesFlatList
-                recipes={filteredRecipes}
+                recipes={sortedRecipes}
                 navigation={navigation}
                 dropdown
             />
