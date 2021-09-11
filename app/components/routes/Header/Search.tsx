@@ -31,7 +31,7 @@ const SearchBarComponent = ({
                 size={25}
             />
             <SearchBar
-                placeholder={routeName === 'Main' ? 'Search' : 'Filter'}
+                placeholder='Search'
                 placeholderTextColor={theme.grey}
                 onChangeText={(t: string) => handleText(t)}
                 value={searchText}
