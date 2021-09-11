@@ -8,6 +8,7 @@ export type Scope = 'published' | 'author'
 interface GetRecipeParams {
     scopes?: Scope[]
     search?: string
+    sort?: string[]
     body?: {
         authorId?: number
     }
@@ -32,15 +33,20 @@ export async function getRecipe(recipeId: number): Promise<Recipe> {
 export async function getRecipes({
     scopes,
     search,
+    sort,
     body,
 }: GetRecipeParams): Promise<Recipe[]> {
     let suffix = ''
     if (typeof scopes !== 'undefined') {
-        suffix = suffix.concat('?scopes=', scopes.join(','))
+        suffix = suffix.concat(`?scopes=${scopes.join(',')}`)
     }
 
     if (typeof search !== 'undefined') {
         suffix = suffix.concat(`&search=${search}`)
+    }
+
+    if (typeof sort !== 'undefined') {
+        suffix = suffix.concat(`&sort=${sort.join(',')}`)
     }
 
     return handleError('GET', `/recipes${suffix}`, { body })

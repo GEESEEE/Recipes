@@ -1,19 +1,19 @@
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { ButtonInverted } from '../components/user-input/Buttons'
 
 const Popup = ({ navigation }: { navigation: any }): JSX.Element => {
-    const { params } = navigation.state
-    const { title, description } = params
+    const { title, description } = navigation.state.params
 
     return (
         <Container>
             <PopupMenu>
                 <PopupTitle>{title ?? 'Title'}</PopupTitle>
+
                 {description ? (
                     <PopupDescription>{description}</PopupDescription>
                 ) : undefined}
+
                 <ReturnButton onPress={() => navigation.pop()}>
                     <ReturnText>OK</ReturnText>
                 </ReturnButton>

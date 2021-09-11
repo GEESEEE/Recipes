@@ -37,6 +37,18 @@ export function applySearch(
     return recipes
 }
 
+export function inElementOf(arr: string[], val: string): boolean {
+    return arr.some(el => el.includes(val))
+}
+
+export function indexOfIncludedElement(arr: string[], val: string): number {
+    const found = arr.find(el => el.includes(val))
+    if (typeof found === 'undefined') {
+        return -1
+    }
+    return arr.indexOf(found)
+}
+
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {
     const sameElement = arr.find((e) => _.isEqual(e, element))
     if (!sameElement) return false

@@ -4,9 +4,17 @@ import { BROWSE_RECIPE_ACTIONS } from '../reducers/browse-recipes'
 import { Scope } from '../rest/recipe'
 
 export const getRecipes =
-    (scopes: Scope[], search?: string) =>
+    ({
+        scopes,
+        search,
+        sort
+    }:{
+        scopes: Scope[]
+        search?: string
+        sort?: string[]
+    }) =>
     async (dispatch: Dispatch): Promise<void> => {
-        const newRecipes = await recipeService.getRecipes({ scopes, search })
+        const newRecipes = await recipeService.getRecipes({ scopes, search, sort })
 
         dispatch({
             type: BROWSE_RECIPE_ACTIONS.SET_RECIPES,

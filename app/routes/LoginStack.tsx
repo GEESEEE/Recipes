@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
-import { LoginScreen, RegisterScreen, Popup } from '../screens'
+import { LoginScreen, RegisterScreen, Popup, Filter } from '../screens'
 import Drawer from './Drawer'
 import * as routeUtils from '../config/routes'
 
@@ -21,6 +21,12 @@ const screens = {
             cardStyleInterpolator: routeUtils.fade,
         },
     },
+    Filter: {
+        screen: Filter,
+        navigationOptions: {
+            cardStyleInterpolator: routeUtils.fade,
+        },
+    }
 }
 
 const stackConfig: any = {

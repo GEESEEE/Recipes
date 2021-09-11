@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, View, Text } from 'react-native'
 import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
@@ -12,24 +12,28 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const dispatch = useAppDispatch()
 
     const listRef = React.useRef<FlatList>()
+
     const search = navigation.state.params?.search
+    const sort = useAppSelector((state) => state.browseSort)
+    console.log("Main", sort)
 
     useEffect(() => {
         dispatch(retrieveRecipes())
-        dispatch(getRecipes(['published']))
+        dispatch(getRecipes({scopes: ['published'], sort: ['publishtime']}))
     }, [])
 
     const onSearch = (): void => {
         if (typeof listRef.current !== 'undefined') {
             listRef.current.scrollToOffset({ animated: true, offset: 0 })
         }
-        dispatch(getRecipes(['published'], search))
+        dispatch(getRecipes({scopes: ['published'], search, sort}))
     }
 
     useDebounce(onSearch, 1000, [search])
 
     return (
         <Container>
+            <SampleText>{`YES${sort.join(" ")}`}</SampleText>
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes}
@@ -47,4 +51,9 @@ const Container = styled(View)`
     align-items: center;
     background-color: ${(props) => props.theme.background};
     padding-bottom: 5px;
+`
+
+const SampleText = styled(Text)`
+    color: ${(props) => props.theme.primary}
+    font-size: 15px;
 `

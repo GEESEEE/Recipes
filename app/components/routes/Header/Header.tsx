@@ -3,15 +3,12 @@ import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { useAppSelector } from '../../../hooks/redux'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
-import { getRecipes } from '../../../actions/browse-recipes'
-import { useDebounce } from '../../../hooks'
 
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
-    const dispatch = useAppDispatch()
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
 
@@ -38,7 +35,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function handleFilter(): void {
-        console.log('Filterr')
+        navigation.navigate('Filter', { route: routeName})
     }
 
     return (

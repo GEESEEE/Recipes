@@ -5,6 +5,8 @@ import useTimout from './timeout'
 import useUpdateEffect from './update-effect'
 import useDebounce from './debounce'
 import useAsync from './async'
+import usePrevious from './previous'
+import useArray from './array'
 
 export {
     usePosition,
@@ -16,4 +18,6 @@ export {
     useUpdateEffect,
     useDebounce,
     useAsync,
+    usePrevious,
+    useArray
 }
