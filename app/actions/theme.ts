@@ -13,7 +13,7 @@ export const retrieveTheme =
                     payload: theme,
                 })
             }
-        } catch (err) {
+        } catch (err: any) {
             console.log(err.message)
             console.error(err)
         }
@@ -29,7 +29,7 @@ export const setTheme =
                 payload: theme,
             })
             await AsyncStorage.setItem('theme', theme)
-        } catch (err) {
+        } catch (err: any) {
             console.log(err.message)
             console.error(err)
         }
@@ -46,7 +46,7 @@ export const retrieveColor =
                     payload: color,
                 })
             }
-        } catch (err) {
+        } catch (err: any) {
             console.log(err.message)
             console.error(err)
         }
@@ -61,7 +61,7 @@ export const setColor =
                 payload: color,
             })
             await AsyncStorage.setItem('color', color)
-        } catch (err) {
+        } catch (err: any) {
             console.log(err.message)
             console.error(err)
         }
