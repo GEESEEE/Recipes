@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import * as recipeService from '../services/recipe'
-import { MY_RECIPE_ACTIONS } from '../reducers/my-recipes'
+import { MY_RECIPE_ACTIONS } from '../reducers/my'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
 import { deleteElement, deleteElements, replaceElements } from '../config/utils'
 

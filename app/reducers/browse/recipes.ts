@@ -1,4 +1,4 @@
-import { Recipe } from '../data'
+import { Recipe } from '../../data'
 
 export const BROWSE_RECIPE_ACTIONS = {
     ADD_RECIPES: 'addBrowseRecipes',

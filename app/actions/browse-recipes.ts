@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import * as recipeService from '../rest/recipe'
-import { BROWSE_RECIPE_ACTIONS } from '../reducers/browse-recipes'
+import { BROWSE_RECIPE_ACTIONS } from '../reducers/browse'
 import { Scope } from '../rest/recipe'
 
 export const getRecipes =
