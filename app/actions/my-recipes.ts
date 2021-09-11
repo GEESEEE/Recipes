@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
-import * as recipeService from '../services/recipe'
+import * as recipeUtils from '../config/recipes'
 import { MY_RECIPE_ACTIONS } from '../reducers/my'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
 import { deleteElement, deleteElements, replaceElements } from '../config/utils'
@@ -14,7 +14,7 @@ export const createRecipe =
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
                 const newRecipe = (
-                    await recipeService.createRecipes([recipe])
+                    await recipeUtils.createRecipes([recipe])
                 )[0]
 
                 // If ingredients were set, put those in database too and set in newRecipe
@@ -22,7 +22,7 @@ export const createRecipe =
                     typeof recipe.recipeIngredients !== 'undefined' &&
                     recipe.recipeIngredients.length > 0
                 ) {
-                    const ingredients = await recipeService.addIngredients(
+                    const ingredients = await recipeUtils.addIngredients(
                         newRecipe.id,
                         recipe.recipeIngredients
                     )
@@ -37,7 +37,7 @@ export const createRecipe =
                     typeof recipe.instructions !== 'undefined' &&
                     recipe.instructions.length > 0
                 ) {
-                    const instructions = await recipeService.addInstructions(
+                    const instructions = await recipeUtils.addInstructions(
                         newRecipe.id,
                         recipe.instructions
                     )
@@ -78,7 +78,7 @@ export const editRecipe =
                 deleteElement(localRecipes, oldRecipe)
 
                 // If recipe edited, change in database
-                const newRecipe = await recipeService.updateRecipe(
+                const newRecipe = await recipeUtils.updateRecipe(
                     recipe,
                     oldRecipe
                 )
@@ -124,7 +124,7 @@ export const editRecipe =
                 // Update ingredients if there are any
                 if (ingredientsToUpdate.length > 0) {
                     const updatedIngredients =
-                        await recipeService.updateIngredients(
+                        await recipeUtils.updateIngredients(
                             recipe.id,
                             ingredientsToUpdate,
                             oldRecipe.recipeIngredients!
@@ -137,7 +137,7 @@ export const editRecipe =
 
                 // Delete ingredients if there are any
                 if (ingredientsToDelete.length > 0) {
-                    await recipeService.removeIngredients(
+                    await recipeUtils.removeIngredients(
                         recipe.id,
                         ingredientsToDelete
                     )
@@ -149,7 +149,7 @@ export const editRecipe =
 
                 // Add ingredients if there are any
                 if (ingredientsToAdd.length > 0) {
-                    const addedIngredients = await recipeService.addIngredients(
+                    const addedIngredients = await recipeUtils.addIngredients(
                         recipe.id,
                         ingredientsToAdd
                     )
@@ -187,7 +187,7 @@ export const editRecipe =
                 // Update instructions if there are any
                 if (instructionsToUpdate.length > 0) {
                     const updatedInstructions =
-                        await recipeService.updateInstructions(
+                        await recipeUtils.updateInstructions(
                             recipe.id,
                             instructionsToUpdate,
                             oldRecipe.instructions!
@@ -200,7 +200,7 @@ export const editRecipe =
 
                 // Delete instructions if there are any
                 if (instructionsToDelete.length > 0) {
-                    await recipeService.deleteInstructions(
+                    await recipeUtils.deleteInstructions(
                         recipe.id,
                         instructionsToDelete
                     )
@@ -213,7 +213,7 @@ export const editRecipe =
                 // Add Instructions if there are any
                 if (instructionsToAdd.length > 0) {
                     const addedInstructions =
-                        await recipeService.addInstructions(
+                        await recipeUtils.addInstructions(
                             recipe.id,
                             instructionsToAdd
                         )
@@ -251,11 +251,11 @@ export const retrieveRecipes =
             // Put recipes without a database id into the database
             const localRecipes = recipes.filter((recipe) => recipe.id <= 0)
             if (localRecipes.length > 0) {
-                await recipeService.createRecipes(localRecipes)
+                await recipeUtils.createRecipes(localRecipes)
             }
 
             // Get all my recipes from database
-            const newRecipes = await recipeService.getMyRecipes()
+            const newRecipes = await recipeUtils.getMyRecipes()
 
             await AsyncStorage.setItem('recipes', JSON.stringify(newRecipes))
             dispatch({
@@ -277,7 +277,7 @@ export const deleteRecipe =
             deleteElements(localRecipes, [recipe])
 
             await AsyncStorage.setItem('recipes', JSON.stringify(localRecipes))
-            await recipeService.deleteRecipe(recipe.id)
+            await recipeUtils.deleteRecipe(recipe.id)
             dispatch({
                 type: MY_RECIPE_ACTIONS.DELETE_RECIPE,
                 payload: { recipe },

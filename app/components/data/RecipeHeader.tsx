@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
@@ -8,7 +8,7 @@ import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { deleteRecipe } from '../../actions/my-recipes'
 import { ButtonIcon } from '../user-input/Buttons'
-import { recipeDifference } from '../../services/recipe'
+import { recipeDifference } from '../../config/recipes'
 
 interface RecipeHeaderOptions {
     recipe: Recipe

@@ -6,7 +6,7 @@ import {
 } from 'react-navigation'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS } from '../reducers/auth'
-import * as authService from '../rest/auth'
+import * as authService from '../services/auth'
 import { clearUserData, getUserData } from './user'
 
 export const retrieveToken =

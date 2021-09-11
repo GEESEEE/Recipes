@@ -2,10 +2,9 @@ import React, { useRef } from 'react'
 import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
 import { setColor } from '../actions/theme'
-import logo from '../assets/temp_icon.png'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import * as recipeService from '../rest/recipe'
+import * as recipeService from '../services/recipe'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -85,13 +84,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <SampleText>Test Screen</SampleText>
-            <ButtonFilled text="Log recipes" onPress={logRecipes} />
-            <ButtonFilled text="Drawer" onPress={handleDrawer} />
+            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
+            <ButtonFilled text="Drawer" onPress={() => handleDrawer()} />
             <ButtonFilled
                 text="Change Primary Color"
-                onPress={changePrimaryColor}
+                onPress={() => changePrimaryColor()}
             />
-            <ButtonFilled text="do some scopes" onPress={scopes} />
+            <ButtonFilled text="do some scopes" onPress={() => scopes()} />
         </Container>
     )
 }
