@@ -13,9 +13,7 @@ export const createRecipe =
             if (recipesString !== null) {
                 const localRecipes: Recipe[] = JSON.parse(recipesString)
 
-                const newRecipe = (
-                    await recipeUtils.createRecipes([recipe])
-                )[0]
+                const newRecipe = (await recipeUtils.createRecipes([recipe]))[0]
 
                 // If ingredients were set, put those in database too and set in newRecipe
                 if (
@@ -212,11 +210,10 @@ export const editRecipe =
 
                 // Add Instructions if there are any
                 if (instructionsToAdd.length > 0) {
-                    const addedInstructions =
-                        await recipeUtils.addInstructions(
-                            recipe.id,
-                            instructionsToAdd
-                        )
+                    const addedInstructions = await recipeUtils.addInstructions(
+                        recipe.id,
+                        instructionsToAdd
+                    )
                     newRecipe.instructions!.push(...addedInstructions)
                 }
 

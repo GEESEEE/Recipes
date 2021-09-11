@@ -166,8 +166,6 @@ export async function deleteInstructions(
     )
 }
 
-
-
 export function applySearch(
     recipes: Recipe[],
     search: string | undefined
@@ -237,5 +235,3 @@ export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
     }
     return recipes
 }
-
-
