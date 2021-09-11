@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import { useDebounce } from '../hooks'
 import { getRecipes } from '../actions/browse-recipes'
-import { sorts } from './Sort'
 import SortRow from '../components/user-input/SortRow'
+import { sorts } from '../actions/sort'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
@@ -44,7 +44,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
                     type={filt.type}
                     name={filt.name}
                     options={filt.options}
-                    sortState={sortState}
+                    routeName='Main'
                 />)
             })}
             <RecipesFlatList

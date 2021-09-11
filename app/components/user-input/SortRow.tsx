@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { removeSort, addSort, swapSort, toggleSort, SortStateType } from '../../actions/sort'
+import { removeSort, addSort, swapSort, toggleSort, SortType } from '../../actions/sort'
 import { inElementOf, indexOfIncludedElement } from '../../config/utils'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { BROWSE_SORT_ACTIONS } from '../../reducers/browse'
-import { SortType } from '../../screens/Sort'
+import { MY_SORT_ACTIONS } from '../../reducers/my'
 import { MyMaterialCommunityIcons } from '../Icons'
 import { ButtonIcon, FeatherButton } from './Buttons'
 
@@ -14,21 +14,30 @@ function SortRow({
     type,
     name,
     options,
-    sortState
-}: SortType & {sortState: SortStateType}): JSX.Element {
+    routeName
+}: SortType & {routeName: string}): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
+
+    const globalState = useAppSelector((state) => state)
+
+    const sortState = routeName === 'Main' ? globalState.browseSort : globalState.mySort
+
+    const addType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.ADD_SORT : MY_SORT_ACTIONS.ADD_SORT
+    const removeType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.REMOVE_SORT : MY_SORT_ACTIONS.REMOVE_SORT
+    const swapType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.SWAP_SORT : MY_SORT_ACTIONS.SWAP_SORT
+    const toggleType = routeName === 'Main' ? BROWSE_SORT_ACTIONS.TOGGLE_SORT : MY_SORT_ACTIONS.TOGGLE_SORT
 
     const selected = inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]
 
     const callback = selected
-        ? removeSort(BROWSE_SORT_ACTIONS.REMOVE_SORT, type)
-        : addSort(BROWSE_SORT_ACTIONS.ADD_SORT, type, order)
+        ? removeSort(removeType, type)
+        : addSort(addType, type, order)
 
     const toggleOrder = selected
-        ? () => dispatch(swapSort(BROWSE_SORT_ACTIONS.SWAP_SORT, type))
-        : () => dispatch(toggleSort(BROWSE_SORT_ACTIONS.TOGGLE_SORT, type))
+        ? () => dispatch(swapSort(swapType, type))
+        : () => dispatch(toggleSort(toggleType, type))
 
     return (
         <FilterContainer>

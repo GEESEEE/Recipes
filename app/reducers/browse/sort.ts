@@ -1,4 +1,4 @@
-import { RecipeSortType, SortStateType } from "../../actions/sort"
+import { initialSortState, RecipeSortType, SortStateType } from "../../actions/sort"
 
 export const BROWSE_SORT_ACTIONS = {
     ADD_SORT: 'addBrowseSort',
@@ -7,21 +7,8 @@ export const BROWSE_SORT_ACTIONS = {
     TOGGLE_SORT: 'toggleBrowseSort'
 }
 
-
-
-const initialState: SortStateType = {
-    sortState: [],
-    orders: {
-        publishtime: true,
-        preparetime: true,
-        peoplecount: true,
-        ingredientcount: true,
-        instructioncount: true,
-    }
-}
-
 const browseSort = (
-    state = initialState,
+    state = initialSortState,
     action: { type: string; payload: {sort: RecipeSortType} }
 ): SortStateType => {
     switch (action.type) {
