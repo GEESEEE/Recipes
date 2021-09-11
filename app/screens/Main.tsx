@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { FlatList, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { v4 as uuid } from 'uuid'
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import { useDebounce } from '../hooks'
 import { getRecipes } from '../actions/browse-recipes'
-import SortRow from '../components/user-input/SortRow'
-import { sorts } from '../actions/sort'
+import SortHeader from '../components/user-input/SortHeader'
+
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
@@ -19,6 +18,8 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const search = navigation.state.params?.search
     const sortState = useAppSelector((state) => state.browseSort)
     const sort = sortState.sortState
+
+    console.log("Main", sort)
 
     useEffect(() => {
         dispatch(retrieveRecipes())
@@ -36,17 +37,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            {sort.map(s => {
-                const filt = sorts.find(f => s.includes(f.type))
-                if (typeof filt === 'undefined') return null
-                return (<SortRow
-                    key={uuid()}
-                    type={filt.type}
-                    name={filt.name}
-                    options={filt.options}
-                    routeName='Main'
-                />)
-            })}
+            <SortHeader route='Main'/>
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes}

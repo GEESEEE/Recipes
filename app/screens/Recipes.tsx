@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import RecipesFlatList from '../components/data/RecipesFlatList'
+import SortHeader from '../components/user-input/SortHeader'
 import { applySearch } from '../config/utils'
 import { useAppSelector } from '../hooks/redux'
 
@@ -12,12 +13,14 @@ function RecipesScreen({
     navigation: NavigationScreenProp<string>
 }): JSX.Element {
     const recipes = useAppSelector((state) => state.myRecipes)
-
+    const sortState = useAppSelector((state) => state.mySort)
+    console.log("Recipes", sortState.sortState)
     const search = navigation.state.params?.search
     const filteredRecipes = applySearch(recipes, search)
 
     return (
         <Container>
+            <SortHeader route='Recipes'/>
             <RecipesFlatList
                 recipes={filteredRecipes}
                 navigation={navigation}
