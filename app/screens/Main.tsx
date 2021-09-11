@@ -19,7 +19,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const search = navigation.state.params?.search
     const sortState = useAppSelector((state) => state.browseSort)
     const sort = sortState.sortState
-    console.log("Main", sort)
 
     useEffect(() => {
         dispatch(retrieveRecipes())
@@ -33,7 +32,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(getRecipes({scopes: ['published'], search, sort}))
     }
 
-    useDebounce(onSearch, 1000, [search])
+    useDebounce(onSearch, 1000, [search, sort])
 
     return (
         <Container>

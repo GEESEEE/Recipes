@@ -17,7 +17,7 @@ export interface SortType {
 export const sorts: SortType[] = [{
     type: "publishtime",
     name: "Publish time",
-    options: ["new - old", "old - new"],
+    options: ["old - new", "new - old"],
 }, {
     type: "preparetime",
     name: "Prepare time",
