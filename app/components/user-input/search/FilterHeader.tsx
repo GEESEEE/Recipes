@@ -18,20 +18,21 @@ function FilterHeader({
     const removeSearchType = route === 'Main' ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH : MY_SEARCH_ACTIONS.REMOVE_SEARCH
 
     return (
-        <Container
-            onContentSizeChange={(e: any) => console.log("content", e)}
-            horizontal
-        >
-            {search.map(query => (
-                <QueryContainer key={uuid()}>
-                    <QueryText>{query}</QueryText>
-                    <FeatherButton
-                        iconName="x"
-                        onPress={() => dispatch(removeSearch(removeSearchType, query))}
-                        size={16}
-                    />
-                </QueryContainer>
-            ))}
+        <Container>
+            <ScrollViewContainer
+                horizontal
+            >
+                {search.map(query => (
+                    <QueryContainer key={uuid()}>
+                        <QueryText>{query}</QueryText>
+                        <FeatherButton
+                            iconName="x"
+                            onPress={() => dispatch(removeSearch(removeSearchType, query))}
+                            size={16}
+                        />
+                    </QueryContainer>
+                ))}
+            </ScrollViewContainer>
         </Container>
     )
 
@@ -39,10 +40,14 @@ function FilterHeader({
 
 export default FilterHeader
 
-const Container = styled(ScrollView)`
+const Container = styled(View)`
     width: 90%;
+`
+
+const ScrollViewContainer = styled(ScrollView)`
     flex-direction: row;
     padding-top: 3px;
+    padding-bottom: 3px;
 `
 
 const QueryContainer = styled(View)`

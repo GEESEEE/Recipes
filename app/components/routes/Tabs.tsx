@@ -114,6 +114,8 @@ const Container = styled(View)`
     width: 100%;
     background-color: ${(props) => props.theme.background};
     align-items: flex-start;
+    border-top-width: 1px;
+    border-top-color: ${(props) => props.theme.primary};
 `
 
 const SafeContainer = styled(View)`
@@ -124,10 +126,10 @@ const SafeContainer = styled(View)`
 `
 
 const TabSlider = styled(Animated.View)`
-    height: 4px;
+    height: 5px;
     position: absolute;
     left: 10px;
-    top: -2px;
+    top: -3px;
     background-color: ${(props) => props.theme.primary};
     border-radius: 10px;
 `

@@ -13,43 +13,25 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
     const globalState = useAppSelector(state => state)
 
-    const {theme } = globalState
+    const { theme, browseSearch, browseSort } = globalState
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
+    const sort = browseSort.sortState
 
     const searchRoutes = ['Main', 'Recipes']
     const [openSearchBar, setOpenSearchBar] = useState(false)
     const [searchText, setSearchText] = useState('')
 
     const displayFilter = searchRoutes.includes(routeName)
-    const displaySearch = searchRoutes.includes(routeName)
+    const displaySearch = routeName === 'Main' || !openSearchBar
     const displayAdd = ['Recipes'].includes(routeName) && !openSearchBar
 
-    const search = routeName === 'Main' ? globalState.browseSearch : globalState.mySearch
-    const sortState = routeName === 'Main' ? globalState.browseSort : globalState.mySort
-    const sort = sortState.sortState
-
-    function handleDrawer(): void {
-        navigation.toggleDrawer()
-    }
-
-    function handleCreateRecipe(): void {
-        navigation.navigate('EditRecipe')
-    }
-
     function toggleSearch(): void {
-        if (openSearchBar) {
-            navigation.setParams({ search: '' })
-        }
         setOpenSearchBar(!openSearchBar)
     }
 
     function searchDatabase(): void {
-        dispatch(getRecipes({ scopes: ['published'], search, sort }))
-    }
-
-    function handleFilter(): void {
-        navigation.navigate('Sort', { route: routeName })
+        dispatch(getRecipes({ scopes: ['published'], search: browseSearch, sort }))
     }
 
     return (
@@ -72,7 +54,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     <HeaderFlex>
                         <FeatherButton
                             iconName="menu"
-                            onPress={() => handleDrawer()}
+                            onPress={() => navigation.toggleDrawer()}
                         />
                     </HeaderFlex>
                 )}
@@ -95,7 +77,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"
-                        onPress={() => handleFilter()}
+                        onPress={() => navigation.navigate('Sort', { route: routeName })}
                         size={25}
                     />
                 ) : null}
@@ -104,7 +86,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayAdd ? (
                     <FeatherButton
                         iconName="plus"
-                        onPress={() => handleCreateRecipe()}
+                        onPress={() => navigation.navigate('EditRecipe')}
                     />
                 ) : null}
             </HeaderContainer>

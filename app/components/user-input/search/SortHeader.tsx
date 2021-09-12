@@ -1,5 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
+import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { sorts } from '../../../actions/sort'
 import { useAppSelector } from '../../../hooks'
@@ -12,7 +13,7 @@ function SortHeader({ route }: { route: string }): JSX.Element {
     const sort = sortState.sortState
 
     return (
-        <View>
+        <Container>
             {sort.map((s) => {
                 const filt = sorts.find((f) => s.includes(f.type))
                 if (typeof filt === 'undefined') return null
@@ -27,8 +28,12 @@ function SortHeader({ route }: { route: string }): JSX.Element {
                     />
                 )
             })}
-        </View>
+        </Container>
     )
 }
 
 export default SortHeader
+
+const Container = styled(View)`
+    padding-bottom: 3px;
+`

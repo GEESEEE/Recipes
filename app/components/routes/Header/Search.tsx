@@ -24,10 +24,6 @@ const SearchBarComponent = ({
 
     const addSearchType = routeName === 'Main' ? BROWSE_SEARCH_ACTIONS.ADD_SEARCH : MY_SEARCH_ACTIONS.ADD_SEARCH
 
-    const removeSearchType = routeName === 'Main'
-        ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH
-        : MY_SEARCH_ACTIONS.REMOVE_SEARCH
-
     function handleText(search: string): void {
         setText(search)
     }
