@@ -12,7 +12,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
     const globalState = useAppSelector((state) => state)
 
-    const { theme, browseSearch, browseSort } = globalState
+    const { theme, settings, browseSearch, browseSort } = globalState
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
     const sort = browseSort.sortState
@@ -35,13 +35,20 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
         )
     }
 
+    const backgroundColor = settings.invertedColors ? theme.primary : theme.background
+    const iconColor = settings.invertedColors ? theme.background : theme.primary
+
     return (
-        <Container style={{ height: insets.top + 35 }}>
+        <Container style={{
+            height: insets.top + 35,
+            backgroundColor
+        }}>
             <HeaderContainer
                 style={{
                     paddingTop: insets.top,
                     paddingLeft: insets.left + 5,
                     paddingRight: insets.right + 5,
+                    backgroundColor
                 }}
             >
                 {openSearchBar ? (
@@ -56,6 +63,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                         <FeatherButton
                             iconName="menu"
                             onPress={() => navigation.toggleDrawer()}
+                            color={iconColor}
                         />
                     </HeaderFlex>
                 )}
@@ -70,7 +78,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                             <MaterialIcons
                                 name="search"
                                 size={30}
-                                color={theme.primary}
+                                color={iconColor}
                             />
                         }
                     />
@@ -84,6 +92,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                             navigation.navigate('Sort', { route: routeName })
                         }
                         size={25}
+                        color={iconColor}
                     />
                 ) : null}
 
@@ -92,6 +101,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     <FeatherButton
                         iconName="plus"
                         onPress={() => navigation.navigate('EditRecipe')}
+                        color={iconColor}
                     />
                 ) : null}
             </HeaderContainer>
@@ -102,7 +112,6 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 export default Header
 
 const Container = styled(View)`
-    background-color: ${(props) => props.theme.background};
     border-bottom-color: ${(props) => props.theme.primary};
     border-bottom-width: 1px;
 `
@@ -112,7 +121,6 @@ const HeaderContainer = styled(View)`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: ${(props) => props.theme.background};
 `
 
 const HeaderFlex = styled(View)`

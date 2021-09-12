@@ -5,6 +5,7 @@ import { browseRecipes, browseSort, browseSearch } from './browse'
 import user from './user'
 import theme from './theme'
 import indices from './indices'
+import settings from './settings'
 
 export default combineReducers({
     auth,
@@ -17,4 +18,5 @@ export default combineReducers({
     user,
     theme,
     indices,
+    settings
 })

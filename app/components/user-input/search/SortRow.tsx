@@ -40,8 +40,8 @@ function SortRow({
         : addSort(SORT_ACTIONS.ADD_SORT, type, order)
 
     const toggleOrder = selected
-        ? () => dispatch(swapSort(SORT_ACTIONS.SWAP_SORT, type))
-        : () => dispatch(toggleSort(SORT_ACTIONS.TOGGLE_SORT, type))
+        ? swapSort(SORT_ACTIONS.SWAP_SORT, type)
+        : toggleSort(SORT_ACTIONS.TOGGLE_SORT, type)
 
     const filterTextColor = selected ? theme.primary : theme.text
     const fontSize = header ? 14 : 16
@@ -74,7 +74,7 @@ function SortRow({
                                 size={iconSize}
                             />
                         }
-                        onPress={toggleOrder}
+                        onPress={() => dispatch(toggleOrder)}
                     />
                 </FilterOptionsView>
 

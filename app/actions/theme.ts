@@ -20,10 +20,10 @@ export const retrieveTheme =
     }
 
 export const setTheme =
-    (darkTheme: boolean) =>
+    (lightTheme: boolean) =>
     async (dispatch: Dispatch): Promise<void> => {
         try {
-            const theme = darkTheme ? 'dark' : 'light'
+            const theme = lightTheme ? 'light' : 'dark'
             dispatch({
                 type: THEME_ACTIONS.SET_THEME,
                 payload: theme,

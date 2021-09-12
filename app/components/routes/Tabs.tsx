@@ -20,10 +20,12 @@ const routeIconMap = {
 
 const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     const { state } = navigation
-    const { routes } = state
+    const { routes } = navigation.state
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
+
+    const { theme, settings} = useAppSelector((globalState) => globalState)
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)
@@ -44,7 +46,9 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     }, [state.index])
 
     return (
-        <Container style={{ height: insets.bottom + 50 }}>
+        <Container style={{
+            height: insets.bottom + 50,
+            backgroundColor: settings.invertedColors ? theme.primary : theme.background }}>
             <SafeContainer
                 style={{
                     paddingBottom: insets.bottom,
@@ -58,6 +62,7 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
                         {
                             transform: [{ translateX: translateValue }],
                             width: tabWidth - 20,
+                            backgroundColor: settings.invertedColors ? theme.text : theme.primary
                         },
                     ]}
                 />
@@ -95,15 +100,27 @@ const RouteTab = ({
     onPress,
     isCurrent,
 }: TabProps): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
+    const { theme, settings} = useAppSelector((state) => state)
+
+    let color = theme.primary
+    if (settings.invertedColors) {
+        if (isCurrent) {
+            color = theme.text
+        } else {
+            color = theme.background
+        }
+    } else if (!isCurrent) {
+            color = theme.grey
+    }
+    const tabColor = !isCurrent ? theme.grey : settings.invertedColors ? theme.background : theme.primary
 
     return (
         <TabContainer onPress={onPress}>
             <MyMaterialCommunityIcons
                 name={icon}
-                color={isCurrent ? theme.primary : theme.grey}
+                color={color}
             />
-            <TabText style={{ color: isCurrent ? theme.primary : theme.grey }}>
+            <TabText style={{ color }}>
                 {text}
             </TabText>
         </TabContainer>
@@ -112,7 +129,6 @@ const RouteTab = ({
 
 const Container = styled(View)`
     width: 100%;
-    background-color: ${(props) => props.theme.background};
     align-items: flex-start;
     border-top-width: 1px;
     border-top-color: ${(props) => props.theme.primary};
@@ -130,7 +146,6 @@ const TabSlider = styled(Animated.View)`
     position: absolute;
     left: 10px;
     top: -3px;
-    background-color: ${(props) => props.theme.primary};
     border-radius: 10px;
 `
 
@@ -142,8 +157,6 @@ const TabContainer = styled(TouchableOpacity)`
 `
 
 const TabText = styled(Text)`
-    color: ${(props) => props.theme.primary}
     font-size: 16px;
     font-weight: bold;
-
 `

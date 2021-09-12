@@ -8,6 +8,7 @@ import { ButtonFilled } from '../user-input/Buttons'
 import { MyFeather } from '../Icons'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { Theme } from '../../reducers/theme'
+import { setInvertedColors } from '../../actions/settings'
 
 const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     <TouchableOpacity>
@@ -18,23 +19,22 @@ const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     </TouchableOpacity>
 )
 
-const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
-    const dispatch = useAppDispatch()
+const PreferenceSwitch = (text: string, switchValue: boolean, onValueChange: (val: boolean) => void): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
-        <DarkThemeView>
+        <PreferenceItemView>
             <Paragraph>{text}</Paragraph>
             <Switch
                 value={switchValue}
-                onValueChange={(value: boolean) => dispatch(setTheme(!value))}
+                onValueChange={onValueChange}
                 trackColor={{
                     true: theme.backgroundVariant,
                     false: theme.backgroundVariant,
                 }}
                 thumbColor={theme.primary}
             />
-        </DarkThemeView>
+        </PreferenceItemView>
     )
 }
 
@@ -43,8 +43,7 @@ export default function Drawer({
 }: {
     navigation: any
 }): JSX.Element {
-    const {user, auth, theme} = useAppSelector((state) => state)
-
+    const {user, auth, theme, settings} = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     async function handleSignOut(): Promise<void> {
@@ -65,7 +64,16 @@ export default function Drawer({
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
-                    {PreferenceSwitch('Light Theme', theme.mode === 'light')}
+                    {PreferenceSwitch(
+                        'Light Theme',
+                        theme.mode === 'light',
+                        (val: boolean) => dispatch(setTheme(val))
+                    )}
+                    {PreferenceSwitch(
+                        'Inverted Colors',
+                        settings.invertedColors,
+                        (val: boolean) => dispatch(setInvertedColors(val))
+                    )}
                 </PreferenceView>
             </ScrollView>
             <Footer>
@@ -122,7 +130,7 @@ const Section = styled(View)`
 `
 
 const PreferenceView = styled(View)`
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     padding-vertical: 12px;
     padding-horizontal: 16px;
@@ -139,10 +147,11 @@ const PreferenceText = styled(Text)`
     font-weight: bold;
 `
 
-const DarkThemeView = styled(View)`
+const PreferenceItemView = styled(View)`
     flex: 1;
     flex-direction: row;
     justify-content: space-between;
+    padding-bottom: 5px;
 `
 
 const Footer = styled(View)`

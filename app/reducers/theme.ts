@@ -19,7 +19,7 @@ const lightTheme = (): Theme => ({
     mode: 'light',
     primary: colors.primary,
     background: colors.white,
-    backgroundVariant: colors.lightergrey,
+    backgroundVariant: colors.lightestgrey,
     text: colors.darkergrey,
     grey: colors.grey,
     error: colors.red,
