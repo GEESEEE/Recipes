@@ -27,7 +27,7 @@ const PreferenceSwitch = (text: string, switchValue: boolean): JSX.Element => {
             <Paragraph>{text}</Paragraph>
             <Switch
                 value={switchValue}
-                onValueChange={(value: boolean) => dispatch(setTheme(value))}
+                onValueChange={(value: boolean) => dispatch(setTheme(!value))}
                 trackColor={{
                     true: theme.backgroundVariant,
                     false: theme.backgroundVariant,
@@ -43,9 +43,8 @@ export default function Drawer({
 }: {
     navigation: any
 }): JSX.Element {
-    const user = useAppSelector((state) => state.user)
-    const auth = useAppSelector((state) => state.auth)
-    const theme = useAppSelector((state) => state.theme)
+    const {user, auth, theme} = useAppSelector((state) => state)
+
     const dispatch = useAppDispatch()
 
     async function handleSignOut(): Promise<void> {
@@ -66,11 +65,11 @@ export default function Drawer({
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
-                    {PreferenceSwitch('Dark Theme', theme.mode === 'dark')}
+                    {PreferenceSwitch('Light Theme', theme.mode === 'light')}
                 </PreferenceView>
             </ScrollView>
             <Footer>
-                <ButtonFilled text="Sign Out" onPress={handleSignOut} />
+                <ButtonFilled text="Sign Out" onPress={() => handleSignOut()} />
             </Footer>
         </Container>
     )
