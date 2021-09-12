@@ -30,7 +30,8 @@ function SortRow({
     const sortState =
         routeName === 'Main' ? globalState.browseSort : globalState.mySort
 
-    const SORT_ACTIONS = routeName === 'Main' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
+    const SORT_ACTIONS =
+        routeName === 'Main' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
 
     const selected = inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]

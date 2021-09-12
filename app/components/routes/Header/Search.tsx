@@ -18,7 +18,7 @@ const SearchBarComponent = ({
     searchText: string
     setText(text: string): void
 }): JSX.Element => {
-    const {theme, settings} = useAppSelector((state) => state)
+    const { theme, settings } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
     const { routeName } = navigation.state
 
@@ -31,12 +31,12 @@ const SearchBarComponent = ({
         setText(search)
     }
 
-    const backgroundColor = settings.invertedColors ? theme.background : theme.backgroundVariant
+    const backgroundColor = settings.invertedColors
+        ? theme.background
+        : theme.backgroundVariant
 
     return (
-        <SearchBarContainer
-            style={{backgroundColor }}
-        >
+        <SearchBarContainer style={{ backgroundColor }}>
             <ReturnButton
                 iconName="arrow-left"
                 onPress={() => toggle()}

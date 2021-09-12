@@ -25,7 +25,7 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
-    const { theme, settings} = useAppSelector((globalState) => globalState)
+    const { theme, settings } = useAppSelector((globalState) => globalState)
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)
@@ -46,9 +46,14 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     }, [state.index])
 
     return (
-        <Container style={{
-            height: insets.bottom + 50,
-            backgroundColor: settings.invertedColors ? theme.primary : theme.background }}>
+        <Container
+            style={{
+                height: insets.bottom + 50,
+                backgroundColor: settings.invertedColors
+                    ? theme.primary
+                    : theme.background,
+            }}
+        >
             <SafeContainer
                 style={{
                     paddingBottom: insets.bottom,
@@ -62,8 +67,12 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
                         {
                             transform: [{ translateX: translateValue }],
                             width: tabWidth - 20,
-                            backgroundColor: settings.invertedColors ? theme.background : theme.primary,
-                            borderColor: settings.invertedColors ? theme.primary : theme.primary
+                            backgroundColor: settings.invertedColors
+                                ? theme.background
+                                : theme.primary,
+                            borderColor: settings.invertedColors
+                                ? theme.primary
+                                : theme.primary,
                         },
                     ]}
                 />
@@ -101,7 +110,7 @@ const RouteTab = ({
     onPress,
     isCurrent,
 }: TabProps): JSX.Element => {
-    const { theme, settings} = useAppSelector((state) => state)
+    const { theme, settings } = useAppSelector((state) => state)
 
     let color = theme.primary
     if (settings.invertedColors) {
@@ -111,19 +120,18 @@ const RouteTab = ({
             color = theme.textVariant
         }
     } else if (!isCurrent) {
-            color = theme.grey
+        color = theme.grey
     }
-    const tabColor = !isCurrent ? theme.grey : settings.invertedColors ? theme.background : theme.primary
+    const tabColor = !isCurrent
+        ? theme.grey
+        : settings.invertedColors
+        ? theme.background
+        : theme.primary
 
     return (
         <TabContainer onPress={onPress}>
-            <MyMaterialCommunityIcons
-                name={icon}
-                color={color}
-            />
-            <TabText style={{ color }}>
-                {text}
-            </TabText>
+            <MyMaterialCommunityIcons name={icon} color={color} />
+            <TabText style={{ color }}>{text}</TabText>
         </TabContainer>
     )
 }

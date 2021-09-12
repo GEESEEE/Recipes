@@ -19,7 +19,11 @@ const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
     </TouchableOpacity>
 )
 
-const PreferenceSwitch = (text: string, switchValue: boolean, onValueChange: (val: boolean) => void): JSX.Element => {
+const PreferenceSwitch = (
+    text: string,
+    switchValue: boolean,
+    onValueChange: (val: boolean) => void
+): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
 
     return (
@@ -43,7 +47,7 @@ export default function Drawer({
 }: {
     navigation: any
 }): JSX.Element {
-    const {user, auth, theme, settings} = useAppSelector((state) => state)
+    const { user, auth, theme, settings } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     async function handleSignOut(): Promise<void> {

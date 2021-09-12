@@ -18,5 +18,5 @@ export default combineReducers({
     user,
     theme,
     indices,
-    settings
+    settings,
 })

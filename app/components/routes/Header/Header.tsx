@@ -35,20 +35,24 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
         )
     }
 
-    const backgroundColor = settings.invertedColors ? theme.primary : theme.background
+    const backgroundColor = settings.invertedColors
+        ? theme.primary
+        : theme.background
     const iconColor = settings.invertedColors ? theme.background : theme.primary
 
     return (
-        <Container style={{
-            height: insets.top + 35,
-            backgroundColor
-        }}>
+        <Container
+            style={{
+                height: insets.top + 35,
+                backgroundColor,
+            }}
+        >
             <HeaderContainer
                 style={{
                     paddingTop: insets.top,
                     paddingLeft: insets.left + 5,
                     paddingRight: insets.right + 5,
-                    backgroundColor
+                    backgroundColor,
                 }}
             >
                 {openSearchBar ? (

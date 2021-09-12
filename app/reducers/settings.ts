@@ -1,11 +1,10 @@
-
 export const SETTINGS_ACTIONS = {
     SET_SETTINGS: 'setSettings',
-    SET_INVERTED_COLORS: 'setInvertedColors'
+    SET_INVERTED_COLORS: 'setInvertedColors',
 }
 
 export interface Settings {
-    invertedColors: boolean;
+    invertedColors: boolean
 }
 
 export const initialSettingsState: Settings = {
@@ -14,7 +13,7 @@ export const initialSettingsState: Settings = {
 
 const settings = (
     state = initialSettingsState,
-    action: { type: string, payload: any}
+    action: { type: string; payload: any }
 ): Settings => {
     switch (action.type) {
         case SETTINGS_ACTIONS.SET_SETTINGS: {
@@ -23,8 +22,8 @@ const settings = (
         }
 
         case SETTINGS_ACTIONS.SET_INVERTED_COLORS: {
-            const { invertedColors } = action.payload;
-            return {...state, invertedColors}
+            const { invertedColors } = action.payload
+            return { ...state, invertedColors }
         }
 
         default: {
