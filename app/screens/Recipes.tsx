@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import RecipesFlatList from '../components/data/RecipesFlatList'
-import {FilterHeader, SortHeader} from '../components/user-input/search'
+import { FilterHeader, SortHeader } from '../components/user-input/search'
 import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 
@@ -26,9 +26,9 @@ function RecipesScreen({
 
     return (
         <Container>
-            <FilterHeader route="Recipes"/>
+            <FilterHeader route="Recipes" />
             <SortHeader route="Recipes" />
-            {displaySeparator ? <Separator/> : null}
+            {displaySeparator ? <Separator /> : null}
             <RecipesFlatList
                 recipes={sortedRecipes}
                 navigation={navigation}
@@ -49,5 +49,5 @@ const Container = styled(View)`
 const Separator = styled(View)`
     width: 100%;
     height: 1px;
-    background-color: ${(props) => props.theme.primary}
+    background-color: ${(props) => props.theme.primary};
 `

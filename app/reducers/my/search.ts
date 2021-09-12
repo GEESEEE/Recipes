@@ -1,4 +1,4 @@
-import { initialSearchState } from "../../actions/search"
+import { initialSearchState } from '../../actions/search'
 
 export const MY_SEARCH_ACTIONS = {
     ADD_SEARCH: 'addMySearch',
@@ -8,7 +8,7 @@ export const MY_SEARCH_ACTIONS = {
 
 const mySearch = (
     state = initialSearchState,
-    action: { type: string, payload: any }
+    action: { type: string; payload: any }
 ): string[] => {
     switch (action.type) {
         case MY_SEARCH_ACTIONS.ADD_SEARCH: {
@@ -18,7 +18,7 @@ const mySearch = (
 
         case MY_SEARCH_ACTIONS.REMOVE_SEARCH: {
             const { search } = action.payload
-            return state.filter(s => s !== search)
+            return state.filter((s) => s !== search)
         }
 
         default: {

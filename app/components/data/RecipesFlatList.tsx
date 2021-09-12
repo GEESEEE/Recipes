@@ -60,5 +60,5 @@ const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
 const styles = StyleSheet.create({
     contentContainer: {
         justifyContent: 'flex-start',
-    }
+    },
 })

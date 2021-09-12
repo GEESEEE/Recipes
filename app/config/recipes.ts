@@ -166,20 +166,31 @@ export async function deleteInstructions(
     )
 }
 
-export function applySearch(
-    recipes: Recipe[],
-    search: string[]
-): Recipe[] {
+export function applySearch(recipes: Recipe[], search: string[]): Recipe[] {
     if (search.length > 0) {
-        const queries = search.map(s => s.toLowerCase())
+        const queries = search.map((s) => s.toLowerCase())
 
         return recipes.filter((recipe) => {
-            if (queries.some(query => recipe.name.toLowerCase().includes(query))) return true
-            if (queries.some(query => recipe.description.toLowerCase().includes(query))) return true
+            if (
+                queries.some((query) =>
+                    recipe.name.toLowerCase().includes(query)
+                )
+            )
+                return true
+            if (
+                queries.some((query) =>
+                    recipe.description.toLowerCase().includes(query)
+                )
+            )
+                return true
 
             let included = false
             recipe.recipeIngredients!.forEach((ingr) => {
-                if (queries.some(query => ingr.ingredient!.name.toLowerCase().includes(query)))
+                if (
+                    queries.some((query) =>
+                        ingr.ingredient!.name.toLowerCase().includes(query)
+                    )
+                )
                     included = true
             })
             return included

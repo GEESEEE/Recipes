@@ -22,7 +22,10 @@ const SearchBarComponent = ({
     const dispatch = useAppDispatch()
     const { routeName } = navigation.state
 
-    const addSearchType = routeName === 'Main' ? BROWSE_SEARCH_ACTIONS.ADD_SEARCH : MY_SEARCH_ACTIONS.ADD_SEARCH
+    const addSearchType =
+        routeName === 'Main'
+            ? BROWSE_SEARCH_ACTIONS.ADD_SEARCH
+            : MY_SEARCH_ACTIONS.ADD_SEARCH
 
     function handleText(search: string): void {
         setText(search)

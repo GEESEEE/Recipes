@@ -8,10 +8,9 @@ import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 
-
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
-    const globalState = useAppSelector(state => state)
+    const globalState = useAppSelector((state) => state)
 
     const { theme, browseSearch, browseSort } = globalState
     const { routeName } = navigation.state
@@ -31,7 +30,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function searchDatabase(): void {
-        dispatch(getRecipes({ scopes: ['published'], search: browseSearch, sort }))
+        dispatch(
+            getRecipes({ scopes: ['published'], search: browseSearch, sort })
+        )
     }
 
     return (
@@ -62,7 +63,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {/* Search Button */}
                 {displaySearch ? (
                     <ButtonIcon
-                        onPress={() => openSearchBar ? searchDatabase() : toggleSearch()}
+                        onPress={() =>
+                            openSearchBar ? searchDatabase() : toggleSearch()
+                        }
                         icon={
                             <MaterialIcons
                                 name="search"
@@ -77,7 +80,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"
-                        onPress={() => navigation.navigate('Sort', { route: routeName })}
+                        onPress={() =>
+                            navigation.navigate('Sort', { route: routeName })
+                        }
                         size={25}
                     />
                 ) : null}

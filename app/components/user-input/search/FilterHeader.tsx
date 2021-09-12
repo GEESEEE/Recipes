@@ -8,26 +8,28 @@ import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
 import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
 import { FeatherButton } from '../Buttons'
 
-function FilterHeader({
-    route
-}: { route: string }): JSX.Element {
+function FilterHeader({ route }: { route: string }): JSX.Element {
     const globalState = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
-    const search = route === 'Main' ? globalState.browseSearch : globalState.mySearch
-    const removeSearchType = route === 'Main' ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH : MY_SEARCH_ACTIONS.REMOVE_SEARCH
+    const search =
+        route === 'Main' ? globalState.browseSearch : globalState.mySearch
+    const removeSearchType =
+        route === 'Main'
+            ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH
+            : MY_SEARCH_ACTIONS.REMOVE_SEARCH
 
     return (
         <Container>
-            <ScrollViewContainer
-                horizontal
-            >
-                {search.map(query => (
+            <ScrollViewContainer horizontal>
+                {search.map((query) => (
                     <QueryContainer key={uuid()}>
                         <QueryText>{query}</QueryText>
                         <FeatherButton
                             iconName="x"
-                            onPress={() => dispatch(removeSearch(removeSearchType, query))}
+                            onPress={() =>
+                                dispatch(removeSearch(removeSearchType, query))
+                            }
                             size={16}
                         />
                     </QueryContainer>
@@ -35,7 +37,6 @@ function FilterHeader({
             </ScrollViewContainer>
         </Container>
     )
-
 }
 
 export default FilterHeader

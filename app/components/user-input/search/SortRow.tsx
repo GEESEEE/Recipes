@@ -21,7 +21,7 @@ function SortRow({
     options,
     routeName,
     header,
-}: SortType & { routeName: string, header?: boolean}): JSX.Element {
+}: SortType & { routeName: string; header?: boolean }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -67,24 +67,21 @@ function SortRow({
 
     return (
         <FilterContainer>
-            {header
-            ? null
-            :   <FilterPosition>
+            {header ? null : (
+                <FilterPosition>
                     {selected
                         ? indexOfIncludedElement(sortState.sortState, type) + 1
                         : null}
                 </FilterPosition>
-            }
+            )}
 
             <FilterRowContainer>
-                <FilterText
-                    style={{ color: filterTextColor, fontSize }}
-                >
+                <FilterText style={{ color: filterTextColor, fontSize }}>
                     {name}
                 </FilterText>
 
                 <FilterOptionsView>
-                    <FilterOptions  style={{ fontSize }}>
+                    <FilterOptions style={{ fontSize }}>
                         {order ? options[0] : options[1]}
                     </FilterOptions>
                     <ButtonIcon
