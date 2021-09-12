@@ -144,10 +144,12 @@ export function FeatherButton({
     iconName,
     onPress,
     size,
+    color,
 }: {
     iconName: string
     onPress: () => void
     size?: number
+    color?: string
 }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
@@ -157,7 +159,7 @@ export function FeatherButton({
                 <Feather
                     name={iconName}
                     size={size || 30}
-                    color={theme.primary}
+                    color={color || theme.primary}
                 />
             }
         />

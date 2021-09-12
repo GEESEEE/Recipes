@@ -7,7 +7,7 @@ export type Scope = 'published' | 'author'
 
 interface GetRecipeParams {
     scopes?: Scope[]
-    search?: string
+    search?: string[]
     sort?: string[]
     body?: {
         authorId?: number

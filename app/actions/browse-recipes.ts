@@ -10,7 +10,7 @@ export const getRecipes =
         sort,
     }: {
         scopes: Scope[]
-        search?: string
+        search?: string[]
         sort?: string[]
     }) =>
     async (dispatch: Dispatch): Promise<void> => {

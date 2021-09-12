@@ -10,13 +10,11 @@ import {FilterHeader, SortHeader} from '../components/user-input/search'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
-    const browseSearch = useAppSelector((state) => state.browseSearch)
-    console.log("Main", browseSearch)
+    const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()
 
     const listRef = React.useRef<FlatList>()
 
-    const search = navigation.state.params?.search
     const sortState = useAppSelector((state) => state.browseSort)
     const sort = sortState.sortState
 
@@ -36,7 +34,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-            <SampleText>{`YES ${browseSearch.join(" ")}`}</SampleText>
             <FilterHeader route="Main"/>
             <SortHeader route="Main" />
             <RecipesFlatList
@@ -52,13 +49,9 @@ export default MainScreen
 
 const Container = styled(View)`
     flex: 1;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: ${(props) => props.theme.background};
     padding-bottom: 5px;
 `
 
-const SampleText = styled(Text)`
-    color: ${(props) => props.theme.primary}
-    font-size: 15px;
-`

@@ -20,7 +20,8 @@ function SortRow({
     name,
     options,
     routeName,
-}: SortType & { routeName: string }): JSX.Element {
+    header,
+}: SortType & { routeName: string, header?: boolean}): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -33,14 +34,17 @@ function SortRow({
         routeName === 'Main'
             ? BROWSE_SORT_ACTIONS.ADD_SORT
             : MY_SORT_ACTIONS.ADD_SORT
+
     const removeType =
         routeName === 'Main'
             ? BROWSE_SORT_ACTIONS.REMOVE_SORT
             : MY_SORT_ACTIONS.REMOVE_SORT
+
     const swapType =
         routeName === 'Main'
             ? BROWSE_SORT_ACTIONS.SWAP_SORT
             : MY_SORT_ACTIONS.SWAP_SORT
+
     const toggleType =
         routeName === 'Main'
             ? BROWSE_SORT_ACTIONS.TOGGLE_SORT
@@ -57,22 +61,30 @@ function SortRow({
         ? () => dispatch(swapSort(swapType, type))
         : () => dispatch(toggleSort(toggleType, type))
 
+    const filterTextColor = selected ? theme.primary : theme.text
+    const fontSize = header ? 14 : 16
+    const iconSize = header ? 20 : 25
+
     return (
         <FilterContainer>
-            <FilterPosition>
-                {selected
-                    ? indexOfIncludedElement(sortState.sortState, type) + 1
-                    : null}
-            </FilterPosition>
+            {header
+            ? null
+            :   <FilterPosition>
+                    {selected
+                        ? indexOfIncludedElement(sortState.sortState, type) + 1
+                        : null}
+                </FilterPosition>
+            }
+
             <FilterRowContainer>
                 <FilterText
-                    style={{ color: selected ? theme.primary : theme.text }}
+                    style={{ color: filterTextColor, fontSize }}
                 >
                     {name}
                 </FilterText>
 
                 <FilterOptionsView>
-                    <FilterOptions>
+                    <FilterOptions  style={{ fontSize }}>
                         {order ? options[0] : options[1]}
                     </FilterOptions>
                     <ButtonIcon
@@ -80,7 +92,7 @@ function SortRow({
                             <MyMaterialCommunityIcons
                                 name="swap-vertical"
                                 color={theme.primary}
-                                size={25}
+                                size={iconSize}
                             />
                         }
                         onPress={toggleOrder}
@@ -91,6 +103,7 @@ function SortRow({
                     <FeatherButton
                         iconName={selected ? 'x' : 'plus'}
                         onPress={() => dispatch(callback)}
+                        size={iconSize}
                     />
                 </FinalButtonView>
             </FilterRowContainer>

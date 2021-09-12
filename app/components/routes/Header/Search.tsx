@@ -52,7 +52,12 @@ const SearchBarComponent = ({
             />
             <SearchBarButton
                 iconName="plus"
-                onPress={() => dispatch(addSearch(addSearchType, searchText))}
+                onPress={() => {
+                    if (searchText.length > 0) {
+                        dispatch(addSearch(addSearchType, searchText))
+                    }
+                    handleText('')
+                }}
                 size={27}
             />
         </SearchBarContainer>

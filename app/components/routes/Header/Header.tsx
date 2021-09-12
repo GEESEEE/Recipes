@@ -3,21 +3,31 @@ import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useAppSelector } from '../../../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
+import { getRecipes } from '../../../actions/browse-recipes'
+
 
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
+    const globalState = useAppSelector(state => state)
+
+    const {theme } = globalState
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
 
     const searchRoutes = ['Main', 'Recipes']
     const [openSearchBar, setOpenSearchBar] = useState(false)
-    const [search, setSearch] = useState('')
+    const [searchText, setSearchText] = useState('')
 
     const displayFilter = searchRoutes.includes(routeName)
+    const displaySearch = searchRoutes.includes(routeName)
     const displayAdd = ['Recipes'].includes(routeName) && !openSearchBar
+
+    const search = routeName === 'Main' ? globalState.browseSearch : globalState.mySearch
+    const sortState = routeName === 'Main' ? globalState.browseSort : globalState.mySort
+    const sort = sortState.sortState
 
     function handleDrawer(): void {
         navigation.toggleDrawer()
@@ -32,6 +42,10 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
             navigation.setParams({ search: '' })
         }
         setOpenSearchBar(!openSearchBar)
+    }
+
+    function searchDatabase(): void {
+        dispatch(getRecipes({ scopes: ['published'], search, sort }))
     }
 
     function handleFilter(): void {
@@ -51,8 +65,8 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     <SearchBarComponent
                         navigation={navigation}
                         toggle={() => toggleSearch()}
-                        searchText={search}
-                        setText={setSearch}
+                        searchText={searchText}
+                        setText={setSearchText}
                     />
                 ) : (
                     <HeaderFlex>
@@ -64,9 +78,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 )}
 
                 {/* Search Button */}
-                {!openSearchBar ? (
+                {displaySearch ? (
                     <ButtonIcon
-                        onPress={() => toggleSearch()}
+                        onPress={() => openSearchBar ? searchDatabase() : toggleSearch()}
                         icon={
                             <MaterialIcons
                                 name="search"

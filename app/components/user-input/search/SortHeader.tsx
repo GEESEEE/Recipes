@@ -23,6 +23,7 @@ function SortHeader({ route }: { route: string }): JSX.Element {
                         name={filt.name}
                         options={filt.options}
                         routeName={route}
+                        header
                     />
                 )
             })}

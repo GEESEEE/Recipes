@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import styled from 'styled-components'
 import { RecipeHeader } from '.'
 import { Recipe } from '../../data'
@@ -30,7 +30,7 @@ const RecipesFlatList = React.forwardRef(
                 ref={ref}
                 data={recipes}
                 keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{}}
+                contentContainerStyle={styles.contentContainer}
                 renderItem={({ item }) => (
                     <MemoizedRecipeHeader
                         recipe={item}
@@ -56,3 +56,9 @@ const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
     width: 100%;
     padding-top: 5px;
 `
+
+const styles = StyleSheet.create({
+    contentContainer: {
+        justifyContent: 'flex-start',
+    }
+})
