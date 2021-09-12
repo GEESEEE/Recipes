@@ -12,6 +12,7 @@ export type Theme = {
     backgroundVariant: string
     text: string
     grey: string
+    greyVariant: string
     error: string
 }
 
@@ -22,6 +23,7 @@ const lightTheme = (): Theme => ({
     backgroundVariant: colors.lightestgrey,
     text: colors.darkergrey,
     grey: colors.grey,
+    greyVariant: colors.lightgrey,
     error: colors.red,
 })
 
@@ -32,6 +34,7 @@ const darkTheme = (): Theme => ({
     backgroundVariant: colors.darkergrey,
     text: colors.lightergrey,
     grey: colors.grey,
+    greyVariant: colors.darkgrey,
     error: colors.red,
 })
 

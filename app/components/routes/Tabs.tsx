@@ -62,7 +62,8 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
                         {
                             transform: [{ translateX: translateValue }],
                             width: tabWidth - 20,
-                            backgroundColor: settings.invertedColors ? theme.text : theme.primary
+                            backgroundColor: settings.invertedColors ? theme.background : theme.primary,
+                            borderColor: settings.invertedColors ? theme.primary : theme.primary
                         },
                     ]}
                 />
@@ -105,9 +106,9 @@ const RouteTab = ({
     let color = theme.primary
     if (settings.invertedColors) {
         if (isCurrent) {
-            color = theme.text
-        } else {
             color = theme.background
+        } else {
+            color = theme.greyVariant
         }
     } else if (!isCurrent) {
             color = theme.grey
@@ -147,6 +148,7 @@ const TabSlider = styled(Animated.View)`
     left: 10px;
     top: -3px;
     border-radius: 10px;
+    border-width: 1px;
 `
 
 const TabContainer = styled(TouchableOpacity)`
