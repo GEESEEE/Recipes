@@ -108,7 +108,7 @@ const RouteTab = ({
         if (isCurrent) {
             color = theme.background
         } else {
-            color = theme.greyVariant
+            color = theme.textVariant
         }
     } else if (!isCurrent) {
             color = theme.grey

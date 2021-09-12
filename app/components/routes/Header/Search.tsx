@@ -48,12 +48,12 @@ const SearchBarComponent = ({
                 onChangeText={(t: string) => handleText(t)}
                 value={searchText}
             />
-            <SearchBarButton
+            <FeatherButton
                 iconName="x"
                 onPress={() => handleText('')}
                 size={25}
             />
-            <SearchBarButton
+            <FeatherButton
                 iconName="plus"
                 onPress={() => {
                     if (searchText.length > 0) {
@@ -88,9 +88,4 @@ const SearchBar = styled(TextInput)`
     color: ${(props) => props.theme.text};
     padding-left: 8px;
     padding-right: 8px;
-`
-
-const SearchBarButton = styled(FeatherButton)`
-    align-self: flex-end;
-    padding-right: 15px;
 `
