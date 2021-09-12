@@ -41,11 +41,11 @@ export async function getRecipes({
         suffix = suffix.concat(`?scopes=${scopes.join(',')}`)
     }
 
-    if (typeof search !== 'undefined') {
+    if (typeof search !== 'undefined' && search.length > 0) {
         suffix = suffix.concat(`&search=${search}`)
     }
 
-    if (typeof sort !== 'undefined') {
+    if (typeof sort !== 'undefined' && sort.length > 0) {
         suffix = suffix.concat(`&sort=${sort.join(',')}`)
     }
 
