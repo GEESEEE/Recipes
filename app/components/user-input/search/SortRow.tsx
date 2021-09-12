@@ -30,36 +30,18 @@ function SortRow({
     const sortState =
         routeName === 'Main' ? globalState.browseSort : globalState.mySort
 
-    const addType =
-        routeName === 'Main'
-            ? BROWSE_SORT_ACTIONS.ADD_SORT
-            : MY_SORT_ACTIONS.ADD_SORT
-
-    const removeType =
-        routeName === 'Main'
-            ? BROWSE_SORT_ACTIONS.REMOVE_SORT
-            : MY_SORT_ACTIONS.REMOVE_SORT
-
-    const swapType =
-        routeName === 'Main'
-            ? BROWSE_SORT_ACTIONS.SWAP_SORT
-            : MY_SORT_ACTIONS.SWAP_SORT
-
-    const toggleType =
-        routeName === 'Main'
-            ? BROWSE_SORT_ACTIONS.TOGGLE_SORT
-            : MY_SORT_ACTIONS.TOGGLE_SORT
+    const SORT_ACTIONS = routeName === 'Main' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
 
     const selected = inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]
 
     const callback = selected
-        ? removeSort(removeType, type)
-        : addSort(addType, type, order)
+        ? removeSort(SORT_ACTIONS.REMOVE_SORT, type)
+        : addSort(SORT_ACTIONS.ADD_SORT, type, order)
 
     const toggleOrder = selected
-        ? () => dispatch(swapSort(swapType, type))
-        : () => dispatch(toggleSort(toggleType, type))
+        ? () => dispatch(swapSort(SORT_ACTIONS.SWAP_SORT, type))
+        : () => dispatch(toggleSort(SORT_ACTIONS.TOGGLE_SORT, type))
 
     const filterTextColor = selected ? theme.primary : theme.text
     const fontSize = header ? 14 : 16
