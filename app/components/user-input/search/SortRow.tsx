@@ -7,13 +7,13 @@ import {
     swapSort,
     toggleSort,
     SortType,
-} from '../../actions/sort'
-import { inElementOf, indexOfIncludedElement } from '../../config/utils'
-import { useAppDispatch, useAppSelector } from '../../hooks'
-import { BROWSE_SORT_ACTIONS } from '../../reducers/browse'
-import { MY_SORT_ACTIONS } from '../../reducers/my'
-import { MyMaterialCommunityIcons } from '../Icons'
-import { ButtonIcon, FeatherButton } from './Buttons'
+} from '../../../actions/sort'
+import { inElementOf, indexOfIncludedElement } from '../../../config/utils'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { BROWSE_SORT_ACTIONS } from '../../../reducers/browse'
+import { MY_SORT_ACTIONS } from '../../../reducers/my'
+import { MyMaterialCommunityIcons } from '../../Icons'
+import { ButtonIcon, FeatherButton } from '../Buttons'
 
 function SortRow({
     type,

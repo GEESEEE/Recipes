@@ -1,10 +1,9 @@
-import { filter } from 'lodash'
 import React from 'react'
 import { View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import RecipesFlatList from '../components/data/RecipesFlatList'
-import SortHeader from '../components/user-input/SortHeader'
+import {SortHeader} from '../components/user-input/search'
 import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 

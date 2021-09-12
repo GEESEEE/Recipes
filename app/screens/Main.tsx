@@ -6,10 +6,12 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import { useDebounce } from '../hooks'
 import { getRecipes } from '../actions/browse-recipes'
-import SortHeader from '../components/user-input/SortHeader'
+import {FilterHeader, SortHeader} from '../components/user-input/search'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
+    const browseSearch = useAppSelector((state) => state.browseSearch)
+    console.log("Main", browseSearch)
     const dispatch = useAppDispatch()
 
     const listRef = React.useRef<FlatList>()
@@ -30,10 +32,12 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(getRecipes({ scopes: ['published'], search, sort }))
     }
 
-    useDebounce(onSearch, 1000, [search, sort])
+    // useDebounce(onSearch, 1000, [search, sort])
 
     return (
         <Container>
+            <SampleText>{`YES ${browseSearch.join(" ")}`}</SampleText>
+            <FilterHeader route="Main"/>
             <SortHeader route="Main" />
             <RecipesFlatList
                 ref={listRef}

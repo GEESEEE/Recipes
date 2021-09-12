@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { View, TextInput } from 'react-native'
-import { useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { FeatherButton } from '../../user-input/Buttons'
+import { addSearch, removeSearch } from '../../../actions/search'
+import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
+import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
 
 const SearchBarComponent = ({
     navigation,
@@ -16,11 +19,17 @@ const SearchBarComponent = ({
     setText(text: string): void
 }): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
+    const dispatch = useAppDispatch()
     const { routeName } = navigation.state
+
+    const addSearchType = routeName === 'Main' ? BROWSE_SEARCH_ACTIONS.ADD_SEARCH : MY_SEARCH_ACTIONS.ADD_SEARCH
+
+    const removeSearchType = routeName === 'Main'
+        ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH
+        : MY_SEARCH_ACTIONS.REMOVE_SEARCH
 
     function handleText(search: string): void {
         setText(search)
-        navigation.setParams({ search })
     }
 
     return (
@@ -36,10 +45,15 @@ const SearchBarComponent = ({
                 onChangeText={(t: string) => handleText(t)}
                 value={searchText}
             />
-            <ClearSearchBarButton
+            <SearchBarButton
                 iconName="x"
                 onPress={() => handleText('')}
                 size={25}
+            />
+            <SearchBarButton
+                iconName="plus"
+                onPress={() => dispatch(addSearch(addSearchType, searchText))}
+                size={27}
             />
         </SearchBarContainer>
     )
@@ -58,7 +72,7 @@ const SearchBarContainer = styled(View)`
 
 const ReturnButton = styled(FeatherButton)`
     align-self: flex-start;
-    padding-left: 10px;
+    padding-left: 15px;
 `
 
 const SearchBar = styled(TextInput)`
@@ -68,7 +82,7 @@ const SearchBar = styled(TextInput)`
     padding-right: 8px;
 `
 
-const ClearSearchBarButton = styled(FeatherButton)`
+const SearchBarButton = styled(FeatherButton)`
     align-self: flex-end;
-    padding-right: 10px;
+    padding-right: 15px;
 `

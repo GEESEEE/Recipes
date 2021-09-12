@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { FeatherButton } from '../components/user-input/Buttons'
 import { sorts } from '../actions/sort'
-import SortRow from '../components/user-input/SortRow'
+import {SortRow} from '../components/user-input/search'
 
 const Sort = ({ navigation }: { navigation: any }): JSX.Element => {
     const routeName = navigation.state.params?.route
