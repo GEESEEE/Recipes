@@ -252,7 +252,8 @@ export const retrieveRecipes =
             }
 
             // Get all my recipes from database
-            const newRecipes = await recipeUtils.getMyRecipes()
+            const paginationObject = await recipeUtils.getMyRecipes()
+            const newRecipes = paginationObject.data
 
             await AsyncStorage.setItem('recipes', JSON.stringify(newRecipes))
             dispatch({

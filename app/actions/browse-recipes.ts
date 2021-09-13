@@ -1,27 +1,43 @@
 import { Dispatch } from 'redux'
 import * as recipeService from '../services/recipe'
 import { BROWSE_RECIPE_ACTIONS } from '../reducers/browse'
-import { Scope } from '../services/recipe'
 
 export const getRecipes =
     ({
         scopes,
         search,
         sort,
-    }: {
-        scopes: Scope[]
-        search?: string[]
-        sort?: string[]
-    }) =>
+        page,
+        perPage
+    }: recipeService.GetRecipeParams) =>
     async (dispatch: Dispatch): Promise<void> => {
-        const newRecipes = await recipeService.getRecipes({
+        const paginationObject = await recipeService.getRecipes({
             scopes,
             search,
             sort,
+            page,
+            perPage
         })
+        const { from,
+            to,
+            per_page,
+            total,
+            current_page,
+            prev_page,
+            next_page,
+            last_page,
+        } = paginationObject
+        console.log("New Recipes", from,
+        to,
+        per_page,
+        total,
+        current_page,
+        prev_page,
+        next_page,
+        last_page,)
 
         dispatch({
             type: BROWSE_RECIPE_ACTIONS.SET_RECIPES,
-            payload: { newRecipes },
+            payload: { newRecipes: paginationObject.data },
         })
     }

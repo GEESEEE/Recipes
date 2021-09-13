@@ -1,6 +1,7 @@
 import { RecipeSortType } from '../actions/sort'
 import * as recipeService from '../services/recipe'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
+import { PaginationObject } from '../services/recipe'
 
 type IngredientDifferenceObject = {
     recipeIngredientId: number
@@ -67,9 +68,10 @@ export async function updateRecipe(
     return JSON.parse(JSON.stringify(recipe))
 }
 
-export async function getMyRecipes(): Promise<Recipe[]> {
+export async function getMyRecipes(): Promise<PaginationObject> {
     return recipeService.getRecipes({
         scopes: ['author'],
+        perPage: 9999
     })
 }
 

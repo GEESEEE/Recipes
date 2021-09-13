@@ -9,6 +9,7 @@ import { FilterHeader, SortHeader } from '../components/user-input/search'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
+    console.log("Main", browseRecipes.length)
     const sort = useAppSelector((state) => state.browseSort)
     const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()

@@ -122,11 +122,6 @@ const RouteTab = ({
     } else if (!isCurrent) {
         color = theme.grey
     }
-    const tabColor = !isCurrent
-        ? theme.grey
-        : settings.invertedColors
-        ? theme.background
-        : theme.primary
 
     return (
         <TabContainer onPress={onPress}>

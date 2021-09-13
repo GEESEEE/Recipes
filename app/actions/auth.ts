@@ -109,11 +109,11 @@ export const signOut =
     async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.SIGN_OUT_START, payload: {} })
         try {
-            await authService.signOut({ token })
             await SecureStore.deleteItemAsync('token')
-            dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             dispatch(clearUserData())
+            dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             navigation.navigate('Login')
+            await authService.signOut({ token })
         } catch (err) {
             console.error(err)
             dispatch({

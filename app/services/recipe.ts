@@ -5,10 +5,24 @@ import handleError from './base'
 
 export type Scope = 'published' | 'author'
 
-interface GetRecipeParams {
+export interface PaginationObject {
+    from: any
+    to: any
+    per_page: any
+    total: number | any
+    current_page: number
+    prev_page?: number | null
+    next_page?: number | null
+    last_page: number | null
+    data: Array<any> | any
+}
+
+export interface GetRecipeParams {
     scopes?: Scope[]
     search?: string[]
     sort?: string[]
+    perPage?: number
+    page?: number
     body?: {
         authorId?: number
     }
@@ -34,8 +48,10 @@ export async function getRecipes({
     scopes,
     search,
     sort,
+    perPage,
+    page,
     body,
-}: GetRecipeParams): Promise<Recipe[]> {
+}: GetRecipeParams): Promise<PaginationObject> {
     let suffix = ''
     if (typeof scopes !== 'undefined') {
         suffix = suffix.concat(`?scopes=${scopes.join(',')}`)
@@ -47,6 +63,14 @@ export async function getRecipes({
 
     if (typeof sort !== 'undefined' && sort.length > 0) {
         suffix = suffix.concat(`&sort=${sort.join(',')}`)
+    }
+
+    if (typeof perPage !== 'undefined') {
+        suffix = suffix.concat(`&per_page=${perPage}`)
+    }
+
+    if (typeof page !== 'undefined') {
+        suffix = suffix.concat(`&page=${page}`)
     }
 
     return handleError('GET', `/recipes${suffix}`, { body })
