@@ -65,14 +65,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         navigation.openDrawer()
     }
 
-    async function scopes(): Promise<void> {
-        console.log('Scopes')
-        const r = await recipeService.getRecipes({
-            scopes: ['published'],
-        })
-        console.log(r.length)
-    }
-
     return (
         <Container>
             {/* <LogoView>
@@ -90,7 +82,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
-            <ButtonFilled text="do some scopes" onPress={() => scopes()} />
         </Container>
     )
 }
