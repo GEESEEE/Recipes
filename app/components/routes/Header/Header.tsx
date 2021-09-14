@@ -12,6 +12,8 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
     const globalState = useAppSelector((state) => state)
 
+    const listRef = navigation.state.params?.listRef
+
     const { theme, settings, browseSearch, browseSort } = globalState
     const { routeName } = navigation.state
     const insets = useSafeAreaInsets()
@@ -30,6 +32,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function searchDatabase(): void {
+        if (typeof listRef.current !== 'undefined') {
+            listRef.current.scrollToOffset({ aniamted: true, offset: 0})
+        }
         dispatch(
             getRecipes(
                 { scopes: ['published'], search: browseSearch, sort })

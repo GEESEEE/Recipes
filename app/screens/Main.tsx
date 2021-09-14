@@ -19,6 +19,7 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const listRef = React.useRef<FlatList>()
 
     useEffect(() => {
+        navigation.setParams({ listRef })
         dispatch(retrieveRecipes())
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])

@@ -66,15 +66,11 @@ const styles = StyleSheet.create({
     },
 })
 
-const Footer = (): JSX.Element => {
-    console.log("Footer")
-
-    return (
+const Footer = (): JSX.Element => (
         <FooterView>
             <FooterText>End of List</FooterText>
         </FooterView>
     )
-}
 
 const FooterView = styled(View)`
     align-items: center;
