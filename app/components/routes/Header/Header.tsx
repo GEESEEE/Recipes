@@ -31,7 +31,8 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 
     function searchDatabase(): void {
         dispatch(
-            getRecipes({ scopes: ['published'], search: browseSearch, sort })
+            getRecipes(
+                { scopes: ['published'], search: browseSearch, sort })
         )
     }
 

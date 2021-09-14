@@ -9,13 +9,14 @@ interface RecipesFlatListProps {
     recipes: Recipe[]
     navigation: any
     dropdown?: boolean
+    onEndReached?: () => void
 }
 
 const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
 
 const RecipesFlatList = React.forwardRef(
     (
-        { recipes, navigation, dropdown }: RecipesFlatListProps,
+        { recipes, navigation, dropdown, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
         const [scrollPosition, setScrollPosition] = React.useState(0)
@@ -45,6 +46,7 @@ const RecipesFlatList = React.forwardRef(
                     />
                 )}
                 onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
+                onEndReached={() => onEndReached ? onEndReached() : undefined}
             />
         )
     }

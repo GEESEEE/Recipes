@@ -4,15 +4,18 @@ import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
-import { getRecipes } from '../actions/browse-recipes'
+import { addRecipes, getRecipes } from '../actions/browse-recipes'
 import { FilterHeader, SortHeader } from '../components/user-input/search'
+
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
-    console.log("Main", browseRecipes.length)
-    const sort = useAppSelector((state) => state.browseSort)
+    // console.log("Main", browseRecipes.recipes.length, browseRecipes.recipes.map(r =>
+    //     ({index: browseRecipes.recipes.indexOf(r), id: r.id, name: r.name})))
+    const {sortState} = useAppSelector((state) => state.browseSort)
     const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()
+
     const listRef = React.useRef<FlatList>()
 
     useEffect(() => {
@@ -20,7 +23,15 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])
 
-    const displaySeparator = sort.sortState.length > 0 || search.length > 0
+
+    const onEndReached = (): void => {
+        if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
+            const params = {...browseRecipes.currentParams, page: browseRecipes.nextPage}
+            dispatch(addRecipes(params))
+        }
+    }
+
+    const displaySeparator = sortState.length > 0 || search.length > 0
 
     return (
         <Container>
@@ -29,8 +40,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
             {displaySeparator ? <Separator /> : null}
             <RecipesFlatList
                 ref={listRef}
-                recipes={browseRecipes}
+                recipes={browseRecipes.recipes}
                 navigation={navigation}
+                onEndReached={onEndReached}
             />
         </Container>
     )
