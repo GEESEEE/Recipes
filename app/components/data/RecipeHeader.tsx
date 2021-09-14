@@ -196,7 +196,7 @@ export default RecipeHeader
 const Header = styled(TouchableOpacity)`
     align-self: center;
     align-items: center;
-    width: 90%;
+    width: 100%;
     background-color: ${(props) => props.theme.background};
     border-color: ${(props) => props.theme.primary};
     border-radius: 20px;

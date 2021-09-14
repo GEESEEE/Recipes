@@ -47,6 +47,7 @@ const RecipesFlatList = React.forwardRef(
                 )}
                 onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
                 onEndReached={() => onEndReached ? onEndReached() : undefined}
+
             />
         )
     }
@@ -55,7 +56,7 @@ const RecipesFlatList = React.forwardRef(
 export default RecipesFlatList
 
 const RecipesList = styled(FlatList as new () => FlatList<Recipe>)`
-    width: 100%;
+    width: 90%;
     padding-top: 5px;
 `
 
