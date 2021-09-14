@@ -33,11 +33,10 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
 
     function searchDatabase(): void {
         if (typeof listRef.current !== 'undefined') {
-            listRef.current.scrollToOffset({ aniamted: true, offset: 0})
+            listRef.current.scrollToOffset({ aniamted: true, offset: 0 })
         }
         dispatch(
-            getRecipes(
-                { scopes: ['published'], search: browseSearch, sort })
+            getRecipes({ scopes: ['published'], search: browseSearch, sort })
         )
     }
 

@@ -7,12 +7,11 @@ import RecipesFlatList from '../components/data/RecipesFlatList'
 import { addRecipes, getRecipes } from '../actions/browse-recipes'
 import { FilterHeader, SortHeader } from '../components/user-input/search'
 
-
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
     // console.log("Main", browseRecipes.recipes.length, browseRecipes.recipes.map(r =>
     //     ({index: browseRecipes.recipes.indexOf(r), id: r.id, name: r.name})))
-    const {sortState} = useAppSelector((state) => state.browseSort)
+    const { sortState } = useAppSelector((state) => state.browseSort)
     const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()
 
@@ -24,10 +23,12 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])
 
-
     const onEndReached = (): void => {
         if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
-            const params = {...browseRecipes.currentParams, page: browseRecipes.nextPage}
+            const params = {
+                ...browseRecipes.currentParams,
+                page: browseRecipes.nextPage,
+            }
             dispatch(addRecipes(params))
         }
     }

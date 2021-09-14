@@ -6,7 +6,6 @@ export const BROWSE_RECIPE_ACTIONS = {
     ADD_RECIPES_SUCCES: 'addBrowseRecipesSucces',
     GET_RECIPES_SUCCES: 'getBrowseRecipesSucces',
     RECIPES_ERROR: 'addBrowseRecipesError',
-
 }
 
 interface BrowseRecipeState {
@@ -29,26 +28,33 @@ const browseRecipes = (
 ): BrowseRecipeState => {
     switch (action.type) {
         case BROWSE_RECIPE_ACTIONS.RECIPES_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case BROWSE_RECIPE_ACTIONS.GET_RECIPES_SUCCES: {
             const { newRecipes, nextPage, currentParams } = action.payload
-            return { loading: false, recipes: newRecipes, nextPage, currentParams }
+            return {
+                loading: false,
+                recipes: newRecipes,
+                nextPage,
+                currentParams,
+            }
         }
 
         case BROWSE_RECIPE_ACTIONS.ADD_RECIPES_SUCCES: {
             const { newRecipes, nextPage } = action.payload
             // Check if some recipes already exist, in case new recipes are published between adding
-            const currentIds = state.recipes.map(r => r.id)
-            const actualNewRecipes = newRecipes.filter((r: Recipe) => !currentIds.includes(r.id))
+            const currentIds = state.recipes.map((r) => r.id)
+            const actualNewRecipes = newRecipes.filter(
+                (r: Recipe) => !currentIds.includes(r.id)
+            )
 
             const recipes = [...state.recipes, ...actualNewRecipes]
-            return { ...state, recipes, nextPage, loading:false }
+            return { ...state, recipes, nextPage, loading: false }
         }
 
         case BROWSE_RECIPE_ACTIONS.RECIPES_ERROR: {
-            return {...state, loading: false}
+            return { ...state, loading: false }
         }
 
         default:

@@ -46,8 +46,8 @@ const RecipesFlatList = React.forwardRef(
                     />
                 )}
                 onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
-                onEndReached={() => onEndReached ? onEndReached() : undefined}
-                ListFooterComponent={<Footer/>}
+                onEndReached={() => (onEndReached ? onEndReached() : undefined)}
+                ListFooterComponent={<Footer />}
             />
         )
     }
@@ -67,15 +67,15 @@ const styles = StyleSheet.create({
 })
 
 const Footer = (): JSX.Element => (
-        <FooterView>
-            <FooterText>End of List</FooterText>
-        </FooterView>
-    )
+    <FooterView>
+        <FooterText>End of List</FooterText>
+    </FooterView>
+)
 
 const FooterView = styled(View)`
     align-items: center;
 `
 
 const FooterText = styled(Text)`
-    color: ${(props) => props.theme.primary}
+    color: ${(props) => props.theme.primary};
 `

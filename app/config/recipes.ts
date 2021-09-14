@@ -71,7 +71,7 @@ export async function updateRecipe(
 export async function getMyRecipes(): Promise<PaginationObject> {
     return recipeService.getRecipes({
         scopes: ['author'],
-        perPage: 9999
+        perPage: 9999,
     })
 }
 
