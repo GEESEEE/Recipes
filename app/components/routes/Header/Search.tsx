@@ -37,7 +37,7 @@ const SearchBarComponent = ({
 
     return (
         <SearchBarContainer style={{ backgroundColor }}>
-            <ReturnButton
+            <FeatherButton
                 iconName="arrow-left"
                 onPress={() => toggle()}
                 size={25}
@@ -76,11 +76,6 @@ const SearchBarContainer = styled(View)`
     background-color: ${(props) => props.theme.backgroundVariant};
     border-radius: 10px;
     margin-end: 5px;
-`
-
-const ReturnButton = styled(FeatherButton)`
-    align-self: flex-start;
-    padding-left: 15px;
 `
 
 const SearchBar = styled(TextInput)`

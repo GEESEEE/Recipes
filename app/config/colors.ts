@@ -13,7 +13,8 @@ export default {
 
     red: '#f00',
 
-    secondary: '#fc5c65',
+    primaryBlue: '#4ecdc4',
+    primaryRed: '#fc5c65',
     green: '#0f0',
     blue: '#00f',
 }
