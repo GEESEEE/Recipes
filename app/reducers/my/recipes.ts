@@ -21,7 +21,7 @@ const myRecipes = (
 
         case MY_RECIPE_ACTIONS.ADD_RECIPE: {
             const { newRecipe } = action.payload
-            return [...state, newRecipe]
+            return [newRecipe, ...state]
         }
 
         case MY_RECIPE_ACTIONS.DELETE_RECIPE: {
