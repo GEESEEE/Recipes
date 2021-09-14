@@ -24,7 +24,8 @@ const RecipesFlatList = React.forwardRef(
         function handleScroll(event: any): void {
             setScrollPosition(event.nativeEvent.contentOffset.y)
         }
-        const dropDownDependencies = dropdown ? [scrollPosition] : undefined
+
+        const dropDownDependencies = dropdown ? [scrollPosition, recipes.length] : undefined
 
         return (
             <RecipesList

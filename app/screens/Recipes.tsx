@@ -4,7 +4,6 @@ import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import RecipesListHeader from '../components/data/RecipesListHeader'
-import { FilterHeader, SortHeader } from '../components/user-input/search'
 import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 
