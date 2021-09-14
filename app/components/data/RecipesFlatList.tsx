@@ -78,4 +78,5 @@ const FooterView = styled(View)`
 
 const FooterText = styled(Text)`
     color: ${(props) => props.theme.primary};
+    padding-bottom: 10px;
 `

@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import { addRecipes, getRecipes } from '../actions/browse-recipes'
 import { FilterHeader, SortHeader } from '../components/user-input/search'
+import { browseSort } from '../reducers/browse'
+import RecipesListHeader from '../components/data/RecipesListHeader'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
@@ -33,13 +35,9 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    const displaySeparator = sortState.length > 0 || search.length > 0
-
     return (
         <Container>
-            <FilterHeader route="Main" />
-            <SortHeader route="Main" />
-            {displaySeparator ? <Separator /> : null}
+            <RecipesListHeader search={search} sort={sortState}/>
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes.recipes}
@@ -58,10 +56,4 @@ const Container = styled(View)`
     align-items: center;
     background-color: ${(props) => props.theme.background};
     padding-bottom: 5px;
-`
-
-const Separator = styled(View)`
-    width: 100%;
-    height: 1px;
-    background-color: ${(props) => props.theme.primary};
 `
