@@ -22,7 +22,10 @@ function FilterHeader({ route }: { route: string }): JSX.Element {
 
     return (
         <Container>
-            <ScrollViewContainer horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollViewContainer
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            >
                 {search.map((query) => (
                     <QueryContainer key={uuid()}>
                         <QueryText>{query}</QueryText>

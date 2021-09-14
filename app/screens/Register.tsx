@@ -174,10 +174,14 @@ function RegisterScreen({
             {/* Password 1 Input Field */}
             <InputFieldRounded
                 secureTextEntry={data.securePasswordText}
-                onChangeText={(text: string) => handlePassword1InputChange(text)}
+                onChangeText={(text: string) =>
+                    handlePassword1InputChange(text)
+                }
                 placeholder="Password"
                 rightIcon={
-                    <TouchableOpacity onPress={() => handleSecurePassword1Change()}>
+                    <TouchableOpacity
+                        onPress={() => handleSecurePassword1Change()}
+                    >
                         {data.securePasswordText ? (
                             <MyFeather name="eye-off" color={colors.grey} />
                         ) : (
@@ -193,7 +197,9 @@ function RegisterScreen({
             {/* Password 2 Input Field */}
             <InputFieldRounded
                 secureTextEntry
-                onChangeText={(text: string) => handlePassword2InputChange(text)}
+                onChangeText={(text: string) =>
+                    handlePassword2InputChange(text)
+                }
                 placeholder="Password"
                 errorMessage={
                     !data.isValidPassword2
@@ -205,7 +211,10 @@ function RegisterScreen({
             />
 
             {/* Register Button */}
-            <ButtonFilled text="Register" onPress={() => handleRegisterButton()} />
+            <ButtonFilled
+                text="Register"
+                onPress={() => handleRegisterButton()}
+            />
             <ErrorMessage errorMessage={auth.error} />
             {/* Already have an account/Go Back Button */}
             <ButtonBorderless

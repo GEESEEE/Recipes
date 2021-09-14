@@ -86,7 +86,6 @@ export const signIn =
             dispatch(getUserData(token))
 
             navigation.navigate('Main')
-
         } catch (err: any) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,

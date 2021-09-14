@@ -23,10 +23,9 @@ function RecipesScreen({
     const filteredRecipes = applySearch(recipes, search)
     const sortedRecipes = applySort(filteredRecipes, sort)
 
-
     return (
         <Container>
-            <RecipesListHeader route="Recipes" search={search} sort={sort}/>
+            <RecipesListHeader route="Recipes" search={search} sort={sort} />
             <RecipesFlatList
                 recipes={sortedRecipes}
                 navigation={navigation}

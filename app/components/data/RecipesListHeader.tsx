@@ -12,23 +12,21 @@ interface RecipesListHeaderProps {
 function RecipesListHeader({
     route,
     search,
-    sort
+    sort,
 }: RecipesListHeaderProps): JSX.Element {
-
     const display = search.length > 0 || sort.length > 0
 
     return (
         <Container>
-            {display
-            ?   <Container>
+            {display ? (
+                <Container>
                     <Container90>
                         <FilterHeader route={route} />
                         <SortHeader route={route} />
                     </Container90>
                     <Separator />
                 </Container>
-            : null}
-
+            ) : null}
         </Container>
     )
 }

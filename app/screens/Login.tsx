@@ -133,7 +133,9 @@ function LoginScreen({
                 onChangeText={(text: string) => handlePasswordInputChange(text)}
                 placeholder="Your Password"
                 rightIcon={
-                    <TouchableOpacity onPress={() => handleSecurePasswordChange()}>
+                    <TouchableOpacity
+                        onPress={() => handleSecurePasswordChange()}
+                    >
                         {data.securePasswordText ? (
                             <MyFeather name="eye-off" color={colors.grey} />
                         ) : (
@@ -150,7 +152,10 @@ function LoginScreen({
             <ButtonFilled text="Sign in" onPress={() => handleLoginButton()} />
 
             {/* Register Button */}
-            <ButtonInverted text="Register" onPress={() => handleRegisterButton()} />
+            <ButtonInverted
+                text="Register"
+                onPress={() => handleRegisterButton()}
+            />
             <ErrorMessage errorMessage={auth.error} />
         </Container>
     )

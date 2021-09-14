@@ -36,7 +36,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             recipeIngredients: [],
             instructions: [],
             publishedAt: null,
-            createdAt: new Date()
+            createdAt: new Date(),
         }
     }
 
@@ -224,22 +224,40 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 navigation={navigation}
                 action="Create"
                 handleNameChange={(text: string) => handleNameChange(text)}
-                handleDescriptionChange={(text: string) => handleDescriptionChange(text)}
-                handlePeopleCountChange={(text: string) => handlePeopleCountChange(text)}
-                handlePrepareTimeChange={(text: string) => handlePrepareTimeChange(text)}
+                handleDescriptionChange={(text: string) =>
+                    handleDescriptionChange(text)
+                }
+                handlePeopleCountChange={(text: string) =>
+                    handlePeopleCountChange(text)
+                }
+                handlePrepareTimeChange={(text: string) =>
+                    handlePrepareTimeChange(text)
+                }
                 handlePublishedAtChange={() => handlePublishedAtChange()}
-                handleRemoveIngredient={(key: string) => handleRemoveIngredient(key)}
-                handleIngredientNameChange={(key: string, text: string) => handleIngredientNameChange(key, text)}
-                handleIngredientAmountChange={(key: string, text: string) => handleIngredientAmountChange(key, text)}
-                handleIngredientUnitChange={(key: string, text: string) => handleIngredientUnitChange(key, text)}
+                handleRemoveIngredient={(key: string) =>
+                    handleRemoveIngredient(key)
+                }
+                handleIngredientNameChange={(key: string, text: string) =>
+                    handleIngredientNameChange(key, text)
+                }
+                handleIngredientAmountChange={(key: string, text: string) =>
+                    handleIngredientAmountChange(key, text)
+                }
+                handleIngredientUnitChange={(key: string, text: string) =>
+                    handleIngredientUnitChange(key, text)
+                }
                 handleAddIngredient={() => handleAddIngredient()}
                 ingredientError={
                     recipeData.validIngredients
                         ? undefined
                         : 'Invalid Ingredients'
                 }
-                handleRemoveInstruction={(key: string) => handleRemoveInstruction(key)}
-                handleInstructionTextChange={(key: string, text: string) => handleInstructionTextChange(key, text)}
+                handleRemoveInstruction={(key: string) =>
+                    handleRemoveInstruction(key)
+                }
+                handleInstructionTextChange={(key: string, text: string) =>
+                    handleInstructionTextChange(key, text)
+                }
                 handleAddInstruction={() => handleAddInstruction()}
                 FooterComponent={
                     <FooterView>
