@@ -36,6 +36,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             recipeIngredients: [],
             instructions: [],
             publishedAt: null,
+            createdAt: new Date()
         }
     }
 
@@ -193,6 +194,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     async function handleCreateRecipe(): Promise<void> {
         if (validRecipe()) {
+            recipeData.createdAt = new Date()
             dispatch(createRecipe(recipeData))
             dispatch(decrementRecipeId(indices.recipeId))
             clearRecipeData()

@@ -35,6 +35,7 @@ export async function createRecipes(
         prepareTime: number
         peopleCount: number
         publishedAt: Date | null
+        createdAt: Date
     }[]
 ): Promise<Recipe[]> {
     return handleError('POST', '/recipes/bulk', { body })

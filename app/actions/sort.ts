@@ -2,6 +2,7 @@ import { Dispatch } from 'redux'
 
 export type RecipeSortType =
     | 'publishtime'
+    | 'createtime'
     | 'preparetime'
     | 'peoplecount'
     | 'ingredientcount'
@@ -14,6 +15,11 @@ export interface SortType {
 }
 
 export const sorts: SortType[] = [
+    {
+        type: 'createtime',
+        name: 'Created time',
+        options: ['old - new', 'new - old'],
+    },
     {
         type: 'publishtime',
         name: 'Publish time',
@@ -51,6 +57,7 @@ export type SortStateType = {
 export const initialSortState: SortStateType = {
     sortState: [],
     orders: {
+        createtime: false,
         publishtime: false,
         preparetime: true,
         peoplecount: true,

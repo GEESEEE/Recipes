@@ -17,4 +17,6 @@ export default class Recipe {
     public instructions?: Instruction[]
 
     public publishedAt!: Date | null
+
+    public createdAt!: Date
 }

@@ -51,6 +51,7 @@ export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
             peopleCount: recipe.peopleCount,
             prepareTime: recipe.prepareTime,
             publishedAt: recipe.publishedAt,
+            createdAt: recipe.createdAt,
         }))
     )
 }
@@ -202,6 +203,7 @@ export function applySearch(recipes: Recipe[], search: string[]): Recipe[] {
 }
 
 const sortFieldMap: { [key in RecipeSortType]: keyof Recipe } = {
+    createtime: 'createdAt',
     publishtime: 'publishedAt',
     preparetime: 'prepareTime',
     peoplecount: 'peopleCount',
