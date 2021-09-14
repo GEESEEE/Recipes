@@ -3,10 +3,11 @@ import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
+import Sort from '../../user-input/search/SortModal'
 
 const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
@@ -39,6 +40,8 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
             getRecipes({ scopes: ['published'], search: browseSearch, sort })
         )
     }
+
+    const [openSort, toggleSort] = useToggle(false)
 
     const backgroundColor = settings.invertedColors
         ? theme.primary
@@ -97,9 +100,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"
-                        onPress={() =>
-                            navigation.navigate('Sort', { route: routeName })
-                        }
+                        onPress={() => toggleSort() }
                         size={25}
                         color={iconColor}
                     />
@@ -113,6 +114,14 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                         color={iconColor}
                     />
                 ) : null}
+
+                {openSort
+                ?   <Sort
+                        routeName={routeName}
+                        toggle={toggleSort}
+                    />
+                : null
+                }
             </HeaderContainer>
         </Container>
     )

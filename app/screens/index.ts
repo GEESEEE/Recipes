@@ -6,7 +6,6 @@ import RegisterScreen from './Register'
 import TestScreen from './Test'
 import ViewRecipeScreen from './ViewRecipe'
 import Popup from './Popup'
-import Sort from './Sort'
 
 export {
     LoginScreen,
@@ -17,5 +16,4 @@ export {
     RecipesScreen,
     TestScreen,
     Popup,
-    Sort,
 }

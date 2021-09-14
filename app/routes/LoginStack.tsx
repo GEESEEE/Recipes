@@ -21,12 +21,6 @@ const screens = {
             cardStyleInterpolator: routeUtils.fade,
         },
     },
-    Sort: {
-        screen: Sort,
-        navigationOptions: {
-            cardStyleInterpolator: routeUtils.fade,
-        },
-    },
 }
 
 const stackConfig: any = {
