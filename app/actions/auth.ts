@@ -85,13 +85,8 @@ export const signIn =
             dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
             dispatch(getUserData(token))
 
-            // navigation.navigate('Main')
-            const resetActions = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'Main' })],
-                key: null,
-            })
-            navigation.dispatch(resetActions)
+            navigation.navigate('Main')
+
         } catch (err: any) {
             dispatch({
                 type: AUTH_ACTIONS.SIGN_IN_ERROR,

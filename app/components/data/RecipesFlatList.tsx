@@ -32,6 +32,7 @@ const RecipesFlatList = React.forwardRef(
                 data={recipes}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.contentContainer}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <MemoizedRecipeHeader
                         recipe={item}

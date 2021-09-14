@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import { FilterHeader, SortHeader } from '../user-input/search'
 
 interface RecipesListHeaderProps {
+    route: string
     search: string[]
     sort: string[]
 }
 
 function RecipesListHeader({
+    route,
     search,
     sort
 }: RecipesListHeaderProps): JSX.Element {
@@ -20,8 +22,8 @@ function RecipesListHeader({
             {display
             ?   <Container>
                     <Container90>
-                        <FilterHeader route="Recipes" />
-                        <SortHeader route="Recipes" />
+                        <FilterHeader route={route} />
+                        <SortHeader route={route} />
                     </Container90>
                     <Separator />
                 </Container>
