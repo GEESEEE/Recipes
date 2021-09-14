@@ -157,7 +157,7 @@ function RegisterScreen({
         <Container>
             {/* Username Input Field */}
             <InputFieldRounded
-                onChangeText={handleUsernameInputChange}
+                onChangeText={(text: string) => handleUsernameInputChange(text)}
                 placeholder="Username"
                 errorMessage={
                     !data.isValidUsername ? 'Invalid Username' : undefined
@@ -166,7 +166,7 @@ function RegisterScreen({
 
             {/* Email Input Field */}
             <InputFieldRounded
-                onChangeText={handleEmailInputChange}
+                onChangeText={(text: string) => handleEmailInputChange(text)}
                 placeholder="E-mail"
                 errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
             />
@@ -174,10 +174,10 @@ function RegisterScreen({
             {/* Password 1 Input Field */}
             <InputFieldRounded
                 secureTextEntry={data.securePasswordText}
-                onChangeText={handlePassword1InputChange}
+                onChangeText={(text: string) => handlePassword1InputChange(text)}
                 placeholder="Password"
                 rightIcon={
-                    <TouchableOpacity onPress={handleSecurePassword1Change}>
+                    <TouchableOpacity onPress={() => handleSecurePassword1Change()}>
                         {data.securePasswordText ? (
                             <MyFeather name="eye-off" color={colors.grey} />
                         ) : (
@@ -193,7 +193,7 @@ function RegisterScreen({
             {/* Password 2 Input Field */}
             <InputFieldRounded
                 secureTextEntry
-                onChangeText={handlePassword2InputChange}
+                onChangeText={(text: string) => handlePassword2InputChange(text)}
                 placeholder="Password"
                 errorMessage={
                     !data.isValidPassword2
@@ -205,12 +205,12 @@ function RegisterScreen({
             />
 
             {/* Register Button */}
-            <ButtonFilled text="Register" onPress={handleRegisterButton} />
+            <ButtonFilled text="Register" onPress={() => handleRegisterButton()} />
             <ErrorMessage errorMessage={auth.error} />
             {/* Already have an account/Go Back Button */}
             <ButtonBorderless
                 text="Already have an account?"
-                onPress={handleGoBackButton}
+                onPress={() => handleGoBackButton()}
             />
         </Container>
     )

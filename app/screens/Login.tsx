@@ -117,7 +117,7 @@ function LoginScreen({
             {/* Email Input Field */}
             <InputFieldRounded
                 leftIcon={<MyFontAwesome name="user-o" />}
-                onChangeText={handleUsernameInputChange}
+                onChangeText={(text: string) => handleUsernameInputChange(text)}
                 placeholder="Your Username or Email"
                 errorMessage={
                     !data.isValidUsername
@@ -130,10 +130,10 @@ function LoginScreen({
             <InputFieldRounded
                 leftIcon={<MyFontAwesome name="lock" />}
                 secureTextEntry={data.securePasswordText}
-                onChangeText={handlePasswordInputChange}
+                onChangeText={(text: string) => handlePasswordInputChange(text)}
                 placeholder="Your Password"
                 rightIcon={
-                    <TouchableOpacity onPress={handleSecurePasswordChange}>
+                    <TouchableOpacity onPress={() => handleSecurePasswordChange()}>
                         {data.securePasswordText ? (
                             <MyFeather name="eye-off" color={colors.grey} />
                         ) : (
@@ -147,10 +147,10 @@ function LoginScreen({
             />
 
             {/* Log in Button */}
-            <ButtonFilled text="Sign in" onPress={handleLoginButton} />
+            <ButtonFilled text="Sign in" onPress={() => handleLoginButton()} />
 
             {/* Register Button */}
-            <ButtonInverted text="Register" onPress={handleRegisterButton} />
+            <ButtonInverted text="Register" onPress={() => handleRegisterButton()} />
             <ErrorMessage errorMessage={auth.error} />
         </Container>
     )

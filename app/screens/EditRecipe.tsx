@@ -221,24 +221,24 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipe={recipeData}
                 navigation={navigation}
                 action="Create"
-                handleNameChange={handleNameChange}
-                handleDescriptionChange={handleDescriptionChange}
-                handlePeopleCountChange={handlePeopleCountChange}
-                handlePrepareTimeChange={handlePrepareTimeChange}
-                handlePublishedAtChange={handlePublishedAtChange}
-                handleRemoveIngredient={handleRemoveIngredient}
-                handleIngredientNameChange={handleIngredientNameChange}
-                handleIngredientAmountChange={handleIngredientAmountChange}
-                handleIngredientUnitChange={handleIngredientUnitChange}
-                handleAddIngredient={handleAddIngredient}
+                handleNameChange={(text: string) => handleNameChange(text)}
+                handleDescriptionChange={(text: string) => handleDescriptionChange(text)}
+                handlePeopleCountChange={(text: string) => handlePeopleCountChange(text)}
+                handlePrepareTimeChange={(text: string) => handlePrepareTimeChange(text)}
+                handlePublishedAtChange={() => handlePublishedAtChange()}
+                handleRemoveIngredient={(key: string) => handleRemoveIngredient(key)}
+                handleIngredientNameChange={(key: string, text: string) => handleIngredientNameChange(key, text)}
+                handleIngredientAmountChange={(key: string, text: string) => handleIngredientAmountChange(key, text)}
+                handleIngredientUnitChange={(key: string, text: string) => handleIngredientUnitChange(key, text)}
+                handleAddIngredient={() => handleAddIngredient()}
                 ingredientError={
                     recipeData.validIngredients
                         ? undefined
                         : 'Invalid Ingredients'
                 }
-                handleRemoveInstruction={handleRemoveInstruction}
-                handleInstructionTextChange={handleInstructionTextChange}
-                handleAddInstruction={handleAddInstruction}
+                handleRemoveInstruction={(key: string) => handleRemoveInstruction(key)}
+                handleInstructionTextChange={(key: string, text: string) => handleInstructionTextChange(key, text)}
+                handleAddInstruction={() => handleAddInstruction()}
                 FooterComponent={
                     <FooterView>
                         <ButtonFilled
