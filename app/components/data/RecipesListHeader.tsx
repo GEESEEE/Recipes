@@ -18,10 +18,12 @@ function RecipesListHeader({
     return (
         <Container>
             {display
-            ? <Container>
-                <FilterHeader route="Recipes" />
-                <SortHeader route="Recipes" />
-                <Separator />
+            ?   <Container>
+                    <Container90>
+                        <FilterHeader route="Recipes" />
+                        <SortHeader route="Recipes" />
+                    </Container90>
+                    <Separator />
                 </Container>
             : null}
 
@@ -32,7 +34,13 @@ function RecipesListHeader({
 export default RecipesListHeader
 
 const Container = styled(View)`
+    width: 100%;
+    align-items: center;
+`
 
+const Container90 = styled(View)`
+    width: 90%;
+    align-items: center;
 `
 
 const Separator = styled(View)`
