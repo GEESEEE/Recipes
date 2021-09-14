@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { View, Text } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { FeatherButton } from '../components/user-input/Buttons'
-import { sorts } from '../actions/sort'
+import { sorts} from '../actions/sort'
 import { SortRow } from '../components/user-input/search'
 
 const Sort = ({ navigation }: { navigation: any }): JSX.Element => {
