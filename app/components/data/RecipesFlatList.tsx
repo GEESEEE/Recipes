@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
 import { RecipeHeader } from '.'
 import { Recipe } from '../../data'
@@ -47,7 +47,7 @@ const RecipesFlatList = React.forwardRef(
                 )}
                 onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
                 onEndReached={() => onEndReached ? onEndReached() : undefined}
-
+                ListFooterComponent={<Footer/>}
             />
         )
     }
@@ -65,3 +65,21 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
 })
+
+const Footer = (): JSX.Element => {
+    console.log("Footer")
+
+    return (
+        <FooterView>
+            <FooterText>End of List</FooterText>
+        </FooterView>
+    )
+}
+
+const FooterView = styled(View)`
+    align-items: center;
+`
+
+const FooterText = styled(Text)`
+    color: ${(props) => props.theme.primary}
+`
