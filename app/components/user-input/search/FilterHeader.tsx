@@ -14,7 +14,7 @@ function FilterHeader({ route }: { route: string }): JSX.Element {
 
     const search =
         route === 'Main' ? globalState.browseSearch : globalState.mySearch
-    console.log(route, search)
+
     const removeSearchType =
         route === 'Main'
             ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH

@@ -224,8 +224,8 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
             const r1Value = r1[field as keyof Recipe]
             const r2Value = r2[field as keyof Recipe]
 
-            if (r1Value == null) return 0
-            if (r2Value == null) return 0
+            if (typeof r1Value === 'undefined') return 0
+            if (typeof r2Value === 'undefined') return 0
 
             if (r1Value instanceof Array && r2Value instanceof Array) {
                 return r1Value.length > r2Value.length
@@ -233,6 +233,14 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
                     : r1Value.length < r2Value.length
                     ? -dir
                     : 0
+            }
+
+            if (r1Value === null) {
+                return -dir
+            }
+
+            if (r2Value === null) {
+                return dir
             }
 
             return r1Value > r2Value ? dir : r1Value < r2Value ? -dir : 0
