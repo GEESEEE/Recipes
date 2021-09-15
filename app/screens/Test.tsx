@@ -3,7 +3,7 @@ import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/Buttons'
-import { useAppDispatch, useAppSelector, useToggle } from '../hooks'
+import { useAppDispatch, useAppSelector } from '../hooks'
 
 
 const bigLogo = 1
