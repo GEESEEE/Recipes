@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { View, Text, Modal } from 'react-native'
 import { v4 as uuid } from 'uuid'
-import { FeatherButton } from '../Buttons'
+import { FeatherButton, ReturnButton } from '../Buttons'
 import { sorts} from '../../../actions/sort'
 import { SortRow } from '.'
 import { useAppSelector } from '../../../hooks'
@@ -16,14 +16,7 @@ function Sort({ routeName, toggle }: {routeName: string, toggle: () => void}): J
             transparent
         >
             <Container>
-                <ReturnButtonContainer>
-                    <FeatherButton
-                        iconName="arrow-left"
-                        onPress={() => toggle()}
-                        size={35}
-                    />
-                </ReturnButtonContainer>
-
+                <ReturnButton onPress={() => toggle()} />
                 <CategoryHeader>Sort (order matters)</CategoryHeader>
                 {sorts.map((sort) => (
                     <SortRow
@@ -48,12 +41,7 @@ const Container = styled(View)`
     justify-content: flex-start;
 `
 
-const ReturnButtonContainer = styled(View)`
-    width: 100%;
-    height: 50px;
-    padding-left: 10px;
 
-`
 
 const CategoryHeader = styled(Text)`
     width: 90%;

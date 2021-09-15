@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/redux'
@@ -28,9 +28,10 @@ const ButtonTextGeneric = styled(Text)`
     flex: 1;
 `
 
-export function ButtonFilled({ text, onPress }: ButtonProps): JSX.Element {
+export function ButtonFilled({ text, onPress, color }: ButtonProps & {color?: string}): JSX.Element {
+    const theme = useAppSelector((state) => state.theme)
     return (
-        <ButtonFilledStyle onPress={onPress}>
+        <ButtonFilledStyle onPress={onPress} style={{backgroundColor: color ?? theme.primary}}>
             <ButtonFilledText>{text}</ButtonFilledText>
         </ButtonFilledStyle>
     )
@@ -165,3 +166,26 @@ export function FeatherButton({
         />
     )
 }
+
+export function ReturnButton({
+    onPress,
+    color
+}: {onPress: () => void, color?: string}): JSX.Element {
+    const theme = useAppSelector((state) => state.theme)
+    return (
+        <ReturnButtonContainer>
+            <FeatherButton
+                iconName="arrow-left"
+                onPress={() => onPress()}
+                size={35}
+                color={color ?? theme.primary}
+            />
+        </ReturnButtonContainer>
+    )
+}
+
+const ReturnButtonContainer = styled(View)`
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+`
