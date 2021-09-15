@@ -3,18 +3,21 @@ import styled from 'styled-components'
 import { View, Text, Modal } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { FeatherButton, ReturnButton } from '../Buttons'
-import { sorts} from '../../../actions/sort'
+import { sorts } from '../../../actions/sort'
 import { SortRow } from '.'
 import { useAppSelector } from '../../../hooks'
 
-function Sort({ routeName, toggle }: {routeName: string, toggle: () => void}): JSX.Element {
+function Sort({
+    routeName,
+    toggle,
+}: {
+    routeName: string
+    toggle: () => void
+}): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
-        <Modal
-            animationType='fade'
-            transparent
-        >
+        <Modal animationType="fade" transparent>
             <Container>
                 <ReturnButton onPress={() => toggle()} />
                 <CategoryHeader>Sort (order matters)</CategoryHeader>
@@ -29,8 +32,8 @@ function Sort({ routeName, toggle }: {routeName: string, toggle: () => void}): J
                 ))}
             </Container>
         </Modal>
-
-    )}
+    )
+}
 
 export default Sort
 
@@ -40,8 +43,6 @@ const Container = styled(View)`
     align-items: center;
     justify-content: flex-start;
 `
-
-
 
 const CategoryHeader = styled(Text)`
     width: 90%;

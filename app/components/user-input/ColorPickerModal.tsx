@@ -10,13 +10,9 @@ import colors from '../../config/colors'
 
 interface ColorPickerProps {
     toggle: () => void
-
 }
 
-function ColorPickerModal({
-    toggle
-}: ColorPickerProps): JSX.Element {
-
+function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -27,38 +23,38 @@ function ColorPickerModal({
     }
 
     return (
-        <Modal
-            animationType='fade'
-            transparent
-        >
+        <Modal animationType="fade" transparent>
             <Container>
-                <ReturnButton
-                    onPress={() => toggle()}
-                    color={localColor}
-                />
+                <ReturnButton onPress={() => toggle()} color={localColor} />
 
                 <DifferenceContainer>
-                    <SampleText style={{color: localColor}}>Change Primary Color!</SampleText>
+                    <SampleText style={{ color: localColor }}>
+                        Change Primary Color!
+                    </SampleText>
                 </DifferenceContainer>
 
                 <Picker
-                    style={{ borderColor: localColor}}
+                    style={{ borderColor: localColor }}
                     defaultColor={theme.primary}
                     oldColor={theme.primary}
-                    onColorChange={(color: HsvColor) => setLocalColor(fromHsv(color))}
+                    onColorChange={(color: HsvColor) =>
+                        setLocalColor(fromHsv(color))
+                    }
                 />
 
                 <ConfirmContainer>
                     <ButtonFilled
                         text="Confirm"
-                        onPress={() => {setPrimaryColor(localColor); toggle() }}
+                        onPress={() => {
+                            setPrimaryColor(localColor)
+                            toggle()
+                        }}
                         color={localColor}
                     />
                 </ConfirmContainer>
 
                 <FillRest />
             </Container>
-
         </Modal>
     )
 }
@@ -67,7 +63,7 @@ export default ColorPickerModal
 
 const Container = styled(View)`
     flex 1;
-    background-color: ${props => props.theme.background};
+    background-color: ${(props) => props.theme.background};
     align-items: center;
 `
 
@@ -79,7 +75,6 @@ const DifferenceContainer = styled(View)`
 const SampleText = styled(Text)`
     font-size: 20px;
 `
-
 
 const Picker = styled(TriangleColorPicker)`
     height: 70%;
@@ -97,5 +92,5 @@ const ConfirmContainer = styled(View)`
 
 const FillRest = styled(View)`
     height: 8%;
-    background-color: ${props => props.theme.background};
+    background-color: ${(props) => props.theme.background};
 `

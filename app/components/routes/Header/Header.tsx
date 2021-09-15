@@ -100,7 +100,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                 {displayFilter ? (
                     <FeatherButton
                         iconName="filter"
-                        onPress={() => toggleSort() }
+                        onPress={() => toggleSort()}
                         size={25}
                         color={iconColor}
                     />
@@ -115,13 +115,9 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
                     />
                 ) : null}
 
-                {openSort
-                ?   <Sort
-                        routeName={routeName}
-                        toggle={toggleSort}
-                    />
-                : null
-                }
+                {openSort ? (
+                    <Sort routeName={routeName} toggle={toggleSort} />
+                ) : null}
             </HeaderContainer>
         </Container>
     )

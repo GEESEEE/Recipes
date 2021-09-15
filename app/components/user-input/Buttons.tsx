@@ -28,10 +28,17 @@ const ButtonTextGeneric = styled(Text)`
     flex: 1;
 `
 
-export function ButtonFilled({ text, onPress, color }: ButtonProps & {color?: string}): JSX.Element {
+export function ButtonFilled({
+    text,
+    onPress,
+    color,
+}: ButtonProps & { color?: string }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
-        <ButtonFilledStyle onPress={onPress} style={{backgroundColor: color ?? theme.primary}}>
+        <ButtonFilledStyle
+            onPress={onPress}
+            style={{ backgroundColor: color ?? theme.primary }}
+        >
             <ButtonFilledText>{text}</ButtonFilledText>
         </ButtonFilledStyle>
     )
@@ -169,8 +176,11 @@ export function FeatherButton({
 
 export function ReturnButton({
     onPress,
-    color
-}: {onPress: () => void, color?: string}): JSX.Element {
+    color,
+}: {
+    onPress: () => void
+    color?: string
+}): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
         <ReturnButtonContainer>

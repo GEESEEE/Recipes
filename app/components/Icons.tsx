@@ -10,23 +10,14 @@ interface MyIconProps {
     name: string
     size?: number
     color?: string
-
 }
 
-export function MyFeather({
-    name,
-    size,
-    color,
-}: MyIconProps): JSX.Element {
+export function MyFeather({ name, size, color }: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return <Feather name={name} color={color || theme.grey} size={size || 20} />
 }
 
-export function MyFontAwesome({
-    name,
-    color,
-    size,
-}: MyIconProps): JSX.Element {
+export function MyFontAwesome({ name, color, size }: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
@@ -70,18 +61,10 @@ export function MyMaterialIcons({
     )
 }
 
-export function MyIonicons({
-    name,
-    color,
-    size,
-}: MyIconProps): JSX.Element {
+export function MyIonicons({ name, color, size }: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
-        <Ionicons
-            name={name}
-            color={color || theme.grey}
-            size={size || 20}
-        />
+        <Ionicons name={name} color={color || theme.grey} size={size || 20} />
     )
 }

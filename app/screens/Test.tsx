@@ -5,7 +5,6 @@ import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
-
 const bigLogo = 1
 const smallLogo = 0.5
 

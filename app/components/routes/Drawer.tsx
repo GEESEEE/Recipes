@@ -17,8 +17,8 @@ interface RouteProps {
     onPress: () => void
 }
 
-const Route = ({icon, text, onPress}: RouteProps): JSX.Element => (
-    <TouchableOpacity onPress={onPress} >
+const Route = ({ icon, text, onPress }: RouteProps): JSX.Element => (
+    <TouchableOpacity onPress={onPress}>
         <Section>
             <Paragraph>{text}</Paragraph>
             {icon}
@@ -65,11 +65,9 @@ export default function Drawer({
 
     return (
         <Container>
-            {
-                openColorPicker
-                ? <ColorPickerModal toggle={toggleColorPicker}/>
-                : null
-            }
+            {openColorPicker ? (
+                <ColorPickerModal toggle={toggleColorPicker} />
+            ) : null}
 
             <ScrollView>
                 <Header>
@@ -89,7 +87,6 @@ export default function Drawer({
                         text="Set Primary Color"
                         onPress={() => toggleColorPicker()}
                     />
-
                 </RoutesSection>
 
                 <PreferenceText>Preferences</PreferenceText>
