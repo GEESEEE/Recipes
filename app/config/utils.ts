@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import { Recipe } from '../data'
 
 export function handleNumericTextInput(
     number: string,

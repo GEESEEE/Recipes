@@ -5,6 +5,7 @@ import {
     StackActions,
 } from 'react-navigation'
 import { Dispatch } from 'redux'
+import { showPopup } from '../config/routes'
 import { AUTH_ACTIONS } from '../reducers/auth'
 import * as authService from '../services/auth'
 import { clearUserData, getUserData } from './user'
@@ -31,14 +32,7 @@ export const retrieveToken =
                 }
             }
         } catch (err: any) {
-            dispatch({
-                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
-                payload: {
-                    err:
-                        err?.response?.data?.errors?.[0]?.message ??
-                        'Could not connect to server',
-                },
-            })
+            handleError(err, navigation, dispatch, AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR)
         }
     }
 
@@ -57,14 +51,7 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err: any) {
-            dispatch({
-                type: AUTH_ACTIONS.SIGN_UP_ERROR,
-                payload: {
-                    error:
-                        err?.response?.data?.errors?.[0]?.message ??
-                        'Could not connect to server',
-                },
-            })
+            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR )
         }
     }
 
@@ -87,14 +74,7 @@ export const signIn =
 
             navigation.navigate('Main')
         } catch (err: any) {
-            dispatch({
-                type: AUTH_ACTIONS.SIGN_IN_ERROR,
-                payload: {
-                    error:
-                        err?.response?.data?.errors?.[0]?.message ??
-                        'Could not connect to server',
-                },
-            })
+            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_IN_ERROR, 'Could not connect to server')
         }
     }
 
@@ -108,14 +88,16 @@ export const signOut =
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             navigation.navigate('Login')
             await authService.signOut({ token })
-        } catch (err) {
-            console.error(err)
-            dispatch({
-                type: AUTH_ACTIONS.SIGN_OUT_ERROR,
-                payload: {
-                    error: 'Could not connect to server, but signed out anyway',
-                },
-            })
+        } catch (err: any) {
+            handleError(
+                err,
+                navigation,
+                dispatch,
+                AUTH_ACTIONS.SIGN_OUT_ERROR,
+                'Could not connect to server',
+                'But signed out anyway'
+            )
+
         }
     }
 
@@ -124,3 +106,25 @@ export const clearError =
     async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }
+
+
+function handleError(
+    err: any,
+    navigation: any,
+    dispatch: any,
+    type: string,
+    errorMessage?: string,
+    errorDescription?: string
+): void {
+    const error = err?.response?.data?.errors?.[0]?.message
+    if (error == null) {
+        showPopup(navigation, errorMessage ?? 'Could not connect to server', errorDescription)
+    }
+    dispatch({
+        type,
+        payload: {
+            error,
+        },
+    })
+
+}
