@@ -3,9 +3,8 @@ import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/Buttons'
-import ColorPickerModal from '../components/user-input/ColorPickerModal'
 import { useAppDispatch, useAppSelector, useToggle } from '../hooks'
-import * as recipeService from '../services/recipe'
+
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -66,8 +65,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         navigation.openDrawer()
     }
 
-    const [pickerOpen, togglePicker] = useToggle(false)
-
     return (
         <Container>
             {/* <LogoView>
@@ -85,10 +82,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
-            <ButtonFilled text="Color picker" onPress={() => togglePicker()}/>
-            {pickerOpen
-            ? <ColorPickerModal toggle={togglePicker} />
-            : null}
         </Container>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Modal } from 'react-native'
+import { View, Modal, Text } from 'react-native'
 import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
@@ -37,6 +37,10 @@ function ColorPickerModal({
                     color={localColor}
                 />
 
+                <DifferenceContainer>
+                    <SampleText style={{color: localColor}}>Change Primary Color!</SampleText>
+                </DifferenceContainer>
+
                 <Picker
                     style={{ borderColor: localColor}}
                     defaultColor={theme.primary}
@@ -47,7 +51,7 @@ function ColorPickerModal({
                 <ConfirmContainer>
                     <ButtonFilled
                         text="Confirm"
-                        onPress={() => setPrimaryColor(localColor)}
+                        onPress={() => {setPrimaryColor(localColor); toggle() }}
                         color={localColor}
                     />
                 </ConfirmContainer>
@@ -67,6 +71,16 @@ const Container = styled(View)`
     align-items: center;
 `
 
+const DifferenceContainer = styled(View)`
+    flex-direction: row;
+    align-items: center;
+`
+
+const SampleText = styled(Text)`
+    font-size: 20px;
+`
+
+
 const Picker = styled(TriangleColorPicker)`
     height: 70%;
     width: 70%;
@@ -82,6 +96,6 @@ const ConfirmContainer = styled(View)`
 `
 
 const FillRest = styled(View)`
-    height: 15%;
+    height: 8%;
     background-color: ${props => props.theme.background};
 `

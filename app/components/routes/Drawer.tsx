@@ -5,16 +5,23 @@ import styled from 'styled-components'
 import { signOut } from '../../actions/auth'
 import { setTheme } from '../../actions/theme'
 import { ButtonFilled } from '../user-input/Buttons'
-import { MyFeather } from '../Icons'
+import { MyFeather, MyIonicons } from '../Icons'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { Theme } from '../../reducers/theme'
 import { setInvertedColors } from '../../actions/settings'
+import { useToggle } from '../../hooks'
+import ColorPickerModal from '../user-input/ColorPickerModal'
 
-const Route = (iconName: string, text: string, theme: Theme): JSX.Element => (
-    <TouchableOpacity>
+interface RouteProps {
+    icon: string | JSX.Element
+    text: string
+    onPress: () => void
+}
+
+const Route = ({icon, text, onPress}: RouteProps): JSX.Element => (
+    <TouchableOpacity onPress={onPress} >
         <Section>
-            <MyFeather name={iconName} color={theme.text} />
             <Paragraph>{text}</Paragraph>
+            {icon}
         </Section>
     </TouchableOpacity>
 )
@@ -50,12 +57,20 @@ export default function Drawer({
     const { user, auth, theme, settings } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
+    const [openColorPicker, toggleColorPicker] = useToggle(false)
+
     async function handleSignOut(): Promise<void> {
         dispatch(signOut(auth.token, navigation))
     }
 
     return (
         <Container>
+            {
+                openColorPicker
+                ? <ColorPickerModal toggle={toggleColorPicker}/>
+                : null
+            }
+
             <ScrollView>
                 <Header>
                     <Title>{user.name}</Title>
@@ -63,7 +78,18 @@ export default function Drawer({
                 </Header>
 
                 <RoutesSection>
-                    {Route('settings', 'Settings', theme)}
+                    <Route
+                        icon={
+                            <MyIonicons
+                                name="color-palette-outline"
+                                color={theme.primary}
+                                size={23}
+                            />
+                        }
+                        text="Set Primary Color"
+                        onPress={() => toggleColorPicker()}
+                    />
+
                 </RoutesSection>
 
                 <PreferenceText>Preferences</PreferenceText>
@@ -80,6 +106,7 @@ export default function Drawer({
                     )}
                 </PreferenceView>
             </ScrollView>
+
             <Footer>
                 <ButtonFilled text="Sign Out" onPress={() => handleSignOut()} />
             </Footer>
@@ -128,7 +155,7 @@ const Section = styled(View)`
     align-items: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-right: 12px;
+    padding-right: 15px;
     padding-left: 12px;
     justify-content: space-between;
 `

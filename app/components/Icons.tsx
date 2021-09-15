@@ -3,17 +3,21 @@ import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useAppSelector } from '../hooks/redux'
+
+interface MyIconProps {
+    name: string
+    size?: number
+    color?: string
+
+}
 
 export function MyFeather({
     name,
     size,
     color,
-}: {
-    name: string
-    size?: number
-    color?: string
-}): JSX.Element {
+}: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return <Feather name={name} color={color || theme.grey} size={size || 20} />
 }
@@ -22,11 +26,7 @@ export function MyFontAwesome({
     name,
     color,
     size,
-}: {
-    name: string
-    color?: string
-    size?: number
-}): JSX.Element {
+}: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
@@ -42,11 +42,7 @@ export function MyMaterialCommunityIcons({
     name,
     color,
     size,
-}: {
-    name: string
-    color?: string
-    size?: number
-}): JSX.Element {
+}: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
@@ -62,15 +58,27 @@ export function MyMaterialIcons({
     name,
     color,
     size,
-}: {
-    name: string
-    color?: string
-    size?: number
-}): JSX.Element {
+}: MyIconProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 
     return (
         <MaterialIcons
+            name={name}
+            color={color || theme.grey}
+            size={size || 20}
+        />
+    )
+}
+
+export function MyIonicons({
+    name,
+    color,
+    size,
+}: MyIconProps): JSX.Element {
+    const theme = useAppSelector((state) => state.theme)
+
+    return (
+        <Ionicons
             name={name}
             color={color || theme.grey}
             size={size || 20}
