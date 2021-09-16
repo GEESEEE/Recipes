@@ -17,5 +17,4 @@ export default class User {
     public settingsId!: number
 
     public settings?: Settings
-
 }

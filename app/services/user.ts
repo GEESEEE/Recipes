@@ -6,9 +6,13 @@ export async function getUser(headers: { token: string }): Promise<User> {
 }
 
 export async function getSettings(): Promise<Settings> {
-    return handleError('GET', `/users/settings`, { })
+    return handleError('GET', `/users/settings`, {})
 }
 
-export async function updateSettings(body: {theme?: string, color?: string, invertedColors?: boolean }): Promise<void> {
-    return handleError('PUT', `/users/settings`, {body})
+export async function updateSettings(body: {
+    theme?: string
+    color?: string
+    invertedColors?: boolean
+}): Promise<void> {
+    return handleError('PUT', `/users/settings`, { body })
 }

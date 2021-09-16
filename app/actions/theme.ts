@@ -9,10 +9,9 @@ export const setTheme =
             const theme = lightTheme ? 'light' : 'dark'
             dispatch({
                 type: THEME_ACTIONS.SET_THEME,
-                payload: {newTheme: theme},
+                payload: { newTheme: theme },
             })
-            await userService.updateSettings({theme})
-
+            await userService.updateSettings({ theme })
         } catch (err: any) {
             console.log(err.message)
             console.error(err)
@@ -25,9 +24,9 @@ export const setColor =
         try {
             dispatch({
                 type: THEME_ACTIONS.SET_COLOR,
-                payload: {color},
+                payload: { color },
             })
-            await userService.updateSettings({color})
+            await userService.updateSettings({ color })
         } catch (err: any) {
             console.log(err.message)
             console.error(err)
@@ -35,9 +34,10 @@ export const setColor =
     }
 
 export const resetTheme =
-    (): any => async (dispatch: Dispatch): Promise<void> => {
+    (): any =>
+    async (dispatch: Dispatch): Promise<void> => {
         dispatch({
             type: THEME_ACTIONS.RESET_THEME,
-            payload: {}
+            payload: {},
         })
     }

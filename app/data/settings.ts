@@ -1,7 +1,6 @@
-import { User } from "."
+import { User } from '.'
 
 export default class Settings {
-
     public readonly id!: number
 
     public theme!: string

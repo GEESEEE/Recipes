@@ -1,7 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
-import {
-    NavigationScreenProp,
-} from 'react-navigation'
+import { NavigationScreenProp } from 'react-navigation'
 import { Dispatch } from 'redux'
 import { showPopup } from '../config/routes'
 import { AUTH_ACTIONS } from '../reducers/auth'
@@ -30,7 +28,12 @@ export const retrieveToken =
                 }
             }
         } catch (err: any) {
-            handleError(err, navigation, dispatch, AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR)
+            handleError(
+                err,
+                navigation,
+                dispatch,
+                AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR
+            )
         }
     }
 
@@ -49,7 +52,7 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err: any) {
-            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR )
+            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR)
         }
     }
 
@@ -71,7 +74,13 @@ export const signIn =
 
             navigation.navigate('Main')
         } catch (err: any) {
-            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_IN_ERROR, 'Could not connect to server')
+            handleError(
+                err,
+                navigation,
+                dispatch,
+                AUTH_ACTIONS.SIGN_IN_ERROR,
+                'Could not connect to server'
+            )
         }
     }
 
@@ -95,7 +104,6 @@ export const signOut =
                 'Could not connect to server',
                 'But signed out anyway'
             )
-
         }
     }
 
@@ -104,7 +112,6 @@ export const clearError =
     async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }
-
 
 function handleError(
     err: any,
@@ -116,7 +123,11 @@ function handleError(
 ): void {
     const error = err?.response?.data?.errors?.[0]?.message
     if (error == null) {
-        showPopup(navigation, errorMessage ?? 'Could not connect to server', errorDescription)
+        showPopup(
+            navigation,
+            errorMessage ?? 'Could not connect to server',
+            errorDescription
+        )
     }
     dispatch({
         type,
@@ -124,5 +135,4 @@ function handleError(
             error,
         },
     })
-
 }

@@ -6,4 +6,12 @@ import User from './user'
 import ListItem from './list-item'
 import Settings from './settings'
 
-export { Ingredient, Recipe, Instruction, RecipeIngredient, User, ListItem, Settings }
+export {
+    Ingredient,
+    Recipe,
+    Instruction,
+    RecipeIngredient,
+    User,
+    ListItem,
+    Settings,
+}
