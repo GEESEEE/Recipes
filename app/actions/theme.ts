@@ -2,7 +2,6 @@ import { Dispatch } from 'redux'
 import { THEME_ACTIONS } from '../reducers/theme'
 import * as userService from '../services/user'
 
-    // TODO: Set it in DB as well
 export const setTheme =
     (lightTheme: boolean) =>
     async (dispatch: Dispatch): Promise<void> => {
@@ -20,7 +19,6 @@ export const setTheme =
         }
     }
 
-    // TODO: set it in db as well
 export const setColor =
     (color: string) =>
     async (dispatch: Dispatch): Promise<void> => {
@@ -34,4 +32,12 @@ export const setColor =
             console.log(err.message)
             console.error(err)
         }
+    }
+
+export const resetTheme =
+    (): any => async (dispatch: Dispatch): Promise<void> => {
+        dispatch({
+            type: THEME_ACTIONS.RESET_THEME,
+            payload: {}
+        })
     }

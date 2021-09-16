@@ -4,6 +4,7 @@ import {
 } from '../reducers/settings'
 import * as userService from '../services/user'
 
+
 export const setInvertedColors =
     (invertedColors: boolean) =>
     async (dispatch: Dispatch): Promise<void> => {

@@ -6,6 +6,7 @@ import { Dispatch } from 'redux'
 import { showPopup } from '../config/routes'
 import { AUTH_ACTIONS } from '../reducers/auth'
 import * as authService from '../services/auth'
+import { resetTheme } from './theme'
 import { clearUserData } from './user'
 
 export const retrieveToken =
@@ -82,6 +83,7 @@ export const signOut =
             await SecureStore.deleteItemAsync('token')
             dispatch(clearUserData())
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
+            dispatch(resetTheme())
             navigation.navigate('Login')
             await authService.signOut({ token })
         } catch (err: any) {

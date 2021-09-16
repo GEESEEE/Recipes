@@ -5,7 +5,7 @@ export const USERACTIONS = {
     CLEAR_USER: 'clearUser',
 }
 
-export type User = {
+export type Auth = {
     id: number
     name: string
     email: string
@@ -23,8 +23,8 @@ const initialState = {
 
 const auth = (
     state = initialState,
-    action: { type: string; payload: User }
-): User => {
+    action: { type: string; payload: Auth }
+): Auth => {
     switch (action.type) {
         case USERACTIONS.GET_USER_START: {
             return { ...state, loading: true }
