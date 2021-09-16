@@ -13,12 +13,13 @@ export const retrieveUserData =
             const token = await SecureStore.getItemAsync('token')
             if (token) {
                 const user = await userService.getUser({ token })
-                console.log(user)
-                dispatch({ type: THEME_ACTIONS.SET_COLOR, payload: user.settings?.color })
-                dispatch({ type: THEME_ACTIONS.SET_THEME, payload: user.settings?.theme })
+                const settings = await userService.getSettings()
+                dispatch({
+                    type: THEME_ACTIONS.INITIALIZE_THEME,
+                    payload: { color: settings.color, newTheme: settings.theme } })
                 dispatch({
                     type: SETTINGS_ACTIONS.SET_INVERTED_COLORS,
-                    payload: { invertedColors: user.settings?.invertedColors}
+                    payload: { invertedColors: settings.invertedColors}
                 })
                 dispatch({ type: USERACTIONS.GET_USER_SUCCES, payload: user })
             }

@@ -13,8 +13,6 @@ function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const { sortState } = useAppSelector((state) => state.browseSort)
     const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()
-    const globalState = useAppSelector((state) => state)
-    console.log("state", globalState.settings, globalState.theme)
 
     const listRef = React.useRef<FlatList>()
 

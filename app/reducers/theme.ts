@@ -1,6 +1,7 @@
 import colors from '../config/colors'
 
 export const THEME_ACTIONS = {
+    INITIALIZE_THEME: 'initializeTheme',
     SET_THEME: 'setTheme',
     SET_COLOR: 'setColor',
 }
@@ -46,6 +47,14 @@ const theme = (
     action: { type: string; payload: any }
 ): Theme => {
     switch (action.type) {
+        case THEME_ACTIONS.INITIALIZE_THEME: {
+            const {newTheme, color} = action.payload
+            colors.primary = color
+            const newState = newTheme === 'dark' ? darkTheme() : lightTheme()
+
+            return {...newState, primary: color}
+        }
+
         case THEME_ACTIONS.SET_THEME: {
             const {newTheme} = action.payload
             return newTheme === 'dark' ? darkTheme() : lightTheme()

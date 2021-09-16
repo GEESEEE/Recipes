@@ -7,7 +7,6 @@ import { retrieveIndices } from './actions/indices'
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
     const theme = useAppSelector((state) => state.theme)
-
     React.useEffect(() => {
         console.log('Starting')
         dispatch(retrieveIndices())
