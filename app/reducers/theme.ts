@@ -43,16 +43,16 @@ const darkTheme = (): Theme => ({
 
 const theme = (
     state = darkTheme(),
-    action: { type: string; payload: string }
+    action: { type: string; payload: any }
 ): Theme => {
     switch (action.type) {
         case THEME_ACTIONS.SET_THEME: {
-            const newTheme = action.payload
+            const {newTheme} = action.payload
             return newTheme === 'dark' ? darkTheme() : lightTheme()
         }
 
         case THEME_ACTIONS.SET_COLOR: {
-            const color = action.payload
+            const { color} = action.payload
             colors.primary = color
             return { ...state, primary: color }
         }

@@ -10,7 +10,7 @@ import { useAppSelector } from '../hooks/redux'
 function RecipesScreen({
     navigation,
 }: {
-    navigation: NavigationScreenProp<string>
+    navigation: any
 }): JSX.Element {
     const globalState = useAppSelector((state) => state)
     const recipes = globalState.myRecipes
@@ -21,6 +21,18 @@ function RecipesScreen({
 
     const filteredRecipes = applySearch(recipes, search)
     const sortedRecipes = applySort(filteredRecipes, sort)
+
+    React.useEffect(() => {
+        console.log("yes")
+        navigation.addListener('focus', () => {
+            console.log("Focused")
+          // The screen is focused
+          // Call any action
+        });
+
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+
+      }, [navigation.state]);
 
     return (
         <Container>

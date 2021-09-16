@@ -6,17 +6,21 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import { addRecipes, getRecipes } from '../actions/browse-recipes'
 import RecipesListHeader from '../components/data/RecipesListHeader'
+import { retrieveUserData } from '../actions/user'
 
 function MainScreen({ navigation }: { navigation: any }): JSX.Element {
     const browseRecipes = useAppSelector((state) => state.browseRecipes)
     const { sortState } = useAppSelector((state) => state.browseSort)
     const search = useAppSelector((state) => state.browseSearch)
     const dispatch = useAppDispatch()
+    const globalState = useAppSelector((state) => state)
+    console.log("state", globalState.settings, globalState.theme)
 
     const listRef = React.useRef<FlatList>()
 
     useEffect(() => {
         navigation.setParams({ listRef })
+        dispatch(retrieveUserData())
         dispatch(retrieveRecipes())
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])

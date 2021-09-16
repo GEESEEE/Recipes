@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import { THEME_ACTIONS } from '../reducers/theme'
 
-export const retrieveTheme =
+export const initializeTheme =
     () =>
     async (dispatch: Dispatch): Promise<void> => {
         try {
@@ -19,6 +19,7 @@ export const retrieveTheme =
         }
     }
 
+    // TODO: Set it in DB as well
 export const setTheme =
     (lightTheme: boolean) =>
     async (dispatch: Dispatch): Promise<void> => {
@@ -35,32 +36,30 @@ export const setTheme =
         }
     }
 
-export const retrieveColor =
-    () =>
+export const initializeColor =
+    (color: string) =>
     async (dispatch: Dispatch): Promise<void> => {
         try {
-            const color = await AsyncStorage.getItem('color')
-            if (color) {
-                dispatch({
-                    type: THEME_ACTIONS.SET_COLOR,
-                    payload: color,
-                })
-            }
+            dispatch({
+                type: THEME_ACTIONS.SET_COLOR,
+                payload: {color},
+            })
+
         } catch (err: any) {
             console.log(err.message)
             console.error(err)
         }
     }
 
+    // TODO: set it in db as well
 export const setColor =
     (color: string) =>
     async (dispatch: Dispatch): Promise<void> => {
         try {
             dispatch({
                 type: THEME_ACTIONS.SET_COLOR,
-                payload: color,
+                payload: {color},
             })
-            await AsyncStorage.setItem('color', color)
         } catch (err: any) {
             console.log(err.message)
             console.error(err)

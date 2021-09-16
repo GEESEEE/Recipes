@@ -107,8 +107,6 @@ function LoginScreen({
         dispatch(clearError())
     }
 
-    console.log("auth", auth)
-
     return (
         <Container>
             {/* Logo */}
