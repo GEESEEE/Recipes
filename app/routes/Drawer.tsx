@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from 'react-navigation-drawer'
-import { Drawer } from '../components/routes'
+import { DrawerComponent } from '../components/routes'
 import MainTabs from './MainTabs'
 import RecipesStack from './RecipesStack'
 
@@ -14,7 +14,7 @@ const screens = {
 
 const drawerOptions = {
     drawerWidth: 200,
-    contentComponent: Drawer,
+    contentComponent: DrawerComponent,
 }
 
 const DrawerNavigator = createDrawerNavigator(screens, drawerOptions)

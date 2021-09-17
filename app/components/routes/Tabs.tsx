@@ -20,7 +20,8 @@ const routeIconMap = {
 
 const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     const { state } = navigation
-    const { routes } = navigation.state
+    console.log("BottomTAb", navigation.state)
+    const routes = ['Browse', 'Recipes', 'Test']
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()

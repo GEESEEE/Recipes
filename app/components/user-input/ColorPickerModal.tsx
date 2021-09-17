@@ -29,7 +29,7 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
 
                 <DifferenceContainer>
                     <SampleText style={{ color: localColor }}>
-                        Change Primary Color!
+                        Change Primary Color
                     </SampleText>
                 </DifferenceContainer>
 
@@ -68,6 +68,7 @@ const Container = styled(View)`
 `
 
 const DifferenceContainer = styled(View)`
+    height: 5%;
     flex-direction: row;
     align-items: center;
 `
@@ -86,11 +87,13 @@ const Picker = styled(TriangleColorPicker)`
 
 const ConfirmContainer = styled(View)`
     width: 70%;
+    height: 8%;
     align-items: center;
     padding-top: 30px;
+
 `
 
 const FillRest = styled(View)`
-    height: 8%;
+    height: 10%;
     background-color: ${(props) => props.theme.background};
 `

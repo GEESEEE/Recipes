@@ -9,7 +9,7 @@ import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
 
-const Header = ({ navigation }: { navigation: any }): JSX.Element => {
+const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()
     const globalState = useAppSelector((state) => state)
 
@@ -123,7 +123,7 @@ const Header = ({ navigation }: { navigation: any }): JSX.Element => {
     )
 }
 
-export default Header
+export default HeaderComponent
 
 const Container = styled(View)`
     border-bottom-color: ${(props) => props.theme.primary};

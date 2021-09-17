@@ -49,7 +49,7 @@ const PreferenceSwitch = (
     )
 }
 
-export default function Drawer({
+export default function DrawerComponent({
     navigation,
 }: {
     navigation: any

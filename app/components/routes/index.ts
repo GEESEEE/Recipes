@@ -1,5 +1,5 @@
 import BottomTab from './Tabs'
-import Header from './Header'
-import Drawer from './Drawer'
+import HeaderComponent from './Header'
+import DrawerComponent from './Drawer'
 
-export { BottomTab, Header, Drawer }
+export { BottomTab, HeaderComponent, DrawerComponent}

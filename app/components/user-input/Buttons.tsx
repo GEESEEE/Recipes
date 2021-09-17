@@ -196,6 +196,6 @@ export function ReturnButton({
 
 const ReturnButtonContainer = styled(View)`
     width: 100%;
-    height: 50px;
+    height: 7%;
     padding-left: 10px;
 `
