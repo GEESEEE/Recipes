@@ -10,6 +10,7 @@ import { ButtonFilled, ButtonInverted } from '../components/user-input/Buttons'
 import { InputFieldRounded } from '../components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
+import * as Navigation from '../routes/root'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -103,7 +104,7 @@ function LoginScreen({
     }
 
     function handleRegisterButton(): void {
-        navigation.navigate('Register')
+        Navigation.navigate('Register', {})
         dispatch(clearError())
     }
 

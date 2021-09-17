@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { setColor } from '../actions/theme'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import * as Navigator from '../routes/root'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -64,6 +65,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         navigation.openDrawer()
     }
 
+    function routeShit(): void {
+        console.log("State", Navigator.call('getState')() )
+        // console.log("RootState", Navigator.getRootState())
+    }
+
     return (
         <Container>
             {/* <LogoView>
@@ -81,6 +87,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
+            <ButtonFilled text="RouteShit" onPress={() => routeShit()} />
         </Container>
     )
 }

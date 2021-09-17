@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { LoginStack } from './routes'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { retrieveIndices } from './actions/indices'
+import * as rootNavigator from './routes/root'
 
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
@@ -15,7 +16,7 @@ function Wrapper(): JSX.Element {
 
     return (
         <ThemeProvider theme={theme}>
-            <NavigationContainer>
+            <NavigationContainer ref={rootNavigator.navigationRef}>
                 <LoginStack />
             </NavigationContainer>
         </ThemeProvider>

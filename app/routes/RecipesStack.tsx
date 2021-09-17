@@ -8,6 +8,9 @@ function RecipesStack(): JSX.Element {
     return (
         <Stack.Navigator
             initialRouteName="Recipes"
+            screenOptions={{
+                headerShown: false
+            }}
         >
 
             <Stack.Screen

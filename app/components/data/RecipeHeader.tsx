@@ -45,7 +45,6 @@ const RecipeHeader = ({
     async function editRecipe(): Promise<void> {
         navigation.navigate('EditRecipe', { recipe })
     }
-
     const dropDownItems: DropDownItem[] = [
         {
             id: 0,
@@ -70,7 +69,9 @@ const RecipeHeader = ({
     }
 
     const dropDown =
-        typeof dropDownDependencies === 'undefined' ? null : (
+        typeof dropDownDependencies === 'undefined'
+        ? null
+        : (
             <DropDownMenu
                 items={dropDownItems}
                 dependencies={dropDownDependencies}

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
+import { useNavigationState } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
+
 
 const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     const dispatch = useAppDispatch()

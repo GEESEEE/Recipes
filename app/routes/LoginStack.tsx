@@ -11,8 +11,9 @@ function LoginStack(): JSX.Element {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerMode: 'none',
-    }}>
+        headerShown: false,
+    }}
+    >
 
       <Stack.Screen
         name="Login"

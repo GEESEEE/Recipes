@@ -6,22 +6,28 @@ import {
     Animated,
     Dimensions,
 } from 'react-native'
+import { useNavigationState, useRoute } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
+import { Navigator } from '../../routes'
 
 const routeIconMap = {
-    Browse: 'book-search',
-    Recipes: 'book-open-page-variant',
+    BrowseStack: 'book-search',
+    RecipesStack: 'book-open-page-variant',
     Test: 'test-tube',
 }
 
 const TabsComponent = ({ navigation }: { navigation: any }): JSX.Element => {
-    const { state } = navigation
-    console.log("BottomTAb", navigation.state)
-    const routes = ['Browse', 'Recipes', 'Test']
+
+    const tabs = Navigator.getTabs()
+    console.log(tabs, "state", tabs?.state)
+    const state = tabs?.state
+    console.log(state)
+    const routes = state?.routes ?? ['Browse', 'Recipes', 'Test']
+
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
@@ -43,8 +49,8 @@ const TabsComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     useEffect(() => {
-        animateSlider(state.index)
-    }, [state.index])
+        animateSlider(state?.index ?? 0)
+    }, [state?.index])
 
     return (
         <Container
@@ -79,8 +85,9 @@ const TabsComponent = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
 
                 {routes.map((route: any, index: any) => {
-                    const routeName: string = route.key
-                    const isFocused = state.index === index
+                    const routeName: string = route.name
+                    const stateIndex = state?.index ?? 0
+                    const isFocused = stateIndex === index
                     return (
                         <RouteTab
                             key={uuid()}

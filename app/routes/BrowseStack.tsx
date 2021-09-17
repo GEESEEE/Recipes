@@ -10,9 +10,8 @@ function BrowseStack(): JSX.Element {
         <Stack.Navigator
             initialRouteName="Browse"
             screenOptions={{
-                // header: ({navigation}) => <HeaderComponent navigation={navigation}/>
+                headerShown: false
             }}
-
         >
 
             <Stack.Screen
