@@ -1,22 +1,24 @@
-import { createDrawerNavigator } from 'react-navigation-drawer'
+import React from 'react'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
 import { DrawerComponent } from '../components/routes'
 import MainTabs from './MainTabs'
-import RecipesStack from './RecipesStack'
 
-const screens = {
-    Main: {
-        screen: MainTabs,
-    },
-    Recipes: {
-        screen: RecipesStack,
-    },
+const DrawerNav = createDrawerNavigator()
+
+function Drawer(): JSX.Element {
+    return (
+        <DrawerNav.Navigator
+            initialRouteName="MainTabs"
+            drawerContent={({navigation}) => <DrawerComponent navigation={navigation}/>}
+        >
+            <DrawerNav.Screen
+                name="MainTabs"
+                component={MainTabs}
+            />
+
+        </DrawerNav.Navigator>
+    )
 }
 
-const drawerOptions = {
-    drawerWidth: 200,
-    contentComponent: DrawerComponent,
-}
-
-const DrawerNavigator = createDrawerNavigator(screens, drawerOptions)
-
-export default DrawerNavigator
+export default Drawer

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
-import { LoginStack } from './routesv5'
+import { LoginStack } from './routes'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { retrieveIndices } from './actions/indices'
 

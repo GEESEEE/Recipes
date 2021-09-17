@@ -18,7 +18,7 @@ const routeIconMap = {
     Test: 'test-tube',
 }
 
-const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
+const TabsComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     const { state } = navigation
     console.log("BottomTAb", navigation.state)
     const routes = ['Browse', 'Recipes', 'Test']
@@ -96,7 +96,7 @@ const BottomTab = ({ navigation }: { navigation: any }): JSX.Element => {
     )
 }
 
-export default BottomTab
+export default TabsComponent
 
 type TabProps = {
     icon: string

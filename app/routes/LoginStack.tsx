@@ -1,37 +1,41 @@
-import { createStackNavigator } from 'react-navigation-stack'
-import { createAppContainer } from 'react-navigation'
-import { LoginScreen, RegisterScreen, Popup } from '../screens'
+import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack';
+
 import Drawer from './Drawer'
-import * as routeUtils from '../config/routes'
+import { LoginScreen, Popup, RegisterScreen } from '../screens'
 
-const screens = {
-    Login: {
-        screen: LoginScreen,
-    },
-    Register: {
-        screen: RegisterScreen,
-    },
-    Main: {
-        screen: Drawer,
-    },
-    Popup: {
-        screen: Popup,
-        navigationOptions: {
-            cardStyle: { backgroundColor: 'rgba(0,0,0,0.4)' },
-            cardStyleInterpolator: routeUtils.fade,
-        },
-    },
+const Stack = createStackNavigator();
+
+function LoginStack(): JSX.Element {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      screenOptions={{
+        headerMode: 'none',
+    }}>
+
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+      />
+
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+      />
+
+      <Stack.Screen
+        name="Main"
+        component={Drawer}
+      />
+
+      <Stack.Screen
+        name="Popup"
+        component={Popup}
+      />
+
+    </Stack.Navigator>
+  );
 }
 
-const stackConfig: any = {
-    headerMode: 'none',
-    mode: 'modal',
-    defaultNavigationOptions: {
-        cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideHorizontal,
-    },
-}
-
-const LoginStack = createStackNavigator(screens, stackConfig)
-
-export default createAppContainer(LoginStack)
+export default LoginStack;

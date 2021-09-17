@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { BackHandler, View } from 'react-native'
+import React from 'react'
+import {  View } from 'react-native'
 import styled from 'styled-components'
 import { RecipeSectionList } from '../components/data'
 import { handleNumericTextInput } from '../config/utils'

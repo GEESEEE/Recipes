@@ -1,7 +1,7 @@
-import Drawer from './Drawer'
 import LoginStack from './LoginStack'
-import MainStack from './MainStack'
+import Drawer from './Drawer'
 import MainTabs from './MainTabs'
+import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
 
-export { Drawer, LoginStack, MainStack, MainTabs, RecipesStack }
+export { LoginStack, Drawer, MainTabs, BrowseStack, RecipesStack }

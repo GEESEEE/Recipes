@@ -1,45 +1,31 @@
 import React from 'react'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import Feather from 'react-native-vector-icons/Feather'
-import { View } from 'react-native'
-import MainStack from './MainStack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
+import { TabsComponent } from '../components/routes'
+import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
-import { TestScreen } from '../screens'
-import { BottomTab } from '../components/routes'
 
-const screens = {
-    Browse: {
-        screen: MainStack,
-        navigationOptions: {
-            tabBarLabel: 'Browse',
-            tabBarIcon: ({ tintColor }: { tintColor: string }) => (
-                <View>
-                    <Feather color={tintColor} name="book-open" size={25} />
-                </View>
-            ),
-        },
-    },
-    Recipes: {
-        screen: RecipesStack,
-        navigationOptions: {
-            tabBarLabel: 'My Recipes',
-            tabBarIcon: ({ tintColor }: { tintColor: string }) => (
-                <View>
-                    <Feather color={tintColor} name="user" size={25} />
-                </View>
-            ),
-        },
-    },
-    Test: {
-        screen: TestScreen,
-    },
+const Tabs = createBottomTabNavigator()
+
+function MainTabs(): JSX.Element {
+    return (
+        <Tabs.Navigator
+            initialRouteName="BrowseStack"
+            // tabBar={({navigation }) => <BottomTab navigation={navigation}/>}
+        >
+
+            <Tabs.Screen
+                name="BrowseStack"
+                component={BrowseStack}
+            />
+
+            <Tabs.Screen
+                name="RecipesStack"
+                component={RecipesStack}
+            />
+
+        </Tabs.Navigator>
+    )
 }
-
-const tabConfig: any = {
-    initialRouteName: 'Browse',
-    tabBarComponent: BottomTab,
-}
-
-const MainTabs = createBottomTabNavigator(screens, tabConfig)
 
 export default MainTabs

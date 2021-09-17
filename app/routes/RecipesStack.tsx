@@ -1,34 +1,31 @@
-import { createStackNavigator } from 'react-navigation-stack'
-import { RecipesScreen, EditRecipeScreen } from '../screens'
-import { Header } from '../components/routes'
-import * as routeUtils from '../config/routes'
-import { ViewRecipeConfig } from './config'
+import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import { EditRecipeScreen, RecipesScreen, ViewRecipeScreen } from '../screens'
 
-const screens = {
-    Recipes: {
-        screen: RecipesScreen,
-        navigationOptions: () => ({
-            header: Header,
-            headerMode: 'screen',
-        }),
-    },
-    EditRecipe: {
-        screen: EditRecipeScreen,
-        navigationOptions: () => ({
-            header: () => null,
-        }),
-    },
-    ...ViewRecipeConfig,
+const Stack = createStackNavigator()
+
+function RecipesStack(): JSX.Element {
+    return (
+        <Stack.Navigator
+            initialRouteName="Recipes"
+        >
+
+            <Stack.Screen
+                name="Recipes"
+                component={RecipesScreen}
+            />
+
+            <Stack.Screen
+                name="EditRecipe"
+                component={EditRecipeScreen}
+            />
+
+            <Stack.Screen
+                name="ViewRecipe"
+                component={ViewRecipeScreen}
+            />
+        </Stack.Navigator>
+    )
 }
-
-const stackConfig: any = {
-    mode: 'modal',
-    defaultNavigationOptions: {
-        cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: routeUtils.slideVertical,
-    },
-}
-
-const RecipesStack = createStackNavigator(screens, stackConfig)
 
 export default RecipesStack
