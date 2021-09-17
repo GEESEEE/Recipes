@@ -1,4 +1,4 @@
-import { useNavigation, useNavigationState, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import React from 'react'
 import {  View } from 'react-native'
 import styled from 'styled-components'
@@ -11,7 +11,7 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const route = useRoute()
     console.log("R", route)
 
-    const recipe = new Recipe()
+    const {recipe} = route.params
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
     const [recipeData, setRecipeData] = React.useState<Recipe>(

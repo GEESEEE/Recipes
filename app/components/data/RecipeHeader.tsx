@@ -23,7 +23,7 @@ interface RecipeHeaderOptions {
     handlePublishedAtChange?: () => void
 }
 
-export const RecipeHeader = ({
+function RecipeHeaderComponent({
     recipe,
     navigation,
     editable,
@@ -34,7 +34,7 @@ export const RecipeHeader = ({
     handlePeopleCountChange,
     handlePrepareTimeChange,
     handlePublishedAtChange,
-}: RecipeHeaderOptions): JSX.Element => {
+}: RecipeHeaderOptions): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -192,8 +192,9 @@ function recipeHeaderPropsChanged(
     return Object.keys(recipeDifferenceObject).length === 0
 }
 
+export const RecipeHeader = RecipeHeaderComponent
 
-export const MemoizedRecipeHeader = React.memo(RecipeHeader, recipeHeaderPropsChanged)
+export const MemoizedRecipeHeader = React.memo(RecipeHeaderComponent, recipeHeaderPropsChanged)
 
 const Header = styled(TouchableOpacity)`
     align-self: center;

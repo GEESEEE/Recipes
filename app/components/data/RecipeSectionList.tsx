@@ -62,11 +62,10 @@ const RecipeSectionList = ({
 
     FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
-    console.log("First")
+
     const insets = useSafeAreaInsets()
-    console.log("2")
     const editable = ['Edit', 'Create'].includes(action)
-    console.log("3")
+
     const sections = [
         {
             key: 'Ingredients',
@@ -101,7 +100,7 @@ const RecipeSectionList = ({
             ),
         },
     ]
-    console.log("4")
+
     return (
         <List
             sections={sections}
