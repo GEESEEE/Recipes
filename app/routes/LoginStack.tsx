@@ -1,9 +1,9 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import Drawer from './Drawer'
 import { LoginScreen, Popup, RegisterScreen } from '../screens'
-import HeaderComponent from '../components/routes/Header';
+import * as routeUtils from '../config/routes'
 
 const Stack = createStackNavigator();
 
@@ -34,6 +34,11 @@ function LoginStack(): JSX.Element {
       <Stack.Screen
         name="Popup"
         component={Popup}
+        options={{
+            cardStyle: {backgroundColor: 'rgba(0,0,0,0.4)'},
+            presentation: 'transparentModal',
+            cardStyleInterpolator: routeUtils.fade
+        }}
       />
 
     </Stack.Navigator>
