@@ -15,7 +15,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
     const smallerLogo = (event: any): any => {
-        console.log('Smaller Logo')
+        // console.log('Smaller Logo')
         Animated.timing(logoSize, {
             duration: event.duration,
             toValue: smallLogo,
@@ -24,7 +24,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     const biggerLogo = (event: any): void => {
-        console.log('Bigger Logo')
+        // console.log('Bigger Logo')
         Animated.timing(logoSize, {
             duration: event.duration,
             toValue: bigLogo,

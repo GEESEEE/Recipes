@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid'
 import { ReturnButton } from '../Buttons'
 import { sorts } from '../../../actions/sort'
 import { SortRow } from '.'
-import { useAppSelector } from '../../../hooks'
 
 function Sort({
     routeName,
@@ -14,8 +13,6 @@ function Sort({
     routeName: string
     toggle: () => void
 }): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
-
     return (
         <Modal animationType="fade" transparent>
             <Container>

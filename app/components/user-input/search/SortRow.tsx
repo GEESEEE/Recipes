@@ -28,10 +28,10 @@ function SortRow({
     const globalState = useAppSelector((state) => state)
 
     const sortState =
-        routeName === 'Main' ? globalState.browseSort : globalState.mySort
+        routeName === 'Browse' ? globalState.browseSort : globalState.mySort
 
     const SORT_ACTIONS =
-        routeName === 'Main' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
+        routeName === 'Browse' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
 
     const selected = inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]

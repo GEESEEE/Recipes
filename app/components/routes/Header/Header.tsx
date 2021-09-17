@@ -37,7 +37,6 @@ const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     const { theme, settings, browseSearch, browseSort } = globalState
 
     const insets = useSafeAreaInsets()
-    const sort = browseSort.sortState
 
     const [openSearchBar, setOpenSearchBar] = useState(false)
     const [searchText, setSearchText] = useState('')
@@ -55,7 +54,7 @@ const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
         //     listRef.current.scrollToOffset({ aniamted: true, offset: 0 })
         // }
         dispatch(
-            getRecipes({ scopes: ['published'], search: browseSearch, sort })
+            getRecipes({ scopes: ['published'], search: browseSearch, sort: browseSort.sortState })
         )
     }
 
