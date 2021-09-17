@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native'
 import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import styled from 'styled-components'
@@ -8,15 +9,17 @@ import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
 import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
 import { FeatherButton } from '../Buttons'
 
-function FilterHeader({ route }: { route: string }): JSX.Element {
+function FilterHeader(): JSX.Element {
     const globalState = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
+    const {name} = useRoute()
+
     const search =
-        route === 'Main' ? globalState.browseSearch : globalState.mySearch
+        name === 'Browse' ? globalState.browseSearch : globalState.mySearch
 
     const removeSearchType =
-        route === 'Main'
+        name === 'Browse'
             ? BROWSE_SEARCH_ACTIONS.REMOVE_SEARCH
             : MY_SEARCH_ACTIONS.REMOVE_SEARCH
 

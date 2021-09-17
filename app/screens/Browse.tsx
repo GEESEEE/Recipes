@@ -35,9 +35,11 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
+    const displayHeader = search.length > 0 || sortState.length > 0
+
     return (
         <Container>
-            <RecipesListHeader route="Browse" search={search} sort={sortState} />
+            <RecipesListHeader display={displayHeader} />
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes.recipes}

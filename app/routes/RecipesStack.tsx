@@ -9,17 +9,17 @@ function RecipesStack(): JSX.Element {
     return (
         <Stack.Navigator
             initialRouteName="Recipes"
-            screenOptions={{
-                header: ({navigation}) =>
-                    <HeaderComponent
-                        navigation={navigation}
-                    />
-            }}
         >
 
             <Stack.Screen
                 name="Recipes"
                 component={RecipesScreen}
+                options={{
+                    header: ({navigation}) =>
+                        <HeaderComponent
+                            navigation={navigation}
+                        />
+                }}
             />
 
             <Stack.Screen

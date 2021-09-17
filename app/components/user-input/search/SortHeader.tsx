@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native'
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
@@ -6,10 +7,11 @@ import { sorts } from '../../../actions/sort'
 import { useAppSelector } from '../../../hooks'
 import SortRow from './SortRow'
 
-function SortHeader({ route }: { route: string }): JSX.Element {
+function SortHeader(): JSX.Element {
     const globalState = useAppSelector((state) => state)
+    const {name} = useRoute()
     const sortState =
-        route === 'Main' ? globalState.browseSort : globalState.mySort
+        name === 'Browse' ? globalState.browseSort : globalState.mySort
     const sort = sortState.sortState
 
     return (
@@ -23,7 +25,7 @@ function SortHeader({ route }: { route: string }): JSX.Element {
                         type={filt.type}
                         name={filt.name}
                         options={filt.options}
-                        routeName={route}
+                        routeName={name}
                         header
                     />
                 )

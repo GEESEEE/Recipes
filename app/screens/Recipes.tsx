@@ -14,12 +14,16 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const sortState = globalState.mySort
     const sort = sortState.sortState
 
+    console.log(search, sort)
+
     const filteredRecipes = applySearch(recipes, search)
     const sortedRecipes = applySort(filteredRecipes, sort)
+    console.log(sortedRecipes)
+    const displayHeader = search.length > 0 || sort.length > 0
 
     return (
         <Container>
-            <RecipesListHeader route="Recipes" search={search} sort={sort} />
+            <RecipesListHeader display={displayHeader} />
             <RecipesFlatList
                 recipes={sortedRecipes}
                 navigation={navigation}

@@ -3,26 +3,16 @@ import { View } from 'react-native'
 import styled from 'styled-components'
 import { FilterHeader, SortHeader } from '../user-input/search'
 
-interface RecipesListHeaderProps {
-    route: string
-    search: string[]
-    sort: string[]
-}
 
-function RecipesListHeader({
-    route,
-    search,
-    sort,
-}: RecipesListHeaderProps): JSX.Element {
-    const display = search.length > 0 || sort.length > 0
+function RecipesListHeader({display}: {display: boolean}): JSX.Element {
 
     return (
         <Container>
             {display ? (
                 <Container>
                     <Container90>
-                        <FilterHeader route={route} />
-                        <SortHeader route={route} />
+                        <FilterHeader />
+                        <SortHeader />
                     </Container90>
                     <Separator />
                 </Container>
