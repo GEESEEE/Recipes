@@ -12,11 +12,21 @@ import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
 
-const routeIconMap = {
-    BrowseStack: 'book-search',
-    RecipesStack: 'book-open-page-variant',
-    Test: 'test-tube',
+const Config: { [key: string]: any} = {
+    BrowseStack: {
+        icon: 'book-search',
+        name: 'Browse'
+    },
+    RecipesStack: {
+        icon: 'book-open-page-variant',
+        name: 'My Recipes'
+    },
+    Test: {
+        icon: 'test-tube',
+        name: 'Test'
+    }
 }
+
 
 const TabsComponent = ({ state, navigation }: any): JSX.Element => {
     const {routes} = state
@@ -78,14 +88,14 @@ const TabsComponent = ({ state, navigation }: any): JSX.Element => {
                 />
 
                 {routes.map((route: any, index: any) => {
-                    const routeName: string = route.name
+                    const {icon, name} = Config[route.name]
                     const isFocused = state.index === index
                     return (
                         <RouteTab
                             key={uuid()}
-                            icon={(routeIconMap as any)[routeName]}
-                            text={routeName}
-                            onPress={() => navigate(routeName)}
+                            icon={icon}
+                            text={name}
+                            onPress={() => navigate(name)}
                             isCurrent={isFocused}
                         />
                     )
