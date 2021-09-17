@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Drawer from './Drawer'
 import { LoginScreen, Popup, RegisterScreen } from '../screens'
+import HeaderComponent from '../components/routes/Header';
 
 const Stack = createStackNavigator();
 
@@ -11,7 +12,7 @@ function LoginStack(): JSX.Element {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerShown: false,
+        headerShown: false
     }}
     >
 

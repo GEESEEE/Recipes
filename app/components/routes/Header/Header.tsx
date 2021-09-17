@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { useNavigationState } from '@react-navigation/native'
+import { useNavigationState, useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
@@ -10,34 +10,50 @@ import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
 
+const Config: {[key: string]: any} = {
+    Browse: {
+        filter: true,
+        search: true,
+        add: false,
+    },
+    Recipes: {
+        filter: true,
+        search: false,
+        add: true,
+    }
+}
+
 
 const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
+
+    const route = useRoute()
+    const routeName = route.name
+
     const dispatch = useAppDispatch()
     const globalState = useAppSelector((state) => state)
 
-    const listRef = navigation.state.params?.listRef
+    // const listRef = navigation.state.params?.listRef
 
     const { theme, settings, browseSearch, browseSort } = globalState
-    const { routeName } = navigation.state
+
     const insets = useSafeAreaInsets()
     const sort = browseSort.sortState
 
-    const searchRoutes = ['Main', 'Recipes']
     const [openSearchBar, setOpenSearchBar] = useState(false)
     const [searchText, setSearchText] = useState('')
 
-    const displayFilter = searchRoutes.includes(routeName)
-    const displaySearch = routeName === 'Main' || !openSearchBar
-    const displayAdd = ['Recipes'].includes(routeName) && !openSearchBar
+    const displayFilter = Config[routeName].filter
+    const displaySearch = Config[routeName].search || !openSearchBar
+    const displayAdd = Config[routeName].add && !openSearchBar
 
     function toggleSearch(): void {
         setOpenSearchBar(!openSearchBar)
     }
 
     function searchDatabase(): void {
-        if (typeof listRef.current !== 'undefined') {
-            listRef.current.scrollToOffset({ aniamted: true, offset: 0 })
-        }
+        // if (typeof listRef.current !== 'undefined') {
+        //     listRef.current.scrollToOffset({ aniamted: true, offset: 0 })
+        // }
         dispatch(
             getRecipes({ scopes: ['published'], search: browseSearch, sort })
         )

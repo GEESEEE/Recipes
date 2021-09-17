@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { View, TextInput } from 'react-native'
+import { useRoute } from '@react-navigation/native'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { FeatherButton } from '../../user-input/Buttons'
 import { addSearch, removeSearch } from '../../../actions/search'
 import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
 import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
+
 
 const SearchBarComponent = ({
     navigation,
@@ -20,10 +22,12 @@ const SearchBarComponent = ({
 }): JSX.Element => {
     const { theme, settings } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
-    const { routeName } = navigation.state
+
+    const route = useRoute()
+    const routeName = route.name
 
     const addSearchType =
-        routeName === 'Main'
+        routeName === 'Browse'
             ? BROWSE_SEARCH_ACTIONS.ADD_SEARCH
             : MY_SEARCH_ACTIONS.ADD_SEARCH
 

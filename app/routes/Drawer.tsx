@@ -10,6 +10,7 @@ function Drawer(): JSX.Element {
     return (
         <DrawerNav.Navigator
             initialRouteName="MainTabs"
+            screenOptions={{ headerShown: false }}
             drawerContent={({navigation}) => <DrawerComponent navigation={navigation}/>}
         >
             <DrawerNav.Screen
@@ -20,5 +21,6 @@ function Drawer(): JSX.Element {
         </DrawerNav.Navigator>
     )
 }
+
 
 export default Drawer
