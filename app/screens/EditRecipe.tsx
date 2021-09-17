@@ -2,6 +2,7 @@ import React from 'react'
 import { Alert, View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
+import { useRoute } from '@react-navigation/native'
 import { createRecipe, editRecipe } from '../actions/my-recipes'
 import {
     ButtonBorderless,
@@ -44,8 +45,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         validIngredients: true,
     }
 
-    let recipe = navigation.state.params?.recipe
-    const initialState = recipe || getInitialRecipe()
+    let passedRecipe
+    const {params} = useRoute()
+    if (typeof params !== 'undefined') {
+        const {recipe} = params as {recipe: Recipe}
+        passedRecipe = recipe
+    }
+
+    const initialState = passedRecipe || getInitialRecipe()
     const [recipeData, setRecipeData] = React.useState<Recipe & RecipeValidity>(
         { ...initialState, ...initialValidity }
     )
@@ -209,7 +216,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     async function handleEditRecipe(): Promise<void> {
         if (validRecipe()) {
             dispatch(editRecipe(recipeData))
-            recipe = recipeData
+            passedRecipe = recipeData
         }
     }
 
@@ -221,7 +228,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         <Container>
             <RecipeSectionList
                 recipe={recipeData}
-                navigation={navigation}
                 action="Create"
                 handleNameChange={(text: string) => handleNameChange(text)}
                 handleDescriptionChange={(text: string) =>
@@ -262,16 +268,16 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 FooterComponent={
                     <FooterView>
                         <ButtonFilled
-                            text={recipe ? 'Save' : 'Create Recipe'}
+                            text={passedRecipe ? 'Save' : 'Create Recipe'}
                             onPress={
-                                recipe ? handleEditRecipe : handleCreateRecipe
+                                passedRecipe ? handleEditRecipe : handleCreateRecipe
                             }
                         />
 
                         <ButtonBorderless
-                            text={recipe ? 'Cancel' : 'Clear Recipe'}
+                            text={passedRecipe ? 'Cancel' : 'Clear Recipe'}
                             onPress={
-                                recipe ? cancelEditRecipe : clearRecipeData
+                                passedRecipe ? cancelEditRecipe : clearRecipeData
                             }
                         />
                     </FooterView>

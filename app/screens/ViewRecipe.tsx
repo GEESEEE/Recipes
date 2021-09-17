@@ -6,12 +6,10 @@ import { RecipeSectionList } from '../components/data'
 import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
-function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
+function ViewRecipeScreen(): JSX.Element {
 
     const route = useRoute()
-    console.log("R", route)
-
-    const {recipe} = route.params
+    const {recipe} = route.params as {recipe: Recipe}
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
     const [recipeData, setRecipeData] = React.useState<Recipe>(
@@ -37,7 +35,6 @@ function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         <Container>
             <RecipeSectionList
                 recipe={recipeData}
-                navigation={navigation}
                 action="View"
                 handlePeopleCountChange={(text: string) =>
                     handlePeopleCountChange(text)
