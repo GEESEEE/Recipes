@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
-import { useNavigationState, useRoute } from '@react-navigation/native'
 import { retrieveRecipes } from '../actions/my-recipes'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import RecipesFlatList from '../components/data/RecipesFlatList'
@@ -11,9 +10,7 @@ import { retrieveUserData } from '../actions/user'
 
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const browseRecipes = useAppSelector((state) => state.browseRecipes)
-    const { sortState } = useAppSelector((state) => state.browseSort)
-    const search = useAppSelector((state) => state.browseSearch)
+    const {browseRecipes, browseSort, browseSearch} = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     const listRef = React.useRef<FlatList>()
@@ -35,7 +32,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    const displayHeader = search.length > 0 || sortState.length > 0
+    const displayHeader = browseSearch.length > 0 || browseSort.sortState.length > 0
 
     return (
         <Container>

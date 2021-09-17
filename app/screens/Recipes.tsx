@@ -7,19 +7,12 @@ import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
-    const globalState = useAppSelector((state) => state)
-    const recipes = globalState.myRecipes
+    const {myRecipes, mySearch, mySort} = useAppSelector((state) => state)
 
-    const search = globalState.mySearch
-    const sortState = globalState.mySort
-    const sort = sortState.sortState
+    const filteredRecipes = applySearch(myRecipes, mySearch)
+    const sortedRecipes = applySort(filteredRecipes, mySort.sortState)
 
-    console.log(search, sort)
-
-    const filteredRecipes = applySearch(recipes, search)
-    const sortedRecipes = applySort(filteredRecipes, sort)
-    console.log(sortedRecipes)
-    const displayHeader = search.length > 0 || sort.length > 0
+    const displayHeader = mySearch.length > 0 || mySort.sortState.length > 0
 
     return (
         <Container>
