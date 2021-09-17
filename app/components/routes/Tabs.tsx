@@ -15,15 +15,15 @@ import { MyMaterialCommunityIcons } from '../Icons'
 const Config: { [key: string]: any} = {
     BrowseStack: {
         icon: 'book-search',
-        name: 'Browse'
+        name: 'Browse',
     },
     RecipesStack: {
         icon: 'book-open-page-variant',
-        name: 'My Recipes'
+        name: 'My Recipes',
     },
     Test: {
         icon: 'test-tube',
-        name: 'Test'
+        name: 'Test',
     }
 }
 
@@ -95,7 +95,7 @@ const TabsComponent = ({ state, navigation }: any): JSX.Element => {
                             key={uuid()}
                             icon={icon}
                             text={name}
-                            onPress={() => navigate(name)}
+                            onPress={() => navigate(route)}
                             isCurrent={isFocused}
                         />
                     )
