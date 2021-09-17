@@ -7,16 +7,11 @@ import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
 function ViewRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const nav = useNavigation()
-    console.log("navvv", nav)
+
     const route = useRoute()
     console.log("R", route)
-    const state = useNavigationState(s => s)
-    console.log("ViewRecipe", state)
-    // Shouldnt pass the recipe,
-    // should pass recipe Id and whether its from browseRecipes or myRecipes and grab it from there
-    const {recipe}: {recipe: Recipe} = route.params
-    console.log("Re", recipe)
+
+    const recipe = new Recipe()
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
     const [recipeData, setRecipeData] = React.useState<Recipe>(

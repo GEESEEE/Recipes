@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { RecipeHeader } from '.'
+import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '../../data'
-import { recipeHeaderPropsChanged } from './RecipeHeader'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
@@ -12,7 +11,7 @@ interface RecipesFlatListProps {
     onEndReached?: () => void
 }
 
-const MemoizedRecipeHeader = memo(RecipeHeader, recipeHeaderPropsChanged)
+
 
 const RecipesFlatList = React.forwardRef(
     (

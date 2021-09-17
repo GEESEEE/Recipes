@@ -23,7 +23,7 @@ interface RecipeHeaderOptions {
     handlePublishedAtChange?: () => void
 }
 
-const RecipeHeader = ({
+export const RecipeHeader = ({
     recipe,
     navigation,
     editable,
@@ -174,7 +174,7 @@ const RecipeHeader = ({
     )
 }
 
-export function recipeHeaderPropsChanged(
+function recipeHeaderPropsChanged(
     prevProps: any,
     nextProps: any
 ): boolean {
@@ -192,7 +192,8 @@ export function recipeHeaderPropsChanged(
     return Object.keys(recipeDifferenceObject).length === 0
 }
 
-export default RecipeHeader
+
+export const MemoizedRecipeHeader = React.memo(RecipeHeader, recipeHeaderPropsChanged)
 
 const Header = styled(TouchableOpacity)`
     align-self: center;
