@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { EditRecipeScreen, RecipesScreen, ViewRecipeScreen } from '../screens'
 import { HeaderComponent } from '../components/routes'
+import * as routeUtils from '../config/routes'
 
 const Stack = createStackNavigator()
 
@@ -9,6 +10,10 @@ function RecipesStack(): JSX.Element {
     return (
         <Stack.Navigator
             initialRouteName="Recipes"
+            screenOptions={{
+                presentation: 'transparentModal',
+                cardStyleInterpolator: routeUtils.slideVertical
+            }}
         >
 
             <Stack.Screen

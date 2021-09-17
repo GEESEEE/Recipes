@@ -12,7 +12,9 @@ function LoginStack(): JSX.Element {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerShown: false
+        headerShown: false,
+        presentation: 'transparentModal',
+        cardStyleInterpolator: routeUtils.slideHorizontal
     }}
     >
 
@@ -29,6 +31,10 @@ function LoginStack(): JSX.Element {
       <Stack.Screen
         name="Main"
         component={Drawer}
+        options={{
+            presentation: 'transparentModal',
+            cardStyleInterpolator: routeUtils.slideVertical
+        }}
       />
 
       <Stack.Screen
