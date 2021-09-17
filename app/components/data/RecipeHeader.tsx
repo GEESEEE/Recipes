@@ -2,6 +2,7 @@ import React from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
+import { useNavigation } from '@react-navigation/native'
 import Recipe from '../../data/recipe'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
@@ -12,7 +13,6 @@ import { recipeDifference } from '../../config/recipes'
 
 interface RecipeHeaderOptions {
     recipe: Recipe
-    navigation: any
     editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
     dropDownDependencies?: any[]
     onPress?: () => void
@@ -25,7 +25,6 @@ interface RecipeHeaderOptions {
 
 function RecipeHeaderComponent({
     recipe,
-    navigation,
     editable,
     dropDownDependencies,
     onPress,
@@ -37,13 +36,14 @@ function RecipeHeaderComponent({
 }: RecipeHeaderOptions): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
+    const navigation = useNavigation()
 
     async function removeRecipe(): Promise<void> {
         dispatch(deleteRecipe(recipe))
     }
 
     async function editRecipe(): Promise<void> {
-        navigation.navigate('EditRecipe', { recipe })
+        navigation.navigate('EditRecipe' as never, { recipe } as never)
     }
     const dropDownItems: DropDownItem[] = [
         {

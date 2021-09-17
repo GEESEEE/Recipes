@@ -1,23 +1,22 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
+import { useNavigation } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '../../data'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
-    navigation: any
     dropdown?: boolean
     onEndReached?: () => void
 }
 
-
-
 const RecipesFlatList = React.forwardRef(
     (
-        { recipes, navigation, dropdown, onEndReached }: RecipesFlatListProps,
+        { recipes,dropdown, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
+        const navigation = useNavigation()
         const [scrollPosition, setScrollPosition] = React.useState(0)
 
         function handleScroll(event: any): void {
@@ -38,13 +37,12 @@ const RecipesFlatList = React.forwardRef(
                 renderItem={({ item }) => (
                     <MemoizedRecipeHeader
                         recipe={item}
-                        navigation={navigation}
                         editable="Edit-none"
                         dropDownDependencies={dropDownDependencies}
                         onPress={() =>
-                            navigation.navigate('ViewRecipe', {
+                            navigation.navigate('ViewRecipe' as never, {
                                 recipe: item,
-                            })
+                            } as never)
                         }
                     />
                 )}

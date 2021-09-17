@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react'
 import { View, Dimensions, TouchableOpacity, Animated } from 'react-native'
-import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import { MyFeather, MyFontAwesome } from '../components/Icons'
@@ -10,7 +9,7 @@ import { ButtonFilled, ButtonInverted } from '../components/user-input/Buttons'
 import { InputFieldRounded } from '../components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
-import * as Navigation from '../routes/root'
+
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -43,7 +42,7 @@ function reducer(state: any, action: any): any {
 function LoginScreen({
     navigation,
 }: {
-    navigation: NavigationScreenProp<string>
+    navigation: any
 }): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
@@ -104,7 +103,7 @@ function LoginScreen({
     }
 
     function handleRegisterButton(): void {
-        Navigation.navigate('Register', {})
+        navigation.navigate('Register', {})
         dispatch(clearError())
     }
 

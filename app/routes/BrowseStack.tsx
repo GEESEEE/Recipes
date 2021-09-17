@@ -25,6 +25,7 @@ function BrowseStack(): JSX.Element {
             <Stack.Screen
                 name="ViewRecipe"
                 component={ViewRecipeScreen}
+                options={{ headerShown: false}}
             />
 
         </Stack.Navigator>

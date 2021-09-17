@@ -1,9 +1,12 @@
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import styled from 'styled-components'
 
-const Popup = ({ navigation }: { navigation: any }): JSX.Element => {
-    const { title, description } = navigation.state.params
+const Popup = (): JSX.Element => {
+    const route = useRoute()
+    const navigation = useNavigation() as any
+    const { title, description } = route.params as any
 
     return (
         <Container>
@@ -28,6 +31,7 @@ const Container = styled(View)`
     flex: 1;
     align-items: center;
     justify-content: center;
+
 `
 
 const PopupMenu = styled(View)`

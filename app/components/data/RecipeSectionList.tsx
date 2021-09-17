@@ -10,7 +10,6 @@ import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
 
 type RecipeSectionListProps = {
-    navigation: any
     recipe: Recipe
     action: 'Edit' | 'Create' | 'View'
 
@@ -38,7 +37,6 @@ type RecipeSectionListProps = {
 }
 
 const RecipeSectionList = ({
-    navigation,
     recipe,
     action,
 
@@ -111,7 +109,6 @@ const RecipeSectionList = ({
                 <View>
                     <RecipeHeader
                         recipe={recipe}
-                        navigation={navigation}
                         editable={editable ? 'Edit-all' : 'Edit-people'}
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, View } from 'react-native'
+import { View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { useRoute } from '@react-navigation/native'
@@ -221,7 +221,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function cancelEditRecipe(): void {
-        navigation.navigate('Recipes')
+        navigation.goBack()
     }
 
     return (

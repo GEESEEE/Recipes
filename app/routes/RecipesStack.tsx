@@ -25,11 +25,13 @@ function RecipesStack(): JSX.Element {
             <Stack.Screen
                 name="EditRecipe"
                 component={EditRecipeScreen}
+                options={{ headerShown: false}}
             />
 
             <Stack.Screen
                 name="ViewRecipe"
                 component={ViewRecipeScreen}
+                options={{ headerShown: false}}
             />
         </Stack.Navigator>
     )
