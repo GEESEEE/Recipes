@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
@@ -35,12 +35,11 @@ const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: a
     const routeName = route.name
 
     const dispatch = useAppDispatch()
-    const globalState = useAppSelector((state) => state)
-
-    const { theme, settings, browseSearch, browseSort } = globalState
+    const { theme, settings, browseSearch, browseSort } = useAppSelector((state) => state)
 
     const insets = useSafeAreaInsets()
 
+    const [openSort, toggleSort] = useToggle(false)
     const [openSearchBar, setOpenSearchBar] = useState(false)
     const [searchText, setSearchText] = useState('')
 
@@ -61,11 +60,12 @@ const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: a
         )
     }
 
-    const [openSort, toggleSort] = useToggle(false)
+
 
     const backgroundColor = settings.invertedColors
         ? theme.primary
         : theme.background
+
     const iconColor = settings.invertedColors ? theme.background : theme.primary
 
     return (
@@ -97,6 +97,11 @@ const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: a
                             onPress={() => navigation.toggleDrawer()}
                             color={iconColor}
                         />
+                        <HeaderTitle
+                            style={{color: iconColor}}
+                        >
+                            {routeName}
+                        </HeaderTitle>
                     </HeaderFlex>
                 )}
 
@@ -159,5 +164,18 @@ const HeaderContainer = styled(View)`
 
 const HeaderFlex = styled(View)`
     flex: 1;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: row;
+`
+
+const HeaderTitle = styled(Text)`
+    flex: 1;
+    padding-left: 15px;
+
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+
+    font-size: 20px;
+    font-weight: bold;
 `
