@@ -12,31 +12,29 @@ function RecipesStack(): JSX.Element {
             initialRouteName="Recipes"
             screenOptions={{
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideVertical
+                cardStyleInterpolator: routeUtils.slideVertical,
             }}
         >
-
             <Stack.Screen
                 name="Recipes"
                 component={RecipesScreen}
                 options={{
-                    header: ({navigation}) =>
-                        <HeaderComponent
-                            navigation={navigation}
-                        />
+                    header: ({ navigation }) => (
+                        <HeaderComponent navigation={navigation} />
+                    ),
                 }}
             />
 
             <Stack.Screen
                 name="EditRecipe"
                 component={EditRecipeScreen}
-                options={{ headerShown: false}}
+                options={{ headerShown: false }}
             />
 
             <Stack.Screen
                 name="ViewRecipe"
                 component={ViewRecipeScreen}
-                options={{ headerShown: false}}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     )

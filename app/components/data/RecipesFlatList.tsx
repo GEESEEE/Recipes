@@ -1,7 +1,11 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native'
+import {
+    useFocusEffect,
+    useIsFocused,
+    useNavigation,
+} from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '../../data'
 
@@ -13,7 +17,7 @@ interface RecipesFlatListProps {
 
 const RecipesFlatList = React.forwardRef(
     (
-        { recipes,dropdown, onEndReached }: RecipesFlatListProps,
+        { recipes, dropdown, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
         const navigation = useNavigation()
@@ -26,7 +30,6 @@ const RecipesFlatList = React.forwardRef(
                 setScrollPosition(scrollPosition + 1)
             }
         }, [isFocused])
-
 
         function handleScroll(event: any): void {
             setScrollPosition(event.nativeEvent.contentOffset.y)
@@ -49,9 +52,12 @@ const RecipesFlatList = React.forwardRef(
                         editable="Edit-none"
                         dropDownDependencies={dropDownDependencies}
                         onPress={() =>
-                            navigation.navigate('ViewRecipe' as never, {
-                                recipe: item,
-                            } as never)
+                            navigation.navigate(
+                                'ViewRecipe' as never,
+                                {
+                                    recipe: item,
+                                } as never
+                            )
                         }
                     />
                 )}

@@ -9,25 +9,23 @@ import RecipesListHeader from '../components/data/RecipesListHeader'
 import { retrieveUserData } from '../actions/user'
 import { HeaderComponent } from '../components/routes'
 
-
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const {browseRecipes, browseSort, browseSearch} = useAppSelector((state) => state)
+    const { browseRecipes, browseSort, browseSearch } = useAppSelector(
+        (state) => state
+    )
     const dispatch = useAppDispatch()
 
     const listRef = React.useRef<FlatList>()
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            header: () =>
-            <HeaderComponent
-                navigation={navigation}
-                listRef={listRef}
-            />
+            header: () => (
+                <HeaderComponent navigation={navigation} listRef={listRef} />
+            ),
         })
     }, [navigation])
 
     useEffect(() => {
-
         dispatch(retrieveUserData())
         dispatch(retrieveRecipes())
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
@@ -43,7 +41,8 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    const displayHeader = browseSearch.length > 0 || browseSort.sortState.length > 0
+    const displayHeader =
+        browseSearch.length > 0 || browseSort.sortState.length > 0
 
     return (
         <Container>

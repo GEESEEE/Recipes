@@ -9,7 +9,7 @@ const Popup = (): JSX.Element => {
     const { title, description } = route.params as any
 
     return (
-        <Container >
+        <Container>
             <PopupMenu>
                 <PopupTitle>{title ?? 'Title'}</PopupTitle>
 
@@ -31,7 +31,6 @@ const Container = styled(View)`
     flex: 1;
     align-items: center;
     justify-content: center;
-
 `
 
 const PopupMenu = styled(View)`

@@ -4,4 +4,4 @@ import MainTabs from './MainTabs'
 import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
 
-export { LoginStack, Drawer, MainTabs, BrowseStack, RecipesStack}
+export { LoginStack, Drawer, MainTabs, BrowseStack, RecipesStack }

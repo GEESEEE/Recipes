@@ -64,7 +64,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         navigation.openDrawer()
     }
 
-
     return (
         <Container>
             {/* <LogoView>

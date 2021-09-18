@@ -10,7 +10,6 @@ import { InputFieldRounded } from '../components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { ErrorMessage } from '../components/user-input/ErrorMessage'
 
-
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
     PASSWORD_CHANGE: 'passwordChange',
@@ -39,11 +38,7 @@ function reducer(state: any, action: any): any {
     }
 }
 
-function LoginScreen({
-    navigation,
-}: {
-    navigation: any
-}): JSX.Element {
+function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 

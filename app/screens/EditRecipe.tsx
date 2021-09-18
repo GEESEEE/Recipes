@@ -46,9 +46,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     let passedRecipe
-    const {params} = useRoute()
+    const { params } = useRoute()
     if (typeof params !== 'undefined') {
-        const {recipe} = params as {recipe: Recipe}
+        const { recipe } = params as { recipe: Recipe }
         passedRecipe = recipe
     }
 
@@ -270,14 +270,18 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         <ButtonFilled
                             text={passedRecipe ? 'Save' : 'Create Recipe'}
                             onPress={
-                                passedRecipe ? handleEditRecipe : handleCreateRecipe
+                                passedRecipe
+                                    ? handleEditRecipe
+                                    : handleCreateRecipe
                             }
                         />
 
                         <ButtonBorderless
                             text={passedRecipe ? 'Cancel' : 'Clear Recipe'}
                             onPress={
-                                passedRecipe ? cancelEditRecipe : clearRecipeData
+                                passedRecipe
+                                    ? cancelEditRecipe
+                                    : clearRecipeData
                             }
                         />
                     </FooterView>

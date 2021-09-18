@@ -90,7 +90,6 @@ const ConfirmContainer = styled(View)`
     height: 8%;
     align-items: center;
     padding-top: 30px;
-
 `
 
 const FillRest = styled(View)`

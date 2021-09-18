@@ -16,7 +16,7 @@ interface ScreenConfig {
     add: boolean
 }
 
-const Config: {[key: string]: ScreenConfig} = {
+const Config: { [key: string]: ScreenConfig } = {
     Browse: {
         filter: true,
         search: true,
@@ -26,16 +26,23 @@ const Config: {[key: string]: ScreenConfig} = {
         filter: true,
         search: false,
         add: true,
-    }
+    },
 }
 
-
-const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: any }): JSX.Element => {
+const HeaderComponent = ({
+    navigation,
+    listRef,
+}: {
+    navigation: any
+    listRef?: any
+}): JSX.Element => {
     const route = useRoute()
     const routeName = route.name
 
     const dispatch = useAppDispatch()
-    const { theme, settings, browseSearch, browseSort } = useAppSelector((state) => state)
+    const { theme, settings, browseSearch, browseSort } = useAppSelector(
+        (state) => state
+    )
 
     const insets = useSafeAreaInsets()
 
@@ -56,11 +63,13 @@ const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: a
             listRef.current.scrollToOffset({ animated: true, offset: 0 })
         }
         dispatch(
-            getRecipes({ scopes: ['published'], search: browseSearch, sort: browseSort.sortState })
+            getRecipes({
+                scopes: ['published'],
+                search: browseSearch,
+                sort: browseSort.sortState,
+            })
         )
     }
-
-
 
     const backgroundColor = settings.invertedColors
         ? theme.primary
@@ -97,9 +106,7 @@ const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: a
                             onPress={() => navigation.toggleDrawer()}
                             color={iconColor}
                         />
-                        <HeaderTitle
-                            style={{color: iconColor}}
-                        >
+                        <HeaderTitle style={{ color: iconColor }}>
                             {routeName}
                         </HeaderTitle>
                     </HeaderFlex>

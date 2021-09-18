@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import IngredientListItem from './IngredientListItem'
 import InstructionListItem from './InstructionListItem'
-import {RecipeHeader} from './RecipeHeader'
+import { RecipeHeader } from './RecipeHeader'
 import { Recipe, ListItem, Instruction, RecipeIngredient } from '../../data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
@@ -59,7 +59,6 @@ const RecipeSectionList = ({
 
     FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
-
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)
 

@@ -12,27 +12,24 @@ function BrowseStack(): JSX.Element {
             initialRouteName="Browse"
             screenOptions={{
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideVertical
+                cardStyleInterpolator: routeUtils.slideVertical,
             }}
         >
-
             <Stack.Screen
                 name="Browse"
                 component={BrowseScreen}
                 options={{
-                    header: ({navigation}) =>
-                        <HeaderComponent
-                            navigation={navigation}
-                        />
+                    header: ({ navigation }) => (
+                        <HeaderComponent navigation={navigation} />
+                    ),
                 }}
             />
 
             <Stack.Screen
                 name="ViewRecipe"
                 component={ViewRecipeScreen}
-                options={{ headerShown: false}}
+                options={{ headerShown: false }}
             />
-
         </Stack.Navigator>
     )
 }

@@ -9,7 +9,7 @@ import SortRow from './SortRow'
 
 function SortHeader(): JSX.Element {
     const globalState = useAppSelector((state) => state)
-    const {name} = useRoute()
+    const { name } = useRoute()
 
     const sortState =
         name === 'Browse' ? globalState.browseSort : globalState.mySort

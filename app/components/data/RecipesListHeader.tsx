@@ -3,9 +3,7 @@ import { View } from 'react-native'
 import styled from 'styled-components'
 import { FilterHeader, SortHeader } from '../user-input/search'
 
-
-function RecipesListHeader({display}: {display: boolean}): JSX.Element {
-
+function RecipesListHeader({ display }: { display: boolean }): JSX.Element {
     return (
         <Container>
             {display ? (

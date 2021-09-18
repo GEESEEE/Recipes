@@ -12,7 +12,7 @@ import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '../../hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
 
-const Config: { [key: string]: any} = {
+const Config: { [key: string]: any } = {
     BrowseStack: {
         icon: 'book-search',
         name: 'Browse',
@@ -24,12 +24,11 @@ const Config: { [key: string]: any} = {
     Test: {
         icon: 'test-tube',
         name: 'Test',
-    }
+    },
 }
 
-
 const TabsComponent = ({ state, navigation }: any): JSX.Element => {
-    const {routes} = state
+    const { routes } = state
 
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
@@ -88,7 +87,7 @@ const TabsComponent = ({ state, navigation }: any): JSX.Element => {
                 />
 
                 {routes.map((route: any, index: any) => {
-                    const {icon, name} = Config[route.name]
+                    const { icon, name } = Config[route.name]
                     const isFocused = state.index === index
                     return (
                         <RouteTab

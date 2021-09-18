@@ -1,15 +1,14 @@
 import { useRoute } from '@react-navigation/native'
 import React from 'react'
-import {  View } from 'react-native'
+import { View } from 'react-native'
 import styled from 'styled-components'
 import { RecipeSectionList } from '../components/data'
 import { handleNumericTextInput } from '../config/utils'
 import { Recipe } from '../data'
 
 function ViewRecipeScreen(): JSX.Element {
-
     const route = useRoute()
-    const {recipe} = route.params as {recipe: Recipe}
+    const { recipe } = route.params as { recipe: Recipe }
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
     const [recipeData, setRecipeData] = React.useState<Recipe>(

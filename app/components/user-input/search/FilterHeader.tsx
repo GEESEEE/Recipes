@@ -13,7 +13,7 @@ function FilterHeader(): JSX.Element {
     const globalState = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
-    const {name} = useRoute()
+    const { name } = useRoute()
 
     const search =
         name === 'Browse' ? globalState.browseSearch : globalState.mySearch

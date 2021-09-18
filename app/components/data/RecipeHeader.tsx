@@ -69,9 +69,7 @@ function RecipeHeaderComponent({
     }
 
     const dropDown =
-        typeof dropDownDependencies === 'undefined'
-        ? null
-        : (
+        typeof dropDownDependencies === 'undefined' ? null : (
             <DropDownMenu
                 items={dropDownItems}
                 dependencies={dropDownDependencies}
@@ -174,10 +172,7 @@ function RecipeHeaderComponent({
     )
 }
 
-function recipeHeaderPropsChanged(
-    prevProps: any,
-    nextProps: any
-): boolean {
+function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     if (
         !_.isEqual(
             prevProps.dropDownDependencies,
@@ -194,7 +189,10 @@ function recipeHeaderPropsChanged(
 
 export const RecipeHeader = RecipeHeaderComponent
 
-export const MemoizedRecipeHeader = React.memo(RecipeHeaderComponent, recipeHeaderPropsChanged)
+export const MemoizedRecipeHeader = React.memo(
+    RecipeHeaderComponent,
+    recipeHeaderPropsChanged
+)
 
 const Header = styled(TouchableOpacity)`
     align-self: center;

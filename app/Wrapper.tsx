@@ -5,7 +5,6 @@ import { LoginStack } from './routes'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { retrieveIndices } from './actions/indices'
 
-
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
     const theme = useAppSelector((state) => state.theme)

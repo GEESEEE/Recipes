@@ -8,7 +8,6 @@ import { addSearch, removeSearch } from '../../../actions/search'
 import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
 import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
 
-
 const SearchBarComponent = ({
     navigation,
     toggle,

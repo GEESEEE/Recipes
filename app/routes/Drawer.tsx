@@ -11,16 +11,13 @@ function Drawer(): JSX.Element {
         <DrawerNav.Navigator
             initialRouteName="MainTabs"
             screenOptions={{ headerShown: false }}
-            drawerContent={({navigation}) => <DrawerComponent navigation={navigation}/>}
+            drawerContent={({ navigation }) => (
+                <DrawerComponent navigation={navigation} />
+            )}
         >
-            <DrawerNav.Screen
-                name="MainTabs"
-                component={MainTabs}
-            />
-
+            <DrawerNav.Screen name="MainTabs" component={MainTabs} />
         </DrawerNav.Navigator>
     )
 }
-
 
 export default Drawer
