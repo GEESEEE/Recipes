@@ -4,7 +4,6 @@ import { TextInput } from 'react-native'
 import styled from 'styled-components'
 import { RecipeIngredient } from '../../data'
 import { useAppSelector } from '../../hooks'
-import { MyFeather } from '../Icons'
 import ListItemWrapper from './ListItem'
 
 type IngredientListItemProps = {

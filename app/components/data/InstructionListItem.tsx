@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { View, TextInput, TouchableOpacity, Text } from 'react-native'
+import {  TextInput, Text } from 'react-native'
 import styled from 'styled-components'
 import { Instruction } from '../../data'
 import { useAppSelector } from '../../hooks'
-import { MyFeather } from '../Icons'
 import ListItemWrapper from './ListItem'
 
 type InstructionListItemProps = {
