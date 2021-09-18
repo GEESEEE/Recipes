@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     recyclerList: {
         width: '90%',
         alignSelf: 'center',
-
         paddingTop: 5,
     },
 })
