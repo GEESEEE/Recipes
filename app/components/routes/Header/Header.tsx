@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { useNavigationState, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
 import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
@@ -10,7 +10,13 @@ import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
 
-const Config: {[key: string]: any} = {
+interface ScreenConfig {
+    filter: boolean
+    search: boolean
+    add: boolean
+}
+
+const Config: {[key: string]: ScreenConfig} = {
     Browse: {
         filter: true,
         search: true,
@@ -24,15 +30,12 @@ const Config: {[key: string]: any} = {
 }
 
 
-const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
-
+const HeaderComponent = ({ navigation, listRef }: { navigation: any, listRef?: any }): JSX.Element => {
     const route = useRoute()
     const routeName = route.name
 
     const dispatch = useAppDispatch()
     const globalState = useAppSelector((state) => state)
-
-    // const listRef = navigation.state.params?.listRef
 
     const { theme, settings, browseSearch, browseSort } = globalState
 
@@ -50,9 +53,9 @@ const HeaderComponent = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function searchDatabase(): void {
-        // if (typeof listRef.current !== 'undefined') {
-        //     listRef.current.scrollToOffset({ aniamted: true, offset: 0 })
-        // }
+        if (typeof listRef?.current !== 'undefined') {
+            listRef.current.scrollToOffset({ animated: true, offset: 0 })
+        }
         dispatch(
             getRecipes({ scopes: ['published'], search: browseSearch, sort: browseSort.sortState })
         )

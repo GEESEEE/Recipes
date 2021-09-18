@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '../../data'
 
@@ -19,6 +19,11 @@ const RecipesFlatList = React.forwardRef(
         const navigation = useNavigation()
         const [scrollPosition, setScrollPosition] = React.useState(0)
 
+        useFocusEffect(() => {
+            if (dropdown) {
+                console.log("Focused")
+            }
+        })
         function handleScroll(event: any): void {
             setScrollPosition(event.nativeEvent.contentOffset.y)
         }

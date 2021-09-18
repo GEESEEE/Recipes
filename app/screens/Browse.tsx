@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
 import { retrieveRecipes } from '../actions/my-recipes'
@@ -7,6 +7,7 @@ import RecipesFlatList from '../components/data/RecipesFlatList'
 import { addRecipes, getRecipes } from '../actions/browse-recipes'
 import RecipesListHeader from '../components/data/RecipesListHeader'
 import { retrieveUserData } from '../actions/user'
+import { HeaderComponent } from '../components/routes'
 
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
@@ -15,8 +16,18 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const listRef = React.useRef<FlatList>()
 
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            header: () =>
+            <HeaderComponent
+                navigation={navigation}
+                listRef={listRef}
+            />
+        })
+    }, [navigation])
+
     useEffect(() => {
-        // navigation.setParams({ listRef })
+
         dispatch(retrieveUserData())
         dispatch(retrieveRecipes())
         dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
@@ -40,7 +51,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes.recipes}
-                navigation={navigation}
                 onEndReached={onEndReached}
             />
         </Container>
