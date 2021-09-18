@@ -1,13 +1,21 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
+import { useFocusEffect } from '@react-navigation/native'
 import RecipesFlatList from '../components/data/RecipesFlatList'
 import RecipesListHeader from '../components/data/RecipesListHeader'
 import { applySearch, applySort } from '../config/recipes'
 import { useAppSelector } from '../hooks/redux'
 
-function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
+function RecipesScreen(): JSX.Element {
     const {myRecipes, mySearch, mySort} = useAppSelector((state) => state)
+
+    const [state, rerender] = React.useState(0)
+
+    useFocusEffect(() => {
+        console.log("Focused")
+
+    })
 
     const filteredRecipes = applySearch(myRecipes, mySearch)
     const sortedRecipes = applySort(filteredRecipes, mySort.sortState)
@@ -19,7 +27,6 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
             <RecipesListHeader display={displayHeader} />
             <RecipesFlatList
                 recipes={sortedRecipes}
-                navigation={navigation}
                 dropdown
             />
         </Container>
