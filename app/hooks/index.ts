@@ -7,6 +7,7 @@ import useDebounce from './debounce'
 import useAsync from './async'
 import usePrevious from './previous'
 import useArray from './array'
+import useForceUpdate from './force-update'
 
 export {
     usePosition,
@@ -20,4 +21,5 @@ export {
     useAsync,
     usePrevious,
     useArray,
+    useForceUpdate,
 }
