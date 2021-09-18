@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import { NavigationScreenProp } from 'react-navigation'
 import styled from 'styled-components'
 import colors from '../config/colors'
 import { clearError, signUp } from '../actions/auth'
@@ -56,7 +55,7 @@ function reducer(state: any, action: any): any {
 function RegisterScreen({
     navigation,
 }: {
-    navigation: NavigationScreenProp<string>
+    navigation: any
 }): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()

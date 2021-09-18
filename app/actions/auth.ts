@@ -1,5 +1,4 @@
 import * as SecureStore from 'expo-secure-store'
-import { NavigationScreenProp } from 'react-navigation'
 import { Dispatch } from 'redux'
 import { showPopup } from '../config/routes'
 import { AUTH_ACTIONS } from '../reducers/auth'
@@ -8,7 +7,7 @@ import { resetTheme } from './theme'
 import { clearUserData } from './user'
 
 export const retrieveToken =
-    (navigation: NavigationScreenProp<string>): any =>
+    (navigation: any): any =>
     async (dispatch: Dispatch) => {
         dispatch({
             type: AUTH_ACTIONS.RETRIEVE_TOKEN_START,
@@ -40,7 +39,7 @@ export const retrieveToken =
 export const signUp =
     (
         userData: { name: string; password: string; email: string },
-        navigation: NavigationScreenProp<string>
+        navigation: any
     ): any =>
     async (dispatch: Dispatch) => {
         dispatch({
@@ -60,7 +59,7 @@ export const signIn =
     (
         username: string,
         password: string,
-        navigation: NavigationScreenProp<string>
+        navigation: any
     ): any =>
     async (dispatch: Dispatch) => {
         dispatch({
@@ -85,7 +84,7 @@ export const signIn =
     }
 
 export const signOut =
-    (token: string, navigation: NavigationScreenProp<string>): any =>
+    (token: string, navigation: any): any =>
     async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.SIGN_OUT_START, payload: {} })
         try {
