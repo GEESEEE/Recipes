@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
-import { ButtonIcon, FeatherButton } from '../../user-input/Buttons'
+import { ButtonIcon, FeatherButton, FeatherButtonProps } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '../../../actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
@@ -101,7 +101,7 @@ const HeaderComponent = ({
                     />
                 ) : (
                     <HeaderFlex>
-                        <FeatherButton
+                        <HeaderButton
                             iconName="menu"
                             onPress={() => navigation.toggleDrawer()}
                             color={iconColor}
@@ -130,7 +130,7 @@ const HeaderComponent = ({
 
                 {/* Filter button */}
                 {displayFilter ? (
-                    <FeatherButton
+                    <HeaderButton
                         iconName="filter"
                         onPress={() => toggleSort()}
                         size={25}
@@ -140,7 +140,7 @@ const HeaderComponent = ({
 
                 {/* Create Recipe Button */}
                 {displayAdd ? (
-                    <FeatherButton
+                    <HeaderButton
                         iconName="plus"
                         onPress={() => navigation.navigate('EditRecipe')}
                         color={iconColor}
@@ -156,6 +156,19 @@ const HeaderComponent = ({
 }
 
 export default HeaderComponent
+
+
+const HeaderButton = ({iconName, onPress, color, size}: FeatherButtonProps): JSX.Element => (
+        <HeaderButtonView>
+            <FeatherButton
+                iconName={iconName}
+                onPress={onPress}
+                color={color}
+                size={size}
+            />
+        </HeaderButtonView>
+    )
+
 
 const Container = styled(View)`
     border-bottom-color: ${(props) => props.theme.primary};
@@ -185,4 +198,8 @@ const HeaderTitle = styled(Text)`
 
     font-size: 20px;
     font-weight: bold;
+`
+const HeaderButtonView = styled(View)`
+    padding-left: 2px;
+    padding-right: 2px;
 `

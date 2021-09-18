@@ -8,6 +8,7 @@ import { MyMaterialCommunityIcons } from '../Icons'
 export type ButtonProps = {
     text: string
     onPress: () => void
+    color?: string
 }
 
 const ButtonStyleGeneric = styled(TouchableOpacity)`
@@ -32,7 +33,7 @@ export function ButtonFilled({
     text,
     onPress,
     color,
-}: ButtonProps & { color?: string }): JSX.Element {
+}: ButtonProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
         <ButtonFilledStyle
@@ -136,16 +137,26 @@ export function ButtonIcon({
     onPress,
     icon,
     disabled,
+    style
 }: {
     onPress: () => void
     icon: JSX.Element
     disabled?: boolean
+    style?: any
 }): JSX.Element {
     return (
-        <TouchableOpacity onPress={onPress} disabled={disabled ?? false}>
+        <TouchableOpacity style={{...style}} onPress={onPress} disabled={disabled ?? false}>
             {icon}
         </TouchableOpacity>
     )
+}
+
+export interface FeatherButtonProps {
+    iconName: string
+    onPress: () => void
+    size?: number
+    color?: string
+    style?: any
 }
 
 export function FeatherButton({
@@ -153,15 +164,12 @@ export function FeatherButton({
     onPress,
     size,
     color,
-}: {
-    iconName: string
-    onPress: () => void
-    size?: number
-    color?: string
-}): JSX.Element {
+    style
+}: FeatherButtonProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
         <ButtonIcon
+            style={{...style}}
             onPress={onPress}
             icon={
                 <Feather
