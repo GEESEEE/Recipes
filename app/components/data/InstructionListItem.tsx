@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Instruction } from '../../data'
 import { useAppSelector } from '../../hooks'
 import { MyFeather } from '../Icons'
+import ListItemWrapper from './ListItem'
 
 type InstructionListItemProps = {
     instruction: Instruction
@@ -23,19 +24,14 @@ const InstructionListItem = ({
 }: InstructionListItemProps): JSX.Element => {
     const theme = useAppSelector((state) => state.theme)
     const index = instructions.indexOf(instruction)
-    let listSize = instructions.length - 1
-    if (editable) listSize += 1
 
     return (
-        <Container
-            style={{
-                borderBottomWidth: index === listSize ? 3 : 0,
-                borderBottomLeftRadius: index === listSize ? 20 : 0,
-                borderBottomRightRadius: index === listSize ? 20 : 0,
-                paddingBottom: index === listSize ? 5 : 0,
-            }}
+        <ListItemWrapper
+            list={instructions}
+            item={instruction}
+            editable={editable}
+            handleRemove={handleRemoveInstruction}
         >
-            <ItemContainer>
                 {/* Instruction Number */}
                 <Number>{(index + 1).toString()}</Number>
 
@@ -56,44 +52,11 @@ const InstructionListItem = ({
                     editable={editable}
                     maxLength={255}
                 />
-            </ItemContainer>
-
-            {/* Remove Instruction Button */}
-            {editable ? (
-                <RemoveButton
-                    onPress={() =>
-                        handleRemoveInstruction
-                            ? handleRemoveInstruction(instruction.id.toString())
-                            : undefined
-                    }
-                >
-                    <MyFeather name="minus" size={20} color={theme.text} />
-                </RemoveButton>
-            ) : null}
-        </Container>
+        </ListItemWrapper>
     )
 }
 
 export default InstructionListItem
-
-const Container = styled(View)`
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    border-left-width: 3px;
-    border-right-width: 3px;
-    border-color: ${(props) => props.theme.primary};
-    border-bottom-color: ${(props) => props.theme.primary};
-`
-
-const ItemContainer = styled(View)`
-    flex: 1;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 10px;
-`
 
 const Number = styled(Text)`
     width: 10%;
@@ -106,9 +69,4 @@ const InstructionText = styled(TextInput)`
     width: 90%;
     padding-end: 5px;
     color: ${(props) => props.theme.text};
-`
-
-const RemoveButton = styled(TouchableOpacity)`
-    align-content: flex-end;
-    padding: 3px;
 `
