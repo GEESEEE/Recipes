@@ -21,15 +21,21 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint", "react-native", "react-hooks"],
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "react-native",
+        "react-hooks",
+        "import",
+        "module-resolver",
+        "prettier",
+        "jsx-a11y",
+        "node"
+    ],
     "settings": {
         "import/resolver": {
             "typescript": {},
-            "babel-module": {
-                "alias": {
-                    "@components": "./app/components"
-                }
-            }
+            "node": {}
         }
     },
     "rules": {

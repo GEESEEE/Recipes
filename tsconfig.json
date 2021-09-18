@@ -5,8 +5,8 @@
         "typeRoots": ["./app/types"],
         "noImplicitAny": true,
         "strict": true,
+        "baseUrl": ".",
         "paths": {
-            "*": ["./app/*"],
             "@components": ["./app/components/*"],
             "@routes": ["./app/routes/*"],
             "@screens": ["./app/screens/*"],
