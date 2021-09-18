@@ -1,14 +1,14 @@
 import React, { useReducer } from 'react'
 import { View, Dimensions, TouchableOpacity, Animated } from 'react-native'
 import styled from 'styled-components'
-import { ButtonFilled, ButtonInverted } from '@components/user-input/Buttons'
 import { MyFeather, MyFontAwesome } from '@components/Icons'
-import colors from '../config/colors'
-import logo from '../assets/temp_icon.png'
-import { clearError, retrieveToken, signIn } from '../actions/auth'
-import { InputFieldRounded } from '../components/user-input/TextInputs'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { ErrorMessage } from '../components/user-input/ErrorMessage'
+import { ButtonFilled, ButtonInverted } from '@components/user-input/Buttons'
+import colors from '@config/colors'
+import logo from '@assets/temp_icon.png'
+import { clearError, retrieveToken, signIn } from '@actions/auth'
+import { InputFieldRounded } from '@components/user-input/TextInputs'
+import { useAppDispatch, useAppSelector } from '@hooks/redux'
+import { ErrorMessage } from '@components/user-input/ErrorMessage'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
