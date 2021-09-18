@@ -24,7 +24,12 @@
     "plugins": ["react", "@typescript-eslint", "react-native", "react-hooks"],
     "settings": {
         "import/resolver": {
-            "typescript": {}
+            "typescript": {},
+            "babel-module": {
+                "alias": {
+                    "@components": "./app/components"
+                }
+            }
         }
     },
     "rules": {
