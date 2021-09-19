@@ -1,13 +1,10 @@
 import React, { useEffect, useLayoutEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
-import { retrieveRecipes } from '../actions/my-recipes'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import RecipesFlatList from '../components/data/RecipesFlatList'
-import { addRecipes, getRecipes } from '../actions/browse-recipes'
-import RecipesListHeader from '../components/data/RecipesListHeader'
-import { retrieveUserData } from '../actions/user'
-import { HeaderComponent } from '../components/routes'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { RecipesFlatList, RecipesListHeader } from '@/components/data'
+import { browseRecipeActions, userActions, myRecipeActions } from '@/actions'
+import { HeaderComponent } from '@/components/routes'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { browseRecipes, browseSort, browseSearch } = useAppSelector(
@@ -26,9 +23,9 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [navigation])
 
     useEffect(() => {
-        dispatch(retrieveUserData())
-        dispatch(retrieveRecipes())
-        dispatch(getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
+        dispatch(userActions.retrieveUserData())
+        dispatch(myRecipeActions.retrieveRecipes())
+        dispatch(browseRecipeActions.getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
     }, [])
 
     const onEndReached = (): void => {
@@ -37,7 +34,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 ...browseRecipes.currentParams,
                 page: browseRecipes.nextPage,
             }
-            dispatch(addRecipes(params))
+            dispatch(browseRecipeActions.addRecipes(params))
         }
     }
 

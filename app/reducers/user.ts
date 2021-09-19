@@ -1,4 +1,4 @@
-export const USERACTIONS = {
+export const USER_ACTIONS = {
     GET_USER_START: 'getUserStart',
     GET_USER_SUCCES: 'getUserSucces',
     GET_USER_ERROR: 'getUserError',
@@ -26,19 +26,19 @@ const auth = (
     action: { type: string; payload: Auth }
 ): Auth => {
     switch (action.type) {
-        case USERACTIONS.GET_USER_START: {
+        case USER_ACTIONS.GET_USER_START: {
             return { ...state, loading: true }
         }
 
-        case USERACTIONS.GET_USER_SUCCES: {
+        case USER_ACTIONS.GET_USER_SUCCES: {
             return { ...state, ...action.payload, loading: false }
         }
 
-        case USERACTIONS.GET_USER_ERROR: {
+        case USER_ACTIONS.GET_USER_ERROR: {
             return { ...state, error: action.payload.error, loading: false }
         }
 
-        case USERACTIONS.CLEAR_USER: {
+        case USER_ACTIONS.CLEAR_USER: {
             return initialState
         }
 

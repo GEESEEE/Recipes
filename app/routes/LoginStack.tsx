@@ -1,12 +1,8 @@
 import React from 'react'
-import {
-    CardStyleInterpolators,
-    createStackNavigator,
-} from '@react-navigation/stack'
-
+import { createStackNavigator } from '@react-navigation/stack'
+import { routeUtils } from '@/config'
+import { LoginScreen, Popup, RegisterScreen } from '@/screens'
 import Drawer from './Drawer'
-import { LoginScreen, Popup, RegisterScreen } from '../screens'
-import * as routeUtils from '../config/routes'
 
 const Stack = createStackNavigator()
 

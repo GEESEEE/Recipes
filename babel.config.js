@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function config(api) {
     const { cache } = api
     cache(true)
 
@@ -19,7 +19,7 @@ module.exports = function(api) {
         [
             'module-resolver',
             {
-                root: ["./app/"],
+                root: ["./"],
                 extensions: [
                     '.js',
                     '.ts',
@@ -32,17 +32,7 @@ module.exports = function(api) {
                     '.json'
                 ],
                 alias: {
-                    "@components": "./app/components",
-                    '@routes': './app/routes',
-                    '@screens': './app/screens',
-                    '@actions': './app/actions',
-                    '@reducers': './app/reducers',
-                    '@hooks': './app/hooks',
-                    '@services': './app/services',
-                    '@adapters': './app/adapters',
-                    '@assets': './app/assets',
-                    '@config': './app/config',
-                    '@data': './app/data',
+                    '@': './app',
                 }
             }
         ]

@@ -7,17 +7,8 @@
         "strict": true,
         "baseUrl": ".",
         "paths": {
-            "@components/*": ["./app/components/*"],
-            "@routes/*": ["./app/routes/*"],
-            "@screens/*": ["./app/screens/*"],
-            "@actions/*": ["./app/actions/*"],
-            "@reducers/*": ["./app/reducers/*"],
-            "@hooks/*": ["./app/hooks/*"],
-            "@services/*": ["./app/services/*"],
-            "@adapters/*": ["./app/adapters/*"],
-            "@assets/*": ["./app/assets/*"],
-            "@config/*": ["./app/config/*"],
-            "@data/*": ["./app/data/*"]
-        }
+            "@/*": ["./app/*"],
+        },
+        "module": "commonjs"
     }
 }

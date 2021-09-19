@@ -1,9 +1,9 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import TabsComponent from '../components/routes/Tabs'
+import { TabsComponent } from '@/components/routes'
+import { TestScreen } from '@/screens'
 import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
-import { TestScreen } from '../screens'
 
 
 const Tabs = createBottomTabNavigator()

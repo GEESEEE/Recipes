@@ -8,16 +8,11 @@ import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
-import { Ingredient, Recipe, Instruction, RecipeIngredient } from '../data'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import {
-    decrementIngredientId,
-    decrementInstructionId,
-    decrementRecipeId,
-} from '../actions/indices'
-import { handleNumericTextInput } from '../config/utils'
-import { RecipeSectionList } from '../components/data'
-import { showPopup } from '../config/routes'
+import { Ingredient, Recipe, Instruction, RecipeIngredient } from '@/data'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { indicesActions } from '@/actions'
+import { RecipeSectionList } from '@/components/data'
+import { routeUtils, utils } from '@/config'
 
 type RecipeValidity = {
     validIngredients: boolean
@@ -67,12 +62,12 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handlePrepareTimeChange(prepareTime: string): void {
-        recipeData.prepareTime = handleNumericTextInput(prepareTime)
+        recipeData.prepareTime = utils.handleNumericTextInput(prepareTime)
         setRecipeData({ ...recipeData })
     }
 
     function handlePeopleCountChange(peopleCount: string): void {
-        recipeData.peopleCount = handleNumericTextInput(peopleCount, true)
+        recipeData.peopleCount = utils.handleNumericTextInput(peopleCount, true)
         setRecipeData({ ...recipeData })
     }
 
@@ -92,7 +87,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             if (recipeComplete()) {
                 recipeData.publishedAt = new Date()
             } else {
-                showPopup(
+                routeUtils.showPopup(
                     navigation,
                     'Incomplete Recipe',
                     'Can not publish an incomplete recipe'
@@ -115,7 +110,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         )
 
         recipeData.recipeIngredients?.push(recipeIngredient)
-        dispatch(decrementIngredientId(indices.ingredientId))
+        dispatch(indicesActions.decrementIngredientId(indices.ingredientId))
         setRecipeData({ ...recipeData })
     }
 
@@ -152,7 +147,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         const recipeIngredient = recipeData.recipeIngredients?.filter(
             (item) => item.id.toString() === key
         )[0]
-        recipeIngredient!.amount = handleNumericTextInput(amount)
+        recipeIngredient!.amount = utils.handleNumericTextInput(amount)
         setRecipeData({ ...recipeData })
     }
 
@@ -173,7 +168,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             i ? i.position + 1 : 0
         )
         recipeData.instructions?.push(instruction)
-        dispatch(decrementInstructionId(indices.instructionId))
+        dispatch(indicesActions.decrementInstructionId(indices.instructionId))
         setRecipeData({ ...recipeData })
     }
 
@@ -203,7 +198,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         if (validRecipe()) {
             recipeData.createdAt = new Date()
             dispatch(createRecipe(recipeData))
-            dispatch(decrementRecipeId(indices.recipeId))
+            dispatch(indicesActions.decrementRecipeId(indices.recipeId))
             clearRecipeData()
             navigation.navigate('Recipes')
         }

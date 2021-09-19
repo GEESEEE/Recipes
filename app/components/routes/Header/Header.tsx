@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '../../../hooks'
 import { ButtonIcon, FeatherButton, FeatherButtonProps } from '../../user-input/Buttons'
 import SearchBarComponent from './Search'
-import { getRecipes } from '../../../actions/browse-recipes'
+import { getRecipes } from '@/actions/browse-recipes'
 import Sort from '../../user-input/search/SortModal'
 
 interface ScreenConfig {
