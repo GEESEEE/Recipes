@@ -1,9 +1,9 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
-import { LoginStack } from './routes'
-import { useAppDispatch, useAppSelector } from './hooks'
-import { retrieveIndices } from './actions/indices'
+import { LoginStack } from '@/routes'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { indicesActions } from '@/actions'
 
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
@@ -11,7 +11,7 @@ function Wrapper(): JSX.Element {
 
     React.useEffect(() => {
         console.log('Starting')
-        dispatch(retrieveIndices())
+        dispatch(indicesActions.retrieveIndices())
     }, [])
 
     return (

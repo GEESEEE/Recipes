@@ -20,6 +20,9 @@ module.exports = function config(api) {
             'module-resolver',
             {
                 root: ["./"],
+                alias: {
+                    '^@/(.+)': './app/\\1',
+                },
                 extensions: [
                     '.js',
                     '.ts',
@@ -30,10 +33,7 @@ module.exports = function config(api) {
                     '.ios.tsx',
                     '.android.tsx',
                     '.json'
-                ],
-                alias: {
-                    '@': './app',
-                }
+                ]
             }
         ]
     ]
