@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { ButtonIcon, FeatherButton, FeatherButtonProps } from '../../user-input/Buttons'
+import { ButtonIcon, FeatherButton, FeatherButtonProps } from '../../../components/user-input/Buttons'
 import SearchBarComponent from './Search'
 import { getRecipes } from '@/actions/browse-recipes'
-import Sort from '../../user-input/search/SortModal'
+import Sort from '../../../components/user-input/search/SortModal'
 
 interface ScreenConfig {
     filter: boolean

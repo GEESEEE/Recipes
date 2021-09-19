@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { TabsComponent } from '@components/routes'
+import { TabsComponent } from './components'
 import { TestScreen } from '@/screens'
 import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'

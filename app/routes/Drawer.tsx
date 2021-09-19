@@ -1,6 +1,6 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { DrawerComponent } from '@/components/routes'
+import { DrawerComponent } from './components'
 import MainTabs from './MainTabs'
 
 const DrawerNav = createDrawerNavigator()

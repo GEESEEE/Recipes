@@ -9,8 +9,8 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { useAppSelector } from '../../hooks'
-import { MyMaterialCommunityIcons } from '../Icons'
+import { useAppSelector } from '@/hooks'
+import { MyMaterialCommunityIcons } from '@/components/Icons'
 
 const Config: { [key: string]: any } = {
     BrowseStack: {

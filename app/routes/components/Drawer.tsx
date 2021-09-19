@@ -4,12 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { signOut } from '../../actions/auth'
 import { setTheme } from '../../actions/theme'
-import { ButtonFilled } from '../user-input/Buttons'
-import { MyIonicons } from '../Icons'
+import { ButtonFilled } from '../../components/user-input/Buttons'
+import { MyIonicons } from '../../components/Icons'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { setInvertedColors } from '../../actions/settings'
 import { useToggle } from '../../hooks'
-import ColorPickerModal from '../user-input/ColorPickerModal'
+import ColorPickerModal from '../../components/user-input/ColorPickerModal'
 
 interface RouteProps {
     icon: string | JSX.Element

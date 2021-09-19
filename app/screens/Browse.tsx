@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
 import { browseRecipeActions, userActions, myRecipeActions } from '@/actions'
-import { HeaderComponent } from '@/components/routes'
+import { HeaderComponent } from '@/routes/components'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { browseRecipes, browseSort, browseSearch } = useAppSelector(
