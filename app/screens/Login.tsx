@@ -5,7 +5,7 @@ import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import colors from '@/config/colors'
 import logo from '@/assets/temp_icon.png'
-import { clearError, retrieveToken, signIn } from '@/actions/auth'
+import { authActions } from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
@@ -43,7 +43,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        dispatch(retrieveToken(navigation))
+        dispatch(authActions.retrieveToken(navigation))
     }, [])
 
     const initialState = {
@@ -93,13 +93,13 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            dispatch(signIn(data.username, data.password, navigation))
+            dispatch(authActions.signIn(data.username, data.password, navigation))
         }
     }
 
     function handleRegisterButton(): void {
         navigation.navigate('Register', {})
-        dispatch(clearError())
+        dispatch(authActions.clearError())
     }
 
     return (

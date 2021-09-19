@@ -1,6 +1,6 @@
-import { useNavigation, useRoute } from '@react-navigation/native'
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import styled from 'styled-components'
 
 const Popup = (): JSX.Element => {

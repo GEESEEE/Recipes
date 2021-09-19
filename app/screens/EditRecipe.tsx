@@ -3,14 +3,13 @@ import { View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { useRoute } from '@react-navigation/native'
-import { createRecipe, editRecipe } from '../actions/my-recipes'
 import {
     ButtonBorderless,
     ButtonFilled,
 } from '../components/user-input/Buttons'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { indicesActions } from '@/actions'
+import { indicesActions, myRecipeActions } from '@/actions'
 import { RecipeSectionList } from '@/components/data'
 import { routeUtils, utils } from '@/config'
 
@@ -197,7 +196,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     async function handleCreateRecipe(): Promise<void> {
         if (validRecipe()) {
             recipeData.createdAt = new Date()
-            dispatch(createRecipe(recipeData))
+            dispatch(myRecipeActions.createRecipe(recipeData))
             dispatch(indicesActions.decrementRecipeId(indices.recipeId))
             clearRecipeData()
             navigation.navigate('Recipes')
@@ -210,7 +209,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     async function handleEditRecipe(): Promise<void> {
         if (validRecipe()) {
-            dispatch(editRecipe(recipeData))
+            dispatch(myRecipeActions.editRecipe(recipeData))
             passedRecipe = recipeData
         }
     }

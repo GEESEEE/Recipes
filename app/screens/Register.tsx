@@ -1,16 +1,16 @@
 import React, { useReducer } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
-import colors from '../config/colors'
-import { clearError, signUp } from '../actions/auth'
+import { colors } from '@/config'
+import { authActions } from '@/actions'
 import {
     ButtonBorderless,
     ButtonFilled,
-} from '../components/user-input/Buttons'
-import { MyFeather } from '../components/Icons'
-import { InputFieldRounded } from '../components/user-input/TextInputs'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { ErrorMessage } from '../components/user-input/ErrorMessage'
+} from '@/components/user-input/Buttons'
+import { MyFeather } from '@/components/Icons'
+import { InputFieldRounded } from '@/components/user-input/TextInputs'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -143,13 +143,13 @@ function RegisterScreen({
                 password: data.password1,
                 email: data.email,
             }
-            dispatch(signUp(userData, navigation))
+            dispatch(authActions.signUp(userData, navigation))
         }
     }
 
     function handleGoBackButton(): void {
         navigation.goBack()
-        dispatch(clearError())
+        dispatch(authActions.clearError())
     }
 
     return (

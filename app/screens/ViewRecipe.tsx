@@ -2,9 +2,9 @@ import { useRoute } from '@react-navigation/native'
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import { RecipeSectionList } from '../components/data'
-import { handleNumericTextInput } from '../config/utils'
-import { Recipe } from '../data'
+import { RecipeSectionList } from '@/components/data'
+import { utils } from '@/config'
+import { Recipe } from '@/data'
 
 function ViewRecipeScreen(): JSX.Element {
     const route = useRoute()
@@ -16,7 +16,7 @@ function ViewRecipeScreen(): JSX.Element {
     )
 
     function handlePeopleCountChange(peopleCount: string): void {
-        const val = handleNumericTextInput(peopleCount, true)
+        const val = utils.handleNumericTextInput(peopleCount, true)
         recipeData.peopleCount = val
         recipeData.recipeIngredients!.forEach((tempRi) => {
             const existRi = recipe.recipeIngredients!.find(

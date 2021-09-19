@@ -1,16 +1,15 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import RecipesFlatList from '../components/data/RecipesFlatList'
-import RecipesListHeader from '../components/data/RecipesListHeader'
-import { applySearch, applySort } from '../config/recipes'
-import { useAppSelector } from '../hooks/redux'
+import {RecipesFlatList, RecipesListHeader} from '@/components/data'
+import { recipeUtils } from '@/config'
+import { useAppSelector } from '@/hooks'
 
 function RecipesScreen(): JSX.Element {
     const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 
-    const filteredRecipes = applySearch(myRecipes, mySearch)
-    const sortedRecipes = applySort(filteredRecipes, mySort.sortState)
+    const filteredRecipes = recipeUtils.applySearch(myRecipes, mySearch)
+    const sortedRecipes = recipeUtils.applySort(filteredRecipes, mySort.sortState)
 
     const displayHeader = mySearch.length > 0 || mySort.sortState.length > 0
 

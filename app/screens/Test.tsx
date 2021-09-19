@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
-import { setColor } from '../actions/theme'
+import { themeActions } from '@/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
@@ -54,9 +54,9 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     function changePrimaryColor(): void {
         if (theme.primary === '#4ecdc4') {
-            dispatch(setColor('#fc5c65'))
+            dispatch(themeActions.setColor('#fc5c65'))
         } else {
-            dispatch(setColor('#4ecdc4'))
+            dispatch(themeActions.setColor('#4ecdc4'))
         }
     }
 
