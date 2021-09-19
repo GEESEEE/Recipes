@@ -4,7 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useAppSelector } from '../hooks/redux'
+import { useAppSelector } from '@/hooks'
 
 interface MyIconProps {
     name: string

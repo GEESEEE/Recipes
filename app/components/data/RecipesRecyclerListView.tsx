@@ -8,7 +8,7 @@ import {
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import {RecipeHeader} from './RecipeHeader'
-import { Recipe } from '../../data'
+import { Recipe } from '@/data'
 
 const ViewTypes = {
     RecipeHeader: 0,

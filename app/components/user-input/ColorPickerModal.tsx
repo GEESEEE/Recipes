@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
 import { ButtonFilled, ReturnButton } from './Buttons'
-import { useAppDispatch, useAppSelector } from '../../hooks'
-import { setColor } from '../../actions/theme'
-import colors from '../../config/colors'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { themeActions } from '@/actions'
+import {colors} from '@/config'
 
 interface ColorPickerProps {
     toggle: () => void
@@ -19,7 +19,7 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     const [localColor, setLocalColor] = useState<string>(colors.primary)
 
     function setPrimaryColor(color: string): void {
-        dispatch(setColor(color))
+        dispatch(themeActions.setColor(color))
     }
 
     return (

@@ -3,13 +3,13 @@ import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { useNavigation } from '@react-navigation/native'
-import Recipe from '../../data/recipe'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { Recipe } from '@/data'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
-import { deleteRecipe } from '../../actions/my-recipes'
+import { myRecipeActions } from '@/actions'
 import { ButtonIcon } from '../user-input/Buttons'
-import { recipeDifference } from '../../config/recipes'
+import { recipeUtils } from '@/config'
 
 interface RecipeHeaderOptions {
     recipe: Recipe
@@ -39,7 +39,7 @@ function RecipeHeaderComponent({
     const navigation = useNavigation()
 
     async function removeRecipe(): Promise<void> {
-        dispatch(deleteRecipe(recipe))
+        dispatch(myRecipeActions.deleteRecipe(recipe))
     }
 
     async function editRecipe(): Promise<void> {
@@ -183,7 +183,7 @@ function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     const oldRecipe = prevProps.recipe
     const newRecipe = nextProps.recipe
 
-    const recipeDifferenceObject = recipeDifference(oldRecipe, newRecipe)
+    const recipeDifferenceObject = recipeUtils.recipeDifference(oldRecipe, newRecipe)
     return Object.keys(recipeDifferenceObject).length === 0
 }
 

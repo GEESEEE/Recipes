@@ -1,6 +1,4 @@
-import Recipe from '../data/recipe'
-import RecipeIngredient from '../data/recipe-ingredient'
-import Instruction from '../data/instruction'
+import { Recipe, RecipeIngredient, Instruction } from '@/data'
 import handleError from './base'
 
 export type Scope = 'published' | 'author'

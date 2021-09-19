@@ -3,8 +3,8 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { sorts } from '../../../actions/sort'
-import { useAppSelector } from '../../../hooks'
+import { sortActions } from '@/actions'
+import { useAppSelector } from '@/hooks'
 import SortRow from './SortRow'
 
 function SortHeader(): JSX.Element {
@@ -18,7 +18,7 @@ function SortHeader(): JSX.Element {
     return (
         <Container>
             {sort.map((s) => {
-                const filt = sorts.find((f) => s.includes(f.type))
+                const filt = sortActions.sorts.find((f) => s.includes(f.type))
                 if (typeof filt === 'undefined') return null
                 return (
                     <SortRow

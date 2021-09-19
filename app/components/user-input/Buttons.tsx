@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Text, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
-import { useAppSelector } from '../../hooks/redux'
+import { useAppSelector } from '@/hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
 
 export type ButtonProps = {

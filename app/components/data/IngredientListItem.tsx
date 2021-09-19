@@ -2,8 +2,8 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 import styled from 'styled-components'
-import { RecipeIngredient } from '../../data'
-import { useAppSelector } from '../../hooks'
+import { RecipeIngredient } from '@/data'
+import { useAppSelector } from '@/hooks'
 import ListItemWrapper from './ListItem'
 
 type IngredientListItemProps = {

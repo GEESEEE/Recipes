@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { View, Text, Modal } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { ReturnButton } from '../Buttons'
-import { sorts } from '../../../actions/sort'
+import { sortActions } from '@/actions'
 import { SortRow } from '.'
 
 function Sort({
@@ -18,7 +18,7 @@ function Sort({
             <Container>
                 <ReturnButton onPress={() => toggle()} />
                 <CategoryHeader>Sort (order matters)</CategoryHeader>
-                {sorts.map((sort) => (
+                {sortActions.sorts.map((sort) => (
                     <SortRow
                         key={uuid()}
                         type={sort.type}

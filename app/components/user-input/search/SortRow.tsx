@@ -1,17 +1,10 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import {
-    removeSort,
-    addSort,
-    swapSort,
-    toggleSort,
-    SortType,
-} from '../../../actions/sort'
-import { inElementOf, indexOfIncludedElement } from '../../../config/utils'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { BROWSE_SORT_ACTIONS } from '../../../reducers/browse'
-import { MY_SORT_ACTIONS } from '../../../reducers/my'
+import { sortActions } from '@/actions'
+import { utils } from '@/config'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { BROWSE_SORT_ACTIONS, MY_SORT_ACTIONS } from '@/reducers'
 import { MyMaterialCommunityIcons } from '../../Icons'
 import { ButtonIcon, FeatherButton } from '../Buttons'
 
@@ -21,7 +14,7 @@ function SortRow({
     options,
     routeName,
     header,
-}: SortType & { routeName: string; header?: boolean }): JSX.Element {
+}: sortActions.SortType & { routeName: string; header?: boolean }): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -33,16 +26,16 @@ function SortRow({
     const SORT_ACTIONS =
         routeName === 'Browse' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
 
-    const selected = inElementOf(sortState.sortState, type)
+    const selected = utils.inElementOf(sortState.sortState, type)
     const order = sortState.orders[type]
 
     const callback = selected
-        ? removeSort(SORT_ACTIONS.REMOVE_SORT, type)
-        : addSort(SORT_ACTIONS.ADD_SORT, type, order)
+        ? sortActions.removeSort(SORT_ACTIONS.REMOVE_SORT, type)
+        : sortActions.addSort(SORT_ACTIONS.ADD_SORT, type, order)
 
     const toggleOrder = selected
-        ? swapSort(SORT_ACTIONS.SWAP_SORT, type)
-        : toggleSort(SORT_ACTIONS.TOGGLE_SORT, type)
+        ? sortActions.swapSort(SORT_ACTIONS.SWAP_SORT, type)
+        : sortActions.toggleSort(SORT_ACTIONS.TOGGLE_SORT, type)
 
     const filterTextColor = selected ? theme.primary : theme.text
     const fontSize = header ? 14 : 16
@@ -53,7 +46,7 @@ function SortRow({
             {header ? null : (
                 <FilterPosition>
                     {selected
-                        ? indexOfIncludedElement(sortState.sortState, type) + 1
+                        ? utils.indexOfIncludedElement(sortState.sortState, type) + 1
                         : null}
                 </FilterPosition>
             )}

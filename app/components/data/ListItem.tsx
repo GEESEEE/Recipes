@@ -2,8 +2,8 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import styled from 'styled-components'
-import { ListItem } from '../../data'
-import { useAppSelector } from '../../hooks'
+import { ListItem } from '@/data'
+import { useAppSelector } from '@/hooks'
 import { MyFeather } from '../Icons'
 
 interface ListItemProps {

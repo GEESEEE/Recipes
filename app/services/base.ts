@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store'
 import { Method } from 'axios'
-import applicationAdapter from '../adapters/application'
+import { applicationAdapter } from '@/adapters'
 
 async function getTokenHeader(): Promise<{ token: string }> {
     const token = await SecureStore.getItemAsync('token')

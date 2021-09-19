@@ -3,10 +3,9 @@ import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { removeSearch } from '../../../actions/search'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
-import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
+import { searchActions } from '@/actions'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/reducers'
 import { FeatherButton } from '../Buttons'
 
 function FilterHeader(): JSX.Element {
@@ -35,7 +34,7 @@ function FilterHeader(): JSX.Element {
                         <FeatherButton
                             iconName="x"
                             onPress={() =>
-                                dispatch(removeSearch(removeSearchType, query))
+                                dispatch(searchActions.removeSearch(removeSearchType, query))
                             }
                             size={16}
                         />

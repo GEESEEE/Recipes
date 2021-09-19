@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import IngredientListItem from './IngredientListItem'
 import InstructionListItem from './InstructionListItem'
 import { RecipeHeader } from './RecipeHeader'
-import { Recipe, ListItem, Instruction, RecipeIngredient } from '../../data'
+import { Recipe, ListItem, Instruction, RecipeIngredient } from '@/data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
 

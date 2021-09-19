@@ -6,7 +6,7 @@ import {
     useNavigation,
 } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
-import { Recipe } from '../../data'
+import { Recipe } from '@/data'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
