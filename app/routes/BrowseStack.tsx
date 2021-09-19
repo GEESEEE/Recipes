@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { BrowseScreen, ViewRecipeScreen } from '@/screens'
 import { HeaderComponent } from '@/components/routes'
+import { BrowseScreen, ViewRecipeScreen } from '@/screens'
 import { routeUtils } from '@/config'
 
 const Stack = createStackNavigator()

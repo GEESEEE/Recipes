@@ -19,15 +19,18 @@ module.exports = function config(api) {
         [
             'module-resolver',
             {
-                root: ["./"],
+                root: ["."],
                 alias: {
                     '^@/(.+)': './app/\\1',
+                    '@components': './app/components'
                 },
                 extensions: [
                     '.js',
                     '.ts',
                     '.jsx',
                     '.tsx',
+                    '.ios.js',
+                    '.android.js',
                     '.ios.ts',
                     '.android.ts',
                     '.ios.tsx',
