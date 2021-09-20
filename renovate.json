@@ -1,11 +1,29 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":preserveSemverRanges"
   ],
+  "buildkite": {
+    "enabled": false
+  },
+  "docker-compose": {
+    "enabled": false
+  },
   "packageRules": [
     {
+      "groupName": "Minors",
+      "matchManagers": ["dockerfile", "npm"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
+    },
+    {
+      "groupName": "Majors",
+      "matchManagers": ["dockerfile", "npm"],
+      "matchUpdateTypes": ["major"], 
+    },
+    {
+      "groupName": "Ignore",
+      "matchPackageNames": ["react-native-reanimated"],
+      "enabled": false
+    },
   ]
 }
