@@ -24,6 +24,6 @@
       "groupName": "Ignore",
       "matchPackageNames": ["react-native-reanimated"],
       "enabled": false
-    },
+    }
   ]
 }
