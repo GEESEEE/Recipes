@@ -2,14 +2,12 @@ import React from 'react'
 import { View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { signOut } from '../../actions/auth'
-import { setTheme } from '../../actions/theme'
-import { ButtonFilled } from '../../components/user-input/Buttons'
-import { MyIonicons } from '../../components/Icons'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { setInvertedColors } from '../../actions/settings'
-import { useToggle } from '../../hooks'
-import ColorPickerModal from '../../components/user-input/ColorPickerModal'
+import { authActions, themeActions, settingsActions } from '@/actions'
+import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
+import { ButtonFilled } from '@/components/user-input/Buttons'
+import { MyIonicons } from '@/components/Icons'
+import ColorPickerModal from '@/components/user-input/ColorPickerModal'
+import DrawerIten from './DrawerItem'
 
 interface RouteProps {
     icon: string | JSX.Element
@@ -60,7 +58,7 @@ export default function DrawerComponent({
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        dispatch(signOut(auth.token, navigation))
+        dispatch(authActions.signOut(auth.token, navigation))
     }
 
     return (
@@ -94,12 +92,12 @@ export default function DrawerComponent({
                     {PreferenceSwitch(
                         'Light Theme',
                         theme.mode === 'light',
-                        (val: boolean) => dispatch(setTheme(val))
+                        (val: boolean) => dispatch(themeActions.setTheme(val))
                     )}
                     {PreferenceSwitch(
                         'Inverted Colors',
                         settings.invertedColors,
-                        (val: boolean) => dispatch(setInvertedColors(val))
+                        (val: boolean) => dispatch(settingsActions.setInvertedColors(val))
                     )}
                 </PreferenceView>
             </ScrollView>

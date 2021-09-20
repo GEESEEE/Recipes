@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { View, TextInput } from 'react-native'
 import { useRoute } from '@react-navigation/native'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { FeatherButton } from '../../../components/user-input/Buttons'
-import { addSearch, removeSearch } from '../../../actions/search'
-import { BROWSE_SEARCH_ACTIONS } from '../../../reducers/browse'
-import { MY_SEARCH_ACTIONS } from '../../../reducers/my'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { FeatherButton } from '@/components/user-input/Buttons'
+import { searchActions } from '@/actions'
+import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/reducers'
 
 const SearchBarComponent = ({
-    navigation,
     toggle,
     searchText,
     setText,
 }: {
-    navigation: any
     toggle: () => void
     searchText: string
     setText(text: string): void
@@ -60,7 +57,7 @@ const SearchBarComponent = ({
                 iconName="plus"
                 onPress={() => {
                     if (searchText.length > 0) {
-                        dispatch(addSearch(addSearchType, searchText))
+                        dispatch(searchActions.addSearch(addSearchType, searchText))
                     }
                     handleText('')
                 }}

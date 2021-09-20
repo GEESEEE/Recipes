@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { ButtonIcon, FeatherButton, FeatherButtonProps } from '../../../components/user-input/Buttons'
+import { ButtonIcon, FeatherButton, FeatherButtonProps } from '@/components/user-input/Buttons'
 import SearchBarComponent from './Search'
-import { getRecipes } from '@/actions/browse-recipes'
-import Sort from '../../../components/user-input/search/SortModal'
+import { browseRecipeActions } from '@/actions'
+import Sort from '@/components/user-input/search/SortModal'
 
 interface ScreenConfig {
     filter: boolean
@@ -63,7 +63,7 @@ const HeaderComponent = ({
             listRef.current.scrollToOffset({ animated: true, offset: 0 })
         }
         dispatch(
-            getRecipes({
+            browseRecipeActions.getRecipes({
                 scopes: ['published'],
                 search: browseSearch,
                 sort: browseSort.sortState,
@@ -94,7 +94,6 @@ const HeaderComponent = ({
             >
                 {openSearchBar ? (
                     <SearchBarComponent
-                        navigation={navigation}
                         toggle={() => toggleSearch()}
                         searchText={searchText}
                         setText={setSearchText}
