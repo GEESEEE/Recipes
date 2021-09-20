@@ -13,12 +13,12 @@
     {
       "groupName": "Minors",
       "matchManagers": ["dockerfile", "npm"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"]
     },
     {
       "groupName": "Majors",
       "matchManagers": ["dockerfile", "npm"],
-      "matchUpdateTypes": ["major"], 
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "Ignore",
