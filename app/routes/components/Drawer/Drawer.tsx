@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
 import ColorPickerModal from '@/components/user-input/ColorPickerModal'
-import DrawerItem from './DrawerItem'
 
 interface RouteProps {
     icon: string | JSX.Element
