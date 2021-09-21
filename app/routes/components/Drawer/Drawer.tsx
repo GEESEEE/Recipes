@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Switch, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { authActions, themeActions, settingsActions } from '@/actions'
@@ -7,44 +7,28 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
 import ColorPickerModal from '@/components/user-input/ColorPickerModal'
+import { SwitchComponent } from '@/components/atoms'
 
-interface RouteProps {
-    icon: string | JSX.Element
-    text: string
-    onPress: () => void
-}
-
-const Route = ({ icon, text, onPress }: RouteProps): JSX.Element => (
-    <TouchableOpacity onPress={onPress}>
-        <Section>
-            <Paragraph>{text}</Paragraph>
-            {icon}
-        </Section>
-    </TouchableOpacity>
-)
-
-const PreferenceSwitch = (
+interface DrawerItemProps {
     text: string,
-    switchValue: boolean,
-    onValueChange: (val: boolean) => void
-): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
-
-    return (
-        <PreferenceItemView>
-            <Paragraph>{text}</Paragraph>
-            <Switch
-                value={switchValue}
-                onValueChange={onValueChange}
-                trackColor={{
-                    true: theme.backgroundVariant,
-                    false: theme.backgroundVariant,
-                }}
-                thumbColor={theme.primary}
-            />
-        </PreferenceItemView>
-    )
+    element: JSX.Element
+    onPress?: () => void
 }
+
+const DrawerItem = ({
+    text,
+    element,
+    onPress
+}: DrawerItemProps): JSX.Element => (
+        <DrawerItemView
+            onPress={onPress}
+            disabled={typeof onPress === 'undefined'}
+        >
+            <DrawerItemText>{text}</DrawerItemText>
+            <DrawerItemElement>{element}</DrawerItemElement>
+        </DrawerItemView>
+    )
+
 
 export default function DrawerComponent({
     navigation,
@@ -68,36 +52,47 @@ export default function DrawerComponent({
 
             <ScrollView>
                 <Header>
-                    <Title>{user.name}</Title>
-                    <Caption>{user.email}</Caption>
+                    <HeaderName>{user.name}</HeaderName>
+                    <HeaderEmail>{user.email}</HeaderEmail>
                 </Header>
 
                 <PreferenceView>
-                    <Route
-                        icon={
+                    <DrawerItem
+                        text="Set Primary Color"
+                        element={
                             <MyIonicons
                                 name="color-palette-outline"
                                 color={theme.primary}
                                 size={23}
                             />
                         }
-                        text="Set Primary Color"
                         onPress={() => toggleColorPicker()}
                     />
                 </PreferenceView>
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
-                    {PreferenceSwitch(
-                        'Light Theme',
-                        theme.mode === 'light',
-                        (val: boolean) => dispatch(themeActions.setTheme(val))
-                    )}
-                    {PreferenceSwitch(
-                        'Inverted Colors',
-                        settings.invertedColors,
-                        (val: boolean) => dispatch(settingsActions.setInvertedColors(val))
-                    )}
+                    {/* Light Theme Toggle */}
+                    <DrawerItem
+                        text='Light Theme'
+                        element={
+                            <SwitchComponent
+                                switchValue={theme.mode === 'light'}
+                                onValueChange={(val: boolean) => dispatch(themeActions.setTheme(val))}
+                            />
+                        }
+                    />
+
+                    {/* Inverted Colors Toggle */}
+                    <DrawerItem
+                        text='Inverted Colors'
+                        element={
+                            <SwitchComponent
+                                switchValue={settings.invertedColors}
+                                onValueChange={(val: boolean) =>dispatch(settingsActions.setInvertedColors(val))}
+                            />
+                        }
+                    />
                 </PreferenceView>
             </ScrollView>
 
@@ -121,37 +116,16 @@ const Header = styled(View)`
     border-bottom-color: ${(props) => props.theme.primary};
 `
 
-const Title = styled(Text)`
+const HeaderName = styled(Text)`
     font-size: 25px;
     margin-top: 3px;
     font-weight: bold;
     color: ${(props) => props.theme.primary};
 `
 
-const Caption = styled(Text)`
+const HeaderEmail = styled(Text)`
     font-size: 15px;
     color: ${(props) => props.theme.text};
-`
-
-const Paragraph = styled(Text)`
-    font-size: 16px;
-    margin-right: 3px;
-    font-weight: bold;
-    color: ${(props) => props.theme.text};
-`
-
-const RoutesSection = styled(View)`
-    margin-top: 15px;
-`
-
-const Section = styled(View)`
-    flex-direction: row;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 15px;
-    padding-left: 12px;
-    justify-content: space-between;
 `
 
 const PreferenceView = styled(View)`
@@ -172,11 +146,27 @@ const PreferenceText = styled(Text)`
     font-weight: bold;
 `
 
-const PreferenceItemView = styled(View)`
+const DrawerItemView = styled(TouchableOpacity)`
     flex: 1;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     padding-bottom: 5px;
+`
+
+const DrawerItemText = styled(Text)`
+    flex: 3;
+    font-size: 16px;
+    margin-right: 3px;
+    font-weight: bold;
+    color: ${(props) => props.theme.text};
+`
+
+const DrawerItemElement = styled(View)`
+    flex: 1;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 `
 
 const Footer = styled(View)`
