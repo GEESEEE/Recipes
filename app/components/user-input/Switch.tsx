@@ -7,7 +7,6 @@ interface SwitchProps {
     onValueChange: (val: boolean) => void
 }
 
-
 function SwitchComponent({
     switchValue,
     onValueChange
