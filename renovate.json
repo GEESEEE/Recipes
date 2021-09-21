@@ -23,11 +23,6 @@
       "groupName": "Majors",
       "matchManagers": ["dockerfile", "npm"],
       "matchUpdateTypes": ["major"]
-    },
-    {
-      "groupName": "Ignore",
-      "matchPackageNames": ["react-native-reanimated"],
-      "enabled": false
     }
   ]
 }
