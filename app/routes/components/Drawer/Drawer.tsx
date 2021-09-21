@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
 import ColorPickerModal from '@/components/user-input/ColorPickerModal'
-import { SwitchComponent } from '@/components/atoms'
+import SwitchComponent from '@/components/user-input/Switch'
 
 interface DrawerItemProps {
     text: string,
