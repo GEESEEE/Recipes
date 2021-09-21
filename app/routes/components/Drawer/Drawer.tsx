@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
 import ColorPickerModal from '@/components/user-input/ColorPickerModal'
-import DrawerIten from './DrawerItem'
+import DrawerItem from './DrawerItem'
 
 interface RouteProps {
     icon: string | JSX.Element
@@ -73,7 +73,7 @@ export default function DrawerComponent({
                     <Caption>{user.email}</Caption>
                 </Header>
 
-                <RoutesSection>
+                <PreferenceView>
                     <Route
                         icon={
                             <MyIonicons
@@ -85,7 +85,7 @@ export default function DrawerComponent({
                         text="Set Primary Color"
                         onPress={() => toggleColorPicker()}
                     />
-                </RoutesSection>
+                </PreferenceView>
 
                 <PreferenceText>Preferences</PreferenceText>
                 <PreferenceView>
