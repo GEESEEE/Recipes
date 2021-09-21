@@ -12,6 +12,7 @@
   "docker-compose": {
     "enabled": false
   },
+  "labels": ["Renovate", "Dependencies"],
   "packageRules": [
     {
       "groupName": "Minors",
