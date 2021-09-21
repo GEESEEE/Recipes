@@ -1,29 +1,24 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { TabsComponent } from './components'
 import { TestScreen } from '@/screens'
 import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
-import { routeUtils } from '@/config'
 
 
-const Tabs = createBottomTabNavigator()
+const Tabs = createMaterialTopTabNavigator()
 
 function MainTabs(): JSX.Element {
 
     return (
         <Tabs.Navigator
             initialRouteName="BrowseStack"
-            screenOptions={{
-                headerShown: false,
-
-            }}
             backBehavior="history"
-            tabBar={({ navigation, state, descriptors }) => (
+            tabBarPosition="bottom"
+            tabBar={({ navigation, state }: any) => (
                 <TabsComponent
                     navigation={navigation}
                     state={state}
-                    descriptors={descriptors}
                 />
             )}
         >

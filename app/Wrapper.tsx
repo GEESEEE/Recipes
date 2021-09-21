@@ -16,6 +16,7 @@ function Wrapper(): JSX.Element {
 
     return (
         <ThemeProvider theme={theme}>
+
             <NavigationContainer>
                 <LoginStack />
             </NavigationContainer>
