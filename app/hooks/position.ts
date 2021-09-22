@@ -36,7 +36,12 @@ const usePosition = (
                 pageY: number
             ) => {
                 console.log('Onlayout', x, y, width, height, pageX, pageY)
-                setPosition({ width, height, pageX, pageY })
+                if (typeof x !== 'undefined') {
+                    setPosition({ width, height, pageX, pageY })
+                } else {
+                    setPosition({ width: 1, height: 1, pageX: 1, pageY: 1 })
+                }
+
             }
         )
     }, callbackDependencies ?? [])
