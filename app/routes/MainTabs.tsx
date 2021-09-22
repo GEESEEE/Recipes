@@ -8,6 +8,7 @@ import RecipesStack from './RecipesStack'
 const Tabs = createMaterialTopTabNavigator()
 
 function MainTabs(): JSX.Element {
+
     return (
         <Tabs.Navigator
             initialRouteName="BrowseStack"
@@ -19,6 +20,7 @@ function MainTabs(): JSX.Element {
                     state={state}
                 />
             )}
+
             screenOptions={{
                 swipeEnabled: false
             }}
