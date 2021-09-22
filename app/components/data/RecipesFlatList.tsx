@@ -27,7 +27,7 @@ const RecipesFlatList = React.forwardRef(
                     setScrollPosition(scrollPosition + 1)
                 }
             },
-            125,
+            150,
             [isFocused]
         )
 
