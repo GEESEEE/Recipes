@@ -4,7 +4,7 @@ import { View, Text, Modal } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { ReturnButton } from '../Buttons'
 import { sortActions } from '@/actions'
-import { SortRow } from '.'
+import SortRow from './SortRow'
 
 function Sort({
     routeName,
