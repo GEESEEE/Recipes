@@ -19,9 +19,9 @@ module.exports = function config(api) {
         [
             'module-resolver',
             {
-                root: ["."],
+                root: ['.'],
                 alias: {
-                    '^@/(.+)': './app/\\1'
+                    '^@/(.+)': './app/\\1',
                 },
                 extensions: [
                     '.js',
@@ -34,15 +34,15 @@ module.exports = function config(api) {
                     '.android.ts',
                     '.ios.tsx',
                     '.android.tsx',
-                    '.json'
-                ]
-            }
+                    '.json',
+                ],
+            },
         ],
-        ['react-native-reanimated/plugin']
+        ['react-native-reanimated/plugin'],
     ]
 
     return {
         presets,
-        plugins
+        plugins,
     }
 }

@@ -14,7 +14,10 @@ function SortRow({
     options,
     routeName,
     header,
-}: sortActions.SortType & { routeName: string; header?: boolean }): JSX.Element {
+}: sortActions.SortType & {
+    routeName: string
+    header?: boolean
+}): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const dispatch = useAppDispatch()
 
@@ -46,7 +49,10 @@ function SortRow({
             {header ? null : (
                 <FilterPosition>
                     {selected
-                        ? utils.indexOfIncludedElement(sortState.sortState, type) + 1
+                        ? utils.indexOfIncludedElement(
+                              sortState.sortState,
+                              type
+                          ) + 1
                         : null}
                 </FilterPosition>
             )}

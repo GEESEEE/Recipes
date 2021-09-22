@@ -137,7 +137,7 @@ export function ButtonIcon({
     onPress,
     icon,
     disabled,
-    style
+    style,
 }: {
     onPress: () => void
     icon: JSX.Element
@@ -145,7 +145,11 @@ export function ButtonIcon({
     style?: any
 }): JSX.Element {
     return (
-        <TouchableOpacity style={{...style}} onPress={onPress} disabled={disabled ?? false}>
+        <TouchableOpacity
+            style={{ ...style }}
+            onPress={onPress}
+            disabled={disabled ?? false}
+        >
             {icon}
         </TouchableOpacity>
     )
@@ -164,12 +168,12 @@ export function FeatherButton({
     onPress,
     size,
     color,
-    style
+    style,
 }: FeatherButtonProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
         <ButtonIcon
-            style={{...style}}
+            style={{ ...style }}
             onPress={onPress}
             icon={
                 <Feather

@@ -9,7 +9,10 @@ function RecipesScreen(): JSX.Element {
     const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 
     const filteredRecipes = recipeUtils.applySearch(myRecipes, mySearch)
-    const sortedRecipes = recipeUtils.applySort(filteredRecipes, mySort.sortState)
+    const sortedRecipes = recipeUtils.applySort(
+        filteredRecipes,
+        mySort.sortState
+    )
 
     const displayHeader = mySearch.length > 0 || mySort.sortState.length > 0
 

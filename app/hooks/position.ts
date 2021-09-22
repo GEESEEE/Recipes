@@ -41,7 +41,6 @@ const usePosition = (
                 } else {
                     setPosition({ width: 1, height: 1, pageX: 1, pageY: 1 })
                 }
-
             }
         )
     }, callbackDependencies ?? [])

@@ -1,3 +1,3 @@
-import HeaderComponent from "./Header"
+import HeaderComponent from './Header'
 
 export default HeaderComponent

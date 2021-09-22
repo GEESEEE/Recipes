@@ -19,7 +19,7 @@ function ListItemWrapper({
     list,
     item,
     editable,
-    handleRemove
+    handleRemove,
 }: ListItemProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     const index = list.indexOf(item)
@@ -35,9 +35,7 @@ function ListItemWrapper({
                 paddingBottom: index === listSize ? 5 : 0,
             }}
         >
-            <ItemContainer>
-                {children}
-            </ItemContainer>
+            <ItemContainer>{children}</ItemContainer>
 
             {editable ? (
                 <RemoveButton

@@ -34,7 +34,12 @@ function FilterHeader(): JSX.Element {
                         <FeatherButton
                             iconName="x"
                             onPress={() =>
-                                dispatch(searchActions.removeSearch(removeSearchType, query))
+                                dispatch(
+                                    searchActions.removeSearch(
+                                        removeSearchType,
+                                        query
+                                    )
+                                )
                             }
                             size={16}
                         />

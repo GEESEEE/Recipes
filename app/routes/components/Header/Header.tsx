@@ -5,7 +5,11 @@ import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { ButtonIcon, FeatherButton, FeatherButtonProps } from '@/components/user-input/Buttons'
+import {
+    ButtonIcon,
+    FeatherButton,
+    FeatherButtonProps,
+} from '@/components/user-input/Buttons'
 import SearchBarComponent from './Search'
 import { browseRecipeActions } from '@/actions'
 import Sort from '@/components/user-input/search/SortModal'
@@ -156,18 +160,21 @@ const HeaderComponent = ({
 
 export default HeaderComponent
 
-
-const HeaderButton = ({iconName, onPress, color, size}: FeatherButtonProps): JSX.Element => (
-        <HeaderButtonView>
-            <FeatherButton
-                iconName={iconName}
-                onPress={onPress}
-                color={color}
-                size={size}
-            />
-        </HeaderButtonView>
-    )
-
+const HeaderButton = ({
+    iconName,
+    onPress,
+    color,
+    size,
+}: FeatherButtonProps): JSX.Element => (
+    <HeaderButtonView>
+        <FeatherButton
+            iconName={iconName}
+            onPress={onPress}
+            color={color}
+            size={size}
+        />
+    </HeaderButtonView>
+)
 
 const Container = styled(View)`
     border-bottom-color: ${(props) => props.theme.primary};

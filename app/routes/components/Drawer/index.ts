@@ -1,3 +1,3 @@
-import DrawerComponent from "./Drawer";
+import DrawerComponent from './Drawer'
 
 export default DrawerComponent

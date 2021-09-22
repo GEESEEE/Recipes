@@ -3,10 +3,7 @@ import { View, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { colors } from '@/config'
 import { authActions } from '@/actions'
-import {
-    ButtonBorderless,
-    ButtonFilled,
-} from '@/components/user-input/Buttons'
+import { ButtonBorderless, ButtonFilled } from '@/components/user-input/Buttons'
 import { MyFeather } from '@/components/Icons'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '@/hooks'
@@ -52,11 +49,7 @@ function reducer(state: any, action: any): any {
     }
 }
 
-function RegisterScreen({
-    navigation,
-}: {
-    navigation: any
-}): JSX.Element {
+function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 

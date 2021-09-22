@@ -1,3 +1,3 @@
-import TabsComponent from "./Tabs"
+import TabsComponent from './Tabs'
 
 export default TabsComponent

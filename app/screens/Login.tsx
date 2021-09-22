@@ -93,7 +93,9 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            dispatch(authActions.signIn(data.username, data.password, navigation))
+            dispatch(
+                authActions.signIn(data.username, data.password, navigation)
+            )
         }
     }
 

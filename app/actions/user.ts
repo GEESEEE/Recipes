@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
 import { SETTINGS_ACTIONS, THEME_ACTIONS, USER_ACTIONS } from '@/reducers'
-import {userService} from '@/services'
+import { userService } from '@/services'
 
 export const retrieveUserData = (): any => async (dispatch: Dispatch) => {
     dispatch({ type: USER_ACTIONS.GET_USER_START, payload: {} })

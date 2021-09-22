@@ -1,3 +1,3 @@
-import applicationAdapter from "./application"
+import applicationAdapter from './application'
 
 export { applicationAdapter }

@@ -17,5 +17,5 @@ export {
     sortActions,
     themeActions,
     settingsActions,
-    userActions
+    userActions,
 }

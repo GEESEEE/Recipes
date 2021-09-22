@@ -10,7 +10,7 @@ import ColorPickerModal from '@/components/user-input/ColorPickerModal'
 import SwitchComponent from '@/components/user-input/Switch'
 
 interface DrawerItemProps {
-    text: string,
+    text: string
     element: JSX.Element
     onPress?: () => void
 }
@@ -18,17 +18,13 @@ interface DrawerItemProps {
 const DrawerItem = ({
     text,
     element,
-    onPress
+    onPress,
 }: DrawerItemProps): JSX.Element => (
-        <DrawerItemView
-            onPress={onPress}
-            disabled={typeof onPress === 'undefined'}
-        >
-            <DrawerItemText>{text}</DrawerItemText>
-            <DrawerItemElement>{element}</DrawerItemElement>
-        </DrawerItemView>
-    )
-
+    <DrawerItemView onPress={onPress} disabled={typeof onPress === 'undefined'}>
+        <DrawerItemText>{text}</DrawerItemText>
+        <DrawerItemElement>{element}</DrawerItemElement>
+    </DrawerItemView>
+)
 
 export default function DrawerComponent({
     navigation,
@@ -74,22 +70,28 @@ export default function DrawerComponent({
                 <PreferenceView>
                     {/* Light Theme Toggle */}
                     <DrawerItem
-                        text='Light Theme'
+                        text="Light Theme"
                         element={
                             <SwitchComponent
                                 switchValue={theme.mode === 'light'}
-                                onValueChange={(val: boolean) => dispatch(themeActions.setTheme(val))}
+                                onValueChange={(val: boolean) =>
+                                    dispatch(themeActions.setTheme(val))
+                                }
                             />
                         }
                     />
 
                     {/* Inverted Colors Toggle */}
                     <DrawerItem
-                        text='Inverted Colors'
+                        text="Inverted Colors"
                         element={
                             <SwitchComponent
                                 switchValue={settings.invertedColors}
-                                onValueChange={(val: boolean) =>dispatch(settingsActions.setInvertedColors(val))}
+                                onValueChange={(val: boolean) =>
+                                    dispatch(
+                                        settingsActions.setInvertedColors(val)
+                                    )
+                                }
                             />
                         }
                     />

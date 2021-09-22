@@ -34,72 +34,70 @@ const IngredientListItem = ({
             editable={editable}
             handleRemove={handleRemoveIngredient}
         >
-                {/* Ingredient Name Input */}
-                <NameText
+            {/* Ingredient Name Input */}
+            <NameText
+                onChangeText={(text: string) =>
+                    handleIngredientNameChange
+                        ? handleIngredientNameChange(
+                              ingredient.id.toString(),
+                              text
+                          )
+                        : undefined
+                }
+                value={ingredient.ingredient?.name}
+                placeholder="New Ingredient"
+                placeholderTextColor={theme.grey}
+                multiline
+                editable={editable}
+                maxLength={255}
+            />
+
+            {/* Ingredient Amount Input */}
+            <AmountText
+                style={{
+                    color: ingredient.amount === 0 ? theme.grey : theme.text,
+                }}
+                onChangeText={(text: string) =>
+                    handleIngredientAmountChange
+                        ? handleIngredientAmountChange(
+                              ingredient.id.toString(),
+                              text
+                          )
+                        : undefined
+                }
+                keyboardType="decimal-pad"
+                value={ingredient.amount.toString()}
+                placeholder="0"
+                placeholderTextColor={theme.grey}
+                multiline
+                editable={editable}
+                maxLength={5}
+            />
+
+            {/* Ingredient Unit Input */}
+            {editable || ingredient.ingredient?.unit ? (
+                <UnitText
                     onChangeText={(text: string) =>
-                        handleIngredientNameChange
-                            ? handleIngredientNameChange(
+                        handleIngredientUnitChange
+                            ? handleIngredientUnitChange(
                                   ingredient.id.toString(),
                                   text
                               )
                             : undefined
                     }
-                    value={ingredient.ingredient?.name}
-                    placeholder="New Ingredient"
+                    value={ingredient.ingredient?.unit?.toString() ?? ''}
+                    placeholder="Unit?"
                     placeholderTextColor={theme.grey}
                     multiline
                     editable={editable}
-                    maxLength={255}
+                    maxLength={8}
                 />
-
-                {/* Ingredient Amount Input */}
-                <AmountText
-                    style={{
-                        color:
-                            ingredient.amount === 0 ? theme.grey : theme.text,
-                    }}
-                    onChangeText={(text: string) =>
-                        handleIngredientAmountChange
-                            ? handleIngredientAmountChange(
-                                  ingredient.id.toString(),
-                                  text
-                              )
-                            : undefined
-                    }
-                    keyboardType="decimal-pad"
-                    value={ingredient.amount.toString()}
-                    placeholder="0"
-                    placeholderTextColor={theme.grey}
-                    multiline
-                    editable={editable}
-                    maxLength={5}
-                />
-
-                {/* Ingredient Unit Input */}
-                {editable || ingredient.ingredient?.unit ? (
-                    <UnitText
-                        onChangeText={(text: string) =>
-                            handleIngredientUnitChange
-                                ? handleIngredientUnitChange(
-                                      ingredient.id.toString(),
-                                      text
-                                  )
-                                : undefined
-                        }
-                        value={ingredient.ingredient?.unit?.toString() ?? ''}
-                        placeholder="Unit?"
-                        placeholderTextColor={theme.grey}
-                        multiline
-                        editable={editable}
-                        maxLength={8}
-                    />
-                ) : null}
+            ) : null}
         </ListItemWrapper>
     )
 }
 
 export default IngredientListItem
-
 
 const NameText = styled(TextInput)`
     width: 60%;

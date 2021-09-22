@@ -57,7 +57,9 @@ const SearchBarComponent = ({
                 iconName="plus"
                 onPress={() => {
                     if (searchText.length > 0) {
-                        dispatch(searchActions.addSearch(addSearchType, searchText))
+                        dispatch(
+                            searchActions.addSearch(addSearchType, searchText)
+                        )
                     }
                     handleText('')
                 }}

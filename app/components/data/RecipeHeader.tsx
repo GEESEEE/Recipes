@@ -183,7 +183,10 @@ function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     const oldRecipe = prevProps.recipe
     const newRecipe = nextProps.recipe
 
-    const recipeDifferenceObject = recipeUtils.recipeDifference(oldRecipe, newRecipe)
+    const recipeDifferenceObject = recipeUtils.recipeDifference(
+        oldRecipe,
+        newRecipe
+    )
     return Object.keys(recipeDifferenceObject).length === 0
 }
 

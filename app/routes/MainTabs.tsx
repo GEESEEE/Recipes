@@ -8,27 +8,19 @@ import RecipesStack from './RecipesStack'
 const Tabs = createMaterialTopTabNavigator()
 
 function MainTabs(): JSX.Element {
-
     return (
         <Tabs.Navigator
             initialRouteName="BrowseStack"
             backBehavior="history"
             tabBarPosition="bottom"
             tabBar={({ navigation, state }: any) => (
-                <TabsComponent
-                    navigation={navigation}
-                    state={state}
-                />
+                <TabsComponent navigation={navigation} state={state} />
             )}
             screenOptions={{
-                swipeEnabled: false
+                swipeEnabled: false,
             }}
-
         >
-            <Tabs.Screen
-                name="BrowseStack"
-                component={BrowseStack}
-            />
+            <Tabs.Screen name="BrowseStack" component={BrowseStack} />
 
             <Tabs.Screen name="RecipesStack" component={RecipesStack} />
 

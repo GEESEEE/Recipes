@@ -7,7 +7,7 @@
         "strict": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./app/*"],
+            "@/*": ["./app/*"]
         },
         "module": "commonjs"
     }

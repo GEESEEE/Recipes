@@ -6,7 +6,7 @@ import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
 import { ButtonFilled, ReturnButton } from './Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { themeActions } from '@/actions'
-import {colors} from '@/config'
+import { colors } from '@/config'
 
 interface ColorPickerProps {
     toggle: () => void

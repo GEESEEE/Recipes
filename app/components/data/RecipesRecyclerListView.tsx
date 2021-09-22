@@ -7,7 +7,7 @@ import {
     LayoutProvider,
 } from 'recyclerlistview'
 import styled from 'styled-components'
-import {RecipeHeader} from './RecipeHeader'
+import { RecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
 
 const ViewTypes = {

@@ -3,13 +3,13 @@ import { Switch } from 'react-native'
 import { useAppSelector } from '@/hooks'
 
 interface SwitchProps {
-    switchValue: boolean,
+    switchValue: boolean
     onValueChange: (val: boolean) => void
 }
 
 function SwitchComponent({
     switchValue,
-    onValueChange
+    onValueChange,
 }: SwitchProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
 

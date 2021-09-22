@@ -25,7 +25,12 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     useEffect(() => {
         dispatch(userActions.retrieveUserData())
         dispatch(myRecipeActions.retrieveRecipes())
-        dispatch(browseRecipeActions.getRecipes({ scopes: ['published'], sort: ['publishtime'] }))
+        dispatch(
+            browseRecipeActions.getRecipes({
+                scopes: ['published'],
+                sort: ['publishtime'],
+            })
+        )
     }, [])
 
     const onEndReached = (): void => {

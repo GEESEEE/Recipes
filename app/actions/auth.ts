@@ -56,11 +56,7 @@ export const signUp =
     }
 
 export const signIn =
-    (
-        username: string,
-        password: string,
-        navigation: any
-    ): any =>
+    (username: string, password: string, navigation: any): any =>
     async (dispatch: Dispatch) => {
         dispatch({
             type: AUTH_ACTIONS.SIGN_IN_START,
