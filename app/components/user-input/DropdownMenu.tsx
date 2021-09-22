@@ -72,11 +72,16 @@ const Menu = React.forwardRef(
     ): JSX.Element => {
         const coords: Position = ref.current
         const insets = useSafeAreaInsets()
+
+        const width = coords ? coords.width : 1
+        const left = coords ? coords.pageX : 1
+        const top = coords ? coords.pageY - insets.top + offset : 1
+
         const PopupMenu = styled(View)`
             position: absolute;
-            width: ${coords.width}px;
-            margin-left: ${coords.pageX}px;
-            margin-top: ${coords.pageY - insets.top + offset}px;
+            width: ${width}px;
+            margin-left: ${left}px;
+            margin-top: ${top}px;
             border-radius: 10px;
             background-color: ${(props) => props.theme.backgroundVariant};
         `

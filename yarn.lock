@@ -11595,7 +11595,7 @@ react-native-global-props@^1.1.5:
   resolved "https://registry.yarnpkg.com/react-native-global-props/-/react-native-global-props-1.1.5.tgz#443e0ffc89d5402fa20ebedf37bcbca6d861c34d"
   integrity sha512-QDeAdRel6zyJfbgyFxZi9QXZe78OdlANxJae0rJn76uTqdt/A+iWBVjJy3NmaN/fpKy0uV0HhW6Hu4xM0QCisQ==
 
-react-native-pager-view@^5.4.4:
+react-native-pager-view@^5.0.12:
   version "5.4.4"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.4.tgz#83a873a82748440696ca0e0fd07a77477b854a78"
   integrity sha512-5zyol+FZ9X4N4OEz92IyaFFROR3KtgAgTmgqlUvG59Eigf+f6aWs5fvcbWwzuz/AlLZbrxIDrnLmSpMUOK57ww==
