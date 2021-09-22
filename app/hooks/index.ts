@@ -1,7 +1,7 @@
 import usePosition, { Position } from './position'
 import { useAppDispatch, useAppSelector } from './redux'
 import useToggle from './toggle'
-import useTimout from './timeout'
+import useTimeout from './timeout'
 import useUpdateEffect from './update-effect'
 import useDebounce from './debounce'
 import useAsync from './async'
@@ -15,7 +15,7 @@ export {
     useAppDispatch,
     useAppSelector,
     useToggle,
-    useTimout,
+    useTimeout,
     useUpdateEffect,
     useDebounce,
     useAsync,

@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
+import { useDebounce, useTimeout } from '@/hooks'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
@@ -21,14 +22,13 @@ const RecipesFlatList = React.forwardRef(
     ): JSX.Element => {
         const navigation = useNavigation()
 
-
         const isFocused = useIsFocused()
-        React.useEffect(() => {
+
+        useDebounce(() => {
             if (dropdown && isFocused) {
                 setScrollPosition(scrollPosition + 1)
             }
-        }, [isFocused])
-
+        }, 125, [isFocused])
 
         const [scrollPosition, setScrollPosition] = React.useState(0)
         function handleScroll(event: any): void {

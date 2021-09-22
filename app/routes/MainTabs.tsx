@@ -20,7 +20,6 @@ function MainTabs(): JSX.Element {
                     state={state}
                 />
             )}
-
             screenOptions={{
                 swipeEnabled: false
             }}

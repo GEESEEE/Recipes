@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
-import {RecipesFlatList, RecipesListHeader} from '@/components/data'
+import { RecipesFlatList, RecipesListHeader } from '@/components/data'
 import { recipeUtils } from '@/config'
 import { useAppSelector } from '@/hooks'
 
