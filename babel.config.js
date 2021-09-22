@@ -37,7 +37,8 @@ module.exports = function config(api) {
                     '.json'
                 ]
             }
-        ]
+        ],
+        ['react-native-reanimated/plugin']
     ]
 
     return {
