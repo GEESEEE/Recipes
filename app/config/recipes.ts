@@ -220,6 +220,7 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
                 dir = -1
                 field = field.substring(1)
             }
+            
 
             const r1Value = r1[field as keyof Recipe]
             const r2Value = r2[field as keyof Recipe]
