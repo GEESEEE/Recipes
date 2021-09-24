@@ -212,6 +212,36 @@ const sortFieldMap: { [key in RecipeSortType]: keyof Recipe } = {
     instructioncount: 'instructions',
 }
 
+const nullableProperties: (keyof Recipe)[] = [
+    'publishedAt'
+]
+
+export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
+    if (sort.length > 0) {
+        const fields: (keyof Recipe)[] = []
+        // Map the sort strings to the corresponding field names
+        const sortFields = sort.map((s) => {
+            const reverse = s.charAt(0) === '-'
+            const field =
+                sortFieldMap[(reverse ? s.substring(1) : s) as RecipeSortType]
+            fields.push(field)
+
+            return reverse ? `-${field}` : field
+        })
+
+        // Filter out the null values if we sort by a nullable property, because we can't sort null values
+        let filteredRecipes = recipes
+        nullableProperties.forEach(prop => {
+            if (fields.includes(prop)) {
+                filteredRecipes = filteredRecipes.filter(recipe => recipe[prop] !== null)
+            }
+        })
+
+        return filteredRecipes.sort(recipeFieldSorter(sortFields))
+    }
+    return recipes
+}
+
 const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
     fields
         .map((field) => {
@@ -220,16 +250,13 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
                 dir = -1
                 field = field.substring(1)
             }
-            
+
 
             const r1Value = r1[field as keyof Recipe]
             const r2Value = r2[field as keyof Recipe]
 
-            if (typeof r1Value === 'undefined') return 0
-            if (typeof r2Value === 'undefined') return 0
-
-            if (r1Value === null) return -dir
-            if (r2Value === null) return dir
+            if (typeof r1Value === 'undefined' || r1Value === null) return 0
+            if (typeof r2Value === 'undefined' || r2Value === null) return 0
 
             if (r1Value instanceof Array && r2Value instanceof Array) {
                 return r1Value.length > r2Value.length
@@ -242,16 +269,3 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
             return r1Value > r2Value ? dir : r1Value < r2Value ? -dir : 0
         })
         .reduce((p, n) => p || n, 0)
-
-export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
-    if (sort.length > 0) {
-        const fields = sort.map((s) => {
-            const reverse = s.charAt(0) === '-'
-            const field =
-                sortFieldMap[(reverse ? s.substring(1) : s) as RecipeSortType]
-            return reverse ? `-${field}` : field
-        })
-        return recipes.sort(recipeFieldSorter(fields))
-    }
-    return recipes
-}
