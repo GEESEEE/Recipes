@@ -18,7 +18,7 @@ type RecipeValidity = {
 }
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const {indices, myRecipes} = useAppSelector((state) => state)
+    const { indices, myRecipes } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     function getInitialRecipe(): Recipe {

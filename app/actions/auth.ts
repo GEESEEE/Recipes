@@ -51,7 +51,12 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err: any) {
-            routeUtils.handleAPIError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR)
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                AUTH_ACTIONS.SIGN_UP_ERROR
+            )
         }
     }
 
@@ -107,6 +112,3 @@ export const clearError =
     async (dispatch: Dispatch): Promise<any> => {
         dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }
-
-
-

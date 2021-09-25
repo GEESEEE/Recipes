@@ -35,7 +35,6 @@ export const handleAPIError = (
             },
         })
     }
-
 }
 
 export const fade = ({ current }: any): any => ({

@@ -5,7 +5,7 @@ import Lottie from 'lottie-react-native'
 import * as LoadingAnimation from '@/assets/animations/Loading4Dots.json'
 
 interface Loading4DotsProps {
-    backgroundColor: string,
+    backgroundColor: string
     dotColor: string
     height: number
 }
@@ -13,39 +13,38 @@ interface Loading4DotsProps {
 function Loading4Dots({
     backgroundColor,
     dotColor,
-    height
+    height,
 }: Loading4DotsProps): JSX.Element {
     const colorFilters = [
         {
             keypath: 'Back',
-            color: backgroundColor
+            color: backgroundColor,
         },
         {
             keypath: 'Dot1',
-            color: dotColor
+            color: dotColor,
         },
         {
             keypath: 'Dot2',
-            color: dotColor
+            color: dotColor,
         },
         {
             keypath: 'Dot3',
-            color: dotColor
+            color: dotColor,
         },
         {
             keypath: 'Dot4',
-            color: dotColor
-        }
+            color: dotColor,
+        },
     ]
 
     return (
         <Container>
-
             <Lottie
                 source={LoadingAnimation}
                 colorFilters={colorFilters}
                 autoSize
-                style={{height}}
+                style={{ height }}
                 autoPlay
                 loop
             />

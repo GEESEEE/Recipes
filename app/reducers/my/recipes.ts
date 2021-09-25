@@ -18,7 +18,7 @@ interface MyRecipes {
 
 const initialState: MyRecipes = {
     recipes: [],
-    loading: false
+    loading: false,
 }
 
 const myRecipes = (
@@ -27,33 +27,40 @@ const myRecipes = (
 ): MyRecipes => {
     switch (action.type) {
         case MY_RECIPE_ACTIONS.ACTION_START: {
-            return {...state, loading: true}
+            return { ...state, loading: true }
         }
 
         case MY_RECIPE_ACTIONS.SET_RECIPES_SUCCES: {
             const { newRecipes } = action.payload
-            return { recipes: newRecipes, loading: false}
+            return { recipes: newRecipes, loading: false }
         }
 
         case MY_RECIPE_ACTIONS.ADD_RECIPE_SUCCES: {
             const { newRecipe } = action.payload
-            return {recipes: [newRecipe, ...state.recipes], loading: false}
+            return { recipes: [newRecipe, ...state.recipes], loading: false }
         }
 
         case MY_RECIPE_ACTIONS.DELETE_RECIPE_SUCCES: {
             const { recipe } = action.payload
-            return {recipes: state.recipes.filter((r) => r.id !== recipe.id), loading: false}
+            return {
+                recipes: state.recipes.filter((r) => r.id !== recipe.id),
+                loading: false,
+            }
         }
 
         case MY_RECIPE_ACTIONS.EDIT_RECIPE_SUCCES: {
             const { newRecipe } = action.payload
-            return {recipes: state.recipes.map((r) => (r.id === newRecipe.id ? newRecipe : r)), loading: false}
+            return {
+                recipes: state.recipes.map((r) =>
+                    r.id === newRecipe.id ? newRecipe : r
+                ),
+                loading: false,
+            }
         }
 
         case MY_RECIPE_ACTIONS.ACTION_ERROR: {
-            return {...state, loading: false}
+            return { ...state, loading: false }
         }
-
 
         default:
             return state

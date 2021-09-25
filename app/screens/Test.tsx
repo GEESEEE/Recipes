@@ -79,7 +79,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <SampleText>Test Screen</SampleText>
-            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} loading={loading} />
+            <ButtonFilled
+                text="Log recipes"
+                onPress={() => logRecipes()}
+                loading={loading}
+            />
             <ButtonFilled text="Loading" onPress={() => setLoading(!loading)} />
             <ButtonFilled
                 text="Change Primary Color"

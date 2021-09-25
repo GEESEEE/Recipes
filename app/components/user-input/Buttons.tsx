@@ -44,16 +44,15 @@ export function ButtonFilled({
             style={{ backgroundColor: color ?? theme.primary }}
             disabled={loading}
         >
-            {
-                loading
-                ?   <Loading4Dots
-                        backgroundColor={theme.primary}
-                        dotColor={theme.background}
-                        height={21.7}
-                    />
-                :   <ButtonFilledText>{text}</ButtonFilledText>
-            }
-
+            {loading ? (
+                <Loading4Dots
+                    backgroundColor={theme.primary}
+                    dotColor={theme.background}
+                    height={21.7}
+                />
+            ) : (
+                <ButtonFilledText>{text}</ButtonFilledText>
+            )}
         </ButtonFilledStyle>
     )
 }

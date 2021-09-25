@@ -212,9 +212,7 @@ const sortFieldMap: { [key in RecipeSortType]: keyof Recipe } = {
     instructioncount: 'instructions',
 }
 
-const nullableProperties: (keyof Recipe)[] = [
-    'publishedAt'
-]
+const nullableProperties: (keyof Recipe)[] = ['publishedAt']
 
 export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
     if (sort.length > 0) {
@@ -231,9 +229,11 @@ export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
 
         // Filter out the null values if we sort by a nullable property, because we can't sort null values
         let filteredRecipes = recipes
-        nullableProperties.forEach(prop => {
+        nullableProperties.forEach((prop) => {
             if (fields.includes(prop)) {
-                filteredRecipes = filteredRecipes.filter(recipe => recipe[prop] !== null)
+                filteredRecipes = filteredRecipes.filter(
+                    (recipe) => recipe[prop] !== null
+                )
             }
         })
 
@@ -250,7 +250,6 @@ const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
                 dir = -1
                 field = field.substring(1)
             }
-
 
             const r1Value = r1[field as keyof Recipe]
             const r2Value = r2[field as keyof Recipe]
