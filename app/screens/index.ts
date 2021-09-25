@@ -1,3 +1,4 @@
+import RetrievingScreen from './Retrieving'
 import LoginScreen from './Login'
 import BrowseScreen from './Browse'
 import RecipesScreen from './Recipes'
@@ -8,6 +9,7 @@ import ViewRecipeScreen from './ViewRecipe'
 import Popup from './Popup'
 
 export {
+    RetrievingScreen,
     LoginScreen,
     EditRecipeScreen,
     ViewRecipeScreen,

@@ -9,21 +9,16 @@ import { routeUtils } from '@/config'
 export const retrieveToken =
     (navigation: any): any =>
     async (dispatch: Dispatch) => {
-        dispatch({
-            type: AUTH_ACTIONS.RETRIEVE_TOKEN_START,
-            payload: {},
-        })
         try {
             const token = await SecureStore.getItemAsync('token')
             if (token) {
                 const result = await authService.verifyToken({ token })
                 if (result) {
+                    console.log(`Token: ${  result}`)
                     dispatch({
                         type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
-
-                    navigation.navigate('Main')
                 }
             }
         } catch (err: any) {
@@ -33,7 +28,13 @@ export const retrieveToken =
                 dispatch,
                 AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR
             )
+        } finally {
+            dispatch({
+                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
+                payload: { error: '' },
+            })
         }
+        console.log("Finished retrieving Token")
     }
 
 export const signUp =

@@ -19,14 +19,14 @@ export const AUTH_ACTIONS = {
 }
 
 export type Auth = {
-    retrieveLoading: boolean
+    retrieveFinished: boolean
     loading: boolean
     token: string
     error: string
 }
 
 const initialState = {
-    retrieveLoading: false,
+    retrieveFinished: false,
     loading: false,
     token: '',
     error: '',
@@ -81,18 +81,14 @@ const auth = (
         }
 
         // RETRIEVE TOKEN ACTIONS
-        case AUTH_ACTIONS.RETRIEVE_TOKEN_START: {
-            return { ...state, retrieveLoading: true }
-        }
-
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
-            return { ...state, token, retrieveLoading: false, error: '' }
+            return { ...state, token, retrieveFinished: true, error: '' }
         }
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {
             const { error } = action.payload
-            return { ...state, error, retrieveLoading: false }
+            return { ...state, error, retrieveFinished: true }
         }
 
         // CLEAR ERROR AND DEFAULT

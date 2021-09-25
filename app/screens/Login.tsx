@@ -43,10 +43,6 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
-    React.useEffect(() => {
-        dispatch(authActions.retrieveToken(navigation))
-    }, [])
-
     const initialState = {
         username: '',
         password: '',
@@ -107,8 +103,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
-
-            { auth.retrieveLoading
+            { auth.retrieveFinished
                 ? <LoadingModal />
                 : null
             }
