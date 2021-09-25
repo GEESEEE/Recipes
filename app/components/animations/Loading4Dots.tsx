@@ -7,7 +7,7 @@ import * as LoadingAnimation from '@assets/animations/Loading4Dots.json'
 interface Loading4DotsProps {
     backgroundColor: string
     dotColor: string
-    height: number
+    height?: number
 }
 
 function Loading4Dots({
@@ -44,7 +44,8 @@ function Loading4Dots({
                 source={LoadingAnimation}
                 colorFilters={colorFilters}
                 autoSize
-                style={{ height }}
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{ height, width: height ? undefined : '100%' }}
                 autoPlay
                 loop
             />
@@ -57,4 +58,5 @@ export default Loading4Dots
 const Container = styled(View)`
     flex: 1;
     align-items: center;
+    justify-content: center;
 `

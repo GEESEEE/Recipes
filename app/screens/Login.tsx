@@ -9,6 +9,7 @@ import { authActions } from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+import LoadingModal from '@/components/LoadingModal'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -106,6 +107,12 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
+
+            { auth.retrieveLoading
+                ? <LoadingModal />
+                : null
+            }
+
             {/* Logo */}
             <LogoView>
                 <Logo source={logo} />
