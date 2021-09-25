@@ -18,7 +18,7 @@ type RecipeValidity = {
 }
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const indices = useAppSelector((state) => state.indices)
+    const {indices, myRecipes} = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     function getInitialRecipe(): Recipe {
@@ -196,10 +196,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     async function handleCreateRecipe(): Promise<void> {
         if (validRecipe()) {
             recipeData.createdAt = new Date()
-            dispatch(myRecipeActions.createRecipe(recipeData))
+            dispatch(myRecipeActions.createRecipe(recipeData, navigation))
             dispatch(indicesActions.decrementRecipeId(indices.recipeId))
             clearRecipeData()
-            navigation.navigate('Recipes')
         }
     }
 
@@ -209,7 +208,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     async function handleEditRecipe(): Promise<void> {
         if (validRecipe()) {
-            dispatch(myRecipeActions.editRecipe(recipeData))
+            dispatch(myRecipeActions.editRecipe(recipeData, navigation))
             passedRecipe = recipeData
         }
     }
@@ -268,6 +267,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                                     ? handleEditRecipe
                                     : handleCreateRecipe
                             }
+                            loading={myRecipes.loading}
                         />
 
                         <ButtonBorderless

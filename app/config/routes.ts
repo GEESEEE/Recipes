@@ -11,6 +11,33 @@ export const showPopup = (
     })
 }
 
+export const handleAPIError = (
+    err: any,
+    navigation: any,
+    dispatch?: any,
+    type?: string,
+    errorMessage?: string,
+    errorDescription?: string
+): void => {
+    const error = err?.response?.data?.errors?.[0]?.message
+    if (error == null) {
+        showPopup(
+            navigation,
+            errorMessage ?? 'Could not connect to server',
+            errorDescription
+        )
+    }
+    if (typeof dispatch !== 'undefined' && typeof type !== 'undefined') {
+        dispatch({
+            type,
+            payload: {
+                error,
+            },
+        })
+    }
+
+}
+
 export const fade = ({ current }: any): any => ({
     cardStyle: {
         opacity: current.progress,

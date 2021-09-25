@@ -1,10 +1,10 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
-import { showPopup } from '../config/routes'
-import { AUTH_ACTIONS } from '../reducers/auth'
-import * as authService from '../services/auth'
+import { AUTH_ACTIONS } from '@/reducers'
+import { authService } from '@/services'
 import { resetTheme } from './theme'
 import { clearUserData } from './user'
+import { routeUtils } from '@/config'
 
 export const retrieveToken =
     (navigation: any): any =>
@@ -27,7 +27,7 @@ export const retrieveToken =
                 }
             }
         } catch (err: any) {
-            handleError(
+            routeUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -51,7 +51,7 @@ export const signUp =
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
             navigation.goBack()
         } catch (err: any) {
-            handleError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR)
+            routeUtils.handleAPIError(err, navigation, dispatch, AUTH_ACTIONS.SIGN_UP_ERROR)
         }
     }
 
@@ -69,7 +69,7 @@ export const signIn =
 
             navigation.navigate('Main')
         } catch (err: any) {
-            handleError(
+            routeUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -91,7 +91,7 @@ export const signOut =
             navigation.navigate('Login')
             await authService.signOut({ token })
         } catch (err: any) {
-            handleError(
+            routeUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -108,26 +108,5 @@ export const clearError =
         dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR, payload: {} })
     }
 
-function handleError(
-    err: any,
-    navigation: any,
-    dispatch: any,
-    type: string,
-    errorMessage?: string,
-    errorDescription?: string
-): void {
-    const error = err?.response?.data?.errors?.[0]?.message
-    if (error == null) {
-        showPopup(
-            navigation,
-            errorMessage ?? 'Could not connect to server',
-            errorDescription
-        )
-    }
-    dispatch({
-        type,
-        payload: {
-            error,
-        },
-    })
-}
+
+

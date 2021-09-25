@@ -1,13 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
-import * as recipeUtils from '../config/recipes'
-import { MY_RECIPE_ACTIONS } from '../reducers/my'
-import { Instruction, Recipe, RecipeIngredient } from '../data'
-import { deleteElement, deleteElements, replaceElements } from '../config/utils'
+import  {recipeUtils, utils, routeUtils} from '@/config'
+import { MY_RECIPE_ACTIONS } from '@/reducers'
+import { Instruction, Recipe, RecipeIngredient } from '@/data'
 
 export const createRecipe =
-    (recipe: Recipe) =>
+    (recipe: Recipe, navigation: any) =>
     async (dispatch: Dispatch): Promise<void> => {
+        dispatch({
+            type: MY_RECIPE_ACTIONS.ACTION_START,
+            payload: {},
+        })
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
@@ -51,20 +54,29 @@ export const createRecipe =
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
-
+                navigation.navigate('Recipes')
                 dispatch({
-                    type: MY_RECIPE_ACTIONS.ADD_RECIPE,
+                    type: MY_RECIPE_ACTIONS.ADD_RECIPE_SUCCES,
                     payload: { newRecipe },
                 })
             }
         } catch (err) {
-            console.error(err)
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                MY_RECIPE_ACTIONS.ACTION_ERROR
+            )
         }
     }
 
 export const editRecipe =
-    (recipe: Recipe) =>
+    (recipe: Recipe, navigation: any) =>
     async (dispatch: Dispatch): Promise<void> => {
+        dispatch({
+            type: MY_RECIPE_ACTIONS.ACTION_START,
+            payload: {},
+        })
         try {
             const recipesString = await AsyncStorage.getItem('recipes')
             if (recipesString !== null) {
@@ -73,7 +85,7 @@ export const editRecipe =
                 const oldRecipe = localRecipes.filter(
                     (r) => r.id === recipe.id
                 )[0]
-                deleteElement(localRecipes, oldRecipe)
+                utils.deleteElement(localRecipes, oldRecipe)
 
                 // If recipe edited, change in database
                 const newRecipe = await recipeUtils.updateRecipe(
@@ -127,7 +139,7 @@ export const editRecipe =
                             ingredientsToUpdate,
                             oldRecipe.recipeIngredients!
                         )
-                    newRecipe.recipeIngredients = replaceElements(
+                    newRecipe.recipeIngredients = utils.replaceElements(
                         newRecipe.recipeIngredients!,
                         updatedIngredients
                     )
@@ -139,7 +151,7 @@ export const editRecipe =
                         recipe.id,
                         ingredientsToDelete
                     )
-                    deleteElements(
+                    utils.deleteElements(
                         newRecipe.recipeIngredients!,
                         ingredientsToDelete
                     )
@@ -190,7 +202,7 @@ export const editRecipe =
                             instructionsToUpdate,
                             oldRecipe.instructions!
                         )
-                    newRecipe.instructions = replaceElements(
+                    newRecipe.instructions = utils.replaceElements(
                         newRecipe.instructions!,
                         updatedInstructions
                     )
@@ -202,7 +214,7 @@ export const editRecipe =
                         recipe.id,
                         instructionsToDelete
                     )
-                    deleteElements(
+                    utils.deleteElements(
                         newRecipe.instructions!,
                         instructionsToDelete
                     )
@@ -224,18 +236,27 @@ export const editRecipe =
                 )
 
                 dispatch({
-                    type: MY_RECIPE_ACTIONS.EDIT_RECIPE,
+                    type: MY_RECIPE_ACTIONS.EDIT_RECIPE_SUCCES,
                     payload: { newRecipe },
                 })
             }
         } catch (err) {
-            console.error(err)
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                MY_RECIPE_ACTIONS.ACTION_ERROR
+            )
         }
     }
 
 export const retrieveRecipes =
-    () =>
+    (navigation: any) =>
     async (dispatch: Dispatch): Promise<void> => {
+        dispatch({
+            type: MY_RECIPE_ACTIONS.ACTION_START,
+            payload: {},
+        })
         try {
             // Check local storage for recipes
             let rs = await AsyncStorage.getItem('recipes')
@@ -257,30 +278,44 @@ export const retrieveRecipes =
 
             await AsyncStorage.setItem('recipes', JSON.stringify(newRecipes))
             dispatch({
-                type: MY_RECIPE_ACTIONS.SET_RECIPES,
+                type: MY_RECIPE_ACTIONS.SET_RECIPES_SUCCES,
                 payload: { newRecipes },
             })
         } catch (err) {
-            console.error(err)
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                MY_RECIPE_ACTIONS.ACTION_ERROR
+            )
         }
     }
 
 export const deleteRecipe =
-    (recipe: Recipe) =>
+    (recipe: Recipe, navigation: any) =>
     async (dispatch: Dispatch): Promise<void> => {
+        dispatch({
+            type: MY_RECIPE_ACTIONS.ACTION_START,
+            payload: {},
+        })
         try {
             const rs = (await AsyncStorage.getItem('recipes')) as string
             const localRecipes: Recipe[] = JSON.parse(rs)
 
-            deleteElements(localRecipes, [recipe])
+            utils.deleteElements(localRecipes, [recipe])
 
             await AsyncStorage.setItem('recipes', JSON.stringify(localRecipes))
             await recipeUtils.deleteRecipe(recipe.id)
             dispatch({
-                type: MY_RECIPE_ACTIONS.DELETE_RECIPE,
+                type: MY_RECIPE_ACTIONS.DELETE_RECIPE_SUCCES,
                 payload: { recipe },
             })
         } catch (err) {
-            console.error(err)
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                MY_RECIPE_ACTIONS.ACTION_ERROR
+            )
         }
     }

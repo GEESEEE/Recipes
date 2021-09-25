@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { TouchableOpacity, TouchableHighlight, Text, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
@@ -13,7 +13,7 @@ export type ButtonProps = {
     loading?: boolean
 }
 
-const ButtonStyleGeneric = styled(TouchableOpacity)`
+const ButtonStyleGeneric = styled(TouchableHighlight)`
     flex-direction: row;
     align-items: center;
     width: 80%;
@@ -42,6 +42,7 @@ export function ButtonFilled({
         <ButtonFilledStyle
             onPress={onPress}
             style={{ backgroundColor: color ?? theme.primary }}
+            disabled={loading}
         >
             {
                 loading

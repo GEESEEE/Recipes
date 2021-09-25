@@ -8,7 +8,7 @@ import { useAppSelector } from '@/hooks'
 function RecipesScreen(): JSX.Element {
     const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 
-    const filteredRecipes = recipeUtils.applySearch(myRecipes, mySearch)
+    const filteredRecipes = recipeUtils.applySearch(myRecipes.recipes, mySearch)
     const sortedRecipes = recipeUtils.applySort(
         filteredRecipes,
         mySort.sortState

@@ -39,7 +39,7 @@ function RecipeHeaderComponent({
     const navigation = useNavigation()
 
     async function removeRecipe(): Promise<void> {
-        dispatch(myRecipeActions.deleteRecipe(recipe))
+        dispatch(myRecipeActions.deleteRecipe(recipe, navigation))
     }
 
     async function editRecipe(): Promise<void> {

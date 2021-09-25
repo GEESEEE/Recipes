@@ -39,7 +39,7 @@ function reducer(state: any, action: any): any {
 }
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth, theme } = useAppSelector((state) => state)
+    const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
@@ -146,7 +146,11 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
             />
 
             {/* Log in Button */}
-            <ButtonFilled text="Sign in" onPress={() => handleLoginButton()} />
+            <ButtonFilled
+                text="Sign in"
+                onPress={() => handleLoginButton()}
+                loading={auth.loading}
+            />
 
             {/* Register Button */}
             <ButtonInverted
