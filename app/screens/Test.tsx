@@ -1,9 +1,11 @@
 import React, { useRef } from 'react'
 import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
+import LottieView from 'lottie-react-native'
 import { themeActions } from '@/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import * as Loading4Dots from '@/assets/animations/Loading4Dots.json'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -64,6 +66,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         navigation.openDrawer()
     }
 
+    const [loading, setLoading] = React.useState(false)
+
     return (
         <Container>
             {/* <LogoView>
@@ -75,8 +79,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <SampleText>Test Screen</SampleText>
-            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
-            <ButtonFilled text="Drawer" onPress={() => handleDrawer()} />
+            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} loading={loading} />
+            <ButtonFilled text="Loading" onPress={() => setLoading(!loading)} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
@@ -101,6 +105,11 @@ const SampleText = styled(TextInput)`
     color: ${(props) => props.theme.primary}
     border-width: 1px;
     border-color: ${(props) => props.theme.primary}
+`
+
+const LottieAnimation = styled(LottieView)`
+    width: 50%;
+    height: 20%;
 `
 
 const LogoView = styled(View)`

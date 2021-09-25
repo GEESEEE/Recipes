@@ -39,7 +39,7 @@ function reducer(state: any, action: any): any {
 }
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-    const auth = useAppSelector((state) => state.auth)
+    const { auth, theme } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {

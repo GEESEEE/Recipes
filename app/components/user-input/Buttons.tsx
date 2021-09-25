@@ -4,11 +4,13 @@ import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
+import { Loading4Dots } from '../animations'
 
 export type ButtonProps = {
     text: string
     onPress: () => void
     color?: string
+    loading?: boolean
 }
 
 const ButtonStyleGeneric = styled(TouchableOpacity)`
@@ -33,6 +35,7 @@ export function ButtonFilled({
     text,
     onPress,
     color,
+    loading,
 }: ButtonProps): JSX.Element {
     const theme = useAppSelector((state) => state.theme)
     return (
@@ -40,7 +43,16 @@ export function ButtonFilled({
             onPress={onPress}
             style={{ backgroundColor: color ?? theme.primary }}
         >
-            <ButtonFilledText>{text}</ButtonFilledText>
+            {
+                loading
+                ?   <Loading4Dots
+                        backgroundColor={theme.primary}
+                        dotColor={theme.background}
+                        height={21.7}
+                    />
+                :   <ButtonFilledText>{text}</ButtonFilledText>
+            }
+
         </ButtonFilledStyle>
     )
 }
