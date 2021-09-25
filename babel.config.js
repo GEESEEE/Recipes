@@ -22,6 +22,7 @@ module.exports = function config(api) {
                 root: ['.'],
                 alias: {
                     '^@/(.+)': './app/\\1',
+                    '@assets': './assets'
                 },
                 extensions: [
                     '.js',
