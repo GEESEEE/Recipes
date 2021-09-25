@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
 import Lottie from 'lottie-react-native'
-import * as LoadingAnimation from '@/assets/animations/Loading4Dots.json'
+import * as LoadingAnimation from '../../assets/animations/Loading4Dots.json'
 
 interface Loading4DotsProps {
     backgroundColor: string

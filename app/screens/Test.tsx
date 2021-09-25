@@ -5,7 +5,6 @@ import LottieView from 'lottie-react-native'
 import { themeActions } from '@/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import * as Loading4Dots from '@/assets/animations/Loading4Dots.json'
 
 const bigLogo = 1
 const smallLogo = 0.5
