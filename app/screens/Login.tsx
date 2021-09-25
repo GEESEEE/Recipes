@@ -5,10 +5,10 @@ import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
-import { authActions } from '@/actions'
+import { authActions, browseRecipeActions, initializationActions, myRecipeActions, userActions } from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
 import LoadingModal from '@/components/LoadingModal'
 
 const LOGIN_ACTIONS = {
@@ -40,8 +40,29 @@ function reducer(state: any, action: any): any {
 }
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth } = useAppSelector((state) => state)
+    const { auth, initialized } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
+
+    React.useEffect(() => {
+        dispatch(authActions.retrieveToken(navigation))
+    }, [])
+
+    async function init(): Promise<void> {
+        dispatch(userActions.retrieveUserData())
+        dispatch(myRecipeActions.retrieveRecipes(navigation))
+        dispatch(
+            browseRecipeActions.getRecipes({
+                scopes: ['published'],
+                sort: ['publishtime'],
+            })
+        )
+    }
+
+    useUpdateEffect(() => {
+        console.log("Auth token changed")
+        // TODO: Call User/Recipe Initialization functions
+        dispatch(initializationActions.initialize(navigation, init))
+    }, [auth.token])
 
     const initialState = {
         username: '',
@@ -97,13 +118,13 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleRegisterButton(): void {
-        navigation.navigate('Register', {})
+        navigation.navigate('Retrieving', {})
         dispatch(authActions.clearError())
     }
 
     return (
         <Container>
-            { auth.retrieveFinished
+            { !auth.retrieveFinished || (auth.token.length > 0 && !initialized)
                 ? <LoadingModal />
                 : null
             }

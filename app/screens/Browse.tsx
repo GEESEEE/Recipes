@@ -22,16 +22,16 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    useEffect(() => {
-        dispatch(userActions.retrieveUserData())
-        dispatch(myRecipeActions.retrieveRecipes(navigation))
-        dispatch(
-            browseRecipeActions.getRecipes({
-                scopes: ['published'],
-                sort: ['publishtime'],
-            })
-        )
-    }, [])
+    // useEffect(() => {
+    //     dispatch(userActions.retrieveUserData())
+    //     dispatch(myRecipeActions.retrieveRecipes(navigation))
+    //     dispatch(
+    //         browseRecipeActions.getRecipes({
+    //             scopes: ['published'],
+    //             sort: ['publishtime'],
+    //         })
+    //     )
+    // }, [])
 
     const onEndReached = (): void => {
         if (browseRecipes.nextPage !== null && !browseRecipes.loading) {

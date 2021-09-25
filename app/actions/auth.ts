@@ -14,7 +14,6 @@ export const retrieveToken =
             if (token) {
                 const result = await authService.verifyToken({ token })
                 if (result) {
-                    console.log(`Token: ${  result}`)
                     dispatch({
                         type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },

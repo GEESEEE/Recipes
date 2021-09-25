@@ -9,6 +9,7 @@ import {
     BROWSE_SEARCH_ACTIONS,
 } from './browse'
 import { MY_SEARCH_ACTIONS, MY_SORT_ACTIONS, MY_RECIPE_ACTIONS } from './my'
+import { INITIALIZATION_ACTIONS } from './initialization'
 import rootReducer from './root'
 
 export {
@@ -23,5 +24,6 @@ export {
     MY_SORT_ACTIONS,
     MY_SEARCH_ACTIONS,
     MY_RECIPE_ACTIONS,
+    INITIALIZATION_ACTIONS,
     rootReducer,
 }

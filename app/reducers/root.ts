@@ -6,6 +6,7 @@ import user from './user'
 import theme from './theme'
 import indices from './indices'
 import settings from './settings'
+import initialized from './initialization'
 
 export default combineReducers({
     auth,
@@ -19,4 +20,5 @@ export default combineReducers({
     theme,
     indices,
     settings,
+    initialized
 })

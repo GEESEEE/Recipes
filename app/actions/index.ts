@@ -7,6 +7,7 @@ import * as sortActions from './sort'
 import * as settingsActions from './settings'
 import * as themeActions from './theme'
 import * as userActions from './user'
+import * as initializationActions from './initialization'
 
 export {
     authActions,
@@ -18,4 +19,5 @@ export {
     themeActions,
     settingsActions,
     userActions,
+    initializationActions
 }
