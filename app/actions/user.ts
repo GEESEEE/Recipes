@@ -1,25 +1,24 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
-import { SETTINGS_ACTIONS, THEME_ACTIONS, USER_ACTIONS } from '@/reducers'
+import { SETTINGS_ACTIONS, USER_ACTIONS } from '@/reducers'
 import { userService } from '@/services'
 
 export const retrieveUserData = (): any => async (dispatch: Dispatch) => {
+    console.log("Retrieving User Data")
     dispatch({ type: USER_ACTIONS.GET_USER_START, payload: {} })
     try {
         const token = await SecureStore.getItemAsync('token')
+        console.log("Token", token)
         if (token) {
             const user = await userService.getUser({ token })
 
             dispatch({
-                type: THEME_ACTIONS.INITIALIZE_THEME,
+                type: SETTINGS_ACTIONS.SET_SETTINGS,
                 payload: {
+                    invertedColors: user.settings?.invertedColors,
                     color: user.settings?.color,
                     newTheme: user.settings?.theme,
                 },
-            })
-            dispatch({
-                type: SETTINGS_ACTIONS.SET_INVERTED_COLORS,
-                payload: { invertedColors: user.settings?.invertedColors },
             })
             dispatch({ type: USER_ACTIONS.GET_USER_SUCCES, payload: user })
         }

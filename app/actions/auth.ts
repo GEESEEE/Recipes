@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
-import { AUTH_ACTIONS, INITIALIZATION_ACTIONS } from '@/reducers'
+import { AUTH_ACTIONS, INITIALIZATION_ACTIONS, SETTINGS_ACTIONS } from '@/reducers'
 import { authService } from '@/services'
 import { clearUserData } from './user'
 import { routeUtils } from '@/config'
@@ -42,7 +42,7 @@ export const signUp =
     ): any =>
     async (dispatch: Dispatch) => {
         dispatch({
-            type: AUTH_ACTIONS.SIGN_UP_START,
+            type: AUTH_ACTIONS.LOADING_START,
             payload: {},
         })
         try {
@@ -54,7 +54,7 @@ export const signUp =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.SIGN_UP_ERROR
+                AUTH_ACTIONS.LOADING_ERROR
             )
         }
     }
@@ -63,7 +63,7 @@ export const signIn =
     (username: string, password: string, navigation: any): any =>
     async (dispatch: Dispatch) => {
         dispatch({
-            type: AUTH_ACTIONS.SIGN_IN_START,
+            type: AUTH_ACTIONS.LOADING_START,
             payload: {},
         })
         try {
@@ -77,7 +77,7 @@ export const signIn =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.SIGN_IN_ERROR,
+                AUTH_ACTIONS.LOADING_ERROR,
                 'Could not connect to server'
             )
         }
@@ -86,11 +86,12 @@ export const signIn =
 export const signOut =
     (token: string, navigation: any): any =>
     async (dispatch: Dispatch): Promise<any> => {
-        dispatch({ type: AUTH_ACTIONS.SIGN_OUT_START, payload: {} })
+        dispatch({ type: AUTH_ACTIONS.LOADING_START, payload: {} })
         try {
             await SecureStore.deleteItemAsync('token')
             dispatch(clearUserData())
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
+            dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {}})
             dispatch({
                 type: INITIALIZATION_ACTIONS.RESET,
                 payload: {}
@@ -102,7 +103,7 @@ export const signOut =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.SIGN_OUT_ERROR,
+                AUTH_ACTIONS.LOADING_ERROR,
                 'Could not connect to server',
                 'But signed out anyway'
             )

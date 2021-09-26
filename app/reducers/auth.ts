@@ -1,24 +1,21 @@
 export const AUTH_ACTIONS = {
-    SIGN_IN_START: 'signInStart',
-    SIGN_IN_SUCCES: 'signInSucces',
-    SIGN_IN_ERROR: 'signInError',
-
-    SIGN_OUT_START: 'signOutStart',
-    SIGN_OUT_SUCCES: 'signOutSucces',
-    SIGN_OUT_ERROR: 'signOutError',
-
-    SIGN_UP_START: 'signUpStart',
-    SIGN_UP_SUCCES: 'signUpSucces',
-    SIGN_UP_ERROR: 'signUpError',
 
     RETRIEVE_TOKEN_START: 'retrieveToken',
     RETRIEVE_TOKEN_SUCCES: 'retrieveTokenSucces',
     RETRIEVE_TOKEN_ERROR: 'retrieveTokenError',
 
+    LOADING_START: 'authLoadingStart',
+    LOADING_ERROR: 'authLoadingError',
+
+    SIGN_IN_SUCCES: 'signInSucces',
+    SIGN_OUT_SUCCES: 'signOutSucces',
+    SIGN_UP_SUCCES: 'signUpSucces',
+
     CLEAR_ERROR: 'clearError',
 }
 
 export type Auth = {
+    initialized: boolean
     retrieveFinished: boolean
     loading: boolean
     token: string
@@ -26,6 +23,7 @@ export type Auth = {
 }
 
 const initialState = {
+    initialized: false,
     retrieveFinished: false,
     loading: false,
     token: '',
@@ -38,22 +36,18 @@ const auth = (
 ): Auth => {
     switch (action.type) {
         // SIGN UP ACTIONS
-        case AUTH_ACTIONS.SIGN_UP_START: {
+        case AUTH_ACTIONS.LOADING_START: {
             return { ...state, loading: true }
         }
 
-        case AUTH_ACTIONS.SIGN_UP_SUCCES: {
-            return { ...state, error: '', loading: false }
-        }
-
-        case AUTH_ACTIONS.SIGN_UP_ERROR: {
+        case AUTH_ACTIONS.LOADING_ERROR: {
             const { error } = action.payload
             return { ...state, error, loading: false }
         }
 
-        // SIGN IN ACTIONS
-        case AUTH_ACTIONS.SIGN_IN_START: {
-            return { ...state, loading: true }
+        // AUTH SUCCES ACTIONS
+        case AUTH_ACTIONS.SIGN_UP_SUCCES: {
+            return { ...state, error: '', loading: false }
         }
 
         case AUTH_ACTIONS.SIGN_IN_SUCCES: {
@@ -61,26 +55,17 @@ const auth = (
             return { ...state, token, error: '', loading: false }
         }
 
-        case AUTH_ACTIONS.SIGN_IN_ERROR: {
-            const { error } = action.payload
-            return { ...state, error, loading: false }
-        }
-
-        // SIGN OUT ACTIONS
-        case AUTH_ACTIONS.SIGN_OUT_START: {
-            return { ...state, loading: true }
-        }
-
         case AUTH_ACTIONS.SIGN_OUT_SUCCES: {
-            return initialState
+            return {...initialState, retrieveFinished: true}
         }
 
-        case AUTH_ACTIONS.SIGN_OUT_ERROR: {
-            const { error } = action.payload
-            return { ...state, error, loading: false }
-        }
+
 
         // RETRIEVE TOKEN ACTIONS
+        case AUTH_ACTIONS.RETRIEVE_TOKEN_START: {
+            return {...state, retrieveFinished: false}
+        }
+
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
             return { ...state, token, retrieveFinished: true, error: '' }

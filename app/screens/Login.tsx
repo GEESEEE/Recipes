@@ -45,17 +45,22 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // On first load, retrieve token
     React.useEffect(() => {
+        console.log("Retrieving Token, Login Screen")
         dispatch(authActions.retrieveToken(navigation))
     }, [])
 
     // If token is fetched dispatch initialization actions
     useUpdateEffect(() => {
-        dispatch(initializationActions.initialize(navigation))
+        if (auth.token.length > 0) {
+            dispatch(initializationActions.initialize(navigation))
+        }
     }, [auth.token])
 
     // If initialized navigate to main
     useUpdateEffect(() => {
-        navigation.navigate('Main')
+        if (initialized) {
+            navigation.navigate('Main')
+        }
     }, [initialized])
 
 
@@ -120,7 +125,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
 
     const showLoadingModal = !auth.retrieveFinished || (auth.token.length > 0 && !initialized)
-
+    console.log("Login Screen", auth.retrieveFinished, auth.token.length, initialized)
     if (showLoadingModal) {
         return (
             <Container>
