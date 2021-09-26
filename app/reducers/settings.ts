@@ -60,8 +60,11 @@ const settings = (
 ): Settings => {
     switch (action.type) {
         case SETTINGS_ACTIONS.SET_SETTINGS: {
-            const { newSettings } = action.payload
-            return newSettings
+            const { newTheme, color, invertedColors } = action.payload
+            colors.primary = color
+            let theme = newTheme === 'dark' ? darkTheme() : lightTheme()
+            theme = {...theme, primary: color}
+            return { theme, invertedColors }
         }
 
         case SETTINGS_ACTIONS.RESET_SETTINGS: {

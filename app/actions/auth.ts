@@ -19,11 +19,12 @@ export const retrieveToken =
                     })
                     return
                 }
+            } else {
+                dispatch({
+                    type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
+                    payload: { error: '' },
+                })
             }
-            dispatch({
-                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
-                payload: { error: '' },
-            })
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,

@@ -2,7 +2,7 @@ import * as SecureStore from 'expo-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS, BROWSE_RECIPE_ACTIONS,
-    INITIALIZATION_ACTIONS, MY_RECIPE_ACTIONS, SETTINGS_ACTIONS, THEME_ACTIONS, USER_ACTIONS } from '@/reducers'
+    INITIALIZATION_ACTIONS, MY_RECIPE_ACTIONS, SETTINGS_ACTIONS, USER_ACTIONS } from '@/reducers'
 import { recipeService, userService } from '@/services'
 import { recipeUtils } from '@/config'
 import { Recipe } from '@/data'
@@ -31,15 +31,12 @@ export const initialize =
                     const user = await userService.getUser({ token })
 
                     dispatch({
-                        type: THEME_ACTIONS.INITIALIZE_THEME,
+                        type: SETTINGS_ACTIONS.SET_SETTINGS,
                         payload: {
+                            invertedColors: user.settings?.invertedColors,
                             color: user.settings?.color,
                             newTheme: user.settings?.theme,
                         },
-                    })
-                    dispatch({
-                        type: SETTINGS_ACTIONS.SET_INVERTED_COLORS,
-                        payload: { invertedColors: user.settings?.invertedColors },
                     })
                     dispatch({ type: USER_ACTIONS.GET_USER_SUCCES, payload: user })
                 }
