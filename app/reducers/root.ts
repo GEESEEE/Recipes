@@ -3,7 +3,6 @@ import auth from './auth'
 import { myRecipes, mySort, mySearch } from './my'
 import { browseRecipes, browseSort, browseSearch } from './browse'
 import user from './user'
-import theme from './theme'
 import indices from './indices'
 import settings from './settings'
 import initialized from './initialization'
@@ -17,7 +16,6 @@ export default combineReducers({
     browseSort,
     browseSearch,
     user,
-    theme,
     indices,
     settings,
     initialized

@@ -37,7 +37,7 @@ export function ButtonFilled({
     color,
     loading,
 }: ButtonProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     return (
         <ButtonFilledStyle
             onPress={onPress}
@@ -124,7 +124,7 @@ export function ButtonOptions({
     offset?: number
     onLayout?: (e: any) => void
 }): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     const OptionsContainer = styled(TouchableOpacity)`
         position: absolute;
         align-self: flex-end;
@@ -182,7 +182,7 @@ export function FeatherButton({
     color,
     style,
 }: FeatherButtonProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     return (
         <ButtonIcon
             style={{ ...style }}
@@ -205,7 +205,7 @@ export function ReturnButton({
     onPress: () => void
     color?: string
 }): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     return (
         <ReturnButtonContainer>
             <FeatherButton

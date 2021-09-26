@@ -18,7 +18,7 @@ function SortRow({
     routeName: string
     header?: boolean
 }): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
     const globalState = useAppSelector((state) => state)

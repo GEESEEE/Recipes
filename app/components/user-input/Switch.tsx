@@ -11,7 +11,7 @@ function SwitchComponent({
     switchValue,
     onValueChange,
 }: SwitchProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <Switch

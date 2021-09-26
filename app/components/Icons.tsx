@@ -13,12 +13,12 @@ interface MyIconProps {
 }
 
 export function MyFeather({ name, size, color }: MyIconProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     return <Feather name={name} color={color || theme.grey} size={size || 20} />
 }
 
 export function MyFontAwesome({ name, color, size }: MyIconProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <FontAwesome
@@ -34,7 +34,7 @@ export function MyMaterialCommunityIcons({
     color,
     size,
 }: MyIconProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <MaterialCommunityIcons
@@ -50,7 +50,7 @@ export function MyMaterialIcons({
     color,
     size,
 }: MyIconProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <MaterialIcons
@@ -62,7 +62,7 @@ export function MyMaterialIcons({
 }
 
 export function MyIonicons({ name, color, size }: MyIconProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <Ionicons name={name} color={color || theme.grey} size={size || 20} />

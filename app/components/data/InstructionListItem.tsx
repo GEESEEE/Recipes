@@ -21,7 +21,7 @@ const InstructionListItem = ({
     handleInstructionTextChange,
     handleRemoveInstruction,
 }: InstructionListItemProps): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     const index = instructions.indexOf(instruction)
 
     return (

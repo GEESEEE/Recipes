@@ -3,22 +3,27 @@ import { Modal, View } from 'react-native'
 import styled from 'styled-components'
 import { Loading4Dots } from '@/components/animations'
 import { useAppSelector } from '@/hooks'
+import { colors } from '@/config'
 
 function LoadingModal(): JSX.Element {
-    const {theme} = useAppSelector((state) => state)
+    const {theme} = useAppSelector((state) => state.settings)
     return (
-        <Modal transparent>
+        <ModalContainer transparent>
             <Container>
                 <Loading4Dots
                     backgroundColor={theme.background}
-                    dotColor={theme.primary}
+                    dotColor={colors.primaryBlue}
                 />
             </Container>
-        </Modal>
+        </ModalContainer>
     )
 }
 
 export default LoadingModal
+
+const ModalContainer = styled(Modal)`
+    margin: 0;
+`
 
 const Container = styled(View)`
     flex: 1;

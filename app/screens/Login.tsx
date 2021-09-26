@@ -5,7 +5,7 @@ import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
-import { authActions, browseRecipeActions, initializationActions, myRecipeActions, userActions } from '@/actions'
+import { authActions, initializationActions} from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
@@ -43,26 +43,22 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, initialized } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
+    // On first load, retrieve token
     React.useEffect(() => {
         dispatch(authActions.retrieveToken(navigation))
     }, [])
 
-    async function init(): Promise<void> {
-        dispatch(userActions.retrieveUserData())
-        dispatch(myRecipeActions.retrieveRecipes(navigation))
-        dispatch(
-            browseRecipeActions.getRecipes({
-                scopes: ['published'],
-                sort: ['publishtime'],
-            })
-        )
-    }
-
+    // If token is fetched dispatch initialization actions
     useUpdateEffect(() => {
-        console.log("Auth token changed")
-        // TODO: Call User/Recipe Initialization functions
-        dispatch(initializationActions.initialize(navigation, init))
+        dispatch(initializationActions.initialize(navigation))
     }, [auth.token])
+
+    // If initialized navigate to main
+    useUpdateEffect(() => {
+        navigation.navigate('Main')
+    }, [initialized])
+
+
 
     const initialState = {
         username: '',
@@ -122,13 +118,23 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(authActions.clearError())
     }
 
+
+    const showLoadingModal = !auth.retrieveFinished || (auth.token.length > 0 && !initialized)
+
+    if (showLoadingModal) {
+        return (
+            <Container>
+                <LoadingModal/>
+            </Container>
+        )
+    }
+
+    if (initialized) {
+        return <Container/>
+    }
+
     return (
         <Container>
-            { !auth.retrieveFinished || (auth.token.length > 0 && !initialized)
-                ? <LoadingModal />
-                : null
-            }
-
             {/* Logo */}
             <LogoView>
                 <Logo source={logo} />

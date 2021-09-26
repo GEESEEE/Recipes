@@ -2,7 +2,7 @@ import React from 'react'
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { authActions, themeActions, settingsActions } from '@/actions'
+import { authActions, settingsActions } from '@/actions'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
@@ -31,7 +31,8 @@ export default function DrawerComponent({
 }: {
     navigation: any
 }): JSX.Element {
-    const { user, auth, theme, settings } = useAppSelector((state) => state)
+    const { user, auth, settings } = useAppSelector((state) => state)
+    const { theme } = settings
     const dispatch = useAppDispatch()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
@@ -75,7 +76,7 @@ export default function DrawerComponent({
                             <SwitchComponent
                                 switchValue={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
-                                    dispatch(themeActions.setTheme(val))
+                                    dispatch(settingsActions.setTheme(val))
                                 }
                             />
                         }

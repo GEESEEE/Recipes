@@ -7,7 +7,7 @@ import { indicesActions } from '@/actions'
 
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     React.useEffect(() => {
         console.log('Starting')

@@ -25,7 +25,7 @@ const IngredientListItem = ({
     handleIngredientUnitChange,
     handleRemoveIngredient,
 }: IngredientListItemProps): JSX.Element => {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
 
     return (
         <ListItemWrapper

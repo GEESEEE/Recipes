@@ -21,7 +21,7 @@ function ListItemWrapper({
     editable,
     handleRemove,
 }: ListItemProps): JSX.Element {
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     const index = list.indexOf(item)
     let listSize = list.length - 1
     if (editable) listSize += 1

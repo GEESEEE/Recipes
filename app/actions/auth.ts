@@ -1,8 +1,7 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
-import { AUTH_ACTIONS } from '@/reducers'
+import { AUTH_ACTIONS, INITIALIZATION_ACTIONS } from '@/reducers'
 import { authService } from '@/services'
-import { resetTheme } from './theme'
 import { clearUserData } from './user'
 import { routeUtils } from '@/config'
 
@@ -18,8 +17,13 @@ export const retrieveToken =
                         type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
+                    return
                 }
             }
+            dispatch({
+                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
+                payload: { error: '' },
+            })
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
@@ -27,13 +31,7 @@ export const retrieveToken =
                 dispatch,
                 AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR
             )
-        } finally {
-            dispatch({
-                type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
-                payload: { error: '' },
-            })
         }
-        console.log("Finished retrieving Token")
     }
 
 export const signUp =
@@ -92,7 +90,10 @@ export const signOut =
             await SecureStore.deleteItemAsync('token')
             dispatch(clearUserData())
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
-            dispatch(resetTheme())
+            dispatch({
+                type: INITIALIZATION_ACTIONS.RESET,
+                payload: {}
+            })
             navigation.navigate('Login')
             await authService.signOut({ token })
         } catch (err: any) {

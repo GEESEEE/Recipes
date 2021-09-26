@@ -88,7 +88,7 @@ const auth = (
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {
             const { error } = action.payload
-            return { ...state, error, retrieveFinished: true }
+            return { ...state, error, retrieveFinished: true, token: ''}
         }
 
         // CLEAR ERROR AND DEFAULT

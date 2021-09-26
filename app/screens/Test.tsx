@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { View, Animated, Keyboard, TextInput } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
-import { themeActions } from '@/actions'
+import { settingsActions } from '@/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
@@ -11,7 +11,7 @@ const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const recipes = useAppSelector((state) => state.myRecipes)
-    const theme = useAppSelector((state) => state.theme)
+    const {theme} = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
@@ -55,9 +55,9 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     function changePrimaryColor(): void {
         if (theme.primary === '#4ecdc4') {
-            dispatch(themeActions.setColor('#fc5c65'))
+            dispatch(settingsActions.setColor('#fc5c65'))
         } else {
-            dispatch(themeActions.setColor('#4ecdc4'))
+            dispatch(settingsActions.setColor('#4ecdc4'))
         }
     }
 

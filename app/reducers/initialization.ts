@@ -1,5 +1,6 @@
 export const INITIALIZATION_ACTIONS = {
-    DONE: 'initDone'
+    DONE: 'initDone',
+    RESET: 'initReset',
 }
 
 const initialState = false
@@ -11,6 +12,10 @@ const initialized = (
     switch (action.type) {
         case INITIALIZATION_ACTIONS.DONE: {
             return true
+        }
+
+        case INITIALIZATION_ACTIONS.RESET: {
+            return false
         }
 
         default:

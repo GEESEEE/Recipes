@@ -34,7 +34,8 @@ const TabsComponent = ({ state, navigation }: any): JSX.Element => {
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
-    const { theme, settings } = useAppSelector((globalState) => globalState)
+    const { settings } = useAppSelector((globalState) => globalState)
+    const { theme } = settings
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)
@@ -119,7 +120,8 @@ const RouteTab = ({
     onPress,
     isCurrent,
 }: TabProps): JSX.Element => {
-    const { theme, settings } = useAppSelector((state) => state)
+    const { settings } = useAppSelector((state) => state)
+    const { theme } = settings
 
     let color = theme.primary
     if (settings.invertedColors) {
