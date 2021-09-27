@@ -45,16 +45,9 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // On first load, retrieve token
     React.useEffect(() => {
-        console.log("Retrieving Token, Login Screen")
         dispatch(authActions.retrieveToken(navigation))
     }, [])
 
-    // If token is fetched dispatch initialization actions
-    useUpdateEffect(() => {
-        if (auth.user.token.length > 0) {
-            dispatch(authActions.retrieveUserData(auth.user.token, navigation))
-        }
-    }, [auth.user.token])
 
     // If initialized navigate to main
     useUpdateEffect(() => {
@@ -119,14 +112,11 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleRegisterButton(): void {
-        navigation.navigate('Retrieving', {})
+        navigation.navigate('Register', {})
         dispatch(authActions.clearError())
     }
 
-
-    const showLoadingModal = !auth.tokenRetrieved || (auth.user.token.length > 0 && !auth.dataLoaded)
-
-    if (showLoadingModal) {
+    if (auth.loadingData) {
         return (
             <Container>
                 <LoadingModal/>
@@ -183,7 +173,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
             <ButtonFilled
                 text="Sign in"
                 onPress={() => handleLoginButton()}
-                loading={auth.loading}
+                loading={auth.awaitingResponse}
             />
 
             {/* Register Button */}

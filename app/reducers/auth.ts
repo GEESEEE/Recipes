@@ -1,14 +1,11 @@
-import { User } from "@/data"
-
 export const AUTH_ACTIONS = {
+    AWAIT_RESPONSE: 'authLoadingStart',
+    RESPONSE_ERROR: 'authLoadingError',
 
-    RETRIEVE_TOKEN_START: 'retrieveToken',
+    LOADING_START: 'loadingStart',
+    LOADING_ERROR: 'loadingError',
+
     RETRIEVE_TOKEN_SUCCES: 'retrieveTokenSucces',
-    RETRIEVE_TOKEN_ERROR: 'retrieveTokenError',
-
-    LOADING_START: 'authLoadingStart',
-    LOADING_ERROR: 'authLoadingError',
-
     SIGN_IN_SUCCES: 'signInSucces',
     SIGN_OUT_SUCCES: 'signOutSucces',
     SIGN_UP_SUCCES: 'signUpSucces',
@@ -20,8 +17,8 @@ export const AUTH_ACTIONS = {
 
 export type Auth = {
     dataLoaded: boolean
-    tokenRetrieved: boolean
-    loading: boolean
+    loadingData: boolean
+    awaitingResponse: boolean
     error: string
     user: {
         id: number,
@@ -33,8 +30,8 @@ export type Auth = {
 
 const initialState: Auth = {
     dataLoaded: false,
-    tokenRetrieved: false,
-    loading: false,
+    loadingData: false,
+    awaitingResponse: false,
     error: '',
     user: {
         id: -1,
@@ -49,54 +46,56 @@ const auth = (
     action: { type: string; payload: any }
 ): Auth => {
     switch (action.type) {
-        // LOADING
+        // WAITING FOR SERVER RESPONSE
+        case AUTH_ACTIONS.AWAIT_RESPONSE: {
+            return { ...state, awaitingResponse: true }
+        }
+
+        case AUTH_ACTIONS.RESPONSE_ERROR: {
+            const { error } = action.payload
+            return { ...state, error, awaitingResponse: false }
+        }
+
+        // ASYNC LOADING
         case AUTH_ACTIONS.LOADING_START: {
-            return { ...state, loading: true }
+            return { ...state, loadingData: true}
         }
 
         case AUTH_ACTIONS.LOADING_ERROR: {
             const { error } = action.payload
-            return { ...state, error, loading: false }
+            return { ...state, loadingData: false, error}
         }
+
 
         // AUTH SUCCES ACTIONS
         case AUTH_ACTIONS.SIGN_UP_SUCCES: {
-            return { ...state, error: '', loading: false }
-        }
-
-        case AUTH_ACTIONS.SIGN_IN_SUCCES: {
-            const { token } = action.payload
-            const user = {...state.user, token}
-            return { ...state, user, error: '', loading: false }
-        }
-
-        case AUTH_ACTIONS.SIGN_OUT_SUCCES: {
-            return {...initialState, tokenRetrieved: true, dataLoaded: false}
-        }
-
-        case AUTH_ACTIONS.GET_USER_DATA_SUCCES: {
-            const { userData } = action.payload
-            const user = {...userData, token: state.user.token}
-            return {...state, user, dataLoaded: true}
-        }
-
-
-        // RETRIEVE TOKEN ACTIONS
-        case AUTH_ACTIONS.RETRIEVE_TOKEN_START: {
-            return {...state, tokenRetrieved: false}
+            return { ...state, error: '', awaitingResponse: false }
         }
 
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
             const user = {...state.user, token}
-            return { ...state, user, tokenRetrieved: true, error: '' }
+            return { ...state, user, loadingData: false, error: '' }
         }
 
-        case AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR: {
-            const { error } = action.payload
-            const user = {...state.user, token: ''}
-            return { ...state, error, tokenRetrieved: true, user}
+        case AUTH_ACTIONS.SIGN_IN_SUCCES: {
+            const { token } = action.payload
+            const user = {...state.user, token}
+            return { ...state, user, error: '', awaitingResponse: false }
         }
+
+        case AUTH_ACTIONS.SIGN_OUT_SUCCES: {
+            return initialState
+        }
+
+        case AUTH_ACTIONS.GET_USER_DATA_SUCCES: {
+            const { userData } = action.payload
+            const user = {...userData, token: state.user.token}
+            return {...state, user, loadingData: false, dataLoaded: true, }
+        }
+
+
+
 
         // CLEAR ERROR AND DEFAULT
         case AUTH_ACTIONS.CLEAR_ERROR: {

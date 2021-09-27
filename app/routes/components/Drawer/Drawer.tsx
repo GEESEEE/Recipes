@@ -101,7 +101,11 @@ export default function DrawerComponent({
             </ScrollView>
 
             <Footer>
-                <ButtonFilled text="Sign Out" onPress={() => handleSignOut()} />
+                <ButtonFilled
+                    text="Sign Out"
+                    onPress={() => handleSignOut()}
+                    loading={auth.awaitingResponse}
+                />
             </Footer>
         </Container>
     )

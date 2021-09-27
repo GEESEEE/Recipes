@@ -6,7 +6,6 @@ import * as searchActions from './search'
 import * as sortActions from './sort'
 import * as settingsActions from './settings'
 
-
 export {
     authActions,
     browseRecipeActions,

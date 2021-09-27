@@ -206,7 +206,7 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
             <ButtonFilled
                 text="Register"
                 onPress={() => handleRegisterButton()}
-                loading={auth.loading}
+                loading={auth.awaitingResponse}
             />
             <ErrorMessage errorMessage={auth.error} />
             {/* Already have an account/Go Back Button */}

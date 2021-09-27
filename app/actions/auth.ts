@@ -9,6 +9,10 @@ import { getRecipes } from './browse-recipes'
 export const retrieveToken =
     (navigation: any): any =>
     async (dispatch: Dispatch) => {
+        dispatch({
+            type: AUTH_ACTIONS.LOADING_START,
+            payload: {},
+        })
         try {
             const token = await SecureStore.getItemAsync('token')
             if (token) {
@@ -18,11 +22,11 @@ export const retrieveToken =
                         type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
-                    return
+                    await dispatch(retrieveUserData(token, navigation))
                 }
             } else {
                 dispatch({
-                    type: AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR,
+                    type: AUTH_ACTIONS.LOADING_ERROR,
                     payload: { error: '' },
                 })
             }
@@ -31,7 +35,7 @@ export const retrieveToken =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.RETRIEVE_TOKEN_ERROR
+                AUTH_ACTIONS.LOADING_ERROR
             )
         }
     }
@@ -43,7 +47,7 @@ export const signUp =
     ): any =>
     async (dispatch: Dispatch) => {
         dispatch({
-            type: AUTH_ACTIONS.LOADING_START,
+            type: AUTH_ACTIONS.AWAIT_RESPONSE,
             payload: {},
         })
         try {
@@ -55,7 +59,7 @@ export const signUp =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.LOADING_ERROR
+                AUTH_ACTIONS.RESPONSE_ERROR
             )
         }
     }
@@ -64,26 +68,29 @@ export const signIn =
     (username: string, password: string, navigation: any): any =>
     async (dispatch: Dispatch) => {
         dispatch({
-            type: AUTH_ACTIONS.LOADING_START,
+            type: AUTH_ACTIONS.AWAIT_RESPONSE,
             payload: {},
         })
         try {
             const token = await authService.signIn(username, password)
             await SecureStore.setItemAsync('token', token)
             dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
-
-            navigation.navigate('Main')
+            await dispatch(retrieveUserData(token, navigation))
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.LOADING_ERROR,
+                AUTH_ACTIONS.RESPONSE_ERROR,
             )
         }
     }
 
 export const retrieveUserData = (token: string, navigation: any): any => async (dispatch: Dispatch) => {
+    dispatch({
+        type: AUTH_ACTIONS.LOADING_START,
+        payload: {}
+    })
     try {
         const user = await userService.getUser({token})
         await dispatch({
@@ -118,7 +125,7 @@ export const retrieveUserData = (token: string, navigation: any): any => async (
 export const signOut =
     (token: string, navigation: any): any =>
     async (dispatch: Dispatch): Promise<any> => {
-        dispatch({ type: AUTH_ACTIONS.LOADING_START, payload: {} })
+        dispatch({ type: AUTH_ACTIONS.AWAIT_RESPONSE, payload: {} })
         try {
             await SecureStore.deleteItemAsync('token')
             dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {}})
@@ -130,7 +137,7 @@ export const signOut =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.LOADING_ERROR,
+                AUTH_ACTIONS.RESPONSE_ERROR,
                 'Could not connect to server',
                 'But signed out anyway'
             )
