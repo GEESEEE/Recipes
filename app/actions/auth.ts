@@ -1,9 +1,11 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS, INITIALIZATION_ACTIONS, SETTINGS_ACTIONS } from '@/reducers'
-import { authService } from '@/services'
+import { authService, userService } from '@/services'
 import { clearUserData } from './user'
 import { routeUtils } from '@/config'
+import { retrieveRecipes } from './my-recipes'
+import { getRecipes } from './browse-recipes'
 
 export const retrieveToken =
     (navigation: any): any =>
@@ -78,10 +80,41 @@ export const signIn =
                 navigation,
                 dispatch,
                 AUTH_ACTIONS.LOADING_ERROR,
-                'Could not connect to server'
             )
         }
     }
+
+export const retrieveUserData = (token: string, navigation: any): any => async (dispatch: Dispatch) => {
+    try {
+        const user = await userService.getUser({token})
+        await dispatch({
+            type: SETTINGS_ACTIONS.SET_SETTINGS,
+            payload: {
+                invertedColors: user.settings?.invertedColors,
+                color: user.settings?.color,
+                newTheme: user.settings?.theme,
+            },
+        })
+        await dispatch(retrieveRecipes(navigation) as any)
+        await dispatch(getRecipes({
+            scopes: ['published'],
+            sort: ['publishtime'],
+        }) as any)
+
+        dispatch({
+            type: AUTH_ACTIONS.GET_USER_DATA_SUCCES,
+            payload: { userData: user }
+        })
+    } catch (err: any) {
+        routeUtils.handleAPIError(
+            err,
+            navigation,
+            dispatch,
+            AUTH_ACTIONS.LOADING_ERROR,
+
+        )
+    }
+}
 
 export const signOut =
     (token: string, navigation: any): any =>
@@ -89,13 +122,8 @@ export const signOut =
         dispatch({ type: AUTH_ACTIONS.LOADING_START, payload: {} })
         try {
             await SecureStore.deleteItemAsync('token')
-            dispatch(clearUserData())
-            dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {}})
-            dispatch({
-                type: INITIALIZATION_ACTIONS.RESET,
-                payload: {}
-            })
+            dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             navigation.navigate('Login')
             await authService.signOut({ token })
         } catch (err: any) {

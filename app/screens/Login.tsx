@@ -40,7 +40,7 @@ function reducer(state: any, action: any): any {
 }
 
 function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth, initialized } = useAppSelector((state) => state)
+    const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     // On first load, retrieve token
@@ -51,17 +51,17 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // If token is fetched dispatch initialization actions
     useUpdateEffect(() => {
-        if (auth.token.length > 0) {
-            dispatch(initializationActions.initialize(navigation))
+        if (auth.user.token.length > 0) {
+            dispatch(authActions.retrieveUserData(auth.user.token, navigation))
         }
-    }, [auth.token])
+    }, [auth.user.token])
 
     // If initialized navigate to main
     useUpdateEffect(() => {
-        if (initialized) {
+        if (auth.dataLoaded) {
             navigation.navigate('Main')
         }
-    }, [initialized])
+    }, [auth.dataLoaded])
 
 
 
@@ -124,8 +124,8 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
 
-    const showLoadingModal = !auth.retrieveFinished || (auth.token.length > 0 && !initialized)
-    console.log("Login Screen", auth.retrieveFinished, auth.token.length, initialized)
+    const showLoadingModal = !auth.tokenRetrieved || (auth.user.token.length > 0 && !auth.dataLoaded)
+
     if (showLoadingModal) {
         return (
             <Container>
@@ -134,7 +134,7 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
         )
     }
 
-    if (initialized) {
+    if (auth.dataLoaded) {
         return <Container/>
     }
 

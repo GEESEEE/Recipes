@@ -21,7 +21,7 @@ const initialState = {
     loading: false,
 }
 
-const auth = (
+const user = (
     state = initialState,
     action: { type: string; payload: AuthUser }
 ): AuthUser => {
@@ -47,4 +47,4 @@ const auth = (
     }
 }
 
-export default auth
+export default user

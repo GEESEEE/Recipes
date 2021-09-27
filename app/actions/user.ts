@@ -4,11 +4,11 @@ import { SETTINGS_ACTIONS, USER_ACTIONS } from '@/reducers'
 import { userService } from '@/services'
 
 export const retrieveUserData = (): any => async (dispatch: Dispatch) => {
-    console.log("Retrieving User Data")
+
     dispatch({ type: USER_ACTIONS.GET_USER_START, payload: {} })
     try {
         const token = await SecureStore.getItemAsync('token')
-        console.log("Token", token)
+
         if (token) {
             const user = await userService.getUser({ token })
 

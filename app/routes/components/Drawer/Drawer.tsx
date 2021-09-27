@@ -38,7 +38,7 @@ export default function DrawerComponent({
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        dispatch(authActions.signOut(auth.token, navigation))
+        dispatch(authActions.signOut(auth.user.token, navigation))
     }
 
     return (
