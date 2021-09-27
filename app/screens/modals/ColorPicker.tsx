@@ -3,7 +3,8 @@ import { View, Modal, Text } from 'react-native'
 import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
-import { ButtonFilled, ReturnButton } from './Buttons'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ButtonFilled, ReturnButton } from '../../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { settingsActions } from '@/actions'
 import { colors } from '@/config'
@@ -18,13 +19,24 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
 
     const [localColor, setLocalColor] = useState<string>(colors.primary)
 
+    const insets = useSafeAreaInsets()
+
     function setPrimaryColor(color: string): void {
         dispatch(settingsActions.setColor(color))
     }
-
+    console.log(insets)
     return (
-        <Modal animationType="fade" transparent>
-            <Container>
+        <Modal
+            animationType="slide"
+            transparent
+            statusBarTranslucent
+        >
+            <Container style={{
+                paddingTop: insets.top,
+                paddingLeft: insets.left,
+                paddingRight: insets.right,
+                paddingBottom: insets.bottom
+            }}>
                 <ReturnButton onPress={() => toggle()} color={localColor} />
 
                 <DifferenceContainer>
@@ -65,6 +77,7 @@ const Container = styled(View)`
     flex 1;
     background-color: ${(props) => props.theme.background};
     align-items: center;
+    margin-top: 0;
 `
 
 const DifferenceContainer = styled(View)`

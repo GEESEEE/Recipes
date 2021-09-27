@@ -8,7 +8,7 @@ import { colors } from '@/config'
 function LoadingModal(): JSX.Element {
     const {theme} = useAppSelector((state) => state.settings)
     return (
-        <ModalContainer transparent>
+        <ModalContainer transparent statusBarTranslucent >
             <Container>
                 <Loading4Dots
                     backgroundColor={theme.background}

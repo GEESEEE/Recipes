@@ -1,17 +1,17 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
-import { browseRecipeActions, userActions, myRecipeActions } from '@/actions'
+import { authActions, browseRecipeActions } from '@/actions'
 import { HeaderComponent } from '@/routes/components'
+import { RegisterModal, LoginModal, LoadingModal } from './modals'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { browseRecipes, browseSort, browseSearch } = useAppSelector(
+    const { browseRecipes, browseSort, browseSearch, auth } = useAppSelector(
         (state) => state
     )
     const dispatch = useAppDispatch()
-
     const listRef = React.useRef<FlatList>()
 
     useLayoutEffect(() => {
@@ -22,16 +22,12 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    // useEffect(() => {
-    //     dispatch(userActions.retrieveUserData())
-    //     dispatch(myRecipeActions.retrieveRecipes(navigation))
-    //     dispatch(
-    //         browseRecipeActions.getRecipes({
-    //             scopes: ['published'],
-    //             sort: ['publishtime'],
-    //         })
-    //     )
-    // }, [])
+     // On first load, retrieve token
+     React.useEffect(() => {
+        dispatch(authActions.retrieveToken(navigation))
+    }, [])
+
+    const [showRegisterScreen, setShowRegisterScreen] = React.useState(false)
 
     const onEndReached = (): void => {
         if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
@@ -48,6 +44,32 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
+
+            {
+                auth.loadingData
+                ? <LoadingModal />
+                : null
+            }
+
+            {
+                !auth.dataLoaded
+                ? <LoginModal
+                    navigation={navigation}
+                    showRegister={() => setShowRegisterScreen(true)}
+                />
+                : null
+            }
+
+            {
+                showRegisterScreen
+                ? <RegisterModal
+                    navigation={navigation}
+                    showLogin={() => setShowRegisterScreen(false)}
+                />
+                : null
+            }
+
+
             <RecipesListHeader display={displayHeader} />
             <RecipesFlatList
                 ref={listRef}

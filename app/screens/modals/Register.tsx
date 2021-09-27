@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Modal } from 'react-native'
 import styled from 'styled-components'
 import { colors } from '@/config'
 import { authActions } from '@/actions'
@@ -49,7 +49,9 @@ function reducer(state: any, action: any): any {
     }
 }
 
-function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
+interface RegisterModalProps { navigation: any, showLogin: () => void }
+
+function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 
@@ -141,84 +143,97 @@ function RegisterScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleGoBackButton(): void {
-        navigation.goBack()
+        showLogin()
         dispatch(authActions.clearError())
     }
 
     return (
-        <Container>
-            {/* Username Input Field */}
-            <InputFieldRounded
-                onChangeText={(text: string) => handleUsernameInputChange(text)}
-                placeholder="Username"
-                errorMessage={
-                    !data.isValidUsername ? 'Invalid Username' : undefined
-                }
-            />
+        <ModalContainer
+            transparent
+            animationType="slide"
+            statusBarTranslucent
+        >
 
-            {/* Email Input Field */}
-            <InputFieldRounded
-                onChangeText={(text: string) => handleEmailInputChange(text)}
-                placeholder="E-mail"
-                errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
-            />
+            <Container>
+                {/* Username Input Field */}
+                <InputFieldRounded
+                    onChangeText={(text: string) => handleUsernameInputChange(text)}
+                    placeholder="Username"
+                    errorMessage={
+                        !data.isValidUsername ? 'Invalid Username' : undefined
+                    }
+                />
 
-            {/* Password 1 Input Field */}
-            <InputFieldRounded
-                secureTextEntry={data.securePasswordText}
-                onChangeText={(text: string) =>
-                    handlePassword1InputChange(text)
-                }
-                placeholder="Password"
-                rightIcon={
-                    <TouchableOpacity
-                        onPress={() => handleSecurePassword1Change()}
-                    >
-                        {data.securePasswordText ? (
-                            <MyFeather name="eye-off" color={colors.grey} />
-                        ) : (
-                            <MyFeather name="eye" color={colors.grey} />
-                        )}
-                    </TouchableOpacity>
-                }
-                errorMessage={
-                    !data.isValidPassword1 ? 'Invalid Password' : undefined
-                }
-            />
+                {/* Email Input Field */}
+                <InputFieldRounded
+                    onChangeText={(text: string) => handleEmailInputChange(text)}
+                    placeholder="E-mail"
+                    errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
+                />
 
-            {/* Password 2 Input Field */}
-            <InputFieldRounded
-                secureTextEntry
-                onChangeText={(text: string) =>
-                    handlePassword2InputChange(text)
-                }
-                placeholder="Password"
-                errorMessage={
-                    !data.isValidPassword2
-                        ? 'Invalid Password'
-                        : !samePasswords()
-                        ? 'Passwords are not the same'
-                        : undefined
-                }
-            />
+                {/* Password 1 Input Field */}
+                <InputFieldRounded
+                    secureTextEntry={data.securePasswordText}
+                    onChangeText={(text: string) =>
+                        handlePassword1InputChange(text)
+                    }
+                    placeholder="Password"
+                    rightIcon={
+                        <TouchableOpacity
+                            onPress={() => handleSecurePassword1Change()}
+                        >
+                            {data.securePasswordText ? (
+                                <MyFeather name="eye-off" color={colors.grey} />
+                            ) : (
+                                <MyFeather name="eye" color={colors.grey} />
+                            )}
+                        </TouchableOpacity>
+                    }
+                    errorMessage={
+                        !data.isValidPassword1 ? 'Invalid Password' : undefined
+                    }
+                />
 
-            {/* Register Button */}
-            <ButtonFilled
-                text="Register"
-                onPress={() => handleRegisterButton()}
-                loading={auth.awaitingResponse}
-            />
-            <ErrorMessage errorMessage={auth.error} />
-            {/* Already have an account/Go Back Button */}
-            <ButtonBorderless
-                text="Already have an account?"
-                onPress={() => handleGoBackButton()}
-            />
-        </Container>
+                {/* Password 2 Input Field */}
+                <InputFieldRounded
+                    secureTextEntry
+                    onChangeText={(text: string) =>
+                        handlePassword2InputChange(text)
+                    }
+                    placeholder="Password"
+                    errorMessage={
+                        !data.isValidPassword2
+                            ? 'Invalid Password'
+                            : !samePasswords()
+                            ? 'Passwords are not the same'
+                            : undefined
+                    }
+                />
+
+                {/* Register Button */}
+                <ButtonFilled
+                    text="Register"
+                    onPress={() => handleRegisterButton()}
+                    loading={auth.awaitingResponse}
+                />
+                <ErrorMessage errorMessage={auth.error} />
+                {/* Already have an account/Go Back Button */}
+                <ButtonBorderless
+                    text="Already have an account?"
+                    onPress={() => handleGoBackButton()}
+                />
+            </Container>
+        </ModalContainer>
     )
 }
 
 export default RegisterScreen
+
+
+const ModalContainer = styled(Modal)`
+    flex: 1;
+    margin: 0;
+`
 
 const Container = styled(View)`
     flex: 1;

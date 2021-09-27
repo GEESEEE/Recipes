@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { routeUtils } from '@/config'
-import { LoginScreen, Popup, RegisterScreen } from '@/screens'
+import { Popup } from '@/screens'
 import Drawer from './Drawer'
 
 const Stack = createStackNavigator()
@@ -16,10 +16,6 @@ function LoginStack(): JSX.Element {
                 cardStyleInterpolator: routeUtils.slideHorizontal,
             }}
         >
-
-            <Stack.Screen name="Login" component={LoginScreen} />
-
-            <Stack.Screen name="Register" component={RegisterScreen} />
 
             <Stack.Screen
                 name="Main"

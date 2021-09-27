@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
-import { LoginStack } from '@/routes'
+import { RootStack } from '@/routes'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { indicesActions } from '@/actions'
 
@@ -17,7 +17,7 @@ function Wrapper(): JSX.Element {
     return (
         <ThemeProvider theme={theme}>
             <NavigationContainer>
-                <LoginStack />
+                <RootStack />
             </NavigationContainer>
         </ThemeProvider>
     )

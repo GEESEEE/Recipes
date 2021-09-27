@@ -51,7 +51,6 @@ export const signUp =
         try {
             await authService.signUp(userData)
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
-            navigation.goBack()
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
@@ -134,7 +133,6 @@ export const signOut =
             await SecureStore.deleteItemAsync('token')
             dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {}})
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
-            navigation.navigate('Login')
             await authService.signOut({ token })
         } catch (err: any) {
             routeUtils.handleAPIError(

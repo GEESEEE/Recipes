@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, Dimensions, TouchableOpacity, Animated } from 'react-native'
+import { View, Dimensions, TouchableOpacity, Animated, Modal } from 'react-native'
 import styled from 'styled-components'
 import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
@@ -8,8 +8,7 @@ import { colors } from '@/config'
 import { authActions} from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
-import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
-import LoadingModal from '@/components/LoadingModal'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -39,26 +38,14 @@ function reducer(state: any, action: any): any {
     }
 }
 
-function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
+interface LoginModalProps  {
+    navigation: any,
+    showRegister: any
+}
+
+function LoginModal({ navigation, showRegister }: LoginModalProps): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
-
-
-
-    // On first load, retrieve token
-    React.useEffect(() => {
-        dispatch(authActions.retrieveToken(navigation))
-    }, [])
-
-
-    // If initialized navigate to main
-    useUpdateEffect(() => {
-        if (auth.dataLoaded) {
-            navigation.navigate('Main')
-        }
-    }, [auth.dataLoaded])
-
-
 
     const initialState = {
         username: '',
@@ -114,84 +101,83 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function handleRegisterButton(): void {
-        navigation.navigate('Register', {})
+        showRegister()
         dispatch(authActions.clearError())
     }
 
-    if (auth.loadingData) {
-        return (
-            <Container>
-                <LoadingModal/>
-            </Container>
-        )
-    }
-
-    if (auth.dataLoaded) {
-        return <Container/>
-    }
-
     return (
-        <Container>
-            {/* Logo */}
-            <LogoView>
-                <Logo source={logo} />
-            </LogoView>
+        <ModalContainer
+            transparent
+            animationType="slide"
+            statusBarTranslucent
+        >
+            <Container>
+                {/* Logo */}
+                <LogoView>
+                    <Logo source={logo} />
+                </LogoView>
 
-            {/* Email Input Field */}
-            <InputFieldRounded
-                leftIcon={<MyFontAwesome name="user-o" />}
-                onChangeText={(text: string) => handleUsernameInputChange(text)}
-                placeholder="Your Username or Email"
-                errorMessage={
-                    !data.isValidUsername
-                        ? 'Invalid Username or Email'
-                        : undefined
-                }
-            />
+                {/* Email Input Field */}
+                <InputFieldRounded
+                    leftIcon={<MyFontAwesome name="user-o" />}
+                    onChangeText={(text: string) => handleUsernameInputChange(text)}
+                    placeholder="Your Username or Email"
+                    errorMessage={
+                        !data.isValidUsername
+                            ? 'Invalid Username or Email'
+                            : undefined
+                    }
+                />
 
-            {/* Password Input Field */}
-            <InputFieldRounded
-                leftIcon={<MyFontAwesome name="lock" />}
-                secureTextEntry={data.securePasswordText}
-                onChangeText={(text: string) => handlePasswordInputChange(text)}
-                placeholder="Your Password"
-                rightIcon={
-                    <TouchableOpacity
-                        onPress={() => handleSecurePasswordChange()}
-                    >
-                        {data.securePasswordText ? (
-                            <MyFeather name="eye-off" color={colors.grey} />
-                        ) : (
-                            <MyFeather name="eye" color={colors.grey} />
-                        )}
-                    </TouchableOpacity>
-                }
-                errorMessage={
-                    !data.isValidPassword ? 'Invalid Password' : undefined
-                }
-            />
+                {/* Password Input Field */}
+                <InputFieldRounded
+                    leftIcon={<MyFontAwesome name="lock" />}
+                    secureTextEntry={data.securePasswordText}
+                    onChangeText={(text: string) => handlePasswordInputChange(text)}
+                    placeholder="Your Password"
+                    rightIcon={
+                        <TouchableOpacity
+                            onPress={() => handleSecurePasswordChange()}
+                        >
+                            {data.securePasswordText ? (
+                                <MyFeather name="eye-off" color={colors.grey} />
+                            ) : (
+                                <MyFeather name="eye" color={colors.grey} />
+                            )}
+                        </TouchableOpacity>
+                    }
+                    errorMessage={
+                        !data.isValidPassword ? 'Invalid Password' : undefined
+                    }
+                />
 
-            {/* Log in Button */}
-            <ButtonFilled
-                text="Sign in"
-                onPress={() => handleLoginButton()}
-                loading={auth.awaitingResponse}
-            />
+                {/* Log in Button */}
+                <ButtonFilled
+                    text="Sign in"
+                    onPress={() => handleLoginButton()}
+                    loading={auth.awaitingResponse}
+                />
 
-            {/* Register Button */}
-            <ButtonInverted
-                text="Register"
-                onPress={() => handleRegisterButton()}
-            />
-            <ErrorMessage errorMessage={auth.error} />
-        </Container>
+                {/* Register Button */}
+                <ButtonInverted
+                    text="Register"
+                    onPress={() => handleRegisterButton()}
+                />
+                <ErrorMessage errorMessage={auth.error} />
+            </Container>
+        </ModalContainer>
     )
 }
 
-export default LoginScreen
+export default LoginModal
 
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.2
+
+const ModalContainer = styled(Modal)`
+    flex: 1;
+    margin: 0;
+`
 
 const Container = styled(View)`
     flex: 1;

@@ -82,7 +82,7 @@ const auth = (
         case AUTH_ACTIONS.GET_USER_DATA_SUCCES: {
             const { userData } = action.payload
             const user = {...userData}
-            return {...state, user, loadingData: false, dataLoaded: true, }
+            return {...state, user, awaitingResponse: false, loadingData: false, dataLoaded: true, }
         }
 
         // CLEAR ERROR AND DEFAULT
