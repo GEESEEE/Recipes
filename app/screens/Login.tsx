@@ -43,6 +43,8 @@ function LoginScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
+
+
     // On first load, retrieve token
     React.useEffect(() => {
         dispatch(authActions.retrieveToken(navigation))

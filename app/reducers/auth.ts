@@ -1,3 +1,5 @@
+import { Theme } from "./settings"
+
 export const AUTH_ACTIONS = {
     AWAIT_RESPONSE: 'authLoadingStart',
     RESPONSE_ERROR: 'authLoadingError',
@@ -15,17 +17,19 @@ export const AUTH_ACTIONS = {
     CLEAR_ERROR: 'clearError',
 }
 
-export type Auth = {
+export interface Auth {
     dataLoaded: boolean
     loadingData: boolean
     awaitingResponse: boolean
     error: string
-    user: {
-        id: number,
-        name: string
-        email: string
-        token: string
-    }
+    user: AuthUser
+}
+
+interface AuthUser {
+    id: number
+    name: string
+    email: string
+    token: string
 }
 
 const initialState: Auth = {
@@ -45,6 +49,7 @@ const auth = (
     state = initialState,
     action: { type: string; payload: any }
 ): Auth => {
+    console.log(action.type);
     switch (action.type) {
         // WAITING FOR SERVER RESPONSE
         case AUTH_ACTIONS.AWAIT_RESPONSE: {
@@ -56,14 +61,14 @@ const auth = (
             return { ...state, error, awaitingResponse: false }
         }
 
-        // ASYNC LOADING
+        // ASYNC LOADING OF DATA
         case AUTH_ACTIONS.LOADING_START: {
             return { ...state, loadingData: true}
         }
 
         case AUTH_ACTIONS.LOADING_ERROR: {
             const { error } = action.payload
-            return { ...state, loadingData: false, error}
+            return { ...initialState, error }
         }
 
 
@@ -75,7 +80,7 @@ const auth = (
         case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
             const { token } = action.payload
             const user = {...state.user, token}
-            return { ...state, user, loadingData: false, error: '' }
+            return { ...state, user, error: '' }
         }
 
         case AUTH_ACTIONS.SIGN_IN_SUCCES: {
@@ -94,6 +99,7 @@ const auth = (
             return {...state, user, loadingData: false, dataLoaded: true, }
         }
 
+        // SETTINGS ACTIONS
 
 
 

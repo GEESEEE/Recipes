@@ -22,14 +22,15 @@ export const retrieveToken =
                         type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
                         payload: { token },
                     })
-                    await dispatch(retrieveUserData(token, navigation))
+                    await dispatch(retrieveUserData(token, false, navigation))
+                    return
                 }
-            } else {
-                dispatch({
-                    type: AUTH_ACTIONS.LOADING_ERROR,
-                    payload: { error: '' },
-                })
             }
+            dispatch({
+                type: AUTH_ACTIONS.LOADING_ERROR,
+                payload: { error: '' },
+            })
+
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
@@ -75,7 +76,8 @@ export const signIn =
             const token = await authService.signIn(username, password)
             await SecureStore.setItemAsync('token', token)
             dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
-            await dispatch(retrieveUserData(token, navigation))
+
+            await dispatch(retrieveUserData(token, true, navigation))
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
@@ -86,11 +88,17 @@ export const signIn =
         }
     }
 
-export const retrieveUserData = (token: string, navigation: any): any => async (dispatch: Dispatch) => {
-    dispatch({
-        type: AUTH_ACTIONS.LOADING_START,
-        payload: {}
-    })
+export const retrieveUserData = (
+    token: string,
+    startLoading: boolean,
+    navigation: any
+): any => async (dispatch: Dispatch) => {
+    if (startLoading) {
+        dispatch({
+            type: AUTH_ACTIONS.LOADING_START,
+            payload: {}
+        })
+    }
     try {
         const user = await userService.getUser({token})
         await dispatch({
