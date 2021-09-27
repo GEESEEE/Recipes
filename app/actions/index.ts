@@ -5,8 +5,7 @@ import * as myRecipeActions from './my-recipes'
 import * as searchActions from './search'
 import * as sortActions from './sort'
 import * as settingsActions from './settings'
-import * as userActions from './user'
-import * as initializationActions from './initialization'
+
 
 export {
     authActions,
@@ -16,6 +15,4 @@ export {
     searchActions,
     sortActions,
     settingsActions,
-    userActions,
-    initializationActions
 }

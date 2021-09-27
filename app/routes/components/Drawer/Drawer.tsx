@@ -31,14 +31,15 @@ export default function DrawerComponent({
 }: {
     navigation: any
 }): JSX.Element {
-    const { user, auth, settings } = useAppSelector((state) => state)
+    const { auth, settings } = useAppSelector((state) => state)
+    const { user } = auth
     const { theme } = settings
     const dispatch = useAppDispatch()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        dispatch(authActions.signOut(auth.user.token, navigation))
+        dispatch(authActions.signOut(user.token, navigation))
     }
 
     return (
