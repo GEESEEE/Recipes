@@ -1,5 +1,7 @@
 import React, { useReducer } from 'react'
-import { View, Dimensions, TouchableOpacity, Animated, Modal } from 'react-native'
+import { View, Dimensions, TouchableOpacity, Animated, StyleSheet } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Modal from 'react-native-modal'
 import styled from 'styled-components'
 import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
@@ -9,6 +11,7 @@ import { authActions} from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -41,11 +44,14 @@ function reducer(state: any, action: any): any {
 interface LoginModalProps  {
     navigation: any,
     showRegister: any
+    visible: boolean
 }
 
-function LoginModal({ navigation, showRegister }: LoginModalProps): JSX.Element {
+function LoginModal({ navigation, showRegister, visible }: LoginModalProps): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
+
+    const insets = useSafeAreaInsets()
 
     const initialState = {
         username: '',
@@ -106,12 +112,18 @@ function LoginModal({ navigation, showRegister }: LoginModalProps): JSX.Element 
     }
 
     return (
-        <ModalContainer
-            transparent
-            animationType="slide"
+        <Modal
+            isVisible={visible}
             statusBarTranslucent
+            style={styles.modal}
+            animationIn="bounceInUp"
         >
-            <Container>
+            <Container style={{
+                paddingTop: insets.top,
+                paddingLeft: insets.left,
+                paddingRight: insets.right,
+                paddingBottom: insets.bottom
+            }}>
                 {/* Logo */}
                 <LogoView>
                     <Logo source={logo} />
@@ -165,7 +177,7 @@ function LoginModal({ navigation, showRegister }: LoginModalProps): JSX.Element 
                 />
                 <ErrorMessage errorMessage={auth.error} />
             </Container>
-        </ModalContainer>
+        </Modal>
     )
 }
 
@@ -174,10 +186,11 @@ export default LoginModal
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.2
 
-const ModalContainer = styled(Modal)`
-    flex: 1;
-    margin: 0;
-`
+const styles = StyleSheet.create({
+    modal: {
+        margin: 0
+    }
+})
 
 const Container = styled(View)`
     flex: 1;

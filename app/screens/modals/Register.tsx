@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react'
 import { View, TouchableOpacity, Modal } from 'react-native'
 import styled from 'styled-components'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/config'
 import { authActions } from '@/actions'
 import { ButtonBorderless, ButtonFilled } from '@/components/user-input/Buttons'
@@ -54,6 +55,8 @@ interface RegisterModalProps { navigation: any, showLogin: () => void }
 function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
+
+    const insets = useSafeAreaInsets()
 
     const initialState = {
         username: '',
@@ -154,7 +157,12 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
             statusBarTranslucent
         >
 
-            <Container>
+            <Container style={{
+                paddingTop: insets.top,
+                paddingLeft: insets.left,
+                paddingRight: insets.right,
+                paddingBottom: insets.bottom
+            }}>
                 {/* Username Input Field */}
                 <InputFieldRounded
                     onChangeText={(text: string) => handleUsernameInputChange(text)}
