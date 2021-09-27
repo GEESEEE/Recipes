@@ -7,6 +7,7 @@ import settings from './settings'
 
 export default combineReducers({
     auth,
+    settings,
     myRecipes,
     mySort,
     mySearch,
@@ -14,5 +15,4 @@ export default combineReducers({
     browseSort,
     browseSearch,
     indices,
-    settings,
 })

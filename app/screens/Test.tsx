@@ -5,6 +5,7 @@ import LottieView from 'lottie-react-native'
 import { settingsActions } from '@/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import { routeUtils } from '@/config'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -61,8 +62,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         }
     }
 
-    function handleDrawer(): void {
-        navigation.openDrawer()
+    function showPopup(): void {
+        routeUtils.showPopup(navigation, 'Yes')
     }
 
     const [loading, setLoading] = React.useState(false)
@@ -83,7 +84,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 onPress={() => logRecipes()}
                 loading={loading}
             />
-            <ButtonFilled text="Loading" onPress={() => setLoading(!loading)} />
+            <ButtonFilled text="Popup" onPress={() => showPopup() } />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}

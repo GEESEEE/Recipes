@@ -5,6 +5,7 @@ import { authService, userService } from '@/services'
 import { routeUtils } from '@/config'
 import { retrieveRecipes } from './my-recipes'
 import { getRecipes } from './browse-recipes'
+import { AuthUser } from '@/reducers/auth'
 
 export const retrieveToken =
     (navigation: any): any =>
@@ -18,10 +19,6 @@ export const retrieveToken =
             if (token) {
                 const result = await authService.verifyToken({ token })
                 if (result) {
-                    dispatch({
-                        type: AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES,
-                        payload: { token },
-                    })
                     await dispatch(retrieveUserData(token, false, navigation))
                     return
                 }
@@ -75,7 +72,6 @@ export const signIn =
         try {
             const token = await authService.signIn(username, password)
             await SecureStore.setItemAsync('token', token)
-            dispatch({ type: AUTH_ACTIONS.SIGN_IN_SUCCES, payload: { token } })
 
             await dispatch(retrieveUserData(token, true, navigation))
         } catch (err: any) {
@@ -114,10 +110,10 @@ export const retrieveUserData = (
             scopes: ['published'],
             sort: ['publishtime'],
         }) as any)
-
+        const authUser: AuthUser = {...user, token}
         dispatch({
             type: AUTH_ACTIONS.GET_USER_DATA_SUCCES,
-            payload: { userData: user }
+            payload: { userData: authUser }
         })
     } catch (err: any) {
         routeUtils.handleAPIError(

@@ -9,7 +9,7 @@ const Stack = createStackNavigator()
 function LoginStack(): JSX.Element {
     return (
         <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="Drawer"
             screenOptions={{
                 headerShown: false,
                 presentation: 'transparentModal',

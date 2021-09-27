@@ -7,8 +7,7 @@ export const AUTH_ACTIONS = {
     LOADING_START: 'loadingStart',
     LOADING_ERROR: 'loadingError',
 
-    RETRIEVE_TOKEN_SUCCES: 'retrieveTokenSucces',
-    SIGN_IN_SUCCES: 'signInSucces',
+    SET_TOKEN: 'setToken',
     SIGN_OUT_SUCCES: 'signOutSucces',
     SIGN_UP_SUCCES: 'signUpSucces',
 
@@ -25,7 +24,7 @@ export interface Auth {
     user: AuthUser
 }
 
-interface AuthUser {
+export interface AuthUser {
     id: number
     name: string
     email: string
@@ -49,7 +48,6 @@ const auth = (
     state = initialState,
     action: { type: string; payload: any }
 ): Auth => {
-    console.log(action.type);
     switch (action.type) {
         // WAITING FOR SERVER RESPONSE
         case AUTH_ACTIONS.AWAIT_RESPONSE: {
@@ -77,31 +75,15 @@ const auth = (
             return { ...state, error: '', awaitingResponse: false }
         }
 
-        case AUTH_ACTIONS.RETRIEVE_TOKEN_SUCCES: {
-            const { token } = action.payload
-            const user = {...state.user, token}
-            return { ...state, user, error: '' }
-        }
-
-        case AUTH_ACTIONS.SIGN_IN_SUCCES: {
-            const { token } = action.payload
-            const user = {...state.user, token}
-            return { ...state, user, error: '', awaitingResponse: false }
-        }
-
         case AUTH_ACTIONS.SIGN_OUT_SUCCES: {
             return initialState
         }
 
         case AUTH_ACTIONS.GET_USER_DATA_SUCCES: {
             const { userData } = action.payload
-            const user = {...userData, token: state.user.token}
+            const user = {...userData}
             return {...state, user, loadingData: false, dataLoaded: true, }
         }
-
-        // SETTINGS ACTIONS
-
-
 
         // CLEAR ERROR AND DEFAULT
         case AUTH_ACTIONS.CLEAR_ERROR: {

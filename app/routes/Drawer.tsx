@@ -15,6 +15,7 @@ function Drawer(): JSX.Element {
             )}
         >
             <DrawerNav.Screen name="MainTabs" component={MainTabs} />
+
         </DrawerNav.Navigator>
     )
 }
