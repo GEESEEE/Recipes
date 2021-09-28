@@ -46,7 +46,9 @@ export default function DrawerComponent({
     return (
         <Container>
             {openColorPicker ? (
-                <ColorPickerModal toggle={toggleColorPicker} />
+                <ColorPickerModal
+                    toggle={toggleColorPicker}
+                />
             ) : null}
 
             <ScrollView>

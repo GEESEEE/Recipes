@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity, Modal } from 'react-native'
+import { View, TouchableOpacity, Modal} from 'react-native'
 import styled from 'styled-components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/config'
@@ -151,10 +151,10 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
     }
 
     return (
-        <ModalContainer
-            transparent
-            animationType="slide"
+        <Modal
             statusBarTranslucent
+            presentationStyle="overFullScreen"
+            animationType="slide"
         >
 
             <Container style={{
@@ -231,17 +231,12 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
                     onPress={() => handleGoBackButton()}
                 />
             </Container>
-        </ModalContainer>
+        </Modal>
     )
 }
 
 export default RegisterScreen
 
-
-const ModalContainer = styled(Modal)`
-    flex: 1;
-    margin: 0;
-`
 
 const Container = styled(View)`
     flex: 1;

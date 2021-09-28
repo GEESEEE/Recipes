@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Modal, Text } from 'react-native'
+import { View, Text, Modal } from 'react-native'
 import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
@@ -27,9 +27,8 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     console.log(insets)
     return (
         <Modal
-            animationType="slide"
-            transparent
             statusBarTranslucent
+            animationType="slide"
         >
             <Container style={{
                 paddingTop: insets.top,

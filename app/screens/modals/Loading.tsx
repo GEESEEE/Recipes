@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, View } from 'react-native'
+import { View, Modal } from 'react-native'
 import styled from 'styled-components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Loading4Dots } from '@/components/animations'
@@ -10,7 +10,9 @@ function LoadingModal(): JSX.Element {
     const {theme} = useAppSelector((state) => state.settings)
     const insets = useSafeAreaInsets()
     return (
-        <ModalContainer transparent statusBarTranslucent >
+        <Modal
+            statusBarTranslucent
+        >
             <Container style={{
                 paddingTop: insets.top,
                 paddingLeft: insets.left,
@@ -22,15 +24,11 @@ function LoadingModal(): JSX.Element {
                     dotColor={colors.primaryBlue}
                 />
             </Container>
-        </ModalContainer>
+        </Modal>
     )
 }
 
 export default LoadingModal
-
-const ModalContainer = styled(Modal)`
-    margin: 0;
-`
 
 const Container = styled(View)`
     flex: 1;
