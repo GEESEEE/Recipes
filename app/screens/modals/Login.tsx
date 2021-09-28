@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react'
-import { View, Dimensions, TouchableOpacity, Animated } from 'react-native'
+import { View, Dimensions, TouchableOpacity, Animated, Modal } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Modal from 'react-native-modal'
 import styled from 'styled-components'
 import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
@@ -115,11 +114,9 @@ function LoginModal({
     }
 
     return (
-        <ModalContainer
-            isVisible={visible}
+        <Modal
             statusBarTranslucent
-            animationIn="slideInUp"
-            animationInTiming={1000}
+            animationType="slide"
         >
             <Container
                 style={{
@@ -186,7 +183,7 @@ function LoginModal({
                 />
                 <ErrorMessage errorMessage={auth.error} />
             </Container>
-        </ModalContainer>
+        </Modal>
     )
 }
 
@@ -194,10 +191,6 @@ export default LoginModal
 
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.2
-
-const ModalContainer = styled(Modal as any)`
-    margin: 0;
-`
 
 const Container = styled(View)`
     flex: 1;
