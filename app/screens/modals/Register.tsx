@@ -18,7 +18,19 @@ const REGISTER_ACTIONS = {
     PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
 }
 
-function reducer(state: any, action: any): any {
+interface RegisterState {
+    username: string;
+    email: string;
+    password1: string;
+    password2: string;
+    securePasswordText: boolean;
+    isValidUsername: boolean;
+    isValidPassword1: boolean;
+    isValidPassword2: boolean;
+    isValidEmail: boolean;
+}
+
+function reducer(state: any, action: any): RegisterState {
     switch (action.type) {
         case REGISTER_ACTIONS.USERNAME_CHANGE: {
             const { username, isValidUsername } = action.payload
@@ -64,7 +76,7 @@ function RegisterScreen({
 
     const insets = useSafeAreaInsets()
 
-    const initialState = {
+    const initialState: RegisterState = {
         username: '',
         email: '',
         password1: '',

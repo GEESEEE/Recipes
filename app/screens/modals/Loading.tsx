@@ -10,7 +10,10 @@ function LoadingModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const insets = useSafeAreaInsets()
     return (
-        <Modal statusBarTranslucent>
+        <Modal
+            statusBarTranslucent
+            animationType="slide"
+        >
             <Container
                 style={{
                     paddingTop: insets.top,

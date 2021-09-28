@@ -129,8 +129,8 @@ export const signOut =
         dispatch({ type: AUTH_ACTIONS.AWAIT_RESPONSE, payload: {} })
         try {
             await SecureStore.deleteItemAsync('token')
-            dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {} })
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
+            dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {} })
             await authService.signOut({ token })
         } catch (err: any) {
             routeUtils.handleAPIError(

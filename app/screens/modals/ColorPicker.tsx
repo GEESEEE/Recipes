@@ -24,7 +24,7 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     function setPrimaryColor(color: string): void {
         dispatch(settingsActions.setColor(color))
     }
-    console.log(insets)
+
     return (
         <Modal statusBarTranslucent animationType="slide">
             <Container

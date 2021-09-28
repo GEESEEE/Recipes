@@ -118,7 +118,8 @@ function LoginModal({
         <ModalContainer
             isVisible={visible}
             statusBarTranslucent
-            animationIn="bounceInUp"
+            animationIn="slideInUp"
+            animationInTiming={1000}
         >
             <Container
                 style={{
