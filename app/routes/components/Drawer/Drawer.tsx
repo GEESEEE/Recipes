@@ -6,7 +6,7 @@ import { authActions, settingsActions } from '@/actions'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
-import {ColorPickerModal} from '@/screens/modals'
+import { ColorPickerModal } from '@/screens/modals'
 import SwitchComponent from '@/components/user-input/Switch'
 
 interface DrawerItemProps {
@@ -46,9 +46,7 @@ export default function DrawerComponent({
     return (
         <Container>
             {openColorPicker ? (
-                <ColorPickerModal
-                    toggle={toggleColorPicker}
-                />
+                <ColorPickerModal toggle={toggleColorPicker} />
             ) : null}
 
             <ScrollView>

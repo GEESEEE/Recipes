@@ -16,7 +16,6 @@ function LoginStack(): JSX.Element {
                 cardStyleInterpolator: routeUtils.slideHorizontal,
             }}
         >
-
             <Stack.Screen
                 name="Main"
                 component={Drawer}

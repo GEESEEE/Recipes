@@ -51,7 +51,7 @@ export interface Settings {
 
 export const initialSettings: Settings = {
     invertedColors: false,
-    theme: darkTheme()
+    theme: darkTheme(),
 }
 
 const settings = (
@@ -63,7 +63,7 @@ const settings = (
             const { newTheme, color, invertedColors } = action.payload
             colors.primary = color
             let theme = newTheme === 'dark' ? darkTheme() : lightTheme()
-            theme = {...theme, primary: color}
+            theme = { ...theme, primary: color }
             return { theme, invertedColors }
         }
 
@@ -80,14 +80,14 @@ const settings = (
         case SETTINGS_ACTIONS.SET_THEME: {
             const { newTheme } = action.payload
             const theme = newTheme === 'dark' ? darkTheme() : lightTheme()
-            return {...state, theme}
+            return { ...state, theme }
         }
 
         case SETTINGS_ACTIONS.SET_COLOR: {
             const { color } = action.payload
             colors.primary = color
-            const theme = {...state.theme, primary: color}
-            return {...state, theme}
+            const theme = { ...state.theme, primary: color }
+            return { ...state, theme }
         }
 
         default: {

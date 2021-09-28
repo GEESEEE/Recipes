@@ -22,7 +22,7 @@ export const InputFieldRounded = ({
     leftIcon?: JSX.Element
     rightIcon?: JSX.Element
 }): JSX.Element => {
-    const {theme} = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
 
     return (
         <Container>

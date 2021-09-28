@@ -4,8 +4,7 @@ import EditRecipeScreen from './EditRecipe'
 import TestScreen from './Test'
 import ViewRecipeScreen from './ViewRecipe'
 import Popup from './Popup'
-import {LoginModal, RegisterModal} from './modals'
-
+import { LoginModal, RegisterModal } from './modals'
 
 export {
     EditRecipeScreen,
@@ -15,5 +14,5 @@ export {
     TestScreen,
     Popup,
     LoginModal,
-    RegisterModal
+    RegisterModal,
 }

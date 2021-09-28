@@ -7,11 +7,10 @@ import logo from '@assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
-import { authActions} from '@/actions'
+import { authActions } from '@/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -41,13 +40,17 @@ function reducer(state: any, action: any): any {
     }
 }
 
-interface LoginModalProps  {
-    navigation: any,
+interface LoginModalProps {
+    navigation: any
     showRegister: any
     visible: boolean
 }
 
-function LoginModal({ navigation, showRegister, visible }: LoginModalProps): JSX.Element {
+function LoginModal({
+    navigation,
+    showRegister,
+    visible,
+}: LoginModalProps): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
@@ -117,12 +120,14 @@ function LoginModal({ navigation, showRegister, visible }: LoginModalProps): JSX
             statusBarTranslucent
             animationIn="bounceInUp"
         >
-            <Container style={{
-                paddingTop: insets.top,
-                paddingLeft: insets.left,
-                paddingRight: insets.right,
-                paddingBottom: insets.bottom
-            }}>
+            <Container
+                style={{
+                    paddingTop: insets.top,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                    paddingBottom: insets.bottom,
+                }}
+            >
                 {/* Logo */}
                 <LogoView>
                     <Logo source={logo} />
@@ -131,7 +136,9 @@ function LoginModal({ navigation, showRegister, visible }: LoginModalProps): JSX
                 {/* Email Input Field */}
                 <InputFieldRounded
                     leftIcon={<MyFontAwesome name="user-o" />}
-                    onChangeText={(text: string) => handleUsernameInputChange(text)}
+                    onChangeText={(text: string) =>
+                        handleUsernameInputChange(text)
+                    }
                     placeholder="Your Username or Email"
                     errorMessage={
                         !data.isValidUsername
@@ -144,7 +151,9 @@ function LoginModal({ navigation, showRegister, visible }: LoginModalProps): JSX
                 <InputFieldRounded
                     leftIcon={<MyFontAwesome name="lock" />}
                     secureTextEntry={data.securePasswordText}
-                    onChangeText={(text: string) => handlePasswordInputChange(text)}
+                    onChangeText={(text: string) =>
+                        handlePasswordInputChange(text)
+                    }
                     placeholder="Your Password"
                     rightIcon={
                         <TouchableOpacity
@@ -185,7 +194,7 @@ export default LoginModal
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.2
 
-const ModalContainer =  styled(Modal as any)`
+const ModalContainer = styled(Modal as any)`
     margin: 0;
 `
 

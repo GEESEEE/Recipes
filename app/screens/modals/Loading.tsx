@@ -7,18 +7,18 @@ import { useAppSelector } from '@/hooks'
 import { colors } from '@/config'
 
 function LoadingModal(): JSX.Element {
-    const {theme} = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
     const insets = useSafeAreaInsets()
     return (
-        <Modal
-            statusBarTranslucent
-        >
-            <Container style={{
-                paddingTop: insets.top,
-                paddingLeft: insets.left,
-                paddingRight: insets.right,
-                paddingBottom: insets.bottom
-            }}>
+        <Modal statusBarTranslucent>
+            <Container
+                style={{
+                    paddingTop: insets.top,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                    paddingBottom: insets.bottom,
+                }}
+            >
                 <Loading4Dots
                     backgroundColor={theme.background}
                     dotColor={colors.primaryBlue}

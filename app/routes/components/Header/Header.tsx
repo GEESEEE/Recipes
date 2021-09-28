@@ -44,7 +44,7 @@ const HeaderComponent = ({
     const routeName = route.name
 
     const dispatch = useAppDispatch()
-    const {settings, browseSearch, browseSort } = useAppSelector(
+    const { settings, browseSearch, browseSort } = useAppSelector(
         (state) => state
     )
     const { theme } = settings

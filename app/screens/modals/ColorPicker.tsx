@@ -14,7 +14,7 @@ interface ColorPickerProps {
 }
 
 function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
-    const {theme} = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
     const [localColor, setLocalColor] = useState<string>(colors.primary)
@@ -26,16 +26,15 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     }
     console.log(insets)
     return (
-        <Modal
-            statusBarTranslucent
-            animationType="slide"
-        >
-            <Container style={{
-                paddingTop: insets.top,
-                paddingLeft: insets.left,
-                paddingRight: insets.right,
-                paddingBottom: insets.bottom
-            }}>
+        <Modal statusBarTranslucent animationType="slide">
+            <Container
+                style={{
+                    paddingTop: insets.top,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                    paddingBottom: insets.bottom,
+                }}
+            >
                 <ReturnButton onPress={() => toggle()} color={localColor} />
 
                 <DifferenceContainer>

@@ -12,7 +12,7 @@ const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const recipes = useAppSelector((state) => state.myRecipes)
-    const {theme} = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
     const logoSize = useRef(new Animated.Value(bigLogo)).current
 
@@ -84,7 +84,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 onPress={() => logRecipes()}
                 loading={loading}
             />
-            <ButtonFilled text="Popup" onPress={() => showPopup() } />
+            <ButtonFilled text="Popup" onPress={() => showPopup()} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}

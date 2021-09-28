@@ -22,8 +22,8 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-     // On first load, retrieve token
-     React.useEffect(() => {
+    // On first load, retrieve token
+    React.useEffect(() => {
         dispatch(authActions.retrieveToken(navigation))
     }, [])
 
@@ -44,32 +44,22 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container>
+            {auth.loadingData ? <LoadingModal /> : null}
 
-            {
-                auth.loadingData
-                ? <LoadingModal />
-                : null
-            }
-
-            {
-                !auth.dataLoaded
-                ? <LoginModal
+            {!auth.dataLoaded ? (
+                <LoginModal
                     visible={!auth.dataLoaded}
                     navigation={navigation}
                     showRegister={() => setShowRegisterScreen(true)}
                 />
-                : null
-            }
+            ) : null}
 
-            {
-                showRegisterScreen
-                ? <RegisterModal
+            {showRegisterScreen ? (
+                <RegisterModal
                     navigation={navigation}
                     showLogin={() => setShowRegisterScreen(false)}
                 />
-                : null
-            }
-
+            ) : null}
 
             <RecipesListHeader display={displayHeader} />
             <RecipesFlatList

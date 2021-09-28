@@ -34,7 +34,7 @@ function RecipeHeaderComponent({
     handlePrepareTimeChange,
     handlePublishedAtChange,
 }: RecipeHeaderOptions): JSX.Element {
-    const {theme} = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
 

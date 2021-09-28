@@ -27,7 +27,6 @@ export const retrieveToken =
                 type: AUTH_ACTIONS.LOADING_ERROR,
                 payload: { error: '' },
             })
-
         } catch (err: any) {
             routeUtils.handleAPIError(
                 err,
@@ -78,52 +77,51 @@ export const signIn =
                 err,
                 navigation,
                 dispatch,
-                AUTH_ACTIONS.RESPONSE_ERROR,
+                AUTH_ACTIONS.RESPONSE_ERROR
             )
         }
     }
 
-export const retrieveUserData = (
-    token: string,
-    startLoading: boolean,
-    navigation: any
-): any => async (dispatch: Dispatch) => {
-    if (startLoading) {
-        dispatch({
-            type: AUTH_ACTIONS.LOADING_START,
-            payload: {}
-        })
+export const retrieveUserData =
+    (token: string, startLoading: boolean, navigation: any): any =>
+    async (dispatch: Dispatch) => {
+        if (startLoading) {
+            dispatch({
+                type: AUTH_ACTIONS.LOADING_START,
+                payload: {},
+            })
+        }
+        try {
+            const user = await userService.getUser({ token })
+            await dispatch({
+                type: SETTINGS_ACTIONS.SET_SETTINGS,
+                payload: {
+                    invertedColors: user.settings?.invertedColors,
+                    color: user.settings?.color,
+                    newTheme: user.settings?.theme,
+                },
+            })
+            await dispatch(retrieveRecipes(navigation) as any)
+            await dispatch(
+                getRecipes({
+                    scopes: ['published'],
+                    sort: ['publishtime'],
+                }) as any
+            )
+            const authUser: AuthUser = { ...user, token }
+            dispatch({
+                type: AUTH_ACTIONS.GET_USER_DATA_SUCCES,
+                payload: { userData: authUser },
+            })
+        } catch (err: any) {
+            routeUtils.handleAPIError(
+                err,
+                navigation,
+                dispatch,
+                AUTH_ACTIONS.LOADING_ERROR
+            )
+        }
     }
-    try {
-        const user = await userService.getUser({token})
-        await dispatch({
-            type: SETTINGS_ACTIONS.SET_SETTINGS,
-            payload: {
-                invertedColors: user.settings?.invertedColors,
-                color: user.settings?.color,
-                newTheme: user.settings?.theme,
-            },
-        })
-        await dispatch(retrieveRecipes(navigation) as any)
-        await dispatch(getRecipes({
-            scopes: ['published'],
-            sort: ['publishtime'],
-        }) as any)
-        const authUser: AuthUser = {...user, token}
-        dispatch({
-            type: AUTH_ACTIONS.GET_USER_DATA_SUCCES,
-            payload: { userData: authUser }
-        })
-    } catch (err: any) {
-        routeUtils.handleAPIError(
-            err,
-            navigation,
-            dispatch,
-            AUTH_ACTIONS.LOADING_ERROR,
-
-        )
-    }
-}
 
 export const signOut =
     (token: string, navigation: any): any =>
@@ -131,7 +129,7 @@ export const signOut =
         dispatch({ type: AUTH_ACTIONS.AWAIT_RESPONSE, payload: {} })
         try {
             await SecureStore.deleteItemAsync('token')
-            dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {}})
+            dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {} })
             dispatch({ type: AUTH_ACTIONS.SIGN_OUT_SUCCES, payload: {} })
             await authService.signOut({ token })
         } catch (err: any) {

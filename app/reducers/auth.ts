@@ -1,4 +1,4 @@
-import { Theme } from "./settings"
+import { Theme } from './settings'
 
 export const AUTH_ACTIONS = {
     AWAIT_RESPONSE: 'authLoadingStart',
@@ -41,7 +41,7 @@ const initialState: Auth = {
         name: '',
         email: '',
         token: '',
-    }
+    },
 }
 
 const auth = (
@@ -61,14 +61,13 @@ const auth = (
 
         // ASYNC LOADING OF DATA
         case AUTH_ACTIONS.LOADING_START: {
-            return { ...state, loadingData: true}
+            return { ...state, loadingData: true }
         }
 
         case AUTH_ACTIONS.LOADING_ERROR: {
             const { error } = action.payload
             return { ...initialState, error }
         }
-
 
         // AUTH SUCCES ACTIONS
         case AUTH_ACTIONS.SIGN_UP_SUCCES: {
@@ -81,8 +80,14 @@ const auth = (
 
         case AUTH_ACTIONS.GET_USER_DATA_SUCCES: {
             const { userData } = action.payload
-            const user = {...userData}
-            return {...state, user, awaitingResponse: false, loadingData: false, dataLoaded: true, }
+            const user = { ...userData }
+            return {
+                ...state,
+                user,
+                awaitingResponse: false,
+                loadingData: false,
+                dataLoaded: true,
+            }
         }
 
         // CLEAR ERROR AND DEFAULT

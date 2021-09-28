@@ -17,20 +17,20 @@ export const setInvertedColors =
     }
 
 export const setTheme =
-(lightTheme: boolean) =>
-async (dispatch: Dispatch): Promise<void> => {
-    try {
-        const theme = lightTheme ? 'light' : 'dark'
-        dispatch({
-            type: SETTINGS_ACTIONS.SET_THEME,
-            payload: { newTheme: theme },
-        })
-        await userService.updateSettings({ theme })
-    } catch (err: any) {
-        console.log(err.message)
-        console.error(err)
+    (lightTheme: boolean) =>
+    async (dispatch: Dispatch): Promise<void> => {
+        try {
+            const theme = lightTheme ? 'light' : 'dark'
+            dispatch({
+                type: SETTINGS_ACTIONS.SET_THEME,
+                payload: { newTheme: theme },
+            })
+            await userService.updateSettings({ theme })
+        } catch (err: any) {
+            console.log(err.message)
+            console.error(err)
+        }
     }
-}
 
 export const setColor =
     (color: string) =>
@@ -46,4 +46,3 @@ export const setColor =
             console.error(err)
         }
     }
-

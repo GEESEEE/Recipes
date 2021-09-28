@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity, Modal} from 'react-native'
+import { View, TouchableOpacity, Modal } from 'react-native'
 import styled from 'styled-components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/config'
@@ -50,9 +50,15 @@ function reducer(state: any, action: any): any {
     }
 }
 
-interface RegisterModalProps { navigation: any, showLogin: () => void }
+interface RegisterModalProps {
+    navigation: any
+    showLogin: () => void
+}
 
-function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Element {
+function RegisterScreen({
+    navigation,
+    showLogin,
+}: RegisterModalProps): JSX.Element {
     const auth = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
 
@@ -156,16 +162,19 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
             presentationStyle="overFullScreen"
             animationType="slide"
         >
-
-            <Container style={{
-                paddingTop: insets.top,
-                paddingLeft: insets.left,
-                paddingRight: insets.right,
-                paddingBottom: insets.bottom
-            }}>
+            <Container
+                style={{
+                    paddingTop: insets.top,
+                    paddingLeft: insets.left,
+                    paddingRight: insets.right,
+                    paddingBottom: insets.bottom,
+                }}
+            >
                 {/* Username Input Field */}
                 <InputFieldRounded
-                    onChangeText={(text: string) => handleUsernameInputChange(text)}
+                    onChangeText={(text: string) =>
+                        handleUsernameInputChange(text)
+                    }
                     placeholder="Username"
                     errorMessage={
                         !data.isValidUsername ? 'Invalid Username' : undefined
@@ -174,9 +183,13 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
 
                 {/* Email Input Field */}
                 <InputFieldRounded
-                    onChangeText={(text: string) => handleEmailInputChange(text)}
+                    onChangeText={(text: string) =>
+                        handleEmailInputChange(text)
+                    }
                     placeholder="E-mail"
-                    errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
+                    errorMessage={
+                        !data.isValidEmail ? 'Invalid Email' : undefined
+                    }
                 />
 
                 {/* Password 1 Input Field */}
@@ -236,7 +249,6 @@ function RegisterScreen({ navigation, showLogin }: RegisterModalProps): JSX.Elem
 }
 
 export default RegisterScreen
-
 
 const Container = styled(View)`
     flex: 1;
