@@ -48,7 +48,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
             {!auth.dataLoaded ? (
                 <LoginModal
-                    visible={!auth.dataLoaded}
                     navigation={navigation}
                     showRegister={() => setShowRegisterScreen(true)}
                 />

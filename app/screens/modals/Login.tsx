@@ -42,13 +42,11 @@ function reducer(state: any, action: any): any {
 interface LoginModalProps {
     navigation: any
     showRegister: any
-    visible: boolean
 }
 
 function LoginModal({
     navigation,
     showRegister,
-    visible,
 }: LoginModalProps): JSX.Element {
     const { auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
