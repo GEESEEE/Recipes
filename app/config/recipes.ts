@@ -52,6 +52,7 @@ export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
             prepareTime: recipe.prepareTime,
             publishedAt: recipe.publishedAt,
             createdAt: recipe.createdAt,
+            copyOf: recipe.copyOf,
         }))
     )
 }

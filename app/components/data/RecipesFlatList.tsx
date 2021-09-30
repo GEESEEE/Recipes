@@ -1,10 +1,10 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
-import { useDebounce, useTimeout } from '@/hooks'
+import { useDebounce } from '@/hooks'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
@@ -18,9 +18,14 @@ const RecipesFlatList = React.forwardRef(
         ref: any
     ): JSX.Element => {
         const navigation = useNavigation()
+        const route = useRoute()
+
+        const [scrollPosition, setScrollPosition] = React.useState(0)
+        function handleScroll(event: any): void {
+            setScrollPosition(event.nativeEvent.contentOffset.y)
+        }
 
         const isFocused = useIsFocused()
-
         useDebounce(
             () => {
                 if (dropdown && isFocused) {
@@ -31,14 +36,10 @@ const RecipesFlatList = React.forwardRef(
             [isFocused]
         )
 
-        const [scrollPosition, setScrollPosition] = React.useState(0)
-        function handleScroll(event: any): void {
-            setScrollPosition(event.nativeEvent.contentOffset.y)
-        }
-
         const dropDownDependencies = dropdown
             ? [scrollPosition, recipes.length]
             : undefined
+
 
         return (
             <RecipesList
@@ -57,6 +58,7 @@ const RecipesFlatList = React.forwardRef(
                                 'ViewRecipe' as never,
                                 {
                                     recipe: item,
+                                    dropdown: route.name === 'Browse'
                                 } as never
                             )
                         }

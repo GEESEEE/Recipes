@@ -8,7 +8,7 @@ import { Recipe } from '@/data'
 
 function ViewRecipeScreen(): JSX.Element {
     const route = useRoute()
-    const { recipe } = route.params as { recipe: Recipe }
+    const { recipe, dropdown } = route.params as { recipe: Recipe, dropdown: boolean }
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
     const [recipeData, setRecipeData] = React.useState<Recipe>(
@@ -34,7 +34,8 @@ function ViewRecipeScreen(): JSX.Element {
         <Container>
             <RecipeSectionList
                 recipe={recipeData}
-                action="View"
+                action='View'
+                dropdown={dropdown}
                 handlePeopleCountChange={(text: string) =>
                     handlePeopleCountChange(text)
                 }

@@ -12,6 +12,7 @@ import { ErrorMessage } from '../user-input/ErrorMessage'
 type RecipeSectionListProps = {
     recipe: Recipe
     action: 'Edit' | 'Create' | 'View'
+    dropdown?: boolean
 
     // Recipe related
     handleNameChange?: (text: string) => void
@@ -39,6 +40,7 @@ type RecipeSectionListProps = {
 const RecipeSectionList = ({
     recipe,
     action,
+    dropdown,
 
     handleNameChange,
     handleDescriptionChange,
@@ -61,6 +63,15 @@ const RecipeSectionList = ({
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)
+
+    const [scrollPosition, setScrollPosition] = React.useState(0)
+    function handleScroll(event: any): void {
+        setScrollPosition(event.nativeEvent.contentOffset.y)
+    }
+
+    const dropDownDependencies = dropdown
+        ? [scrollPosition]
+        : undefined
 
     const sections = [
         {
@@ -99,6 +110,7 @@ const RecipeSectionList = ({
 
     return (
         <List
+            onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
             sections={sections}
             contentContainerStyle={[
                 styles.contentContainer,
@@ -109,6 +121,7 @@ const RecipeSectionList = ({
                     <RecipeHeader
                         recipe={recipe}
                         editable={editable ? 'Edit-all' : 'Edit-people'}
+                        dropDownDependencies={dropDownDependencies}
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}
                         handlePeopleCountChange={handlePeopleCountChange}

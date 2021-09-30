@@ -23,6 +23,17 @@ interface RecipeHeaderOptions {
     handlePublishedAtChange?: () => void
 }
 
+function createDropDownItems(onPresses: Array<() => Promise<void>>): DropDownItem[] {
+    return onPresses.map((onPress) => {
+        const text = onPress.name.slice(0, onPress.name.length - 6)
+        return {
+            id: onPresses.indexOf(onPress),
+            text,
+            onPress
+        }
+    })
+}
+
 function RecipeHeaderComponent({
     recipe,
     editable,
@@ -34,29 +45,34 @@ function RecipeHeaderComponent({
     handlePrepareTimeChange,
     handlePublishedAtChange,
 }: RecipeHeaderOptions): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { settings, auth } = useAppSelector((state) => state)
+    const { theme } = settings
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
 
-    async function removeRecipe(): Promise<void> {
+    async function deleteRecipe(): Promise<void> {
         dispatch(myRecipeActions.deleteRecipe(recipe, navigation))
     }
 
     async function editRecipe(): Promise<void> {
         navigation.navigate('EditRecipe' as never, { recipe } as never)
     }
-    const dropDownItems: DropDownItem[] = [
-        {
-            id: 0,
-            text: 'Edit',
-            onPress: editRecipe,
-        },
-        {
-            id: 1,
-            text: 'Delete',
-            onPress: removeRecipe,
-        },
-    ]
+
+    async function copyRecipe(): Promise<void> {
+        const copy = JSON.parse(JSON.stringify(recipe))
+        copy.copyOf = recipe.id
+        copy.publishedAt = null
+        dispatch(myRecipeActions.createRecipe(copy, navigation))
+    }
+
+    const dropDownFunctions = []
+    if (recipe.authorId === auth.user.id) {
+        dropDownFunctions.push(editRecipe, deleteRecipe)
+    } else {
+        dropDownFunctions.push(copyRecipe)
+    }
+
+    const dropDownItems: DropDownItem[] = createDropDownItems(dropDownFunctions)
 
     const prepareTimeStyle = (): { color: string } => {
         if (!editable || recipe.prepareTime > 0) return { color: theme.text }
@@ -75,6 +91,24 @@ function RecipeHeaderComponent({
                 dependencies={dropDownDependencies}
             />
         )
+
+
+    const displayPublishIcon = editable === 'Edit-all' || recipe.publishedAt !== null || recipe.copyOf !== null
+
+    let publishIconName = 'published-with-changes'
+    if (recipe.copyOf !== null ) {
+        publishIconName = 'content-copy'
+    } else if (recipe.publishedAt === null) {
+        publishIconName = 'publish'
+    }
+
+    let publishIconColor = theme.text
+    if (recipe.publishedAt !== null || recipe.copyOf !== null) {
+        publishIconColor = theme.primary
+    }
+
+    console.log("Header", recipe.name, recipe.id, recipe.copyOf, publishIconName)
+
     return (
         <Header onPress={onPress} disabled={!onPress}>
             {/* Recipe Name Input Field */}
@@ -138,25 +172,21 @@ function RecipeHeaderComponent({
                 </PropertyView>
 
                 <PublishedView>
-                    {editable === 'Edit-all' || recipe.publishedAt !== null ? (
+                    {displayPublishIcon ? (
                         <ButtonIcon
                             onPress={() =>
                                 handlePublishedAtChange
                                     ? handlePublishedAtChange()
                                     : undefined
                             }
-                            disabled={editable !== 'Edit-all'}
+                            disabled={editable !== 'Edit-all' || recipe.copyOf !== null}
                             icon={
                                 <MyMaterialIcons
                                     name={
-                                        recipe.publishedAt === null
-                                            ? 'publish'
-                                            : 'published-with-changes'
+                                        publishIconName
                                     }
                                     color={
-                                        recipe.publishedAt === null
-                                            ? theme.text
-                                            : theme.primary
+                                        publishIconColor
                                     }
                                     size={25}
                                 />
@@ -171,6 +201,8 @@ function RecipeHeaderComponent({
         </Header>
     )
 }
+
+export const RecipeHeader = RecipeHeaderComponent
 
 function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     if (
@@ -189,8 +221,6 @@ function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
     )
     return Object.keys(recipeDifferenceObject).length === 0
 }
-
-export const RecipeHeader = RecipeHeaderComponent
 
 export const MemoizedRecipeHeader = React.memo(
     RecipeHeaderComponent,
