@@ -62,6 +62,7 @@ function RecipeHeaderComponent({
         const copy = JSON.parse(JSON.stringify(recipe))
         copy.copyOf = recipe.id
         copy.publishedAt = null
+        copy.createdAt = new Date()
         dispatch(myRecipeActions.createRecipe(copy, navigation))
     }
 
