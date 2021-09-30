@@ -69,9 +69,7 @@ const RecipeSectionList = ({
         setScrollPosition(event.nativeEvent.contentOffset.y)
     }
 
-    const dropDownDependencies = dropdown
-        ? [scrollPosition]
-        : undefined
+    const dropDownDependencies = dropdown ? [scrollPosition] : undefined
 
     const sections = [
         {

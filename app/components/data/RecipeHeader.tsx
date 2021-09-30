@@ -23,13 +23,15 @@ interface RecipeHeaderOptions {
     handlePublishedAtChange?: () => void
 }
 
-function createDropDownItems(onPresses: Array<() => Promise<void>>): DropDownItem[] {
+function createDropDownItems(
+    onPresses: Array<() => Promise<void>>
+): DropDownItem[] {
     return onPresses.map((onPress) => {
         const text = onPress.name.slice(0, onPress.name.length - 6)
         return {
             id: onPresses.indexOf(onPress),
             text,
-            onPress
+            onPress,
         }
     })
 }
@@ -93,11 +95,13 @@ function RecipeHeaderComponent({
             />
         )
 
-
-    const displayPublishIcon = editable === 'Edit-all' || recipe.publishedAt !== null || recipe.copyOf !== null
+    const displayPublishIcon =
+        editable === 'Edit-all' ||
+        recipe.publishedAt !== null ||
+        recipe.copyOf !== null
 
     let publishIconName = 'published-with-changes'
-    if (recipe.copyOf !== null ) {
+    if (recipe.copyOf !== null) {
         publishIconName = 'content-copy'
     } else if (recipe.publishedAt === null) {
         publishIconName = 'publish'
@@ -178,15 +182,14 @@ function RecipeHeaderComponent({
                                     ? handlePublishedAtChange()
                                     : undefined
                             }
-                            disabled={editable !== 'Edit-all' || recipe.copyOf !== null}
+                            disabled={
+                                editable !== 'Edit-all' ||
+                                recipe.copyOf !== null
+                            }
                             icon={
                                 <MyMaterialIcons
-                                    name={
-                                        publishIconName
-                                    }
-                                    color={
-                                        publishIconColor
-                                    }
+                                    name={publishIconName}
+                                    color={publishIconColor}
                                     size={25}
                                 />
                             }

@@ -40,7 +40,6 @@ const RecipesFlatList = React.forwardRef(
             ? [scrollPosition, recipes.length]
             : undefined
 
-
         return (
             <RecipesList
                 ref={ref}
@@ -58,7 +57,7 @@ const RecipesFlatList = React.forwardRef(
                                 'ViewRecipe' as never,
                                 {
                                     recipe: item,
-                                    dropdown: route.name === 'Browse'
+                                    dropdown: route.name === 'Browse',
                                 } as never
                             )
                         }
