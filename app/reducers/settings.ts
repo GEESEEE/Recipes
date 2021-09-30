@@ -1,4 +1,4 @@
-import { colors } from '@/config'
+import { colors, themeUtils } from '@/config'
 
 export const SETTINGS_ACTIONS = {
     SET_SETTINGS: 'setSettings',
@@ -8,50 +8,18 @@ export const SETTINGS_ACTIONS = {
     RESET_SETTINGS: 'resetSettings',
 }
 
-export type Theme = {
-    mode: string
-    primary: string
-    background: string
-    backgroundVariant: string
-    text: string
-    textVariant: string
-    grey: string
-    greyVariant: string
-    error: string
-}
-
-const lightTheme = (): Theme => ({
-    mode: 'light',
-    primary: colors.primary,
-    background: colors.white,
-    backgroundVariant: colors.lightestgrey,
-    text: colors.black,
-    textVariant: colors.darkestgrey,
-    grey: colors.grey,
-    greyVariant: colors.lightgrey,
-    error: colors.red,
-})
-
-const darkTheme = (): Theme => ({
-    mode: 'dark',
-    primary: colors.primary,
-    background: colors.darkestgrey,
-    backgroundVariant: colors.darkergrey,
-    text: colors.white,
-    textVariant: colors.lightestgrey,
-    grey: colors.grey,
-    greyVariant: colors.darkgrey,
-    error: colors.red,
-})
-
 export interface Settings {
     invertedColors: boolean
-    theme: Theme
+    theme: themeUtils.Theme
 }
 
 export const initialSettings: Settings = {
     invertedColors: false,
-    theme: darkTheme(),
+    theme: themeUtils.darkTheme(),
+}
+
+function getTheme(theme: string): themeUtils.Theme {
+    return theme === 'dark' ? themeUtils.darkTheme() : themeUtils.lightTheme()
 }
 
 const settings = (
@@ -62,7 +30,7 @@ const settings = (
         case SETTINGS_ACTIONS.SET_SETTINGS: {
             const { newTheme, color, invertedColors } = action.payload
             colors.primary = color
-            let theme = newTheme === 'dark' ? darkTheme() : lightTheme()
+            let theme = getTheme(newTheme)
             theme = { ...theme, primary: color }
             return { theme, invertedColors }
         }
@@ -79,7 +47,7 @@ const settings = (
 
         case SETTINGS_ACTIONS.SET_THEME: {
             const { newTheme } = action.payload
-            const theme = newTheme === 'dark' ? darkTheme() : lightTheme()
+            const theme = getTheme(newTheme)
             return { ...state, theme }
         }
 
