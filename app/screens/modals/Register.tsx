@@ -19,15 +19,15 @@ const REGISTER_ACTIONS = {
 }
 
 interface RegisterState {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
-    securePasswordText: boolean;
-    isValidUsername: boolean;
-    isValidPassword1: boolean;
-    isValidPassword2: boolean;
-    isValidEmail: boolean;
+    username: string
+    email: string
+    password1: string
+    password2: string
+    securePasswordText: boolean
+    isValidUsername: boolean
+    isValidPassword1: boolean
+    isValidPassword2: boolean
+    isValidEmail: boolean
 }
 
 function reducer(state: any, action: any): RegisterState {

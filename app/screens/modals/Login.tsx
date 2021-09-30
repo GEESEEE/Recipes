@@ -1,5 +1,11 @@
 import React, { useReducer } from 'react'
-import { View, Dimensions, TouchableOpacity, Animated, Modal } from 'react-native'
+import {
+    View,
+    Dimensions,
+    TouchableOpacity,
+    Animated,
+    Modal,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@assets/temp_icon.png'
@@ -112,10 +118,7 @@ function LoginModal({
     }
 
     return (
-        <Modal
-            statusBarTranslucent
-            animationType="slide"
-        >
+        <Modal statusBarTranslucent animationType="slide">
             <Container
                 style={{
                     paddingTop: insets.top,
