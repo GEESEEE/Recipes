@@ -16,7 +16,8 @@ const SearchBarComponent = ({
     searchText: string
     setText(text: string): void
 }): JSX.Element => {
-    const { theme, settings } = useAppSelector((state) => state)
+    const { settings } = useAppSelector((state) => state)
+    const { theme } = settings
     const dispatch = useAppDispatch()
 
     const route = useRoute()
