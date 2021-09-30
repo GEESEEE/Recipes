@@ -107,8 +107,6 @@ function RecipeHeaderComponent({
         publishIconColor = theme.primary
     }
 
-    console.log("Header", recipe.name, recipe.id, recipe.copyOf, publishIconName)
-
     return (
         <Header onPress={onPress} disabled={!onPress}>
             {/* Recipe Name Input Field */}

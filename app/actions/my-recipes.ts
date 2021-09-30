@@ -54,7 +54,7 @@ export const createRecipe =
                     'recipes',
                     JSON.stringify(localRecipes)
                 )
-                navigation.navigate('Recipes')
+
                 dispatch({
                     type: MY_RECIPE_ACTIONS.ADD_RECIPE_SUCCES,
                     payload: { newRecipe },
