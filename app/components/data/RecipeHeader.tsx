@@ -16,7 +16,9 @@ function createDropDownItems(
 ): DropDownItem[] {
     return onPresses.map((onPress) => {
         // Slice recipe off the function name
-        const text = utils.capitalizeFirstLetter(onPress.name.slice(0, onPress.name.length - 6))
+        const text = utils.capitalizeFirstLetter(
+            onPress.name.slice(0, onPress.name.length - 6)
+        )
         return {
             id: onPresses.indexOf(onPress),
             text,
@@ -57,7 +59,7 @@ function RecipeHeaderComponent({
     const { theme } = settings
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const {routeNames} = useNavigationState(state => state)
+    const { routeNames } = useNavigationState((state) => state)
 
     async function deleteRecipe(): Promise<void> {
         dispatch(myRecipeActions.deleteRecipe(recipe, navigation))
@@ -96,15 +98,13 @@ function RecipeHeaderComponent({
 
     const displayDropDown = typeof dropDownDependencies !== 'undefined'
 
-    const displayDescription = editable !== 'Edit-none' ||
-    recipe.description.length !== 0
+    const displayDescription =
+        editable !== 'Edit-none' || recipe.description.length !== 0
 
     const displayPublishIcon =
         editable === 'Edit-all' ||
         recipe.publishedAt !== null ||
         recipe.copyOf !== null
-
-
 
     let publishIconName = 'published-with-changes'
     if (recipe.copyOf !== null) {
@@ -204,11 +204,12 @@ function RecipeHeaderComponent({
             </PropertiesContainer>
 
             {/* Dropdown Menu */}
-            {displayDropDown
-            ? <DropDownMenu
-            items={dropDownItems}
-            dependencies={dropDownDependencies}
-        /> : null}
+            {displayDropDown ? (
+                <DropDownMenu
+                    items={dropDownItems}
+                    dependencies={dropDownDependencies}
+                />
+            ) : null}
         </Header>
     )
 }

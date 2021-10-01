@@ -62,8 +62,9 @@ const RecipeSectionList = ({
     FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
     const { auth } = useAppSelector((state) => state)
-    const {routeNames} = useNavigationState(state => state)
-    const displayDropdown = routeNames.includes('Browse') && recipe.authorId !== auth.user.id
+    const { routeNames } = useNavigationState((state) => state)
+    const displayDropdown =
+        routeNames.includes('Browse') && recipe.authorId !== auth.user.id
 
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)

@@ -62,7 +62,9 @@ const RecipesFlatList = React.forwardRef(
                         }
                     />
                 )}
-                onScroll={(e) => (displayDropdown ? handleScroll(e) : undefined)}
+                onScroll={(e) =>
+                    displayDropdown ? handleScroll(e) : undefined
+                }
                 onEndReached={() => (onEndReached ? onEndReached() : undefined)}
                 ListFooterComponent={<Footer />}
             />

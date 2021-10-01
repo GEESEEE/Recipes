@@ -33,7 +33,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             publishedAt: null,
             createdAt: new Date(),
             copyOf: null,
-            authorId: auth.user.id
+            authorId: auth.user.id,
         }
     }
 
