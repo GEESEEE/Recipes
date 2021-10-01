@@ -30,7 +30,7 @@ function createDropDownItems(
 // Edit-people is for editing just the people count when viewing a recipe
 // Edit-none is for editing nothing, when viewing a list of recipes
 
-interface RecipeHeaderOptions {
+interface RecipeHeaderProps {
     recipe: Recipe
     editActions: 'Edit-all' | 'Edit-people' | 'Edit-none'
     dropDownDependencies?: any[]
@@ -52,7 +52,7 @@ function RecipeHeaderComponent({
     handlePeopleCountChange,
     handlePrepareTimeChange,
     handlePublishedAtChange,
-}: RecipeHeaderOptions): JSX.Element {
+}: RecipeHeaderProps): JSX.Element {
     const { settings } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
@@ -94,18 +94,17 @@ function RecipeHeaderComponent({
         return { color: theme.grey }
     }
 
-    const dropDown =
-        typeof dropDownDependencies === 'undefined' ? null : (
-            <DropDownMenu
-                items={dropDownItems}
-                dependencies={dropDownDependencies}
-            />
-        )
+    const displayDropDown = typeof dropDownDependencies !== 'undefined'
+
+    const displayDescription = editable !== 'Edit-none' ||
+    recipe.description.length !== 0
 
     const displayPublishIcon =
         editable === 'Edit-all' ||
         recipe.publishedAt !== null ||
         recipe.copyOf !== null
+
+
 
     let publishIconName = 'published-with-changes'
     if (recipe.copyOf !== null) {
@@ -134,8 +133,7 @@ function RecipeHeaderComponent({
             </RecipeNameView>
 
             {/* Recipe Description Input Field */}
-            {editable === 'Edit-none' &&
-            recipe.description.length === 0 ? null : (
+            {displayDescription ? (
                 <DescriptionTextInput
                     editable={editable === 'Edit-all'}
                     placeholder="Description"
@@ -144,7 +142,7 @@ function RecipeHeaderComponent({
                     onChangeText={handleDescriptionChange}
                     multiline
                 />
-            )}
+            ) : null}
             <PropertiesContainer>
                 {/* Prepare Time */}
                 <PropertyView>
@@ -206,7 +204,11 @@ function RecipeHeaderComponent({
             </PropertiesContainer>
 
             {/* Dropdown Menu */}
-            {dropDown}
+            {displayDropDown
+            ? <DropDownMenu
+            items={dropDownItems}
+            dependencies={dropDownDependencies}
+        /> : null}
         </Header>
     )
 }

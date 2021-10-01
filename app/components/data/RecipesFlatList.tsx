@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
 import { useDebounce } from '@/hooks'
@@ -18,7 +18,6 @@ const RecipesFlatList = React.forwardRef(
         ref: any
     ): JSX.Element => {
         const navigation = useNavigation()
-        const route = useRoute()
 
         const isFocused = useIsFocused()
         useDebounce(
