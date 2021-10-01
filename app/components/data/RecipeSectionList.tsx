@@ -63,6 +63,7 @@ const RecipeSectionList = ({
 }: RecipeSectionListProps): JSX.Element => {
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)
+    const headerEditActions = editable ? 'Edit-all' : 'Edit-people'
 
     const [scrollPosition, setScrollPosition] = React.useState(0)
     function handleScroll(event: any): void {
@@ -118,7 +119,7 @@ const RecipeSectionList = ({
                 <View>
                     <RecipeHeader
                         recipe={recipe}
-                        editable={editable ? 'Edit-all' : 'Edit-people'}
+                        editActions={headerEditActions}
                         dropDownDependencies={dropDownDependencies}
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}

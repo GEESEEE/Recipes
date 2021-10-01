@@ -67,7 +67,7 @@ function RecipesRecyclerListView({
                     <RecipeHeaderContainer>
                         <RecipeHeader
                             recipe={data}
-                            editable="Edit-none"
+                            editActions="Edit-none"
                             onPress={() =>
                                 navigation.navigate('ViewRecipe', {
                                     recipe: data,

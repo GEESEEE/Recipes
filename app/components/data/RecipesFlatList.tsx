@@ -50,7 +50,7 @@ const RecipesFlatList = React.forwardRef(
                 renderItem={({ item }) => (
                     <MemoizedRecipeHeader
                         recipe={item}
-                        editable="Edit-none"
+                        editActions="Edit-none"
                         dropDownDependencies={dropDownDependencies}
                         onPress={() =>
                             navigation.navigate(

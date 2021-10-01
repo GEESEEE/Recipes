@@ -11,18 +11,6 @@ import { myRecipeActions } from '@/actions'
 import { ButtonIcon } from '../user-input/Buttons'
 import { recipeUtils } from '@/config'
 
-interface RecipeHeaderOptions {
-    recipe: Recipe
-    editable: 'Edit-all' | 'Edit-people' | 'Edit-none'
-    dropDownDependencies?: any[]
-    onPress?: () => void
-    handleNameChange?: (text: string) => void
-    handleDescriptionChange?: (text: string) => void
-    handlePeopleCountChange?: (text: string) => void
-    handlePrepareTimeChange?: (text: string) => void
-    handlePublishedAtChange?: () => void
-}
-
 function createDropDownItems(
     onPresses: Array<() => Promise<void>>
 ): DropDownItem[] {
@@ -36,9 +24,26 @@ function createDropDownItems(
     })
 }
 
+// Edit Actions determine what can be edited and what is displayed in this component
+// Edit-all, is for editing everything
+// Edit-people is for editing just the people count when viewing a recipe
+// Edit-none is for editing nothing, when viewing a list of recipes
+
+interface RecipeHeaderOptions {
+    recipe: Recipe
+    editActions: 'Edit-all' | 'Edit-people' | 'Edit-none'
+    dropDownDependencies?: any[]
+    onPress?: () => void
+    handleNameChange?: (text: string) => void
+    handleDescriptionChange?: (text: string) => void
+    handlePeopleCountChange?: (text: string) => void
+    handlePrepareTimeChange?: (text: string) => void
+    handlePublishedAtChange?: () => void
+}
+
 function RecipeHeaderComponent({
     recipe,
-    editable,
+    editActions: editable,
     dropDownDependencies,
     onPress,
     handleNameChange,
