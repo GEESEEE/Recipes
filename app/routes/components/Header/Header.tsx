@@ -52,16 +52,12 @@ const HeaderComponent = ({
     const insets = useSafeAreaInsets()
 
     const [openSort, toggleSort] = useToggle(false)
-    const [openSearchBar, setOpenSearchBar] = useState(false)
+    const [openSearchBar, toggleSearch] = useToggle(false)
     const [searchText, setSearchText] = useState('')
 
     const displayFilter = Config[routeName].filter
     const displaySearch = Config[routeName].search || !openSearchBar
     const displayAdd = Config[routeName].add && !openSearchBar
-
-    function toggleSearch(): void {
-        setOpenSearchBar(!openSearchBar)
-    }
 
     function searchDatabase(): void {
         if (typeof listRef?.current !== 'undefined') {

@@ -105,7 +105,7 @@ export const retrieveUserData =
             await dispatch(
                 getRecipes({
                     scopes: ['published'],
-                    sort: ['publishtime'],
+                    sort: ['-publishtime'],
                 }) as any
             )
             const authUser: AuthUser = { ...user, token }
