@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, View, Text, SectionList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { useIsFocused, useNavigationState } from '@react-navigation/native'
+import { useNavigationState } from '@react-navigation/native'
 import IngredientListItem from './IngredientListItem'
 import InstructionListItem from './InstructionListItem'
 import { RecipeHeader } from './RecipeHeader'
 import { Recipe, ListItem, Instruction, RecipeIngredient } from '@/data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
-import { useAppSelector, useDebounce } from '@/hooks'
+import { useAppSelector, useDropdownRerender } from '@/hooks'
 
 type RecipeSectionListProps = {
     recipe: Recipe
@@ -70,21 +70,7 @@ const RecipeSectionList = ({
     const editable = ['Edit', 'Create'].includes(action)
     const headerEditActions = editable ? 'Edit-all' : 'Edit-people'
 
-    const isFocused = useIsFocused()
-    useDebounce(
-        () => {
-            if (displayDropdown && isFocused) {
-                setScrollPosition(scrollPosition + 1)
-            }
-        },
-        300,
-        [isFocused]
-    )
-
-    const [scrollPosition, setScrollPosition] = React.useState(0)
-    function handleScroll(event: any): void {
-        setScrollPosition(event.nativeEvent.contentOffset.y)
-    }
+    const [scrollPosition, handleScroll] = useDropdownRerender(displayDropdown, 300)
 
     const dropDownDependencies = displayDropdown ? [scrollPosition] : undefined
 

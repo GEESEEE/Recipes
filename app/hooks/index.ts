@@ -8,6 +8,7 @@ import useAsync from './async'
 import usePrevious from './previous'
 import useArray from './array'
 import useForceUpdate from './force-update'
+import useDropdownRerender from './dropdown-rerender'
 
 export {
     usePosition,
@@ -22,4 +23,5 @@ export {
     usePrevious,
     useArray,
     useForceUpdate,
+    useDropdownRerender
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
-import { useDebounce } from '@/hooks'
+import { useDropdownRerender } from '@/hooks'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
@@ -20,21 +20,7 @@ const RecipesFlatList = React.forwardRef(
         const navigation = useNavigation()
         const displayDropdown = route.name === 'Recipes'
 
-        const isFocused = useIsFocused()
-        useDebounce(
-            () => {
-                if (displayDropdown && isFocused) {
-                    setScrollPosition(scrollPosition + 1)
-                }
-            },
-            150,
-            [isFocused]
-        )
-
-        const [scrollPosition, setScrollPosition] = React.useState(0)
-        function handleScroll(event: any): void {
-            setScrollPosition(event.nativeEvent.contentOffset.y)
-        }
+        const [scrollPosition, handleScroll] = useDropdownRerender(displayDropdown, 150)
 
         const dropDownDependencies = displayDropdown
             ? [scrollPosition, recipes.length]
