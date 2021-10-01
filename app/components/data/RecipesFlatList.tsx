@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
-import { useDropdownRerender } from '@/hooks'
+import { useAppSelector, useDropdownRerender } from '@/hooks'
+import { Loading4Dots } from '@/components/animations'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
@@ -16,9 +17,15 @@ const RecipesFlatList = React.forwardRef(
         { recipes, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
+        const {browseRecipes, settings} = useAppSelector((state) => state)
+        const { theme } = settings
+
         const route = useRoute()
         const navigation = useNavigation()
         const displayDropdown = route.name === 'Recipes'
+
+        const displayFooter = route.name === 'Browse'
+        const displayFooterLoading = browseRecipes.loading
 
         const [scrollPosition, handleScroll] = useDropdownRerender(displayDropdown, 150)
 
@@ -52,7 +59,18 @@ const RecipesFlatList = React.forwardRef(
                     displayDropdown ? handleScroll(e) : undefined
                 }
                 onEndReached={() => (onEndReached ? onEndReached() : undefined)}
-                ListFooterComponent={<Footer />}
+                ListFooterComponent={
+                displayFooter ? <FooterView>
+                    {displayFooterLoading
+                    ? <Loading4Dots
+                        backgroundColor={theme.background}
+                        dotColor={theme.primary}
+                        height={20}
+                    />
+                    : <FooterText>End of List</FooterText>}
+
+                </FooterView>
+                : null}
             />
         )
     }
@@ -71,17 +89,11 @@ const styles = StyleSheet.create({
     },
 })
 
-const Footer = (): JSX.Element => (
-    <FooterView>
-        <FooterText>End of List</FooterText>
-    </FooterView>
-)
-
 const FooterView = styled(View)`
     align-items: center;
+    padding-bottom: 10px;
 `
 
 const FooterText = styled(Text)`
     color: ${(props) => props.theme.primary};
-    padding-bottom: 10px;
 `
