@@ -18,7 +18,7 @@ type RecipeValidity = {
 }
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { indices, myRecipes } = useAppSelector((state) => state)
+    const { indices, myRecipes, auth } = useAppSelector((state) => state)
     const dispatch = useAppDispatch()
 
     function getInitialRecipe(): Recipe {
@@ -32,6 +32,8 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             instructions: [],
             publishedAt: null,
             createdAt: new Date(),
+            copyOf: null,
+            authorId: auth.user.id
         }
     }
 
@@ -196,7 +198,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     async function handleCreateRecipe(): Promise<void> {
         if (validRecipe()) {
             recipeData.createdAt = new Date()
-            dispatch(myRecipeActions.createRecipe(recipeData, navigation))
+            await dispatch(myRecipeActions.createRecipe(recipeData, navigation))
             dispatch(indicesActions.decrementRecipeId(indices.recipeId))
             clearRecipeData()
         }

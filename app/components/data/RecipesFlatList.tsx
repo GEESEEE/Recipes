@@ -20,11 +20,6 @@ const RecipesFlatList = React.forwardRef(
         const navigation = useNavigation()
         const route = useRoute()
 
-        const [scrollPosition, setScrollPosition] = React.useState(0)
-        function handleScroll(event: any): void {
-            setScrollPosition(event.nativeEvent.contentOffset.y)
-        }
-
         const isFocused = useIsFocused()
         useDebounce(
             () => {
@@ -35,6 +30,11 @@ const RecipesFlatList = React.forwardRef(
             150,
             [isFocused]
         )
+
+        const [scrollPosition, setScrollPosition] = React.useState(0)
+        function handleScroll(event: any): void {
+            setScrollPosition(event.nativeEvent.contentOffset.y)
+        }
 
         const dropDownDependencies = dropdown
             ? [scrollPosition, recipes.length]
@@ -57,7 +57,6 @@ const RecipesFlatList = React.forwardRef(
                                 'ViewRecipe' as never,
                                 {
                                     recipe: item,
-                                    dropdown: route.name === 'Browse',
                                 } as never
                             )
                         }

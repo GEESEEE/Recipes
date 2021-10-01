@@ -2,17 +2,18 @@ import React from 'react'
 import { StyleSheet, View, Text, SectionList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
+import { useIsFocused, useNavigationState } from '@react-navigation/native'
 import IngredientListItem from './IngredientListItem'
 import InstructionListItem from './InstructionListItem'
 import { RecipeHeader } from './RecipeHeader'
 import { Recipe, ListItem, Instruction, RecipeIngredient } from '@/data'
 import { ButtonBorderless } from '../user-input/Buttons'
 import { ErrorMessage } from '../user-input/ErrorMessage'
+import { useAppSelector, useDebounce } from '@/hooks'
 
 type RecipeSectionListProps = {
     recipe: Recipe
     action: 'Edit' | 'Create' | 'View'
-    dropdown?: boolean
 
     // Recipe related
     handleNameChange?: (text: string) => void
@@ -40,7 +41,6 @@ type RecipeSectionListProps = {
 const RecipeSectionList = ({
     recipe,
     action,
-    dropdown,
 
     handleNameChange,
     handleDescriptionChange,
@@ -61,6 +61,10 @@ const RecipeSectionList = ({
 
     FooterComponent,
 }: RecipeSectionListProps): JSX.Element => {
+    const { auth } = useAppSelector((state) => state)
+    const {routeNames} = useNavigationState(state => state)
+    const dropdown = routeNames.includes('Browse') && recipe.authorId !== auth.user.id
+
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)
     const headerEditActions = editable ? 'Edit-all' : 'Edit-people'
@@ -69,6 +73,17 @@ const RecipeSectionList = ({
     function handleScroll(event: any): void {
         setScrollPosition(event.nativeEvent.contentOffset.y)
     }
+
+    const isFocused = useIsFocused()
+    useDebounce(
+        () => {
+            if (dropdown && isFocused) {
+                setScrollPosition(scrollPosition + 1)
+            }
+        },
+        250,
+        [isFocused]
+    )
 
     const dropDownDependencies = dropdown ? [scrollPosition] : undefined
 

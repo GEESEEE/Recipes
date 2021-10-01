@@ -8,9 +8,8 @@ import { Recipe } from '@/data'
 
 function ViewRecipeScreen(): JSX.Element {
     const route = useRoute()
-    const { recipe, dropdown } = route.params as {
+    const { recipe } = route.params as {
         recipe: Recipe
-        dropdown: boolean
     }
 
     const people = recipe.peopleCount === 0 ? 1 : recipe.peopleCount
@@ -38,7 +37,6 @@ function ViewRecipeScreen(): JSX.Element {
             <RecipeSectionList
                 recipe={recipeData}
                 action="View"
-                dropdown={dropdown}
                 handlePeopleCountChange={(text: string) =>
                     handlePeopleCountChange(text)
                 }

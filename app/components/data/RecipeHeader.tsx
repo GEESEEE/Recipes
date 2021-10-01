@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useNavigationState } from '@react-navigation/native'
 import { Recipe } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
@@ -53,10 +53,11 @@ function RecipeHeaderComponent({
     handlePrepareTimeChange,
     handlePublishedAtChange,
 }: RecipeHeaderOptions): JSX.Element {
-    const { settings, auth } = useAppSelector((state) => state)
+    const { settings } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
+    const {routeNames} = useNavigationState(state => state)
 
     async function deleteRecipe(): Promise<void> {
         dispatch(myRecipeActions.deleteRecipe(recipe, navigation))
@@ -75,7 +76,7 @@ function RecipeHeaderComponent({
     }
 
     const dropDownFunctions = []
-    if (recipe.authorId === auth.user.id) {
+    if (routeNames.includes('Recipes')) {
         dropDownFunctions.push(editRecipe, deleteRecipe)
     } else {
         dropDownFunctions.push(copyRecipe)
