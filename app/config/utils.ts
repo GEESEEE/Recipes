@@ -14,6 +14,13 @@ export function handleNumericTextInput(
     return 0
 }
 
+export function capitalizeFirstLetter(str: string): string {
+    if (str.length > 0) {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+    return str
+}
+
 export function inElementOf(arr: string[], val: string): boolean {
     return arr.some((el) => el.includes(val))
 }

@@ -32,7 +32,7 @@ export function DropDownMenu({
         padding-end: ${iconOffset}px;
         align-self: flex-end;
         width: 101px;
-        height: ${items.length * 30 + 2}px;
+        height: 35px;
     `
 
     return (
@@ -115,13 +115,12 @@ const PopupReturn = styled(TouchableOpacity)`
 
 const ItemView = styled(TouchableOpacity)`
     justify-content: center;
-    height: 25px;
+    height: 32px;
 `
 
 const ItemText = styled(Text)`
     font-size: 15px;
-    padding: 5px;
-    padding: 10px;
+    padding-left: 10px;
     color: ${(props) => props.theme.text};
 `
 

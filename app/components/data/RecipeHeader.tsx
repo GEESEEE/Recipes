@@ -9,13 +9,14 @@ import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { myRecipeActions } from '@/actions'
 import { ButtonIcon } from '../user-input/Buttons'
-import { recipeUtils } from '@/config'
+import { recipeUtils, utils } from '@/config'
 
 function createDropDownItems(
     onPresses: Array<() => Promise<void>>
 ): DropDownItem[] {
     return onPresses.map((onPress) => {
-        const text = onPress.name.slice(0, onPress.name.length - 6)
+        // Slice recipe off the function name
+        const text = utils.capitalizeFirstLetter(onPress.name.slice(0, onPress.name.length - 6))
         return {
             id: onPresses.indexOf(onPress),
             text,
