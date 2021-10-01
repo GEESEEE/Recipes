@@ -70,7 +70,10 @@ const RecipeSectionList = ({
     const editable = ['Edit', 'Create'].includes(action)
     const headerEditActions = editable ? 'Edit-all' : 'Edit-people'
 
-    const [scrollPosition, handleScroll] = useDropdownRerender(displayDropdown, 300)
+    const [scrollPosition, handleScroll] = useDropdownRerender(
+        displayDropdown,
+        300
+    )
 
     const dropDownDependencies = displayDropdown ? [scrollPosition] : undefined
 

@@ -17,7 +17,7 @@ const RecipesFlatList = React.forwardRef(
         { recipes, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
-        const {browseRecipes, settings} = useAppSelector((state) => state)
+        const { browseRecipes, settings } = useAppSelector((state) => state)
         const { theme } = settings
 
         const route = useRoute()
@@ -27,7 +27,10 @@ const RecipesFlatList = React.forwardRef(
         const displayFooter = route.name === 'Browse'
         const displayFooterLoading = browseRecipes.loading
 
-        const [scrollPosition, handleScroll] = useDropdownRerender(displayDropdown, 150)
+        const [scrollPosition, handleScroll] = useDropdownRerender(
+            displayDropdown,
+            150
+        )
 
         const dropDownDependencies = displayDropdown
             ? [scrollPosition, recipes.length]
@@ -60,17 +63,20 @@ const RecipesFlatList = React.forwardRef(
                 }
                 onEndReached={() => (onEndReached ? onEndReached() : undefined)}
                 ListFooterComponent={
-                displayFooter ? <FooterView>
-                    {displayFooterLoading
-                    ? <Loading4Dots
-                        backgroundColor={theme.background}
-                        dotColor={theme.primary}
-                        height={20}
-                    />
-                    : <FooterText>End of List</FooterText>}
-
-                </FooterView>
-                : null}
+                    displayFooter ? (
+                        <FooterView>
+                            {displayFooterLoading ? (
+                                <Loading4Dots
+                                    backgroundColor={theme.background}
+                                    dotColor={theme.primary}
+                                    height={20}
+                                />
+                            ) : (
+                                <FooterText>End of List</FooterText>
+                            )}
+                        </FooterView>
+                    ) : null
+                }
             />
         )
     }

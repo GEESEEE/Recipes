@@ -23,5 +23,5 @@ export {
     usePrevious,
     useArray,
     useForceUpdate,
-    useDropdownRerender
+    useDropdownRerender,
 }
