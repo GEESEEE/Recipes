@@ -30,7 +30,7 @@ interface RegisterState {
     isValidEmail: boolean
 }
 
-function reducer(state: any, action: any): RegisterState {
+function reducer(state: RegisterState, action: any): RegisterState {
     switch (action.type) {
         case REGISTER_ACTIONS.USERNAME_CHANGE: {
             const { username, isValidUsername } = action.payload

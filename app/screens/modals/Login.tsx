@@ -23,7 +23,15 @@ const LOGIN_ACTIONS = {
     PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
 }
 
-function reducer(state: any, action: any): any {
+interface LoginState {
+    username: string
+    password: string
+    securePasswordText: boolean
+    isValidUsername: boolean
+    isValidPassword: boolean
+}
+
+function reducer(state: LoginState, action: any): LoginState {
     switch (action.type) {
         case LOGIN_ACTIONS.USERNAME_CHANGE: {
             const { username, isValidUsername } = action.payload
@@ -47,7 +55,7 @@ function reducer(state: any, action: any): any {
 
 interface LoginModalProps {
     navigation: any
-    showRegister: any
+    showRegister: () => void
 }
 
 function LoginModal({
@@ -59,7 +67,7 @@ function LoginModal({
 
     const insets = useSafeAreaInsets()
 
-    const initialState = {
+    const initialState: LoginState = {
         username: '',
         password: '',
         securePasswordText: true,
