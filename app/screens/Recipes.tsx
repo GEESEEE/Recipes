@@ -19,7 +19,7 @@ function RecipesScreen(): JSX.Element {
     return (
         <Container>
             <RecipesListHeader display={displayHeader} />
-            <RecipesFlatList recipes={sortedRecipes} dropdown />
+            <RecipesFlatList recipes={sortedRecipes} />
         </Container>
     )
 }

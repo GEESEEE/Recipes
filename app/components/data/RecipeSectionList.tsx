@@ -63,29 +63,29 @@ const RecipeSectionList = ({
 }: RecipeSectionListProps): JSX.Element => {
     const { auth } = useAppSelector((state) => state)
     const {routeNames} = useNavigationState(state => state)
-    const dropdown = routeNames.includes('Browse') && recipe.authorId !== auth.user.id
+    const displayDropdown = routeNames.includes('Browse') && recipe.authorId !== auth.user.id
 
     const insets = useSafeAreaInsets()
     const editable = ['Edit', 'Create'].includes(action)
     const headerEditActions = editable ? 'Edit-all' : 'Edit-people'
+
+    const isFocused = useIsFocused()
+    useDebounce(
+        () => {
+            if (displayDropdown && isFocused) {
+                setScrollPosition(scrollPosition + 1)
+            }
+        },
+        300,
+        [isFocused]
+    )
 
     const [scrollPosition, setScrollPosition] = React.useState(0)
     function handleScroll(event: any): void {
         setScrollPosition(event.nativeEvent.contentOffset.y)
     }
 
-    const isFocused = useIsFocused()
-    useDebounce(
-        () => {
-            if (dropdown && isFocused) {
-                setScrollPosition(scrollPosition + 1)
-            }
-        },
-        250,
-        [isFocused]
-    )
-
-    const dropDownDependencies = dropdown ? [scrollPosition] : undefined
+    const dropDownDependencies = displayDropdown ? [scrollPosition] : undefined
 
     const sections = [
         {
@@ -124,7 +124,7 @@ const RecipeSectionList = ({
 
     return (
         <List
-            onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
+            onScroll={(e) => (displayDropdown ? handleScroll(e) : undefined)}
             sections={sections}
             contentContainerStyle={[
                 styles.contentContainer,

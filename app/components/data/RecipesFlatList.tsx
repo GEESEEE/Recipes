@@ -1,28 +1,29 @@
 import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import styled from 'styled-components'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
 import { useDebounce } from '@/hooks'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]
-    dropdown?: boolean
     onEndReached?: () => void
 }
 
 const RecipesFlatList = React.forwardRef(
     (
-        { recipes, dropdown, onEndReached }: RecipesFlatListProps,
+        { recipes, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
+        const route = useRoute()
         const navigation = useNavigation()
+        const displayDropdown = route.name === 'Recipes'
 
         const isFocused = useIsFocused()
         useDebounce(
             () => {
-                if (dropdown && isFocused) {
+                if (displayDropdown && isFocused) {
                     setScrollPosition(scrollPosition + 1)
                 }
             },
@@ -35,7 +36,7 @@ const RecipesFlatList = React.forwardRef(
             setScrollPosition(event.nativeEvent.contentOffset.y)
         }
 
-        const dropDownDependencies = dropdown
+        const dropDownDependencies = displayDropdown
             ? [scrollPosition, recipes.length]
             : undefined
 
@@ -61,7 +62,7 @@ const RecipesFlatList = React.forwardRef(
                         }
                     />
                 )}
-                onScroll={(e) => (dropdown ? handleScroll(e) : undefined)}
+                onScroll={(e) => (displayDropdown ? handleScroll(e) : undefined)}
                 onEndReached={() => (onEndReached ? onEndReached() : undefined)}
                 ListFooterComponent={<Footer />}
             />
