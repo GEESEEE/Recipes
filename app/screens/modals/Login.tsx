@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import logo from '@assets/temp_icon.png'
+import logo from '@/assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
