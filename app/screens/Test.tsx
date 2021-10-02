@@ -1,12 +1,14 @@
 import React, { useRef } from 'react'
-import { View, Animated, Keyboard, TextInput, Text } from 'react-native'
+import { View, Animated, Keyboard, TextInput} from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import { settingsActions } from '@/redux/actions'
-import { ButtonFilled } from '../components/user-input/Buttons'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { ButtonFilled } from '@/components/user-input/Buttons'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Typography } from '@/styles'
+import { Text } from '@/components/base'
+import { Colors } from '@/styles'
+
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -67,7 +69,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         routeUtils.showPopup(navigation, 'Yes')
     }
 
-
     return (
         <Container>
             {/* <LogoView>
@@ -78,12 +79,18 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <Sample> TESTTST this shit </Sample>
+            <Text
+                type='text'
+            >
+                Yes
+            </Text>
+            <Styled
+                type='header'
+            >
+                Je moeder is een hoer
+            </Styled>
             <SampleText>Test Screen</SampleText>
-            <ButtonFilled
-                text="Log recipes"
-                onPress={() => logRecipes()}
-            />
+            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="Popup" onPress={() => showPopup()} />
             <ButtonFilled
                 text="Change Primary Color"
@@ -103,12 +110,14 @@ const Container = styled(View)`
 `
 
 const SampleText = styled(TextInput)`
+    text-align: center;
     height: 50px;
     width: 100px;
     font-size: 16px;
     color: ${(props) => props.theme.primary}
     border-width: 1px;
-    border-color: ${(props) => props.theme.primary}
+    border-color: ${(props) => props.theme.primary};
+
 `
 
 const LottieAnimation = styled(LottieView)`
@@ -125,10 +134,6 @@ const Logo = styled(Animated.Image)`
     width: 200px;
 `
 
-const Sample = styled(Text)`
+const Styled = styled(Text)`
     color: ${(props) => props.theme.primary};
-    ${Typography.text.l};
-
-    border-color: ${(props) => props.theme.primary};
-    border-width: 1px;
 `

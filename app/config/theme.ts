@@ -12,14 +12,14 @@ export type Theme = {
     error: string
 }
 
-const baseTheme = {
+const baseTheme = (): any => ({
     primary: colors.primary,
     grey: colors.grey,
-    error: colors.red,
-}
+    error: colors.red
+})
 
 export const lightTheme = (): Theme => ({
-    ...baseTheme,
+    ...baseTheme(),
     mode: 'light',
     background: colors.white,
     backgroundVariant: colors.lightestgrey,
@@ -29,7 +29,7 @@ export const lightTheme = (): Theme => ({
 })
 
 export const darkTheme = (): Theme => ({
-    ...baseTheme,
+    ...baseTheme(),
     mode: 'dark',
     background: colors.darkestgrey,
     backgroundVariant: colors.darkergrey,

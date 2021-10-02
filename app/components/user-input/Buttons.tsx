@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
 import { Loading4Dots } from '@/components/animations'
+import { Spacing } from '@/styles'
 
 export type ButtonProps = {
     text: string
@@ -17,13 +18,11 @@ const ButtonStyleGeneric = styled(TouchableHighlight)`
     flex-direction: row;
     align-items: center;
     width: 80%;
-    margin-top: 8px;
-    margin-bottom: 8px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    ${Spacing.paddingVertical('m')}
+    ${Spacing.marginVertical('m')}
 `
 
 const ButtonTextGeneric = styled(Text)`

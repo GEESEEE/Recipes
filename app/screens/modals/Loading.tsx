@@ -9,6 +9,7 @@ import { colors } from '@/config'
 function LoadingModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const insets = useSafeAreaInsets()
+
     return (
         <Modal statusBarTranslucent animationType="slide">
             <Container

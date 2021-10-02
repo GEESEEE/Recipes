@@ -1,20 +1,25 @@
 import { colors, themeUtils } from '@/config'
+import { Typography } from '@/styles'
 
 export const SETTINGS_ACTIONS = {
     SET_SETTINGS: 'setSettings',
     SET_INVERTED_COLORS: 'setInvertedColors',
     SET_THEME: 'setTheme',
     SET_COLOR: 'setColor',
+    SET_TEXT_SIZE: 'setTextSize',
     RESET_SETTINGS: 'resetSettings',
 }
 
+
 export interface Settings {
     invertedColors: boolean
+    textSize: Typography.TextSize
     theme: themeUtils.Theme
 }
 
 export const initialSettings: Settings = {
     invertedColors: false,
+    textSize: 'm',
     theme: themeUtils.darkTheme(),
 }
 
@@ -30,9 +35,8 @@ const settings = (
         case SETTINGS_ACTIONS.SET_SETTINGS: {
             const { newTheme, color, invertedColors } = action.payload
             colors.primary = color
-            let theme = getTheme(newTheme)
-            theme = { ...theme, primary: color }
-            return { theme, invertedColors }
+            const theme = { ...getTheme(newTheme), primary: color }
+            return { ...state, theme, invertedColors }
         }
 
         case SETTINGS_ACTIONS.RESET_SETTINGS: {
@@ -49,6 +53,11 @@ const settings = (
             const { newTheme } = action.payload
             const theme = getTheme(newTheme)
             return { ...state, theme }
+        }
+
+        case SETTINGS_ACTIONS.SET_TEXT_SIZE: {
+            const { textSize } = action.payload
+            return { ...state, textSize }
         }
 
         case SETTINGS_ACTIONS.SET_COLOR: {
