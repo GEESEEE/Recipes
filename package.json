@@ -12,9 +12,6 @@
         "rn:link": "react-native link",
         "rn:upgrade": "react-native upgrade"
     },
-    "resolutions": {
-        "react-native-pager-view": "^5.0.12"
-    },
     "dependencies": {
         "@react-native-async-storage/async-storage": "~1.15.0",
         "@react-native-community/hooks": "^2.6.0",

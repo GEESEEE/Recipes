@@ -4,9 +4,9 @@
         "slug": "Recipes",
         "version": "1.0.0",
         "orientation": "default",
-        "icon": "./assets/temp_icon.png",
+        "icon": "./app/assets/temp_icon.png",
         "splash": {
-            "image": "./assets/temp_icon.png",
+            "image": "./app/assets/temp_icon.png",
             "resizeMode": "contain",
             "backgroundColor": "#000000"
         },
@@ -20,12 +20,12 @@
         "android": {
             "softwareKeyboardLayoutMode": "pan",
             "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
+                "foregroundImage": "./app/assets/adaptive-icon.png",
                 "backgroundColor": "#000000"
             }
         },
         "web": {
-            "favicon": "./assets/favicon.png"
+            "favicon": "./app/assets/favicon.png"
         }
     }
 }
