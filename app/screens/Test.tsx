@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
-import { View, Animated, Keyboard, TextInput } from 'react-native'
+import { View, Animated, Keyboard, TextInput, Text } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { routeUtils } from '@/config'
+import { Typography } from '@/styles'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -66,7 +67,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         routeUtils.showPopup(navigation, 'Yes')
     }
 
-    const [loading, setLoading] = React.useState(false)
 
     return (
         <Container>
@@ -78,11 +78,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
+            <Sample> TESTTST this shit </Sample>
             <SampleText>Test Screen</SampleText>
             <ButtonFilled
                 text="Log recipes"
                 onPress={() => logRecipes()}
-                loading={loading}
             />
             <ButtonFilled text="Popup" onPress={() => showPopup()} />
             <ButtonFilled
@@ -123,4 +123,12 @@ const LogoView = styled(View)`
 const Logo = styled(Animated.Image)`
     height: 200px;
     width: 200px;
+`
+
+const Sample = styled(Text)`
+    color: ${(props) => props.theme.primary};
+    ${Typography.text.l};
+
+    border-color: ${(props) => props.theme.primary};
+    border-width: 1px;
 `
