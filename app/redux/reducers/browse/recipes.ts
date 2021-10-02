@@ -1,5 +1,5 @@
-import { Recipe } from '../../data'
-import { GetRecipeParams } from '../../services/recipe'
+import { Recipe } from '../../../data'
+import { GetRecipeParams } from '../../../services/recipe'
 
 export const BROWSE_RECIPE_ACTIONS = {
     RECIPES_START: 'addBrowseRecipesStart',

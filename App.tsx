@@ -3,7 +3,7 @@ import 'react-native-get-random-values'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { rootReducer } from '@/reducers'
+import { rootReducer } from '@/redux/reducers'
 import Wrapper from '@/Wrapper'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))

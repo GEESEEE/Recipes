@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
 import { recipeUtils, utils, routeUtils } from '@/config'
-import { MY_RECIPE_ACTIONS } from '@/reducers'
+import { MY_RECIPE_ACTIONS } from '@/redux/reducers'
 import { Instruction, Recipe, RecipeIngredient } from '@/data'
 
 export const createRecipe =

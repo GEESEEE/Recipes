@@ -3,9 +3,9 @@ import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { searchActions } from '@/actions'
+import { searchActions } from '@/redux/actions'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/reducers'
+import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/redux/reducers'
 import { FeatherButton } from '../Buttons'
 
 function FilterHeader(): JSX.Element {

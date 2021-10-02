@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
 import { RootStack } from '@/routes'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { indicesActions } from '@/actions'
+import { indicesActions } from '@/redux/actions'
 
 function Wrapper(): JSX.Element {
     const dispatch = useAppDispatch()

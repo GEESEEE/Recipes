@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { sortActions } from '@/actions'
+import { sortActions } from '@/redux/actions'
 import { utils } from '@/config'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { BROWSE_SORT_ACTIONS, MY_SORT_ACTIONS } from '@/reducers'
+import { BROWSE_SORT_ACTIONS, MY_SORT_ACTIONS } from '@/redux/reducers'
 import { MyMaterialCommunityIcons } from '../../Icons'
 import { ButtonIcon, FeatherButton } from '../Buttons'
 

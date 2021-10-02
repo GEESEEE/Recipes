@@ -1,4 +1,4 @@
-import { RecipeSortType } from '../actions/sort'
+import { RecipeSortType } from '../redux/actions/sort'
 import * as recipeService from '../services/recipe'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
 import { PaginationObject } from '../services/recipe'

@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
-import { authActions, browseRecipeActions } from '@/actions'
+import { authActions, browseRecipeActions } from '@/redux/actions'
 import { HeaderComponent } from '@/routes/components'
 import { RegisterModal, LoginModal, LoadingModal } from './modals'
 

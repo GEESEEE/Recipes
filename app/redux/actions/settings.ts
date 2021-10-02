@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { SETTINGS_ACTIONS } from '../reducers/settings'
-import * as userService from '../services/user'
+import * as userService from '../../services/user'
 
 export const setInvertedColors =
     (invertedColors: boolean) =>

@@ -6,7 +6,7 @@ import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ButtonFilled, ReturnButton } from '../../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { settingsActions } from '@/actions'
+import { settingsActions } from '@/redux/actions'
 import { colors } from '@/config'
 
 interface ColorPickerProps {

@@ -4,8 +4,8 @@ import { View, TextInput } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { FeatherButton } from '@/components/user-input/Buttons'
-import { searchActions } from '@/actions'
-import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/reducers'
+import { searchActions } from '@/redux/actions'
+import { BROWSE_SEARCH_ACTIONS, MY_SEARCH_ACTIONS } from '@/redux/reducers'
 
 const SearchBarComponent = ({
     toggle,

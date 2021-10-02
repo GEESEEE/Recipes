@@ -1,4 +1,4 @@
-import { Recipe } from '../../data'
+import { Recipe } from '../../../data'
 
 export const MY_RECIPE_ACTIONS = {
     ACTION_START: 'myRecipeActionStart',

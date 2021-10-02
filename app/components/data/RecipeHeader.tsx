@@ -7,7 +7,7 @@ import { Recipe } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
-import { myRecipeActions } from '@/actions'
+import { myRecipeActions } from '@/redux/actions'
 import { ButtonIcon } from '../user-input/Buttons'
 import { recipeUtils, utils } from '@/config'
 

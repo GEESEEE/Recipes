@@ -3,7 +3,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { sortActions } from '@/actions'
+import { sortActions } from '@/redux/actions'
 import { useAppSelector } from '@/hooks'
 import SortRow from './SortRow'
 

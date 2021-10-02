@@ -9,7 +9,7 @@ import {
 } from '../components/user-input/Buttons'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { indicesActions, myRecipeActions } from '@/actions'
+import { indicesActions, myRecipeActions } from '@/redux/actions'
 import { RecipeSectionList } from '@/components/data'
 import { routeUtils, utils } from '@/config'
 
