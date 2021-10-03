@@ -40,7 +40,7 @@ export const letterSpacing = {
 export type TextSize = 'm' | 'l' | 'xl'
 export type TextType = 'Header' | 'SubHeader' | 'Text' | 'SubText' | 'TinyText'
 
-const textSize: Record<TextSize, number> = {
+const standardTextSize: Record<TextSize, number> = {
     m: 14,
     l: 16,
     xl: 18
@@ -62,8 +62,14 @@ const textWeight: Record<TextType, string> = {
     TinyText: fontWeight.normal
 }
 
+const lineHeightMultiplier = 1.35
+
+export const fontSize = (type: TextType, size: TextSize): number => standardTextSize[size] + textOffset[type]
+export const lineHeight = (type: TextType, size: TextSize): number => fontSize(type, size) * lineHeightMultiplier
+
 export const textStyle = (type: TextType, size: TextSize): FlattenInterpolation<any> => css`
-    ${base};
-    font-size: ${textSize[size] + textOffset[type]}px;
+    ${base}
     ${textWeight[type]}
+    font-size: ${fontSize(type, size)}px;
+    line-height: ${lineHeight(type, size)}px;
 `

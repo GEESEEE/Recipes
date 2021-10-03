@@ -14,9 +14,9 @@ type TextProps = {
 & RNTextProps
 
 const Text = ({
-    style,
     children,
     type,
+    ...rest
 }: TextProps): JSX.Element => {
     const { settings } = useAppSelector((state) => state)
 
@@ -25,9 +25,8 @@ const Text = ({
     `
 
     return (
-        <StyledText
-            style={[style]}
-        >
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <StyledText {...rest}>
             {children}
         </StyledText>
     )

@@ -6,8 +6,7 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text, View } from '@/components/atoms'
-import { Colors } from '@/styles'
+import { Text, View, Button } from '@/components/atoms'
 
 
 const bigLogo = 1
@@ -84,10 +83,17 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             >
                 <StyledText
                     type='Header'
-                    paddingVertical='l'
                 >
                     Yes
                 </StyledText>
+                <StyledButton
+                    paddingHorizontal='m'
+                    paddingVertical='m'
+                    marginVertical='s'
+                    marginHorizontal='s'
+                    type='Solid'
+                    text='Yes'
+                />
             </StyledView>
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
@@ -136,9 +142,16 @@ const Logo = styled(Animated.Image)`
 
 const StyledText = styled(Text)`
     color: ${(props) => props.theme.primary};
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
 `
 
 const StyledView = styled(View)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
+const StyledButton = styled(Button)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
