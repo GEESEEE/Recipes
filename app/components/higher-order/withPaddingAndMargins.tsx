@@ -12,7 +12,7 @@ export type PaddingAndMarginProps = {
 function withPaddingAndMargin<T extends PaddingAndMarginProps>(WrappedComponent: React.ComponentType<T>):
     (props: T) => JSX.Element {
 
-    const ComponentWithPaddingAndMargins = ({
+    return ({
         marginHorizontal,
         marginVertical,
         paddingHorizontal,
@@ -36,7 +36,7 @@ function withPaddingAndMargin<T extends PaddingAndMarginProps>(WrappedComponent:
         )
     }
 
-    return ComponentWithPaddingAndMargins
+
 }
 
 export default withPaddingAndMargin

@@ -6,11 +6,9 @@ import { Typography} from '@/styles'
 import { withPaddingAndMargins } from '@/components/higher-order'
 import { PaddingAndMarginProps } from '../higher-order/withPaddingAndMargins'
 
-type TextType = 'header' | 'subHeader' | 'text' | 'subText' | 'tinyText'
-
 type TextProps = {
-    children: any
-    type: TextType
+    children: React.ReactNode
+    type: Typography.TextType
 }
 & PaddingAndMarginProps
 & RNTextProps
@@ -23,7 +21,7 @@ const Text = ({
     const { settings } = useAppSelector((state) => state)
 
     const StyledText = styled(RNText)`
-        ${Typography[type](settings.textSize)}
+        ${Typography.textStyle(type, settings.textSize)}
     `
 
     return (

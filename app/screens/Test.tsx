@@ -83,7 +83,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 marginVertical='m'
             >
                 <StyledText
-                    type='header'
+                    type='Header'
                     paddingVertical='l'
                 >
                     Yes

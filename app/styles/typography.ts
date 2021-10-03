@@ -4,21 +4,6 @@ export const base = css`
     color: ${(props) => props.theme.text};
 `
 
-// Font Sizing
-type FontSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl'
-
-const fontSizes: Record<FontSize, number> = {
-    xs: 10,
-    s: 12,
-    m: 14,
-    l: 16,
-    xl: 18,
-    xxl: 20,
-    xxxl: 22
-}
-
-export const fontSize = (size: FontSize): string => `font-size: ${fontSizes[size]}px;`
-
 // Font Weights
 export const fontWeight = {
     light: `
@@ -53,62 +38,32 @@ export const letterSpacing = {
 
 // Text styles
 export type TextSize = 'm' | 'l' | 'xl'
+export type TextType = 'Header' | 'SubHeader' | 'Text' | 'SubText' | 'TinyText'
 
-// Header
-const headers: Record<TextSize, FontSize> = {
-    m: 'xl',
-    l: 'xxl',
-    xl: 'xxxl'
+const textSize: Record<TextSize, number> = {
+    m: 14,
+    l: 16,
+    xl: 18
 }
 
-export const header = (size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
-    ${fontSize(headers[size])}
-    ${fontWeight.bold}
-`
-
-// SubHeaders
-const subHeaders: Record<TextSize, FontSize> = {
-    m: 'l',
-    l: 'xl',
-    xl: 'xxl'
+const textOffset: Record<TextType, number> = {
+    Header: 6,
+    SubHeader: 3,
+    Text: 0,
+    SubText: -2,
+    TinyText: -4
 }
 
-export const subHeader = (size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
-    ${fontSize(subHeaders[size])}
-    ${fontWeight.semiBold}
-`
-
-// Text
-export const text = (size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
-    ${fontSize(size)}
-    ${fontWeight.normal}
-`
-
-// Sub Text
-const subTexts: Record<TextSize, FontSize> = {
-    m: 's',
-    l: 'm',
-    xl: 'l'
+const textWeight: Record<TextType, string> = {
+    Header: fontWeight.bold,
+    SubHeader: fontWeight.semiBold,
+    Text: fontWeight.normal,
+    SubText: fontWeight.normal,
+    TinyText: fontWeight.normal
 }
 
-export const subText = (size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
-    ${fontSize(subTexts[size])}
-    ${fontWeight.normal}
-`
-
-// Tiny Text
-const tinyTexts: Record<TextSize, FontSize> = {
-    m: 'xs',
-    l: 's',
-    xl: 'm'
-}
-
-export const tinyText = (size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
-    ${fontSize(tinyTexts[size])}
-    ${fontWeight.normal}
+export const textStyle = (type: TextType, size: TextSize): FlattenInterpolation<any> => css`
+    ${base};
+    font-size: ${textSize[size] + textOffset[type]}px;
+    ${textWeight[type]}
 `
