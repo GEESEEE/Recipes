@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
-import { View, Animated, Keyboard, TextInput} from 'react-native'
+import { Animated, Keyboard, TextInput} from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text } from '@/components/base'
+import { Text, View } from '@/components/atoms'
 import { Colors } from '@/styles'
 
 
@@ -79,16 +79,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <Text
-                type='text'
+            <StyledView
+                marginVertical='m'
             >
-                Yes
-            </Text>
-            <Styled
-                type='header'
-            >
-                Je moeder is een hoer
-            </Styled>
+                <StyledText
+                    type='header'
+                    paddingVertical='l'
+                >
+                    Yes
+                </StyledText>
+            </StyledView>
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="Popup" onPress={() => showPopup()} />
@@ -134,6 +134,11 @@ const Logo = styled(Animated.Image)`
     width: 200px;
 `
 
-const Styled = styled(Text)`
+const StyledText = styled(Text)`
     color: ${(props) => props.theme.primary};
+`
+
+const StyledView = styled(View)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
 `

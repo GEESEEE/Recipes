@@ -2,38 +2,27 @@ import React from 'react'
 import { Text as RNText, TextProps as RNTextProps } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
-import { Spacing, Typography} from '@/styles'
+import { Typography} from '@/styles'
+import { withPaddingAndMargins } from '@/components/higher-order'
+import { PaddingAndMarginProps } from '../higher-order/withPaddingAndMargins'
 
 type TextType = 'header' | 'subHeader' | 'text' | 'subText' | 'tinyText'
 
 type TextProps = {
     children: any
     type: TextType
-    marginVertical?: Spacing.Size
-    marginHorizontal?: Spacing.Size
-    paddingVertical?: Spacing.Size
-    paddingHorizontal?: Spacing.Size
-} & RNTextProps
+}
+& PaddingAndMarginProps
+& RNTextProps
 
 const Text = ({
     style,
     children,
     type,
-    marginVertical,
-    marginHorizontal,
-    paddingVertical,
-    paddingHorizontal
 }: TextProps): JSX.Element => {
     const { settings } = useAppSelector((state) => state)
 
-    let styles = ''
-    if (marginVertical) styles += Spacing.marginVertical(marginVertical)
-    if (marginHorizontal) styles += Spacing.marginHorizontal(marginHorizontal)
-    if (paddingVertical) styles += Spacing.paddingVertical(paddingVertical)
-    if (paddingHorizontal) styles += Spacing.paddingHorizontal(paddingHorizontal)
-
     const StyledText = styled(RNText)`
-        ${styles}
         ${Typography[type](settings.textSize)}
     `
 
@@ -46,4 +35,4 @@ const Text = ({
     )
 }
 
-export default Text
+export default withPaddingAndMargins(Text)
