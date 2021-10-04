@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard, TextInput} from 'react-native'
+import { Animated, Keyboard} from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -7,7 +7,7 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text, View, Button, Icon } from '@/components/base'
+import { Text, View, Button, Icon, TextInput, IconButton } from '@/components/atoms'
 
 
 const bigLogo = 1
@@ -101,6 +101,21 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 textType='Text'
                 onPress={() => toggle()}
                 loading={loading}
+            />
+
+            <Icon
+                Type={Feather}
+                name='image'
+                size='l'
+                color={theme.error}
+            />
+
+            <IconButton
+                onPress={() => console.log("Icon Button")}
+                IconType={Feather}
+                iconName='image'
+                size='l'
+                color={theme.error}
             />
 
             <SampleText>Test Screen</SampleText>
