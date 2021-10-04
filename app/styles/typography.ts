@@ -22,7 +22,6 @@ export const fontWeight: Record<TextWeight, string> = {
     extraBold: `
         font-family: sans-serif-medium;
         font-weight: bold;
-
     `,
 }
 

@@ -1,8 +1,5 @@
 import React from 'react'
 import { Text as RNText, TextProps as RNTextProps } from 'react-native'
-import styled from 'styled-components'
-import { useAppSelector } from '@/hooks'
-import { Typography} from '@/styles'
 import { withLayoutProps, LayoutProps, withTextProps, TextProps } from '@/components/higher-order'
 
 type Props = {

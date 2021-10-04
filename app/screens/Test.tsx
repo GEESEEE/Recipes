@@ -86,7 +86,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             >
                 <StyledText
                     type='Text'
-                    weight='extraBold'
+                    weight='bold'
                 >
                     Yes
                 </StyledText>
@@ -97,11 +97,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <Button
                 marginVertical='m'
                 type='Solid'
-                text='LOG RECIPES'
+                text='Log Recipes'
                 textType='Text'
+                color={theme.error}
                 onPress={() => toggle()}
                 loading={loading}
-
             />
 
             <Icon
@@ -116,15 +116,19 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 iconName='image'
                 size='s'
                 color={theme.grey}
+                paddingVertical='m'
             />
             <SampleText
-                type='TinyText'
-                weight='extraBold'
-                
+                type='Text'
+                weight='bold'
+                backgroundColor={theme.primary}
+                roundness='s'
+                paddingHorizontal='s'
             >
                 Goeie test dit
-            </SampleText>
-            <SampleText>Test Screen</SampleText>
+            </SampleText
+            >
+            <Sample>Test Screen</Sample>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
             <ButtonFilled
@@ -145,6 +149,12 @@ const Container = styled(View)`
 `
 
 const SampleText = styled(TextInput)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
+const Sample = styled(RNTextInput)`
+    color: ${(props) => props.theme.primary}
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `

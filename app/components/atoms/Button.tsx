@@ -60,6 +60,8 @@ const Button = ({
     textType = textType || 'Text'
     textWeight = textWeight || 'bold'
 
+    if (type === TYPE.Clear) textWeight = 'normal'
+
     width = width || 'l'
     roundness = roundness || 's'
 
