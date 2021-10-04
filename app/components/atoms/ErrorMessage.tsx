@@ -22,12 +22,12 @@ function ErrorMessage({ errorMessage, size }: ErrorMessageProps): JSX.Element {
 
     const textType = sizeMap[size]
 
-    const Padding = styled(View)`
-        height: ${Typography.lineHeight(textType, settings.textSize)}px;
-    `
-
     const ErrorMessageView = styled(Text)`
         color: ${(props) => props.theme.error};
+    `
+
+    const Padding = styled(View)`
+        height: ${Typography.lineHeight(textType, settings.textSize)}px;
     `
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, TouchableHighlight, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
@@ -14,7 +14,7 @@ export type ButtonProps = {
     loading?: boolean
 }
 
-const ButtonStyleGeneric = styled(TouchableHighlight)`
+const ButtonStyleGeneric = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
     width: 80%;

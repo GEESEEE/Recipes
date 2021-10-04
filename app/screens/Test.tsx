@@ -14,6 +14,7 @@ import {
     Icon,
     TextInput,
     IconButton,
+    ErrorMessage
 } from '@/components/atoms'
 
 const bigLogo = 1
@@ -76,6 +77,12 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     const [loading, toggle] = useToggle(false)
+    const [errorMessage, setErrorMessage] = React.useState('Error Jwz')
+
+    function toggleError(): void {
+        if (errorMessage.length > 0) setErrorMessage('')
+        else setErrorMessage('Error Jwz')
+    }
 
     return (
         <Container>
@@ -121,9 +128,12 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             >
                 Goeie test dit
             </SampleText>
-            <Sample>Test Screen</Sample>
-            <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
-            <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
+            <ErrorMessage
+                errorMessage={errorMessage}
+                size='m'
+            />
+            <Button type='Solid' text="LOG RECIPES" onPress={() => logRecipes()} marginVertical='m' width='m' />
+            <ButtonFilled text="ToggleError" onPress={() => toggleError()} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
