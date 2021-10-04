@@ -1,11 +1,8 @@
 import { css, FlattenInterpolation } from 'styled-components'
 
-export const base = css`
-    color: ${(props) => props.theme.text};
-`
-
 // Font Weights
-export const fontWeight = {
+export type TextWeight = 'light' | 'normal' | 'semiBold' | 'bold' | 'extraBold'
+export const fontWeight: Record<TextWeight, string> = {
     light: `
         font-family: sans-serif-light;
         font-weight: normal;
@@ -27,13 +24,6 @@ export const fontWeight = {
         font-weight: bold;
 
     `,
-}
-
-// Letter Spacing
-export const letterSpacing = {
-    m: ` letter-spacing: 1px; `,
-    l: ` letter-spacing: 2px; `,
-    xl: ` letter-spacing: 3px ;`,
 }
 
 // Text styles
@@ -67,9 +57,15 @@ const lineHeightMultiplier = 1.35
 export const fontSize = (type: TextType, size: TextSize): number => standardTextSize[size] + textOffset[type]
 export const lineHeight = (type: TextType, size: TextSize): number => fontSize(type, size) * lineHeightMultiplier
 
-export const textStyle = (type: TextType, size: TextSize): FlattenInterpolation<any> => css`
-    ${base}
+type textOptions = {
+    color?: string
+    weight?: TextWeight
+}
+
+export const textStyle = (type: TextType, size: TextSize, options?: textOptions): FlattenInterpolation<any> => css`
     ${textWeight[type]}
     font-size: ${fontSize(type, size)}px;
     line-height: ${lineHeight(type, size)}px;
+    color: ${(props) => options?.color || props.theme.text};
+    ${options?.weight ? fontWeight[options?.weight] : undefined}
 `

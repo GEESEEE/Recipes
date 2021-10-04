@@ -44,8 +44,7 @@ function Loading4Dots({
                 source={LoadingAnimation}
                 colorFilters={colorFilters}
                 autoSize
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{ height, width: height ? undefined : '100%' }}
+                style={{ height }}
                 autoPlay
                 loop
             />
@@ -56,7 +55,6 @@ function Loading4Dots({
 export default Loading4Dots
 
 const Container = styled(View)`
-    flex: 1;
     align-items: center;
     justify-content: center;
 `

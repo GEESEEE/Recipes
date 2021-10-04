@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
 import { Text, View, Button } from '@/components/atoms'
 
@@ -68,6 +68,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         routeUtils.showPopup(navigation, 'Yes')
     }
 
+    const [loading, toggle] = useToggle(false)
+
     return (
         <Container>
             {/* <LogoView>
@@ -82,22 +84,25 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 marginVertical='m'
             >
                 <StyledText
-                    type='Header'
+                    type='Text'
+                    weight='extraBold'
                 >
                     Yes
                 </StyledText>
-                <StyledButton
-                    paddingHorizontal='m'
-                    paddingVertical='m'
-                    marginVertical='s'
-                    marginHorizontal='s'
-                    type='Solid'
-                    text='Yes'
-                />
+
+
             </StyledView>
+            <Button
+                marginVertical='m'
+                type='Outline'
+                text='LOG RECIPES'
+                textType='Text'
+                onPress={() => toggle()}
+                loading={loading}
+            />
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
-            <ButtonFilled text="Popup" onPress={() => showPopup()} />
+            <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
@@ -141,17 +146,11 @@ const Logo = styled(Animated.Image)`
 `
 
 const StyledText = styled(Text)`
-    color: ${(props) => props.theme.primary};
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
 
 const StyledView = styled(View)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
-const StyledButton = styled(Button)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `

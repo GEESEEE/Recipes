@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Spacing } from '@/styles'
 
 export type PaddingAndMarginProps = {
+    padding?: Spacing.Size
+    margin?: Spacing.Size
     marginVertical?: Spacing.Size
     marginHorizontal?: Spacing.Size
     paddingVertical?: Spacing.Size
@@ -13,6 +15,8 @@ function withPaddingAndMargin<T extends PaddingAndMarginProps>(WrappedComponent:
     (props: T) => JSX.Element {
 
     return ({
+        padding,
+        margin,
         marginHorizontal,
         marginVertical,
         paddingHorizontal,
@@ -21,6 +25,8 @@ function withPaddingAndMargin<T extends PaddingAndMarginProps>(WrappedComponent:
     }: T): JSX.Element => {
 
         let styles = ''
+        if (padding) styles += Spacing.padding(padding)
+        if (margin) styles += Spacing.margin(margin)
         if (marginVertical) styles += Spacing.marginVertical(marginVertical)
         if (marginHorizontal) styles += Spacing.marginHorizontal(marginHorizontal)
         if (paddingVertical) styles += Spacing.paddingVertical(paddingVertical)

@@ -10,11 +10,10 @@ type ViewProps = {
 
 const View = ({
     children,
-    style,
+    ...rest
 }: ViewProps): JSX.Element => (
-    <RNView
-        style={[style]}
-    >
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <RNView {...rest}>
         {children}
     </RNView>
     )
