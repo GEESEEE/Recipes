@@ -10,14 +10,12 @@ export type Theme = {
     grey: string
     greyVariant: string
     error: string
-    transparent: string
 }
 
 const baseTheme = (): any => ({
     primary: colors.primary,
     grey: colors.grey,
     error: colors.red,
-    transparent: colors.transparent,
 })
 
 export const lightTheme = (): Theme => ({

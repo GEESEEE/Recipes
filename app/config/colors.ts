@@ -11,7 +11,7 @@ export default {
     darkestgrey: '#101010',
     black: '#030303',
 
-    red: '#f00',
+    red: '#ff0000',
     transparent: 'rgba(0,0,0,0)',
 
     primaryBlue: '#4ecdc4',
