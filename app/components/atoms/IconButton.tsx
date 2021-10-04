@@ -3,48 +3,44 @@ import styled from 'styled-components'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
+import { Spacing } from '@/styles'
+import Icon from '../base/Icon'
 
 type IconButtonProps = {
     onPress: () => void
     IconType: any
     iconName: string
+
+    color?: string
+    size?: Spacing.Size
 }
 & PaddingAndMarginProps
 & TouchableOpacityProps
 
 function IconButton({
     onPress,
-    disabled,
-
     IconType,
     iconName,
 
+    color,
+    size,
+
     ...rest
 }: IconButtonProps): JSX.Element {
-    const { settings } = useAppSelector((state) => state)
-    const { theme } = settings
-
-    const StyledTouchable = styled(TouchableOpacity)`
-
-    `
-
-    const StyledIcon = styled(IconType)`
-
-    `
 
     return (
-        <StyledTouchable
+        <TouchableOpacity
             onPress={onPress}
-            disabled={disabled}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
-            <StyledIcon
+            <Icon
+                Type={IconType}
                 name={iconName}
-                color={theme.primary}
-                size={20}
+                color={color}
+                size={size}
             />
-        </StyledTouchable>
+        </TouchableOpacity>
     )
 }
 

@@ -45,7 +45,7 @@ const borderRadii: Record<Size, number> = {
 
 export const borderRadius = (size: Size): string => `border-radius: ${borderRadii[size]}px;`
 
-const iconSize: Record<Size, number> = {
+export const iconSize: Record<Size, number> = {
     s: 20,
     m: 25,
     l: 30,

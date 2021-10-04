@@ -7,7 +7,7 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text, View, Button, IconButton } from '@/components/atoms'
+import { Text, View, Button, Icon } from '@/components/base'
 
 
 const bigLogo = 1
@@ -103,11 +103,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 loading={loading}
             />
 
-            <IconButton
-                onPress={() => console.log("Icon Pressed")}
-                IconType={Feather}
-                iconName='sidebar'
-            />
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
