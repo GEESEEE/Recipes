@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'

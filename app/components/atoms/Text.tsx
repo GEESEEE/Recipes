@@ -7,7 +7,7 @@ import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/highe
 
 type TextProps = {
     children: React.ReactNode
-    type: Typography.TextType
+    type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string
 }
@@ -22,6 +22,8 @@ const Text = ({
     ...rest
 }: TextProps): JSX.Element => {
     const { settings } = useAppSelector((state) => state)
+
+    type = type || 'Text'
 
     const StyledText = styled(RNText)`
         ${Typography.textStyle(type, settings.textSize, {color, weight})}

@@ -1,10 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import Icon from './Icon'
 import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
-import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
-import Icon from '../base/Icon'
 
 type IconButtonProps = {
     onPress: () => void
@@ -27,7 +25,7 @@ function IconButton({
 
     ...rest
 }: IconButtonProps): JSX.Element {
-
+    console.log("Button", onPress, IconType, iconName, size, color)
     return (
         <TouchableOpacity
             onPress={onPress}
