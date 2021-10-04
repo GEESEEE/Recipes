@@ -7,13 +7,15 @@ import * as LoadingAnimation from '@/assets/animations/Loading4Dots.json'
 interface Loading4DotsProps {
     backgroundColor: string
     dotColor: string
-    height?: number
+    height?: number | string
+    width?: number | string
 }
 
 function Loading4Dots({
     backgroundColor,
     dotColor,
     height,
+    width
 }: Loading4DotsProps): JSX.Element {
     const colorFilters = [
         {
@@ -43,8 +45,8 @@ function Loading4Dots({
             <Lottie
                 source={LoadingAnimation}
                 colorFilters={colorFilters}
-                autoSize
-                style={{ height }}
+
+                style={{ height, width }}
                 autoPlay
                 loop
             />

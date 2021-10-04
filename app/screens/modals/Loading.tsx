@@ -23,6 +23,7 @@ function LoadingModal(): JSX.Element {
                 <Loading4Dots
                     backgroundColor={theme.background}
                     dotColor={colors.primaryBlue}
+                    width='100%'
                 />
             </Container>
         </Modal>
@@ -34,4 +35,6 @@ export default LoadingModal
 const Container = styled(View)`
     flex: 1;
     background-color: ${(props) => props.theme.background};
+    align-items: center;
+    justify-content: center;
 `

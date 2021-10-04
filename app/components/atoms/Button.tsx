@@ -5,11 +5,18 @@ import Text from './Text'
 import View from './View'
 import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
 import { Loading4Dots } from '@/components/animations'
-import { Typography, Buttons, Spacing } from '@/styles'
+import { Typography, Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
+type ButtonType = 'Solid' | 'Outline' | 'Clear'
+const TYPE = {
+    Solid: 'Solid',
+    Outline: 'Outline',
+    Clear: 'Clear',
+}
+
 type ButtonProps = {
-    type: Buttons.ButtonType
+    type: ButtonType
     color?: string
     backgroundColor?: string
 
@@ -51,7 +58,7 @@ const Button = ({
         color = theme.grey
     }
     backgroundColor = backgroundColor || theme.background
-    const borderColor = type === Buttons.TYPE.Outline ? color : backgroundColor
+    const borderColor = type === TYPE.Outline ? color : backgroundColor
 
 
 
@@ -62,7 +69,7 @@ const Button = ({
     roundness = roundness || 's'
 
     // If solid, swap colors
-    if (type === Buttons.TYPE.Solid) {
+    if (type === TYPE.Solid) {
         const temp = color
         color = backgroundColor
         backgroundColor = temp
