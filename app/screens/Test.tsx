@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard} from 'react-native'
+import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -101,6 +101,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 textType='Text'
                 onPress={() => toggle()}
                 loading={loading}
+
             />
 
             <Icon
@@ -109,15 +110,22 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 size='l'
                 color={theme.error}
             />
+            <RNTextInput
 
+            >
+                Goeie test dit
+            </RNTextInput>
             <IconButton
                 onPress={() => console.log("Icon Button")}
                 IconType={Feather}
                 iconName='image'
-                size='l'
-                color={theme.error}
+                size='s'
+                color={theme.grey}
             />
-
+            <MySampleTextInput
+            >
+                Goeie test dit
+            </MySampleTextInput>
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
@@ -138,15 +146,14 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const SampleText = styled(TextInput)`
-    text-align: center;
-    height: 50px;
-    width: 100px;
-    font-size: 16px;
-    color: ${(props) => props.theme.primary}
+const SampleText = styled(RNTextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
+`
 
+const MySampleTextInput = styled(TextInput)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
 `
 
 const LottieAnimation = styled(LottieView)`

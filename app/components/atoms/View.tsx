@@ -1,11 +1,11 @@
 import React from 'react'
 import { View as RNView, ViewProps as RNViewProps} from 'react-native'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '../higher-order'
+import { withLayoutProps, LayoutProps } from '../higher-order'
 
 type ViewProps = {
-    children: React.ReactNode
+    children?: React.ReactNode | Element[]
 }
-& PaddingAndMarginProps
+& LayoutProps
 & RNViewProps
 
 const View = ({
@@ -18,5 +18,5 @@ const View = ({
     </RNView>
     )
 
-export default withPaddingAndMargins(View)
+export default withLayoutProps(View)
 

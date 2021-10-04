@@ -1,3 +1,3 @@
-import withPaddingAndMargins, { PaddingAndMarginProps} from "./withPaddingAndMargins";
+import withLayoutProps, { LayoutProps} from "./withLayoutProps";
 
-export { withPaddingAndMargins, PaddingAndMarginProps }
+export { withLayoutProps, LayoutProps}

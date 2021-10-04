@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import Icon from './Icon'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
 
 type IconButtonProps = {
@@ -12,7 +12,7 @@ type IconButtonProps = {
     color?: string
     size?: Spacing.Size
 }
-& PaddingAndMarginProps
+& LayoutProps
 & TouchableOpacityProps
 
 function IconButton({
@@ -25,7 +25,6 @@ function IconButton({
 
     ...rest
 }: IconButtonProps): JSX.Element {
-    console.log("Button", onPress, IconType, iconName, size, color)
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -42,4 +41,4 @@ function IconButton({
     )
 }
 
-export default withPaddingAndMargins(IconButton)
+export default withLayoutProps(IconButton)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
 
@@ -10,7 +10,7 @@ type IconProps = {
     color?: string
     size?: Spacing.Size
 }
-& PaddingAndMarginProps
+& LayoutProps
 
 function IconButton({
     Type: IconType,
@@ -33,4 +33,4 @@ function IconButton({
     )
 }
 
-export default withPaddingAndMargins(IconButton)
+export default withLayoutProps(IconButton)

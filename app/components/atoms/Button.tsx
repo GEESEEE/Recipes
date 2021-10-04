@@ -3,7 +3,7 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import styled from 'styled-components'
 import Text from './Text'
 import View from './View'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Loading4Dots } from '@/components/animations'
 import { Typography, Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'
@@ -24,13 +24,10 @@ type ButtonProps = {
     textType?: Typography.TextType
     textWeight?: Typography.TextWeight
 
-    roundness?: Spacing.Size
-    width?: Spacing.Size
-
     loading?: boolean
     onPress: () => void
 }
-& PaddingAndMarginProps
+& LayoutProps
 & TouchableOpacityProps
 
 const Button = ({
@@ -63,7 +60,7 @@ const Button = ({
     textType = textType || 'Text'
     textWeight = textWeight || 'bold'
 
-    width = width || 'm'
+    width = width || 'l'
     roundness = roundness || 's'
 
     // If solid, swap colors
@@ -113,4 +110,4 @@ const Button = ({
         </StyledTouchable>
     )}
 
-export default withPaddingAndMargins(Button)
+export default withLayoutProps(Button)

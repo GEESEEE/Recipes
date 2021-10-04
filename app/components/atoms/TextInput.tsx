@@ -1,7 +1,7 @@
 import React from 'react'
 import { TextInput as RNTextInput, TextInputProps as RNTextInputProps } from 'react-native'
 import styled from 'styled-components'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
@@ -9,7 +9,7 @@ type TextInputProps = {
     children: React.ReactNode
     type?: Typography.TextType
 }
-& PaddingAndMarginProps
+& LayoutProps
 & RNTextInputProps
 
 function TextInput({
@@ -28,7 +28,8 @@ function TextInput({
 
     return (
         <StyledTextInput
-
+            placeholderTextColor={theme.grey}
+            autoCapitalize='none'
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
@@ -37,4 +38,4 @@ function TextInput({
     )
 }
 
-export default withPaddingAndMargins(TextInput)
+export default withLayoutProps(TextInput)

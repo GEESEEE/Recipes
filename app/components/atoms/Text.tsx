@@ -3,7 +3,7 @@ import { Text as RNText, TextProps as RNTextProps } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography} from '@/styles'
-import { withPaddingAndMargins, PaddingAndMarginProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 type TextProps = {
     children: React.ReactNode
@@ -11,7 +11,7 @@ type TextProps = {
     weight?: Typography.TextWeight
     color?: string
 }
-& PaddingAndMarginProps
+& LayoutProps
 & RNTextProps
 
 const Text = ({
@@ -40,4 +40,4 @@ const Text = ({
     )
 }
 
-export default withPaddingAndMargins(Text)
+export default withLayoutProps(Text)
