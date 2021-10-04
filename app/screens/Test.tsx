@@ -2,11 +2,12 @@ import React, { useRef } from 'react'
 import { Animated, Keyboard, TextInput} from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
+import Feather from 'react-native-vector-icons/Feather'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text, View, Button } from '@/components/atoms'
+import { Text, View, Button, IconButton } from '@/components/atoms'
 
 
 const bigLogo = 1
@@ -81,7 +82,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <StyledView
-                marginVertical='m'
+                marginVertical='s'
             >
                 <StyledText
                     type='Text'
@@ -92,13 +93,20 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
 
             </StyledView>
+
             <Button
                 marginVertical='m'
-                type='Outline'
+                type='Solid'
                 text='LOG RECIPES'
                 textType='Text'
                 onPress={() => toggle()}
                 loading={loading}
+            />
+
+            <IconButton
+                onPress={() => console.log("Icon Pressed")}
+                IconType={Feather}
+                iconName='sidebar'
             />
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />

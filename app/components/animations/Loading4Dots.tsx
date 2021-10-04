@@ -17,28 +17,16 @@ function Loading4Dots({
     height,
     width
 }: Loading4DotsProps): JSX.Element {
-    const colorFilters = [
-        {
-            keypath: 'Back',
-            color: backgroundColor,
-        },
-        {
-            keypath: 'Dot1',
-            color: dotColor,
-        },
-        {
-            keypath: 'Dot2',
-            color: dotColor,
-        },
-        {
-            keypath: 'Dot3',
-            color: dotColor,
-        },
-        {
-            keypath: 'Dot4',
-            color: dotColor,
-        },
-    ]
+    const dots = Array.from({length: 4}, (_, i) => i + 1)
+    const colorFilters = dots.map(dot => ({
+        keypath: `Dot${dot}`,
+        color: dotColor
+    }))
+    colorFilters.push({
+        keypath: 'Back',
+        color: backgroundColor,
+    },)
+
 
     return (
         <Container>

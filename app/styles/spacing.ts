@@ -1,5 +1,6 @@
 export type Size = 's' | 'm' | 'l'
 
+// Spacing
 const spacings: Record<Size, number> = {
     s: 4,
     m: 8,
@@ -18,13 +19,15 @@ export const marginVertical = (size: Size): string => `margin-vertical: ${spacin
 
 export const marginHorizontal = (size: Size): string => `margin-horizontal: ${spacings[size]}px;`
 
-const sizing: Record<Size, number> = {
+
+// Sizing
+const widths: Record<Size, number> = {
     s: 30,
     m: 60,
     l: 90
 }
 
-export const width = (size: Size): string => `width: ${sizing[size]}%`
+export const width = (size: Size): string => `width: ${widths[size]}%`
 
 const borderWidths: Record<Size, number> = {
     s: 1,
@@ -41,3 +44,10 @@ const borderRadii: Record<Size, number> = {
 }
 
 export const borderRadius = (size: Size): string => `border-radius: ${borderRadii[size]}px;`
+
+const iconSize: Record<Size, number> = {
+    s: 20,
+    m: 25,
+    l: 30,
+}
+

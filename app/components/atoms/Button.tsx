@@ -58,14 +58,12 @@ const Button = ({
         color = theme.grey
     }
     backgroundColor = backgroundColor || theme.background
-    const borderColor = type === TYPE.Outline ? color : backgroundColor
-
-
+    const borderColor = type === TYPE.Clear ? backgroundColor : color
 
     textType = textType || 'Text'
     textWeight = textWeight || 'bold'
 
-    width = width || 'l'
+    width = width || 'm'
     roundness = roundness || 's'
 
     // If solid, swap colors
@@ -94,8 +92,7 @@ const Button = ({
             {...rest}
         >
             <View
-                paddingVertical='m'
-                paddingHorizontal='m'
+                paddingVertical='s'
             >
                 {loading
                     ? <Loading4Dots
@@ -117,4 +114,3 @@ const Button = ({
     )}
 
 export default withPaddingAndMargins(Button)
-
