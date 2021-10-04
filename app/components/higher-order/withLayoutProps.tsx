@@ -13,12 +13,11 @@ export type LayoutProps = {
 
     roundness?: Spacing.Size
     width?: Spacing.Size
-
 }
 
-function withLayoutProps<T extends LayoutProps>(WrappedComponent: React.ComponentType<T>):
-    (props: T) => JSX.Element {
-
+function withLayoutProps<T extends LayoutProps>(
+    WrappedComponent: React.ComponentType<T>
+): (props: T) => JSX.Element {
     return ({
         padding,
         paddingHorizontal,
@@ -33,15 +32,16 @@ function withLayoutProps<T extends LayoutProps>(WrappedComponent: React.Componen
 
         ...rest
     }: T): JSX.Element => {
-
         let styles = ''
         if (padding) styles += Spacing.padding(padding)
         if (paddingVertical) styles += Spacing.paddingVertical(paddingVertical)
-        if (paddingHorizontal) styles += Spacing.paddingHorizontal(paddingHorizontal)
+        if (paddingHorizontal)
+            styles += Spacing.paddingHorizontal(paddingHorizontal)
 
         if (margin) styles += Spacing.margin(margin)
         if (marginVertical) styles += Spacing.marginVertical(marginVertical)
-        if (marginHorizontal) styles += Spacing.marginHorizontal(marginHorizontal)
+        if (marginHorizontal)
+            styles += Spacing.marginHorizontal(marginHorizontal)
 
         if (roundness) styles += Spacing.borderRadius(roundness)
         if (width) styles += Spacing.width(width)
@@ -52,11 +52,9 @@ function withLayoutProps<T extends LayoutProps>(WrappedComponent: React.Componen
 
         return (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <StyledComponent {...rest}/>
+            <StyledComponent {...rest} />
         )
     }
-
-
 }
 
 export default withLayoutProps

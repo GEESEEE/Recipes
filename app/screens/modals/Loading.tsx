@@ -23,7 +23,7 @@ function LoadingModal(): JSX.Element {
                 <Loading4Dots
                     backgroundColor={theme.background}
                     dotColor={colors.primaryBlue}
-                    width='100%'
+                    width="100%"
                 />
             </Container>
         </Modal>

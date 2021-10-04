@@ -26,9 +26,8 @@ type ButtonProps = {
 
     loading?: boolean
     onPress: () => void
-}
-& LayoutProps
-& TouchableOpacityProps
+} & LayoutProps &
+    TouchableOpacityProps
 
 const Button = ({
     type,
@@ -90,26 +89,24 @@ const Button = ({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
-            <View
-                paddingVertical='s'
-            >
-                {loading
-                    ? <Loading4Dots
+            <View paddingVertical="s">
+                {loading ? (
+                    <Loading4Dots
                         backgroundColor={backgroundColor}
                         dotColor={color}
-                        height={Typography.lineHeight(textType, settings.textSize)}
+                        height={Typography.lineHeight(
+                            textType,
+                            settings.textSize
+                        )}
                     />
-
-                    : <Text
-                        type={textType}
-                        color={color}
-                        weight={textWeight}
-                    >
+                ) : (
+                    <Text type={textType} color={color} weight={textWeight}>
                         {text}
                     </Text>
-                }
+                )}
             </View>
         </StyledTouchable>
-    )}
+    )
+}
 
 export default withLayoutProps(Button)

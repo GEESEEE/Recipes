@@ -32,7 +32,7 @@ export type TextType = 'Header' | 'SubHeader' | 'Text' | 'SubText' | 'TinyText'
 const standardTextSize: Record<TextSize, number> = {
     m: 14,
     l: 16,
-    xl: 18
+    xl: 18,
 }
 
 const textOffset: Record<TextType, number> = {
@@ -40,7 +40,7 @@ const textOffset: Record<TextType, number> = {
     SubHeader: 3,
     Text: 0,
     SubText: -2,
-    TinyText: -4
+    TinyText: -4,
 }
 
 const textWeight: Record<TextType, string> = {
@@ -48,20 +48,26 @@ const textWeight: Record<TextType, string> = {
     SubHeader: fontWeight.semiBold,
     Text: fontWeight.normal,
     SubText: fontWeight.normal,
-    TinyText: fontWeight.normal
+    TinyText: fontWeight.normal,
 }
 
 const lineHeightMultiplier = 1.35
 
-export const fontSize = (type: TextType, size: TextSize): number => standardTextSize[size] + textOffset[type]
-export const lineHeight = (type: TextType, size: TextSize): number => fontSize(type, size) * lineHeightMultiplier
+export const fontSize = (type: TextType, size: TextSize): number =>
+    standardTextSize[size] + textOffset[type]
+export const lineHeight = (type: TextType, size: TextSize): number =>
+    fontSize(type, size) * lineHeightMultiplier
 
 type textOptions = {
     color?: string
     weight?: TextWeight
 }
 
-export const textStyle = (type: TextType, size: TextSize, options?: textOptions): FlattenInterpolation<any> => css`
+export const textStyle = (
+    type: TextType,
+    size: TextSize,
+    options?: textOptions
+): FlattenInterpolation<any> => css`
     font-size: ${fontSize(type, size)}px;
     line-height: ${lineHeight(type, size)}px;
     color: ${(props) => options?.color || props.theme.text};

@@ -7,8 +7,14 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { Text, View, Button, Icon, TextInput, IconButton } from '@/components/atoms'
-
+import {
+    Text,
+    View,
+    Button,
+    Icon,
+    TextInput,
+    IconButton,
+} from '@/components/atoms'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -81,53 +87,40 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <StyledView
-                marginVertical='s'
-            >
-                <StyledText
-                    type='Text'
-                    weight='bold'
-                >
+            <StyledView marginVertical="s">
+                <StyledText type="Text" weight="bold">
                     Yes
                 </StyledText>
-
-
             </StyledView>
 
             <Button
-                marginVertical='m'
-                type='Solid'
-                text='Log Recipes'
-                textType='Text'
+                marginVertical="m"
+                type="Solid"
+                text="Log Recipes"
+                textType="Text"
                 color={theme.error}
                 onPress={() => toggle()}
                 loading={loading}
             />
 
-            <Icon
-                Type={Feather}
-                name='image'
-                size='l'
-                color={theme.error}
-            />
+            <Icon Type={Feather} name="image" size="l" color={theme.error} />
             <IconButton
-                onPress={() => console.log("Icon Button")}
+                onPress={() => console.log('Icon Button')}
                 IconType={Feather}
-                iconName='image'
-                size='s'
+                iconName="image"
+                size="s"
                 color={theme.grey}
-                paddingVertical='m'
+                paddingVertical="m"
             />
             <SampleText
-                type='Text'
-                weight='bold'
+                type="Text"
+                weight="bold"
                 backgroundColor={theme.primary}
-                roundness='s'
-                paddingHorizontal='s'
+                roundness="s"
+                paddingHorizontal="s"
             >
                 Goeie test dit
-            </SampleText
-            >
+            </SampleText>
             <Sample>Test Screen</Sample>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />

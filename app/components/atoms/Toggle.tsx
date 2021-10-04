@@ -6,9 +6,8 @@ import { useAppSelector } from '@/hooks'
 type ToggleProps = {
     switchValue: boolean
     onValueChange: (val: boolean) => void
-}
-& LayoutProps
-& SwitchProps
+} & LayoutProps &
+    SwitchProps
 
 function Toggle({
     switchValue,
@@ -29,7 +28,6 @@ function Toggle({
                 false: theme.backgroundVariant,
             }}
             thumbColor={thumbColor}
-
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />

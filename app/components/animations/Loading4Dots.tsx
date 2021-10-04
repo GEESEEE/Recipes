@@ -15,25 +15,23 @@ function Loading4Dots({
     backgroundColor,
     dotColor,
     height,
-    width
+    width,
 }: Loading4DotsProps): JSX.Element {
-    const dots = Array.from({length: 4}, (_, i) => i + 1)
-    const colorFilters = dots.map(dot => ({
+    const dots = Array.from({ length: 4 }, (_, i) => i + 1)
+    const colorFilters = dots.map((dot) => ({
         keypath: `Dot${dot}`,
-        color: dotColor
+        color: dotColor,
     }))
     colorFilters.push({
         keypath: 'Back',
         color: backgroundColor,
-    },)
-
+    })
 
     return (
         <Container>
             <Lottie
                 source={LoadingAnimation}
                 colorFilters={colorFilters}
-
                 style={{ height, width }}
                 autoPlay
                 loop

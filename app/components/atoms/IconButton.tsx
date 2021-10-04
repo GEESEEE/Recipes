@@ -11,9 +11,8 @@ type IconButtonProps = {
 
     color?: string
     size?: Spacing.Size
-}
-& LayoutProps
-& TouchableOpacityProps
+} & LayoutProps &
+    TouchableOpacityProps
 
 function IconButton({
     onPress,
@@ -31,12 +30,7 @@ function IconButton({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
-            <Icon
-                Type={IconType}
-                name={iconName}
-                color={color}
-                size={size}
-            />
+            <Icon Type={IconType} name={iconName} color={color} size={size} />
         </TouchableOpacity>
     )
 }

@@ -16,10 +16,7 @@ const sizeMap: Record<Spacing.Size, Typography.TextType> = {
     l: 'Text',
 }
 
-function ErrorMessage({
-    errorMessage,
-    size,
-}: ErrorMessageProps): JSX.Element {
+function ErrorMessage({ errorMessage, size }: ErrorMessageProps): JSX.Element {
     const { settings } = useAppSelector((state) => state)
     size = size || 's'
 
@@ -36,9 +33,7 @@ function ErrorMessage({
     return (
         <Container>
             {errorMessage ? (
-                <ErrorMessageView
-                    type={textType}
-                >
+                <ErrorMessageView type={textType}>
                     {errorMessage}
                 </ErrorMessageView>
             ) : (

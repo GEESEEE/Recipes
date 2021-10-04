@@ -9,8 +9,7 @@ type IconProps = {
 
     color?: string
     size?: Spacing.Size
-}
-& LayoutProps
+} & LayoutProps
 
 function IconButton({
     Type: IconType,
@@ -24,13 +23,7 @@ function IconButton({
     color = color || theme.primary
     size = size || 'm'
 
-    return (
-        <IconType
-            name={name}
-            color={color}
-            size={Spacing.iconSize[size]}
-        />
-    )
+    return <IconType name={name} color={color} size={Spacing.iconSize[size]} />
 }
 
 export default withLayoutProps(IconButton)

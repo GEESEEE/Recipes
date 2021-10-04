@@ -10,7 +10,6 @@ export const SETTINGS_ACTIONS = {
     RESET_SETTINGS: 'resetSettings',
 }
 
-
 export interface Settings {
     invertedColors: boolean
     textSize: Typography.TextSize
