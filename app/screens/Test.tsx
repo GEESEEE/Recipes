@@ -110,11 +110,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 size='l'
                 color={theme.error}
             />
-            <RNTextInput
-
-            >
-                Goeie test dit
-            </RNTextInput>
             <IconButton
                 onPress={() => console.log("Icon Button")}
                 IconType={Feather}
@@ -122,10 +117,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 size='s'
                 color={theme.grey}
             />
-            <MySampleTextInput
+            <SampleText
+                type='TinyText'
+                weight='extraBold'
+                
             >
                 Goeie test dit
-            </MySampleTextInput>
+            </SampleText>
             <SampleText>Test Screen</SampleText>
             <ButtonFilled text="Log recipes" onPress={() => logRecipes()} />
             <ButtonFilled text="ToggleLoading" onPress={() => toggle()} />
@@ -146,12 +144,7 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const SampleText = styled(RNTextInput)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
-const MySampleTextInput = styled(TextInput)`
+const SampleText = styled(TextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `

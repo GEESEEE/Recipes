@@ -3,41 +3,25 @@ import { Text as RNText, TextProps as RNTextProps } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography} from '@/styles'
-import { withLayoutProps, LayoutProps } from '@/components/higher-order'
+import { withLayoutProps, LayoutProps, withTextProps, TextProps } from '@/components/higher-order'
 
-type TextProps = {
-    children: React.ReactNode
-    type?: Typography.TextType
-    weight?: Typography.TextWeight
-    color?: string
+type Props = {
+    children?: React.ReactNode | Element[]
 }
+& TextProps
 & LayoutProps
 & RNTextProps
 
 const Text = ({
     children,
-    type,
-    weight,
-    color,
     ...rest
-}: TextProps): JSX.Element => {
-    const { settings } = useAppSelector((state) => state)
-
-    type = type || 'Text'
-
-    const StyledText = styled(RNText)`
-        ${Typography.textStyle(type, settings.textSize, {color, weight})}
-    `
-
-    return (
-
-        <StyledText
+}: Props): JSX.Element => (
+        <RNText
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
             {children}
-        </StyledText>
+        </RNText>
     )
-}
 
-export default withLayoutProps(Text)
+export default withLayoutProps(withTextProps(Text))

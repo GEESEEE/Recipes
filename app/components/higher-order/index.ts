@@ -1,3 +1,4 @@
 import withLayoutProps, { LayoutProps} from "./withLayoutProps";
+import withTextProps, { TextProps } from "./withTextProps"
 
-export { withLayoutProps, LayoutProps}
+export { withLayoutProps, LayoutProps, withTextProps, TextProps }

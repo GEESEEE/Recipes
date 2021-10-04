@@ -63,9 +63,8 @@ type textOptions = {
 }
 
 export const textStyle = (type: TextType, size: TextSize, options?: textOptions): FlattenInterpolation<any> => css`
-    ${textWeight[type]}
     font-size: ${fontSize(type, size)}px;
     line-height: ${lineHeight(type, size)}px;
     color: ${(props) => options?.color || props.theme.text};
-    ${options?.weight ? fontWeight[options?.weight] : undefined}
+    ${options?.weight ? fontWeight[options?.weight] : textWeight[type]}
 `
