@@ -34,14 +34,14 @@ const TextInputWithIcons = ({
                 roundness='s'
                 width='l'
             >
-                {leftIcon}
+                {leftIcon || null}
                 <StyledTextInput
                     placeholder={placeholder}
-                    secureTextEntry={secureTextEntry}
+                    secureTextEntry={secureTextEntry || false}
                     onChangeText={(text) => onChangeText(text)}
                     onEndEditing={(e) => {if (onEndEditing) onEndEditing(e.nativeEvent.text) }}
                 />
-                {rightIcon}
+                {rightIcon || null}
             </InputFieldContainer>
             <ErrorMessage errorMessage={errorMessage}/>
         </Container>

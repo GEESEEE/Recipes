@@ -107,12 +107,12 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             />
 
             <TextInputWithIcons
-            leftIcon={
-                <Icon
-                    Type={Icons.Feather}
-                    name='log-out'
-                />
-            }
+                leftIcon={
+                    <Icon
+                        Type={Icons.MyFeather}
+                        name='log-out'
+                    />
+                }
                 onChangeText={(text) => console.log(text)}
                 placeholder='Placeholder'
             />

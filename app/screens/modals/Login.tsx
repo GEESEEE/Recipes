@@ -16,6 +16,8 @@ import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+
+import { Icon, Icons } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 const LOGIN_ACTIONS = {
@@ -63,7 +65,8 @@ function LoginModal({
     navigation,
     showRegister,
 }: LoginModalProps): JSX.Element {
-    const { auth } = useAppSelector((state) => state)
+    const { auth, settings } = useAppSelector((state) => state)
+    const { theme } = settings
     const dispatch = useAppDispatch()
 
     const insets = useSafeAreaInsets()
@@ -142,8 +145,14 @@ function LoginModal({
                 </LogoView>
 
                 {/* Email Input Field */}
-                <InputFieldRounded
-                    leftIcon={<MyFontAwesome name="user-o" />}
+                <TextInputWithIcons
+                    leftIcon={
+                        <Icon
+                            Type={Icons.MyFontAwesome}
+                            name='user-o'
+                            color={theme.grey}
+                        />
+                    }
                     onChangeText={(text: string) =>
                         handleUsernameInputChange(text)
                     }
