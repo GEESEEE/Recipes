@@ -7,19 +7,16 @@ import {
     TextProps,
 } from '@/components/higher-order'
 
-type Props = {
-    children?: React.ReactNode | Element[]
-} & TextProps &
+type Props = TextProps &
     LayoutProps &
     RNTextProps
 
-const Text = ({ children, ...rest }: Props): JSX.Element => (
+const Text = ({...rest }: Props): JSX.Element => (
     <RNText
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
-    >
-        {children}
-    </RNText>
+    />
+
 )
 
 export default withLayoutProps(withTextProps(Text))

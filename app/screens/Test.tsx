@@ -14,8 +14,10 @@ import {
     Icon,
     TextInput,
     IconButton,
-    ErrorMessage
+    ErrorMessage,
+    Icons
 } from '@/components/atoms'
+import { TextInputWithIcons } from '@/components/molecules'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -94,12 +96,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <StyledView marginVertical="s">
-                <StyledText type="Text" weight="bold">
-                    Yes
-                </StyledText>
-            </StyledView>
-
             <Button
                 marginVertical="m"
                 type="Solid"
@@ -110,28 +106,21 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 loading={loading}
             />
 
-            <Icon Type={Feather} name="image" size="l" color={theme.error} />
-            <IconButton
-                onPress={() => console.log('Icon Button')}
-                IconType={Feather}
-                iconName="image"
-                size="s"
-                color={theme.grey}
-                paddingVertical="m"
+            <TextInputWithIcons
+            leftIcon={
+                <Icon
+                    Type={Icons.Feather}
+                    name='log-out'
+                />
+            }
+                onChangeText={(text) => console.log(text)}
+                placeholder='Placeholder'
             />
-            <SampleText
-                type="Text"
-                weight="bold"
-                backgroundColor={theme.background}
-                roundness="s"
-            >
-                Goeie test dit
-            </SampleText>
-            <ErrorMessage
-                errorMessage={errorMessage}
-                size='m'
+
+            <Button type='Solid' text="LOG RECIPES" onPress={() => logRecipes()} marginVertical='m'
+                width='m'
+                backgroundColor={theme.error}
             />
-            <Button type='Solid' text="LOG RECIPES" onPress={() => logRecipes()} marginVertical='m' width='m' />
             <ButtonFilled text="ToggleError" onPress={() => toggleError()} />
             <ButtonFilled
                 text="Change Primary Color"
@@ -183,4 +172,5 @@ const StyledText = styled(Text)`
 const StyledView = styled(View)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
+    height: 50px;
 `

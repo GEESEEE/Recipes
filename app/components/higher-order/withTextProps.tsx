@@ -4,7 +4,7 @@ import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
 export type TextProps = {
-    children: React.ReactNode
+    children?: React.ReactNode
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string

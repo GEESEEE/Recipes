@@ -16,6 +16,7 @@ import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+import { TextInputWithIcons } from '@/components/molecules'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',

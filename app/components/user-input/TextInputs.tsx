@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, TextInput } from 'react-native'
-
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { ErrorMessage } from './ErrorMessage'
