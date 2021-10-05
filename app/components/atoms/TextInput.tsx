@@ -11,6 +11,7 @@ import {
     TextProps,
 } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
+import { Spacing } from '@/styles'
 
 type TextInputProps = {
     children: React.ReactNode
@@ -22,15 +23,18 @@ type TextInputProps = {
 function TextInput({
     children,
     backgroundColor,
+    paddingHorizontal,
     ...rest
 }: TextInputProps): JSX.Element {
     const { settings } = useAppSelector((state) => state)
     const { theme } = settings
 
     backgroundColor = backgroundColor || theme.background
+    paddingHorizontal = paddingHorizontal || 'm'
 
     const StyledTextInput = styled(RNTextInput)`
         background-color: ${backgroundColor};
+        ${Spacing.paddingHorizontal(paddingHorizontal)}
     `
 
     return (

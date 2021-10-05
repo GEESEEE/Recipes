@@ -122,9 +122,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <SampleText
                 type="Text"
                 weight="bold"
-                backgroundColor={theme.primary}
+                backgroundColor={theme.background}
                 roundness="s"
-                paddingHorizontal="s"
             >
                 Goeie test dit
             </SampleText>
