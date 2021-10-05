@@ -30,7 +30,7 @@ export const TextInputWithIcons = ({
                 backgroundColor={theme.backgroundVariant}
                 paddingHorizontal='m'
                 paddingVertical='s'
-                roundness='s'
+                borderRadius='s'
                 width='l'
             >
                 {leftIcon || null}

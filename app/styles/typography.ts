@@ -29,13 +29,13 @@ export const fontWeight: Record<TextWeight, string> = {
 export type TextSize = 'm' | 'l' | 'xl'
 export type TextType = 'Header' | 'SubHeader' | 'Text' | 'SubText' | 'TinyText'
 
-const standardTextSize: Record<TextSize, number> = {
+export const standardTextSize: Record<TextSize, number> = {
     m: 14,
     l: 16,
     xl: 18,
 }
 
-const textOffset: Record<TextType, number> = {
+export const textOffset: Record<TextType, number> = {
     Header: 6,
     SubHeader: 3,
     Text: 0,
@@ -43,7 +43,7 @@ const textOffset: Record<TextType, number> = {
     TinyText: -4,
 }
 
-const textWeight: Record<TextType, string> = {
+export const textWeight: Record<TextType, string> = {
     Header: fontWeight.bold,
     SubHeader: fontWeight.semiBold,
     Text: fontWeight.normal,
@@ -51,7 +51,7 @@ const textWeight: Record<TextType, string> = {
     TinyText: fontWeight.normal,
 }
 
-const lineHeightMultiplier = 1.35
+export const lineHeightMultiplier = 1.35
 
 export const fontSize = (type: TextType, size: TextSize): number =>
     standardTextSize[size] + textOffset[type]

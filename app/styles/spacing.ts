@@ -3,7 +3,7 @@ import * as Typography from './typography'
 export type Size = 's' | 'm' | 'l'
 
 // Spacing
-const spacings: Record<Size, number> = {
+export const spacings: Record<Size, number> = {
     s: 4,
     m: 8,
     l: 12,
@@ -31,7 +31,7 @@ export const marginHorizontal = (size: Size): string =>
 
 
 // Sizing
-const widths: Record<Size, number> = {
+export const widths: Record<Size, number> = {
     s: 30,
     m: 60,
     l: 90,
@@ -48,7 +48,7 @@ const borderWidths: Record<Size, number> = {
 export const borderWidth = (size: Size): string =>
     `border-width: ${borderWidths[size]}px;`
 
-const borderRadii: Record<Size, number> = {
+export const borderRadii: Record<Size, number> = {
     s: 10,
     m: 15,
     l: 20,
@@ -57,13 +57,13 @@ const borderRadii: Record<Size, number> = {
 export const borderRadius = (size: Size): string =>
     `border-radius: ${borderRadii[size]}px;`
 
-const standardIconSize: Record<Size, number> = {
+export const standardIconSize: Record<Size, number> = {
     s: 20,
     m: 23,
     l: 26,
 }
 
-const iconOffset: Record<Typography.TextSize, number> = {
+export const iconOffset: Record<Typography.TextSize, number> = {
     m: 0,
     l: 4,
     xl: 8

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
+import { Animated, Keyboard, TextInput as RNTextInput, Text } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -7,17 +7,9 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import {
-    Text,
-    View,
-    Button,
-    Icon,
-    TextInput,
-    IconButton,
-    ErrorMessage,
-    Icons
-} from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+
+import { View } from '@/components/atoms'
+import { InputFieldRounded } from '@/components/user-input/TextInputs'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -92,37 +84,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <Button
-                marginVertical="m"
-                type="Solid"
-                text="Log Recipes"
-                textType="Text"
-                color={theme.error}
-                onPress={() => toggle()}
-                loading={loading}
-            />
-
-            <Text
-                type='Header'
-            >{username} </Text>
-
-            <TextInput
-                onChangeText={(text) => setUsername(text)}
-            >{username} </TextInput>
-
-            <TextInputWithIcons
-                leftIcon={
-                    <Icon
-                        Type={Icons.MyFeather}
-                        name='log-out'
-                    />
-                }
-                onChangeText={(text) => setUsername(text)}
-                placeholder='Placeholder'
-            />
-
-            <Button type='Solid' text="LOG RECIPES" onPress={() => logRecipes()} marginVertical='m'
-                width='m'
+            <StyledView
+                marginVertical='m'
             />
             <ButtonFilled text="Show Popup" onPress={() => showPopup()} />
             <ButtonFilled
@@ -142,10 +105,6 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const SampleText = styled(TextInput)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
 
 const Sample = styled(RNTextInput)`
     color: ${(props) => props.theme.primary}
@@ -167,13 +126,9 @@ const Logo = styled(Animated.Image)`
     width: 200px;
 `
 
-const StyledText = styled(Text)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
 const StyledView = styled(View)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
     height: 50px;
+    width: 50px;
 `

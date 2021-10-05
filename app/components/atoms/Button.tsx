@@ -38,8 +38,7 @@ const Button = ({
     textType,
     textWeight,
 
-    width,
-    roundness,
+    borderRadius,
 
     loading,
     onPress,
@@ -61,8 +60,7 @@ const Button = ({
 
     if (type === TYPE.Clear) textWeight = 'normal'
 
-    width = width || 'l'
-    roundness = roundness || 's'
+    borderRadius = borderRadius || 's'
 
     // If solid, swap colors
     if (type === TYPE.Solid) {
@@ -78,8 +76,7 @@ const Button = ({
         background-color: ${backgroundColor};
         border-width: 2px;
         border-color: ${borderColor};
-        ${Spacing.width(width)}
-        ${Spacing.borderRadius(roundness)}
+        ${Spacing.borderRadius(borderRadius)}
     `
 
     return (

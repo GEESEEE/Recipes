@@ -18,9 +18,6 @@ import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
-import { Icon, Icons, TextInput } from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
-
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
     PASSWORD_CHANGE: 'passwordChange',
@@ -150,40 +147,6 @@ function LoginModal({
                     placeholder="Your Username or Email"
                     onChangeText={(text: string) =>
                         handleUsernameInputChange(text)
-                    }
-                />
-                <RNTextInput
-                    placeholderTextColor={theme.grey}
-                    placeholder="Your Username or Email"
-                    onChangeText={(text: string) =>
-                        handlePasswordInputChange(text)
-                    }
-                />
-
-                <TextInput
-                    placeholder="Your Username or Email"
-                    onChangeText={(text: string) =>
-                        handlePasswordInputChange(text)
-                    }
-                />
-
-                {/* Email Input Field */}
-                <TextInputWithIcons
-                    leftIcon={
-                        <Icon
-                            Type={Icons.MyFontAwesome}
-                            name='user-o'
-                            color={theme.grey}
-                        />
-                    }
-                    onChangeText={(text: string) =>
-                        handleUsernameInputChange(text)
-                    }
-                    placeholder="Your Username or Email"
-                    errorMessage={
-                        !data.isValidUsername
-                            ? 'Invalid Username or Email'
-                            : undefined
                     }
                 />
 

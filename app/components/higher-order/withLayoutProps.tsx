@@ -3,58 +3,41 @@ import styled from 'styled-components'
 import { Spacing } from '@/styles'
 
 export type LayoutProps = {
-    padding?: Spacing.Size
     paddingVertical?: Spacing.Size
     paddingHorizontal?: Spacing.Size
 
-    margin?: Spacing.Size
     marginVertical?: Spacing.Size
     marginHorizontal?: Spacing.Size
 
-    roundness?: Spacing.Size
-    width?: Spacing.Size
+    borderRadius?: Spacing.Size
 }
 
 function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<T>
 ): (props: T) => JSX.Element {
-    return ({
-        padding,
+
+    const StyledComponent = styled(WrappedComponent as any).attrs(({
         paddingHorizontal,
         paddingVertical,
 
-        margin,
         marginHorizontal,
         marginVertical,
 
-        roundness,
-        width,
+        borderRadius,
+    }: T) => ({
+        paddingVertical: (paddingVertical ? Spacing.spacings[paddingVertical] : 0),
+        paddingHorizontal: (paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0),
+        marginVertical: (marginVertical ? Spacing.spacings[marginVertical] : 0),
+        marginHorizontal: (marginHorizontal ? Spacing.spacings[marginHorizontal] : 0),
+        borderRadius: (borderRadius ? Spacing.borderRadii[borderRadius] : 0),
+    }))``
 
-        ...rest
-    }: T): JSX.Element => {
-        let styles = ''
-        if (padding) styles += Spacing.padding(padding)
-        if (paddingVertical) styles += Spacing.paddingVertical(paddingVertical)
-        if (paddingHorizontal)
-            styles += Spacing.paddingHorizontal(paddingHorizontal)
-
-        if (margin) styles += Spacing.margin(margin)
-        if (marginVertical) styles += Spacing.marginVertical(marginVertical)
-        if (marginHorizontal)
-            styles += Spacing.marginHorizontal(marginHorizontal)
-
-        if (roundness) styles += Spacing.borderRadius(roundness)
-        if (width) styles += Spacing.width(width)
-
-        const StyledComponent = styled(WrappedComponent as any)`
-            ${styles}
-        `
-
-        return (
+    return ({...rest}: T): JSX.Element => (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <StyledComponent {...rest} />
         )
-    }
 }
 
 export default withLayoutProps
+
+

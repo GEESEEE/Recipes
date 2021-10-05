@@ -13,9 +13,7 @@ import {
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
 
-type TextInputProps = LayoutProps &
-    TextProps &
-    RNTextInputProps
+type TextInputProps = RNTextInputProps
 
 const TextInput = ({
     ...rest
@@ -27,15 +25,20 @@ const TextInput = ({
         <StyledTextInput
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
+
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )
 }
 
-export default withLayoutProps(withTextProps(TextInput))
+export default TextInput
 
-const StyledTextInput = styled(RNTextInput).attrs(({paddingHorizontal}: TextInputProps) => ({
+type Props = {
+    paddingHorizontal?: Spacing.Size
+}
+
+const StyledTextInput = styled(RNTextInput).attrs(({paddingHorizontal}: Props) => ({
     paddingHorizontal: Spacing.spacings[paddingHorizontal || 'm']
 }))`
 
