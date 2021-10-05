@@ -1,4 +1,3 @@
-import { Theme } from './settings'
 
 export const AUTH_ACTIONS = {
     AWAIT_RESPONSE: 'authLoadingStart',

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TextInput as RNTextInput } from 'react-native'
 import { TextInput, View, ErrorMessage } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
 
@@ -14,7 +13,7 @@ type TextInputWithIconsProps = {
     rightIcon?: React.ReactNode
 }
 
-const TextInputWithIcons = ({
+export const TextInputWithIcons = ({
     onChangeText,
     placeholder,
     onEndEditing,
@@ -38,7 +37,7 @@ const TextInputWithIcons = ({
                 <StyledTextInput
                     placeholder={placeholder}
                     secureTextEntry={secureTextEntry || false}
-                    onChangeText={(text) => onChangeText(text)}
+                    onChangeText={(t) => onChangeText(t)}
                     onEndEditing={(e) => {if (onEndEditing) onEndEditing(e.nativeEvent.text) }}
                 />
                 {rightIcon || null}

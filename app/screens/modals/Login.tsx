@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Animated,
     Modal,
+    TextInput as RNTextInput
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
@@ -17,7 +18,7 @@ import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
-import { Icon, Icons } from '@/components/atoms'
+import { Icon, Icons, TextInput } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 const LOGIN_ACTIONS = {
@@ -143,6 +144,28 @@ function LoginModal({
                 <LogoView>
                     <Logo source={logo} />
                 </LogoView>
+
+                <RNTextInput
+                    placeholderTextColor={theme.grey}
+                    placeholder="Your Username or Email"
+                    onChangeText={(text: string) =>
+                        handleUsernameInputChange(text)
+                    }
+                />
+                <RNTextInput
+                    placeholderTextColor={theme.grey}
+                    placeholder="Your Username or Email"
+                    onChangeText={(text: string) =>
+                        handlePasswordInputChange(text)
+                    }
+                />
+
+                <TextInput
+                    placeholder="Your Username or Email"
+                    onChangeText={(text: string) =>
+                        handlePasswordInputChange(text)
+                    }
+                />
 
                 {/* Email Input Field */}
                 <TextInputWithIcons

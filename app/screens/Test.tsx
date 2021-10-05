@@ -79,12 +79,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     const [loading, toggle] = useToggle(false)
-    const [errorMessage, setErrorMessage] = React.useState('Error Jwz')
 
-    function toggleError(): void {
-        if (errorMessage.length > 0) setErrorMessage('')
-        else setErrorMessage('Error Jwz')
-    }
+    const [username, setUsername] = React.useState('')
 
     return (
         <Container>
@@ -106,6 +102,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 loading={loading}
             />
 
+            <Text
+                type='Header'
+            >{username} </Text>
+
+            <TextInput
+                onChangeText={(text) => setUsername(text)}
+            >{username} </TextInput>
+
             <TextInputWithIcons
                 leftIcon={
                     <Icon
@@ -113,15 +117,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                         name='log-out'
                     />
                 }
-                onChangeText={(text) => console.log(text)}
+                onChangeText={(text) => setUsername(text)}
                 placeholder='Placeholder'
             />
 
             <Button type='Solid' text="LOG RECIPES" onPress={() => logRecipes()} marginVertical='m'
                 width='m'
-                backgroundColor={theme.error}
             />
-            <ButtonFilled text="ToggleError" onPress={() => toggleError()} />
+            <ButtonFilled text="Show Popup" onPress={() => showPopup()} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}

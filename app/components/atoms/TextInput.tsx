@@ -17,11 +17,10 @@ type TextInputProps = LayoutProps &
     TextProps &
     RNTextInputProps
 
-function TextInput({
-    children,
+const TextInput = ({
     paddingHorizontal,
     ...rest
-}: TextInputProps): JSX.Element {
+}: TextInputProps): JSX.Element => {
     const { settings } = useAppSelector((state) => state)
     const { theme } = settings
 
@@ -37,9 +36,7 @@ function TextInput({
             autoCapitalize="none"
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
-        >
-            {children}
-        </StyledTextInput>
+        />
     )
 }
 
