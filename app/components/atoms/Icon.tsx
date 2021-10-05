@@ -11,7 +11,7 @@ type IconProps = {
     size?: Spacing.Size
 } & LayoutProps
 
-function IconButton({
+function Icon({
     Type: IconType,
     name,
     color,
@@ -21,9 +21,9 @@ function IconButton({
     const { theme } = settings
 
     color = color || theme.primary
-    size = size || 'm'
+    size = size || 's'
 
-    return <IconType name={name} color={color} size={Spacing.iconSize[size]} />
+    return <IconType name={name} color={color} size={Spacing.iconSize(size, settings.textSize)} />
 }
 
-export default withLayoutProps(IconButton)
+export default withLayoutProps(Icon)

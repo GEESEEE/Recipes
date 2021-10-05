@@ -18,8 +18,6 @@ const ButtonStyleGeneric = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
     width: 80%;
-    padding-left: 10px;
-    padding-right: 10px;
     border-radius: 20px;
     ${Spacing.paddingVertical('m')}
     ${Spacing.marginVertical('m')}

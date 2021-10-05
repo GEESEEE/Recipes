@@ -1,3 +1,5 @@
+import * as Typography from './typography'
+
 export type Size = 's' | 'm' | 'l'
 
 // Spacing
@@ -52,8 +54,18 @@ const borderRadii: Record<Size, number> = {
 export const borderRadius = (size: Size): string =>
     `border-radius: ${borderRadii[size]}px;`
 
-export const iconSize: Record<Size, number> = {
+const standardIconSize: Record<Size, number> = {
     s: 20,
-    m: 25,
-    l: 30,
+    m: 23,
+    l: 26,
 }
+
+const iconOffset: Record<Typography.TextSize, number> = {
+    m: 0,
+    l: 4,
+    xl: 8
+}
+
+export const iconSize = (
+    size: Size, textSize: Typography.TextSize
+): number => standardIconSize[size] + iconOffset[textSize]
