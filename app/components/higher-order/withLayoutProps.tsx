@@ -10,6 +10,7 @@ export type LayoutProps = {
     marginHorizontal?: Spacing.Size
 
     borderRadius?: Spacing.Size
+    width?: Spacing.Size
 }
 
 function withLayoutProps<T extends LayoutProps>(
@@ -24,12 +25,14 @@ function withLayoutProps<T extends LayoutProps>(
         marginVertical,
 
         borderRadius,
+        width,
     }: T) => ({
         paddingVertical: (paddingVertical ? Spacing.spacings[paddingVertical] : 0),
         paddingHorizontal: (paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0),
         marginVertical: (marginVertical ? Spacing.spacings[marginVertical] : 0),
         marginHorizontal: (marginHorizontal ? Spacing.spacings[marginHorizontal] : 0),
         borderRadius: (borderRadius ? Spacing.borderRadii[borderRadius] : 0),
+        width: (width ? `${Spacing.widths[width]}%` : undefined)
     }))``
 
     return ({...rest}: T): JSX.Element => (

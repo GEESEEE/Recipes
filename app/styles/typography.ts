@@ -2,27 +2,27 @@ import { css, FlattenInterpolation } from 'styled-components'
 
 // Font Weights
 export type TextWeight = 'light' | 'normal' | 'semiBold' | 'bold' | 'extraBold'
-export const fontWeight: Record<TextWeight, string> = {
-    light: `
-        font-family: sans-serif-light;
-        font-weight: normal;
-    `,
-    normal: `
-        font-family: sans-serif;
-        font-weight: normal;
-    `,
-    semiBold: `
-        font-family: sans-serif-medium;
-        font-weight: normal;
-    `,
-    bold: `
-        font-family: sans-serif;
-        font-weight: bold;
-    `,
-    extraBold: `
-        font-family: sans-serif-medium;
-        font-weight: bold;
-    `,
+export const fontWeight: Record<TextWeight, any> = {
+    light: {
+        fontFamily: 'sans-serif-light',
+        fontWeight: 'normal'
+    },
+    normal: {
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
+    },
+    semiBold: {
+        fontFamily: 'sans-serif-medium',
+        fontWeight: 'normal',
+    },
+    bold: {
+        fontFamily: 'sans-serif',
+        fontWeight: 'bold',
+    },
+    extraBold: {
+        fontFamily: 'sans-serif-medium',
+        fontWeight: 'bold',
+    },
 }
 
 // Text styles
@@ -43,12 +43,12 @@ export const textOffset: Record<TextType, number> = {
     TinyText: -4,
 }
 
-export const textWeight: Record<TextType, string> = {
-    Header: fontWeight.bold,
-    SubHeader: fontWeight.semiBold,
-    Text: fontWeight.normal,
-    SubText: fontWeight.normal,
-    TinyText: fontWeight.normal,
+export const textWeight: Record<TextType, TextWeight> = {
+    Header: 'bold',
+    SubHeader: 'semiBold',
+    Text: 'normal',
+    SubText: 'normal',
+    TinyText: 'normal',
 }
 
 export const lineHeightMultiplier = 1.35

@@ -9,19 +9,17 @@ type ViewProps = {
 } & LayoutProps &
     RNViewProps
 
-const View = ({ children, backgroundColor, ...rest }: ViewProps): JSX.Element => {
-    let styles = ''
-
-    if (backgroundColor) styles += `background-color: ${backgroundColor};`
-
-    const StyledView = styled(RNView)`
-        ${styles}
-    `
-
-    return (
+const View = ({ children, ...rest }: ViewProps): JSX.Element => (
         // eslint-disable-next-line react/jsx-props-no-spreading
-        <StyledView style={{ backgroundColor}}  {...rest}>{children}</StyledView>
+        <StyledView {...rest}>{children}</StyledView>
     )
-}
 
 export default withLayoutProps(View)
+
+const StyledView = styled(RNView).attrs(({
+    backgroundColor
+}: ViewProps) => ({
+    backgroundColor
+}))`
+
+`

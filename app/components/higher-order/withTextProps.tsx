@@ -8,30 +8,42 @@ export type TextProps = {
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string
+    textSize?: Typography.TextSize
 }
 
 function withTextProps<T extends TextProps>(
     WrappedComponent: React.ComponentType<T>
 ): (props: T) => JSX.Element {
-    return ({
-        children,
+
+    const StyledComponent = styled(WrappedComponent as any).attrs(({
         type,
         weight,
         color,
+        textSize,
+    }: T) => {
+        type = type || 'Text'
+        textSize = textSize || 'm'
+        weight = weight || Typography.textWeight[type]
 
+        return {
+            fontSize: Typography.fontSize(type, textSize),
+            lineHeight: Typography.lineHeight(type, textSize),
+            color,
+            ...Typography.fontWeight[weight]
+        }
+    })``
+
+    return ({
+        children,
         ...rest
     }: T): JSX.Element => {
         const { settings } = useAppSelector((state) => state)
 
-        type = type || 'Text'
-
-        const StyledComponent = styled(WrappedComponent as any)`
-            ${Typography.textStyle(type, settings.textSize, { color, weight })}
-        `
-
         return (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <StyledComponent {...rest}>{children}</StyledComponent>
+            <StyledComponent color={settings.theme.text} textSize={settings.textSize} {...rest}>
+                {children}
+            </StyledComponent>
         )
     }
 }

@@ -11,12 +11,14 @@ type Props = TextProps &
     LayoutProps &
     RNTextProps
 
-const Text = ({...rest }: Props): JSX.Element => (
+const Text = ({children, ...rest }: Props): JSX.Element => (
     <RNText
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
-    />
+    >
+        {children}
+    </RNText>
 
 )
 
-export default withLayoutProps(withTextProps(Text))
+export default withTextProps(Text)

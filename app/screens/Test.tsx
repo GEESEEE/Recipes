@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard, TextInput as RNTextInput, Text } from 'react-native'
+import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -8,7 +8,7 @@ import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
 
-import { View } from '@/components/atoms'
+import { View, Text, TextInput } from '@/components/atoms'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 
 const bigLogo = 1
@@ -74,6 +74,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const [username, setUsername] = React.useState('')
 
+    function changeUsername(text: string): void {
+        setUsername(text)
+        console.log(text)
+    }
+
     return (
         <Container>
             {/* <LogoView>
@@ -85,8 +90,24 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <StyledView
-                marginVertical='m'
+                marginVertical='l'
+                backgroundColor={theme.primary}
             />
+
+            <Sample
+                width='l'
+                marginVertical='l'
+                placeholder='JAAAAAAA'
+                onChangeText={(text) => changeUsername(text)}
+            />
+
+            <Text>Jemoeder</Text>
+
+            <StyledText
+                marginVertical='s'
+                type='Header'
+                color={theme.primary}
+            >Jaaaaa</StyledText>
             <ButtonFilled text="Show Popup" onPress={() => showPopup()} />
             <ButtonFilled
                 text="Change Primary Color"
@@ -106,8 +127,7 @@ const Container = styled(View)`
 `
 
 
-const Sample = styled(RNTextInput)`
-    color: ${(props) => props.theme.primary}
+const Sample = styled(TextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
@@ -131,4 +151,8 @@ const StyledView = styled(View)`
     border-color: ${(props) => props.theme.primary};
     height: 50px;
     width: 50px;
+`
+
+const StyledText = styled(Text)`
+
 `
