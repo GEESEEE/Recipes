@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
-export type TextProps = {
-    children?: React.ReactNode
+type TextProps = React.PropsWithChildren<{
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string
     textSize?: Typography.TextSize
-}
+}>
 
 function withTextProps<T extends TextProps>(
     WrappedComponent: React.ComponentType<T>
@@ -21,6 +20,7 @@ function withTextProps<T extends TextProps>(
         color,
         textSize,
     }: T) => {
+
         type = type || 'Text'
         textSize = textSize || 'm'
         weight = weight || Typography.textWeight[type]
@@ -37,11 +37,11 @@ function withTextProps<T extends TextProps>(
         children,
         ...rest
     }: T): JSX.Element => {
-        const { settings } = useAppSelector((state) => state)
+        const { theme, textSize } = useAppSelector((state) => state.settings)
 
         return (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <StyledComponent color={settings.theme.text} textSize={settings.textSize} {...rest}>
+            <StyledComponent color={theme.text} textSize={textSize} {...rest}>
                 {children}
             </StyledComponent>
         )

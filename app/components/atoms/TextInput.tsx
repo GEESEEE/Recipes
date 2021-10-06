@@ -13,9 +13,10 @@ import {
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
 
-type TextInputProps = LayoutProps &
-    TextProps &
+type TextInputProps =
     RNTextInputProps
+    & TextProps
+    & LayoutProps
 
 const TextInput = ({
     ...rest
@@ -35,8 +36,12 @@ const TextInput = ({
 
 export default withLayoutProps(withTextProps(TextInput))
 
-const StyledTextInput = styled(RNTextInput).attrs(({paddingHorizontal}: TextInputProps) => ({
-    paddingHorizontal: Spacing.spacings[paddingHorizontal || 'm']
+type Attrs = {
+    paddingHorizontal?: Spacing.Size
+}
+
+const StyledTextInput = styled(RNTextInput).attrs(({paddingHorizontal}: Attrs) => ({
+    paddingHorizontal: Spacing.spacings[paddingHorizontal || 's']
 }))`
 
 `

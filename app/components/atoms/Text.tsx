@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Text as RNText, TextProps as RNTextProps } from 'react-native'
 import {
     withLayoutProps,
@@ -12,13 +13,17 @@ type Props = TextProps &
     RNTextProps
 
 const Text = ({children, ...rest }: Props): JSX.Element => (
-    <RNText
+    <StyledText
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
     >
         {children}
-    </RNText>
+    </StyledText>
 
 )
 
 export default withTextProps(Text)
+
+const StyledText = styled(RNText)`
+
+`

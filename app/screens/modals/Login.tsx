@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     Animated,
     Modal,
-    TextInput as RNTextInput
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
@@ -15,8 +14,11 @@ import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
 import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
-import { ErrorMessage } from '@/components/user-input/ErrorMessage'
+import { ErrorMessage as old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+
+import { Icons, Icon, IconButton, Button, ErrorMessage } from '@/components/atoms'
+import { TextInputWithIcons } from '@/components/molecules'
 
 
 const LOGIN_ACTIONS = {
@@ -143,37 +145,51 @@ function LoginModal({
                     <Logo source={logo} />
                 </LogoView>
 
-                <RNTextInput
-                    placeholderTextColor={theme.grey}
+                <TextInputWithIcons
+                    leftIcon={
+                        <Icon
+                            Type={Icons.MyFontAwesome}
+                            name='user-o'
+                            color={theme.grey}
+                        />
+                    }
                     placeholder="Your Username or Email"
                     onChangeText={(text: string) =>
                         handleUsernameInputChange(text)
                     }
+                    errorMessage={!data.isValidUsername ? 'Invalid Username or Email' : undefined}
                 />
 
-                {/* Password Input Field */}
-                <InputFieldRounded
-                    leftIcon={<MyFontAwesome name="lock" />}
-                    secureTextEntry={data.securePasswordText}
+                <TextInputWithIcons
+                    leftIcon={
+                        <Icon
+                            Type={Icons.MyFontAwesome}
+                            name='lock'
+                            color={theme.grey}
+                        />
+                    }
+                    placeholder="Your Password"
                     onChangeText={(text: string) =>
                         handlePasswordInputChange(text)
                     }
-                    placeholder="Your Password"
+                    secureTextEntry={data.securePasswordText}
                     rightIcon={
-                        <TouchableOpacity
+                        <IconButton
+                            IconType={Icons.MyFeather}
+                            iconName={data.securePasswordText ? 'eye-off' : 'eye'}
                             onPress={() => handleSecurePasswordChange()}
-                        >
-                            {data.securePasswordText ? (
-                                <MyFeather name="eye-off" color={colors.grey} />
-                            ) : (
-                                <MyFeather name="eye" color={colors.grey} />
-                            )}
-                        </TouchableOpacity>
+                            color={theme.grey}
+                        />
                     }
-                    errorMessage={
-                        !data.isValidPassword ? 'Invalid Password' : undefined
-                    }
+                    errorMessage={!data.isValidPassword ? 'Invalid Password' : undefined}
                 />
+
+                {/* <Button
+                    type='Solid'
+                    text="SIGN IN"
+                    onPress={() => handleLoginButton()}
+                    loading={auth.awaitingResponse}
+                /> */}
 
                 {/* Log in Button */}
                 <ButtonFilled

@@ -8,8 +8,10 @@ import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
 
+import Test from '@/components/atoms/Test'
+
 import { View, Text, TextInput } from '@/components/atoms'
-import { InputFieldRounded } from '@/components/user-input/TextInputs'
+import { TextInputWithIcons } from '@/components/molecules'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -89,26 +91,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <StyledView
-                marginVertical='l'
-                backgroundColor={theme.primary}
-            />
-
-            <Sample
-                width='l'
-                marginVertical='l'
+            <SampleTextInput
                 placeholder='JAAAAAAA'
                 onChangeText={(text) => changeUsername(text)}
             />
 
-            <Text>Jemoeder</Text>
+            <SampleTest
+            >
+                JAAAA
+            </SampleTest>
 
-            <StyledText
-                marginVertical='s'
-                type='Header'
-                color={theme.primary}
-            >Jaaaaa</StyledText>
-            <ButtonFilled text="Show Popup" onPress={() => showPopup()} />
             <ButtonFilled
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
@@ -126,10 +118,16 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-
-const Sample = styled(TextInput)`
+const SampleTextInput = styled(TextInputWithIcons)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
+
+`
+
+const SampleTest = styled(Test)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+
 `
 
 const LottieAnimation = styled(LottieView)`
@@ -144,15 +142,4 @@ const LogoView = styled(View)`
 const Logo = styled(Animated.Image)`
     height: 200px;
     width: 200px;
-`
-
-const StyledView = styled(View)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-    height: 50px;
-    width: 50px;
-`
-
-const StyledText = styled(Text)`
-
 `
