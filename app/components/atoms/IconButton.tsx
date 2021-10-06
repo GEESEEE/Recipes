@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
 import Icon from './Icon'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
@@ -25,13 +25,16 @@ function IconButton({
     ...rest
 }: IconButtonProps): JSX.Element {
     return (
-        <TouchableOpacity
-            onPress={onPress}
+        <View
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
-            <Icon Type={IconType} name={iconName} color={color} size={size} />
-        </TouchableOpacity>
+            <TouchableOpacity
+                onPress={onPress}
+            >
+                <Icon Type={IconType} name={iconName} color={color} size={size} />
+            </TouchableOpacity>
+        </View>
     )
 }
 

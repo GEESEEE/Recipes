@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import View from './View'
+import { View } from 'react-native'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
@@ -27,8 +27,7 @@ function Icon({
     size = size || 's'
 
     return (
-        <StyledView
-            paddingVertical='l'
+        <View
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
@@ -37,13 +36,9 @@ function Icon({
                 color={color}
                 size={Spacing.iconSize(size, settings.textSize)}
             />
-        </StyledView>
+        </View>
     )
 }
 
 export default withLayoutProps(Icon)
 
-const StyledView = styled(View)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`

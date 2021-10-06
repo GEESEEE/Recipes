@@ -98,14 +98,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
             <SampleTest>JAAAA</SampleTest>
 
-            <Icon Type={Icons.MyFeather} name="menu" paddingVertical="m" />
+            <Icon Type={Icons.MyFeather} name="menu" paddingVertical="s" />
 
             <IconButton
                 IconType={Icons.MyFeather}
                 iconName="menu"
                 onPress={() => console.log("Yess")}
                 color={theme.error}
-                paddingVertical='s'
+                paddingVertical='l'
             />
 
             <Toggle
@@ -140,6 +140,7 @@ const SampleTest = styled(Test)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
+
 
 const LottieAnimation = styled(LottieView)`
     width: 50%;
