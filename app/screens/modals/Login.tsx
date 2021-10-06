@@ -156,7 +156,6 @@ function LoginModal({
                             Type={Icons.MyFontAwesome}
                             name="user-o"
                             color={theme.grey}
-                            paddingHorizontal="s"
                         />
                     }
                     placeholder="Your Username or Email"
@@ -176,7 +175,7 @@ function LoginModal({
                             Type={Icons.MyFontAwesome}
                             name="lock"
                             color={theme.grey}
-                            paddingHorizontal="s"
+
                         />
                     }
                     placeholder="Your Password"

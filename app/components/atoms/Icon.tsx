@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View } from 'react-native'
+import { View, ViewProps } from 'react-native'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
-import { Spacing } from '@/styles'
+import { Spacing, Typography } from '@/styles'
 
 type IconProps = {
     Type: any
@@ -11,7 +11,9 @@ type IconProps = {
 
     color?: string
     size?: Spacing.Size
-} & LayoutProps
+
+    textSize?: Typography.TextSize
+} & LayoutProps & ViewProps
 
 function Icon({
     Type: IconType,
@@ -20,25 +22,40 @@ function Icon({
     size,
     ...rest
 }: IconProps): JSX.Element {
-    const { settings } = useAppSelector((state) => state)
-    const { theme } = settings
+    const { theme, textSize } = useAppSelector((state) => state.settings)
 
     color = color || theme.primary
     size = size || 's'
+    const iconSize = Spacing.iconSize(size, textSize)
 
     return (
-        <View
+        <StyledView
+            textSize={textSize}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
             <IconType
                 name={name}
                 color={color}
-                size={Spacing.iconSize(size, settings.textSize)}
+                size={iconSize}
             />
-        </View>
+        </StyledView>
     )
 }
 
 export default withLayoutProps(Icon)
 
+const StyledView = styled(View).attrs(({
+    size,
+    textSize
+}: IconProps) => {
+    size = size || 's'
+    textSize = textSize || 'm'
+
+    return {
+        width: Spacing.iconSize(size, textSize)
+    }
+})`
+    align-items: center;
+    justify-content: center;
+`

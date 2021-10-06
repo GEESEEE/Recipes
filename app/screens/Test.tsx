@@ -98,7 +98,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
             <SampleTest>JAAAA</SampleTest>
 
-            <Icon Type={Icons.MyFeather} name="menu" paddingVertical="s" />
+            {/* <Icon Type={Icons.MyFeather} name="menu" paddingVertical="l" /> */}
 
             <IconButton
                 IconType={Icons.MyFeather}
@@ -111,7 +111,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <Toggle
                 switchValue
                 onValueChange={(value) => console.log(value)}
-                paddingVertical= 'l'
+                paddingVertical='s'
             />
 
             <ButtonFilled

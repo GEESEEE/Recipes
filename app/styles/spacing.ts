@@ -56,17 +56,17 @@ export const borderRadii: Record<Size, number> = {
 export const borderRadius = (size: Size): string =>
     `border-radius: ${borderRadii[size]}px;`
 
-export const standardIconSize: Record<Size, number> = {
-    s: 20,
-    m: 23,
-    l: 26,
+export const standardIconSize: Record<Typography.TextSize, number> = {
+    m: 18,
+    l: 22,
+    xl: 26
 }
 
-export const iconOffset: Record<Typography.TextSize, number> = {
-    m: 0,
-    l: 4,
-    xl: 8,
+export const iconOffset: Record<Size, number> = {
+    s: 0,
+    m: 3,
+    l: 6,
 }
 
 export const iconSize = (size: Size, textSize: Typography.TextSize): number =>
-    standardIconSize[size] + iconOffset[textSize]
+    standardIconSize[textSize] + iconOffset[size]
