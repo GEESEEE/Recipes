@@ -1,4 +1,3 @@
-
 export const AUTH_ACTIONS = {
     AWAIT_RESPONSE: 'authLoadingStart',
     RESPONSE_ERROR: 'authLoadingError',

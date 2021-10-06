@@ -10,7 +10,7 @@ import { routeUtils } from '@/config'
 
 import Test from '@/components/atoms/Test'
 
-import { View, Text, TextInput } from '@/components/atoms'
+import { View, Text, TextInput, Icon, Icons, IconButton, Toggle } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 const bigLogo = 1
@@ -92,14 +92,27 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
             <SampleTextInput
-                placeholder='JAAAAAAA'
+                placeholder="JAAAAAAA"
                 onChangeText={(text) => changeUsername(text)}
             />
 
-            <SampleTest
-            >
-                JAAAA
-            </SampleTest>
+            <SampleTest>JAAAA</SampleTest>
+
+            <Icon Type={Icons.MyFeather} name="menu" paddingVertical="m" />
+
+            <IconButton
+                IconType={Icons.MyFeather}
+                iconName="menu"
+                onPress={() => console.log("Yess")}
+                color={theme.error}
+                paddingVertical='s'
+            />
+
+            <Toggle
+                switchValue
+                onValueChange={(value) => console.log(value)}
+                paddingVertical= 'l'
+            />
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -121,13 +134,11 @@ const Container = styled(View)`
 const SampleTextInput = styled(TextInputWithIcons)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
-
 `
 
 const SampleTest = styled(Test)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
-
 `
 
 const LottieAnimation = styled(LottieView)`

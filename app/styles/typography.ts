@@ -5,7 +5,7 @@ export type TextWeight = 'light' | 'normal' | 'semiBold' | 'bold' | 'extraBold'
 export const fontWeight: Record<TextWeight, any> = {
     light: {
         fontFamily: 'sans-serif-light',
-        fontWeight: 'normal'
+        fontWeight: 'normal',
     },
     normal: {
         fontFamily: 'sans-serif',

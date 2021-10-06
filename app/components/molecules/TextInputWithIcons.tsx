@@ -20,7 +20,7 @@ export const TextInputWithIcons = ({
     secureTextEntry,
     errorMessage,
     leftIcon,
-    rightIcon
+    rightIcon,
 }: TextInputWithIconsProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -28,21 +28,23 @@ export const TextInputWithIcons = ({
         <Container>
             <InputFieldContainer
                 backgroundColor={theme.backgroundVariant}
-                paddingHorizontal='s'
-                paddingVertical='s'
-                borderRadius='s'
-                width='l'
+                paddingHorizontal="s"
+                paddingVertical="s"
+                borderRadius="s"
+                width="l"
             >
                 {leftIcon || null}
                 <StyledTextInput
                     placeholder={placeholder}
                     secureTextEntry={secureTextEntry || false}
-                    onChangeText={(t) => onChangeText(t)}
-                    onEndEditing={(e) => {if (onEndEditing) onEndEditing(e.nativeEvent.text) }}
+                    onChangeText={(text: string) => onChangeText(text)}
+                    onEndEditing={(e: any) => {
+                        if (onEndEditing) onEndEditing(e.nativeEvent.text)
+                    }}
                 />
                 {rightIcon || null}
             </InputFieldContainer>
-            <ErrorMessage errorMessage={errorMessage}/>
+            <ErrorMessage errorMessage={errorMessage} />
         </Container>
     )
 }

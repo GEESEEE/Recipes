@@ -17,9 +17,14 @@ import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage as old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
-import { Icons, Icon, IconButton, Button, ErrorMessage } from '@/components/atoms'
+import {
+    Icons,
+    Icon,
+    IconButton,
+    Button,
+    ErrorMessage,
+} from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
-
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -149,7 +154,7 @@ function LoginModal({
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
-                            name='user-o'
+                            name="user-o"
                             color={theme.grey}
                         />
                     }
@@ -157,14 +162,19 @@ function LoginModal({
                     onChangeText={(text: string) =>
                         handleUsernameInputChange(text)
                     }
-                    errorMessage={!data.isValidUsername ? 'Invalid Username or Email' : undefined}
+                    errorMessage={
+                        !data.isValidUsername
+                            ? 'Invalid Username or Email'
+                            : undefined
+                    }
                 />
 
                 <TextInputWithIcons
                     leftIcon={
                         <Icon
+                            marginHorizontal="s"
                             Type={Icons.MyFontAwesome}
-                            name='lock'
+                            name="lock"
                             color={theme.grey}
                         />
                     }
@@ -176,12 +186,16 @@ function LoginModal({
                     rightIcon={
                         <IconButton
                             IconType={Icons.MyFeather}
-                            iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                            iconName={
+                                data.securePasswordText ? 'eye-off' : 'eye'
+                            }
                             onPress={() => handleSecurePasswordChange()}
                             color={theme.grey}
                         />
                     }
-                    errorMessage={!data.isValidPassword ? 'Invalid Password' : undefined}
+                    errorMessage={
+                        !data.isValidPassword ? 'Invalid Password' : undefined
+                    }
                 />
 
                 {/* <Button

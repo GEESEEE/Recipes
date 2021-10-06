@@ -21,14 +21,13 @@ export const paddingHorizontal = (size: Size): string =>
 
 // Margins
 export const margin = (size: Size): string =>
-`${marginVertical(size)} ${marginHorizontal(size)}`
+    `${marginVertical(size)} ${marginHorizontal(size)}`
 
 export const marginVertical = (size: Size): string =>
     `margin-vertical: ${spacings[size]}px;`
 
 export const marginHorizontal = (size: Size): string =>
     `margin-horizontal: ${spacings[size]}px;`
-
 
 // Sizing
 export const widths: Record<Size, number> = {
@@ -66,9 +65,8 @@ export const standardIconSize: Record<Size, number> = {
 export const iconOffset: Record<Typography.TextSize, number> = {
     m: 0,
     l: 4,
-    xl: 8
+    xl: 8,
 }
 
-export const iconSize = (
-    size: Size, textSize: Typography.TextSize
-): number => standardIconSize[size] + iconOffset[textSize]
+export const iconSize = (size: Size, textSize: Typography.TextSize): number =>
+    standardIconSize[size] + iconOffset[textSize]

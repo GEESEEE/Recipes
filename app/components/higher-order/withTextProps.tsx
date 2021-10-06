@@ -13,30 +13,22 @@ type TextProps = React.PropsWithChildren<{
 function withTextProps<T extends TextProps>(
     WrappedComponent: React.ComponentType<T>
 ): (props: T) => JSX.Element {
+    const StyledComponent = styled(WrappedComponent as any).attrs(
+        ({ type, weight, color, textSize }: T) => {
+            type = type || 'Text'
+            textSize = textSize || 'm'
+            weight = weight || Typography.textWeight[type]
 
-    const StyledComponent = styled(WrappedComponent as any).attrs(({
-        type,
-        weight,
-        color,
-        textSize,
-    }: T) => {
-
-        type = type || 'Text'
-        textSize = textSize || 'm'
-        weight = weight || Typography.textWeight[type]
-
-        return {
-            fontSize: Typography.fontSize(type, textSize),
-            lineHeight: Typography.lineHeight(type, textSize),
-            color,
-            ...Typography.fontWeight[weight]
+            return {
+                fontSize: Typography.fontSize(type, textSize),
+                lineHeight: Typography.lineHeight(type, textSize),
+                color,
+                ...Typography.fontWeight[weight],
+            }
         }
-    })``
+    )``
 
-    return ({
-        children,
-        ...rest
-    }: T): JSX.Element => {
+    return ({ children, ...rest }: T): JSX.Element => {
         const { theme, textSize } = useAppSelector((state) => state.settings)
 
         return (

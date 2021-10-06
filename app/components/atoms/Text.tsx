@@ -8,22 +8,17 @@ import {
     TextProps,
 } from '@/components/higher-order'
 
-type Props = TextProps &
-    LayoutProps &
-    RNTextProps
+type Props = TextProps & LayoutProps & RNTextProps
 
-const Text = ({children, ...rest }: Props): JSX.Element => (
+const Text = ({ children, ...rest }: Props): JSX.Element => (
     <StyledText
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
     >
         {children}
     </StyledText>
-
 )
 
 export default withTextProps(Text)
 
-const StyledText = styled(RNText)`
-
-`
+const StyledText = styled(RNText)``
