@@ -16,8 +16,7 @@ import { Spacing } from '@/styles'
 type TextInputProps = RNTextInputProps & TextProps & LayoutProps
 
 const TextInput = ({ ...rest }: TextInputProps): JSX.Element => {
-    const { settings } = useAppSelector((state) => state)
-    const { theme } = settings
+    const { theme } = useAppSelector((state) => state.settings)
 
     return (
         <StyledTextInput

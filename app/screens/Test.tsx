@@ -2,13 +2,10 @@ import React, { useRef } from 'react'
 import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
-import Feather from 'react-native-vector-icons/Feather'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-
-import Test from '@/components/atoms/Test'
 
 import { View, Text, TextInput, Icon, Icons, IconButton, Toggle } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -91,28 +88,18 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <SampleTextInput
-                placeholder="JAAAAAAA"
-                onChangeText={(text) => changeUsername(text)}
-            />
-
-            <SampleTest>JAAAA</SampleTest>
-
-            {/* <Icon Type={Icons.MyFeather} name="menu" paddingVertical="l" /> */}
-
-            <IconButton
-                IconType={Icons.MyFeather}
-                iconName="menu"
-                onPress={() => console.log("Yess")}
-                color={theme.error}
-                paddingVertical='l'
-            />
-
-            <Toggle
-                switchValue
-                onValueChange={(value) => console.log(value)}
+            <SampleText
+                editable={false}
                 paddingVertical='s'
-            />
+            >
+                Jup
+            </SampleText>
+
+            <SampleTest
+
+            >
+                JAAAA
+            </SampleTest>
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -131,12 +118,12 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const SampleTextInput = styled(TextInputWithIcons)`
+const SampleText = styled(TextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
 
-const SampleTest = styled(Test)`
+const SampleTest = styled(Text)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
