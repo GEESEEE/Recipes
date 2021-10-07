@@ -177,7 +177,6 @@ function LoginModal({
                             Type={Icons.MyFontAwesome}
                             name="lock"
                             color={theme.grey}
-
                         />
                     }
                     placeholder="Your Password"
@@ -202,12 +201,12 @@ function LoginModal({
                 />
 
                 <Button
-                    type='Solid'
+                    type="Solid"
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                    width='m'
-                    borderRadius='s'
+                    width="m"
+                    borderRadius="s"
                 />
 
                 {/* Log in Button */}

@@ -15,19 +15,25 @@ import { Spacing } from '@/styles'
 
 type TextInputProps = {
     paddingHorizontal?: Spacing.Size
-} & RNTextInputProps & TextProps & LayoutProps
+} & RNTextInputProps &
+    TextProps &
+    LayoutProps
 
-const TextInput = ({ paddingHorizontal, style, ...rest }: TextInputProps): JSX.Element => {
+const TextInput = ({
+    paddingHorizontal,
+    style,
+    ...rest
+}: TextInputProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
     paddingHorizontal = paddingHorizontal || 's'
-    const ph = (paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0)
+    const ph = paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0
     return (
         <RNTextInput
             style={[
                 {
-                    paddingHorizontal: ph
+                    paddingHorizontal: ph,
                 },
-                style
+                style,
             ]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
@@ -38,4 +44,3 @@ const TextInput = ({ paddingHorizontal, style, ...rest }: TextInputProps): JSX.E
 }
 
 export default withLayoutProps(withTextProps(TextInput))
-

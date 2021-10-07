@@ -14,7 +14,6 @@ const Text = ({ ...rest }: Props): JSX.Element => (
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
     />
-
 )
 
 export default withLayoutProps(withTextProps(Text))

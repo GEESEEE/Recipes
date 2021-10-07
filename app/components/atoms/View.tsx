@@ -6,20 +6,16 @@ type ViewProps = {
     backgroundColor?: string
 } & LayoutProps
 
-function View({
-    backgroundColor,
-    style,
-    ...rest
-}: ViewProps): JSX.Element {
+function View({ backgroundColor, style, ...rest }: ViewProps): JSX.Element {
     return (
         <RNView
             style={[
                 {
-                    backgroundColor
+                    backgroundColor,
                 },
-                style
+                style,
             ]}
-             // eslint-disable-next-line react/jsx-props-no-spreading
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )

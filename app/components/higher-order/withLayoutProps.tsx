@@ -11,19 +11,20 @@ export type LayoutProps = {
 
     borderRadius?: Spacing.Size
     width?: Spacing.Size
-} & ViewProps
+} & React.PropsWithChildren<ViewProps>
 
-function withLayoutProps<T extends React.PropsWithChildren<LayoutProps>>(
+function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<
-    Omit<T,
-        "paddingVertical"
-        | "paddingHorizontal"
-        | "marginVertical"
-        | "marginHorizontal"
-        | "borderRadius"
-        | "width"
-        | "style"
-        | "children"
+        Omit<
+            T,
+            | 'paddingVertical'
+            | 'paddingHorizontal'
+            | 'marginVertical'
+            | 'marginHorizontal'
+            | 'borderRadius'
+            | 'width'
+            | 'style'
+            | 'children'
         >
     >
 ): (props: any) => JSX.Element {
@@ -37,15 +38,22 @@ function withLayoutProps<T extends React.PropsWithChildren<LayoutProps>>(
         style,
         children,
         ...rest
-    }: T): JSX.Element  => {
-        const pv = (paddingVertical ? Spacing.spacings[paddingVertical] : 0)
-        const ph = (paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0)
+    }: T): JSX.Element => {
+        console.log(width, borderRadius)
+        const pv = paddingVertical
+            ? Spacing.spacings[paddingVertical]
+            : undefined
+        const ph = paddingHorizontal
+            ? Spacing.spacings[paddingHorizontal]
+            : undefined
 
-        const mv = (marginVertical ? Spacing.spacings[marginVertical ] : 0)
-        const mh = (marginHorizontal ? Spacing.spacings[marginHorizontal] : 0)
+        const mv = marginVertical ? Spacing.spacings[marginVertical] : undefined
+        const mh = marginHorizontal
+            ? Spacing.spacings[marginHorizontal]
+            : undefined
 
-        const br = (borderRadius ? Spacing.borderRadii[borderRadius] : 0)
-        const w = (width ? `${Spacing.widths[width]}%` : undefined)
+        const br = borderRadius ? Spacing.borderRadii[borderRadius] : undefined
+        const w = width ? `${Spacing.widths[width]}%` : undefined
         return (
             <WrappedComponent
                 style={[
@@ -57,16 +65,17 @@ function withLayoutProps<T extends React.PropsWithChildren<LayoutProps>>(
                         marginHorizontal: mh,
 
                         borderRadius: br,
-                        width: w
+                        width: w,
                     },
-                    style
+                    style,
                 ]}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >
                 {children}
             </WrappedComponent>
-        )}
+        )
+    }
 }
 
 export default withLayoutProps

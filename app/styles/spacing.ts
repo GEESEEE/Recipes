@@ -59,7 +59,7 @@ export const borderRadius = (size: Size): string =>
 export const standardIconSize: Record<Typography.TextSize, number> = {
     m: 18,
     l: 22,
-    xl: 26
+    xl: 26,
 }
 
 export const iconOffset: Record<Size, number> = {

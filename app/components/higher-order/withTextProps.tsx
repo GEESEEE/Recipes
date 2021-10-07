@@ -12,10 +12,9 @@ export type TextProps = {
 
 function withTextProps<T extends React.PropsWithChildren<TextProps>>(
     WrappedComponent: React.ComponentType<
-        Omit<T, "type" | "weight" | "color" | "children" | "style">
+        Omit<T, 'type' | 'weight' | 'color' | 'children' | 'style'>
     >
 ): (props: any) => JSX.Element {
-
     return ({
         type,
         weight,
@@ -33,18 +32,16 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
         const lh = Typography.lineHeight(type, textSize)
 
         return (
-
             <WrappedComponent
                 style={[
                     {
                         fontSize: fs,
                         lineHeight: lh,
                         color,
-                        ...Typography.fontWeight[weight]
+                        ...Typography.fontWeight[weight],
                     },
-                    style
+                    style,
                 ]}
-
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >

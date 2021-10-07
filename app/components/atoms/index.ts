@@ -8,14 +8,4 @@ import Toggle from './Toggle'
 import Error from './Error'
 import * as Icons from './Icons'
 
-export {
-    View,
-    Text,
-    Button,
-    Icon,
-    TextInput,
-    IconButton,
-    Toggle,
-    Error,
-    Icons,
-}
+export { View, Text, Button, Icon, TextInput, IconButton, Toggle, Error, Icons }

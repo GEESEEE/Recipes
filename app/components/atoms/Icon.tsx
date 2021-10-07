@@ -30,21 +30,19 @@ function Icon({
     const iconSize = Spacing.iconSize(size, textSize)
 
     return (
-
         <IconType
             name={name}
             color={color}
             size={iconSize}
             style={[
                 {
-                    width: iconSize
+                    width: iconSize,
                 },
-                style
+                style,
             ]}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
-
     )
 }
 

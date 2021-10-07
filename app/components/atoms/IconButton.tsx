@@ -27,13 +27,11 @@ function IconButton({
     return (
         <TouchableOpacity
             onPress={onPress}
-
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
             <Icon Type={IconType} name={iconName} color={color} size={size} />
         </TouchableOpacity>
-
     )
 }
 

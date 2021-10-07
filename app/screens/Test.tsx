@@ -8,10 +8,17 @@ import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
 
-import { View, Text, TextInput, Icon, Icons, IconButton, Toggle, Button } from '@/components/atoms'
+import {
+    View,
+    Text,
+    TextInput,
+    Icon,
+    Icons,
+    IconButton,
+    Toggle,
+    Button,
+} from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
-
-
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -107,30 +114,25 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 JAAAA
             </SampleTest> */}
 
-
             <StyledTestView
-                paddingVertical='s'
-                paddingHorizontal='l'
+                paddingVertical="s"
+                paddingHorizontal="l"
                 backgroundColor={theme.primary}
             >
                 <StyledText
-                    type='TinyText'
-                    weight='semiBold'
-                    paddingVertical='s'
+                    type="TinyText"
+                    weight="semiBold"
+                    paddingVertical="s"
                 >
                     Ah yes
                 </StyledText>
-
             </StyledTestView>
 
             <Styled
-                type='Solid'
-                text="JEmoeders"
-                onPress={() => console.log("pres")}
-                paddingHorizontal='s'
-                width='l'
-                textType='Text'
-                borderRadius='s'
+                type="Solid"
+                text="JEmoe"
+                onPress={() => console.log('pres')}
+                borderRadius="s"
             />
 
             <ButtonFilled
