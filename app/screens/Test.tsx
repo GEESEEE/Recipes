@@ -114,17 +114,19 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 paddingHorizontal='l'
                 backgroundColor={theme.primary}
             >
-                <RNTextInput>
-                    JAAA
-                </RNTextInput>
-                <RNTextInput>
-                    Oef
-                </RNTextInput>
+                <StyledText
+                    type='TinyText'
+                    weight='semiBold'
+                    paddingVertical='s'
+                >
+                    Ah yes
+                </StyledText>
+
             </StyledTestView>
 
             <StyledIcon
                 Type={Icons.MyFeather}
-                name='menu'
+                name='lock'
             />
 
             <ButtonFilled
@@ -150,6 +152,11 @@ const StyledTestView = styled(View)`
 `
 
 const StyledIcon = styled(Icon)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
+const StyledText = styled(Text)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `

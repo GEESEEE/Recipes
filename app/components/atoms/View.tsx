@@ -1,21 +1,28 @@
 import React from 'react'
-import styled from 'styled-components'
-import { View as RNView, ViewProps as RNViewProps } from 'react-native'
-import { withLayoutProps, LayoutProps } from '../higher-order'
+import { View as RNView } from 'react-native'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 type ViewProps = {
-    children?: React.ReactNode | Element[]
     backgroundColor?: string
-} & LayoutProps &
-    RNViewProps
+} & LayoutProps
 
-const View = ({ children, ...rest }: ViewProps): JSX.Element => (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <StyledView {...rest}>{children}</StyledView>
-)
+function View({
+    backgroundColor,
+    style,
+    ...rest
+}: ViewProps): JSX.Element {
+    return (
+        <RNView
+            style={[
+                {
+                    backgroundColor
+                },
+                style
+            ]}
+             // eslint-disable-next-line react/jsx-props-no-spreading
+            {...rest}
+        />
+    )
+}
 
 export default withLayoutProps(View)
-
-const StyledView = styled(RNView).attrs(({ backgroundColor }: ViewProps) => ({
-    backgroundColor,
-}))``

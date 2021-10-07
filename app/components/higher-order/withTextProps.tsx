@@ -1,41 +1,55 @@
 import React from 'react'
+import { TextProps as RNTextProps } from 'react-native'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
-export type TextProps = React.PropsWithChildren<{
+export type TextProps = {
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string
-    textSize?: Typography.TextSize
-}>
+} & RNTextProps
 
-function withTextProps<T extends TextProps>(
-    WrappedComponent: React.ComponentType<T>
-): (props: T) => JSX.Element {
-    const StyledComponent = styled(WrappedComponent as any).attrs(
-        ({ type, weight, color, textSize }: T) => {
-            type = type || 'Text'
-            textSize = textSize || 'm'
-            weight = weight || Typography.textWeight[type]
+function withTextProps<T extends React.PropsWithChildren<TextProps>>(
+    WrappedComponent: React.ComponentType<
+        Omit<T, "type" | "weight" | "color" | "children" | "style">
+    >
+): (props: any) => JSX.Element {
 
-            return {
-                fontSize: Typography.fontSize(type, textSize),
-                lineHeight: Typography.lineHeight(type, textSize),
-                color,
-                ...Typography.fontWeight[weight],
-            }
-        }
-    )``
-
-    return ({ children, ...rest }: T): JSX.Element => {
+    return ({
+        type,
+        weight,
+        color,
+        children,
+        style,
+        ...rest
+    }: T): JSX.Element => {
         const { theme, textSize } = useAppSelector((state) => state.settings)
+        type = type || 'Text'
+        weight = weight || Typography.textWeight[type]
+        color = color || theme.text
+
+        const fs = Typography.fontSize(type, textSize)
+        const lh = Typography.lineHeight(type, textSize)
 
         return (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <StyledComponent color={theme.text} textSize={textSize} {...rest}>
+
+            <WrappedComponent
+                style={[
+                    {
+                        fontSize: fs,
+                        lineHeight: lh,
+                        color,
+                        ...Typography.fontWeight[weight]
+                    },
+                    style
+                ]}
+
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...rest}
+            >
                 {children}
-            </StyledComponent>
+            </WrappedComponent>
         )
     }
 }
