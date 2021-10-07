@@ -8,10 +8,9 @@ import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
 
-import { View, Text, TextInput, Icon, Icons, IconButton, Toggle } from '@/components/atoms'
+import { View, Text, TextInput, Icon, Icons, IconButton, Toggle, Button } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
-import TestView from '@/components/atoms/TestView'
 
 
 const bigLogo = 1
@@ -124,9 +123,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
             </StyledTestView>
 
-            <StyledIcon
-                Type={Icons.MyFeather}
-                name='lock'
+            <Styled
+                type='Solid'
+                text="JEmoeders"
+                onPress={() => console.log("pres")}
+                paddingHorizontal='s'
+                width='l'
+                textType='Text'
+                borderRadius='s'
             />
 
             <ButtonFilled
@@ -151,7 +155,7 @@ const StyledTestView = styled(View)`
     border-color: ${(props) => props.theme.primary};
 `
 
-const StyledIcon = styled(Icon)`
+const Styled = styled(Button)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `

@@ -13,13 +13,22 @@ import {
 import { useAppSelector } from '@/hooks'
 import { Spacing } from '@/styles'
 
-type TextInputProps = RNTextInputProps & TextProps & LayoutProps
+type TextInputProps = {
+    paddingHorizontal?: Spacing.Size
+} & RNTextInputProps & TextProps & LayoutProps
 
-const TextInput = ({ ...rest }: TextInputProps): JSX.Element => {
+const TextInput = ({ paddingHorizontal, style, ...rest }: TextInputProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
-
+    paddingHorizontal = paddingHorizontal || 's'
+    const ph = (paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0)
     return (
-        <StyledTextInput
+        <RNTextInput
+            style={[
+                {
+                    paddingHorizontal: ph
+                },
+                style
+            ]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
             // eslint-disable-next-line react/jsx-props-no-spreading
@@ -30,12 +39,3 @@ const TextInput = ({ ...rest }: TextInputProps): JSX.Element => {
 
 export default withLayoutProps(withTextProps(TextInput))
 
-type Attrs = {
-    paddingHorizontal?: Spacing.Size
-}
-
-const StyledTextInput = styled(RNTextInput).attrs(
-    ({ paddingHorizontal }: Attrs) => ({
-        paddingHorizontal: Spacing.spacings[paddingHorizontal || 's'],
-    })
-)``

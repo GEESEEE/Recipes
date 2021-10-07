@@ -64,23 +64,13 @@ const Button = ({
 
     borderRadius = borderRadius || 's'
     width = width || 'm'
-    console.log(width, `${Spacing.widths[width]}%`)
+    console.log(width, `${Spacing.widths[width]}%`, borderRadius, Spacing.borderRadii[borderRadius])
     // If solid, swap colors
     if (type === TYPE.Solid) {
         const temp = color
         color = backgroundColor
         backgroundColor = temp
     }
-
-    // const StyledTouchable = styled(TouchableOpacity)`
-    //     align-items: center;
-    //     justify-content: center;
-
-    //     background-color: ${backgroundColor};
-    //     border-width: 2px;
-    //     border-color: ${borderColor};
-    //     ${Spacing.borderRadius(borderRadius)}
-    // `
 
     return (
         <StyledTouchable
@@ -118,7 +108,7 @@ const Button = ({
     )
 }
 
-export default withLayoutProps(Button)
+export default withLayoutProps(Button as any)
 
 const StyledTouchable = styled(TouchableOpacity)`
     align-items: center;

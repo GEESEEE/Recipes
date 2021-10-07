@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Text as RNText } from 'react-native'
 import {
     withLayoutProps,

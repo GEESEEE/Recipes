@@ -3,15 +3,10 @@ import { Switch, SwitchProps } from 'react-native'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 
-type ToggleProps = {
-    switchValue: boolean
-    onValueChange: (val: boolean) => void
-} & LayoutProps &
+type ToggleProps = LayoutProps &
     SwitchProps
 
 function Toggle({
-    switchValue,
-    onValueChange,
     disabled,
     ...rest
 }: ToggleProps): JSX.Element {
@@ -21,16 +16,15 @@ function Toggle({
 
     return (
         <Switch
-            value={switchValue}
-            onValueChange={onValueChange}
             trackColor={{
                 true: theme.backgroundVariant,
                 false: theme.backgroundVariant,
             }}
             thumbColor={thumbColor}
+            disabled={disabled}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )
 }
-export default withLayoutProps(Toggle)
+export default withLayoutProps(Toggle as any)

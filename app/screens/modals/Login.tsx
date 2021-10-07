@@ -16,6 +16,8 @@ import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage as Old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+import { Button, Icon, IconButton, Icons } from '@/components/atoms'
+import { TextInputWithIcons } from '@/components/molecules'
 
 // import {
 //     Icons,
@@ -150,7 +152,7 @@ function LoginModal({
                     <Logo source={logo} />
                 </LogoView>
 
-                {/* <TextInputWithIcons
+                <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -167,9 +169,9 @@ function LoginModal({
                             ? 'Invalid Username or Email'
                             : undefined
                     }
-                /> */}
+                />
 
-                {/* <TextInputWithIcons
+                <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -204,7 +206,9 @@ function LoginModal({
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                /> */}
+                    width='m'
+                    borderRadius='s'
+                />
 
                 {/* Log in Button */}
                 <ButtonFilled
