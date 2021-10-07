@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
-type TextProps = React.PropsWithChildren<{
+export type TextProps = React.PropsWithChildren<{
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View as RNView } from 'react-native'
-import withTestProps, { LayoutProps } from '@/components/higher-order/withTestLayout'
+import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 type ViewProps = {
     backgroundColor?: string
@@ -25,4 +25,4 @@ function View({
     )
 }
 
-export default withTestProps(View)
+export default withLayoutProps(View)

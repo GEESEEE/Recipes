@@ -110,6 +110,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
 
             <StyledTestView
+                paddingVertical='s'
+                paddingHorizontal='l'
                 backgroundColor={theme.primary}
             >
                 <RNTextInput>
@@ -119,6 +121,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     Oef
                 </RNTextInput>
             </StyledTestView>
+
+            <StyledIcon
+                Type={Icons.MyFeather}
+                name='menu'
+            />
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -137,7 +144,12 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const StyledTestView = styled(TestView)`
+const StyledTestView = styled(View)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
+const StyledIcon = styled(Icon)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
