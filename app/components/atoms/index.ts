@@ -5,7 +5,7 @@ import Icon from './Icon'
 import TextInput from './TextInput'
 import IconButton from './IconButton'
 import Toggle from './Toggle'
-import ErrorMessage from './ErrorMessage'
+import Error from './Error'
 import * as Icons from './Icons'
 
 export {
@@ -16,6 +16,6 @@ export {
     TextInput,
     IconButton,
     Toggle,
-    ErrorMessage,
+    Error,
     Icons,
 }

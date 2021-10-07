@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TextInput, View, ErrorMessage } from '@/components/atoms'
+import { TextInput, View, Error } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
 
 type TextInputWithIconsProps = {
@@ -44,7 +44,7 @@ export const TextInputWithIcons = ({
                 />
                 {rightIcon || null}
             </InputFieldContainer>
-            <ErrorMessage errorMessage={errorMessage} />
+            <Error errorMessage={errorMessage} />
         </Container>
     )
 }

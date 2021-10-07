@@ -1,5 +1,6 @@
 import React from 'react'
-import TextInput from './TextInput'
+import styled from 'styled-components'
+import { Text as RNText, TextProps as RNTextProps } from 'react-native'
 import {
     withLayoutProps,
     LayoutProps,
@@ -7,15 +8,17 @@ import {
     TextProps,
 } from '@/components/higher-order'
 
-type Props =  TextProps & LayoutProps
+type Props = RNTextProps & TextProps & LayoutProps
 
-const Text = ({ ...rest }: Props): JSX.Element => (
-    <TextInput
-        editable={false}
+const Text = ({ children, ...rest }: Props): JSX.Element => (
+    <StyledText
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
-    />
+    >
+        {children}
+    </StyledText>
 )
 
 export default withLayoutProps(withTextProps(Text))
 
+const StyledText = styled(RNText)``

@@ -22,7 +22,7 @@ import {
     Icon,
     IconButton,
     Button,
-    ErrorMessage,
+    Error,
 } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
@@ -199,12 +199,13 @@ function LoginModal({
                     }
                 />
 
-                {/* <Button
+                <Button
                     type='Solid'
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                /> */}
+                    width='l'
+                />
 
                 {/* Log in Button */}
                 <ButtonFilled
@@ -218,7 +219,7 @@ function LoginModal({
                     text="Register"
                     onPress={() => handleRegisterButton()}
                 />
-                <ErrorMessage errorMessage={auth.error} />
+                <Error errorMessage={auth.error} />
             </Container>
         </Modal>
     )
