@@ -14,17 +14,17 @@ import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
 import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
-import { ErrorMessage as old } from '@/components/user-input/ErrorMessage'
+import { ErrorMessage as Old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
-import {
-    Icons,
-    Icon,
-    IconButton,
-    Button,
-    Error,
-} from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+// import {
+//     Icons,
+//     Icon,
+//     IconButton,
+//     Button,
+//     Error,
+// } from '@/components/atoms'
+// import { TextInputWithIcons } from '@/components/molecules'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -150,7 +150,7 @@ function LoginModal({
                     <Logo source={logo} />
                 </LogoView>
 
-                <TextInputWithIcons
+                {/* <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -167,9 +167,9 @@ function LoginModal({
                             ? 'Invalid Username or Email'
                             : undefined
                     }
-                />
+                /> */}
 
-                <TextInputWithIcons
+                {/* <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -204,8 +204,7 @@ function LoginModal({
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                    width='l'
-                />
+                /> */}
 
                 {/* Log in Button */}
                 <ButtonFilled
@@ -219,7 +218,7 @@ function LoginModal({
                     text="Register"
                     onPress={() => handleRegisterButton()}
                 />
-                <Error errorMessage={auth.error} />
+                <Old errorMessage={auth.error} />
             </Container>
         </Modal>
     )

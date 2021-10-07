@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
+import Feather from 'react-native-vector-icons/Feather'
 import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
@@ -9,6 +10,9 @@ import { routeUtils } from '@/config'
 
 import { View, Text, TextInput, Icon, Icons, IconButton, Toggle } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
+
+import TestView from '@/components/atoms/TestView'
+
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -88,18 +92,33 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            <SampleText
+            {/* <SampleText
                 editable={false}
                 paddingVertical='s'
             >
                 Jup
             </SampleText>
 
-            <SampleTest
+            <SampleIcon
+                name='menu'
+            />
 
+            <SampleTest
             >
                 JAAAA
-            </SampleTest>
+            </SampleTest> */}
+
+
+            <StyledTestView
+                backgroundColor={theme.primary}
+            >
+                <RNTextInput>
+                    JAAA
+                </RNTextInput>
+                <RNTextInput>
+                    Oef
+                </RNTextInput>
+            </StyledTestView>
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -118,16 +137,10 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const SampleText = styled(TextInput)`
+const StyledTestView = styled(TestView)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
-
-const SampleTest = styled(Text)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
 
 const LottieAnimation = styled(LottieView)`
     width: 50%;

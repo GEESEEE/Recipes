@@ -39,10 +39,12 @@ const Button = ({
     textWeight,
 
     borderRadius,
+    width,
 
     loading,
     onPress,
     disabled,
+    style,
     ...rest
 }: ButtonProps): JSX.Element => {
     const { settings } = useAppSelector((state) => state)
@@ -61,7 +63,8 @@ const Button = ({
     if (type === TYPE.Clear) textWeight = 'normal'
 
     borderRadius = borderRadius || 's'
-
+    width = width || 'm'
+    console.log(width, `${Spacing.widths[width]}%`)
     // If solid, swap colors
     if (type === TYPE.Solid) {
         const temp = color
@@ -69,20 +72,29 @@ const Button = ({
         backgroundColor = temp
     }
 
-    const StyledTouchable = styled(TouchableOpacity)`
-        align-items: center;
-        justify-content: center;
+    // const StyledTouchable = styled(TouchableOpacity)`
+    //     align-items: center;
+    //     justify-content: center;
 
-        background-color: ${backgroundColor};
-        border-width: 2px;
-        border-color: ${borderColor};
-        ${Spacing.borderRadius(borderRadius)}
-    `
+    //     background-color: ${backgroundColor};
+    //     border-width: 2px;
+    //     border-color: ${borderColor};
+    //     ${Spacing.borderRadius(borderRadius)}
+    // `
 
     return (
         <StyledTouchable
             onPress={onPress}
             disabled={disabled}
+            style={[
+                {
+                    backgroundColor,
+                    borderColor,
+                    borderRadius: Spacing.borderRadii[borderRadius],
+                    width: `${Spacing.widths[width]}%`,
+                },
+                style
+            ]}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
@@ -107,3 +119,9 @@ const Button = ({
 }
 
 export default withLayoutProps(Button)
+
+const StyledTouchable = styled(TouchableOpacity)`
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+`

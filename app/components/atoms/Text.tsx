@@ -21,4 +21,13 @@ const Text = ({ children, ...rest }: Props): JSX.Element => (
 
 export default withLayoutProps(withTextProps(Text))
 
-const StyledText = styled(RNText)``
+const StyledText = styled(RNText).attrs(({
+    width
+}: Props) => {
+    console.log("Yes", width)
+    return ({
+
+    })
+})`
+
+`
