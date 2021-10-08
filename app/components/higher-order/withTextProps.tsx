@@ -30,9 +30,11 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
         weight = weight || Typography.textWeight[type]
         color = color || theme.text
 
+        const lineHeight = Typography.lineHeight(type, textSize)
         const textStyle = {
             fontSize: Typography.fontSize(type, textSize),
-            lineHeight: Typography.lineHeight(type, textSize),
+            lineHeight,
+            height: lineHeight,
             color,
             ...Typography.fontWeight[weight],
         }

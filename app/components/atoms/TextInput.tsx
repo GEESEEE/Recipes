@@ -21,19 +21,15 @@ type TextInputProps = {
 
 const TextInput = ({
     paddingHorizontal,
-    type,
     style,
     ...rest
 }: TextInputProps): JSX.Element => {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
+    const { theme } = useAppSelector((state) => state.settings)
     paddingHorizontal = paddingHorizontal || 's'
-    type = type || 'Text'
-    const lineHeight = Typography.lineHeight(type, textSize)
     return (
         <RNTextInput
             style={[
                 {
-                    height: lineHeight,
                     paddingHorizontal: Spacing.spacings[paddingHorizontal],
                 },
                 style,
