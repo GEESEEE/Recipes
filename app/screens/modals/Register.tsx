@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { View, TouchableOpacity, Modal } from 'react-native'
+import { TouchableOpacity, Modal } from 'react-native'
 import styled from 'styled-components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/config'
@@ -9,6 +9,9 @@ import { MyFeather } from '@/components/Icons'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { ErrorMessage } from '@/components/user-input/ErrorMessage'
+
+import { Button, IconButton, Icons, Error, View } from '@/components/atoms'
+import { TextInputWithIcons } from '@/components/molecules'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -71,7 +74,8 @@ function RegisterScreen({
     navigation,
     showLogin,
 }: RegisterModalProps): JSX.Element {
-    const auth = useAppSelector((state) => state.auth)
+    const { auth , settings} = useAppSelector((state) => state)
+    const { theme } = settings
     const dispatch = useAppDispatch()
 
     const insets = useSafeAreaInsets()
@@ -183,7 +187,8 @@ function RegisterScreen({
                 }}
             >
                 {/* Username Input Field */}
-                <InputFieldRounded
+
+                <TextInputWithIcons
                     onChangeText={(text: string) =>
                         handleUsernameInputChange(text)
                     }
@@ -193,8 +198,10 @@ function RegisterScreen({
                     }
                 />
 
+
+
                 {/* Email Input Field */}
-                <InputFieldRounded
+                <TextInputWithIcons
                     onChangeText={(text: string) =>
                         handleEmailInputChange(text)
                     }
@@ -205,22 +212,19 @@ function RegisterScreen({
                 />
 
                 {/* Password 1 Input Field */}
-                <InputFieldRounded
+                <TextInputWithIcons
                     secureTextEntry={data.securePasswordText}
                     onChangeText={(text: string) =>
                         handlePassword1InputChange(text)
                     }
                     placeholder="Password"
                     rightIcon={
-                        <TouchableOpacity
+                        <IconButton
+                            IconType={Icons.MyFeather}
+                            iconName={data.securePasswordText ? 'eye-off' : 'eye'}
                             onPress={() => handleSecurePassword1Change()}
-                        >
-                            {data.securePasswordText ? (
-                                <MyFeather name="eye-off" color={colors.grey} />
-                            ) : (
-                                <MyFeather name="eye" color={colors.grey} />
-                            )}
-                        </TouchableOpacity>
+                            color={theme.grey}
+                        />
                     }
                     errorMessage={
                         !data.isValidPassword1 ? 'Invalid Password' : undefined
@@ -228,7 +232,7 @@ function RegisterScreen({
                 />
 
                 {/* Password 2 Input Field */}
-                <InputFieldRounded
+                <TextInputWithIcons
                     secureTextEntry
                     onChangeText={(text: string) =>
                         handlePassword2InputChange(text)
@@ -244,15 +248,19 @@ function RegisterScreen({
                 />
 
                 {/* Register Button */}
-                <ButtonFilled
-                    text="Register"
+                <Button
+                    type='Solid'
+                    text='REGISTER'
                     onPress={() => handleRegisterButton()}
                     loading={auth.awaitingResponse}
                 />
-                <ErrorMessage errorMessage={auth.error} />
+
+                <Error errorMessage={auth.error} />
                 {/* Already have an account/Go Back Button */}
-                <ButtonBorderless
+                <Button
+                    type='Clear'
                     text="Already have an account?"
+                    textType='SubText'
                     onPress={() => handleGoBackButton()}
                 />
             </Container>
@@ -264,7 +272,6 @@ export default RegisterScreen
 
 const Container = styled(View)`
     flex: 1;
-    justify-content: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
 `
