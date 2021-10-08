@@ -11,7 +11,7 @@ import {
     TextProps,
 } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
-import { Spacing } from '@/styles'
+import { Spacing, Typography } from '@/styles'
 
 type TextInputProps = {
     paddingHorizontal?: Spacing.Size
@@ -21,19 +21,24 @@ type TextInputProps = {
 
 const TextInput = ({
     paddingHorizontal,
+    type,
     style,
     ...rest
 }: TextInputProps): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme, textSize } = useAppSelector((state) => state.settings)
+    console.log("TI", type)
     paddingHorizontal = paddingHorizontal || 's'
-    const ph = paddingHorizontal ? Spacing.spacings[paddingHorizontal] : 0
+    type = type || 'Text'
+    const lineHeight = Typography.lineHeight(type, textSize)
     return (
         <RNTextInput
             style={[
                 {
-                    paddingHorizontal: ph,
+                    height: lineHeight,
+                    paddingHorizontal: Spacing.spacings[paddingHorizontal],
                 },
                 style,
+
             ]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"

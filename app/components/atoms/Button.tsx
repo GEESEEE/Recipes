@@ -64,12 +64,7 @@ const Button = ({
 
     borderRadius = borderRadius || 's'
     width = width || 'm'
-    console.log(
-        width,
-        `${Spacing.widths[width]}%`,
-        borderRadius,
-        Spacing.borderRadii[borderRadius]
-    )
+
     // If solid, swap colors
     if (type === TYPE.Solid) {
         const temp = color

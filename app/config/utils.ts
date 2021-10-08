@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { StyleProp, ViewStyle } from 'react-native'
 
 export function handleNumericTextInput(
     number: string,
@@ -68,4 +69,28 @@ export function replaceElements<T extends { id: number }>(
 ): Array<T> {
     arr.map((el) => arr2.find((el2) => el.id === el2.id) || el)
     return arr
+}
+
+
+// Can be used to merge 2 styles to 1 object containing all style props
+export function mergeStyles(styles: Array<any>): StyleProp<ViewStyle> {
+    console.log("Merging", styles)
+    let res: any = {}
+    styles.forEach((style) => {
+        if (typeof style === 'undefined') {
+            return
+        }
+
+        if (Object.prototype.toString.call(style) === '[object Array]') {
+            style = mergeStyles(style)
+        }
+
+        if (Object.prototype.toString.call(style) === '[object Object]') {
+            if ( Object.keys(style).length > 0) {
+                res = {...res, ...style}
+            }
+        }
+    })
+    console.log("Merged:", res)
+    return res
 }

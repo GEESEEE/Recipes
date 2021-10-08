@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard, TextInput as RNTextInput } from 'react-native'
+import { Animated, Keyboard, StyleSheet } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -98,41 +98,17 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
-            {/* <SampleText
-                editable={false}
-                paddingVertical='s'
-            >
-                Jup
-            </SampleText>
 
-            <SampleIcon
-                name='menu'
-            />
-
-            <SampleTest
-            >
-                JAAAA
-            </SampleTest> */}
-
-            <StyledTestView
-                paddingVertical="s"
-                paddingHorizontal="l"
-                backgroundColor={theme.primary}
-            >
-                <StyledText
-                    type="TinyText"
-                    weight="semiBold"
-                    paddingVertical="s"
-                >
-                    Ah yes
-                </StyledText>
-            </StyledTestView>
-
-            <Styled
+            {/* <Button
                 type="Solid"
                 text="JEmoe"
                 onPress={() => console.log('pres')}
                 borderRadius="s"
+            /> */}
+
+
+            <StyledTextInput
+                type='Header'
             />
 
             <ButtonFilled
@@ -152,24 +128,9 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const StyledTestView = styled(View)`
+const StyledTextInput = styled(TextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
-`
-
-const Styled = styled(Button)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
-const StyledText = styled(Text)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
-`
-
-const LottieAnimation = styled(LottieView)`
-    width: 50%;
-    height: 20%;
 `
 
 const LogoView = styled(View)`

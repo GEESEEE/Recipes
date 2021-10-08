@@ -23,4 +23,4 @@ function Toggle({ disabled, ...rest }: ToggleProps): JSX.Element {
         />
     )
 }
-export default withLayoutProps(Toggle as any)
+export default withLayoutProps(Toggle)

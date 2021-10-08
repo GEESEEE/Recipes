@@ -16,7 +16,7 @@ import { authActions } from '@/redux/actions'
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage as Old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { Button, Icon, IconButton, Icons } from '@/components/atoms'
+import { Button, Icon, IconButton, Icons, TextInput } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 // import {
@@ -120,7 +120,7 @@ function LoginModal({
     }
 
     function isValidData(): boolean {
-        const isEmpty = data.username.length === 0 && data.password.length === 0
+        const isEmpty = data.username.length === 0 || data.password.length === 0
         return !isEmpty && data.isValidUsername && data.isValidPassword
     }
 
@@ -137,6 +137,8 @@ function LoginModal({
         dispatch(authActions.clearError())
     }
 
+    console.log(data.username, data.password, isValidData())
+
     return (
         <Modal statusBarTranslucent animationType="slide">
             <Container
@@ -152,7 +154,14 @@ function LoginModal({
                     <Logo source={logo} />
                 </LogoView>
 
-                <TextInputWithIcons
+                <TextInput
+                    placeholder="Your Username or Email"
+                    onChangeText={(text: string) =>
+                        handleUsernameInputChange(text)
+                    }
+                />
+
+                {/* <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -169,9 +178,16 @@ function LoginModal({
                             ? 'Invalid Username or Email'
                             : undefined
                     }
+                /> */}
+
+                <TextInput
+                    placeholder="Your Password"
+                    onChangeText={(text: string) =>
+                        handlePasswordInputChange(text)
+                    }
                 />
 
-                <TextInputWithIcons
+                {/* <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -198,16 +214,16 @@ function LoginModal({
                     errorMessage={
                         !data.isValidPassword ? 'Invalid Password' : undefined
                     }
-                />
+                /> */}
 
-                <Button
+                {/* <Button
                     type="Solid"
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
                     width="m"
                     borderRadius="s"
-                />
+                /> */}
 
                 {/* Log in Button */}
                 <ButtonFilled

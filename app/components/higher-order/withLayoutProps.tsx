@@ -1,6 +1,7 @@
 import React from 'react'
 import { ViewProps } from 'react-native'
 import { Spacing } from '@/styles'
+import { utils } from '@/config'
 
 export type LayoutProps = {
     paddingVertical?: Spacing.Size
@@ -39,36 +40,32 @@ function withLayoutProps<T extends LayoutProps>(
         children,
         ...rest
     }: T): JSX.Element => {
-        console.log(width, borderRadius)
-        const pv = paddingVertical
-            ? Spacing.spacings[paddingVertical]
-            : undefined
-        const ph = paddingHorizontal
-            ? Spacing.spacings[paddingHorizontal]
-            : undefined
+        // console.log("withLayout", style)
 
-        const mv = marginVertical ? Spacing.spacings[marginVertical] : undefined
-        const mh = marginHorizontal
-            ? Spacing.spacings[marginHorizontal]
-            : undefined
+        const myStyle: any = {}
 
-        const br = borderRadius ? Spacing.borderRadii[borderRadius] : undefined
-        const w = width ? `${Spacing.widths[width]}%` : undefined
+        if (paddingVertical) myStyle.paddingVertical = Spacing.spacings[paddingVertical]
+        if (paddingHorizontal) myStyle.paddingHorizontal = Spacing.spacings[paddingHorizontal]
+
+        if (marginVertical) myStyle.marginVertical = Spacing.spacings[marginVertical]
+        if (marginHorizontal) myStyle.marginHorizontal = Spacing.spacings[marginHorizontal]
+
+        if (borderRadius) myStyle.borderRadius = Spacing.borderRadii[borderRadius]
+        if (width) myStyle.width = `${Spacing.widths[width]}%`
+
         return (
             <WrappedComponent
-                style={[
-                    {
-                        paddingVertical: pv,
-                        paddingHorizontal: ph,
+                style={[myStyle, style]}
 
-                        marginVertical: mv,
-                        marginHorizontal: mh,
+                paddingHorizontal={paddingHorizontal}
+                paddingVertical={paddingVertical}
 
-                        borderRadius: br,
-                        width: w,
-                    },
-                    style,
-                ]}
+                marginHorizontal={marginHorizontal}
+                marginVertical={marginVertical}
+
+                borderRadius={borderRadius}
+                width={width}
+
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >
