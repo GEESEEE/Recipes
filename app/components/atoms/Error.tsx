@@ -17,27 +17,23 @@ const sizeMap: Record<Spacing.Size, Typography.TextType> = {
 }
 
 function ErrorMessage({ errorMessage, size }: ErrorMessageProps): JSX.Element {
-    const { settings } = useAppSelector((state) => state)
+    const { theme, textSize } = useAppSelector((state) => state.settings)
     size = size || 's'
 
     const textType = sizeMap[size]
 
-    const ErrorMessageView = styled(Text)`
-        color: ${(props) => props.theme.error};
-    `
-
-    const Padding = styled(View)`
-        height: ${Typography.lineHeight(textType, settings.textSize)}px;
-    `
+    const paddingStyle = {
+        height: Typography.lineHeight(textType, textSize) + .1
+    }
 
     return (
         <Container>
             {errorMessage ? (
-                <ErrorMessageView type={textType}>
+                <Text type={textType} color={theme.error}>
                     {errorMessage}
-                </ErrorMessageView>
+                </Text>
             ) : (
-                <Padding />
+                <View style={paddingStyle}/>
             )}
         </Container>
     )

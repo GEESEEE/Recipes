@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react'
 import {
-    View,
     Dimensions,
     TouchableOpacity,
     Animated,
@@ -12,21 +11,15 @@ import logo from '@/assets/temp_icon.png'
 import { MyFeather, MyFontAwesome } from '@/components/Icons'
 import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
 import { colors } from '@/config'
-import { authActions } from '@/redux/actions'
+
 import { InputFieldRounded } from '@/components/user-input/TextInputs'
 import { ErrorMessage as Old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { Button, Icon, IconButton, Icons, TextInput } from '@/components/atoms'
+import { authActions } from '@/redux/actions'
+
+import { Button, Icon, IconButton, Icons, Error, View } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
-// import {
-//     Icons,
-//     Icon,
-//     IconButton,
-//     Button,
-//     Error,
-// } from '@/components/atoms'
-// import { TextInputWithIcons } from '@/components/molecules'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -149,9 +142,9 @@ function LoginModal({
                 }}
             >
                 {/* Logo */}
-                <LogoView>
+                <View marginVertical='l' paddingVertical='l'>
                     <Logo source={logo} />
-                </LogoView>
+                </View>
 
                 <TextInputWithIcons
                     leftIcon={
@@ -201,28 +194,23 @@ function LoginModal({
                     }
                 />
 
-                {/* <Button
+                <Button
                     type="Solid"
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                    width="m"
-                    borderRadius="s"
-                /> */}
-
-                {/* Log in Button */}
-                <ButtonFilled
-                    text="Sign in"
-                    onPress={() => handleLoginButton()}
-                    loading={auth.awaitingResponse}
+                    marginVertical='s'
                 />
 
-                {/* Register Button */}
-                <ButtonInverted
+                <Button
+                    type="Outline"
                     text="Register"
                     onPress={() => handleRegisterButton()}
+                    loading={auth.awaitingResponse}
+                    marginVertical='m'
                 />
-                <Old errorMessage={auth.error} />
+
+                <Error errorMessage={auth.error} />
             </Container>
         </Modal>
     )
@@ -235,14 +223,12 @@ const logoHeight = height * 0.2
 
 const Container = styled(View)`
     flex: 1;
-    justify-content: center;
     align-items: center;
     background-color: ${(props) => props.theme.background};
 `
 
 const LogoView = styled(View)`
-    position: absolute;
-    top: 80px;
+
 `
 
 const Logo = styled(Animated.Image)`
