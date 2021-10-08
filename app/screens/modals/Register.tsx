@@ -69,7 +69,7 @@ function RegisterScreen({
     navigation,
     showLogin,
 }: RegisterModalProps): JSX.Element {
-    const { auth , settings} = useAppSelector((state) => state)
+    const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
 
@@ -193,8 +193,6 @@ function RegisterScreen({
                     }
                 />
 
-
-
                 {/* Email Input Field */}
                 <TextInputWithIcons
                     onChangeText={(text: string) =>
@@ -216,7 +214,9 @@ function RegisterScreen({
                     rightIcon={
                         <IconButton
                             IconType={Icons.MyFeather}
-                            iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                            iconName={
+                                data.securePasswordText ? 'eye-off' : 'eye'
+                            }
                             onPress={() => handleSecurePassword1Change()}
                             color={theme.grey}
                         />
@@ -244,19 +244,19 @@ function RegisterScreen({
 
                 {/* Register Button */}
                 <Button
-                    type='Solid'
-                    text='REGISTER'
+                    type="Solid"
+                    text="REGISTER"
                     onPress={() => handleRegisterButton()}
                     loading={auth.awaitingResponse}
-                    marginVertical='s'
+                    marginVertical="s"
                 />
 
                 <Error message={auth.error} />
                 {/* Already have an account/Go Back Button */}
                 <Button
-                    type='Clear'
+                    type="Clear"
                     text="Already have an account?"
-                    textType='SubText'
+                    textType="SubText"
                     onPress={() => handleGoBackButton()}
                 />
             </Container>

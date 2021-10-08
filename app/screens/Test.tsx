@@ -106,19 +106,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 borderRadius="s"
             /> */}
 
+            <StyledTextInput paddingHorizontal="s" />
 
-            <StyledTextInput
-                paddingHorizontal='s'
-            />
+            <StyledText>Goeie</StyledText>
 
-            <StyledText>
-                Goeie
-            </StyledText>
-
-            <StyledError
-                size='l'
-                message='Goeie'
-            />
+            <StyledError size="l" message="Goeie" />
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -151,7 +143,6 @@ const StyledError = styled(Error)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
-
 
 const LogoView = styled(View)`
     position: absolute;

@@ -39,10 +39,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
 
         return (
             <WrappedComponent
-                style={[
-                    textStyle,
-                    style
-                ]}
+                style={[textStyle, style]}
                 type={type}
                 weight={weight}
                 color={color}

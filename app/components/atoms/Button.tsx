@@ -27,7 +27,6 @@ type ButtonProps = {
     textWeight?: Typography.TextWeight
 
     loading?: boolean
-
 } & LayoutProps &
     TouchableOpacityProps
 
@@ -84,11 +83,7 @@ const Button = ({
         <StyledTouchable
             onPress={onPress}
             disabled={disabled}
-            style={[
-                buttonStyle,
-                style,
-            ]}
-
+            style={[buttonStyle, style]}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >

@@ -16,11 +16,17 @@ export type LayoutProps = {
 
 function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<
-    { style: StyleProp<ViewStyle>[]; }
-    & Omit<T,
-    "paddingVertical"
-    | "paddingHorizontal"
-    | "marginVertical" | "marginHorizontal" | "borderRadius" | "width" | "style" | "children">
+        { style: StyleProp<ViewStyle>[] } & Omit<
+            T,
+            | 'paddingVertical'
+            | 'paddingHorizontal'
+            | 'marginVertical'
+            | 'marginHorizontal'
+            | 'borderRadius'
+            | 'width'
+            | 'style'
+            | 'children'
+        >
     >
 ): (props: any) => JSX.Element {
     return ({
@@ -38,13 +44,18 @@ function withLayoutProps<T extends LayoutProps>(
 
         const myStyle: StyleProp<ViewStyle> = {}
 
-        if (paddingVertical) myStyle.paddingVertical = Spacing.spacings[paddingVertical]
-        if (paddingHorizontal) myStyle.paddingHorizontal = Spacing.spacings[paddingHorizontal]
+        if (paddingVertical)
+            myStyle.paddingVertical = Spacing.spacings[paddingVertical]
+        if (paddingHorizontal)
+            myStyle.paddingHorizontal = Spacing.spacings[paddingHorizontal]
 
-        if (marginVertical) myStyle.marginVertical = Spacing.spacings[marginVertical]
-        if (marginHorizontal) myStyle.marginHorizontal = Spacing.spacings[marginHorizontal]
+        if (marginVertical)
+            myStyle.marginVertical = Spacing.spacings[marginVertical]
+        if (marginHorizontal)
+            myStyle.marginHorizontal = Spacing.spacings[marginHorizontal]
 
-        if (borderRadius) myStyle.borderRadius = Spacing.borderRadii[borderRadius]
+        if (borderRadius)
+            myStyle.borderRadius = Spacing.borderRadii[borderRadius]
         if (width) myStyle.width = Spacing.widths[width]
 
         return (

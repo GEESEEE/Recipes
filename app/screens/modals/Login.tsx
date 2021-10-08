@@ -1,17 +1,19 @@
 import React, { useReducer } from 'react'
-import {
-    Dimensions,
-    Modal,
-    Image
-} from 'react-native'
+import { Dimensions, Modal, Image } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/actions'
-import { Button, Icon, IconButton, Icons, Error, View } from '@/components/atoms'
+import {
+    Button,
+    Icon,
+    IconButton,
+    Icons,
+    Error,
+    View,
+} from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
-
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -122,7 +124,6 @@ function LoginModal({
         dispatch(authActions.clearError())
     }
 
-
     return (
         <Modal statusBarTranslucent animationType="slide">
             <Container
@@ -134,7 +135,7 @@ function LoginModal({
                 }}
             >
                 {/* Logo */}
-                <View marginVertical='l' paddingVertical='l'>
+                <View marginVertical="l" paddingVertical="l">
                     <Logo source={logo} />
                 </View>
 
@@ -191,14 +192,14 @@ function LoginModal({
                     text="SIGN IN"
                     onPress={() => handleLoginButton()}
                     loading={auth.awaitingResponse}
-                    marginVertical='s'
+                    marginVertical="s"
                 />
 
                 <Button
                     type="Outline"
                     text="Register"
                     onPress={() => handleRegisterButton()}
-                    marginVertical='m'
+                    marginVertical="m"
                 />
 
                 <Error message={auth.error} />
@@ -218,9 +219,7 @@ const Container = styled(View)`
     background-color: ${(props) => props.theme.background};
 `
 
-const LogoView = styled(View)`
-
-`
+const LogoView = styled(View)``
 
 const Logo = styled(Image)`
     height: ${logoHeight}px;

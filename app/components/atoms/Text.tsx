@@ -11,22 +11,23 @@ import { Typography } from '@/styles'
 
 type Props = TextProps & LayoutProps
 
-const Text = ({type, style, ...rest }: Props): JSX.Element => {
+const Text = ({ type, style, ...rest }: Props): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
 
     return (
-    <RNText
-        style={[
-            {
-                height: lineHeight,
-            },
-            style,
-        ]}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
-    />
-)}
+        <RNText
+            style={[
+                {
+                    height: lineHeight,
+                },
+                style,
+            ]}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...rest}
+        />
+    )
+}
 
 export default withLayoutProps(withTextProps(Text))

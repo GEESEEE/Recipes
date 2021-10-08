@@ -16,14 +16,17 @@ const sizeMap: Record<Spacing.Size, Typography.TextType> = {
     l: 'Text',
 }
 
-function Error({ message: errorMessage, size }: ErrorMessageProps): JSX.Element {
+function Error({
+    message: errorMessage,
+    size,
+}: ErrorMessageProps): JSX.Element {
     const { theme, textSize } = useAppSelector((state) => state.settings)
     size = size || 's'
 
     const textType = sizeMap[size]
 
     const paddingStyle = {
-        height: Typography.lineHeight(textType, textSize) + .1
+        height: Typography.lineHeight(textType, textSize) + 0.1,
     }
 
     return (
@@ -33,7 +36,7 @@ function Error({ message: errorMessage, size }: ErrorMessageProps): JSX.Element 
                     {errorMessage}
                 </Text>
             ) : (
-                <View style={paddingStyle}/>
+                <View style={paddingStyle} />
             )}
         </Container>
     )
