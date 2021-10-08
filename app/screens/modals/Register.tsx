@@ -248,9 +248,10 @@ function RegisterScreen({
                     text='REGISTER'
                     onPress={() => handleRegisterButton()}
                     loading={auth.awaitingResponse}
+                    marginVertical='s'
                 />
 
-                <Error errorMessage={auth.error} />
+                <Error message={auth.error} />
                 {/* Already have an account/Go Back Button */}
                 <Button
                     type='Clear'

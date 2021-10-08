@@ -12,7 +12,7 @@ import {
     View,
     Text,
     TextInput,
-    Icon,
+    Error,
     Icons,
     IconButton,
     Toggle,
@@ -109,18 +109,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
             <StyledTextInput
                 paddingHorizontal='s'
-
-
             />
 
+            <StyledText>
+                Goeie
+            </StyledText>
 
-
-                <Button
-                    onPress={() => console.log('yess')}
-                    type='Solid'
-                    text='Ha'
-                />
-
+            <StyledError
+                size='l'
+                message='Goeie'
+            />
 
             <ButtonFilled
                 text="Change Primary Color"
@@ -143,6 +141,17 @@ const StyledTextInput = styled(TextInput)`
     border-width: 1px;
     border-color: ${(props) => props.theme.primary};
 `
+
+const StyledText = styled(Text)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
+const StyledError = styled(Error)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
+`
+
 
 const LogoView = styled(View)`
     position: absolute;

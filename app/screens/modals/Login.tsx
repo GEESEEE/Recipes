@@ -198,11 +198,10 @@ function LoginModal({
                     type="Outline"
                     text="Register"
                     onPress={() => handleRegisterButton()}
-                    loading={auth.awaitingResponse}
                     marginVertical='m'
                 />
 
-                <Error errorMessage={auth.error} />
+                <Error message={auth.error} />
             </Container>
         </Modal>
     )

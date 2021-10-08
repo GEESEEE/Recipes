@@ -44,7 +44,7 @@ export const TextInputWithIcons = ({
                 />
                 {rightIcon || null}
             </InputFieldContainer>
-            <Error errorMessage={errorMessage} />
+            <Error message={errorMessage} />
         </Container>
     )
 }

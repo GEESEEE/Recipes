@@ -6,7 +6,7 @@ import { Spacing, Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
 type ErrorMessageProps = {
-    errorMessage?: string
+    message?: string
     size?: Spacing.Size
 }
 
@@ -16,7 +16,7 @@ const sizeMap: Record<Spacing.Size, Typography.TextType> = {
     l: 'Text',
 }
 
-function ErrorMessage({ errorMessage, size }: ErrorMessageProps): JSX.Element {
+function Error({ message: errorMessage, size }: ErrorMessageProps): JSX.Element {
     const { theme, textSize } = useAppSelector((state) => state.settings)
     size = size || 's'
 
@@ -39,7 +39,7 @@ function ErrorMessage({ errorMessage, size }: ErrorMessageProps): JSX.Element {
     )
 }
 
-export default ErrorMessage
+export default Error
 
 const Container = styled(View)`
     align-self: center;
