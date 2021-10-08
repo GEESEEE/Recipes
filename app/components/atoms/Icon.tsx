@@ -30,10 +30,7 @@ function Icon({
     const iconSize = Spacing.iconSize(size, textSize)
 
     return (
-        <IconType
-            name={name}
-            color={color}
-            size={iconSize}
+        <StyledView
             style={[
                 {
                     width: iconSize,
@@ -42,8 +39,20 @@ function Icon({
             ]}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
-        />
+        >
+
+            <IconType
+                name={name}
+                color={color}
+                size={iconSize}
+            />
+        </StyledView>
     )
 }
 
 export default withLayoutProps(Icon as any)
+
+const StyledView = styled(View)`
+    align-items: center;
+    justify-content: center;
+`

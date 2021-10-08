@@ -1,5 +1,5 @@
 import React from 'react'
-import { ViewProps } from 'react-native'
+import { StyleProp, ViewProps, ViewStyle } from 'react-native'
 import { Spacing } from '@/styles'
 import { utils } from '@/config'
 
@@ -16,17 +16,11 @@ export type LayoutProps = {
 
 function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<
-        Omit<
-            T,
-            | 'paddingVertical'
-            | 'paddingHorizontal'
-            | 'marginVertical'
-            | 'marginHorizontal'
-            | 'borderRadius'
-            | 'width'
-            | 'style'
-            | 'children'
-        >
+    { style: StyleProp<ViewStyle>[]; }
+    & Omit<T,
+    "paddingVertical"
+    | "paddingHorizontal"
+    | "marginVertical" | "marginHorizontal" | "borderRadius" | "width" | "style" | "children">
     >
 ): (props: any) => JSX.Element {
     return ({
@@ -42,7 +36,7 @@ function withLayoutProps<T extends LayoutProps>(
     }: T): JSX.Element => {
         // console.log("withLayout", style)
 
-        const myStyle: any = {}
+        const myStyle: StyleProp<ViewStyle> = {}
 
         if (paddingVertical) myStyle.paddingVertical = Spacing.spacings[paddingVertical]
         if (paddingHorizontal) myStyle.paddingHorizontal = Spacing.spacings[paddingHorizontal]
@@ -51,21 +45,12 @@ function withLayoutProps<T extends LayoutProps>(
         if (marginHorizontal) myStyle.marginHorizontal = Spacing.spacings[marginHorizontal]
 
         if (borderRadius) myStyle.borderRadius = Spacing.borderRadii[borderRadius]
-        if (width) myStyle.width = `${Spacing.widths[width]}%`
+        if (width) myStyle.width = Spacing.widths[width]
 
         return (
             <WrappedComponent
                 style={[myStyle, style]}
-
-                paddingHorizontal={paddingHorizontal}
-                paddingVertical={paddingVertical}
-
-                marginHorizontal={marginHorizontal}
-                marginVertical={marginVertical}
-
-                borderRadius={borderRadius}
-                width={width}
-
+                // I can not pass the layout props through to the inheritors, because it crashes for some reason :|
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >

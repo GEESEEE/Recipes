@@ -137,7 +137,6 @@ function LoginModal({
         dispatch(authActions.clearError())
     }
 
-    console.log(data.username, data.password, isValidData())
 
     return (
         <Modal statusBarTranslucent animationType="slide">
@@ -154,14 +153,7 @@ function LoginModal({
                     <Logo source={logo} />
                 </LogoView>
 
-                <TextInput
-                    placeholder="Your Username or Email"
-                    onChangeText={(text: string) =>
-                        handleUsernameInputChange(text)
-                    }
-                />
-
-                {/* <TextInputWithIcons
+                <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -178,16 +170,9 @@ function LoginModal({
                             ? 'Invalid Username or Email'
                             : undefined
                     }
-                /> */}
-
-                <TextInput
-                    placeholder="Your Password"
-                    onChangeText={(text: string) =>
-                        handlePasswordInputChange(text)
-                    }
                 />
 
-                {/* <TextInputWithIcons
+                <TextInputWithIcons
                     leftIcon={
                         <Icon
                             Type={Icons.MyFontAwesome}
@@ -214,7 +199,7 @@ function LoginModal({
                     errorMessage={
                         !data.isValidPassword ? 'Invalid Password' : undefined
                     }
-                /> */}
+                />
 
                 {/* <Button
                     type="Solid"
@@ -263,4 +248,9 @@ const LogoView = styled(View)`
 const Logo = styled(Animated.Image)`
     height: ${logoHeight}px;
     width: ${logoHeight}px;
+`
+
+const StyledIcon = styled(Icon)`
+    border-width: 1px;
+    border-color: ${(props) => props.theme.primary};
 `

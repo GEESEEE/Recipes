@@ -30,13 +30,13 @@ export const marginHorizontal = (size: Size): string =>
     `margin-horizontal: ${spacings[size]}px;`
 
 // Sizing
-export const widths: Record<Size, number> = {
-    s: 30,
-    m: 60,
-    l: 90,
+export const widths: Record<Size, string> = {
+    s: '30%',
+    m: '60%',
+    l: '90%',
 }
 
-export const width = (size: Size): string => `width: ${widths[size]}%;`
+export const width = (size: Size): string => `width: ${widths[size]};`
 
 const borderWidths: Record<Size, number> = {
     s: 1,

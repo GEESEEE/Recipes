@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard, StyleSheet } from 'react-native'
+import { Animated, Keyboard } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -108,8 +108,19 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
 
             <StyledTextInput
-                type='Header'
+                paddingHorizontal='s'
+
+
             />
+
+
+
+                <Button
+                    onPress={() => console.log('yess')}
+                    type='Solid'
+                    text='Ha'
+                />
+
 
             <ButtonFilled
                 text="Change Primary Color"

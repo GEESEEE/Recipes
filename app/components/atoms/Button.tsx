@@ -17,15 +17,17 @@ const TYPE = {
 
 type ButtonProps = {
     type: ButtonType
+    text: string
+    onPress: () => void
+
     color?: string
     backgroundColor?: string
 
-    text: string
     textType?: Typography.TextType
     textWeight?: Typography.TextWeight
 
     loading?: boolean
-    onPress: () => void
+
 } & LayoutProps &
     TouchableOpacityProps
 
@@ -61,7 +63,6 @@ const Button = ({
     textWeight = textWeight || 'bold'
 
     if (type === TYPE.Clear) textWeight = 'normal'
-
     borderRadius = borderRadius || 's'
     width = width || 'm'
 
@@ -72,19 +73,22 @@ const Button = ({
         backgroundColor = temp
     }
 
+    const buttonStyle = {
+        backgroundColor,
+        borderColor,
+        borderRadius: Spacing.borderRadii[borderRadius],
+        width: Spacing.widths[width],
+    }
+
     return (
         <StyledTouchable
             onPress={onPress}
             disabled={disabled}
             style={[
-                {
-                    backgroundColor,
-                    borderColor,
-                    borderRadius: Spacing.borderRadii[borderRadius],
-                    width: `${Spacing.widths[width]}%`,
-                },
+                buttonStyle,
                 style,
             ]}
+
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >

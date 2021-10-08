@@ -26,7 +26,6 @@ const TextInput = ({
     ...rest
 }: TextInputProps): JSX.Element => {
     const { theme, textSize } = useAppSelector((state) => state.settings)
-    console.log("TI", type)
     paddingHorizontal = paddingHorizontal || 's'
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
@@ -38,7 +37,6 @@ const TextInput = ({
                     paddingHorizontal: Spacing.spacings[paddingHorizontal],
                 },
                 style,
-
             ]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
