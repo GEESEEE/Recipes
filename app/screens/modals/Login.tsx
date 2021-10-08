@@ -1,22 +1,14 @@
 import React, { useReducer } from 'react'
 import {
     Dimensions,
-    TouchableOpacity,
-    Animated,
     Modal,
+    Image
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
-import { MyFeather, MyFontAwesome } from '@/components/Icons'
-import { ButtonFilled, ButtonInverted } from '@/components/user-input/Buttons'
-import { colors } from '@/config'
-
-import { InputFieldRounded } from '@/components/user-input/TextInputs'
-import { ErrorMessage as Old } from '@/components/user-input/ErrorMessage'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/actions'
-
 import { Button, Icon, IconButton, Icons, Error, View } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
@@ -231,7 +223,7 @@ const LogoView = styled(View)`
 
 `
 
-const Logo = styled(Animated.Image)`
+const Logo = styled(Image)`
     height: ${logoHeight}px;
     width: ${logoHeight}px;
 `
