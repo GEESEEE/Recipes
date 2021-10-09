@@ -10,4 +10,16 @@ import Modal from './Modal'
 import Menu from './Menu'
 import * as Icons from './Icons'
 
-export { View, Text, Button, Icon, TextInput, IconButton, Toggle, Error, Modal, Menu, Icons }
+export {
+    View,
+    Text,
+    Button,
+    Icon,
+    TextInput,
+    IconButton,
+    Toggle,
+    Error,
+    Modal,
+    Menu,
+    Icons,
+}

@@ -9,12 +9,11 @@ import {
 
 type Props = TextProps & LayoutProps
 
-const Text = ({  ...rest }: Props): JSX.Element => (
-        <RNText
-
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...rest}
-        />
-    )
+const Text = ({ ...rest }: Props): JSX.Element => (
+    <RNText
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...rest}
+    />
+)
 
 export default withLayoutProps(withTextProps(Text))

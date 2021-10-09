@@ -27,39 +27,37 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     }
 
     return (
-            <Container
-               backgroundColor={theme.background}
-            >
-                <ReturnButton onPress={() => toggle()} color={localColor} />
+        <Container backgroundColor={theme.background}>
+            <ReturnButton onPress={() => toggle()} color={localColor} />
 
-                <DifferenceContainer>
-                    <SampleText style={{ color: localColor }}>
-                        Change Primary Color
-                    </SampleText>
-                </DifferenceContainer>
+            <DifferenceContainer>
+                <SampleText style={{ color: localColor }}>
+                    Change Primary Color
+                </SampleText>
+            </DifferenceContainer>
 
-                <Picker
-                    style={{ borderColor: localColor }}
-                    defaultColor={theme.primary}
-                    oldColor={theme.primary}
-                    onColorChange={(color: HsvColor) =>
-                        setLocalColor(fromHsv(color))
-                    }
+            <Picker
+                style={{ borderColor: localColor }}
+                defaultColor={theme.primary}
+                oldColor={theme.primary}
+                onColorChange={(color: HsvColor) =>
+                    setLocalColor(fromHsv(color))
+                }
+            />
+
+            <ConfirmContainer>
+                <ButtonFilled
+                    text="Confirm"
+                    onPress={() => {
+                        setPrimaryColor(localColor)
+                        toggle()
+                    }}
+                    color={localColor}
                 />
+            </ConfirmContainer>
 
-                <ConfirmContainer>
-                    <ButtonFilled
-                        text="Confirm"
-                        onPress={() => {
-                            setPrimaryColor(localColor)
-                            toggle()
-                        }}
-                        color={localColor}
-                    />
-                </ConfirmContainer>
-
-                <FillRest />
-            </Container>
+            <FillRest />
+        </Container>
     )
 }
 

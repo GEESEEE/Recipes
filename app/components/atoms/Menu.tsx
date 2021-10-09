@@ -14,43 +14,35 @@ type MenuProps = {
     toggle: () => void
 }
 
-const Menu = React.forwardRef(({
-    items,
-    toggle
-}: MenuProps,
-ref: any): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.settings)
-    const coords: Position = ref.current
-    const insets = useSafeAreaInsets()
+const Menu = React.forwardRef(
+    ({ items, toggle }: MenuProps, ref: any): JSX.Element => {
+        const { theme } = useAppSelector((state) => state.settings)
+        const coords: Position = ref.current
+        const insets = useSafeAreaInsets()
 
-    const menuStyle = {
-        position: 'absolute',
-        height: 100,
-        width: 100,
-        marginLeft: coords.pageX,
-        marginTop: coords.pageY - insets.top,
-    }
-    console.log("Menu", items, coords, menuStyle)
-    return (
-        <Modal>
-            <Return
-                onPress={() => toggle()}
-            />
+        const menuStyle = {
+            position: 'absolute',
+            height: 100,
+            width: 100,
+            marginLeft: coords.pageX,
+            marginTop: coords.pageY - insets.top,
+        }
+        console.log('Menu', items, coords, menuStyle)
+        return (
+            <Modal>
+                <Return onPress={() => toggle()} />
 
-            <StyledView
-                borderRadius='s'
-                backgroundColor={theme.backgroundVariant}
-                style={menuStyle}
-            >
-                <Text
-                    color={theme.primary}
+                <StyledView
+                    borderRadius="s"
+                    backgroundColor={theme.backgroundVariant}
+                    style={menuStyle}
                 >
-                    Jaaa
-                </Text>
-            </StyledView>
-        </Modal>
-    )
-})
+                    <Text color={theme.primary}>Jaaa</Text>
+                </StyledView>
+            </Modal>
+        )
+    }
+)
 
 export default Menu
 

@@ -10,13 +10,11 @@ function LoadingModal(): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-
-                <Loading4Dots
-                    backgroundColor={theme.background}
-                    dotColor={colors.primaryBlue}
-                    width="100%"
-                />
-
+            <Loading4Dots
+                backgroundColor={theme.background}
+                dotColor={colors.primaryBlue}
+                width="100%"
+            />
         </Container>
     )
 }

@@ -17,11 +17,7 @@ function Modal({
 }: ModalProps): JSX.Element {
     const insets = useSafeAreaInsets()
     return (
-        <RNModal
-            statusBarTranslucent
-            animationType="slide"
-            transparent
-        >
+        <RNModal statusBarTranslucent animationType="slide" transparent>
             <Container
                 style={[
                     {
@@ -29,9 +25,9 @@ function Modal({
                         paddingLeft: insets.left,
                         paddingRight: insets.right,
                         paddingBottom: insets.bottom,
-                        backgroundColor
+                        backgroundColor,
                     },
-                    style
+                    style,
                 ]}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}

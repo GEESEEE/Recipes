@@ -13,7 +13,7 @@ export type DropDownItem = {
 }
 
 function createDropDownItems(
-    onPresses: Array<() => (Promise<void> | void)>,
+    onPresses: Array<() => Promise<void> | void>,
     name: string
 ): DropDownItem[] {
     return onPresses.map((onPress) => {
@@ -30,8 +30,8 @@ function createDropDownItems(
 }
 
 type DropdownMenuProps = {
-    functions: Array<() =>(Promise<void> | void)>
-    name: string,
+    functions: Array<() => Promise<void> | void>
+    name: string
     iconOffset?: Spacing.Size
     iconSize?: Spacing.Size
     iconColor?: string
@@ -57,7 +57,7 @@ function DropdownMenu({
 
     let containerStyle: StyleProp<ViewStyle> = {
         borderWidth: 1,
-        borderColor: theme.error
+        borderColor: theme.error,
     }
 
     if (typeof iconOffset !== 'undefined') {
@@ -65,29 +65,27 @@ function DropdownMenu({
             ...containerStyle,
             alignSelf: 'flex-end',
             position: 'absolute',
-            paddingTop: Spacing.spacings[iconOffset] ,
-            paddingEnd: Spacing.spacings[iconOffset] ,
+            paddingTop: Spacing.spacings[iconOffset],
+            paddingEnd: Spacing.spacings[iconOffset],
         }
     }
 
     return (
-        <View
-            style={containerStyle}
-            onLayout={onPosition}
-        >
+        <View style={containerStyle} onLayout={onPosition}>
             <StyledIcon
                 IconType={Icons.MyMaterialCommunityIcons}
-                iconName='dots-vertical'
+                iconName="dots-vertical"
                 onPress={() => toggle()}
                 color={iconColor}
                 size={iconSize}
             />
-            { open ?
-            <Menu
-                ref={positionRef}
-                items={dropdownItems}
-                toggle={() => toggle()}
-            /> : null}
+            {open ? (
+                <Menu
+                    ref={positionRef}
+                    items={dropdownItems}
+                    toggle={() => toggle()}
+                />
+            ) : null}
         </View>
     )
 }

@@ -89,7 +89,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function logRecipe(): void {
-        console.log("Ja goeie shit")
+        console.log('Ja goeie shit')
     }
 
     return (
@@ -103,17 +103,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <DropdownMenu
-                functions={[logRecipe]}
-                name='recipe'
-            />
+            <DropdownMenu functions={[logRecipe]} name="recipe" />
 
             <Button
-                type='Solid'
+                type="Solid"
                 text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
             />
-
         </Container>
     )
 }

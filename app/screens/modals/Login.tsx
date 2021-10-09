@@ -12,7 +12,7 @@ import {
     Icons,
     Error,
     View,
-    Modal
+    Modal,
 } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
@@ -126,80 +126,71 @@ function LoginModal({
     }
 
     return (
+        <Container backgroundColor={theme.background}>
+            {/* Logo */}
+            <View marginVertical="l" paddingVertical="l">
+                <Logo source={logo} />
+            </View>
 
-            <Container
-                backgroundColor={theme.background}
-            >
-                {/* Logo */}
-                <View marginVertical="l" paddingVertical="l">
-                    <Logo source={logo} />
-                </View>
+            <TextInputWithIcons
+                leftIcon={
+                    <Icon
+                        Type={Icons.MyFontAwesome}
+                        name="user-o"
+                        color={theme.grey}
+                    />
+                }
+                placeholder="Your Username or Email"
+                onChangeText={(text: string) => handleUsernameInputChange(text)}
+                errorMessage={
+                    !data.isValidUsername
+                        ? 'Invalid Username or Email'
+                        : undefined
+                }
+            />
 
-                <TextInputWithIcons
-                    leftIcon={
-                        <Icon
-                            Type={Icons.MyFontAwesome}
-                            name="user-o"
-                            color={theme.grey}
-                        />
-                    }
-                    placeholder="Your Username or Email"
-                    onChangeText={(text: string) =>
-                        handleUsernameInputChange(text)
-                    }
-                    errorMessage={
-                        !data.isValidUsername
-                            ? 'Invalid Username or Email'
-                            : undefined
-                    }
-                />
+            <TextInputWithIcons
+                leftIcon={
+                    <Icon
+                        Type={Icons.MyFontAwesome}
+                        name="lock"
+                        color={theme.grey}
+                    />
+                }
+                placeholder="Your Password"
+                onChangeText={(text: string) => handlePasswordInputChange(text)}
+                secureTextEntry={data.securePasswordText}
+                rightIcon={
+                    <IconButton
+                        IconType={Icons.MyFeather}
+                        iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                        onPress={() => handleSecurePasswordChange()}
+                        color={theme.grey}
+                        paddingHorizontal="s"
+                    />
+                }
+                errorMessage={
+                    !data.isValidPassword ? 'Invalid Password' : undefined
+                }
+            />
 
-                <TextInputWithIcons
-                    leftIcon={
-                        <Icon
-                            Type={Icons.MyFontAwesome}
-                            name="lock"
-                            color={theme.grey}
-                        />
-                    }
-                    placeholder="Your Password"
-                    onChangeText={(text: string) =>
-                        handlePasswordInputChange(text)
-                    }
-                    secureTextEntry={data.securePasswordText}
-                    rightIcon={
-                        <IconButton
-                            IconType={Icons.MyFeather}
-                            iconName={
-                                data.securePasswordText ? 'eye-off' : 'eye'
-                            }
-                            onPress={() => handleSecurePasswordChange()}
-                            color={theme.grey}
-                            paddingHorizontal="s"
-                        />
-                    }
-                    errorMessage={
-                        !data.isValidPassword ? 'Invalid Password' : undefined
-                    }
-                />
+            <Button
+                type="Solid"
+                text="SIGN IN"
+                onPress={() => handleLoginButton()}
+                loading={auth.awaitingResponse}
+                marginVertical="s"
+            />
 
-                <Button
-                    type="Solid"
-                    text="SIGN IN"
-                    onPress={() => handleLoginButton()}
-                    loading={auth.awaitingResponse}
-                    marginVertical="s"
-                />
+            <Button
+                type="Outline"
+                text="Register"
+                onPress={() => handleRegisterButton()}
+                marginVertical="m"
+            />
 
-                <Button
-                    type="Outline"
-                    text="Register"
-                    onPress={() => handleRegisterButton()}
-                    marginVertical="m"
-                />
-
-                <Error message={auth.error} />
-            </Container>
+            <Error message={auth.error} />
+        </Container>
     )
 }
 

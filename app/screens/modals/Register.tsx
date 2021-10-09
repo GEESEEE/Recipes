@@ -164,89 +164,77 @@ function RegisterScreen({
     }
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
+        <Container backgroundColor={theme.background}>
+            {/* Username Input Field */}
 
-                {/* Username Input Field */}
+            <TextInputWithIcons
+                onChangeText={(text: string) => handleUsernameInputChange(text)}
+                placeholder="Username"
+                errorMessage={
+                    !data.isValidUsername ? 'Invalid Username' : undefined
+                }
+            />
 
-                <TextInputWithIcons
-                    onChangeText={(text: string) =>
-                        handleUsernameInputChange(text)
-                    }
-                    placeholder="Username"
-                    errorMessage={
-                        !data.isValidUsername ? 'Invalid Username' : undefined
-                    }
-                />
+            {/* Email Input Field */}
+            <TextInputWithIcons
+                onChangeText={(text: string) => handleEmailInputChange(text)}
+                placeholder="E-mail"
+                errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
+            />
 
-                {/* Email Input Field */}
-                <TextInputWithIcons
-                    onChangeText={(text: string) =>
-                        handleEmailInputChange(text)
-                    }
-                    placeholder="E-mail"
-                    errorMessage={
-                        !data.isValidEmail ? 'Invalid Email' : undefined
-                    }
-                />
+            {/* Password 1 Input Field */}
+            <TextInputWithIcons
+                secureTextEntry={data.securePasswordText}
+                onChangeText={(text: string) =>
+                    handlePassword1InputChange(text)
+                }
+                placeholder="Password"
+                rightIcon={
+                    <IconButton
+                        IconType={Icons.MyFeather}
+                        iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                        onPress={() => handleSecurePassword1Change()}
+                        color={theme.grey}
+                    />
+                }
+                errorMessage={
+                    !data.isValidPassword1 ? 'Invalid Password' : undefined
+                }
+            />
 
-                {/* Password 1 Input Field */}
-                <TextInputWithIcons
-                    secureTextEntry={data.securePasswordText}
-                    onChangeText={(text: string) =>
-                        handlePassword1InputChange(text)
-                    }
-                    placeholder="Password"
-                    rightIcon={
-                        <IconButton
-                            IconType={Icons.MyFeather}
-                            iconName={
-                                data.securePasswordText ? 'eye-off' : 'eye'
-                            }
-                            onPress={() => handleSecurePassword1Change()}
-                            color={theme.grey}
-                        />
-                    }
-                    errorMessage={
-                        !data.isValidPassword1 ? 'Invalid Password' : undefined
-                    }
-                />
+            {/* Password 2 Input Field */}
+            <TextInputWithIcons
+                secureTextEntry
+                onChangeText={(text: string) =>
+                    handlePassword2InputChange(text)
+                }
+                placeholder="Password"
+                errorMessage={
+                    !data.isValidPassword2
+                        ? 'Invalid Password'
+                        : !samePasswords()
+                        ? 'Passwords are not the same'
+                        : undefined
+                }
+            />
 
-                {/* Password 2 Input Field */}
-                <TextInputWithIcons
-                    secureTextEntry
-                    onChangeText={(text: string) =>
-                        handlePassword2InputChange(text)
-                    }
-                    placeholder="Password"
-                    errorMessage={
-                        !data.isValidPassword2
-                            ? 'Invalid Password'
-                            : !samePasswords()
-                            ? 'Passwords are not the same'
-                            : undefined
-                    }
-                />
+            {/* Register Button */}
+            <Button
+                type="Solid"
+                text="REGISTER"
+                onPress={() => handleRegisterButton()}
+                loading={auth.awaitingResponse}
+                marginVertical="s"
+            />
 
-                {/* Register Button */}
-                <Button
-                    type="Solid"
-                    text="REGISTER"
-                    onPress={() => handleRegisterButton()}
-                    loading={auth.awaitingResponse}
-                    marginVertical="s"
-                />
-
-                <Error message={auth.error} />
-                {/* Already have an account/Go Back Button */}
-                <Button
-                    type="Clear"
-                    text="Already have an account?"
-                    textType="SubText"
-                    onPress={() => handleGoBackButton()}
-                />
-
+            <Error message={auth.error} />
+            {/* Already have an account/Go Back Button */}
+            <Button
+                type="Clear"
+                text="Already have an account?"
+                textType="SubText"
+                onPress={() => handleGoBackButton()}
+            />
         </Container>
     )
 }
