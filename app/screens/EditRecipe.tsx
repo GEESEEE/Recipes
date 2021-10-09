@@ -3,10 +3,7 @@ import { View } from 'react-native'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { useRoute } from '@react-navigation/native'
-import {
-    ButtonBorderless,
-    ButtonFilled,
-} from '@/components/user-input/Buttons'
+import { ButtonBorderless, ButtonFilled } from '@/components/user-input/Buttons'
 import { Ingredient, Recipe, Instruction, RecipeIngredient } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { indicesActions, myRecipeActions } from '@/redux/actions'

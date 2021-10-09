@@ -16,10 +16,8 @@ function MainTabs(): JSX.Element {
             tabBar={({ navigation, state }: any) => (
                 <TabsComponent navigation={navigation} state={state} />
             )}
-
             screenOptions={{
                 swipeEnabled: false,
-                
             }}
         >
             <Tabs.Screen name="BrowseStack" component={BrowseStack} />

@@ -17,10 +17,10 @@ const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
-    const {recipes} = useAppSelector((state) => state.myRecipes)
-    console.log("Test", recipes.length)
-    const {instructions} = recipes[1] ?? [new Instruction(-1, 'text', -1)]
-    console.log("Test", instructions)
+    const { recipes } = useAppSelector((state) => state.myRecipes)
+    console.log('Test', recipes.length)
+    const { instructions } = recipes[1] ?? [new Instruction(-1, 'text', -1)]
+    console.log('Test', instructions)
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
@@ -107,7 +107,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <DropdownMenu
                 functions={[logRecipe, doRecipe]}
                 functionSuffix="recipe"
-
             />
 
             <Button

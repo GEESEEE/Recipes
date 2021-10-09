@@ -11,20 +11,17 @@ type InstructionListItemProps = {
 
 function InstructionListItem({
     instruction,
-    instructions
+    instructions,
 }: InstructionListItemProps): JSX.Element {
     const index = instructions.indexOf(instruction)
-    console.log("IListItem", instructions.length, instruction, index)
+    console.log('IListItem', instructions.length, instruction, index)
     return (
-        <ListItem
-            functions={[]}
-            functionSuffix='instruction'
-        >
-            <Container width='l'>
-                <Text type='SubHeader' paddingHorizontal='s'>{index + 1}</Text>
-                <InstructionTextInput
-                    value={instruction.text}
-                />
+        <ListItem functions={[]} functionSuffix="instruction">
+            <Container width="l">
+                <Text type="SubHeader" paddingHorizontal="s">
+                    {index + 1}
+                </Text>
+                <InstructionTextInput value={instruction.text} />
             </Container>
         </ListItem>
     )
@@ -36,9 +33,7 @@ const Container = styled(View)`
     flex-direction: row;
 `
 
-const Number = styled(Text)`
-
-`
+const Number = styled(Text)``
 
 const InstructionTextInput = styled(TextInput)`
     flex: 8;

@@ -4,26 +4,25 @@ import { View } from '@/components/base'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import { useAppSelector } from '@/hooks'
 
-
 type ListItemProps = {
-    functions: Array<() => (Promise<void> | void)>
+    functions: Array<() => Promise<void> | void>
     functionSuffix: string
 }
 
 function ListItem({
     children,
     functions,
-    functionSuffix
+    functionSuffix,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     return (
         <Container
-            width='l'
-            borderRadius='s'
+            width="l"
+            borderRadius="s"
             backgroundColor={theme.backgroundVariant}
-            paddingVertical='s'
-            paddingHorizontal='s'
-            marginVertical='s'
+            paddingVertical="s"
+            paddingHorizontal="s"
+            marginVertical="s"
         >
             {children}
             <DropdownMenu
@@ -41,4 +40,3 @@ const Container = styled(View)`
     align-items: center;
     align-content: space-between;
 `
-
