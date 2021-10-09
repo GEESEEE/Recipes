@@ -1,3 +1,4 @@
 import TextInputWithIcons from './TextInputWithIcons'
+import DropdownMenu, {DropDownItem} from './DropdownMenu'
 
-export { TextInputWithIcons }
+export { TextInputWithIcons, DropdownMenu, DropDownItem }

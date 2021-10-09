@@ -18,7 +18,7 @@ import {
     Toggle,
     Button,
 } from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+import { TextInputWithIcons, DropdownMenu } from '@/components/molecules'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -88,6 +88,10 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         console.log(text)
     }
 
+    function logRecipe(): void {
+        console.log("Ja goeie shit")
+    }
+
     return (
         <Container>
             {/* <LogoView>
@@ -99,23 +103,17 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            {/* <Button
-                type="Solid"
-                text="JEmoe"
-                onPress={() => console.log('pres')}
-                borderRadius="s"
-            /> */}
+            <DropdownMenu
+                functions={[logRecipe]}
+                name='recipe'
+            />
 
-            <StyledTextInput paddingHorizontal="s" />
-
-            <StyledText>Goeie</StyledText>
-
-            <StyledError size="l" message="Goeie" />
-
-            <ButtonFilled
-                text="Change Primary Color"
+            <Button
+                type='Solid'
+                text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
             />
+
         </Container>
     )
 }

@@ -1,11 +1,9 @@
 import React, { useReducer } from 'react'
-import { Modal } from 'react-native'
 import styled from 'styled-components'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { authActions } from '@/redux/actions'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
-import { Button, IconButton, Icons, Error, View } from '@/components/atoms'
+import { Button, IconButton, Icons, Error, Modal } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 const REGISTER_ACTIONS = {
@@ -72,8 +70,6 @@ function RegisterScreen({
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
-
-    const insets = useSafeAreaInsets()
 
     const initialState: RegisterState = {
         username: '',
@@ -168,19 +164,10 @@ function RegisterScreen({
     }
 
     return (
-        <Modal
-            statusBarTranslucent
-            presentationStyle="overFullScreen"
-            animationType="slide"
+        <Container
+            backgroundColor={theme.background}
         >
-            <Container
-                style={{
-                    paddingTop: insets.top,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: insets.bottom,
-                }}
-            >
+
                 {/* Username Input Field */}
 
                 <TextInputWithIcons
@@ -259,15 +246,13 @@ function RegisterScreen({
                     textType="SubText"
                     onPress={() => handleGoBackButton()}
                 />
-            </Container>
-        </Modal>
+
+        </Container>
     )
 }
 
 export default RegisterScreen
 
-const Container = styled(View)`
-    flex: 1;
+const Container = styled(Modal)`
     align-items: center;
-    background-color: ${(props) => props.theme.background};
 `

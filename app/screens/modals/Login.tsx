@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { Dimensions, Modal, Image } from 'react-native'
+import { Dimensions, Image } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
@@ -12,6 +12,7 @@ import {
     Icons,
     Error,
     View,
+    Modal
 } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
@@ -125,14 +126,9 @@ function LoginModal({
     }
 
     return (
-        <Modal statusBarTranslucent animationType="slide">
+
             <Container
-                style={{
-                    paddingTop: insets.top,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: insets.bottom,
-                }}
+                backgroundColor={theme.background}
             >
                 {/* Logo */}
                 <View marginVertical="l" paddingVertical="l">
@@ -204,7 +200,6 @@ function LoginModal({
 
                 <Error message={auth.error} />
             </Container>
-        </Modal>
     )
 }
 
@@ -213,10 +208,8 @@ export default LoginModal
 const { height } = Dimensions.get('screen')
 const logoHeight = height * 0.2
 
-const Container = styled(View)`
-    flex: 1;
+const Container = styled(Modal)`
     align-items: center;
-    background-color: ${(props) => props.theme.background};
 `
 
 const LogoView = styled(View)``

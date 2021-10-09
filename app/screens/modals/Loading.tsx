@@ -1,40 +1,29 @@
 import React from 'react'
-import { View, Modal } from 'react-native'
 import styled from 'styled-components'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Loading4Dots } from '@/components/animations'
 import { useAppSelector } from '@/hooks'
 import { colors } from '@/config'
+import { Modal } from '@/components/atoms'
 
 function LoadingModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
-    const insets = useSafeAreaInsets()
 
     return (
-        <Modal statusBarTranslucent animationType="slide">
-            <Container
-                style={{
-                    paddingTop: insets.top,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: insets.bottom,
-                }}
-            >
+        <Container backgroundColor={theme.background}>
+
                 <Loading4Dots
                     backgroundColor={theme.background}
                     dotColor={colors.primaryBlue}
                     width="100%"
                 />
-            </Container>
-        </Modal>
+
+        </Container>
     )
 }
 
 export default LoadingModal
 
-const Container = styled(View)`
-    flex: 1;
-    background-color: ${(props) => props.theme.background};
+const Container = styled(Modal)`
     align-items: center;
     justify-content: center;
 `

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Modal } from 'react-native'
+import { View, Text } from 'react-native'
 import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
@@ -8,6 +8,7 @@ import { ButtonFilled, ReturnButton } from '../../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { settingsActions } from '@/redux/actions'
 import { colors } from '@/config'
+import { Modal } from '@/components/atoms'
 
 interface ColorPickerProps {
     toggle: () => void
@@ -26,14 +27,8 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     }
 
     return (
-        <Modal statusBarTranslucent animationType="slide">
             <Container
-                style={{
-                    paddingTop: insets.top,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: insets.bottom,
-                }}
+               backgroundColor={theme.background}
             >
                 <ReturnButton onPress={() => toggle()} color={localColor} />
 
@@ -65,15 +60,12 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
 
                 <FillRest />
             </Container>
-        </Modal>
     )
 }
 
 export default ColorPickerModal
 
-const Container = styled(View)`
-    flex 1;
-    background-color: ${(props) => props.theme.background};
+const Container = styled(Modal)`
     align-items: center;
     margin-top: 0;
 `
