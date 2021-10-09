@@ -5,14 +5,15 @@ import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/actions'
+import { Icon, Icons,  View,
+    Modal,} from '@/components/base'
 import {
     Button,
-    Icon,
+
     IconButton,
-    Icons,
+
     Error,
-    View,
-    Modal,
+
 } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 

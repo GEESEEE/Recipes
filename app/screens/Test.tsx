@@ -7,18 +7,20 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
+import {View,
+    Text,
+    TextInput, Icons, Toggle,} from '@/components/base'
 
 import {
-    View,
-    Text,
-    TextInput,
+
     Error,
-    Icons,
+
     IconButton,
-    Toggle,
+
     Button,
+    DropdownMenu
 } from '@/components/atoms'
-import { TextInputWithIcons, DropdownMenu } from '@/components/molecules'
+import { TextInputWithIcons } from '@/components/molecules'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -89,7 +91,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function logRecipe(): void {
-        console.log('Ja goeie shit')
+        console.log('Ja goeie shit, wajo')
+    }
+
+    function doRecipe(): void {
+        console.log("Do dis ja")
     }
 
     return (
@@ -103,7 +109,11 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <DropdownMenu functions={[logRecipe]} name="recipe" />
+            <DropdownMenu
+                functions={[logRecipe, doRecipe]}
+                functionSuffix="recipe"
+                iconOffset='s'
+            />
 
             <Button
                 type="Solid"

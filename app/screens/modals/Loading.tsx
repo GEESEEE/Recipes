@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Loading4Dots } from '@/components/animations'
 import { useAppSelector } from '@/hooks'
 import { colors } from '@/config'
-import { Modal } from '@/components/atoms'
+import { Modal } from '@/components/base'
 
 function LoadingModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)

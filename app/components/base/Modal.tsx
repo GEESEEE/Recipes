@@ -7,17 +7,20 @@ import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 type ModalProps = {
     backgroundColor?: string
+    animationType?: "slide" | "none" | "fade" | undefined
 } & LayoutProps
 
 function Modal({
     backgroundColor,
+    animationType,
     children,
     style,
     ...rest
 }: ModalProps): JSX.Element {
     const insets = useSafeAreaInsets()
+    animationType = animationType || 'slide'
     return (
-        <RNModal statusBarTranslucent animationType="slide" transparent>
+        <RNModal statusBarTranslucent animationType={animationType} transparent>
             <Container
                 style={[
                     {

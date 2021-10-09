@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import View from './View'
-import Text from './Text'
+import { View, Text } from '@/components/base'
 import { Spacing, Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
