@@ -7,7 +7,7 @@ import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 type ModalProps = {
     backgroundColor?: string
-    animationType?: "slide" | "none" | "fade" | undefined
+    animationType?: 'slide' | 'none' | 'fade' | undefined
 } & LayoutProps
 
 function Modal({

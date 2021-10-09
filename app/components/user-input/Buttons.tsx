@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { MyMaterialCommunityIcons } from '../Icons'
-import { Loading4Dots } from '@/components/animations'
+import { Loading4Dots } from '@/components/atoms'
 import { Spacing } from '@/styles'
 
 export type ButtonProps = {

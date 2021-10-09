@@ -1,6 +1,6 @@
 import React from 'react'
-import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
-import Icon from './Icon'
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import { Icon } from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
 

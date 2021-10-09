@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Loading4Dots } from '@/components/animations'
+import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
 import { colors } from '@/config'
 import { Modal } from '@/components/base'

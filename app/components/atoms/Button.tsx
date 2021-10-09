@@ -1,9 +1,9 @@
 import React from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import styled from 'styled-components'
-import { Text, View} from '@/components/base'
+import { Text, View } from '@/components/base'
+import Loading4Dots from './Loading4Dots'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
-import { Loading4Dots } from '@/components/animations'
 import { Typography, Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'
 

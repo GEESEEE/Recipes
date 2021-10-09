@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { MemoizedRecipeHeader } from './RecipeHeader'
 import { Recipe } from '@/data'
 import { useAppSelector, useDropdownRerender } from '@/hooks'
-import { Loading4Dots } from '@/components/animations'
+import { Loading4Dots } from '@/components/atoms'
 
 interface RecipesFlatListProps {
     recipes: Recipe[]

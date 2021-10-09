@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { View, Text, Modal, Icons} from '@/components/base'
-import { IconButton } from '@/components/atoms'
+import { View, Text, Modal, Icons } from '@/components/base'
+import IconButton from './IconButton'
 import { Spacing } from '@/styles'
 import { Position, useAppSelector, usePosition, useToggle } from '@/hooks'
 import { utils } from '@/config'
@@ -57,8 +57,7 @@ function DropdownMenu({
 
     const dropdownItems = createDropDownItems(functions, name)
 
-    let containerStyle: StyleProp<ViewStyle> = {
-    }
+    let containerStyle: StyleProp<ViewStyle> = {}
 
     let offset = Spacing.iconSize(iconSize, textSize)
     if (typeof iconOffset !== 'undefined') {
@@ -96,7 +95,6 @@ function DropdownMenu({
 
 export default DropdownMenu
 
-
 type MenuProps = {
     items: DropdownItem[]
     offset: number
@@ -119,7 +117,7 @@ const Menu = React.forwardRef(
         }
 
         return (
-            <Modal animationType='none' >
+            <Modal animationType="none">
                 <Return onPress={() => toggle()} />
 
                 <View
@@ -132,16 +130,23 @@ const Menu = React.forwardRef(
                             items.indexOf(item) !== items.length - 1
                         return (
                             <View key={item.id}>
-                                <TouchableOpacity onPress={() => {item.onPress(); toggle()}}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        item.onPress()
+                                        toggle()
+                                    }}
+                                >
                                     <Text
-                                        type='SubHeader'
-                                        paddingHorizontal='m'
-                                        marginVertical='m'
+                                        type="SubHeader"
+                                        paddingHorizontal="m"
+                                        marginVertical="m"
                                     >
                                         {item.text}
                                     </Text>
                                 </TouchableOpacity>
-                                {separator ? <Separator backgroundColor={theme.text} /> : null}
+                                {separator ? (
+                                    <Separator backgroundColor={theme.text} />
+                                ) : null}
                             </View>
                         )
                     })}
