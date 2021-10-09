@@ -4,7 +4,7 @@ import Lottie from 'lottie-react-native'
 import { View } from '@/components/base'
 import * as LoadingAnimation from '@/assets/animations/Loading4Dots.json'
 
-interface Loading4DotsProps {
+type Loading4DotsProps = {
     backgroundColor: string
     dotColor: string
     height?: number | string

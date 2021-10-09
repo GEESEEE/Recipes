@@ -1,3 +1,4 @@
 import TextInputWithIcons from './TextInputWithIcons'
+import InstructionListItem from './InstructionListItem'
 
-export { TextInputWithIcons }
+export { TextInputWithIcons, InstructionListItem }

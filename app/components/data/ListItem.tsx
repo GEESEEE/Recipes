@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native'
 import styled from 'styled-components'
 import { ListItem } from '@/data'
 import { useAppSelector } from '@/hooks'
-import { MyFeather } from '../Icons'
+import { MyFeather } from '@/components/Icons'
 
 interface ListItemProps {
     children: (JSX.Element | undefined | null)[]

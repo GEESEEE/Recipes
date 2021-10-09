@@ -10,13 +10,18 @@ import { routeUtils } from '@/config'
 import { View, Text, TextInput, Icons, Toggle } from '@/components/base'
 
 import { Error, IconButton, Button, DropdownMenu } from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
+import { Instruction } from '@/data'
 
 const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
-    const recipes = useAppSelector((state) => state.myRecipes)
+    const {recipes} = useAppSelector((state) => state.myRecipes)
+    console.log("Test", recipes.length)
+    const {instructions} = recipes[1] ?? [new Instruction(-1, 'text', -1)]
+    console.log("Test", instructions)
+
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
     const logoSize = useRef(new Animated.Value(bigLogo)).current
@@ -102,13 +107,18 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <DropdownMenu
                 functions={[logRecipe, doRecipe]}
                 functionSuffix="recipe"
-                iconOffset="s"
+
             />
 
             <Button
                 type="Solid"
                 text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
+            />
+
+            <InstructionListItem
+                instructions={instructions as Instruction[]}
+                instruction={(instructions as Instruction[])[2]}
             />
         </Container>
     )

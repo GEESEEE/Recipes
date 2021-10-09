@@ -196,14 +196,7 @@ const Container = styled(Modal)`
     align-items: center;
 `
 
-const LogoView = styled(View)``
-
 const Logo = styled(Image)`
     height: ${logoHeight}px;
     width: ${logoHeight}px;
-`
-
-const StyledIcon = styled(Icon)`
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary};
 `

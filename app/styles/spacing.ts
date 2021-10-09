@@ -31,12 +31,10 @@ export const marginHorizontal = (size: Size): string =>
 
 // Sizing
 export const widths: Record<Size, string> = {
-    s: '30%',
-    m: '60%',
+    s: '40%',
+    m: '65%',
     l: '90%',
 }
-
-export const width = (size: Size): string => `width: ${widths[size]};`
 
 const borderWidths: Record<Size, number> = {
     s: 1,
@@ -44,17 +42,11 @@ const borderWidths: Record<Size, number> = {
     l: 3,
 }
 
-export const borderWidth = (size: Size): string =>
-    `border-width: ${borderWidths[size]}px;`
-
 export const borderRadii: Record<Size, number> = {
     s: 10,
     m: 15,
     l: 20,
 }
-
-export const borderRadius = (size: Size): string =>
-    `border-radius: ${borderRadii[size]}px;`
 
 export const standardIconSize: Record<Typography.TextSize, number> = {
     m: 20,

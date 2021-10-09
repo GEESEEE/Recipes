@@ -3,12 +3,11 @@ import { View, Text } from 'react-native'
 import styled from 'styled-components'
 import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ButtonFilled, ReturnButton } from '../../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { settingsActions } from '@/redux/actions'
 import { colors } from '@/config'
-import { Modal } from '@/components/atoms'
+import { Modal } from '@/components/base'
 
 interface ColorPickerProps {
     toggle: () => void
@@ -19,8 +18,6 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     const dispatch = useAppDispatch()
 
     const [localColor, setLocalColor] = useState<string>(colors.primary)
-
-    const insets = useSafeAreaInsets()
 
     function setPrimaryColor(color: string): void {
         dispatch(settingsActions.setColor(color))
