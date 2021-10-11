@@ -61,9 +61,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         }
     }, [])
 
-    function logRecipes(): void {
-        console.log('Recipes', recipes)
-    }
 
     function changePrimaryColor(): void {
         if (theme.primary === '#4ecdc4') {
@@ -77,10 +74,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         routeUtils.showPopup(navigation, 'Yes')
     }
 
-    const [loading, toggle] = useToggle(false)
-
     const [username, setUsername] = React.useState('username')
-    console.log(username)
 
     function changeUsername(text: string): void {
         setUsername(text)
@@ -106,24 +100,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <Editable
-                text={username}
-                editable
-                handleTextChange={(t: string) => setUsername(t)}
-            />
-
             <Button
                 type="Solid"
                 text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
             />
 
-
-
             <InstructionListItem
                 instructions={instructions as Instruction[]}
                 instruction={(instructions as Instruction[])[0]}
-
+                editable
             />
         </Container>
     )

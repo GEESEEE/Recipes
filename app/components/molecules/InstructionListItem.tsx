@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useIsFocused } from '@react-navigation/native'
 import { Instruction } from '@/data'
-import { View, TextInput, Text } from '@/components/base'
+import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/config'
+import { useDropdownRerender, usePosition, useToggle } from '@/hooks'
 
 type InstructionListItemProps = {
     instruction: Instruction
@@ -24,12 +26,11 @@ function InstructionListItem({
         console.log('Logging instruction')
     }
 
-
     return (
         <ListItem
             items={utils.createDropDownItems([logInstruction], 'instruction')}
         >
-            <Container>
+            <Container >
                 <Number type="SubHeader" paddingHorizontal="s" >
                     {index + 10}
                 </Number>
@@ -37,7 +38,7 @@ function InstructionListItem({
                     editable={editable}
                     text={instruction.text}
                     handleTextChange={handleInstructionTextChange}
-                    numberOfLines={1}
+                    numberOfLines={3}
                 />
             </Container>
         </ListItem>

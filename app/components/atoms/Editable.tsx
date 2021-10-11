@@ -18,7 +18,6 @@ function Editable({
     ...rest
 }: EditableProps ): JSX.Element {
 
-    numberOfLines = numberOfLines || 1
     const textStyle = {
         flex: 1
     }
