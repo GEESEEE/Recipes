@@ -31,7 +31,6 @@ export const TextInputWithIcons = ({
                 backgroundColor={theme.backgroundVariant}
                 paddingHorizontal="s"
                 paddingVertical="s"
-                marginVertical='s'
                 borderRadius="s"
                 width="l"
             >

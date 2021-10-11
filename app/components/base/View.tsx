@@ -2,7 +2,7 @@ import React from 'react'
 import { View as RNView } from 'react-native'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
-type ViewProps = {
+export type ViewProps = {
     backgroundColor?: string
 } & LayoutProps
 

@@ -159,7 +159,7 @@ function LoginModal({
                         iconName={data.securePasswordText ? 'eye-off' : 'eye'}
                         onPress={() => handleSecurePasswordChange()}
                         color={theme.grey}
-                        paddingHorizontal="s"
+                        
                     />
                 }
                 errorMessage={

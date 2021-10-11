@@ -4,17 +4,17 @@ import {
     withLayoutProps,
     LayoutProps,
     withTextProps,
-    TextProps,
+    TextProps as RNTextProps,
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
-type Props = {
+export type TextProps = {
     fixHeight?: boolean;
     type: Typography.TextType
-} & TextProps & LayoutProps
+} & RNTextProps & LayoutProps
 
-const Text = ({ fixHeight, type, style, ...rest }: Props): JSX.Element => {
+const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
     const textStyle: StyleProp<ViewStyle> = {}
     if (fixHeight) {

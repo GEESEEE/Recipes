@@ -13,7 +13,7 @@ import {
 import { useAppSelector } from '@/hooks'
 
 
-type TextInputProps = RNTextInputProps &
+export type TextInputProps = RNTextInputProps &
     TextProps &
     LayoutProps
 
