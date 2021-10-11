@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native'
+import { StyleProp, ViewStyle } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { View, Text, Modal, Icons } from '@/components/base'
+import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
 import IconButton from './IconButton'
 import { Spacing } from '@/styles'
 import { Position, useAppSelector, usePosition, useToggle } from '@/hooks'
-import { utils } from '@/config'
 
 export type DropdownItem = {
     id: number
@@ -116,7 +115,6 @@ const Menu = React.forwardRef(
                                     }}
                                 >
                                     <Text
-                                        type="SubHeader"
                                         paddingHorizontal="m"
                                         marginVertical="m"
                                     >

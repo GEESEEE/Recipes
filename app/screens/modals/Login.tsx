@@ -144,10 +144,11 @@ function LoginModal({
 
             <TextInputWithIcons
                 leftIcon={
-                    <Icon
-                        Type={Icons.MyFontAwesome}
-                        name="lock"
+                    <IconButton
+                        IconType={Icons.MyFontAwesome}
+                        iconName="lock"
                         color={theme.grey}
+                        onPress={() => console.log("asd")}
                     />
                 }
                 placeholder="Your Password"

@@ -29,7 +29,7 @@ export const TextInputWithIcons = ({
         <Container>
             <InputFieldContainer
                 backgroundColor={theme.backgroundVariant}
-                paddingHorizontal="s"
+                paddingHorizontal="m"
                 paddingVertical="s"
                 marginVertical="s"
                 borderRadius="s"

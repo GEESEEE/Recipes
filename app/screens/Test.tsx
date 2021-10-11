@@ -114,6 +114,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <InstructionListItem
                 instructions={instructions as Instruction[]}
                 instruction={(instructions as Instruction[])[0]}
+                editable
             />
         </Container>
     )

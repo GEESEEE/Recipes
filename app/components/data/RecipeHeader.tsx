@@ -10,22 +10,8 @@ import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { myRecipeActions } from '@/redux/actions'
 import { ButtonIcon } from '../user-input/Buttons'
 import { recipeUtils, utils } from '@/config'
+import { DropdownMenu } from '@/components/atoms'
 
-function createDropDownItems(
-    onPresses: Array<() => Promise<void>>
-): DropDownItem[] {
-    return onPresses.map((onPress) => {
-        // Slice recipe off the function name
-        const text = utils.capitalizeFirstLetter(
-            onPress.name.slice(0, onPress.name.length - 6)
-        )
-        return {
-            id: onPresses.indexOf(onPress),
-            text,
-            onPress,
-        }
-    })
-}
 
 // Edit Actions determine what can be edited and what is displayed in this component
 // Edit-all, is for editing everything
@@ -84,7 +70,7 @@ function RecipeHeaderComponent({
         dropDownFunctions.push(copyRecipe)
     }
 
-    const dropDownItems: DropDownItem[] = createDropDownItems(dropDownFunctions)
+    const dropDownItems: DropDownItem[] = utils.createDropDownItems(dropDownFunctions, 'recipe')
 
     const prepareTimeStyle = (): { color: string } => {
         if (!editable || recipe.prepareTime > 0) return { color: theme.text }
@@ -205,9 +191,11 @@ function RecipeHeaderComponent({
 
             {/* Dropdown Menu */}
             {displayDropDown ? (
-                <DropDownMenu
+                <DropdownMenu
                     items={dropDownItems}
                     dependencies={dropDownDependencies}
+                    iconOffset='s'
+                    iconSize='m'
                 />
             ) : null}
         </Header>

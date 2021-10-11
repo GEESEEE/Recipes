@@ -8,11 +8,13 @@ import { utils } from '@/config'
 type InstructionListItemProps = {
     instruction: Instruction
     instructions: Instruction[]
+    editable?: boolean
 }
 
 function InstructionListItem({
     instruction,
     instructions,
+    editable
 }: InstructionListItemProps): JSX.Element {
     const index = instructions.indexOf(instruction)
 
@@ -20,7 +22,7 @@ function InstructionListItem({
         console.log('Logging instruction')
     }
 
-    const [text, setText] = React.useState('')
+    const [ text, setText] = React.useState('')
 
     return (
         <ListItem
@@ -31,11 +33,11 @@ function InstructionListItem({
                     {index + 10}
                 </Number>
                 <InstructionTextInput
-                    value={text}
-                    multiline
-                    numberOfLines={2}
-                    onChangeText={(t: string) => setText(t)}
-                />
+                        value={text}
+                        onChangeText={(t: string) => setText(t)}
+                        mutliline
+                        numberOfLines={2}
+                    />
             </Container>
         </ListItem>
     )
@@ -50,6 +52,10 @@ const Container = styled(View)`
 
 const Number = styled(Text)`
     width: 10%;
+`
+
+const InstructionText = styled(Text)`
+    flex: 1;
 `
 
 const InstructionTextInput = styled(TextInput)`
