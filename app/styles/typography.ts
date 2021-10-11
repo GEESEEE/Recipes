@@ -51,7 +51,7 @@ export const textWeight: Record<TextType, TextWeight> = {
     TinyText: 'normal',
 }
 
-export const lineHeightMultiplier = 1.45
+export const lineHeightMultiplier = 1.35
 
 export const fontSize = (type: TextType, size: TextSize): number =>
     standardTextSize[size] + textOffset[type]

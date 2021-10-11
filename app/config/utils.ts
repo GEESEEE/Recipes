@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { StyleProp, ViewStyle } from 'react-native'
+import { DropdownItem } from '@/components/atoms'
 
 export function handleNumericTextInput(
     number: string,
@@ -20,6 +21,23 @@ export function capitalizeFirstLetter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     return str
+}
+
+export function createDropDownItems(
+    onPresses: Array<() => Promise<void> | void>,
+    name: string
+): DropdownItem[] {
+    return onPresses.map((onPress) => {
+        // Slice recipe off the function name
+        const text = capitalizeFirstLetter(
+            onPress.name.slice(0, onPress.name.length - name.length)
+        )
+        return {
+            id: onPresses.indexOf(onPress),
+            text,
+            onPress,
+        }
+    })
 }
 
 export function inElementOf(arr: string[], val: string): boolean {

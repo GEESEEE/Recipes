@@ -19,8 +19,7 @@ const smallLogo = 0.5
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const { recipes } = useAppSelector((state) => state.myRecipes)
     console.log('Test', recipes.length)
-    const { instructions } = recipes[1] ?? [new Instruction(-1, 'text', -1)]
-    console.log('Test', instructions)
+    const instructions = recipes[1]?.instructions ?? [new Instruction(-1, 'text', -1)]
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
@@ -104,11 +103,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <DropdownMenu
-                functions={[logRecipe, doRecipe]}
-                functionSuffix="recipe"
-            />
-
             <Button
                 type="Solid"
                 text="CHANGE PRIMARY COLOR"
@@ -117,7 +111,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
             <InstructionListItem
                 instructions={instructions as Instruction[]}
-                instruction={(instructions as Instruction[])[2]}
+                instruction={(instructions as Instruction[])[0]}
             />
         </Container>
     )

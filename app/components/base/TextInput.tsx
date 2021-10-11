@@ -11,31 +11,22 @@ import {
     TextProps,
 } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
-import { Spacing, Typography } from '@/styles'
 
-type TextInputProps = {
-    paddingHorizontal?: Spacing.Size
-} & RNTextInputProps &
+
+type TextInputProps = RNTextInputProps &
     TextProps &
     LayoutProps
 
 const TextInput = ({
-    paddingHorizontal,
-    style,
     ...rest
 }: TextInputProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
-    paddingHorizontal = paddingHorizontal || 's'
+
     return (
         <RNTextInput
-            style={[
-                {
-                    paddingHorizontal: Spacing.spacings[paddingHorizontal],
-                },
-                style,
-            ]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
+            autoCorrect={false}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />

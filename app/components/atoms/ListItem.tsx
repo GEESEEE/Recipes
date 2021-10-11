@@ -5,14 +5,12 @@ import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {
-    functions: Array<() => Promise<void> | void>
-    functionSuffix: string
+    items: DropdownItem[]
 }
 
 function ListItem({
     children,
-    functions,
-    functionSuffix,
+    items,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     return (
@@ -24,10 +22,11 @@ function ListItem({
             paddingHorizontal="s"
             marginVertical="s"
         >
-            {children}
+            <ItemContainer>
+                {children}
+            </ItemContainer>
             <DropdownMenu
-                functions={functions}
-                functionSuffix={functionSuffix}
+                items={items}
             />
         </Container>
     )
@@ -39,4 +38,8 @@ const Container = styled(View)`
     flex-direction: row;
     align-items: center;
     align-content: space-between;
+`
+
+const ItemContainer = styled(View)`
+    flex: 1;
 `

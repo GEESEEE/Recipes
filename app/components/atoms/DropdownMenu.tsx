@@ -14,26 +14,10 @@ export type DropdownItem = {
     onPress: () => void | Promise<void>
 }
 
-function createDropDownItems(
-    onPresses: Array<() => Promise<void> | void>,
-    name: string
-): DropdownItem[] {
-    return onPresses.map((onPress) => {
-        // Slice recipe off the function name
-        const text = utils.capitalizeFirstLetter(
-            onPress.name.slice(0, onPress.name.length - name.length)
-        )
-        return {
-            id: onPresses.indexOf(onPress),
-            text,
-            onPress,
-        }
-    })
-}
+
 
 type DropdownMenuProps = {
-    functions: Array<() => Promise<void> | void>
-    functionSuffix: string
+    items: DropdownItem[]
     iconOffset?: Spacing.Size
     iconSize?: Spacing.Size
     iconColor?: string
@@ -41,8 +25,7 @@ type DropdownMenuProps = {
 }
 
 function DropdownMenu({
-    functions,
-    functionSuffix: name,
+    items,
     iconOffset,
     iconSize,
     iconColor,
@@ -55,7 +38,6 @@ function DropdownMenu({
     iconSize = iconSize || 'm'
     iconColor = iconColor || theme.primary
 
-    const dropdownItems = createDropDownItems(functions, name)
 
     let containerStyle: StyleProp<ViewStyle> = {}
 
@@ -84,7 +66,7 @@ function DropdownMenu({
             {open ? (
                 <Menu
                     ref={positionRef}
-                    items={dropdownItems}
+                    items={items}
                     toggle={() => toggle()}
                     offset={offset}
                 />
