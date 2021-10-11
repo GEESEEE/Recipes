@@ -1,5 +1,9 @@
 import React from 'react'
-import { Icon, TouchableOpacity, TouchableOpacityProps } from '@/components/base'
+import {
+    Icon,
+    TouchableOpacity,
+    TouchableOpacityProps,
+} from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
 

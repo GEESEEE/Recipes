@@ -12,14 +12,9 @@ import {
 } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 
+export type TextInputProps = RNTextInputProps & TextProps & LayoutProps
 
-export type TextInputProps = RNTextInputProps &
-    TextProps &
-    LayoutProps
-
-const TextInput = ({
-    ...rest
-}: TextInputProps): JSX.Element => {
+const TextInput = ({ ...rest }: TextInputProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
 
     return (

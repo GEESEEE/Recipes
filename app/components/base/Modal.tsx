@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import View from './View'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
-type ModalProps = {
+export type ModalProps = {
     backgroundColor?: string
     animationType?: 'slide' | 'none' | 'fade' | undefined
 } & LayoutProps

@@ -31,7 +31,7 @@ function Error({
     return (
         <Container>
             {errorMessage ? (
-                <Text type={textType} color={theme.error} fixHeight >
+                <Text type={textType} color={theme.error} fixHeight>
                     {errorMessage}
                 </Text>
             ) : (

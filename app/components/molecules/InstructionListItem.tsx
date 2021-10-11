@@ -17,13 +17,15 @@ function InstructionListItem({
     const index = instructions.indexOf(instruction)
 
     function logInstruction(): void {
-        console.log("Logging instruction")
+        console.log('Logging instruction')
     }
 
     const [text, setText] = React.useState('')
 
     return (
-        <ListItem items={utils.createDropDownItems([logInstruction], 'instruction')}>
+        <ListItem
+            items={utils.createDropDownItems([logInstruction], 'instruction')}
+        >
             <Container>
                 <Number type="SubHeader" paddingHorizontal="s">
                     {index + 10}

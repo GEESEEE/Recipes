@@ -10,9 +10,10 @@ import { Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
 
 export type TextProps = {
-    fixHeight?: boolean;
+    fixHeight?: boolean
     type: Typography.TextType
-} & RNTextProps & LayoutProps
+} & RNTextProps &
+    LayoutProps
 
 const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
@@ -21,14 +22,12 @@ const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
         textStyle.height = Typography.lineHeight(type, textSize)
     }
     return (
-    <RNText
-        style={[
-            textStyle,
-            style
-        ]}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
-    />
- )}
+        <RNText
+            style={[textStyle, style]}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...rest}
+        />
+    )
+}
 
 export default withLayoutProps(withTextProps(Text as any))

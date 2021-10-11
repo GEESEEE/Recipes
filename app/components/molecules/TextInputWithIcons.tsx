@@ -31,6 +31,7 @@ export const TextInputWithIcons = ({
                 backgroundColor={theme.backgroundVariant}
                 paddingHorizontal="s"
                 paddingVertical="s"
+                marginVertical="s"
                 borderRadius="s"
                 width="l"
             >
@@ -42,7 +43,7 @@ export const TextInputWithIcons = ({
                     onEndEditing={(e: any) => {
                         if (onEndEditing) onEndEditing(e.nativeEvent.text)
                     }}
-                    paddingHorizontal='s'
+                    paddingHorizontal="s"
                 />
                 {rightIcon || null}
             </InputFieldContainer>

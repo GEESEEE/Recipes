@@ -19,7 +19,9 @@ const smallLogo = 0.5
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const { recipes } = useAppSelector((state) => state.myRecipes)
     console.log('Test', recipes.length)
-    const instructions = recipes[1]?.instructions ?? [new Instruction(-1, 'text', -1)]
+    const instructions = recipes[1]?.instructions ?? [
+        new Instruction(-1, 'text', -1),
+    ]
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()

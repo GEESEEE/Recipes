@@ -14,8 +14,6 @@ export type DropdownItem = {
     onPress: () => void | Promise<void>
 }
 
-
-
 type DropdownMenuProps = {
     items: DropdownItem[]
     iconOffset?: Spacing.Size
@@ -37,7 +35,6 @@ function DropdownMenu({
 
     iconSize = iconSize || 'm'
     iconColor = iconColor || theme.primary
-
 
     let containerStyle: StyleProp<ViewStyle> = {}
 

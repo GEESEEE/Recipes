@@ -22,12 +22,8 @@ function ListItem({
             paddingHorizontal="s"
             marginVertical="s"
         >
-            <ItemContainer>
-                {children}
-            </ItemContainer>
-            <DropdownMenu
-                items={items}
-            />
+            <ItemContainer>{children}</ItemContainer>
+            <DropdownMenu items={items} />
         </Container>
     )
 }
