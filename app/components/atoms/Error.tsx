@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { View, Text } from '@/components/base'
 import { Spacing, Typography } from '@/styles'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, usePosition } from '@/hooks'
 
 type ErrorMessageProps = {
     message?: string
@@ -25,13 +25,13 @@ function Error({
     const textType = sizeMap[size]
 
     const paddingStyle = {
-        height: Typography.lineHeight(textType, textSize) + 0.1,
+        height: Typography.lineHeight(textType, textSize),
     }
 
     return (
         <Container>
             {errorMessage ? (
-                <Text type={textType} color={theme.error}>
+                <Text type={textType} color={theme.error} fixHeight >
                     {errorMessage}
                 </Text>
             ) : (
