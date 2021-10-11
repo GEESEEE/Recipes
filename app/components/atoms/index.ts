@@ -4,6 +4,7 @@ import IconButton from './IconButton'
 import Error from './Error'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import ListItem from './ListItem'
+import Editable from './Editable'
 
 export {
     Button,
@@ -13,4 +14,5 @@ export {
     DropdownItem,
     Loading4Dots,
     ListItem,
+    Editable
 }

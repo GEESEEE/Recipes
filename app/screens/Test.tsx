@@ -7,9 +7,9 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { View, Text, TextInput, Icons, Toggle } from '@/components/base'
+import { View, Text, TextInput, Icons, Toggle} from '@/components/base'
 
-import { Error, IconButton, Button, DropdownMenu } from '@/components/atoms'
+import { Error, IconButton, Button, DropdownMenu, Editable  } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
 
@@ -79,7 +79,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const [loading, toggle] = useToggle(false)
 
-    const [username, setUsername] = React.useState('')
+    const [username, setUsername] = React.useState('username')
+    console.log(username)
 
     function changeUsername(text: string): void {
         setUsername(text)
@@ -105,16 +106,24 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
+            <Editable
+                text={username}
+                editable
+                handleTextChange={(t: string) => setUsername(t)}
+            />
+
             <Button
                 type="Solid"
                 text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
             />
 
+
+
             <InstructionListItem
                 instructions={instructions as Instruction[]}
                 instruction={(instructions as Instruction[])[0]}
-                editable
+
             />
         </Container>
     )
