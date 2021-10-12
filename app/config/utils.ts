@@ -111,3 +111,32 @@ export function mergeStyles(styles: Array<any>): StyleProp<ViewStyle> {
     console.log('Merged:', res)
     return res
 }
+
+export function searchStyles(styles: any, property: string): any {
+    let res: any
+    if (Object.prototype.toString.call(styles) === '[object Array]') {
+        styles.forEach((style: any) => {
+            if (typeof res !== 'undefined') {
+                return
+            }
+
+            if (typeof style === 'undefined') {
+                return
+            }
+
+            if (Object.prototype.toString.call(style) === '[object Object]') {
+                if (typeof style[property] !== 'undefined') {
+                    res = style[property]
+                    return
+                }
+            }
+
+            if (Object.prototype.toString.call(style) === '[object Array]') {
+                res = searchStyles(style, property)
+            }
+
+        })
+    }
+
+    return res
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TextInput, View } from '@/components/base'
+import { TextInput, View, TextInputProps } from '@/components/base'
 import { Error } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
 
@@ -12,16 +12,13 @@ type TextInputWithIconsProps = {
     errorMessage?: string
     leftIcon?:React.ReactNode
     rightIcon?: React.ReactNode
-}
+} & TextInputProps
 
 export const TextInputWithIcons = ({
-    onChangeText,
-    placeholder,
-    onEndEditing,
-    secureTextEntry,
     errorMessage,
     leftIcon,
     rightIcon,
+    ...rest
 }: TextInputWithIconsProps): JSX.Element => {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -37,13 +34,9 @@ export const TextInputWithIcons = ({
             >
                 {leftIcon || null}
                 <StyledTextInput
-                    paddingHorizontal="s"
-                    placeholder={placeholder}
-                    secureTextEntry={secureTextEntry || false}
-                    onChangeText={(text: string) => onChangeText(text)}
-                    onEndEditing={(e: any) => {
-                        if (onEndEditing) onEndEditing(e.nativeEvent.text)
-                    }}
+
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...rest}
                 />
                 {rightIcon || null}
             </InputFieldContainer>

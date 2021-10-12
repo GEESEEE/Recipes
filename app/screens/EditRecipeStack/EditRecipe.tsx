@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useToggle } from '@/hooks'
 import { View, Text, TextInput } from '@/components/base'
-import { TextInputWithTitle } from '@/components/atoms'
+import { TextInputWithTitle, Button } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 
 
@@ -14,13 +14,13 @@ function EditRecipeScreen(): JSX.Element {
         <Container
             backgroundColor={theme.background}
         >
-            <TextInputWithTitle
-                title='Title'
+            <TextInputWithIcons
                 placeholder='Title'
-                type='Text'
-                onChangeText={(t: string) => console.log(t)}
+                type='SubHeader'
+                onChangeText={(t: string) => console.log('')}
                 multiline
             />
+
         </Container>
     )
 }
