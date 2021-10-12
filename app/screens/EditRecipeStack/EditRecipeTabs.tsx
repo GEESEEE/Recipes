@@ -1,6 +1,8 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { EditRecipeScreen, EditIngredientsScreen, EditInstructionsScreen } from '@/screens/EditRecipeStack'
+import { EditRecipeScreen } from '@/screens/EditRecipeStack'
+import { EditInstructionsStack } from './EditInstructionsStack'
+import { EditIngredientsStack } from './EditIngredientsStack'
 import { TabNavigator, TabNavigatorConfig } from '@/components/molecules'
 
 const Tabs = createMaterialTopTabNavigator()
@@ -9,10 +11,10 @@ const config: TabNavigatorConfig = {
     EditRecipe: {
         name: 'Recipe'
     },
-    EditIngredients: {
+    EditIngredientsStack: {
         name: 'Ingredients'
     },
-    EditInstructions: {
+    EditInstructionsStack: {
         name: 'Instructions'
     }
 }
@@ -32,13 +34,13 @@ function EditRecipeTabs(): JSX.Element {
             />
 
             <Tabs.Screen
-                name='EditIngredients'
-                component={EditIngredientsScreen}
+                name='EditIngredientsStack'
+                component={EditIngredientsStack}
             />
 
             <Tabs.Screen
-                name='EditInstructions'
-                component={EditInstructionsScreen}
+                name='EditInstructionsStack'
+                component={EditInstructionsStack}
             />
 
         </Tabs.Navigator>

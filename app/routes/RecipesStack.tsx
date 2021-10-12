@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { HeaderComponent } from './components'
-import {EditRecipeTabs} from '@/screens/EditRecipeStack'
+import { EditRecipeTabs } from '@/screens/EditRecipeStack'
 import { routeUtils } from '@/config'
 import { RecipesScreen, ViewRecipeScreen } from '@/screens'
 
