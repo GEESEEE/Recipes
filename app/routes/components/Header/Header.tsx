@@ -142,7 +142,7 @@ const HeaderComponent = ({
                 {displayAdd ? (
                     <HeaderButton
                         iconName="plus"
-                        onPress={() => navigation.navigate('EditRecipe')}
+                        onPress={() => navigation.navigate('EditRecipeTabs')}
                         color={iconColor}
                     />
                 ) : null}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { HeaderComponent } from './components'
+import EditRecipeTabs from './EditRecipeTabs'
 import { routeUtils } from '@/config'
 import { EditRecipeScreen, RecipesScreen, ViewRecipeScreen } from '@/screens'
 
@@ -26,8 +27,8 @@ function RecipesStack(): JSX.Element {
             />
 
             <Stack.Screen
-                name="EditRecipe"
-                component={EditRecipeScreen}
+                name="EditRecipeTabs"
+                component={EditRecipeTabs}
                 options={{ headerShown: false }}
             />
 

@@ -52,7 +52,7 @@ function RecipeHeaderComponent({
     }
 
     async function editRecipe(): Promise<void> {
-        navigation.navigate('EditRecipe' as never, { recipe } as never)
+        navigation.navigate('EditRecipeTabs' as never, { recipe } as never)
     }
 
     async function copyRecipe(): Promise<void> {
