@@ -1,45 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import {
-    TouchableOpacity,
-    View,
-    Text,
     Animated,
     Dimensions,
+    ViewStyle, StyleProp
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '@/hooks'
-import { MyMaterialCommunityIcons } from '@/components/Icons'
+import { Icon, Icons, View, Text, TouchableOpacity } from '@/components/base'
 
-const Config: { [key: string]: any } = {
-    BrowseStack: {
-        icon: 'book-search',
-        name: 'Browse',
-    },
-    RecipesStack: {
-        icon: 'book-open-page-variant',
-        name: 'My Recipes',
-    },
-    Test: {
-        icon: 'test-tube',
-        name: 'Test',
-    },
+export type TabNavigatorConfig = { [key: string]: {
+    icon?: string
+    name: string
+} }
+
+type TabNavigatorProps = {
+    state: any
+    navigation: any
+    config: TabNavigatorConfig
+    position: 'top' | 'bottom'
 }
 
-const TabNavigator = ({ state, navigation }: any): JSX.Element => {
+const TabNavigator = ({ state, navigation, config, position }: TabNavigatorProps): JSX.Element => {
     const { routes } = state
 
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
-    const { settings } = useAppSelector((globalState) => globalState)
-    const { theme } = settings
+    const { theme, invertedColors } = useAppSelector((globalState) => globalState.settings)
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)
     }
+
+    // #region Slider Stuff
 
     const [translateValue] = useState(new Animated.Value(0))
 
@@ -55,40 +51,82 @@ const TabNavigator = ({ state, navigation }: any): JSX.Element => {
         animateSlider(state.index)
     }, [state.index])
 
+    // #endregion
+
+    // #region Styles and Colors
+
+    const top = position === 'top'
+    const hasIcons = Object.values(config).some((obj) => typeof obj.icon !== 'undefined')
+
+    const paddingTop = top ? insets.top : 0
+    const paddingBottom = top ? 0 : insets.bottom
+    const height = hasIcons ? 50 : 30
+
+    const backgroundColor = invertedColors
+        ? theme.primary
+        : theme.background
+    const color = invertedColors
+        ? theme.background
+        : theme.primary
+
+    const containerBorder = {
+        borderTopColor: top ? undefined : theme.primary,
+        borderBottomColor: top ? theme.primary : undefined
+    }
+
+    const containerStyle: StyleProp<ViewStyle> = {
+        paddingTop,
+        height: height + paddingTop,
+        backgroundColor,
+        borderWidth: 1,
+        ...containerBorder
+    }
+
+    const safeContainerStyle: StyleProp<ViewStyle> ={
+        paddingBottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+    }
+
+    const sliderHeight = 5
+    const sliderOffsetHorizontal = 10
+    const sliderOffsetVertical = -(sliderHeight + 1) / 2
+
+    const sliderPosition = {
+        bottom: top ? sliderOffsetVertical : undefined,
+        top: top ? undefined : sliderOffsetVertical
+    }
+
+    const sliderStyle = [
+        {
+            transform: [{ translateX: translateValue }],
+            width: tabWidth - (2 * sliderOffsetHorizontal),
+            backgroundColor: color,
+            borderColor: theme.primary,
+            height: sliderHeight,
+            left: sliderOffsetHorizontal,
+            borderRadius: 10,
+            borderWidth: 1,
+            ...sliderPosition
+        }
+    ]
+
+    // #endregion
+
     return (
         <Container
-            style={{
-                height: insets.bottom + 50,
-                backgroundColor: settings.invertedColors
-                    ? theme.primary
-                    : theme.background,
-            }}
+            style={containerStyle}
         >
             <SafeContainer
-                style={{
-                    paddingBottom: insets.bottom,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                }}
+                style={safeContainerStyle}
             >
                 <TabSlider
                     key={uuid()}
-                    style={[
-                        {
-                            transform: [{ translateX: translateValue }],
-                            width: tabWidth - 20,
-                            backgroundColor: settings.invertedColors
-                                ? theme.background
-                                : theme.primary,
-                            borderColor: settings.invertedColors
-                                ? theme.primary
-                                : theme.primary,
-                        },
-                    ]}
+                    style={sliderStyle}
                 />
 
                 {routes.map((route: any, index: any) => {
-                    const { icon, name } = Config[route.name]
+                    const { icon, name } = config[route.name]
                     const isFocused = state.index === index
                     return (
                         <RouteTab
@@ -108,7 +146,7 @@ const TabNavigator = ({ state, navigation }: any): JSX.Element => {
 export default TabNavigator
 
 type TabProps = {
-    icon: string
+    icon?: string
     text: string
     onPress: () => void
     isCurrent?: boolean
@@ -138,8 +176,8 @@ const RouteTab = ({
 
     return (
         <TabContainer onPress={onPress}>
-            <MyMaterialCommunityIcons name={icon} color={color} />
-            <TabText style={{ color }}>{text}</TabText>
+            {icon ? <Icon Type={Icons.MyMaterialCommunityIcons} name={icon} color={color} /> : null}
+            <Text type='SubHeader' style={{ color }}>{text}</Text>
         </TabContainer>
     )
 }
@@ -147,8 +185,6 @@ const RouteTab = ({
 const Container = styled(View)`
     width: 100%;
     align-items: flex-start;
-    border-top-width: 1px;
-    border-top-color: ${(props) => props.theme.primary};
 `
 
 const SafeContainer = styled(View)`
@@ -159,22 +195,11 @@ const SafeContainer = styled(View)`
 `
 
 const TabSlider = styled(Animated.View)`
-    height: 5px;
     position: absolute;
-    left: 10px;
-    top: -3px;
-    border-radius: 10px;
-    border-width: 1px;
 `
 
 const TabContainer = styled(TouchableOpacity)`
     flex: 1;
     align-items: center;
     justify-content: center;
-    margin-top: 5px;
-`
-
-const TabText = styled(Text)`
-    font-size: 16px;
-    font-weight: bold;
 `

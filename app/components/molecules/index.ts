@@ -1,5 +1,5 @@
 import TextInputWithIcons from './TextInputWithIcons'
-import TabNavigator from './TabNavigator'
+import TabNavigator, { TabNavigatorConfig } from './TabNavigator'
 import InstructionListItem from './InstructionListItem'
 
-export { TextInputWithIcons, TabNavigator, InstructionListItem }
+export { TextInputWithIcons, TabNavigator, TabNavigatorConfig, InstructionListItem }
