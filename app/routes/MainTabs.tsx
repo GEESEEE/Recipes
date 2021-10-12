@@ -23,13 +23,15 @@ const config: TabNavigatorConfig = {
 }
 
 function MainTabs(): JSX.Element {
+    const position = 'bottom'
+
     return (
         <Tabs.Navigator
             initialRouteName="BrowseStack"
             backBehavior="history"
-            tabBarPosition="bottom"
+            tabBarPosition={position}
             tabBar={({ navigation, state }: any) => (
-                <TabNavigator navigation={navigation} state={state} config={config} position='bottom' />
+                <TabNavigator navigation={navigation} state={state} config={config} position={position} />
             )}
             screenOptions={{
                 swipeEnabled: false,

@@ -18,11 +18,12 @@ const config: TabNavigatorConfig = {
 }
 
 function EditRecipeTabs(): JSX.Element {
+    const position = 'top'
     return (
         <Tabs.Navigator
             initialRouteName="EditRecipe"
             tabBar={({ navigation, state }: any) => (
-                <TabNavigator navigation={navigation} state={state} config={config} position='top' />
+                <TabNavigator navigation={navigation} state={state} config={config} position={position} />
             )}
         >
             <Tabs.Screen
