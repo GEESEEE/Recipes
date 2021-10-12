@@ -5,6 +5,7 @@ import Error from './Error'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import ListItem from './ListItem'
 import Editable from './Editable'
+import TextInputWithTitle from './TextInputWithTitle'
 
 export {
     Button,
@@ -14,5 +15,6 @@ export {
     DropdownItem,
     Loading4Dots,
     ListItem,
-    Editable
+    Editable,
+    TextInputWithTitle,
 }

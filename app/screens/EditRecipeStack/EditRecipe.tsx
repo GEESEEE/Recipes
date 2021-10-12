@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View, Text } from '@/components/base'
 import { useAppSelector } from '@/hooks'
+import { View, Text, TextInput } from '@/components/base'
+import { TextInputWithTitle } from '@/components/atoms'
+import { TextInputWithIcons } from '@/components/molecules'
+
 
 
 function EditRecipeScreen(): JSX.Element {
@@ -11,9 +14,13 @@ function EditRecipeScreen(): JSX.Element {
         <Container
             backgroundColor={theme.background}
         >
-            <Text>
-                Edit Recipe Screen enzo
-            </Text>
+            <TextInputWithTitle
+                title='Title'
+                placeholder='Title'
+                type='Text'
+                onChangeText={(t: string) => console.log(t)}
+                multiline
+            />
         </Container>
     )
 }
@@ -22,4 +29,5 @@ export default EditRecipeScreen
 
 const Container = styled(View)`
     flex: 1;
+    align-items: center;
 `

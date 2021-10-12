@@ -10,7 +10,7 @@ type TextInputWithIconsProps = {
     onEndEditing?: (text: string) => void
     secureTextEntry?: boolean
     errorMessage?: string
-    leftIcon?: JSX.Element
+    leftIcon?:React.ReactNode
     rightIcon?: React.ReactNode
 }
 
@@ -37,13 +37,13 @@ export const TextInputWithIcons = ({
             >
                 {leftIcon || null}
                 <StyledTextInput
+                    paddingHorizontal="s"
                     placeholder={placeholder}
                     secureTextEntry={secureTextEntry || false}
                     onChangeText={(text: string) => onChangeText(text)}
                     onEndEditing={(e: any) => {
                         if (onEndEditing) onEndEditing(e.nativeEvent.text)
                     }}
-                    paddingHorizontal="s"
                 />
                 {rightIcon || null}
             </InputFieldContainer>
