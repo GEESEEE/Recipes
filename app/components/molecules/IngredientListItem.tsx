@@ -31,18 +31,19 @@ function IngredientListItem({
         <ListItem
             items={utils.createDropDownItems([logIngredient], 'ingredient')}
         >
-            <Container paddingHorizontal='s'>
+            <Container >
                 <Editable
                     editable={editable}
                     text={ingredient.ingredient?.name}
                     handleTextChange={handleIngredientNameChange}
-
+                    paddingHorizontal='s'
                 />
                 <SubContainer>
                     <Editable
                         editable={editable}
                         text={ingredient.amount.toString()}
                         handleTextChange={handleIngredientAmountChange}
+                        paddingHorizontal='s'
                     />
                     <Editable
                         editable={editable}

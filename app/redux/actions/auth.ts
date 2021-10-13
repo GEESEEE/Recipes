@@ -101,13 +101,14 @@ export const retrieveUserData =
                     newTheme: user.settings?.theme,
                 },
             })
-            await dispatch(retrieveRecipes(navigation) as any)
-            await dispatch(
-                getRecipes({
-                    scopes: ['published'],
-                    sort: ['-publishtime'],
-                }) as any
-            )
+
+            // await dispatch(retrieveRecipes(navigation) as any)
+            // await dispatch(
+            //     getRecipes({
+            //         scopes: ['published'],
+            //         sort: ['-publishtime'],
+            //     }) as any
+            // )
             const authUser: AuthUser = { ...user, token }
             dispatch({
                 type: AUTH_ACTIONS.GET_USER_DATA_SUCCES,

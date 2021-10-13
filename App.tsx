@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from '@/redux/reducers'
+import { store as newStore} from '@/redux'
 import Wrapper from '@/Wrapper'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -13,7 +14,7 @@ export type AppDispatch = typeof store.dispatch
 
 export default function App(): JSX.Element {
     return (
-        <Provider store={store}>
+        <Provider store={newStore}>
             <Wrapper />
         </Provider>
     )

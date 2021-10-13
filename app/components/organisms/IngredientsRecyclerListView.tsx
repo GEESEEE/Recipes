@@ -66,7 +66,6 @@ function IngredientsRecyclerListView({
                     <IngredientListItem
                         ingredients={ingredients}
                         ingredient={data}
-                        editable
                     />
                 )
 
@@ -85,7 +84,7 @@ function IngredientsRecyclerListView({
                     rowRenderer={rowRenderer}
                     onScroll={(e, x, y) => handleScroll(e, x, y)}
                 />
-            ) : <Text>Niks</Text>}
+            ) : <Text>Tap the + Icon to add an ingredient!</Text>}
         </Container>
     )
 }
