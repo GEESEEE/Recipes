@@ -26,6 +26,8 @@ function ListItemWrapper({
     let listSize = list.length - 1
     if (editable) listSize += 1
 
+
+
     return (
         <Container
             style={{

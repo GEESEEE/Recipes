@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useIsFocused } from '@react-navigation/native'
 import { Instruction } from '@/data'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/config'
-import { useDropdownRerender, usePosition, useToggle } from '@/hooks'
 
 type InstructionListItemProps = {
     instruction: Instruction
@@ -31,8 +29,8 @@ function InstructionListItem({
             items={utils.createDropDownItems([logInstruction], 'instruction')}
         >
             <Container >
-                <Number type="SubHeader" paddingHorizontal="s" >
-                    {index + 10}
+                <Number type="SubHeader" paddingHorizontal="s">
+                    {index + 1}
                 </Number>
                 <Editable
                     editable={editable}

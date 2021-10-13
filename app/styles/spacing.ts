@@ -31,8 +31,8 @@ export const marginHorizontal = (size: Size): string =>
 
 // Sizing
 export const widths: Record<Size, string> = {
-    s: '40%',
-    m: '65%',
+    s: '30%',
+    m: '60%',
     l: '90%',
 }
 

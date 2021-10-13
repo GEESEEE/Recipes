@@ -20,6 +20,7 @@ const config: TabNavigatorConfig = {
 }
 
 function EditRecipeTabs(): JSX.Element {
+
     const position = 'top'
     return (
         <Tabs.Navigator

@@ -5,6 +5,9 @@ import { RecipesFlatList, RecipesListHeader } from '@/components/data'
 import { recipeUtils } from '@/config'
 import { useAppSelector } from '@/hooks'
 
+const EditRecipeContext = React.createContext<string>('jemoeder')
+export { EditRecipeContext }
+
 function RecipesScreen(): JSX.Element {
     const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 

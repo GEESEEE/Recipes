@@ -13,6 +13,7 @@ function ListItem({
     items,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
+
     return (
         <Container
             width="l"
@@ -34,6 +35,7 @@ const Container = styled(View)`
     flex-direction: row;
     align-items: center;
     align-content: space-between;
+    align-self: center;
 `
 
 const ItemContainer = styled(View)`

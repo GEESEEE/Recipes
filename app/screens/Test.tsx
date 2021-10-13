@@ -113,8 +113,9 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <StyledText
                 width='s'
                 paddingVertical='s'
+                numberOfLines={2}
             >
-                Teextkjansdknlkamsdlkmasdlkmasdlkmasd
+                Teextkjansdknlkamsdlkmasdlkmasdlkmasdlkansdlkmasda
             </StyledText>
 
         </Container>

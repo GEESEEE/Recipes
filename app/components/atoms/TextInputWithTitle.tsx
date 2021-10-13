@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import { View, Text, TextInput, TextInputProps } from '@/components/base'
 
 type TextInputRoundedProps = {
-    title: string
+    title?: string
 } & TextInputProps
 
 function TextInputWithTitle({
     title,
+    marginHorizontal,
     paddingHorizontal,
     width,
     ...rest
@@ -19,10 +20,11 @@ function TextInputWithTitle({
         <Container
             width={width}
             marginVertical='s'
+            marginHorizontal={marginHorizontal}
         >
-            <Text type='SubText' paddingHorizontal={paddingHorizontal} >
+            {title ? <Text type='SubText' paddingHorizontal={paddingHorizontal} >
                 {title}
-            </Text>
+            </Text> : null}
             <StyledTextInput
                 borderRadius='s'
                 paddingVertical='s'
