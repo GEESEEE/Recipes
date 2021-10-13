@@ -31,7 +31,7 @@ function IngredientListItem({
         <ListItem
             items={utils.createDropDownItems([logIngredient], 'ingredient')}
         >
-            <Container >
+            <Container paddingHorizontal='s'>
                 <Editable
                     editable={editable}
                     text={ingredient.ingredient?.name}
@@ -48,6 +48,7 @@ function IngredientListItem({
                         editable={editable}
                         text={ingredient.ingredient?.unit}
                         handleTextChange={handleIngredientUnitChange}
+                        width='m'
                     />
                 </SubContainer>
             </Container>
@@ -58,11 +59,8 @@ function IngredientListItem({
 export default IngredientListItem
 
 const Container = styled(View)`
-    flex: 1;
     flex-direction: column;
     justify-content: center;
-    border-width: 1px;
-    border-color: ${(props) => props.theme.primary}
 `
 
 const SubContainer = styled(View)`

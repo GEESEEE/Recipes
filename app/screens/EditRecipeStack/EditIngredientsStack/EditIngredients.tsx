@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View, Text } from '@/components/base'
-import { useAppSelector } from '@/hooks'
+import { View } from '@/components/base'
 import { IngredientsRecyclerListView } from '@/components/organisms'
+import { useAppSelector } from '@/hooks'
 import { Ingredient, RecipeIngredient } from '@/data'
 
 
@@ -21,9 +21,6 @@ function EditIngredientsScreen(): JSX.Element {
         <Container
             backgroundColor={theme.background}
         >
-            <Text>
-                Edit Ingredients Screen enzo
-            </Text>
             <IngredientsRecyclerListView
                 ingredients={ingredients}
             />

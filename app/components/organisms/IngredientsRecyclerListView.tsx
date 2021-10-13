@@ -47,7 +47,7 @@ function IngredientsRecyclerListView({
             switch (type) {
                 case ViewTypes.Ingredient: {
                     dim.width = width
-                    dim.height = 100
+                    dim.height = 16 + 2 * Typography.lineHeight('Text', textSize)
                     break
                 }
 

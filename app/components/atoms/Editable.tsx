@@ -14,20 +14,12 @@ function Editable({
     numberOfLines,
     editable,
     handleTextChange,
-    style,
     ...rest
 }: EditableProps ): JSX.Element {
 
-    const textStyle = {
-        flex: 1
-    }
     if (editable) {
         return (
             <TextInput
-                style={[
-                    textStyle,
-                    style
-                ]}
                 onChangeText={handleTextChange}
                 value={text}
                 multiline
@@ -39,10 +31,6 @@ function Editable({
 
     return (
         <Text
-            style={[
-                textStyle,
-                style
-            ]}
             numberOfLines={numberOfLines}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
