@@ -9,20 +9,20 @@ const EditRecipeContext = React.createContext<string>('jemoeder')
 export { EditRecipeContext }
 
 function RecipesScreen(): JSX.Element {
-    const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
+    // const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 
-    const filteredRecipes = recipeUtils.applySearch(myRecipes.recipes, mySearch)
-    const sortedRecipes = recipeUtils.applySort(
-        filteredRecipes,
-        mySort.sortState
-    )
+    // const filteredRecipes = recipeUtils.applySearch(myRecipes.recipes, mySearch)
+    // const sortedRecipes = recipeUtils.applySort(
+    //     filteredRecipes,
+    //     mySort.sortState
+    // )
 
-    const displayHeader = mySearch.length > 0 || mySort.sortState.length > 0
+    // const displayHeader = mySearch.length > 0 || mySort.sortState.length > 0
 
     return (
         <Container>
-            <RecipesListHeader display={displayHeader} />
-            <RecipesFlatList recipes={sortedRecipes} />
+            {/* <RecipesListHeader display={displayHeader} />
+            <RecipesFlatList recipes={sortedRecipes} /> */}
         </Container>
     )
 }

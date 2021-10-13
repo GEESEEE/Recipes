@@ -8,7 +8,7 @@ import { HeaderComponent } from '@/routes/components'
 import { RegisterModal, LoginModal, LoadingModal } from './modals'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { browseRecipes, browseSort, browseSearch, auth } = useAppSelector(
+    const { auth } = useAppSelector(
         (state) => state
     )
     const dispatch = useAppDispatch()
@@ -29,18 +29,18 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [showRegisterScreen, setShowRegisterScreen] = React.useState(false)
 
-    const onEndReached = (): void => {
-        if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
-            const params = {
-                ...browseRecipes.currentParams,
-                page: browseRecipes.nextPage,
-            }
-            dispatch(browseRecipeActions.addRecipes(params))
-        }
-    }
+    // const onEndReached = (): void => {
+    //     if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
+    //         const params = {
+    //             ...browseRecipes.currentParams,
+    //             page: browseRecipes.nextPage,
+    //         }
+    //         dispatch(browseRecipeActions.addRecipes(params))
+    //     }
+    // }
 
-    const displayHeader =
-        browseSearch.length > 0 || browseSort.sortState.length > 0
+    // const displayHeader =
+    //     browseSearch.length > 0 || browseSort.sortState.length > 0
 
     return (
         <Container>
@@ -60,12 +60,12 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 />
             ) : null}
 
-            <RecipesListHeader display={displayHeader} />
+            {/* <RecipesListHeader display={displayHeader} />
             <RecipesFlatList
                 ref={listRef}
                 recipes={browseRecipes.recipes}
                 onEndReached={onEndReached}
-            />
+            /> */}
         </Container>
     )
 }

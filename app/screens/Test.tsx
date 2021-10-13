@@ -17,11 +17,7 @@ const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
-    const { recipes } = useAppSelector((state) => state.myRecipes)
-
-    const instructions = recipes[1]?.instructions ?? [
-        new Instruction(-1, 'text', -1),
-    ]
+    // const { recipes } = useAppSelector((state) => state.myRecipes)
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
@@ -75,19 +71,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     const [username, setUsername] = React.useState('username')
-
-    function changeUsername(text: string): void {
-        setUsername(text)
-        console.log(text)
-    }
-
-    function logRecipe(): void {
-        console.log('Ja goeie shit, wajo')
-    }
-
-    function doRecipe(): void {
-        console.log('Do dis ja')
-    }
 
     return (
         <Container>
