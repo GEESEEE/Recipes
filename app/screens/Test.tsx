@@ -18,7 +18,7 @@ const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     const { recipes } = useAppSelector((state) => state.myRecipes)
-    console.log('Test', recipes.length)
+
     const instructions = recipes[1]?.instructions ?? [
         new Instruction(-1, 'text', -1),
     ]
@@ -100,17 +100,23 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
+            <Text width='s' numberOfLines={2} paddingVertical='m' >
+                lkamsdlkmasdlkamsdlkasasdasdadadad
+            </Text>
+
             <Button
                 type="Solid"
                 text="CHANGE PRIMARY COLOR"
                 onPress={() => changePrimaryColor()}
             />
 
-            <InstructionListItem
-                instructions={instructions as Instruction[]}
-                instruction={(instructions as Instruction[])[0]}
-                editable
-            />
+            <StyledText
+                width='s'
+                paddingVertical='s'
+            >
+                Teextkjansdknlkamsdlkmasdlkmasdlkmasd
+            </StyledText>
+
         </Container>
     )
 }

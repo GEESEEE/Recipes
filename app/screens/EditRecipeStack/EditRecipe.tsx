@@ -14,12 +14,18 @@ function EditRecipeScreen(): JSX.Element {
         <Container
             backgroundColor={theme.background}
         >
-            <TextInputWithIcons
-                placeholder='Title'
+            <TextInputWithTitle
+                title='Title'
                 type='SubHeader'
                 onChangeText={(t: string) => console.log('')}
                 multiline
             />
+
+            <TextInputWithTitle
+                title='Description'
+                onChangeText={(t: string) => console.log('')}
+            />
+
 
         </Container>
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, Text as RNText, ViewStyle } from 'react-native'
+import { Text as RNText, TextLayoutEventData, TextLayoutLine } from 'react-native'
 import {
     withLayoutProps,
     LayoutProps,
@@ -8,22 +8,30 @@ import {
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
+import { utils } from '@/config'
 
 export type TextProps = {
     fixHeight?: boolean
-    type: Typography.TextType
 } & RNTextProps &
     LayoutProps
 
 const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
-    const textStyle: StyleProp<ViewStyle> = {}
-    if (fixHeight) {
-        textStyle.height = Typography.lineHeight(type, textSize)
+
+    type = type || 'Text'
+    const lineHeight = Typography.lineHeight(type, textSize)
+    const padding = 2 * (utils.searchStyles(style, 'paddingVertical') ?? 0)
+
+    const [height, setHeight] = React.useState<undefined | number>(fixHeight ? lineHeight + padding : undefined)
+
+    function onTextLayout(e: any): void {
+        setHeight((lineHeight * e.nativeEvent.lines.length) + padding)
     }
+
     return (
         <RNText
-            style={[textStyle, style]}
+            style={[{height}, style]}
+            onTextLayout={(e) => onTextLayout(e)}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />

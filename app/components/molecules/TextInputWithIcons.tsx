@@ -27,14 +27,14 @@ export const TextInputWithIcons = ({
             <InputFieldContainer
                 backgroundColor={theme.backgroundVariant}
                 paddingHorizontal="m"
-                paddingVertical="s"
+                paddingVertical="m"
                 marginVertical="s"
                 borderRadius="s"
                 width="l"
             >
                 {leftIcon || null}
                 <StyledTextInput
-
+                    paddingHorizontal='s'
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...rest}
                 />

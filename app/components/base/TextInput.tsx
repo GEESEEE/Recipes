@@ -15,7 +15,7 @@ import { useAppSelector } from '@/hooks'
 
 export type TextInputProps = RNTextInputProps & TextProps & LayoutProps
 
-const TextInput = ({ type, paddingVertical, style, ...rest }: TextInputProps): JSX.Element => {
+const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
     const { theme, textSize } = useAppSelector((state) => state.settings)
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
@@ -36,7 +36,7 @@ const TextInput = ({ type, paddingVertical, style, ...rest }: TextInputProps): J
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
             autoCorrect={false}
-            onContentSizeChange={(e: any) => onContentSizeChange(e)}
+            onContentSizeChange={(e) => onContentSizeChange(e)}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />

@@ -27,7 +27,7 @@ function TextInputWithTitle({
                 borderRadius='s'
                 paddingVertical='s'
                 paddingHorizontal={paddingHorizontal}
-
+                placeholder={title}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             />
