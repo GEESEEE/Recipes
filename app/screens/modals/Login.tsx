@@ -4,7 +4,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { authActions } from '@/redux/actions'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -107,15 +106,15 @@ function LoginModal({
 
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            dispatch(
-                authActions.signIn(data.username, data.password, navigation)
-            )
+            // dispatch(
+            //     authActions.signIn(data.username, data.password, navigation)
+            // )
         }
     }
 
     function handleRegisterButton(): void {
         showRegister()
-        dispatch(authActions.clearError())
+        // dispatch(authActions.clearError())
     }
 
     return (

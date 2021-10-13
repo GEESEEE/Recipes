@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react'
 import styled from 'styled-components'
-import { authActions } from '@/redux/actions'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+import { authActions } from '@/redux/slices'
 import { Icons, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -154,13 +154,13 @@ function RegisterScreen({
                 password: data.password1,
                 email: data.email,
             }
-            dispatch(authActions.signUp(userData, navigation))
+            dispatch(authActions.signUp(userData))
         }
     }
 
     function handleGoBackButton(): void {
         showLogin()
-        dispatch(authActions.clearError())
+        // dispatch(authActions.clearError())
     }
 
     return (

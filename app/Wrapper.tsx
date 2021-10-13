@@ -2,16 +2,13 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
 import { RootStack } from '@/routes'
-import { useAppDispatch, useAppSelector } from '@/hooks'
-import { indicesActions } from '@/redux/actions'
+import { useAppSelector } from '@/hooks'
 
 function Wrapper(): JSX.Element {
-    const dispatch = useAppDispatch()
     const { theme } = useAppSelector((state) => state.settings)
 
     React.useEffect(() => {
         console.log('Starting')
-        dispatch(indicesActions.retrieveIndices())
     }, [])
 
     return (

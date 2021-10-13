@@ -1,18 +1,15 @@
 import React from 'react'
 import 'react-native-get-random-values'
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import { rootReducer } from '@/redux/reducers'
 import { store as newStore} from '@/redux'
 import Wrapper from '@/Wrapper'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-
 export default function App(): JSX.Element {
+
+    React.useEffect(() => {
+        console.log('Starting')
+    }, [])
+
     return (
         <Provider store={newStore}>
             <Wrapper />
