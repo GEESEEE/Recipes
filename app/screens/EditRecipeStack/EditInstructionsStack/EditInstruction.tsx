@@ -7,12 +7,8 @@ function EditInstructionScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
-            <Text>
-                Edit 1 instruction Screen enzo
-            </Text>
+        <Container backgroundColor={theme.background}>
+            <Text>Edit 1 instruction Screen enzo</Text>
         </Container>
     )
 }

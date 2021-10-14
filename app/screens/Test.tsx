@@ -7,9 +7,15 @@ import { settingsActions } from '@/redux/actions'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
-import { View, Text, TextInput, Icons, Toggle} from '@/components/base'
+import { View, Text, TextInput, Icons, Toggle } from '@/components/base'
 
-import { Error, IconButton, Button, DropdownMenu, Editable  } from '@/components/atoms'
+import {
+    Error,
+    IconButton,
+    Button,
+    DropdownMenu,
+    Editable,
+} from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
 
@@ -57,7 +63,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         }
     }, [])
 
-
     function changePrimaryColor(): void {
         if (theme.primary === '#4ecdc4') {
             dispatch(settingsActions.setColor('#fc5c65'))
@@ -83,7 +88,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <Text width='s' numberOfLines={2} paddingVertical='m' >
+            <Text width="s" numberOfLines={2} paddingVertical="m">
                 lkamsdlkmasdlkamsdlkasasdasdadadad
             </Text>
 
@@ -93,14 +98,9 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 onPress={() => changePrimaryColor()}
             />
 
-            <StyledText
-                width='s'
-                paddingVertical='s'
-                numberOfLines={2}
-            >
+            <StyledText width="s" paddingVertical="s" numberOfLines={2}>
                 Teextkjansdknlkamsdlkmasdlkmasdlkmasdlkansdlkmasda
             </StyledText>
-
         </Container>
     )
 }

@@ -79,7 +79,7 @@ export default function DrawerComponent({
                                 switchValue={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
                                     // dispatch(settingsActions.setTheme(val))
-                                    console.log("theme", val)
+                                    console.log('theme', val)
                                 }
                             />
                         }
@@ -95,7 +95,7 @@ export default function DrawerComponent({
                                     // dispatch(
                                     //     settingsActions.setInvertedColors(val)
                                     // )
-                                    console.log("colors", val)
+                                    console.log('colors', val)
                                 }
                             />
                         }

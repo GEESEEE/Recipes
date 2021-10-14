@@ -17,9 +17,7 @@ const initialState: Settings = {
 const settingsSlice = createSlice({
     name: 'settings',
     initialState,
-    reducers: {
-
-    }
+    reducers: {},
 })
 
 export default settingsSlice

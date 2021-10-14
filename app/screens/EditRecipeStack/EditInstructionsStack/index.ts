@@ -1,5 +1,5 @@
-import EditInstructionsScreen from "./EditInstructions";
-import EditInstructionScreen from "./EditInstruction";
-import EditInstructionsStack from "./EditInstructionsStack";
+import EditInstructionsScreen from './EditInstructions'
+import EditInstructionScreen from './EditInstruction'
+import EditInstructionsStack from './EditInstructionsStack'
 
-export { EditInstructionsScreen, EditInstructionScreen, EditInstructionsStack}
+export { EditInstructionsScreen, EditInstructionScreen, EditInstructionsStack }

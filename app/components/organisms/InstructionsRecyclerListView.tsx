@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
 import { Dimensions, StyleSheet } from 'react-native'
@@ -8,7 +7,7 @@ import {
     LayoutProvider,
 } from 'recyclerlistview'
 import styled from 'styled-components'
-import { View, Text} from '@/components/base'
+import { View, Text } from '@/components/base'
 import { InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
 import { useAppSelector } from '@/hooks'
@@ -48,7 +47,8 @@ function InstructionsRecyclerListView({
             switch (type) {
                 case ViewTypes.Instruction: {
                     dim.width = width
-                    dim.height = 16 + Typography.lineHeight('SubHeader', textSize)
+                    dim.height =
+                        16 + Typography.lineHeight('SubHeader', textSize)
                     break
                 }
 
@@ -85,7 +85,9 @@ function InstructionsRecyclerListView({
                     rowRenderer={rowRenderer}
                     onScroll={(e, x, y) => handleScroll(e, x, y)}
                 />
-            ) : <Text>Niks</Text>}
+            ) : (
+                <Text>Niks</Text>
+            )}
         </Container>
     )
 }

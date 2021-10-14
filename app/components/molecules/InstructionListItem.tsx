@@ -28,7 +28,7 @@ function InstructionListItem({
         <ListItem
             items={utils.createDropDownItems([logInstruction], 'instruction')}
         >
-            <Container >
+            <Container>
                 <Number type="SubHeader" paddingHorizontal="s">
                     {index + 1}
                 </Number>

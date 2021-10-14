@@ -5,4 +5,11 @@ import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
 import EditRecipeTabs from '../screens/EditRecipeStack/EditRecipeTabs'
 
-export { RootStack, Drawer, MainTabs, BrowseStack, RecipesStack, EditRecipeTabs }
+export {
+    RootStack,
+    Drawer,
+    MainTabs,
+    BrowseStack,
+    RecipesStack,
+    EditRecipeTabs,
+}

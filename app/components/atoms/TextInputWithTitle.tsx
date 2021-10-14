@@ -19,15 +19,17 @@ function TextInputWithTitle({
     return (
         <Container
             width={width}
-            marginVertical='s'
+            marginVertical="s"
             marginHorizontal={marginHorizontal}
         >
-            {title ? <Text type='SubText' paddingHorizontal={paddingHorizontal} >
-                {title}
-            </Text> : null}
+            {title ? (
+                <Text type="SubText" paddingHorizontal={paddingHorizontal}>
+                    {title}
+                </Text>
+            ) : null}
             <StyledTextInput
-                borderRadius='s'
-                paddingVertical='s'
+                borderRadius="s"
+                paddingVertical="s"
                 paddingHorizontal={paddingHorizontal}
                 placeholder={title}
                 // eslint-disable-next-line react/jsx-props-no-spreading
@@ -39,10 +41,8 @@ function TextInputWithTitle({
 
 export default TextInputWithTitle
 
-const Container = styled(View)`
-
-`
+const Container = styled(View)``
 
 const StyledTextInput = styled(TextInput)`
-    background-color: ${(props) => props.theme.backgroundVariant}
+    background-color: ${(props) => props.theme.backgroundVariant};
 `

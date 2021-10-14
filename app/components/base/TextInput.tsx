@@ -24,15 +24,15 @@ const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
     const [height, setHeight] = React.useState(lineHeight + padding)
 
     function onContentSizeChange(e: any): void {
-        const lines = Math.round((e.nativeEvent.contentSize.height - padding) / lineHeight)
-        setHeight( (lines * lineHeight) + padding)
+        const lines = Math.round(
+            (e.nativeEvent.contentSize.height - padding) / lineHeight
+        )
+        setHeight(lines * lineHeight + padding)
     }
 
     return (
         <RNTextInput
-            style={[
-                {height}, style
-            ]}
+            style={[{ height }, style]}
             placeholderTextColor={theme.grey}
             autoCapitalize="none"
             autoCorrect={false}

@@ -5,7 +5,6 @@ import { RecipesFlatList, RecipesListHeader } from '@/components/data'
 import { recipeUtils } from '@/config'
 import { useAppSelector } from '@/hooks'
 
-
 function RecipesScreen(): JSX.Element {
     // const { myRecipes, mySearch, mySort } = useAppSelector((state) => state)
 

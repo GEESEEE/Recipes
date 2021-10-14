@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {
-    Animated,
-    Dimensions,
-    ViewStyle, StyleProp
-} from 'react-native'
+import { Animated, Dimensions, ViewStyle, StyleProp } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Text, TouchableOpacity } from '@/components/base'
 
-export type TabNavigatorConfig = { [key: string]: {
-    icon?: string
-    name: string
-} }
+export type TabNavigatorConfig = {
+    [key: string]: {
+        icon?: string
+        name: string
+    }
+}
 
 type TabNavigatorProps = {
     state: any
@@ -22,14 +20,21 @@ type TabNavigatorProps = {
     position: 'top' | 'bottom'
 }
 
-const TabNavigator = ({ state, navigation, config, position }: TabNavigatorProps): JSX.Element => {
+const TabNavigator = ({
+    state,
+    navigation,
+    config,
+    position,
+}: TabNavigatorProps): JSX.Element => {
     const { routes } = state
 
     const totalWidth = Dimensions.get('window').width
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
-    const { theme, invertedColors } = useAppSelector((globalState) => globalState.settings)
+    const { theme, invertedColors } = useAppSelector(
+        (globalState) => globalState.settings
+    )
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)
@@ -56,22 +61,20 @@ const TabNavigator = ({ state, navigation, config, position }: TabNavigatorProps
     // #region Styles and Colors
 
     const top = position === 'top'
-    const hasIcons = Object.values(config).some((obj) => typeof obj.icon !== 'undefined')
+    const hasIcons = Object.values(config).some(
+        (obj) => typeof obj.icon !== 'undefined'
+    )
 
     const paddingTop = top ? insets.top : 0
     const paddingBottom = top ? 0 : insets.bottom
     const height = hasIcons ? 50 : 30
 
-    const backgroundColor = invertedColors
-        ? theme.primary
-        : theme.background
-    const color = invertedColors
-        ? theme.background
-        : theme.primary
+    const backgroundColor = invertedColors ? theme.primary : theme.background
+    const color = invertedColors ? theme.background : theme.primary
 
     const containerBorder = {
         borderTopColor: top ? undefined : theme.primary,
-        borderBottomColor: top ? theme.primary : undefined
+        borderBottomColor: top ? theme.primary : undefined,
     }
 
     const containerStyle: StyleProp<ViewStyle> = {
@@ -79,10 +82,10 @@ const TabNavigator = ({ state, navigation, config, position }: TabNavigatorProps
         height: height + paddingTop,
         backgroundColor,
         borderWidth: 1,
-        ...containerBorder
+        ...containerBorder,
     }
 
-    const safeContainerStyle: StyleProp<ViewStyle> ={
+    const safeContainerStyle: StyleProp<ViewStyle> = {
         paddingBottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
@@ -94,36 +97,29 @@ const TabNavigator = ({ state, navigation, config, position }: TabNavigatorProps
 
     const sliderPosition = {
         bottom: top ? sliderOffsetVertical : undefined,
-        top: top ? undefined : sliderOffsetVertical
+        top: top ? undefined : sliderOffsetVertical,
     }
 
     const sliderStyle = [
         {
             transform: [{ translateX: translateValue }],
-            width: tabWidth - (2 * sliderOffsetHorizontal),
+            width: tabWidth - 2 * sliderOffsetHorizontal,
             backgroundColor: color,
             borderColor: theme.primary,
             height: sliderHeight,
             left: sliderOffsetHorizontal,
             borderRadius: 10,
             borderWidth: 1,
-            ...sliderPosition
-        }
+            ...sliderPosition,
+        },
     ]
 
     // #endregion
 
     return (
-        <Container
-            style={containerStyle}
-        >
-            <SafeContainer
-                style={safeContainerStyle}
-            >
-                <TabSlider
-                    key={uuid()}
-                    style={sliderStyle}
-                />
+        <Container style={containerStyle}>
+            <SafeContainer style={safeContainerStyle}>
+                <TabSlider key={uuid()} style={sliderStyle} />
 
                 {routes.map((route: any, index: any) => {
                     const { icon, name } = config[route.name]
@@ -176,8 +172,16 @@ const RouteTab = ({
 
     return (
         <TabContainer onPress={onPress}>
-            {icon ? <Icon Type={Icons.MyMaterialCommunityIcons} name={icon} color={color} /> : null}
-            <Text type='SubHeader' style={{ color }}>{text}</Text>
+            {icon ? (
+                <Icon
+                    Type={Icons.MyMaterialCommunityIcons}
+                    name={icon}
+                    color={color}
+                />
+            ) : null}
+            <Text type="SubHeader" style={{ color }}>
+                {text}
+            </Text>
         </TabContainer>
     )
 }

@@ -134,7 +134,6 @@ export function searchStyles(styles: any, property: string): any {
             if (Object.prototype.toString.call(style) === '[object Array]') {
                 res = searchStyles(style, property)
             }
-
         })
     }
 

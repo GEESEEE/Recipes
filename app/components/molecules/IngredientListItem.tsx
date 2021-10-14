@@ -22,7 +22,6 @@ function IngredientListItem({
     handleIngredientAmountChange,
     handleIngredientUnitChange,
 }: IngredientListItemProps): JSX.Element {
-
     function logIngredient(): void {
         console.log('Logging ingredient')
     }
@@ -31,25 +30,25 @@ function IngredientListItem({
         <ListItem
             items={utils.createDropDownItems([logIngredient], 'ingredient')}
         >
-            <Container >
+            <Container>
                 <Editable
                     editable={editable}
                     text={ingredient.ingredient?.name}
                     handleTextChange={handleIngredientNameChange}
-                    paddingHorizontal='s'
+                    paddingHorizontal="s"
                 />
                 <SubContainer>
                     <Editable
                         editable={editable}
                         text={ingredient.amount.toString()}
                         handleTextChange={handleIngredientAmountChange}
-                        paddingHorizontal='s'
+                        paddingHorizontal="s"
                     />
                     <Editable
                         editable={editable}
                         text={ingredient.ingredient?.unit}
                         handleTextChange={handleIngredientUnitChange}
-                        width='m'
+                        width="m"
                     />
                 </SubContainer>
             </Container>

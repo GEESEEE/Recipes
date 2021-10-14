@@ -12,7 +12,6 @@ import { ButtonIcon } from '../user-input/Buttons'
 import { recipeUtils, utils } from '@/config'
 import { DropdownMenu } from '@/components/atoms'
 
-
 // Edit Actions determine what can be edited and what is displayed in this component
 // Edit-all, is for editing everything
 // Edit-people is for editing just the people count when viewing a recipe
@@ -70,7 +69,10 @@ function RecipeHeaderComponent({
         dropDownFunctions.push(copyRecipe)
     }
 
-    const dropDownItems: DropDownItem[] = utils.createDropDownItems(dropDownFunctions, 'recipe')
+    const dropDownItems: DropDownItem[] = utils.createDropDownItems(
+        dropDownFunctions,
+        'recipe'
+    )
 
     const prepareTimeStyle = (): { color: string } => {
         if (!editable || recipe.prepareTime > 0) return { color: theme.text }
@@ -194,8 +196,8 @@ function RecipeHeaderComponent({
                 <DropdownMenu
                     items={dropDownItems}
                     dependencies={dropDownDependencies}
-                    iconOffset='s'
-                    iconSize='m'
+                    iconOffset="s"
+                    iconSize="m"
                 />
             ) : null}
         </Header>

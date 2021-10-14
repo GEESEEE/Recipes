@@ -9,41 +9,41 @@ const Tabs = createMaterialTopTabNavigator()
 
 const config: TabNavigatorConfig = {
     EditRecipe: {
-        name: 'Recipe'
+        name: 'Recipe',
     },
     EditIngredientsStack: {
-        name: 'Ingredients'
+        name: 'Ingredients',
     },
     EditInstructionsStack: {
-        name: 'Instructions'
-    }
+        name: 'Instructions',
+    },
 }
 
 function EditRecipeTabs(): JSX.Element {
-
     const position = 'top'
     return (
         <Tabs.Navigator
             initialRouteName="EditRecipe"
             tabBar={({ navigation, state }: any) => (
-                <TabNavigator navigation={navigation} state={state} config={config} position={position} />
+                <TabNavigator
+                    navigation={navigation}
+                    state={state}
+                    config={config}
+                    position={position}
+                />
             )}
         >
-            <Tabs.Screen
-                name='EditRecipe'
-                component={EditRecipeScreen}
-            />
+            <Tabs.Screen name="EditRecipe" component={EditRecipeScreen} />
 
             <Tabs.Screen
-                name='EditIngredientsStack'
+                name="EditIngredientsStack"
                 component={EditIngredientsStack}
             />
 
             <Tabs.Screen
-                name='EditInstructionsStack'
+                name="EditInstructionsStack"
                 component={EditInstructionsStack}
             />
-
         </Tabs.Navigator>
     )
 }

@@ -7,7 +7,7 @@ import {
     LayoutProvider,
 } from 'recyclerlistview'
 import styled from 'styled-components'
-import { View, Text} from '@/components/base'
+import { View, Text } from '@/components/base'
 import { InstructionListItem, IngredientListItem } from '@/components/molecules'
 import { RecipeIngredient } from '@/data'
 import { useAppSelector } from '@/hooks'
@@ -47,7 +47,8 @@ function IngredientsRecyclerListView({
             switch (type) {
                 case ViewTypes.Ingredient: {
                     dim.width = width
-                    dim.height = 16 + 2 * Typography.lineHeight('Text', textSize)
+                    dim.height =
+                        16 + 2 * Typography.lineHeight('Text', textSize)
                     break
                 }
 
@@ -84,7 +85,9 @@ function IngredientsRecyclerListView({
                     rowRenderer={rowRenderer}
                     onScroll={(e, x, y) => handleScroll(e, x, y)}
                 />
-            ) : <Text>Tap the + Icon to add an ingredient!</Text>}
+            ) : (
+                <Text>Tap the + Icon to add an ingredient!</Text>
+            )}
         </Container>
     )
 }

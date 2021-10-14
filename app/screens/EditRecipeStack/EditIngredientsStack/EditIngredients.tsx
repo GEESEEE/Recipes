@@ -5,7 +5,6 @@ import { IngredientsRecyclerListView } from '@/components/organisms'
 import { useAppSelector } from '@/hooks'
 import { Ingredient, RecipeIngredient } from '@/data'
 
-
 function EditIngredientsScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -18,12 +17,8 @@ function EditIngredientsScreen(): JSX.Element {
     })
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
-            <IngredientsRecyclerListView
-                ingredients={ingredients}
-            />
+        <Container backgroundColor={theme.background}>
+            <IngredientsRecyclerListView ingredients={ingredients} />
         </Container>
     )
 }

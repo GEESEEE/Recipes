@@ -31,7 +31,12 @@ function MainTabs(): JSX.Element {
             backBehavior="history"
             tabBarPosition={position}
             tabBar={({ navigation, state }: any) => (
-                <TabNavigator navigation={navigation} state={state} config={config} position={position} />
+                <TabNavigator
+                    navigation={navigation}
+                    state={state}
+                    config={config}
+                    position={position}
+                />
             )}
             screenOptions={{
                 swipeEnabled: false,

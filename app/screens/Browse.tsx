@@ -8,9 +8,7 @@ import { HeaderComponent } from '@/routes/components'
 import { RegisterModal, LoginModal, LoadingModal } from './modals'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth } = useAppSelector(
-        (state) => state
-    )
+    const { auth } = useAppSelector((state) => state)
 
     const dispatch = useAppDispatch()
     const listRef = React.useRef<FlatList>()

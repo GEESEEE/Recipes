@@ -9,17 +9,13 @@ function EditInstructionsScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const instructions: Instruction[] = []
     const instrs = [0, 1, 2, 3, 4]
-    instrs.forEach((i) => instructions.push(
-        new Instruction(i, `Instruction ${i}`, i)
-    ))
+    instrs.forEach((i) =>
+        instructions.push(new Instruction(i, `Instruction ${i}`, i))
+    )
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
-            <InstructionsRecyclerListView
-                instructions={instructions}
-            />
+        <Container backgroundColor={theme.background}>
+            <InstructionsRecyclerListView instructions={instructions} />
         </Container>
     )
 }

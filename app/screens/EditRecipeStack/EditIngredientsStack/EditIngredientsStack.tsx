@@ -13,7 +13,7 @@ function EditIngredientsStack(): JSX.Element {
             screenOptions={{
                 presentation: 'transparentModal',
                 cardStyleInterpolator: routeUtils.slideVertical,
-                headerShown: false
+                headerShown: false,
             }}
         >
             <Stack.Screen

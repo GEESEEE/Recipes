@@ -3,17 +3,12 @@ import styled from 'styled-components'
 import { View, Text } from '@/components/base'
 import { useAppSelector } from '@/hooks'
 
-
 function EditIngredientScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
-            <Text>
-                Edit 1 ingredient Screen enzo
-            </Text>
+        <Container backgroundColor={theme.background}>
+            <Text>Edit 1 ingredient Screen enzo</Text>
         </Container>
     )
 }

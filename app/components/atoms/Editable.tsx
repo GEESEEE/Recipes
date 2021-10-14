@@ -1,13 +1,19 @@
 import React from 'react'
-import {Text, TextInput } from '@/components/base'
-import { TextProps, withLayoutProps, LayoutProps, withTextProps } from '@/components/higher-order'
+import { Text, TextInput } from '@/components/base'
+import {
+    TextProps,
+    withLayoutProps,
+    LayoutProps,
+    withTextProps,
+} from '@/components/higher-order'
 
 type EditableProps = {
     text: string
     numberOfLines?: number
     editable?: boolean
     handleTextChange?: (text: string, ...args: any[]) => void
-} & TextProps & LayoutProps
+} & TextProps &
+    LayoutProps
 
 function Editable({
     text,
@@ -15,8 +21,7 @@ function Editable({
     editable,
     handleTextChange,
     ...rest
-}: EditableProps ): JSX.Element {
-
+}: EditableProps): JSX.Element {
     if (editable) {
         return (
             <TextInput

@@ -10,7 +10,7 @@ type TextInputWithIconsProps = {
     onEndEditing?: (text: string) => void
     secureTextEntry?: boolean
     errorMessage?: string
-    leftIcon?:React.ReactNode
+    leftIcon?: React.ReactNode
     rightIcon?: React.ReactNode
 } & TextInputProps
 
@@ -34,7 +34,7 @@ export const TextInputWithIcons = ({
             >
                 {leftIcon || null}
                 <StyledTextInput
-                    paddingHorizontal='s'
+                    paddingHorizontal="s"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...rest}
                 />

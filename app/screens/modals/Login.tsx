@@ -108,7 +108,10 @@ function LoginModal({
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
             dispatch(
-                authActions.signIn({username: data.username, password: data.password})
+                authActions.signIn({
+                    username: data.username,
+                    password: data.password,
+                })
             )
         }
     }
@@ -148,7 +151,7 @@ function LoginModal({
                         IconType={Icons.MyFontAwesome}
                         iconName="lock"
                         color={theme.grey}
-                        onPress={() => console.log("asd")}
+                        onPress={() => console.log('asd')}
                     />
                 }
                 placeholder="Your Password"

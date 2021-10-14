@@ -4,29 +4,24 @@ import { useAppSelector } from '@/hooks'
 import { View, Text, TextInput } from '@/components/base'
 import { TextInputWithTitle, Button } from '@/components/atoms'
 
-
-
 function EditRecipeScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
-    const width ='l'
+    const width = 'l'
     const paddingHorizontal = 'm'
     const marginVertical = 's'
 
     return (
-        <Container
-            backgroundColor={theme.background}
-            paddingVertical='s'
-        >
+        <Container backgroundColor={theme.background} paddingVertical="s">
             <TextInputWithTitle
-                title='Title'
-                type='SubHeader'
+                title="Title"
+                type="SubHeader"
                 onChangeText={(t: string) => console.log('')}
                 multiline
             />
 
             <TextInputWithTitle
-                title='Description'
+                title="Description"
                 onChangeText={(t: string) => console.log('')}
                 multiline
             />
@@ -36,22 +31,20 @@ function EditRecipeScreen(): JSX.Element {
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>
-                    Prepare time
-                </PrepareTimeText>
+                <PrepareTimeText>Prepare time</PrepareTimeText>
                 <TextInputWithTitle
-                    marginHorizontal='s'
-                    title='Hours'
+                    marginHorizontal="s"
+                    title="Hours"
                     onChangeText={(t: string) => console.log('')}
-                    width='s'
-                    keyboardType='numeric'
+                    width="s"
+                    keyboardType="numeric"
                     maxLength={2}
                 />
-                 <TextInputWithTitle
-                    title='Minutes'
+                <TextInputWithTitle
+                    title="Minutes"
                     onChangeText={(t: string) => console.log('')}
-                    width='s'
-                    keyboardType='numeric'
+                    width="s"
+                    keyboardType="numeric"
                     maxLength={2}
                 />
             </PrepareTimeContainer>
@@ -61,23 +54,20 @@ function EditRecipeScreen(): JSX.Element {
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>
-                    People count
-                </PrepareTimeText>
+                <PrepareTimeText>People count</PrepareTimeText>
                 <TextInputWithTitle
-                    placeholder='People count'
-                    width='m'
-                    marginHorizontal='s'
-                    keyboardType='numeric'
+                    placeholder="People count"
+                    width="m"
+                    marginHorizontal="s"
+                    keyboardType="numeric"
                 />
             </PrepareTimeContainer>
 
             <Button
-                type='Solid'
-                text='SAVE'
+                type="Solid"
+                text="SAVE"
                 onPress={() => console.log('Should save now or soething')}
             />
-
         </Container>
     )
 }
@@ -98,6 +88,4 @@ const PrepareTimeText = styled(Text)`
     flex: 1;
 `
 
-const PeopleCountContainer = styled(View)`
-
-`
+const PeopleCountContainer = styled(View)``
