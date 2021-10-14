@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TouchableOpacity, View, Text} from '@/components/base'
-import { useAppSelector } from '@/hooks'
 
 type TextWithElementProps = {
     text: string
@@ -12,10 +11,8 @@ type TextWithElementProps = {
 function PressableTextWithElement({
     text, element, onPress,
 }: TextWithElementProps): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
-
     return (
-        <Container onPress={onPress} >
+        <Container onPress={onPress} paddingHorizontal='m'>
             <StyledText type='SubHeader' weight='normal' >{text}</StyledText>
             <StyledElement>{element}</StyledElement>
         </Container>

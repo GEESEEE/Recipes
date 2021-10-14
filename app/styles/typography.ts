@@ -36,8 +36,8 @@ export const standardTextSize: Record<TextSize, number> = {
 }
 
 export const textOffset: Record<TextType, number> = {
-    Header: 6,
-    SubHeader: 3,
+    Header: 4,
+    SubHeader: 2,
     Text: 0,
     SubText: -2,
     TinyText: -4,

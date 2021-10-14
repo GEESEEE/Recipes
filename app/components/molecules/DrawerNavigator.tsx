@@ -38,7 +38,6 @@ export default function DrawerNavigator({
                 </Header>
 
                 <ContainerView
-                    paddingHorizontal='m'
                     paddingVertical='m'
                 >
                     <PressableTextWithElement
@@ -61,7 +60,6 @@ export default function DrawerNavigator({
                      weight='bold' paddingHorizontal='m'
                 >Preferences</Text>
                 <ContainerView
-                    paddingHorizontal='m'
                     paddingVertical='m'
                 >
                     {/* Light Theme Toggle */}
