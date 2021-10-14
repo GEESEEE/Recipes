@@ -17,7 +17,7 @@ export const retrieveToken =
         try {
             const token = await SecureStore.getItemAsync('token')
             if (token) {
-                const result = await authService.verifyToken({ token })
+                const result = await authService.verifyToken()
                 if (result) {
                     await dispatch(retrieveUserData(token, false, navigation))
                     return

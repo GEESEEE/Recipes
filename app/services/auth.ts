@@ -35,10 +35,10 @@ export async function signIn(
     return tokenObject.access_token
 }
 
-export async function signOut(headers: { token: string }): Promise<boolean> {
-    return handleError('POST', `/auth/revoke`, { headers })
+export async function signOut(headers: { token: string}): Promise<boolean> {
+    return handleError('POST', `/auth/revoke`, {headers})
 }
 
-export async function verifyToken(headers: { token: string }): Promise<any> {
-    return handleError('GET', '/auth/info', { headers })
+export async function verifyToken(): Promise<any> {
+    return handleError('GET', '/auth/info')
 }

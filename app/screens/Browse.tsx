@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
-import { authActions, browseRecipeActions } from '@/redux/actions'
+import { authActions } from '@/redux/slices'
 import { HeaderComponent } from '@/routes/components'
 import { RegisterModal, LoginModal, LoadingModal } from './modals'
 
@@ -25,7 +25,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // On first load, retrieve token
     React.useEffect(() => {
-        dispatch(authActions.retrieveToken(navigation))
+        dispatch(authActions.retrieveToken())
     }, [])
 
     const [showRegisterScreen, setShowRegisterScreen] = React.useState(false)

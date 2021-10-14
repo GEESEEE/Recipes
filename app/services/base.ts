@@ -28,6 +28,7 @@ export default async function handleError<T>(
         const token = await getTokenHeader()
         headers = { ...headers, token }
     }
+
     return (await applicationAdapter(method, pathName, headers, body)).data
 
     // if (err.response.status === 404) {

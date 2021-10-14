@@ -160,7 +160,7 @@ function RegisterScreen({
 
     function handleGoBackButton(): void {
         showLogin()
-        // dispatch(authActions.clearError())
+        dispatch(authActions.clearError())
     }
 
     return (
@@ -223,7 +223,7 @@ function RegisterScreen({
                 type="Solid"
                 text="REGISTER"
                 onPress={() => handleRegisterButton()}
-                loading={auth.awaitingResponse}
+                loading={auth.responsePending}
                 marginVertical="s"
             />
 

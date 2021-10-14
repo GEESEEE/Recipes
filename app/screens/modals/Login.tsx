@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
+import { authActions } from '@/redux/slices'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -106,15 +107,15 @@ function LoginModal({
 
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            // dispatch(
-            //     authActions.signIn(data.username, data.password, navigation)
-            // )
+            dispatch(
+                authActions.signIn({username: data.username, password: data.password})
+            )
         }
     }
 
     function handleRegisterButton(): void {
         showRegister()
-        // dispatch(authActions.clearError())
+        dispatch(authActions.clearError())
     }
 
     return (
@@ -170,7 +171,7 @@ function LoginModal({
                 type="Solid"
                 text="SIGN IN"
                 onPress={() => handleLoginButton()}
-                loading={auth.awaitingResponse}
+                loading={auth.responsePending}
                 marginVertical="s"
             />
 
