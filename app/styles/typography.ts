@@ -1,5 +1,7 @@
 import { css, FlattenInterpolation } from 'styled-components'
 
+export type TextTransform = 'uppercase' | 'lowercase' | 'capitalize'
+
 // Font Weights
 export type TextWeight = 'light' | 'normal' | 'semiBold' | 'bold' | 'extraBold'
 export const fontWeight: Record<TextWeight, any> = {

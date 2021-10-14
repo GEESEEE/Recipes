@@ -95,7 +95,7 @@ export default function DrawerNavigator({
             <Footer>
                 <Button
                     type='Solid'
-                    text="SIGN OUT"
+                    text="Sign out"
                     onPress={() => handleSignOut()}
                     loading={auth.responsePending}
                     marginVertical='m'

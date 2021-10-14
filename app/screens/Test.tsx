@@ -95,13 +95,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 multiline
             />
 
-            <StyledText width="s" numberOfLines={2} paddingVertical="s" >
+            <StyledText width="s" numberOfLines={2} paddingVertical="s" transform='uppercase' >
                 lkamsdlkmasdlkamsdlkasasdasdadadad
             </StyledText>
 
             <Button
                 type="Solid"
-                text="CHANGE PRIMARY COLOR"
+                text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
 

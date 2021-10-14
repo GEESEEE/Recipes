@@ -58,8 +58,6 @@ function LoginModal({
     const { theme } = settings
     const dispatch = useAppDispatch()
 
-    const insets = useSafeAreaInsets()
-
     const initialState: LoginState = {
         username: '',
         password: '',
@@ -172,7 +170,7 @@ function LoginModal({
 
             <Button
                 type="Solid"
-                text="SIGN IN"
+                text="Sign in"
                 onPress={() => handleLoginButton()}
                 loading={auth.responsePending}
                 marginVertical="s"

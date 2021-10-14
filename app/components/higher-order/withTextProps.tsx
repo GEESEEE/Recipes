@@ -1,19 +1,18 @@
 import React from 'react'
 import { TextProps as RNTextProps } from 'react-native'
-import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
-import { utils } from '@/config'
 
 export type TextProps = {
     type?: Typography.TextType
     weight?: Typography.TextWeight
     color?: string
+    transform?: Typography.TextTransform
 } & RNTextProps
 
 function withTextProps<T extends React.PropsWithChildren<TextProps>>(
     WrappedComponent: React.ComponentType<
-        Omit<T, 'type' | 'weight' | 'color' | 'children' | 'style'>
+        Omit<T, 'type' | 'weight' | 'color' | 'children' | 'transform' | 'style'>
     >
 ): (props: any) => JSX.Element {
     return ({
@@ -21,6 +20,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
         weight,
         color,
         children,
+        transform,
         style,
         ...rest
     }: T): JSX.Element => {
@@ -37,6 +37,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
             lineHeight,
             color,
             ...Typography.fontWeight[weight],
+            textTransform: transform
         }
 
         return (
@@ -45,6 +46,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
                 type={type}
                 weight={weight}
                 color={color}
+                transform={transform}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >

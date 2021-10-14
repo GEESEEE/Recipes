@@ -221,7 +221,7 @@ function RegisterScreen({
             {/* Register Button */}
             <Button
                 type="Solid"
-                text="REGISTER"
+                text="Register"
                 onPress={() => handleRegisterButton()}
                 loading={auth.responsePending}
                 marginVertical="s"

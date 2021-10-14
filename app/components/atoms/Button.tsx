@@ -28,6 +28,7 @@ type ButtonProps = {
 
     textType?: Typography.TextType
     textWeight?: Typography.TextWeight
+    textTransform?: Typography.TextTransform
 
     loading?: boolean
 } & LayoutProps &
@@ -41,6 +42,7 @@ const Button = ({
     text,
     textType,
     textWeight,
+    textTransform,
 
     borderRadius,
     width,
@@ -63,8 +65,12 @@ const Button = ({
 
     textType = textType || 'Text'
     textWeight = textWeight || 'bold'
+    textTransform = textTransform || 'uppercase'
 
-    if (type === TYPE.Clear) textWeight = 'normal'
+    if (type === TYPE.Clear){
+        textWeight = 'normal'
+        textTransform = 'lowercase'
+    }
     borderRadius = borderRadius || 's'
     width = width || 'm'
 
@@ -101,7 +107,7 @@ const Button = ({
                         )}
                     />
                 ) : (
-                    <Text type={textType} color={color} weight={textWeight}>
+                    <Text type={textType} color={color} weight={textWeight} transform={textTransform} >
                         {text}
                     </Text>
                 )}
