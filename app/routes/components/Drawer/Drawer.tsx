@@ -4,10 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { authActions, settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
 import { ColorPickerModal } from '@/screens/modals'
-import SwitchComponent from '@/components/user-input/Switch'
+import { Toggle } from '@/components/base'
+import { Button } from '@/components/atoms'
 
 interface DrawerItemProps {
     text: string
@@ -75,7 +75,7 @@ export default function DrawerComponent({
                     <DrawerItem
                         text="Light Theme"
                         element={
-                            <SwitchComponent
+                            <Toggle
                                 switchValue={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
                                     dispatch(settingsActions.setTheme(val))
@@ -88,13 +88,12 @@ export default function DrawerComponent({
                     <DrawerItem
                         text="Inverted Colors"
                         element={
-                            <SwitchComponent
+                            <Toggle
                                 switchValue={settings.invertedColors}
                                 onValueChange={(val: boolean) =>
                                     dispatch(
                                         settingsActions.setInvertedColors(val)
                                     )
-
                                 }
                             />
                         }
@@ -103,10 +102,12 @@ export default function DrawerComponent({
             </ScrollView>
 
             <Footer>
-                <ButtonFilled
-                    text="Sign Out"
+                <Button
+                    type='Solid'
+                    text="SÍGN OUT"
                     onPress={() => handleSignOut()}
                     loading={auth.responsePending}
+                    marginVertical='m'
                 />
             </Footer>
         </Container>
@@ -180,7 +181,6 @@ const DrawerItemElement = styled(View)`
 `
 
 const Footer = styled(View)`
-    margin-bottom: 15px;
     border-top-color: ${(props) => props.theme.primary};
     border-top-width: 1px;
     align-items: center;

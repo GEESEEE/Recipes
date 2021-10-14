@@ -31,7 +31,6 @@ const Text = ({ fixHeight, numberOfLines, type, style, ...rest }: TextProps): JS
     )
 
     function onTextLayout(e: any): void {
-        console.log(e.nativeEvent.lines.length, numberOfLines)
         const lines = numberOfLines ?? e.nativeEvent.lines.length
         setHeight(lineHeight * lines + padding)
     }
