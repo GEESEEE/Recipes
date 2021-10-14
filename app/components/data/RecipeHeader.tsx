@@ -9,7 +9,7 @@ import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
 import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { myRecipeActions } from '@/redux/actions'
 import { ButtonIcon } from '../user-input/Buttons'
-import { recipeUtils, utils } from '@/config'
+import { recipeUtils, utils } from '@/utils'
 import { DropdownMenu } from '@/components/atoms'
 
 // Edit Actions determine what can be edited and what is displayed in this component

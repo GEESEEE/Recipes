@@ -3,7 +3,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
 import { RecipeSectionList } from '@/components/data'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 import { Recipe } from '@/data'
 
 function ViewRecipeScreen(): JSX.Element {

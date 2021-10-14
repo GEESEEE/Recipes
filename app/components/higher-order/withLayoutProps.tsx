@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleProp, ViewProps, ViewStyle } from 'react-native'
 import { Spacing } from '@/styles'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 
 export type LayoutProps = {
     paddingVertical?: Spacing.Size

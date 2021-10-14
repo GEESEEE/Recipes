@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import EditIngredientsScreen from './EditIngredients'
 import EditIngredientScreen from './EditIngredient'
-import { routeUtils } from '@/config'
+import { routeUtils } from '@/utils'
 
 const Stack = createStackNavigator()
 

@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { routeUtils } from '@/config'
+import { routeUtils } from '@/utils'
 import { View, Text, TextInput, Icons, Toggle } from '@/components/base'
 
 import {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { routeUtils } from '@/config'
+import { routeUtils } from '@/utils'
 import { Popup } from '@/screens'
 import Drawer from './Drawer'
 

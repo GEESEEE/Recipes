@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
 import { sortActions } from '@/redux/actions'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { BROWSE_SORT_ACTIONS, MY_SORT_ACTIONS } from '@/redux/reducers'
 import { MyMaterialCommunityIcons } from '../../Icons'
@@ -24,29 +24,29 @@ function SortRow({
     const globalState = useAppSelector((state) => state)
 
     const sortState =
-        routeName === 'Browse' ? globalState.browseSort : globalState.mySort
+        routeName === 'Browse'
 
     const SORT_ACTIONS =
         routeName === 'Browse' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS
 
-    const selected = utils.inElementOf(sortState.sortState, type)
-    const order = sortState.orders[type]
+    // const selected = utils.inElementOf(sortState.sortState, type)
+    // const order = sortState.orders[type]
 
-    const callback = selected
-        ? sortActions.removeSort(SORT_ACTIONS.REMOVE_SORT, type)
-        : sortActions.addSort(SORT_ACTIONS.ADD_SORT, type, order)
+    // const callback = selected
+    //     ? sortActions.removeSort(SORT_ACTIONS.REMOVE_SORT, type)
+    //     : sortActions.addSort(SORT_ACTIONS.ADD_SORT, type, order)
 
-    const toggleOrder = selected
-        ? sortActions.swapSort(SORT_ACTIONS.SWAP_SORT, type)
-        : sortActions.toggleSort(SORT_ACTIONS.TOGGLE_SORT, type)
+    // const toggleOrder = selected
+    //     ? sortActions.swapSort(SORT_ACTIONS.SWAP_SORT, type)
+    //     : sortActions.toggleSort(SORT_ACTIONS.TOGGLE_SORT, type)
 
-    const filterTextColor = selected ? theme.primary : theme.text
-    const fontSize = header ? 14 : 16
-    const iconSize = header ? 20 : 25
+    // const filterTextColor = selected ? theme.primary : theme.text
+    // const fontSize = header ? 14 : 16
+    // const iconSize = header ? 20 : 25
 
     return (
         <FilterContainer>
-            {header ? null : (
+            {/* {header ? null : (
                 <FilterPosition>
                     {selected
                         ? utils.indexOfIncludedElement(
@@ -85,7 +85,7 @@ function SortRow({
                         size={iconSize}
                     />
                 </FinalButtonView>
-            </FilterRowContainer>
+            </FilterRowContainer> */}
         </FilterContainer>
     )
 }

@@ -3,7 +3,7 @@ import Drawer from './Drawer'
 import MainTabs from './MainTabs'
 import BrowseStack from './BrowseStack'
 import RecipesStack from './RecipesStack'
-import EditRecipeTabs from '../screens/EditRecipeStack/EditRecipeTabs'
+import { EditRecipeTabs } from '../screens/EditRecipeTabs'
 
 export {
     RootStack,

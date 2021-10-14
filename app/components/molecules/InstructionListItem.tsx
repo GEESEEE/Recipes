@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Instruction } from '@/data'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 
 type InstructionListItemProps = {
     instruction: Instruction

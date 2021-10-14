@@ -10,7 +10,7 @@ import {
     TextProps,
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 import { useAppSelector } from '@/hooks'
 
 export type TextInputProps = RNTextInputProps & TextProps & LayoutProps

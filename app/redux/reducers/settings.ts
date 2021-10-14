@@ -1,4 +1,4 @@
-import { colors, themeUtils } from '@/config'
+import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
 
 export const SETTINGS_ACTIONS = {

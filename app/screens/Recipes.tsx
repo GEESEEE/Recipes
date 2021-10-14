@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styled from 'styled-components'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
-import { recipeUtils } from '@/config'
+import { recipeUtils } from '@/utils'
 import { useAppSelector } from '@/hooks'
 
 function RecipesScreen(): JSX.Element {

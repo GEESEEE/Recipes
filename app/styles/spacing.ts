@@ -9,26 +9,6 @@ export const spacings: Record<Size, number> = {
     l: 12,
 }
 
-// Padding
-export const padding = (size: Size): string =>
-    `${paddingVertical(size)} ${paddingHorizontal(size)}`
-
-export const paddingVertical = (size: Size): string =>
-    `padding-vertical: ${spacings[size]}px;`
-
-export const paddingHorizontal = (size: Size): string =>
-    `padding-horizontal: ${spacings[size]}px;`
-
-// Margins
-export const margin = (size: Size): string =>
-    `${marginVertical(size)} ${marginHorizontal(size)}`
-
-export const marginVertical = (size: Size): string =>
-    `margin-vertical: ${spacings[size]}px;`
-
-export const marginHorizontal = (size: Size): string =>
-    `margin-horizontal: ${spacings[size]}px;`
-
 // Sizing
 export const widths: Record<Size, string> = {
     s: '30%',

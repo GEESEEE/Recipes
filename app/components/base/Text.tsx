@@ -12,7 +12,7 @@ import {
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { useAppSelector } from '@/hooks'
-import { utils } from '@/config'
+import { utils } from '@/utils'
 
 export type TextProps = {
     fixHeight?: boolean

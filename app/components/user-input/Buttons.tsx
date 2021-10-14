@@ -19,8 +19,8 @@ const ButtonStyleGeneric = styled(TouchableOpacity)`
     align-items: center;
     width: 80%;
     border-radius: 20px;
-    ${Spacing.paddingVertical('m')}
-    ${Spacing.marginVertical('m')}
+    padding-vertical: ${Spacing.spacings.m}px;
+    margin-vertical: ${Spacing.spacings.m}px;
 `
 
 const ButtonTextGeneric = styled(Text)`

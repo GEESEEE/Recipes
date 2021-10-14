@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { colors, themeUtils } from '@/config'
+import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
 import { privateAuthActions } from './auth'
 import { AppDispatch } from '../store'
