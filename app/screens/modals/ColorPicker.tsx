@@ -5,7 +5,7 @@ import { fromHsv, TriangleColorPicker } from 'react-native-color-picker'
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers'
 import { ButtonFilled, ReturnButton } from '../../components/user-input/Buttons'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { settingsActions } from '@/redux/actions'
+import { settingsActions } from '@/redux'
 import { colors } from '@/config'
 import { Modal } from '@/components/base'
 

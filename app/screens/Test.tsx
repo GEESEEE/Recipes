@@ -15,6 +15,7 @@ import {
     Button,
     DropdownMenu,
     Editable,
+    PressableTextWithElement
 } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
@@ -77,6 +78,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const [username, setUsername] = React.useState('username')
 
+    const [val, toggleVal] = useToggle(false)
+
+    function tog(v: boolean): void {
+        console.log("toggle", val, v)
+        toggleVal(v)
+    }
+
     return (
         <Container>
             {/* <LogoView>
@@ -93,6 +101,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 value='lkmasdlkmasdlkmasdlkmasdlk'
                 paddingVertical='s'
                 multiline
+            />
+
+            <PressableTextWithElement
+                text='Yes'
+                element={<Toggle
+                    value={val}
+                    onValueChange={(v: boolean) => tog(v)}
+                />}
             />
 
             <StyledText width="s" numberOfLines={2} paddingVertical="s" transform='uppercase' >

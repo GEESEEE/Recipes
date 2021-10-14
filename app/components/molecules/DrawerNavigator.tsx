@@ -15,7 +15,7 @@ export default function DrawerNavigator({
 }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { user } = auth
-    const { theme } = settings
+    const { theme, invertedColors } = settings
     const dispatch = useAppDispatch()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
@@ -23,6 +23,16 @@ export default function DrawerNavigator({
     async function handleSignOut(): Promise<void> {
         await dispatch(authActions.signOut())
         navigation.toggleDrawer()
+    }
+
+    async function handleSetInvertedColor(val: boolean): Promise<void> {
+        console.log("inverted", invertedColors, val)
+        await dispatch(settingsActions.setInvertedColors(val))
+    }
+
+    async function handleSetTheme(val: boolean): Promise<void> {
+        console.log("theme", theme.mode === 'light', val)
+        await dispatch(settingsActions.setTheme(val))
     }
 
     return (
@@ -67,9 +77,9 @@ export default function DrawerNavigator({
                         text="Light Theme"
                         element={
                             <Toggle
-                                switchValue={theme.mode === 'light'}
+                                value={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
-                                    dispatch(settingsActions.setTheme(val))
+                                    handleSetTheme(val)
                                 }
                             />
                         }
@@ -80,11 +90,9 @@ export default function DrawerNavigator({
                         text="Inverted Colors"
                         element={
                             <Toggle
-                                switchValue={settings.invertedColors}
+                                value={invertedColors}
                                 onValueChange={(val: boolean) =>
-                                    dispatch(
-                                        settingsActions.setInvertedColors(val)
-                                    )
+                                    handleSetInvertedColor(val)
                                 }
                             />
                         }
