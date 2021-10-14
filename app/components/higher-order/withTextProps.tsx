@@ -12,7 +12,10 @@ export type TextProps = {
 
 function withTextProps<T extends React.PropsWithChildren<TextProps>>(
     WrappedComponent: React.ComponentType<
-        Omit<T, 'type' | 'weight' | 'color' | 'children' | 'transform' | 'style'>
+        Omit<
+            T,
+            'type' | 'weight' | 'color' | 'children' | 'transform' | 'style'
+        >
     >
 ): (props: any) => JSX.Element {
     return ({
@@ -37,7 +40,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
             lineHeight,
             color,
             ...Typography.fontWeight[weight],
-            textTransform: transform
+            textTransform: transform,
         }
 
         return (

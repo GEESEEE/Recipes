@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TouchableOpacity, View, Text} from '@/components/base'
+import { TouchableOpacity, View, Text } from '@/components/base'
 
 type TextWithElementProps = {
     text: string
@@ -9,11 +9,15 @@ type TextWithElementProps = {
 }
 
 function PressableTextWithElement({
-    text, element, onPress,
+    text,
+    element,
+    onPress,
 }: TextWithElementProps): JSX.Element {
     return (
-        <Container onPress={onPress} paddingHorizontal='m'>
-            <StyledText type='SubHeader' weight='normal' >{text}</StyledText>
+        <Container onPress={onPress} paddingHorizontal="m">
+            <StyledText type="SubHeader" weight="normal">
+                {text}
+            </StyledText>
             <StyledElement>{element}</StyledElement>
         </Container>
     )

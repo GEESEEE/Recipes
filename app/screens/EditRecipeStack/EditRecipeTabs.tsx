@@ -32,6 +32,9 @@ function EditRecipeTabs(): JSX.Element {
                     position={position}
                 />
             )}
+            screenOptions={{
+                swipeEnabled: false,
+            }}
         >
             <Tabs.Screen name="EditRecipe" component={EditRecipeScreen} />
 

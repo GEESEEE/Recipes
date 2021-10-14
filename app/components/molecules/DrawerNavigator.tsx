@@ -25,16 +25,6 @@ export default function DrawerNavigator({
         navigation.toggleDrawer()
     }
 
-    async function handleSetInvertedColor(val: boolean): Promise<void> {
-        console.log("inverted", invertedColors, val)
-        await dispatch(settingsActions.setInvertedColors(val))
-    }
-
-    async function handleSetTheme(val: boolean): Promise<void> {
-        console.log("theme", theme.mode === 'light', val)
-        await dispatch(settingsActions.setTheme(val))
-    }
-
     return (
         <Container>
             {openColorPicker ? (
@@ -43,13 +33,13 @@ export default function DrawerNavigator({
 
             <ScrollView>
                 <Header>
-                    <Text type='Header' color={theme.primary} >{user.name}</Text>
-                    <Text paddingVertical='s' >{user.email}</Text>
+                    <Text type="Header" color={theme.primary}>
+                        {user.name}
+                    </Text>
+                    <Text paddingVertical="s">{user.email}</Text>
                 </Header>
 
-                <ContainerView
-                    paddingVertical='m'
-                >
+                <ContainerView paddingVertical="m">
                     <PressableTextWithElement
                         text="Set Primary Color"
                         element={
@@ -57,7 +47,7 @@ export default function DrawerNavigator({
                                 Type={Icons.MyIonicons}
                                 name="color-palette-outline"
                                 color={theme.primary}
-                                size='m'
+                                size="m"
                             />
                         }
                         onPress={() => toggleColorPicker()}
@@ -65,13 +55,14 @@ export default function DrawerNavigator({
                 </ContainerView>
 
                 <Text
-                    type='SubHeader'
+                    type="SubHeader"
                     color={theme.primary}
-                     weight='bold' paddingHorizontal='m'
-                >Preferences</Text>
-                <ContainerView
-                    paddingVertical='m'
+                    weight="bold"
+                    paddingHorizontal="m"
                 >
+                    Preferences
+                </Text>
+                <ContainerView paddingVertical="m">
                     {/* Light Theme Toggle */}
                     <PressableTextWithElement
                         text="Light Theme"
@@ -79,7 +70,7 @@ export default function DrawerNavigator({
                             <Toggle
                                 value={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
-                                    handleSetTheme(val)
+                                    dispatch(settingsActions.setTheme(val))
                                 }
                             />
                         }
@@ -92,7 +83,9 @@ export default function DrawerNavigator({
                             <Toggle
                                 value={invertedColors}
                                 onValueChange={(val: boolean) =>
-                                    handleSetInvertedColor(val)
+                                    dispatch(
+                                        settingsActions.setInvertedColors(val)
+                                    )
                                 }
                             />
                         }
@@ -102,11 +95,11 @@ export default function DrawerNavigator({
 
             <Footer>
                 <Button
-                    type='Solid'
+                    type="Solid"
                     text="Sign out"
                     onPress={() => handleSignOut()}
                     loading={auth.responsePending}
-                    marginVertical='m'
+                    marginVertical="m"
                 />
             </Footer>
         </Container>

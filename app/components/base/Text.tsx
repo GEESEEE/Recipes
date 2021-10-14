@@ -19,7 +19,13 @@ export type TextProps = {
 } & RNTextProps &
     LayoutProps
 
-const Text = ({ fixHeight, numberOfLines, type, style, ...rest }: TextProps): JSX.Element => {
+const Text = ({
+    fixHeight,
+    numberOfLines,
+    type,
+    style,
+    ...rest
+}: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
 
     type = type || 'Text'

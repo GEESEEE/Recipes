@@ -67,7 +67,7 @@ const Button = ({
     textWeight = textWeight || 'bold'
     textTransform = textTransform || 'uppercase'
 
-    if (type === TYPE.Clear){
+    if (type === TYPE.Clear) {
         textWeight = 'normal'
         textTransform = 'lowercase'
     }
@@ -107,7 +107,12 @@ const Button = ({
                         )}
                     />
                 ) : (
-                    <Text type={textType} color={color} weight={textWeight} transform={textTransform} >
+                    <Text
+                        type={textType}
+                        color={color}
+                        weight={textWeight}
+                        transform={textTransform}
+                    >
                         {text}
                     </Text>
                 )}

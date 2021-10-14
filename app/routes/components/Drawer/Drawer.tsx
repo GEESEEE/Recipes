@@ -51,7 +51,9 @@ export default function DrawerComponent({
 
             <ScrollView>
                 <Header>
-                    <Text type='Header' color={theme.primary} >{user.name}</Text>
+                    <Text type="Header" color={theme.primary}>
+                        {user.name}
+                    </Text>
                     <Text>{user.email}</Text>
                 </Header>
 
@@ -70,10 +72,14 @@ export default function DrawerComponent({
                 </PreferenceView>
 
                 <Text
-                    type='SubHeader'
+                    type="SubHeader"
                     color={theme.primary}
-                    marginVertical='m' weight='bold' paddingHorizontal='m'
-                >Preferences</Text>
+                    marginVertical="m"
+                    weight="bold"
+                    paddingHorizontal="m"
+                >
+                    Preferences
+                </Text>
                 <PreferenceView>
                     {/* Light Theme Toggle */}
                     <DrawerItem
@@ -107,11 +113,11 @@ export default function DrawerComponent({
 
             <Footer>
                 <Button
-                    type='Solid'
+                    type="Solid"
                     text="SÍGN OUT"
                     onPress={() => handleSignOut()}
                     loading={auth.responsePending}
-                    marginVertical='m'
+                    marginVertical="m"
                 />
             </Footer>
         </Container>

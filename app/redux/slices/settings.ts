@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { colors, themeUtils } from '@/config'
 import { Typography } from '@/styles'
-import { privateAuthActions }from './auth'
+import { privateAuthActions } from './auth'
 import { AppDispatch } from '../store'
 import { userService } from '@/services'
 
@@ -34,24 +34,24 @@ const settingsSlice = createSlice({
         setColor(state, action) {
             const color = action.payload
             colors.primary = color
-            state.theme = {...state.theme, primary: color}
+            state.theme = { ...state.theme, primary: color }
         },
         setTextSize(state, action) {
             state.textSize = action.payload
-        }
+        },
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder.addCase(privateAuthActions.login, (state, action) => {
-            const { color, invertedColors, theme} = action.payload.settings
+            const { color, invertedColors, theme } = action.payload.settings
             colors.primary = color
-            state.theme = { ...getTheme(theme), primary: color}
+            state.theme = { ...getTheme(theme), primary: color }
             state.invertedColors = invertedColors
         })
         builder.addCase(privateAuthActions.logout, () => {
             colors.primary = colors.primaryBlue
             return initialState
         })
-    }
+    },
 })
 
 const { actions } = settingsSlice
@@ -93,7 +93,9 @@ const setColor =
     }
 
 export const settingsActions = {
-    setColor, setInvertedColors, setTheme
+    setColor,
+    setInvertedColors,
+    setTheme,
 }
 
 export default settingsSlice.reducer
