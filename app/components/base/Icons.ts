@@ -2,3 +2,4 @@ export { default as MyMaterialIcons } from 'react-native-vector-icons/MaterialIc
 export { default as MyMaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons'
 export { default as MyFeather } from 'react-native-vector-icons/Feather'
 export { default as MyFontAwesome } from 'react-native-vector-icons/FontAwesome'
+export { default as MyIonicons } from 'react-native-vector-icons/Ionicons'

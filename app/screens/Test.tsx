@@ -105,7 +105,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 onPress={() => changePrimaryColor()}
             />
 
-            <StyledText width="s" paddingVertical="s" numberOfLines={2}>
+            <StyledText width="s" paddingVertical="s" numberOfLines={1}>
                 Teextkjansdknlkamsdlkmasdlkmasdlkmasdlkansdlkmasda
             </StyledText>
         </Container>

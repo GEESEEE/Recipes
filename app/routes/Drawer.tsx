@@ -1,6 +1,6 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { DrawerComponent } from './components'
+import { DrawerNavigator } from '@/components/molecules'
 import MainTabs from './MainTabs'
 
 const DrawerNav = createDrawerNavigator()
@@ -11,7 +11,7 @@ function Drawer(): JSX.Element {
             initialRouteName="MainTabs"
             screenOptions={{ headerShown: false }}
             drawerContent={({ navigation }) => (
-                <DrawerComponent navigation={navigation} />
+                <DrawerNavigator navigation={navigation} />
             )}
         >
             <DrawerNav.Screen name="MainTabs" component={MainTabs} />

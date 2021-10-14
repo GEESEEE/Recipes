@@ -1,32 +1,14 @@
 import React from 'react'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
+import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { authActions, settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { MyIonicons } from '@/components/Icons'
-import { ColorPickerModal } from '@/screens/modals'
-import { Toggle, Text } from '@/components/base'
-import { Button } from '@/components/atoms'
+import ColorPickerModal from '@/screens/modals/ColorPicker'
+import { Toggle, Text, View, Icons, Icon } from '@/components/base'
+import { Button, PressableTextWithElement } from '@/components/atoms'
 
-interface DrawerItemProps {
-    text: string
-    element: JSX.Element
-    onPress?: () => void
-}
-
-const DrawerItem = ({
-    text,
-    element,
-    onPress,
-}: DrawerItemProps): JSX.Element => (
-    <DrawerItemView onPress={onPress} disabled={typeof onPress === 'undefined'}>
-        <DrawerItemText>{text}</DrawerItemText>
-        <DrawerItemElement>{element}</DrawerItemElement>
-    </DrawerItemView>
-)
-
-export default function DrawerComponent({
+export default function DrawerNavigator({
     navigation,
 }: {
     navigation: any
@@ -52,31 +34,38 @@ export default function DrawerComponent({
             <ScrollView>
                 <Header>
                     <Text type='Header' color={theme.primary} >{user.name}</Text>
-                    <Text>{user.email}</Text>
+                    <Text paddingVertical='s' >{user.email}</Text>
                 </Header>
 
-                <PreferenceView>
-                    <DrawerItem
+                <ContainerView
+                    paddingHorizontal='m'
+                    paddingVertical='m'
+                >
+                    <PressableTextWithElement
                         text="Set Primary Color"
                         element={
-                            <MyIonicons
+                            <Icon
+                                Type={Icons.MyIonicons}
                                 name="color-palette-outline"
                                 color={theme.primary}
-                                size={23}
+                                size='m'
                             />
                         }
                         onPress={() => toggleColorPicker()}
                     />
-                </PreferenceView>
+                </ContainerView>
 
                 <Text
                     type='SubHeader'
                     color={theme.primary}
-                    marginVertical='m' weight='bold' paddingHorizontal='m'
+                     weight='bold' paddingHorizontal='m'
                 >Preferences</Text>
-                <PreferenceView>
+                <ContainerView
+                    paddingHorizontal='m'
+                    paddingVertical='m'
+                >
                     {/* Light Theme Toggle */}
-                    <DrawerItem
+                    <PressableTextWithElement
                         text="Light Theme"
                         element={
                             <Toggle
@@ -89,7 +78,7 @@ export default function DrawerComponent({
                     />
 
                     {/* Inverted Colors Toggle */}
-                    <DrawerItem
+                    <PressableTextWithElement
                         text="Inverted Colors"
                         element={
                             <Toggle
@@ -102,13 +91,13 @@ export default function DrawerComponent({
                             />
                         }
                     />
-                </PreferenceView>
+                </ContainerView>
             </ScrollView>
 
             <Footer>
                 <Button
                     type='Solid'
-                    text="SÍGN OUT"
+                    text="SIGN OUT"
                     onPress={() => handleSignOut()}
                     loading={auth.responsePending}
                     marginVertical='m'
@@ -126,41 +115,13 @@ const Container = styled(SafeAreaView)`
 const Header = styled(View)`
     flex: 1;
     align-items: center;
-    padding-bottom: 15px;
-    border-bottom-width: 1px;
-    border-bottom-color: ${(props) => props.theme.primary};
 `
 
-const PreferenceView = styled(View)`
+const ContainerView = styled(View)`
     flex-direction: column;
     justify-content: center;
-    padding-vertical: 12px;
-    padding-horizontal: 16px;
     border-top-color: ${(props) => props.theme.primary};
     border-top-width: 1px;
-`
-
-const DrawerItemView = styled(TouchableOpacity)`
-    flex: 1;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 5px;
-`
-
-const DrawerItemText = styled(Text)`
-    flex: 3;
-    font-size: 16px;
-    margin-right: 3px;
-    font-weight: bold;
-    color: ${(props) => props.theme.text};
-`
-
-const DrawerItemElement = styled(View)`
-    flex: 1;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
 `
 
 const Footer = styled(View)`
