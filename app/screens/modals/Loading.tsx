@@ -9,7 +9,7 @@ function LoadingModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     return (
-        <Container backgroundColor={theme.background} animationType="none">
+        <Container backgroundColor={theme.background}>
             <Loading4Dots
                 backgroundColor={theme.background}
                 dotColor={colors.primaryBlue}

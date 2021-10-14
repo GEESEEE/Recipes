@@ -2,7 +2,7 @@ import React from 'react'
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { authActions } from '@/redux/slices'
+import { authActions, settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { MyIonicons } from '@/components/Icons'
@@ -78,8 +78,7 @@ export default function DrawerComponent({
                             <SwitchComponent
                                 switchValue={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
-                                    // dispatch(settingsActions.setTheme(val))
-                                    console.log('theme', val)
+                                    dispatch(settingsActions.setTheme(val))
                                 }
                             />
                         }
@@ -92,10 +91,10 @@ export default function DrawerComponent({
                             <SwitchComponent
                                 switchValue={settings.invertedColors}
                                 onValueChange={(val: boolean) =>
-                                    // dispatch(
-                                    //     settingsActions.setInvertedColors(val)
-                                    // )
-                                    console.log('colors', val)
+                                    dispatch(
+                                        settingsActions.setInvertedColors(val)
+                                    )
+
                                 }
                             />
                         }

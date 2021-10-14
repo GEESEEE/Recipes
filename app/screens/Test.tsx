@@ -3,7 +3,7 @@ import { Animated, Keyboard } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
-import { settingsActions } from '@/redux/actions'
+import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/config'
@@ -88,9 +88,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <Text width="s" numberOfLines={2} paddingVertical="m">
+            <StyledTextInput
+                width='s'
+                value='lkmasdlkmasdlkmasdlkmasdlk'
+                paddingVertical='s'
+                multiline
+            />
+
+            <StyledText width="s" numberOfLines={2} paddingVertical="s" >
                 lkamsdlkmasdlkamsdlkasasdasdadadad
-            </Text>
+            </StyledText>
 
             <Button
                 type="Solid"

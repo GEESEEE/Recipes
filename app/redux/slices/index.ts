@@ -1,4 +1,4 @@
-import authSlice, { authActions } from './auth'
-import settingsSlice from './settings'
+import authReducer, { authActions } from './auth'
+import settingsReducer, { settingsActions } from './settings'
 
-export { settingsSlice, authSlice, authActions }
+export { settingsReducer, authReducer, authActions, settingsActions }

@@ -19,7 +19,7 @@ export type TextProps = {
 } & RNTextProps &
     LayoutProps
 
-const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
+const Text = ({ fixHeight, numberOfLines, type, style, ...rest }: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
 
     type = type || 'Text'
@@ -31,13 +31,16 @@ const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
     )
 
     function onTextLayout(e: any): void {
-        setHeight(lineHeight * e.nativeEvent.lines.length + padding)
+        console.log(e.nativeEvent.lines.length, numberOfLines)
+        const lines = numberOfLines ?? e.nativeEvent.lines.length
+        setHeight(lineHeight * lines + padding)
     }
 
     return (
         <RNText
             style={[{ height }, style]}
             onTextLayout={(e) => onTextLayout(e)}
+            numberOfLines={numberOfLines}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
