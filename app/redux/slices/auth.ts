@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as SecureStore from 'expo-secure-store'
 import { authService, userService } from '@/services'
 import { AppDispatch } from '@/redux'
-import { SignUpParams } from '@/redux/services/auth'
+import { SignUpParams, SignOutParams, SignInParams } from '@/redux/services/auth'
 import { User } from '@/data'
 
 export interface Auth {
@@ -85,7 +85,7 @@ const { actions } = authSlice
 export const privateAuthActions = actions
 
 const signUp =
-    (args: {
+    (params: {
         signUp: (data: SignUpParams) => Promise<any>
         data: SignUpParams
     }) =>
@@ -93,7 +93,7 @@ const signUp =
         dispatch(actions.responsePending())
         let errorMessage = ''
 
-        const res = await args.signUp(args.data)
+        const res = await params.signUp(params.data)
         if (typeof res.error !== 'undefined') {
             errorMessage =
                 res.error.data?.errors?.[0].message ??
@@ -104,50 +104,51 @@ const signUp =
     }
 
 const signOut =
-    () =>
+    ( signOutCall: (token: string) => Promise<any> ) =>
     async (dispatch: AppDispatch): Promise<void> => {
         dispatch(actions.responsePending())
-        try {
-            const token = (await SecureStore.getItemAsync('token')) as string
-            await SecureStore.deleteItemAsync('token')
-            dispatch(actions.logout())
-            await authService.signOut({ token })
-        } catch (err: any) {
-            const errorMessage =
-                err?.response?.data?.errors?.[0].message ??
-                'Could not connect to the server'
-            dispatch(actions.responseRejected(errorMessage))
+
+        const token = (await SecureStore.getItemAsync('token')) as string
+
+        await SecureStore.deleteItemAsync('token')
+        dispatch(actions.logout())
+        const res = await signOutCall(token)
+
+        if (res.data) {
+            return
         }
+        const errorMessage =  res.error?.data?.errors?.[0].message ??
+            'Could not connect to the server but logged out anyway'
+        dispatch(actions.responseRejected(errorMessage))
     }
 
 const signIn =
-    (data: { username: string; password: string }) =>
+    (params: {
+        signIn: (data: SignInParams) => Promise<any>,
+        getUser: (token: string) => Promise<any>,
+        data: SignInParams
+    } ) =>
     async (dispatch: AppDispatch): Promise<void> => {
-        try {
-            const token = await authService.signIn(data.username, data.password)
+        dispatch(actions.responsePending())
+        const res = await params.signIn(params.data)
+        if (res.data) {
+            const token = res.data.access_token
             await SecureStore.setItemAsync('token', token)
 
-            dispatch(actions.startLoading())
-            try {
-                const user = await userService.getUser({ token })
-                dispatch(actions.login({ user, token }))
-            } catch (err: any) {
-                const errorMessage =
-                    err?.response?.data?.errors?.[0].message ??
-                    'Could not connect to the server'
-                dispatch(actions.failedLoading(errorMessage))
-            }
-        } catch (err: any) {
-            const errorMessage =
-                err?.response?.data?.errors?.[0].message ??
-                'Could not connect to the server'
-            dispatch(actions.responseRejected(errorMessage))
+            const userRes = await params.getUser(token)
+            dispatch(actions.login({ user: userRes.data, token}))
+            return
         }
+
+        const errorMessage =
+            res.error.data?.errors?.[0].message ??
+            'Could not connect to the server'
+        dispatch(actions.responseRejected(errorMessage))
     }
 
 const retrieveToken =
     (verifyToken: (token: string) => Promise<any>) =>
-    async (dispatch: AppDispatch) => {
+    async (dispatch: AppDispatch): Promise<void> => {
         dispatch(actions.startLoading())
         let errorMessage = ''
 
@@ -157,9 +158,13 @@ const retrieveToken =
             dispatch(actions.login({ user: res.data, token }))
             return
         }
-        errorMessage =
+
+        if (res.error.data !== 'Unauthorized') {
+            errorMessage =
             res.error.data?.errors?.[0].message ??
             'Could not connect to the server'
+        }
+
 
         dispatch(actions.failedLoading(errorMessage))
     }

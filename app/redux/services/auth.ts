@@ -1,8 +1,11 @@
+// eslint-disable-next-line import/no-unresolved
+import { APPLICATION_ID } from '@env'
 import { User } from '@/data'
 import { api } from './base'
 
 export type SignUpParams = { name: string; password: string; email: string }
 export type SignOutParams = { token: string }
+export type SignInParams = { username: string, password: string }
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -24,15 +27,34 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signOut: builder.mutation<void, SignOutParams>({
-            query: (headers: SignOutParams) => ({
+        signOut: builder.mutation<void, string>({
+            query: (token: string) => ({
                 url: `/auth/revoke`,
                 method: 'POST',
-                headers,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }),
         }),
+
+        signIn: builder.mutation<any, SignInParams>({
+            query: (params: SignInParams) => {
+                const body = {
+                    client_id: APPLICATION_ID,
+                    username: params.username,
+                    password: params.password,
+                    scope: 'create delete',
+                    grant_type: 'password',
+                }
+                return {
+                    url: `/auth/token`,
+                    method: 'POST',
+                    body
+                }
+            }
+        })
     }),
 })
 
-export const { useVerifyTokenMutation, useSignUpMutation, useSignOutMutation } =
+export const { useVerifyTokenMutation, useSignUpMutation, useSignOutMutation, useSignInMutation } =
     authApi

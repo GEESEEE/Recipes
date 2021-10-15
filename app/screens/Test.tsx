@@ -19,7 +19,7 @@ import {
 } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
-import { useGetSectionsQuery } from '@/redux/services/section'
+import { useGetSectionsQuery } from '@/redux/services/user'
 
 const bigLogo = 1
 const smallLogo = 0.5

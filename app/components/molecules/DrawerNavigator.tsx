@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import ColorPickerModal from '@/screens/modals/ColorPicker'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
+import { useSignOutMutation } from '@/redux/services/auth'
 
 export default function DrawerNavigator({
     navigation,
@@ -16,12 +17,14 @@ export default function DrawerNavigator({
     const { auth, settings } = useAppSelector((state) => state)
     const { user } = auth
     const { theme, invertedColors } = settings
+
     const dispatch = useAppDispatch()
+    const [signOut] = useSignOutMutation()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        await dispatch(authActions.signOut())
+        await dispatch(authActions.signOut(signOut))
         navigation.toggleDrawer()
     }
 

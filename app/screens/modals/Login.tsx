@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react'
 import { Dimensions, Image } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
@@ -8,6 +7,8 @@ import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 import { authActions } from '@/redux/slices'
+import { useSignInMutation } from '@/redux/services/auth'
+import { useGetUserMutation } from '@/redux/services/user'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -56,7 +57,10 @@ function LoginModal({
 }: LoginModalProps): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
+
     const dispatch = useAppDispatch()
+    const [signIn] = useSignInMutation()
+    const [getUser] = useGetUserMutation()
 
     const initialState: LoginState = {
         username: '',
@@ -105,11 +109,12 @@ function LoginModal({
 
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
+            const loginData = {
+                username: data.username,
+                password: data.password,
+            }
             dispatch(
-                authActions.signIn({
-                    username: data.username,
-                    password: data.password,
-                })
+                authActions.signIn({ signIn, data: loginData, getUser})
             )
         }
     }
