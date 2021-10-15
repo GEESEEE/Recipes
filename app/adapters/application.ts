@@ -14,9 +14,10 @@ export default function applicationAdapter(
         headers = {
             ...headers,
             token: undefined,
-            Authorization: `Bearer ${headers.token}`,
+            authorization: `Bearer ${headers.token}`,
         }
     }
+
     console.log('PATH:', `${API_URL ?? '127.0.0.1'}/${V1}${pathName}`)
     // API_URL
     return axios({

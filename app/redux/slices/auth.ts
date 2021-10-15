@@ -8,6 +8,7 @@ export interface Auth {
     loadingData: boolean
     responsePending: boolean
     error: string
+    token: string
     user: AuthUser
 }
 
@@ -15,7 +16,6 @@ export interface AuthUser {
     id: number
     name: string
     email: string
-    token: string
     settingsId: number
 }
 
@@ -24,11 +24,11 @@ const initialState: Auth = {
     loadingData: false,
     responsePending: false,
     error: '',
+    token: '',
     user: {
         id: -1,
         name: '',
         email: '',
-        token: '',
         settingsId: -1,
     },
 }
@@ -66,8 +66,11 @@ const authSlice = createSlice({
             state.loadingData = false
             state.dataLoaded = true
 
-            delete action.payload.settings
-            state.user = action.payload
+            console.log(action.payload)
+            const {user, token} = action.payload
+            delete user.settings
+            state.user = user
+            state.token = token
         },
 
         logout() {
@@ -122,7 +125,7 @@ const signIn =
             dispatch(actions.startLoading())
             try {
                 const user = await userService.getUser({ token })
-                dispatch(actions.login(user))
+                dispatch(actions.login({user, token}))
             } catch (err: any) {
                 const errorMessage =
                     err?.response?.data?.errors?.[0].message ??
@@ -144,14 +147,18 @@ const retrieveToken =
 
         let errorMessage = ''
         try {
+            const token = await SecureStore.getItemAsync('token')
+            console.log("rt", token)
             const user = await authService.verifyToken()
+            console.log("user", user)
             if (user) {
-                dispatch(actions.login(user))
+                dispatch(actions.login({user, token}))
                 return
             }
         } catch (err: any) {
             errorMessage = err?.response?.data?.errors?.[0].message
-            if (err?.response.status !== 400) {
+            console.log(errorMessage, err)
+            if (err?.response?.status !== 400) {
                 errorMessage = 'Could not connect to the server'
             }
         }

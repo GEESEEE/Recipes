@@ -19,12 +19,15 @@ import {
 } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
+import { useGetSectionsQuery } from '@/redux/services/section'
 
 const bigLogo = 1
 const smallLogo = 0.5
 
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     // const { recipes } = useAppSelector((state) => state.myRecipes)
+
+    const globalState = useAppSelector((state) => state)
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()

@@ -1,17 +1,9 @@
-import Ingredient from './ingredient'
-import Instruction from './instruction'
-import RecipeIngredient from './recipe-ingredient'
-import Recipe from './recipe'
-import User from './user'
-import ListItem from './list-item'
-import Settings from './settings'
+export {default as Ingredient} from './ingredient'
+export { default as Instruction} from './instruction'
+export { default as RecipeIngredient } from './recipe-ingredient'
+export { default as Recipe } from './recipe'
+export { default as User } from './user'
+export { default as ListItem } from './list-item'
+export { default as Settings } from './settings'
+export { default as Section } from './section'
 
-export {
-    Ingredient,
-    Recipe,
-    Instruction,
-    RecipeIngredient,
-    User,
-    ListItem,
-    Settings,
-}

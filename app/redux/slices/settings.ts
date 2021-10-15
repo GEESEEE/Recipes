@@ -42,7 +42,8 @@ const settingsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(privateAuthActions.login, (state, action) => {
-            const { color, invertedColors, theme } = action.payload.settings
+            const { user } = action.payload
+            const { color, invertedColors, theme } = user.settings
             colors.primary = color
             state.theme = { ...getTheme(theme), primary: color }
             state.invertedColors = invertedColors
