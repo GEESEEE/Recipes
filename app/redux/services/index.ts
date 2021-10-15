@@ -1,3 +1,3 @@
-import { sectionApi } from './section'
+import { api } from './base'
 
-export { sectionApi }
+export { api }

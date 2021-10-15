@@ -1,13 +1,10 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
 import { Section } from '@/data'
-import { baseQuery }  from './base'
+import { api }  from './base'
 
-export const sectionApi = createApi({
-    reducerPath: 'sectionApi',
-    baseQuery: baseQuery(),
+const sectionApi = api.injectEndpoints({
     endpoints: builder => ({
         getSections: builder.query<Section, void>({
-            query: () => `/users/sections`
+            query: () => `/users/sections`,
         })
     })
 })

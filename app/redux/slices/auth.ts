@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as SecureStore from 'expo-secure-store'
 import { authService, userService } from '@/services'
 import { AppDispatch } from '@/redux'
+import { User } from '@/data'
 
 export interface Auth {
     dataLoaded: boolean
@@ -66,7 +67,6 @@ const authSlice = createSlice({
             state.loadingData = false
             state.dataLoaded = true
 
-            console.log(action.payload)
             const {user, token} = action.payload
             delete user.settings
             state.user = user
@@ -141,29 +141,28 @@ const signIn =
     }
 
 const retrieveToken =
-    () =>
-    async (dispatch: AppDispatch): Promise<void> => {
+    (retrieve: (token: string) => Promise<any>) =>
+    async (dispatch: AppDispatch) => {
         dispatch(actions.startLoading())
 
         let errorMessage = ''
         try {
             const token = await SecureStore.getItemAsync('token')
-            console.log("rt", token)
-            const user = await authService.verifyToken()
-            console.log("user", user)
-            if (user) {
-                dispatch(actions.login({user, token}))
+            const { data } = await retrieve(token as string)
+            if (data) {
+                dispatch(actions.login({user: data, token}))
                 return
             }
         } catch (err: any) {
+            console.log("err", err)
             errorMessage = err?.response?.data?.errors?.[0].message
-            console.log(errorMessage, err)
             if (err?.response?.status !== 400) {
                 errorMessage = 'Could not connect to the server'
             }
         }
         dispatch(actions.failedLoading(errorMessage))
-    }
+}
+
 
 // authActions to use in other files
 const { clearError } = actions

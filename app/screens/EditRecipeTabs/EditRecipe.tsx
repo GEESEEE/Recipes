@@ -3,13 +3,9 @@ import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { View, Text, TextInput } from '@/components/base'
 import { TextInputWithTitle, Button } from '@/components/atoms'
-import { useGetSectionsQuery } from '@/redux/services/section'
 
 function EditRecipeScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
-
-    const sectionsQuery = useGetSectionsQuery()
-    console.log("EditRecipe", sectionsQuery )
 
     const width = 'l'
     const paddingHorizontal = 'm'

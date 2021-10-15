@@ -1,16 +1,14 @@
 import React, { useLayoutEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import styled from 'styled-components'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppSelector } from '@/hooks'
 import { RecipesFlatList, RecipesListHeader } from '@/components/data'
-import { authActions } from '@/redux/slices'
 import { HeaderComponent } from '@/routes/components'
 import { RegisterModal, LoginModal, LoadingModal } from './modals'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth } = useAppSelector((state) => state)
 
-    const dispatch = useAppDispatch()
     const listRef = React.useRef<FlatList>()
 
     useLayoutEffect(() => {
@@ -20,11 +18,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
             ),
         })
     }, [navigation])
-
-    // On first load, retrieve token
-    React.useEffect(() => {
-        dispatch(authActions.retrieveToken())
-    }, [])
 
     const [showRegisterScreen, setShowRegisterScreen] = React.useState(false)
 
