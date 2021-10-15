@@ -27,7 +27,6 @@ export const setTheme =
             })
             await userService.updateSettings({ theme })
         } catch (err: any) {
-            console.log(err.message)
             console.error(err)
         }
     }
@@ -42,7 +41,6 @@ export const setColor =
             })
             await userService.updateSettings({ color })
         } catch (err: any) {
-            console.log(err.message)
             console.error(err)
         }
     }

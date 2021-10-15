@@ -23,8 +23,7 @@ function SortRow({
 
     const globalState = useAppSelector((state) => state)
 
-    const sortState =
-        routeName === 'Browse'
+    const sortState = routeName === 'Browse'
 
     const SORT_ACTIONS =
         routeName === 'Browse' ? BROWSE_SORT_ACTIONS : MY_SORT_ACTIONS

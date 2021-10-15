@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as SecureStore from 'expo-secure-store'
 import { authService, userService } from '@/services'
 import { AppDispatch } from '@/redux'
+import { SignUpParams } from '@/redux/services/auth'
 import { User } from '@/data'
 
 export interface Auth {
@@ -67,7 +68,7 @@ const authSlice = createSlice({
             state.loadingData = false
             state.dataLoaded = true
 
-            const {user, token} = action.payload
+            const { user, token } = action.payload
             delete user.settings
             state.user = user
             state.token = token
@@ -84,17 +85,21 @@ const { actions } = authSlice
 export const privateAuthActions = actions
 
 const signUp =
-    (data: { name: string; password: string; email: string }) =>
+    (args: {
+        signUp: (data: SignUpParams) => Promise<any>
+        data: SignUpParams
+    }) =>
     async (dispatch: AppDispatch): Promise<void> => {
         dispatch(actions.responsePending())
         let errorMessage = ''
-        try {
-            await authService.signUp(data)
-        } catch (err: any) {
+
+        const res = await args.signUp(args.data)
+        if (typeof res.error !== 'undefined') {
             errorMessage =
-                err?.response?.data?.errors?.[0].message ??
+                res.error.data?.errors?.[0].message ??
                 'Could not connect to the server'
         }
+
         dispatch(actions.responseRejected(errorMessage))
     }
 
@@ -125,7 +130,7 @@ const signIn =
             dispatch(actions.startLoading())
             try {
                 const user = await userService.getUser({ token })
-                dispatch(actions.login({user, token}))
+                dispatch(actions.login({ user, token }))
             } catch (err: any) {
                 const errorMessage =
                     err?.response?.data?.errors?.[0].message ??
@@ -141,28 +146,23 @@ const signIn =
     }
 
 const retrieveToken =
-    (retrieve: (token: string) => Promise<any>) =>
+    (verifyToken: (token: string) => Promise<any>) =>
     async (dispatch: AppDispatch) => {
         dispatch(actions.startLoading())
-
         let errorMessage = ''
-        try {
-            const token = await SecureStore.getItemAsync('token')
-            const { data } = await retrieve(token as string)
-            if (data) {
-                dispatch(actions.login({user: data, token}))
-                return
-            }
-        } catch (err: any) {
-            console.log("err", err)
-            errorMessage = err?.response?.data?.errors?.[0].message
-            if (err?.response?.status !== 400) {
-                errorMessage = 'Could not connect to the server'
-            }
-        }
-        dispatch(actions.failedLoading(errorMessage))
-}
 
+        const token = await SecureStore.getItemAsync('token')
+        const res = await verifyToken(token as string)
+        if (typeof res.data !== 'undefined') {
+            dispatch(actions.login({ user: res.data, token }))
+            return
+        }
+        errorMessage =
+            res.error.data?.errors?.[0].message ??
+            'Could not connect to the server'
+
+        dispatch(actions.failedLoading(errorMessage))
+    }
 
 // authActions to use in other files
 const { clearError } = actions

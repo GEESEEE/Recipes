@@ -4,17 +4,17 @@ import { NavigationContainer } from '@react-navigation/native'
 import { RootStack } from '@/routes'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/slices'
-import { useRetrieveTokenMutation } from '@/redux/services/auth'
+import { useVerifyTokenMutation } from '@/redux/services/auth'
 
 function Wrapper(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
-    const [retrieveToken] = useRetrieveTokenMutation()
+    const [verifyToken] = useVerifyTokenMutation()
 
     React.useEffect(() => {
         console.log('Starting')
-        dispatch(authActions.retrieveToken(retrieveToken))
+        dispatch(authActions.retrieveToken(verifyToken))
     }, [])
 
     return (

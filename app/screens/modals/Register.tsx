@@ -2,6 +2,7 @@ import React, { useReducer } from 'react'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/slices'
+import { useSignUpMutation } from '@/redux/services/auth'
 import { Icons, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -70,6 +71,7 @@ function RegisterScreen({
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
+    const [signUp] = useSignUpMutation()
 
     const initialState: RegisterState = {
         username: '',
@@ -154,7 +156,7 @@ function RegisterScreen({
                 password: data.password1,
                 email: data.email,
             }
-            dispatch(authActions.signUp(userData))
+            dispatch(authActions.signUp({ signUp, data: userData }))
         }
     }
 

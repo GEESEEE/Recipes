@@ -17,15 +17,12 @@ export async function updateSettings(body: {
     return handleError('PUT', `/users/settings`, { body })
 }
 
-export async function createSection(
-    body: {
-        name: string
-        description: string
-    }
-): Promise<Section> {
+export async function createSection(body: {
+    name: string
+    description: string
+}): Promise<Section> {
     return handleError('POST', `/users/sections`, { body })
 }
-
 
 export async function getSections(): Promise<Section[]> {
     return handleError('GET', '/users/sections')
@@ -33,7 +30,7 @@ export async function getSections(): Promise<Section[]> {
 
 export async function updateSection(
     sectionId: number,
-    body: { name?: string, description?: string }
+    body: { name?: string; description?: string }
 ): Promise<Section> {
     return handleError('PUT', `/users/sections/${sectionId}`, { body })
 }
