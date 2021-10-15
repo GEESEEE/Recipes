@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as SecureStore from 'expo-secure-store'
-import { authService, userService } from '@/services'
 import { AppDispatch } from '@/redux'
-import { SignUpParams, SignOutParams, SignInParams } from '@/redux/services/auth'
-import { User } from '@/data'
+import { SignUpParams, SignInParams } from '@/redux/services/auth'
 
 export interface Auth {
     dataLoaded: boolean
@@ -141,7 +139,7 @@ const signIn =
         }
 
         const errorMessage =
-            res.error.data?.errors?.[0].message ??
+            res.error?.data?.errors?.[0].message ??
             'Could not connect to the server'
         dispatch(actions.responseRejected(errorMessage))
     }

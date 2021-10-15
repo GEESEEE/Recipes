@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 import { settingsActions } from '@/redux'
 import { colors } from '@/utils'
 import { Modal } from '@/components/base'
+import { useUpdateSettingsMutation } from '@/redux/services/user'
 
 interface ColorPickerProps {
     toggle: () => void
@@ -16,11 +17,13 @@ interface ColorPickerProps {
 function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
+    const [updateSettings] = useUpdateSettingsMutation()
 
     const [localColor, setLocalColor] = useState<string>(colors.primary)
 
-    function setPrimaryColor(color: string): void {
+    async function setPrimaryColor(color: string): Promise<void> {
         dispatch(settingsActions.setColor(color))
+        await updateSettings({ color })
     }
 
     return (

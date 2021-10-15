@@ -19,7 +19,7 @@ import {
 } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
-import { useGetSectionsQuery } from '@/redux/services/user'
+import { useUpdateSettingsMutation } from '@/redux/services/user'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -27,7 +27,7 @@ const smallLogo = 0.5
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     // const { recipes } = useAppSelector((state) => state.myRecipes)
 
-    const globalState = useAppSelector((state) => state)
+    const [updateSettings] = useUpdateSettingsMutation()
 
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
@@ -67,11 +67,16 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         }
     }, [])
 
+    async function setPrimaryColor(color: string): Promise<void> {
+        dispatch(settingsActions.setColor(color))
+        await updateSettings({ color })
+    }
+
     function changePrimaryColor(): void {
         if (theme.primary === '#4ecdc4') {
-            dispatch(settingsActions.setColor('#fc5c65'))
+            setPrimaryColor('#fc5c65')
         } else {
-            dispatch(settingsActions.setColor('#4ecdc4'))
+            setPrimaryColor('#4ecdc4')
         }
     }
 

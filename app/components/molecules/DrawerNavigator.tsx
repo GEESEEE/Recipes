@@ -8,6 +8,7 @@ import ColorPickerModal from '@/screens/modals/ColorPicker'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
 import { useSignOutMutation } from '@/redux/services/auth'
+import { useUpdateSettingsMutation } from '@/redux/services/user'
 
 export default function DrawerNavigator({
     navigation,
@@ -20,12 +21,24 @@ export default function DrawerNavigator({
 
     const dispatch = useAppDispatch()
     const [signOut] = useSignOutMutation()
+    const [updateSettings] = useUpdateSettingsMutation()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
         await dispatch(authActions.signOut(signOut))
         navigation.toggleDrawer()
+    }
+
+    async function handleSetTheme(val: boolean): Promise<void> {
+        const newTheme = val ? 'light' : 'dark'
+        dispatch(settingsActions.setTheme(newTheme))
+        await updateSettings({theme: newTheme})
+    }
+
+    async function handleSetInvertedColors(val: boolean): Promise<void> {
+        dispatch(settingsActions.setInvertedColors(val))
+        await updateSettings({invertedColors: val})
     }
 
     return (
@@ -73,7 +86,7 @@ export default function DrawerNavigator({
                             <Toggle
                                 value={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
-                                    dispatch(settingsActions.setTheme(val))
+                                    handleSetTheme(val)
                                 }
                             />
                         }
@@ -86,9 +99,7 @@ export default function DrawerNavigator({
                             <Toggle
                                 value={invertedColors}
                                 onValueChange={(val: boolean) =>
-                                    dispatch(
-                                        settingsActions.setInvertedColors(val)
-                                    )
+                                    handleSetInvertedColors(val)
                                 }
                             />
                         }

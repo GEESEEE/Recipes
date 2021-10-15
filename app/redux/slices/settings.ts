@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
 import { privateAuthActions } from './auth'
-import { AppDispatch } from '../store'
-import { userService } from '@/services'
 
 export interface Settings {
     invertedColors: boolean
@@ -59,40 +57,7 @@ const { actions } = settingsSlice
 
 export const privateSettingsActions = actions
 
-const setInvertedColors =
-    (invertedColors: boolean) =>
-    async (dispatch: AppDispatch): Promise<void> => {
-        try {
-            dispatch(actions.setInvertedColors(invertedColors))
-            await userService.updateSettings({ invertedColors })
-        } catch (err: any) {
-            console.error(err)
-        }
-    }
-
-const setTheme =
-    (lightTheme: boolean) =>
-    async (dispatch: AppDispatch): Promise<void> => {
-        try {
-            const theme = lightTheme ? 'light' : 'dark'
-            dispatch(actions.setTheme(theme))
-            await userService.updateSettings({ theme })
-        } catch (err: any) {
-            console.error(err)
-        }
-    }
-
-const setColor =
-    (color: string) =>
-    async (dispatch: AppDispatch): Promise<void> => {
-        try {
-            dispatch(actions.setColor(color))
-            await userService.updateSettings({ color })
-        } catch (err: any) {
-            console.error(err)
-        }
-    }
-
+const { setTheme, setInvertedColors, setColor } = actions
 export const settingsActions = {
     setColor,
     setInvertedColors,

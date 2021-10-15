@@ -1,5 +1,11 @@
-import { Section, User } from '@/data'
+import { Section, Settings, User } from '@/data'
 import { api } from './base'
+
+export type UpdateSettingsParams = {
+    theme?: 'light' | 'dark'
+    color?: string
+    invertedColors?: boolean
+}
 
 const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -11,10 +17,18 @@ const userApi = api.injectEndpoints({
             })
         }),
 
+        updateSettings: builder.mutation<Settings, UpdateSettingsParams>({
+            query: (body: UpdateSettingsParams) => ({
+                url: `/users/settings`,
+                method: 'PUT',
+                body
+            })
+        }),
+
         getSections: builder.query<Section, void>({
             query: () => `/users/sections`,
         }),
     }),
 })
 
-export const { useGetUserMutation, useGetSectionsQuery } = userApi
+export const { useGetUserMutation, useUpdateSettingsMutation, useGetSectionsQuery } = userApi
