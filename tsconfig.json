@@ -4,13 +4,9 @@
         "jsx": "react",
         "types": ["@types/react-native-dotenv"],
         "typeRoots": ["./app/types"],
-        "noImplicitAny": true,
-        "strict": true,
         "baseUrl": ".",
         "paths": {
             "@/*": ["./app/*"]
         },
-        "module": "commonjs",
-        "esModuleInterop": true
     }
 }
