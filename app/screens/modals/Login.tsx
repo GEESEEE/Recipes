@@ -8,7 +8,8 @@ import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 import { authActions, userService, authService } from '@/redux'
-import { LoadingModal, RegisterModal } from '@/screens/modals'
+import LoadingModal from './Loading'
+import RegisterModal from './Register'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -45,8 +46,6 @@ function reducer(state: LoginState, action: any): LoginState {
             return state
     }
 }
-
-type LoginModalProps = {}
 
 function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
