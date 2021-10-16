@@ -1,14 +1,9 @@
-node_modules/
-.expo/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-.env
+
+**/node_modules/
+**/.env
+
+/.vscode
+/.VSCodeCounter
 
 .pnp.*
 .yarn/*
@@ -17,7 +12,5 @@ web-build/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-/.vsCodeCounter
 
-# macOS
-.DS_Store
+

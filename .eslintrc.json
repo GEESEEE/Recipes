@@ -9,9 +9,9 @@
         "plugin:react/recommended",
         "airbnb",
         "eslint:recommended",
-        //"@react-native-community",
         "plugin:@typescript-eslint/recommended",
-        "prettier"
+        "prettier",
+        "plugin:mocha/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -30,7 +30,9 @@
         "module-resolver",
         "prettier",
         "jsx-a11y",
-        "node"
+        "node",
+        "mocha",
+        "workspaces"
     ],
     "settings": {
         "import/resolver": {
