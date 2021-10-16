@@ -8,7 +8,7 @@ ENV BUILD_HASH=$BUILD_HASH
 # Install dependencies
 WORKDIR /opt/app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # Bundle app source
 COPY . .
