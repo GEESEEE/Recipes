@@ -7,9 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
-import { SignInParams, useSignInMutation } from '@/redux/services/auth'
-import { authActions } from '@/redux'
-import { useGetUserMutation } from '@/redux/services/user'
+import { authActions, userService, authService } from '@/redux'
 import { LoadingModal, RegisterModal } from '@/screens/modals'
 
 const LOGIN_ACTIONS = {
@@ -55,8 +53,8 @@ function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     const dispatch = useAppDispatch()
-    const [signIn, signInStatus] = useSignInMutation()
-    const [getUser, getUserStatus] = useGetUserMutation()
+    const [signIn, signInStatus] = authService.useSignInMutation()
+    const [getUser, getUserStatus] = userService.useGetUserMutation()
 
     const [error, setError] = React.useState('')
 
@@ -107,33 +105,29 @@ function LoginModal(): JSX.Element {
         return !isEmpty && data.isValidUsername && data.isValidPassword
     }
 
-    async function logIn(loginData: SignInParams): Promise<void> {
-        setError('')
-        let res = await signIn(loginData)
-        if ('data' in res) {
-            const token = res.data.access_token
-            await SecureStore.setItemAsync('token', token)
-
-            res = await getUser(token)
-            if ('data' in res) {
-                dispatch(authActions.login({ user: res.data, token }))
-                return
-            }
-        }
-
-        const errorMessage =
-            (res.error as any)?.data?.errors?.[0].message ??
-            'Could not connect to the server'
-        setError(errorMessage)
-    }
-
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            const loginData: SignInParams = {
+            const loginData = {
                 username: data.username,
                 password: data.password,
             }
-            logIn(loginData)
+            setError('')
+            let res = await signIn(loginData)
+            if ('data' in res) {
+                const token = res.data.access_token
+                await SecureStore.setItemAsync('token', token)
+
+                res = await getUser(token)
+                if ('data' in res) {
+                    dispatch(authActions.login({ user: res.data, token }))
+                    return
+                }
+            }
+
+            const errorMessage =
+                (res.error as any)?.data?.errors?.[0].message ??
+                'Could not connect to the server'
+            setError(errorMessage)
         }
     }
 

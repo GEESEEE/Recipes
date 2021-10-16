@@ -6,8 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 import { View } from '@/components/base'
 import { HeaderComponent } from '@/routes/components'
 import { LoginModal, LoadingModal } from './modals'
-import { useVerifyTokenMutation } from '@/redux/services/auth'
-import { authActions } from '@/redux'
+import { authActions, authService } from '@/redux'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -16,7 +15,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const listRef = React.useRef<FlatList>()
 
     const dispatch = useAppDispatch()
-    const [verifyToken, verifyTokenStatus] = useVerifyTokenMutation()
+    const [verifyToken, verifyTokenStatus] = authService.useVerifyTokenMutation()
 
 
     async function retrieveToken(): Promise<void> {

@@ -3,13 +3,11 @@ import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
-import { authActions, settingsActions } from '@/redux'
+import { authActions, settingsActions, authService, userService } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import ColorPickerModal from '@/screens/modals/ColorPicker'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
-import { useSignOutMutation } from '@/redux/services/auth'
-import { useUpdateSettingsMutation } from '@/redux/services/user'
 
 export default function DrawerNavigator({
     navigation,
@@ -21,8 +19,8 @@ export default function DrawerNavigator({
     const { theme, invertedColors } = settings
 
     const dispatch = useAppDispatch()
-    const [signOut, signOutStatus] = useSignOutMutation()
-    const [updateSettings] = useUpdateSettingsMutation()
+    const [signOut, signOutStatus] = authService.useSignOutMutation()
+    const [updateSettings] = userService.useUpdateSettingsMutation()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 

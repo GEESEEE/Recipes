@@ -1,11 +1,10 @@
 import React, { useReducer } from 'react'
 import styled from 'styled-components'
-import { useAppDispatch, useAppSelector } from '@/hooks'
-import { authActions } from '@/redux/slices'
-import { SignUpParams, useSignUpMutation } from '@/redux/services/auth'
+import {useAppSelector } from '@/hooks'
 import { Icons, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
+import { authService } from '@/redux'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -69,8 +68,7 @@ function RegisterScreen({
     const { settings } = useAppSelector((state) => state)
     const { theme } = settings
 
-    const dispatch = useAppDispatch()
-    const [signUp, signUpStatus] = useSignUpMutation()
+    const [signUp, signUpStatus] = authService.useSignUpMutation()
 
     const [error, setError] = React.useState('')
 
@@ -150,25 +148,21 @@ function RegisterScreen({
         return data.password1 === data.password2
     }
 
-    async function register(userData: SignUpParams): Promise<void> {
-        setError('')
-        const res = await signUp(userData)
-        if ('error' in res) {
-            const errorMessage =
-                (res.error as any)?.data?.errors?.[0].message ??
-                'Could not connect to the server'
-            setError(errorMessage)
-        }
-    }
-
     async function handleRegisterButton(): Promise<void> {
         if (isValidData()) {
-            const userData: SignUpParams = {
+            const userData = {
                 name: data.username,
                 password: data.password1,
                 email: data.email,
             }
-            register(userData)
+            setError('')
+            const res = await signUp(userData)
+            if ('error' in res) {
+                const errorMessage =
+                    (res.error as any)?.data?.errors?.[0].message ??
+                    'Could not connect to the server'
+                setError(errorMessage)
+            }
         }
     }
 
