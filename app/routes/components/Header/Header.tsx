@@ -11,7 +11,6 @@ import {
     FeatherButtonProps,
 } from '@/components/user-input/Buttons'
 import SearchBarComponent from './Search'
-import { browseRecipeActions } from '@/redux/actions'
 import Sort from '@/components/user-input/search/SortModal'
 
 interface ScreenConfig {
