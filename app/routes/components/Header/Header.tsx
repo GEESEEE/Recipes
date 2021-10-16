@@ -44,7 +44,7 @@ const HeaderComponent = ({
     const routeName = route.name
 
     const dispatch = useAppDispatch()
-    const { settings, browseSearch, browseSort } = useAppSelector(
+    const { settings } = useAppSelector(
         (state) => state
     )
     const { theme } = settings
@@ -63,13 +63,13 @@ const HeaderComponent = ({
         if (typeof listRef?.current !== 'undefined') {
             listRef.current.scrollToOffset({ animated: true, offset: 0 })
         }
-        dispatch(
-            browseRecipeActions.getRecipes({
-                scopes: ['published'],
-                search: browseSearch,
-                sort: browseSort.sortState,
-            })
-        )
+        // dispatch(
+        //     browseRecipeActions.getRecipes({
+        //         scopes: ['published'],
+        //         search: browseSearch,
+        //         sort: browseSort.sortState,
+        //     })
+        // )
     }
 
     const backgroundColor = settings.invertedColors
