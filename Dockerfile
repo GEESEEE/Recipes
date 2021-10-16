@@ -7,10 +7,11 @@ ENV BUILD_HASH=$BUILD_HASH
 
 # Install dependencies
 WORKDIR /opt/app
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarn .yarnrc.yml ./
 RUN yarn install --immutable
 
 # Bundle app source
+
 COPY . .
 
 RUN yarn build
