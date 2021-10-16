@@ -53,7 +53,6 @@ const authSlice = createSlice({
 
 export const authActions = authSlice.actions
 
-
 // authActions to use in other files
 
 export default authSlice.reducer

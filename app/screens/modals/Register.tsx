@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import styled from 'styled-components'
-import {useAppSelector } from '@/hooks'
+import { useAppSelector } from '@/hooks'
 import { Icons, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -62,9 +62,7 @@ interface RegisterModalProps {
     showLogin: () => void
 }
 
-function RegisterScreen({
-    showLogin,
-}: RegisterModalProps): JSX.Element {
+function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
     const { settings } = useAppSelector((state) => state)
     const { theme } = settings
 

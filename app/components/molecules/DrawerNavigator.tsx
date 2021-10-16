@@ -35,12 +35,12 @@ export default function DrawerNavigator({
     async function handleSetTheme(val: boolean): Promise<void> {
         const newTheme = val ? 'light' : 'dark'
         dispatch(settingsActions.setTheme(newTheme))
-        await updateSettings({theme: newTheme})
+        await updateSettings({ theme: newTheme })
     }
 
     async function handleSetInvertedColors(val: boolean): Promise<void> {
         dispatch(settingsActions.setInvertedColors(val))
-        await updateSettings({invertedColors: val})
+        await updateSettings({ invertedColors: val })
     }
 
     return (

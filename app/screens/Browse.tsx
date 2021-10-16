@@ -15,15 +15,15 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const listRef = React.useRef<FlatList>()
 
     const dispatch = useAppDispatch()
-    const [verifyToken, verifyTokenStatus] = authService.useVerifyTokenMutation()
-
+    const [verifyToken, verifyTokenStatus] =
+        authService.useVerifyTokenMutation()
 
     async function retrieveToken(): Promise<void> {
         const token = await SecureStore.getItemAsync('token')
         if (token) {
             const res = await verifyToken(token)
             if ('data' in res) {
-                await dispatch(authActions.login({user: res.data, token}))
+                await dispatch(authActions.login({ user: res.data, token }))
             }
         }
     }
@@ -40,7 +40,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-
     // const onEndReached = (): void => {
     //     if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
     //         const params = {
@@ -55,14 +54,10 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     //     browseSearch.length > 0 || browseSort.sortState.length > 0
 
     return (
-        <Container
-            backgroundColor={theme.background}
-        >
-            { verifyTokenStatus.isLoading ? <LoadingModal /> : null}
+        <Container backgroundColor={theme.background}>
+            {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
-            { auth.user.id < 0 ? (
-                <LoginModal />
-            ) : null}
+            {auth.user.id < 0 ? <LoginModal /> : null}
 
             {/* <RecipesListHeader display={displayHeader} />
             <RecipesFlatList

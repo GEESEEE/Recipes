@@ -13,16 +13,16 @@ const userApi = api.injectEndpoints({
             query: (token: string) => ({
                 url: `/users`,
                 method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` },
-            })
+                headers: { Authorization: `Bearer ${token}` },
+            }),
         }),
 
         updateSettings: builder.mutation<Settings, UpdateSettingsParams>({
             query: (body: UpdateSettingsParams) => ({
                 url: `/users/settings`,
                 method: 'PUT',
-                body
-            })
+                body,
+            }),
         }),
 
         getSections: builder.query<Section, void>({
@@ -31,4 +31,8 @@ const userApi = api.injectEndpoints({
     }),
 })
 
-export const { useGetUserMutation, useUpdateSettingsMutation, useGetSectionsQuery } = userApi
+export const {
+    useGetUserMutation,
+    useUpdateSettingsMutation,
+    useGetSectionsQuery,
+} = userApi

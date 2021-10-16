@@ -5,7 +5,7 @@ import { api } from './base'
 
 export type SignUpParams = { name: string; password: string; email: string }
 export type SignOutParams = { token: string }
-export type SignInParams = { username: string, password: string }
+export type SignInParams = { username: string; password: string }
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -49,12 +49,16 @@ const authApi = api.injectEndpoints({
                 return {
                     url: `/auth/token`,
                     method: 'POST',
-                    body
+                    body,
                 }
-            }
-        })
+            },
+        }),
     }),
 })
 
-export const { useVerifyTokenMutation, useSignUpMutation, useSignOutMutation, useSignInMutation } =
-    authApi
+export const {
+    useVerifyTokenMutation,
+    useSignUpMutation,
+    useSignOutMutation,
+    useSignInMutation,
+} = authApi

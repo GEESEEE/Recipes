@@ -46,8 +46,7 @@ function reducer(state: LoginState, action: any): LoginState {
     }
 }
 
-type LoginModalProps = {
-}
+type LoginModalProps = {}
 
 function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
@@ -58,7 +57,8 @@ function LoginModal(): JSX.Element {
 
     const [error, setError] = React.useState('')
 
-    const [displayRegisterScreen, setDisplayRegisterScreen] = React.useState(false)
+    const [displayRegisterScreen, setDisplayRegisterScreen] =
+        React.useState(false)
 
     const initialState: LoginState = {
         username: '',
