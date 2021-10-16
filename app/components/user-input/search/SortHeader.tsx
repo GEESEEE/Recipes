@@ -11,13 +11,13 @@ function SortHeader(): JSX.Element {
     const globalState = useAppSelector((state) => state)
     const { name } = useRoute()
 
-    const sortState =
-        name === 'Browse' ? globalState.browseSort : globalState.mySort
-    const sort = sortState.sortState
+    const sortState: any = []
+        // name === 'Browse' ? globalState.browseSort : globalState.mySort
+    // const sort = sortState.sortState
 
     return (
         <Container>
-            {sort.map((s) => {
+            {/* {sort.map((s) => {
                 const filt = sortActions.sorts.find((f) => s.includes(f.type))
                 if (typeof filt === 'undefined') return null
                 return (
@@ -30,7 +30,7 @@ function SortHeader(): JSX.Element {
                         header
                     />
                 )
-            })}
+            })} */}
         </Container>
     )
 }

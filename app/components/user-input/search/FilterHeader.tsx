@@ -14,8 +14,8 @@ function FilterHeader(): JSX.Element {
 
     const { name } = useRoute()
 
-    const search =
-        name === 'Browse' ? globalState.browseSearch : globalState.mySearch
+    const search: any = []
+        // name === 'Browse' ? globalState.browseSearch : globalState.mySearch
 
     const removeSearchType =
         name === 'Browse'
@@ -28,7 +28,7 @@ function FilterHeader(): JSX.Element {
                 horizontal
                 showsHorizontalScrollIndicator={false}
             >
-                {search.map((query) => (
+                {search.map((query: any) => (
                     <QueryContainer key={uuid()}>
                         <QueryText>{query}</QueryText>
                         <FeatherButton
