@@ -1,14 +1,16 @@
 import React, { useReducer } from 'react'
 import { Dimensions, Image } from 'react-native'
 import styled from 'styled-components'
+import * as SecureStore from 'expo-secure-store'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
-import { authActions } from '@/redux/slices'
-import { useSignInMutation } from '@/redux/services/auth'
+import { SignInParams, useSignInMutation } from '@/redux/services/auth'
+import { authActions } from '@/redux'
 import { useGetUserMutation } from '@/redux/services/user'
+import { LoadingModal, RegisterModal } from '@/screens/modals'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -46,21 +48,19 @@ function reducer(state: LoginState, action: any): LoginState {
     }
 }
 
-interface LoginModalProps {
-    navigation: any
-    showRegister: () => void
+type LoginModalProps = {
 }
 
-function LoginModal({
-    navigation,
-    showRegister,
-}: LoginModalProps): JSX.Element {
-    const { auth, settings } = useAppSelector((state) => state)
-    const { theme } = settings
+function LoginModal(): JSX.Element {
+    const { theme } = useAppSelector((state) => state.settings)
 
     const dispatch = useAppDispatch()
-    const [signIn] = useSignInMutation()
-    const [getUser] = useGetUserMutation()
+    const [signIn, signInStatus] = useSignInMutation()
+    const [getUser, getUserStatus] = useGetUserMutation()
+
+    const [error, setError] = React.useState('')
+
+    const [displayRegisterScreen, setDisplayRegisterScreen] = React.useState(false)
 
     const initialState: LoginState = {
         username: '',
@@ -107,25 +107,50 @@ function LoginModal({
         return !isEmpty && data.isValidUsername && data.isValidPassword
     }
 
+    async function logIn(loginData: SignInParams): Promise<void> {
+        setError('')
+        let res = await signIn(loginData)
+        if ('data' in res) {
+            const token = res.data.access_token
+            await SecureStore.setItemAsync('token', token)
+
+            res = await getUser(token)
+            if ('data' in res) {
+                dispatch(authActions.login({ user: res.data, token }))
+                return
+            }
+        }
+
+        const errorMessage =
+            (res.error as any)?.data?.errors?.[0].message ??
+            'Could not connect to the server'
+        setError(errorMessage)
+    }
+
     async function handleLoginButton(): Promise<void> {
         if (isValidData()) {
-            const loginData = {
+            const loginData: SignInParams = {
                 username: data.username,
                 password: data.password,
             }
-            dispatch(
-                authActions.signIn({ signIn, data: loginData, getUser})
-            )
+            logIn(loginData)
         }
     }
 
     function handleRegisterButton(): void {
-        showRegister()
-        dispatch(authActions.clearError())
+        setDisplayRegisterScreen(true)
     }
 
     return (
         <Container backgroundColor={theme.background}>
+            {getUserStatus.isLoading ? <LoadingModal /> : null}
+
+            {displayRegisterScreen ? (
+                <RegisterModal
+                    showLogin={() => setDisplayRegisterScreen(false)}
+                />
+            ) : null}
+
             {/* Logo */}
             <View marginVertical="l" paddingVertical="l">
                 <Logo source={logo} />
@@ -177,7 +202,7 @@ function LoginModal({
                 type="Solid"
                 text="Sign in"
                 onPress={() => handleLoginButton()}
-                loading={auth.responsePending}
+                loading={signInStatus.isLoading}
                 marginVertical="s"
             />
 
@@ -188,7 +213,7 @@ function LoginModal({
                 marginVertical="m"
             />
 
-            <Error message={auth.error} />
+            <Error message={error} />
         </Container>
     )
 }

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { authActions } from '@/redux/slices'
-import { useSignUpMutation } from '@/redux/services/auth'
+import { SignUpParams, useSignUpMutation } from '@/redux/services/auth'
 import { Icons, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
@@ -60,18 +60,19 @@ function reducer(state: RegisterState, action: any): RegisterState {
 }
 
 interface RegisterModalProps {
-    navigation: any
     showLogin: () => void
 }
 
 function RegisterScreen({
-    navigation,
     showLogin,
 }: RegisterModalProps): JSX.Element {
-    const { auth, settings } = useAppSelector((state) => state)
+    const { settings } = useAppSelector((state) => state)
     const { theme } = settings
+
     const dispatch = useAppDispatch()
-    const [signUp] = useSignUpMutation()
+    const [signUp, signUpStatus] = useSignUpMutation()
+
+    const [error, setError] = React.useState('')
 
     const initialState: RegisterState = {
         username: '',
@@ -149,20 +150,30 @@ function RegisterScreen({
         return data.password1 === data.password2
     }
 
+    async function register(userData: SignUpParams): Promise<void> {
+        setError('')
+        const res = await signUp(userData)
+        if ('error' in res) {
+            const errorMessage =
+                (res.error as any)?.data?.errors?.[0].message ??
+                'Could not connect to the server'
+            setError(errorMessage)
+        }
+    }
+
     async function handleRegisterButton(): Promise<void> {
         if (isValidData()) {
-            const userData = {
+            const userData: SignUpParams = {
                 name: data.username,
                 password: data.password1,
                 email: data.email,
             }
-            dispatch(authActions.signUp({ signUp, data: userData }))
+            register(userData)
         }
     }
 
     function handleGoBackButton(): void {
         showLogin()
-        dispatch(authActions.clearError())
     }
 
     return (
@@ -225,11 +236,11 @@ function RegisterScreen({
                 type="Solid"
                 text="Register"
                 onPress={() => handleRegisterButton()}
-                loading={auth.responsePending}
+                loading={signUpStatus.isLoading}
                 marginVertical="s"
             />
 
-            <Error message={auth.error} />
+            <Error message={error} />
             {/* Already have an account/Go Back Button */}
             <Button
                 type="Clear"

@@ -1,7 +1,7 @@
 import { RecipeSortType } from '../redux/actions/sort'
-import * as recipeService from '../services/recipe'
+import * as recipeService from '../oldServices/recipe'
 import { Instruction, Recipe, RecipeIngredient } from '../data'
-import { PaginationObject } from '../services/recipe'
+import { PaginationObject } from '../oldServices/recipe'
 
 type IngredientDifferenceObject = {
     recipeIngredientId: number

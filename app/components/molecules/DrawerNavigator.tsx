@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
+import * as SecureStore from 'expo-secure-store'
 import { authActions, settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import ColorPickerModal from '@/screens/modals/ColorPicker'
@@ -20,13 +21,16 @@ export default function DrawerNavigator({
     const { theme, invertedColors } = settings
 
     const dispatch = useAppDispatch()
-    const [signOut] = useSignOutMutation()
+    const [signOut, signOutStatus] = useSignOutMutation()
     const [updateSettings] = useUpdateSettingsMutation()
 
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        await dispatch(authActions.signOut(signOut))
+        const token = (await SecureStore.getItemAsync('token')) as string
+        signOut(token)
+        await SecureStore.deleteItemAsync('token')
+        dispatch(authActions.logout())
         navigation.toggleDrawer()
     }
 
@@ -112,7 +116,7 @@ export default function DrawerNavigator({
                     type="Solid"
                     text="Sign out"
                     onPress={() => handleSignOut()}
-                    loading={auth.responsePending}
+                    loading={signOutStatus.isLoading}
                     marginVertical="m"
                 />
             </Footer>

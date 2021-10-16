@@ -1,15 +1,37 @@
 import React, { useLayoutEffect } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList } from 'react-native'
 import styled from 'styled-components'
-import { useAppSelector } from '@/hooks'
-import { RecipesFlatList, RecipesListHeader } from '@/components/data'
+import * as SecureStore from 'expo-secure-store'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { View } from '@/components/base'
 import { HeaderComponent } from '@/routes/components'
-import { RegisterModal, LoginModal, LoadingModal } from './modals'
+import { LoginModal, LoadingModal } from './modals'
+import { useVerifyTokenMutation } from '@/redux/services/auth'
+import { authActions } from '@/redux'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth } = useAppSelector((state) => state)
+    const { auth, settings } = useAppSelector((state) => state)
+    const { theme } = settings
 
     const listRef = React.useRef<FlatList>()
+
+    const dispatch = useAppDispatch()
+    const [verifyToken, verifyTokenStatus] = useVerifyTokenMutation()
+
+
+    async function retrieveToken(): Promise<void> {
+        const token = await SecureStore.getItemAsync('token')
+        if (token) {
+            const res = await verifyToken(token)
+            if ('data' in res) {
+                await dispatch(authActions.login({user: res.data, token}))
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        retrieveToken()
+    }, [])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -19,7 +41,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    const [showRegisterScreen, setShowRegisterScreen] = React.useState(false)
 
     // const onEndReached = (): void => {
     //     if (browseRecipes.nextPage !== null && !browseRecipes.loading) {
@@ -35,21 +56,13 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     //     browseSearch.length > 0 || browseSort.sortState.length > 0
 
     return (
-        <Container>
-            {auth.loadingData ? <LoadingModal /> : null}
+        <Container
+            backgroundColor={theme.background}
+        >
+            { verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
-            {!auth.dataLoaded ? (
-                <LoginModal
-                    navigation={navigation}
-                    showRegister={() => setShowRegisterScreen(true)}
-                />
-            ) : null}
-
-            {showRegisterScreen ? (
-                <RegisterModal
-                    navigation={navigation}
-                    showLogin={() => setShowRegisterScreen(false)}
-                />
+            { auth.user.id < 0 ? (
+                <LoginModal />
             ) : null}
 
             {/* <RecipesListHeader display={displayHeader} />
@@ -68,6 +81,4 @@ const Container = styled(View)`
     flex: 1;
     justify-content: flex-start;
     align-items: center;
-    background-color: ${(props) => props.theme.background};
-    padding-bottom: 5px;
 `

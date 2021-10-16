@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
 import { AUTH_ACTIONS, SETTINGS_ACTIONS } from '@/redux/reducers'
-import { authService, userService } from '@/services'
+import { authService, userService } from '@/oldServices'
 import { routeUtils } from '@/utils'
 import { retrieveRecipes } from './my-recipes'
 import { getRecipes } from './browse-recipes'
