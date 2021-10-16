@@ -17,7 +17,7 @@ const RecipesFlatList = React.forwardRef(
         { recipes, onEndReached }: RecipesFlatListProps,
         ref: any
     ): JSX.Element => {
-        const { browseRecipes, settings } = useAppSelector((state) => state)
+        const { settings } = useAppSelector((state) => state)
         const { theme } = settings
 
         const route = useRoute()
@@ -25,7 +25,7 @@ const RecipesFlatList = React.forwardRef(
         const displayDropdown = route.name === 'Recipes'
 
         const displayFooter = route.name === 'Browse'
-        const displayFooterLoading = browseRecipes.loading
+        const displayFooterLoading = false
 
         const [scrollPosition, handleScroll] = useDropdownRerender(
             displayDropdown,
