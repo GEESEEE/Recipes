@@ -1,4 +1,4 @@
-import { Container } from "inversify"
+import { Container } from 'inversify'
 import {
     Instruction,
     RecipeIngredient,
@@ -7,25 +7,25 @@ import {
     User,
     Token,
     Application,
-} from "../entities"
-import { Repository, getRepository, getCustomRepository } from "typeorm"
-import Redis from "ioredis"
+} from '../entities'
+import { Repository, getRepository, getCustomRepository } from 'typeorm'
+import Redis from 'ioredis'
 import {
     AuthService,
     RecipeService,
     SectionService,
     UserService,
-} from "../services"
-import { TYPES } from "../util/constants"
+} from '../services'
+import { TYPES } from '../util/constants'
 import {
     ErrorMiddleware,
     AbilityMiddleware,
     PaginationMiddleware,
-} from "../middlewares"
-import passport from "passport"
-import { IngredientRepository, RecipeRepository } from "../repositories"
+} from '../middlewares'
+import passport from 'passport'
+import { IngredientRepository, RecipeRepository } from '../repositories'
 
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
 
 dotenv.config()
 
@@ -40,7 +40,7 @@ bind<any>(TYPES.Redis).toConstantValue(
 )
 
 bind<any>(TYPES.PassportMiddleware).toConstantValue(
-    passport.authenticate("bearer", { session: false })
+    passport.authenticate('bearer', { session: false })
 )
 bind<AbilityMiddleware>(TYPES.AbilityMiddleware).to(AbilityMiddleware)
 bind<ErrorMiddleware>(TYPES.ErrorMiddleware).to(ErrorMiddleware)

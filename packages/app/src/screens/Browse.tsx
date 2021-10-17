@@ -29,7 +29,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     React.useEffect(() => {
-        console.log("Starting")
+        console.log('Starting')
         retrieveToken()
     }, [])
 
