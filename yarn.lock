@@ -3746,7 +3746,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@recipes/api@*, @recipes/api@workspace:packages/api":
+"@recipes/api-types@*, @recipes/api-types@workspace:packages/api-types":
+  version: 0.0.0-use.local
+  resolution: "@recipes/api-types@workspace:packages/api-types"
+  languageName: unknown
+  linkType: soft
+
+"@recipes/api@workspace:packages/api":
   version: 0.0.0-use.local
   resolution: "@recipes/api@workspace:packages/api"
   dependencies:
@@ -3788,7 +3794,7 @@ __metadata:
     "@react-navigation/material-top-tabs": ^6.0.2
     "@react-navigation/native": ^6.0.2
     "@react-navigation/stack": ^6.0.7
-    "@recipes/api": "*"
+    "@recipes/api-types": "*"
     "@reduxjs/toolkit": ^1.6.2
     axios: ^0.21.4
     expo: ~42.0.3
