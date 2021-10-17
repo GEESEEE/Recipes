@@ -1,10 +1,6 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./src/*"]
-        },
         "types": ["node", "mocha"],
         /* Basic Options */
         // "incremental": true,

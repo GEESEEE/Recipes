@@ -1,8 +1,17 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
+        "target": "ESNext",
+        "module": "ESNext",
         "strict": true,
-        "module": "commonjs",
-        "esModuleInterop": true
+
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true
     }
 }
