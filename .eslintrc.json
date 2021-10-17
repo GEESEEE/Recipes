@@ -1,4 +1,12 @@
 {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
     "env": {
         "browser": true,
         "es2021": true,
@@ -7,32 +15,11 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb",
-        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier",
+        "plugin:prettier/recommended",
         "plugin:mocha/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
     "plugins": [
-        "react",
-        "@typescript-eslint",
-        "react-native",
-        "react-hooks",
-        "import",
-        "module-resolver",
-        "prettier",
-        "jsx-a11y",
-        "node",
-        "mocha",
-        "workspaces"
     ],
     "settings": {
         "import/resolver": {
