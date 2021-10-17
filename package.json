@@ -13,8 +13,8 @@
     "scripts": {
         "app": "yarn workspace @recipes/app",
         "api": "yarn workspace @recipes/api",
-        "prettier:write": "prettier --write **/*.{js,jsx,ts,tsx,json} && prettier --write *.{js,jsx,ts,tsx,json}",
-        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
+        "lint": "yarn lerna run lint",
+        "start": "yarn lerna run start --parallel"
     },
     "devDependencies": {
         "@babel/core": "~7.9.0",

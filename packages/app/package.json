@@ -13,8 +13,8 @@
         "eject": "expo eject",
         "build": "tsc",
         "postinstall": "expo-yarn-workspaces postinstall",
-        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./ --fix",
-        "visualize": "npx react-native-bundle-visualizer"
+        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./src --fix && eslint App.tsx --fix",
+        "visualize": "npx react-native-bundle-visualizer --entry-file App.tsx"
     },
     "dependencies": {
         "@react-native-async-storage/async-storage": "~1.15.0",

@@ -2,7 +2,7 @@
     "name": "@recipes/api",
     "version": "1.0.0",
     "description": "Api for Recipes App",
-    "main": "index.js",
+    "main": "index.ts",
     "license": "MIT",
     "author": "Gies den Broeder",
     "scripts": {
