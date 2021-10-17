@@ -1,7 +1,7 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { DrawerNavigator } from '@/components/molecules'
 import MainTabs from './MainTabs'
+import { DrawerNavigator } from '@/components/molecules'
 
 const DrawerNav = createDrawerNavigator()
 

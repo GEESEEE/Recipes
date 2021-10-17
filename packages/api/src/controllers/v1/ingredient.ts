@@ -1,4 +1,3 @@
-import { Ingredient } from '../../entities'
 import { ValidationChain, body, param } from 'express-validator'
 import {
     controller,
@@ -9,9 +8,10 @@ import {
     requestBody,
     requestParam,
 } from 'inversify-express-utils'
+import { inject } from 'inversify'
+import { Ingredient } from '../../entities'
 import { RecipeService } from '../../services'
 import { constants } from '../../util'
-import { inject } from 'inversify'
 import { NotFoundError } from '../../errors'
 
 const { TYPES } = constants

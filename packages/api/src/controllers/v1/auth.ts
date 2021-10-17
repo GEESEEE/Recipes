@@ -8,11 +8,11 @@ import {
     requestBody,
     requestHeaders,
 } from 'inversify-express-utils'
-import { constants } from '../../util'
 import { inject } from 'inversify'
+import { Request } from 'express'
+import { constants } from '../../util'
 import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
-import { Request } from 'express'
 import ValidationError from '../../errors/validation'
 import { User } from '../../entities'
 

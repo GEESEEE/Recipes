@@ -6,11 +6,11 @@ import {
     UpdateEvent,
 } from 'typeorm'
 import bcrypt from 'bcrypt'
+import getDecorators from 'inversify-inject-decorators'
 import { User } from '../entities'
 import { RecipeRepository } from '../repositories'
 import { TYPES } from '../util/constants'
 import { container } from '../config'
-import getDecorators from 'inversify-inject-decorators'
 const { lazyInject } = getDecorators(container)
 
 @EventSubscriber()

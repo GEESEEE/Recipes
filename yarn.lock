@@ -6468,6 +6468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"builtin-modules@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "builtin-modules@npm:1.1.1"
+  checksum: 0fbf69ffe77fecf11c441b9a7d1e664bb8119a7d3004831d9bd6ce0eacfd5d121ed4b667172870b5f66ecfce4bd54f7c20060d21c339c29049a7a5dd2bb7bf8c
+  languageName: node
+  linkType: hard
+
 "builtin-status-codes@npm:^3.0.0":
   version: 3.0.0
   resolution: "builtin-status-codes@npm:3.0.0"
@@ -9065,6 +9072,19 @@ __metadata:
     find-up: ^2.1.0
     pkg-dir: ^2.0.0
   checksum: c30dfa125aafe65e5f6a30a31c26932106fcf09934a2f47d7f8a393ed9106da7b07416f2337b55c85f9db0175c873ee0827be5429a24ec381b49940f342b9ac3
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-import-order@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "eslint-plugin-import-order@npm:2.1.4"
+  dependencies:
+    builtin-modules: ^1.1.1
+    lodash.cond: ^4.2.0
+    lodash.find: ^4.2.0
+  peerDependencies:
+    eslint: ">=2"
+  checksum: 99a15973887cbc4036b70842d746717eb985d21ce454e4247b27964dbdf826fe8f1e89cd3644cb4509e76c7e32aa258ab5af5ff4f322dc6b5be5de42d4e62976
   languageName: node
   linkType: hard
 
@@ -13348,6 +13368,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"lodash.cond@npm:^4.2.0":
+  version: 4.5.2
+  resolution: "lodash.cond@npm:4.5.2"
+  checksum: 52a7233104ead999390c235bda139107ada2cfa4a020d72cb958585f593bf64c8301d586f5749a69225a34924b9314ac84e16156fdc83bed3b8547eb954d8e18
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -13359,6 +13386,13 @@ fsevents@~2.3.2:
   version: 4.2.0
   resolution: "lodash.defaults@npm:4.2.0"
   checksum: 84923258235592c8886e29de5491946ff8c2ae5c82a7ac5cddd2e3cb697e6fbdfbbb6efcca015795c86eec2bb953a5a2ee4016e3735a3f02720428a40efbb8f1
+  languageName: node
+  linkType: hard
+
+"lodash.find@npm:^4.2.0":
+  version: 4.6.0
+  resolution: "lodash.find@npm:4.6.0"
+  checksum: b737f849a4fe36f5c3664ea636780dda2fde18335021faf80cdfdcb300ed75441da6f55cfd6de119092d8bb2ddbc4433f4a8de4b99c0b9c8640465b0901c717c
   languageName: node
   linkType: hard
 
@@ -18056,6 +18090,7 @@ fsevents@~2.3.2:
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-typescript: ^2.5.0
     eslint-plugin-import: ^2.25.2
+    eslint-plugin-import-order: ^2.1.4
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.26.1
     eslint-plugin-react-hooks: 4.2.1-alpha-c3a19e5af-20211014

@@ -1,12 +1,12 @@
+import * as fs from 'fs'
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
+import bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
+import { Redis } from 'ioredis'
 import Token from '../entities/token'
 import User from '../entities/user'
 import { TYPES } from '../util/constants'
-import bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
-import * as fs from 'fs'
-import { Redis } from 'ioredis'
 import { Settings } from '../entities'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')

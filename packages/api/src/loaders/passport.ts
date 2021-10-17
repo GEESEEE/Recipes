@@ -1,9 +1,9 @@
 import passport from 'passport'
-import { TYPES } from '../util/constants'
 import { Container } from 'inversify'
 import { Repository } from 'typeorm'
-import { Token, User } from '../entities'
 import { Strategy } from 'passport-http-bearer'
+import { Token, User } from '../entities'
+import { TYPES } from '../util/constants'
 import { AuthService } from '../services'
 import { OAuthError } from '../services/auth'
 

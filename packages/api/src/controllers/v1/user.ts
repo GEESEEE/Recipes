@@ -1,4 +1,3 @@
-import { Section, Settings, User } from '../../entities'
 import { body, param, ValidationChain } from 'express-validator'
 import {
     controller,
@@ -12,9 +11,10 @@ import {
     requestParam,
 } from 'inversify-express-utils'
 import { Request } from 'express'
+import { inject } from 'inversify'
 import { constants } from '../../util'
 import { ThemeType } from '../../util/constants'
-import { inject } from 'inversify'
+import { Section, Settings, User } from '../../entities'
 import { SectionService, UserService } from '../../services'
 import { BadRequestError } from '../../errors'
 import { ModifyError } from './base'

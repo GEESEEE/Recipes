@@ -22,14 +22,10 @@
         "import",
         "react-native"
     ],
-    "settings": {
-        "import/resolver": {
-            "typescript": {},
-            "node": {},
-            "babel-module": {}
-        }
-    },
     "rules": {
+        "import/order": [
+            "error"
+        ],
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/ban-types": "warn",
         "@typescript-eslint/no-var-requires": "warn"

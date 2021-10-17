@@ -5,10 +5,10 @@ import {
     UpdateEvent,
 } from 'typeorm'
 import { Redis } from 'ioredis'
+import getDecorators from 'inversify-inject-decorators'
 import { Settings, User } from '../entities'
 import { TYPES } from '../util/constants'
 import { container } from '../config'
-import getDecorators from 'inversify-inject-decorators'
 const { lazyInject } = getDecorators(container)
 
 @EventSubscriber()

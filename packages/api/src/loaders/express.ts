@@ -1,13 +1,13 @@
 import '../controllers'
 import express, { Application, NextFunction, Request, Response } from 'express'
 import { Container } from 'inversify'
-import ErrorMiddleware from '../middlewares/error'
 import { InversifyExpressServer } from 'inversify-express-utils'
-import { NotFoundError } from '../errors'
-import { constants } from '../util'
 import helmet from 'helmet'
 import hpp from 'hpp'
 import logger from 'morgan'
+import { constants } from '../util'
+import { NotFoundError } from '../errors'
+import ErrorMiddleware from '../middlewares/error'
 
 const { TYPES } = constants
 

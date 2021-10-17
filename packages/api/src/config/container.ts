@@ -1,4 +1,8 @@
 import { Container } from 'inversify'
+import { Repository, getRepository, getCustomRepository } from 'typeorm'
+import Redis from 'ioredis'
+import passport from 'passport'
+import dotenv from 'dotenv'
 import {
     Instruction,
     RecipeIngredient,
@@ -8,8 +12,6 @@ import {
     Token,
     Application,
 } from '../entities'
-import { Repository, getRepository, getCustomRepository } from 'typeorm'
-import Redis from 'ioredis'
 import {
     AuthService,
     RecipeService,
@@ -22,10 +24,7 @@ import {
     AbilityMiddleware,
     PaginationMiddleware,
 } from '../middlewares'
-import passport from 'passport'
 import { IngredientRepository, RecipeRepository } from '../repositories'
-
-import dotenv from 'dotenv'
 
 dotenv.config()
 

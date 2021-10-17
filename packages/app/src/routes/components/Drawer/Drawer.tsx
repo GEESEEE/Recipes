@@ -1,14 +1,14 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
-import { authActions, settingsActions } from '@/redux'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
+import { settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { MyIonicons } from '@/components/Icons'
 import { ColorPickerModal } from '@/screens/modals'
 import { Toggle, Text } from '@/components/base'
 import { Button } from '@/components/atoms'
 
-import { View, ScrollView, TouchableOpacity } from 'react-native'
 interface DrawerItemProps {
     text: string
     element: JSX.Element
