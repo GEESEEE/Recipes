@@ -1,0 +1,8 @@
+{
+    "name": "@recipes/common",
+    "version": "1.0.0",
+    "description": "sample",
+    "main": "index.js",
+    "license": "MIT",
+    "author": "Gies den Broeder"
+}

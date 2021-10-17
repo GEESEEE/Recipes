@@ -2,18 +2,20 @@
     "private": true,
     "name": "recipes",
     "license": "MIT",
+    "author": "Gies den Broeder",
     "workspaces": {
         "packages": [
             "packages/*"
         ]
     },
+    "packageManager": "yarn@3.0.2",
+    "version": "1.0.0",
     "scripts": {
         "app": "yarn workspace @recipes/app",
         "api": "yarn workspace @recipes/api",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
     },
-    "packageManager": "yarn@3.0.2",
-    "version": "1.0.0",
+
     "devDependencies": {
         "@types/node": "^16.11.0",
         "@types/prettier": "^2",
