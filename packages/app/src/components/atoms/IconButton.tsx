@@ -28,11 +28,7 @@ function IconButton({
     ...rest
 }: IconButtonProps): JSX.Element {
     return (
-        <TouchableOpacity
-            onPress={onPress}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...rest}
-        >
+        <TouchableOpacity onPress={onPress} {...rest}>
             <Icon Type={IconType} name={iconName} color={color} size={size} />
         </TouchableOpacity>
     )

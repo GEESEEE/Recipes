@@ -179,7 +179,7 @@ export class createSchema1620169219541 implements MigrationInterface {
                     },
                     {
                         name: 'name',
-                        type: 'varchar(255)'
+                        type: 'varchar(255)',
                     },
                     {
                         name: 'description',
@@ -187,8 +187,8 @@ export class createSchema1620169219541 implements MigrationInterface {
                     },
                     {
                         name: 'user_id',
-                        type: 'int'
-                    }
+                        type: 'int',
+                    },
                 ],
                 foreignKeys: [
                     {

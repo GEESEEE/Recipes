@@ -37,7 +37,6 @@ const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
             autoCapitalize="none"
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )

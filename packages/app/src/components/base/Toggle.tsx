@@ -18,7 +18,6 @@ function Toggle({ disabled, ...rest }: ToggleProps): JSX.Element {
             }}
             thumbColor={thumbColor}
             disabled={disabled}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )

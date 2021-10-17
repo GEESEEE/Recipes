@@ -12,7 +12,7 @@ function SortHeader(): JSX.Element {
     const { name } = useRoute()
 
     const sortState: any = []
-        // name === 'Browse' ? globalState.browseSort : globalState.mySort
+    // name === 'Browse' ? globalState.browseSort : globalState.mySort
     // const sort = sortState.sortState
 
     return (

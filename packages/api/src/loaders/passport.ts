@@ -20,7 +20,6 @@ export default function init(container: Container): void {
             token: string,
             done: (error: any, user?: any, info?: any) => void
         ): void {
-
             const result: any = authService.verifyToken(token)
             if (result === OAuthError.INVALID_GRANT) {
                 return done(null, false, { message: 'Invalid Token' })
@@ -32,7 +31,6 @@ export default function init(container: Container): void {
             redis
                 .lrange('token', 0, 999_999_999)
                 .then(async (revokedTokens: string[]): Promise<void> => {
-
                     if (!revokedTokens.includes(token)) {
                         const userString = await redis.get(result.id)
 
@@ -50,11 +48,17 @@ export default function init(container: Container): void {
                         return done(null, false, { message: 'Token not found' })
                     }
 
-                    const user = await userRepository.findOne({
+                    const user = (await userRepository.findOne({
                         where: { id: result.id },
-                        relations: [ 'settings'],
-                        select: ['id', 'name', 'email', 'settingsId', 'settings'],
-                    }) as User
+                        relations: ['settings'],
+                        select: [
+                            'id',
+                            'name',
+                            'email',
+                            'settingsId',
+                            'settings',
+                        ],
+                    })) as User
 
                     if (typeof user === 'undefined') {
                         return done(null, false, { message: 'User not found' })

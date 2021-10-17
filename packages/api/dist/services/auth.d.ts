@@ -24,6 +24,6 @@ export default class AuthService {
     }): Promise<User | AuthError>;
     signOut(token: string): Promise<boolean | OAuthError>;
     verifyPassword(password: string, hashedPassword: string): Promise<boolean>;
-    signToken(payload: Object): string;
+    signToken(payload: Record<string, unknown>): string;
     verifyToken(token: string): string | jwt.JwtPayload | OAuthError;
 }

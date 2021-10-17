@@ -56,6 +56,7 @@ export default class AuthController implements interfaces.Controller {
     }
 
     @httpPost('/token', TYPES.TokenMiddleware)
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public signIn(): void {}
 
     @httpGet('/info', TYPES.PassportMiddleware, TYPES.ErrorMiddleware)
@@ -90,18 +91,18 @@ export default class AuthController implements interfaces.Controller {
     // #region validate
     private static validate(method: string): ValidationChain[] {
         switch (method) {
-        case 'signUp':
-            return [
-                body('name').exists().isString(),
-                body('password').exists().isString(),
-                body('email').exists().isString(),
-            ]
+            case 'signUp':
+                return [
+                    body('name').exists().isString(),
+                    body('password').exists().isString(),
+                    body('email').exists().isString(),
+                ]
 
-        case 'signOut':
-            return [header('authorization').exists().isString()]
+            case 'signOut':
+                return [header('authorization').exists().isString()]
 
-        default:
-            return []
+            default:
+                return []
         }
     }
     // #endregion

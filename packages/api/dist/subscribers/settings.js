@@ -15,12 +15,12 @@ let SettingsSubscriber = class SettingsSubscriber {
         return entities_1.Settings;
     }
     async afterUpdate(event) {
-        console.log("After Settings update", event.entity);
-        const user = await this.userRepository.findOne({
+        console.log('After Settings update', event.entity);
+        const user = (await this.userRepository.findOne({
             where: { settingsId: event.entity.id },
             select: ['id'],
-        });
-        const redisUser = JSON.parse(await this.redis.get(user.id));
+        }));
+        const redisUser = JSON.parse((await this.redis.get(user.id)));
         redisUser.settings = { ...redisUser.settings, ...event.entity };
         await this.redis.set(user.id, JSON.stringify(redisUser));
     }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { authActions, settingsActions } from '@/redux'
@@ -9,6 +8,7 @@ import { ColorPickerModal } from '@/screens/modals'
 import { Toggle, Text } from '@/components/base'
 import { Button } from '@/components/atoms'
 
+import { View, ScrollView, TouchableOpacity } from 'react-native'
 interface DrawerItemProps {
     text: string
     element: JSX.Element
@@ -39,7 +39,7 @@ export default function DrawerComponent({
     const [openColorPicker, toggleColorPicker] = useToggle(false)
 
     async function handleSignOut(): Promise<void> {
-        await dispatch(authActions.signOut())
+        // await dispatch(authActions.signOut())
         navigation.toggleDrawer()
     }
 

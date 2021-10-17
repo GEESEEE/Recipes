@@ -1,5 +1,5 @@
-import Recipe from "./recipe";
-import User from "./user";
+import Recipe from './recipe';
+import User from './user';
 export default class Section {
     readonly id: number;
     name: string;

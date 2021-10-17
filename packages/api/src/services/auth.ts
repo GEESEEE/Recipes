@@ -92,7 +92,7 @@ export default class AuthService {
         return await bcrypt.compare(password, hashedPassword)
     }
 
-    public signToken(payload: Object): string {
+    public signToken(payload: Record<string, unknown>): string {
         return jwt.sign(payload, privateKey, { algorithm: 'RS256' })
     }
 

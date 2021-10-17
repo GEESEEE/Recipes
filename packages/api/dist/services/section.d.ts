@@ -1,4 +1,4 @@
-import { Section } from "../entities";
+import { Section } from '../entities';
 export default class SectionService {
     private readonly sectionRepository;
     createSections(sectionObjects: Array<{
@@ -8,7 +8,7 @@ export default class SectionService {
     }>): Promise<Section[]>;
     getSection(sectionId: number): Promise<Section | undefined>;
     getSectionsFromUser(userId: number): Promise<Section[]>;
-    updateSection(section: Section, { name, description }: {
+    updateSection(section: Section, { name, description, }: {
         name?: string;
         description?: string;
     }): Promise<Section>;

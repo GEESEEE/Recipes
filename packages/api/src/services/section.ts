@@ -1,21 +1,24 @@
-import { inject, injectable } from "inversify";
-import { Repository } from "typeorm";
-import { Section } from "../entities";
-import { TYPES } from "../util/constants";
-
+import { inject, injectable } from 'inversify'
+import { Repository } from 'typeorm'
+import { Section } from '../entities'
+import { TYPES } from '../util/constants'
 
 @injectable()
 export default class SectionService {
     @inject(TYPES.SectionRepository)
     private readonly sectionRepository!: Repository<Section>
 
-    public async createSections(sectionObjects: Array<{
-        name: string,
-        description: string,
-        userId: number,
-    }>): Promise<Section[]> {
+    public async createSections(
+        sectionObjects: Array<{
+            name: string
+            description: string
+            userId: number
+        }>
+    ): Promise<Section[]> {
         const sections = await this.sectionRepository.save(
-            sectionObjects.map(section => this.sectionRepository.create(section))
+            sectionObjects.map((section) =>
+                this.sectionRepository.create(section)
+            )
         )
         return sections
     }
@@ -26,7 +29,7 @@ export default class SectionService {
 
     public async getSectionsFromUser(userId: number): Promise<Section[]> {
         const sections = await this.sectionRepository.find({
-            where: { userId}
+            where: { userId },
         })
         return sections
     }
@@ -35,7 +38,7 @@ export default class SectionService {
         section: Section,
         {
             name,
-            description
+            description,
         }: {
             name?: string
             description?: string

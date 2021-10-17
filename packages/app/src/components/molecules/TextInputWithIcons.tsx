@@ -33,11 +33,7 @@ export const TextInputWithIcons = ({
                 width="l"
             >
                 {leftIcon || null}
-                <StyledTextInput
-                    paddingHorizontal="s"
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...rest}
-                />
+                <StyledTextInput paddingHorizontal="s" {...rest} />
                 {rightIcon || null}
             </InputFieldContainer>
             <Error message={errorMessage} />

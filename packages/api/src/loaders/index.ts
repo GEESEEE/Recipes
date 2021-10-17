@@ -1,5 +1,5 @@
 import { Application } from 'express'
-import {container} from '../config'
+import { container } from '../config'
 import expressLoader from './express'
 import passportLoader from './passport'
 import oauth2orizeLoader from './oauth2orize'

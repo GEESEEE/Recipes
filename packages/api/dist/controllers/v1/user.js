@@ -39,14 +39,14 @@ let UserController = UserController_1 = class UserController {
             return {
                 id: sectionId,
                 statusCode: 404,
-                statusMessage: 'Provided sectionId was not found'
+                statusMessage: 'Provided sectionId was not found',
             };
         }
         if (section.userId !== userId) {
             return {
                 id: sectionId,
                 statusCode: 403,
-                statusMessage: 'Provided section does not belong to the requesting user'
+                statusMessage: 'Provided section does not belong to the requesting user',
             };
         }
         return section;
@@ -54,7 +54,7 @@ let UserController = UserController_1 = class UserController {
     async createSection(req, body) {
         const section = {
             ...body,
-            userId: req.user?.id
+            userId: req.user?.id,
         };
         return (await this.sectionsService.createSections([section]))[0];
     }
@@ -89,19 +89,21 @@ let UserController = UserController_1 = class UserController {
                     (0, express_validator_1.body)('color').optional().isString(),
                     (0, express_validator_1.body)('invertedColors').optional().isBoolean(),
                 ];
-            case 'createSection': return [
-                (0, express_validator_1.body)('name').exists().isString(),
-                (0, express_validator_1.body)('description').exists().isString(),
-            ];
-            case 'getSections': return [];
-            case 'updateSection': return [
-                (0, express_validator_1.param)('sectionId').isInt().toInt(),
-                (0, express_validator_1.body)('name').optional().isString(),
-                (0, express_validator_1.body)('description').optional().isString(),
-            ];
-            case 'deleteSection': return [
-                (0, express_validator_1.param)('sectionId').isInt().toInt(),
-            ];
+            case 'createSection':
+                return [
+                    (0, express_validator_1.body)('name').exists().isString(),
+                    (0, express_validator_1.body)('description').exists().isString(),
+                ];
+            case 'getSections':
+                return [];
+            case 'updateSection':
+                return [
+                    (0, express_validator_1.param)('sectionId').isInt().toInt(),
+                    (0, express_validator_1.body)('name').optional().isString(),
+                    (0, express_validator_1.body)('description').optional().isString(),
+                ];
+            case 'deleteSection':
+                return [(0, express_validator_1.param)('sectionId').isInt().toInt()];
             default:
                 return [];
         }

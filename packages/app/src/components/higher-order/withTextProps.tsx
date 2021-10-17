@@ -50,7 +50,6 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
                 weight={weight}
                 color={color}
                 transform={transform}
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >
                 {children}

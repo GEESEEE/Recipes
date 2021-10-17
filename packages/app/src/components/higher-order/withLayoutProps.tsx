@@ -58,12 +58,7 @@ function withLayoutProps<T extends LayoutProps>(
         if (width) myStyle.width = Spacing.widths[width]
 
         return (
-            <WrappedComponent
-                style={[myStyle, style]}
-                // I can not pass the layout props through to the inheritors, because it crashes for some reason :|
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...rest}
-            >
+            <WrappedComponent style={[myStyle, style]} {...rest}>
                 {children}
             </WrappedComponent>
         )

@@ -1,17 +1,23 @@
-import { Expose, Type } from "class-transformer";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Recipe from "./recipe";
-import User from "./user";
+import { Expose, Type } from 'class-transformer'
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm'
+import Recipe from './recipe'
+import User from './user'
 
 @Entity('section')
 export default class Section {
-
     @Expose()
     @PrimaryGeneratedColumn()
     public readonly id!: number
 
     @Expose()
-    @Column({ length: 255})
+    @Column({ length: 255 })
     public name!: string
 
     @Expose()

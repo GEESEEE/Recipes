@@ -43,9 +43,7 @@ const HeaderComponent = ({
     const routeName = route.name
 
     const dispatch = useAppDispatch()
-    const { settings } = useAppSelector(
-        (state) => state
-    )
+    const { settings } = useAppSelector((state) => state)
     const { theme } = settings
 
     const insets = useSafeAreaInsets()

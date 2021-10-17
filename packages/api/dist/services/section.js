@@ -7,7 +7,7 @@ const constants_1 = require("../util/constants");
 let SectionService = class SectionService {
     sectionRepository;
     async createSections(sectionObjects) {
-        const sections = await this.sectionRepository.save(sectionObjects.map(section => this.sectionRepository.create(section)));
+        const sections = await this.sectionRepository.save(sectionObjects.map((section) => this.sectionRepository.create(section)));
         return sections;
     }
     async getSection(sectionId) {
@@ -15,11 +15,11 @@ let SectionService = class SectionService {
     }
     async getSectionsFromUser(userId) {
         const sections = await this.sectionRepository.find({
-            where: { userId }
+            where: { userId },
         });
         return sections;
     }
-    async updateSection(section, { name, description }) {
+    async updateSection(section, { name, description, }) {
         section.name = name ?? section.name;
         section.description = description ?? section.description;
         return await this.sectionRepository.save(section);

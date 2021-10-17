@@ -167,7 +167,7 @@ class createSchema1620169219541 {
                 },
                 {
                     name: 'name',
-                    type: 'varchar(255)'
+                    type: 'varchar(255)',
                 },
                 {
                     name: 'description',
@@ -175,8 +175,8 @@ class createSchema1620169219541 {
                 },
                 {
                     name: 'user_id',
-                    type: 'int'
-                }
+                    type: 'int',
+                },
             ],
             foreignKeys: [
                 {

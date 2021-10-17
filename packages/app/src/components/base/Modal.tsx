@@ -32,7 +32,6 @@ function Modal({
                     },
                     style,
                 ]}
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             >
                 {children}

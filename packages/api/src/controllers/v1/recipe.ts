@@ -79,7 +79,7 @@ export default class RecipeController implements interfaces.Controller {
     public async createRecipe(
         @request() req: Request,
         @requestBody()
-            body: {
+        body: {
             name: string
             description: string
             prepareTime: number
@@ -117,7 +117,7 @@ export default class RecipeController implements interfaces.Controller {
     public async createRecipes(
         @request() req: Request,
         @requestBody()
-            body: Array<{
+        body: Array<{
             name: string
             description: string
             prepareTime: number
@@ -174,7 +174,7 @@ export default class RecipeController implements interfaces.Controller {
     public async getRecipes(
         @request() req: Request,
         @requestBody()
-            body: {
+        body: {
             authorId?: number
         },
         @queryParam('scopes') scopes?: string[],
@@ -215,7 +215,7 @@ export default class RecipeController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('recipeId') recipeId: number,
         @requestBody()
-            body: {
+        body: {
             name?: string
             description?: string
             prepareTime?: number
@@ -256,7 +256,7 @@ export default class RecipeController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('recipeId') recipeId: number,
         @requestBody()
-            body: Array<{
+        body: Array<{
             amount: number
             position: number
             name: string
@@ -278,7 +278,7 @@ export default class RecipeController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('recipeId') recipeId: number,
         @requestBody()
-            body: Array<{
+        body: Array<{
             recipeIngredientId: number
             amount?: number
             position?: number
@@ -384,7 +384,7 @@ export default class RecipeController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('recipeId') recipeId: number,
         @requestBody()
-            body: Array<{ instructionId: number; text?: string; position?: number }>
+        body: Array<{ instructionId: number; text?: string; position?: number }>
     ): Promise<Array<Instruction | ModifyError>> {
         const recipe = await this.checkRecipeAbility(req, recipeId)
         const res: Array<Instruction | ModifyError> = []
@@ -451,97 +451,97 @@ export default class RecipeController implements interfaces.Controller {
     // #region validate
     private static validate(method: string): ValidationChain[] {
         switch (method) {
-        case 'createRecipes':
-            return [
-                body().isArray(),
-                body('*.name').exists().isString(),
-                body('*.description').exists().isString(),
-                body('*.prepareTime').isInt().toInt(),
-                body('*.peopleCount').isInt().toInt(),
-            ]
+            case 'createRecipes':
+                return [
+                    body().isArray(),
+                    body('*.name').exists().isString(),
+                    body('*.description').exists().isString(),
+                    body('*.prepareTime').isInt().toInt(),
+                    body('*.peopleCount').isInt().toInt(),
+                ]
 
-        case 'createRecipe':
-            return [
-                body('name').exists().isString(),
-                body('description').exists().isString(),
-                body('prepareTime').isInt().toInt(),
-                body('peopleCount').isInt().toInt(),
-            ]
+            case 'createRecipe':
+                return [
+                    body('name').exists().isString(),
+                    body('description').exists().isString(),
+                    body('prepareTime').isInt().toInt(),
+                    body('peopleCount').isInt().toInt(),
+                ]
 
-        case 'deleteRecipe':
-            return [param('recipeId').isInt().toInt()]
+            case 'deleteRecipe':
+                return [param('recipeId').isInt().toInt()]
 
-        case 'getRecipe':
-            return [param('recipeId').isInt().toInt()]
+            case 'getRecipe':
+                return [param('recipeId').isInt().toInt()]
 
-        case 'getRecipes':
-            return [
-                body('authorId').optional().isString(),
-                query('scopes').customSanitizer(decodeQueryParams),
-                query('sort').customSanitizer(decodeSortQuery),
-                query('search').customSanitizer(decodeQueryParams),
-            ]
+            case 'getRecipes':
+                return [
+                    body('authorId').optional().isString(),
+                    query('scopes').customSanitizer(decodeQueryParams),
+                    query('sort').customSanitizer(decodeSortQuery),
+                    query('search').customSanitizer(decodeQueryParams),
+                ]
 
-        case 'updateRecipe':
-            return [
-                param('recipeId').isInt().toInt(),
-                body('name').optional().isString(),
-                body('description').optional().isString(),
-                body('prepareTime').optional().isInt().toInt(),
-                body('peopleCount').optional().isInt().toInt(),
-            ]
+            case 'updateRecipe':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body('name').optional().isString(),
+                    body('description').optional().isString(),
+                    body('prepareTime').optional().isInt().toInt(),
+                    body('peopleCount').optional().isInt().toInt(),
+                ]
 
-        case 'addIngredients':
-            return [
-                param('recipeId').isInt().toInt(),
-                body().isArray(),
-                body('*.name').exists().isString(),
-                body('*.position').isInt().toInt(),
-                body('*.amount').isFloat().toFloat(),
-                body('*.unit')
-                    .isString()
-                    .optional({ nullable: true, checkFalsy: false }),
-            ]
+            case 'addIngredients':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body().isArray(),
+                    body('*.name').exists().isString(),
+                    body('*.position').isInt().toInt(),
+                    body('*.amount').isFloat().toFloat(),
+                    body('*.unit')
+                        .isString()
+                        .optional({ nullable: true, checkFalsy: false }),
+                ]
 
-        case 'removeIngredients':
-            return [
-                param('recipeId').isInt().toInt(),
-                body().isArray(),
-                body('*').isInt().toInt(),
-            ]
+            case 'removeIngredients':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body().isArray(),
+                    body('*').isInt().toInt(),
+                ]
 
-        case 'updateIngredients':
-            return [
-                param('recipeId').isInt().toInt(),
-                body().isArray(),
-                body('*.recipeIngredientId').isInt().toInt(),
-                body('*.amount').optional().isFloat().toFloat(),
-                body('*.position').optional().isInt().toInt(),
-                body('*.name').optional().isString(),
-                body('*.unit').optional({ nullable: true }).isString(),
-            ]
+            case 'updateIngredients':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body().isArray(),
+                    body('*.recipeIngredientId').isInt().toInt(),
+                    body('*.amount').optional().isFloat().toFloat(),
+                    body('*.position').optional().isInt().toInt(),
+                    body('*.name').optional().isString(),
+                    body('*.unit').optional({ nullable: true }).isString(),
+                ]
 
-        case 'addInstructions':
-            return [
-                param('recipeId').isInt().toInt(),
-                body().isArray(),
-                body('*.text').exists().isString(),
-                body('*.position').isInt().toInt(),
-            ]
+            case 'addInstructions':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body().isArray(),
+                    body('*.text').exists().isString(),
+                    body('*.position').isInt().toInt(),
+                ]
 
-        case 'deleteInstructions':
-            return [body().isArray(), param('*').isInt().toInt()]
+            case 'deleteInstructions':
+                return [body().isArray(), param('*').isInt().toInt()]
 
-        case 'updateInstructions':
-            return [
-                param('recipeId').isInt().toInt(),
-                body().isArray(),
-                body('*.instructionId').isInt().toInt(),
-                body('*.text').exists().isString(),
-                body('*.position').optional().isInt().toInt(),
-            ]
-        default:
-            return []
+            case 'updateInstructions':
+                return [
+                    param('recipeId').isInt().toInt(),
+                    body().isArray(),
+                    body('*.instructionId').isInt().toInt(),
+                    body('*.text').exists().isString(),
+                    body('*.position').optional().isInt().toInt(),
+                ]
+            default:
+                return []
         }
     }
     // #endregion

@@ -93,7 +93,6 @@ const Button = ({
             onPress={onPress}
             disabled={disabled}
             style={[buttonStyle, style]}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
             <View paddingVertical="s">

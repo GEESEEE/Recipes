@@ -25,8 +25,8 @@ const { TYPES } = constants
 export default class UserController implements interfaces.Controller {
     @inject(TYPES.UserService) private readonly userService!: UserService
 
-    @inject(TYPES.SectionService) private readonly sectionsService!: SectionService
-
+    @inject(TYPES.SectionService)
+    private readonly sectionsService!: SectionService
 
     @httpGet(
         '/',
@@ -60,7 +60,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-            body: { theme?: ThemeType; color?: string; invertedColors?: boolean }
+        body: { theme?: ThemeType; color?: string; invertedColors?: boolean }
     ): Promise<Settings> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (
@@ -78,20 +78,24 @@ export default class UserController implements interfaces.Controller {
 
     // #region Sections
 
-    private async validateSection(userId: number, sectionId: number): Promise<Section | ModifyError> {
+    private async validateSection(
+        userId: number,
+        sectionId: number
+    ): Promise<Section | ModifyError> {
         const section = await this.sectionsService.getSection(sectionId)
         if (typeof section === 'undefined') {
             return {
                 id: sectionId,
                 statusCode: 404,
-                statusMessage: 'Provided sectionId was not found'
+                statusMessage: 'Provided sectionId was not found',
             }
         }
         if (section.userId !== userId) {
             return {
                 id: sectionId,
                 statusCode: 403,
-                statusMessage: 'Provided section does not belong to the requesting user'
+                statusMessage:
+                    'Provided section does not belong to the requesting user',
             }
         }
         return section
@@ -106,14 +110,14 @@ export default class UserController implements interfaces.Controller {
     public async createSection(
         @request() req: Request,
         @requestBody()
-            body: {
-                name: string,
-                description: string,
-            }
+        body: {
+            name: string
+            description: string
+        }
     ): Promise<Section> {
         const section: any = {
             ...body,
-            userId: req.user?.id
+            userId: req.user?.id,
         }
         return (await this.sectionsService.createSections([section]))[0]
     }
@@ -124,10 +128,10 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getSections'),
         TYPES.ErrorMiddleware
     )
-    public async getSections(
-        @request() req: Request,
-    ): Promise<Section[]> {
-        return await this.sectionsService.getSectionsFromUser(req.user?.id as number)
+    public async getSections(@request() req: Request): Promise<Section[]> {
+        return await this.sectionsService.getSectionsFromUser(
+            req.user?.id as number
+        )
     }
 
     @httpPut(
@@ -140,14 +144,20 @@ export default class UserController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('sectionId') sectionId: number,
         @requestBody()
-            body: {
-                name?: string
-                description?: string
-            }
+        body: {
+            name?: string
+            description?: string
+        }
     ): Promise<Section | ModifyError> {
-        const validationResult = await this.validateSection(req.user?.id as number, sectionId)
+        const validationResult = await this.validateSection(
+            req.user?.id as number,
+            sectionId
+        )
         if (validationResult instanceof Section) {
-            return await this.sectionsService.updateSection(validationResult, body)
+            return await this.sectionsService.updateSection(
+                validationResult,
+                body
+            )
         }
         return validationResult
     }
@@ -159,10 +169,13 @@ export default class UserController implements interfaces.Controller {
         TYPES.ErrorMiddleware
     )
     public async deleteSection(
-        @request () req: Request,
+        @request() req: Request,
         @requestParam('sectionId') sectionId: number
     ): Promise<boolean | ModifyError> {
-        const validationResult = await this.validateSection(req.user?.id as number, sectionId)
+        const validationResult = await this.validateSection(
+            req.user?.id as number,
+            sectionId
+        )
         if (validationResult instanceof Section) {
             return await this.sectionsService.deleteSection(sectionId)
         }
@@ -174,37 +187,39 @@ export default class UserController implements interfaces.Controller {
     // #region validate
     private static validate(method: string): ValidationChain[] {
         switch (method) {
-        case 'getUser':
-            return []
+            case 'getUser':
+                return []
 
-        case 'getSettings':
-            return []
+            case 'getSettings':
+                return []
 
-        case 'updateSettings':
-            return [
-                body('theme').optional().isIn(Object.values(ThemeType)),
-                body('color').optional().isString(),
-                body('invertedColors').optional().isBoolean(),
-            ]
+            case 'updateSettings':
+                return [
+                    body('theme').optional().isIn(Object.values(ThemeType)),
+                    body('color').optional().isString(),
+                    body('invertedColors').optional().isBoolean(),
+                ]
 
-        case 'createSection': return [
-            body('name').exists().isString(),
-            body('description').exists().isString(),
-        ]
+            case 'createSection':
+                return [
+                    body('name').exists().isString(),
+                    body('description').exists().isString(),
+                ]
 
-        case 'getSections': return []
-        case 'updateSection': return [
-            param('sectionId').isInt().toInt(),
-            body('name').optional().isString(),
-            body('description').optional().isString(),
-        ]
+            case 'getSections':
+                return []
+            case 'updateSection':
+                return [
+                    param('sectionId').isInt().toInt(),
+                    body('name').optional().isString(),
+                    body('description').optional().isString(),
+                ]
 
-        case 'deleteSection': return [
-            param('sectionId').isInt().toInt(),
-        ]
+            case 'deleteSection':
+                return [param('sectionId').isInt().toInt()]
 
-        default:
-            return []
+            default:
+                return []
         }
     }
     // #endregion

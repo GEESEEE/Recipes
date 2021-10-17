@@ -18,13 +18,13 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
                 record.instruction_id === null
                     ? []
                     : [
-                        {
-                            id: record.instruction_id,
-                            text: record.instruction_text,
-                            position: record.instruction_position,
-                            recipe_id: record.instruction_recipe_id,
-                        },
-                    ]
+                          {
+                              id: record.instruction_id,
+                              text: record.instruction_text,
+                              position: record.instruction_position,
+                              recipe_id: record.instruction_recipe_id,
+                          },
+                      ]
         }
 
         if (

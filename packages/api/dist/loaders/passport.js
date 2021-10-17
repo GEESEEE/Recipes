@@ -35,11 +35,17 @@ function init(container) {
             if (typeof tok === 'undefined') {
                 return done(null, false, { message: 'Token not found' });
             }
-            const user = await userRepository.findOne({
+            const user = (await userRepository.findOne({
                 where: { id: result.id },
                 relations: ['settings'],
-                select: ['id', 'name', 'email', 'settingsId', 'settings'],
-            });
+                select: [
+                    'id',
+                    'name',
+                    'email',
+                    'settingsId',
+                    'settings',
+                ],
+            }));
             if (typeof user === 'undefined') {
                 return done(null, false, { message: 'User not found' });
             }

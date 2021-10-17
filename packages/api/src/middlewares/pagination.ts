@@ -25,14 +25,14 @@ export default class PaginationMiddleware extends BaseMiddleware {
     }
 }
 
-function getPage(req: Request, defaultPage: number = 1): number {
+function getPage(req: Request, defaultPage = 1): number {
     if (typeof req.query.page !== 'undefined') {
         return parseInt(req.query.page as string)
     }
     return defaultPage
 }
 
-function getPerPage(req: Request, defaultPerPage: number = 15): number {
+function getPerPage(req: Request, defaultPerPage = 15): number {
     if (req.query.per_page != null) {
         return parseInt(req.query.per_page as string)
     }

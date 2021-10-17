@@ -8,12 +8,7 @@ import { withLayoutProps, LayoutProps } from '../higher-order'
 export type TouchableOpacityProps = RNTouchableOpacityProps & LayoutProps
 
 function TouchableOpacity({ ...rest }: TouchableOpacityProps): JSX.Element {
-    return (
-        <RNTouchableOpacity
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...rest}
-        />
-    )
+    return <RNTouchableOpacity {...rest} />
 }
 
 export default withLayoutProps(TouchableOpacity)

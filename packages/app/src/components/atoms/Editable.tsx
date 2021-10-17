@@ -28,18 +28,13 @@ function Editable({
                 onChangeText={handleTextChange}
                 value={text}
                 multiline
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...rest}
             />
         )
     }
 
     return (
-        <Text
-            numberOfLines={numberOfLines}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...rest}
-        >
+        <Text numberOfLines={numberOfLines} {...rest}>
             {text}
         </Text>
     )

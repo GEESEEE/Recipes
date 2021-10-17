@@ -62,20 +62,20 @@ export default class IngredientController implements interfaces.Controller {
 
     private static validate(method: string): ValidationChain[] {
         switch (method) {
-        case 'createIngredient':
-            return [
-                body('name').exists().isString(),
-                body('unit').optional().isString(),
-            ]
+            case 'createIngredient':
+                return [
+                    body('name').exists().isString(),
+                    body('unit').optional().isString(),
+                ]
 
-        case 'getIngredient':
-            return [param('ingredientId').isInt().toInt()]
+            case 'getIngredient':
+                return [param('ingredientId').isInt().toInt()]
 
-        case 'deleteIngredient':
-            return [param('ingredientId').isInt().toInt()]
+            case 'deleteIngredient':
+                return [param('ingredientId').isInt().toInt()]
 
-        default:
-            return []
+            default:
+                return []
         }
     }
 }

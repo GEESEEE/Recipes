@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-    Text as RNText,
-    TextLayoutEventData,
-    TextLayoutLine,
-} from 'react-native'
+import { Text as RNText } from 'react-native'
 import {
     withLayoutProps,
     LayoutProps,
@@ -46,7 +42,6 @@ const Text = ({
             style={[{ height }, style]}
             onTextLayout={(e) => onTextLayout(e)}
             numberOfLines={numberOfLines}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         />
     )

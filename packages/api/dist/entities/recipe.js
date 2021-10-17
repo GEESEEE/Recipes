@@ -65,7 +65,9 @@ let Recipe = class Recipe {
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),
     (0, class_transformer_1.Type)(() => section_1.default),
-    (0, typeorm_1.ManyToOne)(() => section_1.default, (section) => section.recipes, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => section_1.default, (section) => section.recipes, {
+        onDelete: 'CASCADE',
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'section_id' }),
     (0, tslib_1.__metadata)("design:type", section_1.default)
 ], Recipe.prototype, "section", void 0);

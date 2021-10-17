@@ -10,15 +10,17 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true
+        "node": true,
+        "react-native/react-native": true
     },
     "extends": [
-        "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
     "plugins": [
+        "import",
+        "react-native"
     ],
     "settings": {
         "import/resolver": {
@@ -28,5 +30,8 @@
         }
     },
     "rules": {
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/ban-types": "warn",
+        "@typescript-eslint/no-var-requires": "warn"
     }
 }

@@ -37,7 +37,6 @@ function Icon({
                 },
                 style,
             ]}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rest}
         >
             <IconType name={name} color={color} size={iconSize} />

@@ -52,7 +52,9 @@ export default class Recipe {
 
     @Expose()
     @Type(() => Section)
-    @ManyToOne(() => Section, (section) => section.recipes, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Section, (section) => section.recipes, {
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: 'section_id' })
     public section!: Section
 

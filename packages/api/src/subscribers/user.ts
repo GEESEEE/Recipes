@@ -9,7 +9,7 @@ import bcrypt from 'bcrypt'
 import { User } from '../entities'
 import { RecipeRepository } from '../repositories'
 import { TYPES } from '../util/constants'
-import {container} from '../config'
+import { container } from '../config'
 import getDecorators from 'inversify-inject-decorators'
 const { lazyInject } = getDecorators(container)
 
