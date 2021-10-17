@@ -1,16 +1,15 @@
 import React from 'react'
 import { View, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
+import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
+import { ButtonIcon } from '../user-input/Buttons'
 import { Recipe } from '@/data'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { MyFeather, MyMaterialCommunityIcons, MyMaterialIcons } from '../Icons'
-import { DropDownMenu, DropDownItem } from '../user-input/DropdownMenu'
 import { myRecipeActions } from '@/redux/actions'
-import { ButtonIcon } from '../user-input/Buttons'
 import { recipeUtils, utils } from '@/utils'
-import { DropdownMenu } from '@/components/atoms'
+import { DropdownMenu, DropdownItem } from '@/components/atoms'
 
 // Edit Actions determine what can be edited and what is displayed in this component
 // Edit-all, is for editing everything
@@ -69,7 +68,7 @@ function RecipeHeaderComponent({
         dropDownFunctions.push(copyRecipe)
     }
 
-    const dropDownItems: DropDownItem[] = utils.createDropDownItems(
+    const dropDownItems: DropdownItem[] = utils.createDropDownItems(
         dropDownFunctions,
         'recipe'
     )
@@ -207,12 +206,7 @@ function RecipeHeaderComponent({
 export const RecipeHeader = RecipeHeaderComponent
 
 function recipeHeaderPropsChanged(prevProps: any, nextProps: any): boolean {
-    if (
-        !_.isEqual(
-            prevProps.dropDownDependencies,
-            nextProps.dropDownDependencies
-        )
-    )
+    if (isEqual(prevProps.dropDownDependencies, nextProps.dropDownDependencies))
         return false
     const oldRecipe = prevProps.recipe
     const newRecipe = nextProps.recipe

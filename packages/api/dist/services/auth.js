@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthError = exports.OAuthError = void 0;
 const tslib_1 = require("tslib");
+const fs = (0, tslib_1.__importStar)(require("fs"));
 const inversify_1 = require("inversify");
 const typeorm_1 = require("typeorm");
-const constants_1 = require("../util/constants");
 const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
 const jwt = (0, tslib_1.__importStar)(require("jsonwebtoken"));
-const fs = (0, tslib_1.__importStar)(require("fs"));
+const constants_1 = require("../util/constants");
 const publicKey = fs.readFileSync('public.key', 'utf-8');
 const privateKey = fs.readFileSync('private.key', 'utf-8');
 var OAuthError;

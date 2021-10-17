@@ -2,12 +2,12 @@
 var UserController_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const entities_1 = require("../../entities");
 const express_validator_1 = require("express-validator");
 const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
 const util_1 = require("../../util");
 const constants_1 = require("../../util/constants");
-const inversify_1 = require("inversify");
+const entities_1 = require("../../entities");
 const services_1 = require("../../services");
 const errors_1 = require("../../errors");
 const { TYPES } = util_1.constants;

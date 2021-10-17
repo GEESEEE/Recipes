@@ -4291,9 +4291,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^16.11.0":
-  version: 16.11.0
-  resolution: "@types/node@npm:16.11.0"
-  checksum: 194ae80ec72f664e15e03c33f116be96aa1e85b167a19e31003c53ddfc36dabd65744e9a76c1d46b7ce2e5981d2ccb8e84a85c3ec9ac89f1471daaa885bdcfd0
+  version: 16.11.1
+  resolution: "@types/node@npm:16.11.1"
+  checksum: 22cea470b89292810733b8b9fc1b6a1873bc3ed4d4cdf2f25e777dc607994bd7c12e64166d1a66dd5924734192b0a891b6aeb6813aa935f731345f4086234375
   languageName: node
   linkType: hard
 
@@ -4419,11 +4419,11 @@ __metadata:
   linkType: hard
 
 "@types/react-native@npm:*":
-  version: 0.65.7
-  resolution: "@types/react-native@npm:0.65.7"
+  version: 0.65.8
+  resolution: "@types/react-native@npm:0.65.8"
   dependencies:
     "@types/react": "*"
-  checksum: 14a192ba38813c5e0e4319b5b9f12fd50890a73690222bf99c648b39878b0de4f3be7a6494dcce6d59f99ccae9da40e3ccd1f98a791d1de9e149d5ffb4dd5f04
+  checksum: 142c1b208212fa02b0c645f26da6a417bda5d1989e3579f3cb4f66d8ef77c8dce5b8328063a475bb055eb0debc8ef73719784e946251ce0134e8a955207517be
   languageName: node
   linkType: hard
 
@@ -6468,13 +6468,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"builtin-modules@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "builtin-modules@npm:1.1.1"
-  checksum: 0fbf69ffe77fecf11c441b9a7d1e664bb8119a7d3004831d9bd6ce0eacfd5d121ed4b667172870b5f66ecfce4bd54f7c20060d21c339c29049a7a5dd2bb7bf8c
-  languageName: node
-  linkType: hard
-
 "builtin-status-codes@npm:^3.0.0":
   version: 3.0.0
   resolution: "builtin-status-codes@npm:3.0.0"
@@ -6724,9 +6717,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001265":
-  version: 1.0.30001267
-  resolution: "caniuse-lite@npm:1.0.30001267"
-  checksum: 1a84f792a17a7819d42bed24eafe2a4832ab1f58937b6d65a9f43e9cdd2a3b10308e8bc2bbb3808f1df6b60940b1770b185c42370fa9dac2c8bc5c8a0363c158
+  version: 1.0.30001269
+  resolution: "caniuse-lite@npm:1.0.30001269"
+  checksum: 23a6bd029c4120a084056dae4eeecc552eba55c434035306e7ee4060aed1b6babed5f6d832f6ba359f13376356464a1673bc6c625c2932e376156f7f7fa1a3c0
   languageName: node
   linkType: hard
 
@@ -9072,19 +9065,6 @@ __metadata:
     find-up: ^2.1.0
     pkg-dir: ^2.0.0
   checksum: c30dfa125aafe65e5f6a30a31c26932106fcf09934a2f47d7f8a393ed9106da7b07416f2337b55c85f9db0175c873ee0827be5429a24ec381b49940f342b9ac3
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-import-order@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "eslint-plugin-import-order@npm:2.1.4"
-  dependencies:
-    builtin-modules: ^1.1.1
-    lodash.cond: ^4.2.0
-    lodash.find: ^4.2.0
-  peerDependencies:
-    eslint: ">=2"
-  checksum: 99a15973887cbc4036b70842d746717eb985d21ce454e4247b27964dbdf826fe8f1e89cd3644cb4509e76c7e32aa258ab5af5ff4f322dc6b5be5de42d4e62976
   languageName: node
   linkType: hard
 
@@ -13368,13 +13348,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"lodash.cond@npm:^4.2.0":
-  version: 4.5.2
-  resolution: "lodash.cond@npm:4.5.2"
-  checksum: 52a7233104ead999390c235bda139107ada2cfa4a020d72cb958585f593bf64c8301d586f5749a69225a34924b9314ac84e16156fdc83bed3b8547eb954d8e18
-  languageName: node
-  linkType: hard
-
 "lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -13386,13 +13359,6 @@ fsevents@~2.3.2:
   version: 4.2.0
   resolution: "lodash.defaults@npm:4.2.0"
   checksum: 84923258235592c8886e29de5491946ff8c2ae5c82a7ac5cddd2e3cb697e6fbdfbbb6efcca015795c86eec2bb953a5a2ee4016e3735a3f02720428a40efbb8f1
-  languageName: node
-  linkType: hard
-
-"lodash.find@npm:^4.2.0":
-  version: 4.6.0
-  resolution: "lodash.find@npm:4.6.0"
-  checksum: b737f849a4fe36f5c3664ea636780dda2fde18335021faf80cdfdcb300ed75441da6f55cfd6de119092d8bb2ddbc4433f4a8de4b99c0b9c8640465b0901c717c
   languageName: node
   linkType: hard
 
@@ -18090,7 +18056,6 @@ fsevents@~2.3.2:
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-typescript: ^2.5.0
     eslint-plugin-import: ^2.25.2
-    eslint-plugin-import-order: ^2.1.4
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.26.1
     eslint-plugin-react-hooks: 4.2.1-alpha-c3a19e5af-20211014

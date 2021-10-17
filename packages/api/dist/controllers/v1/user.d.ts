@@ -1,7 +1,7 @@
-import { Section, Settings, User } from '../../entities';
 import { interfaces } from 'inversify-express-utils';
 import { Request } from 'express';
 import { ThemeType } from '../../util/constants';
+import { Section, Settings, User } from '../../entities';
 import { ModifyError } from './base';
 export default class UserController implements interfaces.Controller {
     private readonly userService;

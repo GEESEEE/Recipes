@@ -1,10 +1,10 @@
 import * as SecureStore from 'expo-secure-store'
 import { Dispatch } from 'redux'
+import { retrieveRecipes } from './my-recipes'
+import { getRecipes } from './browse-recipes'
 import { AUTH_ACTIONS, SETTINGS_ACTIONS } from '@/redux/reducers'
 import { authService, userService } from '@/oldServices'
 import { routeUtils } from '@/utils'
-import { retrieveRecipes } from './my-recipes'
-import { getRecipes } from './browse-recipes'
 import { AuthUser } from '@/redux/reducers/auth'
 
 export const retrieveToken =

@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
+import { MyMaterialCommunityIcons } from '../../Icons'
+import { ButtonIcon, FeatherButton } from '../Buttons'
 import { sortActions } from '@/redux/actions'
 import { utils } from '@/utils'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { BROWSE_SORT_ACTIONS, MY_SORT_ACTIONS } from '@/redux/reducers'
-import { MyMaterialCommunityIcons } from '../../Icons'
-import { ButtonIcon, FeatherButton } from '../Buttons'
 
 function SortRow({
     type,

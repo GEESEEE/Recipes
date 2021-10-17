@@ -2,9 +2,9 @@
 import React from 'react'
 import { TextInput, Text } from 'react-native'
 import styled from 'styled-components'
+import ListItemWrapper from './ListItem'
 import { Instruction } from '@/data'
 import { useAppSelector } from '@/hooks'
-import ListItemWrapper from './ListItem'
 
 type InstructionListItemProps = {
     instruction: Instruction

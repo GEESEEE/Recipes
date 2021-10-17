@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseQueryBuilder = void 0;
 const tslib_1 = require("tslib");
-const lodash_1 = (0, tslib_1.__importStar)(require("lodash")), lodash = lodash_1;
+const mergeWith_1 = (0, tslib_1.__importDefault)(require("lodash/mergeWith"));
+const isEqual_1 = (0, tslib_1.__importDefault)(require("lodash/isEqual"));
+const countBy_1 = (0, tslib_1.__importDefault)(require("lodash/countBy"));
 const class_transformer_1 = require("class-transformer");
 const typeorm_1 = require("typeorm");
 const util_1 = require("../util/util");
@@ -22,10 +24,10 @@ class BaseRepository extends typeorm_1.Repository {
         }
         return groups
             .map((groupedRecords) => groupedRecords.map(this.transform.bind(this)))
-            .map(([first, ...rest]) => lodash.mergeWith(first, ...rest, (objValue, srcValue) => {
+            .map(([first, ...rest]) => (0, mergeWith_1.default)(first, ...rest, (objValue, srcValue) => {
             if (Array.isArray(objValue)) {
                 const srcVal = srcValue[0];
-                objValue = objValue.filter((item) => !lodash_1.default.isEqual(item, srcVal));
+                objValue = objValue.filter((item) => !(0, isEqual_1.default)(item, srcVal));
                 objValue.push(srcVal);
                 return objValue;
             }
@@ -97,7 +99,7 @@ class BaseQueryBuilder extends typeorm_1.SelectQueryBuilder {
     async pagination(page, perPage, property) {
         const skip = (page - 1) * perPage;
         const rawRecords = await this.getRawMany();
-        const count = Object.keys(lodash_1.default.countBy(rawRecords, property ?? 'id')).length;
+        const count = Object.keys((0, countBy_1.default)(rawRecords, property ?? 'id')).length;
         const calculeLastPage = count % perPage;
         const lastPage = calculeLastPage === 0
             ? count / perPage

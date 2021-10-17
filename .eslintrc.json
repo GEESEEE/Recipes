@@ -26,6 +26,14 @@
         "import/order": [
             "error"
         ],
+        "no-restricted-imports": [
+            "error",
+            {
+              "paths": [
+                "lodash"
+              ]
+            }
+          ],
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/ban-types": "warn",
         "@typescript-eslint/no-var-requires": "warn"

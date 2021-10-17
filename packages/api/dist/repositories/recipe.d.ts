@@ -1,5 +1,5 @@
-import BaseRepository, { BaseQueryBuilder } from './base';
 import { Recipe } from '../entities';
+import BaseRepository, { BaseQueryBuilder } from './base';
 export default class RecipeRepository extends BaseRepository<Recipe> {
     queryBuilder(args?: object): RecipeQueryBuilder;
     transform(record: any): Recipe;

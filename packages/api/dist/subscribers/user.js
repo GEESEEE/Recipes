@@ -4,11 +4,11 @@ exports.UserSubscriber = void 0;
 const tslib_1 = require("tslib");
 const typeorm_1 = require("typeorm");
 const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
+const inversify_inject_decorators_1 = (0, tslib_1.__importDefault)(require("inversify-inject-decorators"));
 const entities_1 = require("../entities");
 const repositories_1 = require("../repositories");
 const constants_1 = require("../util/constants");
 const config_1 = require("../config");
-const inversify_inject_decorators_1 = (0, tslib_1.__importDefault)(require("inversify-inject-decorators"));
 const { lazyInject } = (0, inversify_inject_decorators_1.default)(config_1.container);
 let UserSubscriber = class UserSubscriber {
     recipeRepository;

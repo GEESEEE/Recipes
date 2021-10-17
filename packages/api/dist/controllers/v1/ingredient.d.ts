@@ -1,5 +1,5 @@
-import { Ingredient } from '../../entities';
 import { interfaces } from 'inversify-express-utils';
+import { Ingredient } from '../../entities';
 export default class IngredientController implements interfaces.Controller {
     private readonly recipeService;
     createIngredient(body: {

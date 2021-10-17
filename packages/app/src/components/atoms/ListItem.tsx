@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View } from '@/components/base'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
+import { View } from '@/components/base'
 import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {

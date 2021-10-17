@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const express_validator_1 = require("express-validator");
 const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
 const services_1 = require("../../services");
 const util_1 = require("../../util");
-const inversify_1 = require("inversify");
 const errors_1 = require("../../errors");
 const { TYPES } = util_1.constants;
 let IngredientController = IngredientController_1 = class IngredientController {

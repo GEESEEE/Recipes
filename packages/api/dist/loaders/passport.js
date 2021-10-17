@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const passport_1 = (0, tslib_1.__importDefault)(require("passport"));
-const constants_1 = require("../util/constants");
 const passport_http_bearer_1 = require("passport-http-bearer");
+const constants_1 = require("../util/constants");
 const auth_1 = require("../services/auth");
 function init(container) {
     const userRepository = container.get(constants_1.TYPES.UserRepository);

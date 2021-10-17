@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import Loading4Dots from './Loading4Dots'
 import {
     Text,
     View,
     TouchableOpacity,
     TouchableOpacityProps,
 } from '@/components/base'
-import Loading4Dots from './Loading4Dots'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Typography, Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'

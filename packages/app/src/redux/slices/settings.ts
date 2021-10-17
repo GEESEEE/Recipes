@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { authActions } from './auth'
 import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
-import { authActions } from './auth'
 
 export interface Settings {
     invertedColors: boolean

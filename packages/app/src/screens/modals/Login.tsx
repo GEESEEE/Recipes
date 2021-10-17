@@ -2,14 +2,14 @@ import React, { useReducer } from 'react'
 import { Dimensions, Image } from 'react-native'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
+import LoadingModal from './Loading'
+import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import { Button, IconButton, Error } from '@/components/atoms'
 import { TextInputWithIcons } from '@/components/molecules'
 import { authActions, userService, authService } from '@/redux'
-import LoadingModal from './Loading'
-import RegisterModal from './Register'
 
 const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',

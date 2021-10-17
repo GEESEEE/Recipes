@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const inversify_1 = require("inversify");
-const entities_1 = require("../entities");
 const typeorm_1 = require("typeorm");
 const ioredis_1 = (0, tslib_1.__importDefault)(require("ioredis"));
+const passport_1 = (0, tslib_1.__importDefault)(require("passport"));
+const dotenv_1 = (0, tslib_1.__importDefault)(require("dotenv"));
+const entities_1 = require("../entities");
 const services_1 = require("../services");
 const constants_1 = require("../util/constants");
 const middlewares_1 = require("../middlewares");
-const passport_1 = (0, tslib_1.__importDefault)(require("passport"));
 const repositories_1 = require("../repositories");
-const dotenv_1 = (0, tslib_1.__importDefault)(require("dotenv"));
 dotenv_1.default.config();
 const container = new inversify_1.Container();
 const bind = container.bind.bind(container);

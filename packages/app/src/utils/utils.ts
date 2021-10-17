@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { StyleProp, ViewStyle } from 'react-native'
 import { DropdownItem } from '@/components/atoms'
 
@@ -53,7 +53,7 @@ export function indexOfIncludedElement(arr: string[], val: string): number {
 }
 
 export function deleteElement<T>(arr: Array<T>, element: T): boolean {
-    const sameElement = arr.find((e) => _.isEqual(e, element))
+    const sameElement = arr.find((e) => isEqual(e, element))
     if (!sameElement) return false
     const index = arr.indexOf(sameElement)
     if (index > -1) {

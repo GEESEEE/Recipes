@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { View, Text, Modal } from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { ReturnButton } from '../Buttons'
-import { sortActions } from '@/redux/actions'
 import SortRow from './SortRow'
+import { sortActions } from '@/redux/actions'
 
 function Sort({
     routeName,

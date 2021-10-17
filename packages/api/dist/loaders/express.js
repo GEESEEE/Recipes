@@ -4,11 +4,11 @@ const tslib_1 = require("tslib");
 require("../controllers");
 const express_1 = (0, tslib_1.__importDefault)(require("express"));
 const inversify_express_utils_1 = require("inversify-express-utils");
-const errors_1 = require("../errors");
-const util_1 = require("../util");
 const helmet_1 = (0, tslib_1.__importDefault)(require("helmet"));
 const hpp_1 = (0, tslib_1.__importDefault)(require("hpp"));
 const morgan_1 = (0, tslib_1.__importDefault)(require("morgan"));
+const util_1 = require("../util");
+const errors_1 = require("../errors");
 const { TYPES } = util_1.constants;
 function init(container) {
     return new inversify_express_utils_1.InversifyExpressServer(container)

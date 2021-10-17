@@ -4,13 +4,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import SearchBarComponent from './Search'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import {
     ButtonIcon,
     FeatherButton,
     FeatherButtonProps,
 } from '@/components/user-input/Buttons'
-import SearchBarComponent from './Search'
 import Sort from '@/components/user-input/search/SortModal'
 
 interface ScreenConfig {

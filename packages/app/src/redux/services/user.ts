@@ -1,5 +1,5 @@
-import { Section, Settings, User } from '@/data'
 import { api } from './base'
+import { Section, Settings, User } from '@/data'
 
 export type UpdateSettingsParams = {
     theme?: 'light' | 'dark'

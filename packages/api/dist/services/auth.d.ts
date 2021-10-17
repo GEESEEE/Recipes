@@ -1,5 +1,5 @@
-import User from '../entities/user';
 import * as jwt from 'jsonwebtoken';
+import User from '../entities/user';
 export declare enum OAuthError {
     INVALID_REQUEST = 0,
     INVALID_CLIENT = 1,

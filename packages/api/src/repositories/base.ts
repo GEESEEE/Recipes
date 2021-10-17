@@ -1,4 +1,6 @@
-import _, * as lodash from 'lodash'
+import mergeWith from 'lodash/mergeWith'
+import isEqual from 'lodash/isEqual'
+import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import { SortQueryTuple } from '../util/request'
@@ -27,21 +29,17 @@ export default abstract class BaseRepository<T> extends Repository<T> {
                 groupedRecords.map(this.transform.bind(this))
             )
             .map(([first, ...rest]) =>
-                lodash.mergeWith(
-                    first,
-                    ...rest,
-                    (objValue: any, srcValue: any) => {
-                        if (Array.isArray(objValue)) {
-                            const srcVal = srcValue[0]
-                            objValue = objValue.filter(
-                                (item) => !_.isEqual(item, srcVal)
-                            )
-                            objValue.push(srcVal)
-                            return objValue
-                        }
-                        return undefined
+                mergeWith(first, ...rest, (objValue: any, srcValue: any) => {
+                    if (Array.isArray(objValue)) {
+                        const srcVal = srcValue[0]
+                        objValue = objValue.filter(
+                            (item) => !isEqual(item, srcVal)
+                        )
+                        objValue.push(srcVal)
+                        return objValue
                     }
-                )
+                    return undefined
+                })
             )
     }
 }
@@ -151,9 +149,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
     ): Promise<PaginationObject> {
         const skip = (page - 1) * perPage
         const rawRecords = await this.getRawMany()
-        const count = Object.keys(
-            _.countBy(rawRecords, property ?? 'id')
-        ).length
+        const count = Object.keys(countBy(rawRecords, property ?? 'id')).length
         const calculeLastPage = count % perPage
         const lastPage =
             calculeLastPage === 0

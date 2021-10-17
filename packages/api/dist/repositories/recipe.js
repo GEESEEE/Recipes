@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecipeQueryBuilder = void 0;
 const tslib_1 = require("tslib");
-const base_1 = (0, tslib_1.__importStar)(require("./base"));
 const typeorm_1 = require("typeorm");
 const entities_1 = require("../entities");
+const base_1 = (0, tslib_1.__importStar)(require("./base"));
 let RecipeRepository = class RecipeRepository extends base_1.default {
     queryBuilder(args) {
         return new RecipeQueryBuilder(this, this.createQueryBuilder('recipe'), args);
