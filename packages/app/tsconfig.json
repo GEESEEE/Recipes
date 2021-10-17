@@ -1,12 +1,12 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "types": ["@types/react-native-dotenv"],
-        "typeRoots": ["src/types"],
-        "noEmit": true,
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"]
         },
+        "types": ["@types/react-native-dotenv"],
+        "typeRoots": ["src/types"],
+        "noEmit": true
     }
 }
