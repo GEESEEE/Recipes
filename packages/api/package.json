@@ -12,7 +12,7 @@
         "migration:revert": "yarn build && typeorm migration:revert",
         "seed:run": "yarn build && yarn typeorm-seeding seed",
         "test": "yarn build && set NODE_ENV=test&& mocha --require dist/tests/helper.js dist/**/*.test.js",
-        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./src"
+        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./src --fix"
     },
     "dependencies": {
         "@casl/ability": "^5.4.3",
