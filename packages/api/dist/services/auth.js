@@ -25,41 +25,39 @@ var AuthError;
     AuthError[AuthError["EMAIL_EXISTS"] = 1] = "EMAIL_EXISTS";
 })(AuthError = exports.AuthError || (exports.AuthError = {}));
 let AuthService = class AuthService {
-    signUp({ name, password, email, }) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            let user = yield this.userRepository.findOne({ name });
-            if (typeof user !== 'undefined') {
-                return AuthError.USER_EXISTS;
-            }
-            user = yield this.userRepository.findOne({ email });
-            if (typeof user !== 'undefined') {
-                return AuthError.EMAIL_EXISTS;
-            }
-            const settings = yield this.settingsRepository.save(this.settingsRepository.create({}));
-            user = yield this.userRepository.save(this.userRepository.create({
-                name,
-                password,
-                email,
-                settingsId: settings.id,
-            }));
-            return user;
-        });
+    userRepository;
+    tokenRepository;
+    settingsRepository;
+    redis;
+    async signUp({ name, password, email, }) {
+        let user = await this.userRepository.findOne({ name });
+        if (typeof user !== 'undefined') {
+            return AuthError.USER_EXISTS;
+        }
+        user = await this.userRepository.findOne({ email });
+        if (typeof user !== 'undefined') {
+            return AuthError.EMAIL_EXISTS;
+        }
+        const settings = await this.settingsRepository.save(this.settingsRepository.create({}));
+        user = await this.userRepository.save(this.userRepository.create({
+            name,
+            password,
+            email,
+            settingsId: settings.id,
+        }));
+        return user;
     }
-    signOut(token) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const result = yield this.tokenRepository.delete({ token });
-            if (result.affected === 0) {
-                return OAuthError.INVALID_GRANT;
-            }
-            yield this.redis.lpush('token', token);
-            return true;
-        });
+    async signOut(token) {
+        const result = await this.tokenRepository.delete({ token });
+        if (result.affected === 0) {
+            return OAuthError.INVALID_GRANT;
+        }
+        await this.redis.lpush('token', token);
+        return true;
     }
     // Helper functions
-    verifyPassword(password, hashedPassword) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield bcrypt_1.default.compare(password, hashedPassword);
-        });
+    async verifyPassword(password, hashedPassword) {
+        return await bcrypt_1.default.compare(password, hashedPassword);
     }
     signToken(payload) {
         return jwt.sign(payload, privateKey, { algorithm: 'RS256' });

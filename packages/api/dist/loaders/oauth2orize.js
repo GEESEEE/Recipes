@@ -23,12 +23,12 @@ function init(container) {
     server.exchange(oauth2orize_1.default.exchange.password({}, function (_client, username, password, _scope, body, done) {
         applicationRepository
             .findOne({ where: { uid: body.client_id } })
-            .then((app) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+            .then(async (app) => {
             if (typeof app === 'undefined') {
                 return done(new oauth2orize_1.TokenError('Unauthorized Client', 'unauthorized_client'));
             }
             else {
-                const user = yield userRepository.findOne({
+                const user = await userRepository.findOne({
                     where: [
                         { name: username },
                         { email: username },
@@ -38,12 +38,12 @@ function init(container) {
                     return done(new oauth2orize_1.TokenError('Invalid Username', 'invalid_client'));
                 }
                 else {
-                    const validPassword = yield authService.verifyPassword(password, user.password);
+                    const validPassword = await authService.verifyPassword(password, user.password);
                     if (validPassword) {
                         const token = authService.signToken({
                             id: user.id,
                         });
-                        const tokenInstance = yield tokenRepository.save(tokenRepository.create({
+                        const tokenInstance = await tokenRepository.save(tokenRepository.create({
                             token,
                             applicationId: app.id,
                             userId: user.id,
@@ -53,7 +53,7 @@ function init(container) {
                     return done(new oauth2orize_1.TokenError('Invalid Password', 'invalid_grant'));
                 }
             }
-        }))
+        })
             .catch((err) => done(err));
     }));
     container.bind(constants_1.TYPES.TokenMiddleware).toConstantValue(server.token());

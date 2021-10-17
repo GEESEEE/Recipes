@@ -6,6 +6,13 @@ const class_transformer_1 = require("class-transformer");
 const ingredient_1 = (0, tslib_1.__importDefault)(require("./ingredient"));
 const recipe_1 = (0, tslib_1.__importDefault)(require("./recipe"));
 let RecipeIngredient = class RecipeIngredient {
+    id;
+    recipeId;
+    ingredientId;
+    amount;
+    position;
+    recipe;
+    ingredient;
 };
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),

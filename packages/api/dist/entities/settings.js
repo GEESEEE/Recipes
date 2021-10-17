@@ -6,6 +6,11 @@ const class_transformer_1 = require("class-transformer");
 const constants_1 = require("../util/constants");
 const _1 = require(".");
 let Settings = class Settings {
+    id;
+    theme;
+    color;
+    invertedColors;
+    user;
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

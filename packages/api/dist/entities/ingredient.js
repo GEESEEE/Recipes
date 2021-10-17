@@ -5,6 +5,10 @@ const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const recipe_ingredient_1 = (0, tslib_1.__importDefault)(require("./recipe-ingredient"));
 let Ingredient = class Ingredient {
+    id;
+    name;
+    unit;
+    recipeIngredients;
 };
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),

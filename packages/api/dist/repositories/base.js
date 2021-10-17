@@ -35,10 +35,12 @@ class BaseRepository extends typeorm_1.Repository {
 }
 exports.default = BaseRepository;
 class BaseQueryBuilder extends typeorm_1.SelectQueryBuilder {
+    scopes = {};
+    sorts = {};
+    repository;
+    paginate;
     constructor(repository, queryBuilder, args) {
         super(queryBuilder);
-        this.scopes = {};
-        this.sorts = {};
         this.repository = repository;
         if (typeof args !== 'undefined') {
             for (const entry of Object.entries(args)) {
@@ -92,47 +94,35 @@ class BaseQueryBuilder extends typeorm_1.SelectQueryBuilder {
             return qb.addOrderBy(qb.sorts[sort[0]], sort[1]);
         }, this);
     }
-    pagination(page, perPage, property) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const skip = (page - 1) * perPage;
-            const rawRecords = yield this.getRawMany();
-            const count = Object.keys(lodash_1.default.countBy(rawRecords, property !== null && property !== void 0 ? property : 'id')).length;
-            const calculeLastPage = count % perPage;
-            const lastPage = calculeLastPage === 0
-                ? count / perPage
-                : Math.trunc(count / perPage) + 1;
-            const res = this.repository.transformMany(rawRecords, skip, perPage);
-            return {
-                from: skip <= count ? skip + 1 : null,
-                to: count > skip + perPage ? skip + perPage : count,
-                per_page: perPage,
-                total: count,
-                current_page: page,
-                prev_page: page > 1 ? page - 1 : null,
-                next_page: count > skip + perPage ? page + 1 : null,
-                last_page: lastPage,
-                data: res,
-            };
-        });
+    async pagination(page, perPage, property) {
+        const skip = (page - 1) * perPage;
+        const rawRecords = await this.getRawMany();
+        const count = Object.keys(lodash_1.default.countBy(rawRecords, property ?? 'id')).length;
+        const calculeLastPage = count % perPage;
+        const lastPage = calculeLastPage === 0
+            ? count / perPage
+            : Math.trunc(count / perPage) + 1;
+        const res = this.repository.transformMany(rawRecords, skip, perPage);
+        return {
+            from: skip <= count ? skip + 1 : null,
+            to: count > skip + perPage ? skip + perPage : count,
+            per_page: perPage,
+            total: count,
+            current_page: page,
+            prev_page: page > 1 ? page - 1 : null,
+            next_page: count > skip + perPage ? page + 1 : null,
+            last_page: lastPage,
+            data: res,
+        };
     }
     existsQuery(builder) {
         return `exists (${builder.getQuery()})`;
     }
-    getMany() {
-        const _super = Object.create(null, {
-            getRawMany: { get: () => super.getRawMany }
-        });
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return this.repository.transformMany(yield _super.getRawMany.call(this));
-        });
+    async getMany() {
+        return this.repository.transformMany(await super.getRawMany());
     }
-    getOne() {
-        const _super = Object.create(null, {
-            getRawMany: { get: () => super.getRawMany }
-        });
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return this.repository.transformMany(yield _super.getRawMany.call(this)).shift();
-        });
+    async getOne() {
+        return this.repository.transformMany(await super.getRawMany()).shift();
     }
     leftJoin(entityOrProperty, alias, condition, parameters) {
         if (this.expressionMap.joinAttributes.some((attribute) => attribute.entityOrProperty === entityOrProperty)) {

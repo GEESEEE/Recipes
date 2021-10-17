@@ -8,6 +8,14 @@ const section_1 = (0, tslib_1.__importDefault)(require("./section"));
 const settings_1 = (0, tslib_1.__importDefault)(require("./settings"));
 const token_1 = (0, tslib_1.__importDefault)(require("./token"));
 let User = class User {
+    id;
+    name;
+    email;
+    tokens;
+    sections;
+    password;
+    settingsId;
+    settings;
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

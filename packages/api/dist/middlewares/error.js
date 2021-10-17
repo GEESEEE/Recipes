@@ -5,21 +5,19 @@ const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
 const express_validator_1 = require("express-validator");
 let ErrorMiddleware = class ErrorMiddleware extends inversify_express_utils_1.BaseMiddleware {
-    handler(req, res, next) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            console.log('RequestBody', req.body);
-            const errors = yield (0, express_validator_1.validationResult)(req);
-            if (errors.isEmpty()) {
-                return next();
-            }
-            this.sendErrors(res, 422, errors
-                .array({ onlyFirstError: true })
-                .map(({ param, location, msg }) => ({
-                param,
-                location,
-                message: msg,
-            })));
-        });
+    async handler(req, res, next) {
+        console.log('RequestBody', req.body);
+        const errors = await (0, express_validator_1.validationResult)(req);
+        if (errors.isEmpty()) {
+            return next();
+        }
+        this.sendErrors(res, 422, errors
+            .array({ onlyFirstError: true })
+            .map(({ param, location, msg }) => ({
+            param,
+            location,
+            message: msg,
+        })));
     }
     sendError(res, statusCode, message) {
         this.sendErrors(res, statusCode, [{ message }]);

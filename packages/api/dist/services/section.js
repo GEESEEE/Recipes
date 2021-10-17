@@ -5,37 +5,28 @@ const inversify_1 = require("inversify");
 const typeorm_1 = require("typeorm");
 const constants_1 = require("../util/constants");
 let SectionService = class SectionService {
-    createSections(sectionObjects) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const sections = yield this.sectionRepository.save(sectionObjects.map(section => this.sectionRepository.create(section)));
-            return sections;
-        });
+    sectionRepository;
+    async createSections(sectionObjects) {
+        const sections = await this.sectionRepository.save(sectionObjects.map(section => this.sectionRepository.create(section)));
+        return sections;
     }
-    getSection(sectionId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.sectionRepository.findOne(sectionId);
-        });
+    async getSection(sectionId) {
+        return await this.sectionRepository.findOne(sectionId);
     }
-    getSectionsFromUser(userId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const sections = yield this.sectionRepository.find({
-                where: { userId }
-            });
-            return sections;
+    async getSectionsFromUser(userId) {
+        const sections = await this.sectionRepository.find({
+            where: { userId }
         });
+        return sections;
     }
-    updateSection(section, { name, description }) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            section.name = name !== null && name !== void 0 ? name : section.name;
-            section.description = description !== null && description !== void 0 ? description : section.description;
-            return yield this.sectionRepository.save(section);
-        });
+    async updateSection(section, { name, description }) {
+        section.name = name ?? section.name;
+        section.description = description ?? section.description;
+        return await this.sectionRepository.save(section);
     }
-    deleteSection(sectionId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const result = yield this.sectionRepository.delete(sectionId);
-            return result.affected !== 0;
-        });
+    async deleteSection(sectionId) {
+        const result = await this.sectionRepository.delete(sectionId);
+        return result.affected !== 0;
     }
 };
 (0, tslib_1.__decorate)([

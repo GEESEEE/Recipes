@@ -5,19 +5,15 @@ const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
 const base_1 = require("../repositories/base");
 let PaginationMiddleware = class PaginationMiddleware extends inversify_express_utils_1.BaseMiddleware {
-    handler(req, _res, next) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            base_1.BaseQueryBuilder.prototype.paginate = function (perPage) {
-                return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-                    const currentPage = getPage(req);
-                    const pageSize = typeof perPage === 'undefined'
-                        ? getPerPage(req)
-                        : getPerPage(req, perPage);
-                    return yield this.pagination(currentPage, pageSize);
-                });
-            };
-            return next();
-        });
+    async handler(req, _res, next) {
+        base_1.BaseQueryBuilder.prototype.paginate = async function (perPage) {
+            const currentPage = getPage(req);
+            const pageSize = typeof perPage === 'undefined'
+                ? getPerPage(req)
+                : getPerPage(req, perPage);
+            return await this.pagination(currentPage, pageSize);
+        };
+        return next();
     }
 };
 PaginationMiddleware = (0, tslib_1.__decorate)([

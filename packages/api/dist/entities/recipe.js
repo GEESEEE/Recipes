@@ -7,6 +7,18 @@ const instruction_1 = (0, tslib_1.__importDefault)(require("./instruction"));
 const recipe_ingredient_1 = (0, tslib_1.__importDefault)(require("./recipe-ingredient"));
 const section_1 = (0, tslib_1.__importDefault)(require("./section"));
 let Recipe = class Recipe {
+    id;
+    name;
+    description;
+    prepareTime;
+    peopleCount;
+    recipeIngredients;
+    instructions;
+    sectionId;
+    section;
+    publishedAt;
+    createdAt;
+    copyOf;
 };
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),

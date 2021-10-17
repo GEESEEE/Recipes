@@ -8,17 +8,13 @@ let RecipeSubscriber = class RecipeSubscriber {
     listenTo() {
         return entities_1.Recipe;
     }
-    beforeInsert(event) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            this.unpublishCopies(event.entity);
-        });
+    async beforeInsert(event) {
+        this.unpublishCopies(event.entity);
     }
-    beforeUpdate(event) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            if (typeof event.entity !== 'undefined') {
-                this.unpublishCopies(event.entity);
-            }
-        });
+    async beforeUpdate(event) {
+        if (typeof event.entity !== 'undefined') {
+            this.unpublishCopies(event.entity);
+        }
     }
     unpublishCopies(recipe) {
         if (recipe.copyOf != null) {

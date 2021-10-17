@@ -5,6 +5,11 @@ const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const recipe_1 = (0, tslib_1.__importDefault)(require("./recipe"));
 let Instruction = class Instruction {
+    id;
+    text;
+    position;
+    recipeId;
+    recipe;
 };
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),

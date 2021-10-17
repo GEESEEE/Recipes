@@ -26,8 +26,7 @@ function init(container) {
             throw new errors_1.NotFoundError();
         });
         app.use((err, _req, res, _next) => {
-            var _a, _b, _c;
-            errorMiddleware.sendError(res, (_b = (_a = err.statusCode) !== null && _a !== void 0 ? _a : err.status) !== null && _b !== void 0 ? _b : 500, (_c = err.message) !== null && _c !== void 0 ? _c : 'Internal Server Error');
+            errorMiddleware.sendError(res, err.statusCode ?? err.status ?? 500, err.message ?? 'Internal Server Error');
         });
     })
         .build();

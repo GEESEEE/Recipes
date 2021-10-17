@@ -5,6 +5,14 @@ const typeorm_1 = require("typeorm");
 const application_1 = (0, tslib_1.__importDefault)(require("./application"));
 const user_1 = (0, tslib_1.__importDefault)(require("./user"));
 let Token = class Token {
+    id;
+    token;
+    createdAt;
+    revokedAt;
+    applicationId;
+    application;
+    userId;
+    user;
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

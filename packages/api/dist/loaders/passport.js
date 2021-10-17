@@ -19,10 +19,10 @@ function init(container) {
         // redis.del(result.id)
         // redis.del('token')
         redis
-            .lrange('token', 0, 999999999)
-            .then((revokedTokens) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+            .lrange('token', 0, 999_999_999)
+            .then(async (revokedTokens) => {
             if (!revokedTokens.includes(token)) {
-                const userString = yield redis.get(result.id);
+                const userString = await redis.get(result.id);
                 if (userString !== null) {
                     try {
                         const redisUser = JSON.parse(userString);
@@ -31,11 +31,11 @@ function init(container) {
                     catch (err) { }
                 }
             }
-            const tok = yield tokenRepository.findOne({ token });
+            const tok = await tokenRepository.findOne({ token });
             if (typeof tok === 'undefined') {
                 return done(null, false, { message: 'Token not found' });
             }
-            const user = yield userRepository.findOne({
+            const user = await userRepository.findOne({
                 where: { id: result.id },
                 relations: ['settings'],
                 select: ['id', 'name', 'email', 'settingsId', 'settings'],
@@ -43,9 +43,9 @@ function init(container) {
             if (typeof user === 'undefined') {
                 return done(null, false, { message: 'User not found' });
             }
-            yield redis.set(user.id, JSON.stringify(user));
+            await redis.set(user.id, JSON.stringify(user));
             return done(null, user);
-        }))
+        })
             .catch((err) => console.log(err));
     }));
 }

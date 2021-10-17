@@ -12,85 +12,68 @@ const services_1 = require("../../services");
 const errors_1 = require("../../errors");
 const { TYPES } = util_1.constants;
 let UserController = UserController_1 = class UserController {
-    getUser(req) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return req.user;
-        });
+    userService;
+    sectionsService;
+    async getUser(req) {
+        return req.user;
     }
     // #region Settings
-    getSettings(req) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const settingsId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.settingsId;
-            return yield this.userService.getSettings(settingsId);
-        });
+    async getSettings(req) {
+        const settingsId = req.user?.settingsId;
+        return await this.userService.getSettings(settingsId);
     }
-    updateSettings(req, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const colorRegex = /^#[0-9A-F]{6}$/i;
-            if (typeof body.color !== 'undefined' &&
-                body.color.match(colorRegex) == null) {
-                throw new errors_1.BadRequestError('Invalid color');
-            }
-            const settings = Object.assign({ id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.settingsId }, body);
-            return yield this.userService.updateSettings(settings);
-        });
+    async updateSettings(req, body) {
+        const colorRegex = /^#[0-9A-F]{6}$/i;
+        if (typeof body.color !== 'undefined' &&
+            body.color.match(colorRegex) == null) {
+            throw new errors_1.BadRequestError('Invalid color');
+        }
+        const settings = { id: req.user?.settingsId, ...body };
+        return await this.userService.updateSettings(settings);
     }
     // #endregion
     // #region Sections
-    validateSection(userId, sectionId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const section = yield this.sectionsService.getSection(sectionId);
-            if (typeof section === 'undefined') {
-                return {
-                    id: sectionId,
-                    statusCode: 404,
-                    statusMessage: 'Provided sectionId was not found'
-                };
-            }
-            if (section.userId !== userId) {
-                return {
-                    id: sectionId,
-                    statusCode: 403,
-                    statusMessage: 'Provided section does not belong to the requesting user'
-                };
-            }
-            return section;
-        });
+    async validateSection(userId, sectionId) {
+        const section = await this.sectionsService.getSection(sectionId);
+        if (typeof section === 'undefined') {
+            return {
+                id: sectionId,
+                statusCode: 404,
+                statusMessage: 'Provided sectionId was not found'
+            };
+        }
+        if (section.userId !== userId) {
+            return {
+                id: sectionId,
+                statusCode: 403,
+                statusMessage: 'Provided section does not belong to the requesting user'
+            };
+        }
+        return section;
     }
-    createSection(req, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const section = Object.assign(Object.assign({}, body), { userId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id });
-            return (yield this.sectionsService.createSections([section]))[0];
-        });
+    async createSection(req, body) {
+        const section = {
+            ...body,
+            userId: req.user?.id
+        };
+        return (await this.sectionsService.createSections([section]))[0];
     }
-    getSections(req) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.sectionsService.getSectionsFromUser((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
-        });
+    async getSections(req) {
+        return await this.sectionsService.getSectionsFromUser(req.user?.id);
     }
-    updateSection(req, sectionId, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const validationResult = yield this.validateSection((_a = req.user) === null || _a === void 0 ? void 0 : _a.id, sectionId);
-            if (validationResult instanceof entities_1.Section) {
-                return yield this.sectionsService.updateSection(validationResult, body);
-            }
-            return validationResult;
-        });
+    async updateSection(req, sectionId, body) {
+        const validationResult = await this.validateSection(req.user?.id, sectionId);
+        if (validationResult instanceof entities_1.Section) {
+            return await this.sectionsService.updateSection(validationResult, body);
+        }
+        return validationResult;
     }
-    deleteSection(req, sectionId) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const validationResult = yield this.validateSection((_a = req.user) === null || _a === void 0 ? void 0 : _a.id, sectionId);
-            if (validationResult instanceof entities_1.Section) {
-                return yield this.sectionsService.deleteSection(sectionId);
-            }
-            return validationResult;
-        });
+    async deleteSection(req, sectionId) {
+        const validationResult = await this.validateSection(req.user?.id, sectionId);
+        if (validationResult instanceof entities_1.Section) {
+            return await this.sectionsService.deleteSection(sectionId);
+        }
+        return validationResult;
     }
     // //#endregion
     // #region validate

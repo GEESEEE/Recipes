@@ -15,15 +15,13 @@ IngredientRepository = (0, tslib_1.__decorate)([
 ], IngredientRepository);
 exports.default = IngredientRepository;
 class IngredientQueryBuilder extends base_1.BaseQueryBuilder {
-    deleteOrphanIngredients() {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.delete()
-                .where(`id NOT IN (${this.repository.manager
-                .createQueryBuilder(entities_1.RecipeIngredient, 'ri')
-                .select('ri.ingredient_id')
-                .getSql()})`)
-                .execute();
-        });
+    async deleteOrphanIngredients() {
+        return await this.delete()
+            .where(`id NOT IN (${this.repository.manager
+            .createQueryBuilder(entities_1.RecipeIngredient, 'ri')
+            .select('ri.ingredient_id')
+            .getSql()})`)
+            .execute();
     }
     get default() {
         return this;

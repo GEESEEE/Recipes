@@ -6,6 +6,12 @@ const typeorm_1 = require("typeorm");
 const recipe_1 = (0, tslib_1.__importDefault)(require("./recipe"));
 const user_1 = (0, tslib_1.__importDefault)(require("./user"));
 let Section = class Section {
+    id;
+    name;
+    description;
+    userId;
+    user;
+    recipes;
 };
 (0, tslib_1.__decorate)([
     (0, class_transformer_1.Expose)(),

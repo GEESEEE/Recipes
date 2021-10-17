@@ -55,22 +55,21 @@ RecipeRepository = (0, tslib_1.__decorate)([
 ], RecipeRepository);
 exports.default = RecipeRepository;
 class RecipeQueryBuilder extends base_1.BaseQueryBuilder {
-    constructor() {
-        super(...arguments);
-        this.scopes = {
-            published: null,
-            author: 'authorId',
-            search: 'searchQuery',
-        };
-        this.sorts = {
-            createtime: 'created_at',
-            publishtime: 'published_at',
-            preparetime: 'prepare_time',
-            peoplecount: 'people_count',
-            ingredientcount: 'COUNT(recipe_ingredient.id)',
-            instructioncount: 'COUNT(instruction.id)',
-        };
-    }
+    scopes = {
+        published: null,
+        author: 'authorId',
+        search: 'searchQuery',
+    };
+    sorts = {
+        createtime: 'created_at',
+        publishtime: 'published_at',
+        preparetime: 'prepare_time',
+        peoplecount: 'people_count',
+        ingredientcount: 'COUNT(recipe_ingredient.id)',
+        instructioncount: 'COUNT(instruction.id)',
+    };
+    authorId;
+    searchQuery;
     makeBaseQuery() {
         return this.addSelect('recipe.*')
             .leftJoinAndSelect('instruction', 'instruction', 'instruction.recipe_id = recipe.id')
@@ -123,16 +122,14 @@ class RecipeQueryBuilder extends base_1.BaseQueryBuilder {
             recipeId,
         });
     }
-    deleteUncopiedRecipesFromAuthor(authorId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const query = this.delete()
-                .andWhere(`recipe.authorId = :authorId`, { authorId })
-                .andWhere(`recipe.id NOT IN (${this.repository
-                .createQueryBuilder('other_recipe')
-                .select('other_recipe.copy_of', 'copy_id')
-                .getSql()})`);
-            yield query.execute();
-        });
+    async deleteUncopiedRecipesFromAuthor(authorId) {
+        const query = this.delete()
+            .andWhere(`recipe.authorId = :authorId`, { authorId })
+            .andWhere(`recipe.id NOT IN (${this.repository
+            .createQueryBuilder('other_recipe')
+            .select('other_recipe.copy_of', 'copy_id')
+            .getSql()})`);
+        await query.execute();
     }
 }
 exports.RecipeQueryBuilder = RecipeQueryBuilder;

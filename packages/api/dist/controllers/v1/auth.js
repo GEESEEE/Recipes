@@ -11,49 +11,44 @@ const errors_1 = require("../../errors");
 const validation_1 = (0, tslib_1.__importDefault)(require("../../errors/validation"));
 const { TYPES } = util_1.constants;
 let AuthController = AuthController_1 = class AuthController {
+    authService;
     // #region Auth
-    signUp(body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            let result;
-            try {
-                result = yield this.authService.signUp(body);
+    async signUp(body) {
+        let result;
+        try {
+            result = await this.authService.signUp(body);
+        }
+        catch (err) {
+            if (err instanceof validation_1.default) {
+                const property = err.data[0].property;
+                throw new errors_1.BadRequestError('Invalid ' +
+                    property.charAt(0).toUpperCase() +
+                    property.slice(1));
             }
-            catch (err) {
-                if (err instanceof validation_1.default) {
-                    const property = err.data[0].property;
-                    throw new errors_1.BadRequestError('Invalid ' +
-                        property.charAt(0).toUpperCase() +
-                        property.slice(1));
-                }
-                throw err;
-            }
-            if (result === auth_1.AuthError.USER_EXISTS) {
-                throw new errors_1.ConflictError('Username already in use');
-            }
-            if (result === auth_1.AuthError.EMAIL_EXISTS) {
-                throw new errors_1.ConflictError('Email already in use');
-            }
-            return { id: result.id };
-        });
+            throw err;
+        }
+        if (result === auth_1.AuthError.USER_EXISTS) {
+            throw new errors_1.ConflictError('Username already in use');
+        }
+        if (result === auth_1.AuthError.EMAIL_EXISTS) {
+            throw new errors_1.ConflictError('Email already in use');
+        }
+        return { id: result.id };
     }
     signIn() { }
-    verifyToken(req) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return req.user;
-        });
+    async verifyToken(req) {
+        return req.user;
     }
-    signOut(headers) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const token = headers.authorization.split(' ')[1];
-            const result = yield this.authService.signOut(token);
-            if (typeof result === 'boolean') {
-                return result;
-            }
-            if (result === auth_1.OAuthError.INVALID_GRANT) {
-                throw new errors_1.BadRequestError('Invalid Token');
-            }
-            throw new errors_1.BadRequestError('Invalid Signout');
-        });
+    async signOut(headers) {
+        const token = headers.authorization.split(' ')[1];
+        const result = await this.authService.signOut(token);
+        if (typeof result === 'boolean') {
+            return result;
+        }
+        if (result === auth_1.OAuthError.INVALID_GRANT) {
+            throw new errors_1.BadRequestError('Invalid Token');
+        }
+        throw new errors_1.BadRequestError('Invalid Signout');
     }
     // #endregion
     // #region validate

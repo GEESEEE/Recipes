@@ -5,6 +5,14 @@ const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 const token_1 = (0, tslib_1.__importDefault)(require("./token"));
 let Application = class Application {
+    id;
+    uid;
+    name;
+    secret;
+    redirectUri;
+    confidential;
+    scopes;
+    tokens;
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

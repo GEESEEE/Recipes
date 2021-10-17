@@ -5,25 +5,21 @@ const inversify_1 = require("inversify");
 const typeorm_1 = require("typeorm");
 const constants_1 = require("../util/constants");
 let UserService = class UserService {
-    getUser(id) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const user = (yield this.userRepository.findOne({
-                where: { id },
-                relations: ['settings'],
-            }));
-            user.password = '';
-            return user;
-        });
+    userRepository;
+    settingsRepository;
+    async getUser(id) {
+        const user = (await this.userRepository.findOne({
+            where: { id },
+            relations: ['settings'],
+        }));
+        user.password = '';
+        return user;
     }
-    getSettings(id) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return (yield this.settingsRepository.findOne({ id }));
-        });
+    async getSettings(id) {
+        return (await this.settingsRepository.findOne({ id }));
     }
-    updateSettings(settings) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.settingsRepository.save(settings);
-        });
+    async updateSettings(settings) {
+        return await this.settingsRepository.save(settings);
     }
 };
 (0, tslib_1.__decorate)([

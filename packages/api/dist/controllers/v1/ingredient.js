@@ -10,27 +10,22 @@ const inversify_1 = require("inversify");
 const errors_1 = require("../../errors");
 const { TYPES } = util_1.constants;
 let IngredientController = IngredientController_1 = class IngredientController {
-    createIngredient(body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.recipeService.createIngredient(body);
-        });
+    recipeService;
+    async createIngredient(body) {
+        return await this.recipeService.createIngredient(body);
     }
-    getIngredient(ingredientId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const ingredient = yield this.recipeService.getIngredient(ingredientId);
-            if (typeof ingredient === 'undefined') {
-                throw new errors_1.NotFoundError('Ingredient was not found');
-            }
-            return ingredient;
-        });
+    async getIngredient(ingredientId) {
+        const ingredient = await this.recipeService.getIngredient(ingredientId);
+        if (typeof ingredient === 'undefined') {
+            throw new errors_1.NotFoundError('Ingredient was not found');
+        }
+        return ingredient;
     }
-    deleteIngredient(ingredientId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const result = yield this.recipeService.deleteIngredient(ingredientId);
-            if (!result) {
-                throw new errors_1.NotFoundError('Ingredient was not found');
-            }
-        });
+    async deleteIngredient(ingredientId) {
+        const result = await this.recipeService.deleteIngredient(ingredientId);
+        if (!result) {
+            throw new errors_1.NotFoundError('Ingredient was not found');
+        }
     }
     static validate(method) {
         switch (method) {

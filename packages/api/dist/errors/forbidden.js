@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const base_1 = (0, tslib_1.__importDefault)(require("./base"));
 class ForbiddenError extends base_1.default {
     constructor(message) {
-        super(message !== null && message !== void 0 ? message : 'Forbidden', 403);
+        super(message ?? 'Forbidden', 403);
     }
 }
 exports.default = ForbiddenError;

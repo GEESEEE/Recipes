@@ -13,239 +13,208 @@ const base_1 = require("./base");
 const { TYPES } = util_1.constants;
 const recipeProperties = ['ingredient', 'instruction'];
 let RecipeController = RecipeController_1 = class RecipeController {
+    recipeService;
     // #region Recipe
-    checkRecipeAbility(req, recipeId) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const ability = (_a = req.user) === null || _a === void 0 ? void 0 : _a.ability;
-            const action = base_1.methodMap[req.method];
-            const recipe = yield this.recipeService.getRecipe(recipeId);
-            if (typeof recipe === 'undefined') {
-                throw new errors_1.NotFoundError('Recipe not found');
-            }
-            if (!ability.can(action, recipe)) {
-                let actionString = action;
-                for (const prop of recipeProperties) {
-                    if (req.path.includes(prop)) {
-                        actionString += ` ${prop}s`;
-                        if (action === 'read') {
-                            actionString += ' for';
-                        }
-                        else {
-                            actionString += ' of';
-                        }
+    async checkRecipeAbility(req, recipeId) {
+        const ability = req.user?.ability;
+        const action = base_1.methodMap[req.method];
+        const recipe = await this.recipeService.getRecipe(recipeId);
+        if (typeof recipe === 'undefined') {
+            throw new errors_1.NotFoundError('Recipe not found');
+        }
+        if (!ability.can(action, recipe)) {
+            let actionString = action;
+            for (const prop of recipeProperties) {
+                if (req.path.includes(prop)) {
+                    actionString += ` ${prop}s`;
+                    if (action === 'read') {
+                        actionString += ' for';
+                    }
+                    else {
+                        actionString += ' of';
                     }
                 }
-                actionString += ' a';
-                if (action === 'read')
-                    actionString += 'n unpublished';
-                throw new errors_1.ForbiddenError(`Unauthorized to ${actionString} recipe from someone else`);
             }
-            return recipe;
-        });
+            actionString += ' a';
+            if (action === 'read')
+                actionString += 'n unpublished';
+            throw new errors_1.ForbiddenError(`Unauthorized to ${actionString} recipe from someone else`);
+        }
+        return recipe;
     }
-    createRecipe(req, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = {
-                name: body.name,
-                description: body.description,
-                prepareTime: body.prepareTime,
-                peopleCount: body.peopleCount,
-                authorId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id,
+    async createRecipe(req, body) {
+        const recipe = {
+            name: body.name,
+            description: body.description,
+            prepareTime: body.prepareTime,
+            peopleCount: body.peopleCount,
+            authorId: req.user?.id,
+        };
+        if (typeof body.publishedAt !== 'undefined') {
+            recipe.publishedAt = body.publishedAt;
+        }
+        if (typeof body.createdAt !== 'undefined') {
+            recipe.createdAt = body.createdAt;
+        }
+        if (typeof body.copyOf !== 'undefined') {
+            recipe.copyOf = body.copyOf;
+        }
+        return (await this.recipeService.createRecipes([recipe]))[0];
+    }
+    async createRecipes(req, body) {
+        const recipes = body.map((b) => {
+            const r = {
+                name: b.name,
+                description: b.description,
+                prepareTime: b.prepareTime,
+                peopleCount: b.peopleCount,
+                authorId: req.user?.id,
             };
-            if (typeof body.publishedAt !== 'undefined') {
-                recipe.publishedAt = body.publishedAt;
+            if (typeof b.publishedAt !== 'undefined') {
+                r.publishedAt = b.publishedAt;
             }
-            if (typeof body.createdAt !== 'undefined') {
-                recipe.createdAt = body.createdAt;
+            if (typeof b.createdAt !== 'undefined') {
+                r.createdAt = b.createdAt;
             }
-            if (typeof body.copyOf !== 'undefined') {
-                recipe.copyOf = body.copyOf;
+            if (typeof b.copyOf !== 'undefined') {
+                r.copyOf = b.copyOf;
             }
-            return (yield this.recipeService.createRecipes([recipe]))[0];
+            return r;
         });
+        return await this.recipeService.createRecipes(recipes);
     }
-    createRecipes(req, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipes = body.map((b) => {
-                var _a;
-                const r = {
-                    name: b.name,
-                    description: b.description,
-                    prepareTime: b.prepareTime,
-                    peopleCount: b.peopleCount,
-                    authorId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id,
-                };
-                if (typeof b.publishedAt !== 'undefined') {
-                    r.publishedAt = b.publishedAt;
-                }
-                if (typeof b.createdAt !== 'undefined') {
-                    r.createdAt = b.createdAt;
-                }
-                if (typeof b.copyOf !== 'undefined') {
-                    r.copyOf = b.copyOf;
-                }
-                return r;
-            });
-            return yield this.recipeService.createRecipes(recipes);
-        });
+    async getRecipe(req, recipeId) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        return recipe;
     }
-    getRecipe(req, recipeId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            return recipe;
-        });
+    async getRecipes(req, body, scopes, search, sort) {
+        if (typeof scopes === 'undefined') {
+            scopes = [];
+        }
+        // If scope has author, but no authorId was provided, use the requesting user's id
+        if (scopes.includes('author') && typeof body.authorId === 'undefined') {
+            body.authorId = req.user?.id;
+        }
+        const args = body;
+        if (typeof search !== 'undefined') {
+            scopes.push('search');
+            args.searchQuery = search;
+        }
+        if (typeof sort === 'undefined') {
+            sort = [];
+        }
+        return await this.recipeService.getRecipesByScopes(scopes, args, sort);
     }
-    getRecipes(req, body, scopes, search, sort) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            if (typeof scopes === 'undefined') {
-                scopes = [];
-            }
-            // If scope has author, but no authorId was provided, use the requesting user's id
-            if (scopes.includes('author') && typeof body.authorId === 'undefined') {
-                body.authorId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-            }
-            const args = body;
-            if (typeof search !== 'undefined') {
-                scopes.push('search');
-                args.searchQuery = search;
-            }
-            if (typeof sort === 'undefined') {
-                sort = [];
-            }
-            return yield this.recipeService.getRecipesByScopes(scopes, args, sort);
-        });
+    async updateRecipe(req, recipeId, body) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        return await this.recipeService.updateRecipe(recipe, body);
     }
-    updateRecipe(req, recipeId, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            return yield this.recipeService.updateRecipe(recipe, body);
-        });
-    }
-    deleteRecipe(req, recipeId) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            yield this.checkRecipeAbility(req, recipeId);
-            yield this.recipeService.deleteRecipe(recipeId);
-        });
+    async deleteRecipe(req, recipeId) {
+        await this.checkRecipeAbility(req, recipeId);
+        await this.recipeService.deleteRecipe(recipeId);
     }
     // #endregion
     // #region Ingredients
-    addIngredients(req, recipeId, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            yield this.checkRecipeAbility(req, recipeId);
-            return yield this.recipeService.addRecipeIngredients(recipeId, body);
-        });
+    async addIngredients(req, recipeId, body) {
+        await this.checkRecipeAbility(req, recipeId);
+        return await this.recipeService.addRecipeIngredients(recipeId, body);
     }
-    updateIngredients(req, recipeId, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            const res = [];
-            const toUpdate = [];
-            for (const iToUpdate of body) {
-                const existIngr = (_a = recipe.recipeIngredients) === null || _a === void 0 ? void 0 : _a.find((i) => i.id === iToUpdate.recipeIngredientId);
-                if (typeof existIngr !== 'undefined') {
-                    toUpdate.push(iToUpdate);
-                }
-                else {
-                    res.push({
-                        id: iToUpdate.recipeIngredientId,
-                        statusCode: 403,
-                        statusMessage: 'Provided recipeId does not match that of this recipe ingredient',
-                    });
-                }
+    async updateIngredients(req, recipeId, body) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        const res = [];
+        const toUpdate = [];
+        for (const iToUpdate of body) {
+            const existIngr = recipe.recipeIngredients?.find((i) => i.id === iToUpdate.recipeIngredientId);
+            if (typeof existIngr !== 'undefined') {
+                toUpdate.push(iToUpdate);
             }
-            if (toUpdate.length > 0) {
-                res.push(...(yield this.recipeService.updateRecipeIngredients(toUpdate)));
+            else {
+                res.push({
+                    id: iToUpdate.recipeIngredientId,
+                    statusCode: 403,
+                    statusMessage: 'Provided recipeId does not match that of this recipe ingredient',
+                });
             }
-            return res;
-        });
+        }
+        if (toUpdate.length > 0) {
+            res.push(...(await this.recipeService.updateRecipeIngredients(toUpdate)));
+        }
+        return res;
     }
-    removeIngredients(req, recipeId, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            const toDelete = [];
-            const errors = [];
-            if (typeof recipe.recipeIngredients === 'undefined')
-                recipe.recipeIngredients = [];
-            for (const recipeIngredient of recipe.recipeIngredients) {
-                if (typeof recipeIngredient.ingredient !== 'undefined' &&
-                    body.includes(recipeIngredient.ingredient.id)) {
-                    toDelete.push(recipeIngredient.ingredient.id);
-                }
-                else {
-                    errors.push({
-                        id: recipeIngredient.id,
-                        statusCode: 403,
-                        statusMessage: 'Provided recipeId does not match that of this recipe ingredient',
-                    });
-                }
+    async removeIngredients(req, recipeId, body) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        const toDelete = [];
+        const errors = [];
+        if (typeof recipe.recipeIngredients === 'undefined')
+            recipe.recipeIngredients = [];
+        for (const recipeIngredient of recipe.recipeIngredients) {
+            if (typeof recipeIngredient.ingredient !== 'undefined' &&
+                body.includes(recipeIngredient.ingredient.id)) {
+                toDelete.push(recipeIngredient.ingredient.id);
             }
-            if (toDelete.length > 0) {
-                yield this.recipeService.removeRecipeIngredients(recipeId, toDelete);
+            else {
+                errors.push({
+                    id: recipeIngredient.id,
+                    statusCode: 403,
+                    statusMessage: 'Provided recipeId does not match that of this recipe ingredient',
+                });
             }
-            return errors;
-        });
+        }
+        if (toDelete.length > 0) {
+            await this.recipeService.removeRecipeIngredients(recipeId, toDelete);
+        }
+        return errors;
     }
     // #endregion
     // #region Instructions
-    addInstructions(req, recipeId, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            yield this.checkRecipeAbility(req, recipeId);
-            return yield this.recipeService.addInstructions(recipeId, body);
-        });
+    async addInstructions(req, recipeId, body) {
+        await this.checkRecipeAbility(req, recipeId);
+        return await this.recipeService.addInstructions(recipeId, body);
     }
-    updateInstructions(req, recipeId, body) {
-        var _a;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            const res = [];
-            const toUpdate = [];
-            for (const iToUpdate of body) {
-                const existInstr = (_a = recipe.instructions) === null || _a === void 0 ? void 0 : _a.find((i) => i.id === iToUpdate.instructionId);
-                if (typeof existInstr !== 'undefined') {
-                    toUpdate.push(iToUpdate);
-                }
-                else {
-                    res.push({
-                        id: iToUpdate.instructionId,
-                        statusCode: 403,
-                        statusMessage: 'Provided recipeId does not match that of this instruction',
-                    });
-                }
+    async updateInstructions(req, recipeId, body) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        const res = [];
+        const toUpdate = [];
+        for (const iToUpdate of body) {
+            const existInstr = recipe.instructions?.find((i) => i.id === iToUpdate.instructionId);
+            if (typeof existInstr !== 'undefined') {
+                toUpdate.push(iToUpdate);
             }
-            if (toUpdate.length > 0) {
-                res.push(...(yield this.recipeService.updateInstructions(toUpdate)));
+            else {
+                res.push({
+                    id: iToUpdate.instructionId,
+                    statusCode: 403,
+                    statusMessage: 'Provided recipeId does not match that of this instruction',
+                });
             }
-            return res;
-        });
+        }
+        if (toUpdate.length > 0) {
+            res.push(...(await this.recipeService.updateInstructions(toUpdate)));
+        }
+        return res;
     }
-    deleteInstructions(req, recipeId, body) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const recipe = yield this.checkRecipeAbility(req, recipeId);
-            const toDelete = [];
-            const errors = [];
-            if (typeof recipe.instructions === 'undefined')
-                recipe.instructions = [];
-            for (const instruction of recipe.instructions) {
-                if (body.includes(instruction.id)) {
-                    toDelete.push(instruction.id);
-                }
-                else {
-                    errors.push({
-                        id: instruction.id,
-                        statusCode: 403,
-                        statusMessage: 'Provided recipeId does not match that of this instruction',
-                    });
-                }
+    async deleteInstructions(req, recipeId, body) {
+        const recipe = await this.checkRecipeAbility(req, recipeId);
+        const toDelete = [];
+        const errors = [];
+        if (typeof recipe.instructions === 'undefined')
+            recipe.instructions = [];
+        for (const instruction of recipe.instructions) {
+            if (body.includes(instruction.id)) {
+                toDelete.push(instruction.id);
             }
-            if (toDelete.length > 0) {
-                yield this.recipeService.deleteInstructions(toDelete);
+            else {
+                errors.push({
+                    id: instruction.id,
+                    statusCode: 403,
+                    statusMessage: 'Provided recipeId does not match that of this instruction',
+                });
             }
-            return errors;
-        });
+        }
+        if (toDelete.length > 0) {
+            await this.recipeService.deleteInstructions(toDelete);
+        }
+        return errors;
     }
     // #endregion
     // #region validate

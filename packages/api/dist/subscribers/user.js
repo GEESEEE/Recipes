@@ -11,37 +11,30 @@ const config_1 = require("../config");
 const inversify_inject_decorators_1 = (0, tslib_1.__importDefault)(require("inversify-inject-decorators"));
 const { lazyInject } = (0, inversify_inject_decorators_1.default)(config_1.container);
 let UserSubscriber = class UserSubscriber {
+    recipeRepository;
     listenTo() {
         return entities_1.User;
     }
-    beforeInsert(event) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            event.entity.password = yield this.hashPassword(event.entity.password);
-        });
+    async beforeInsert(event) {
+        event.entity.password = await this.hashPassword(event.entity.password);
     }
-    beforeUpdate(event) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            if (typeof event.entity === 'undefined') {
-                return;
-            }
-            const newPassword = event.updatedColumns.find((column) => column.propertyName === 'password');
-            if (typeof newPassword !== 'undefined') {
-                event.entity.password = yield this.hashPassword(event.entity.password);
-            }
-        });
+    async beforeUpdate(event) {
+        if (typeof event.entity === 'undefined') {
+            return;
+        }
+        const newPassword = event.updatedColumns.find((column) => column.propertyName === 'password');
+        if (typeof newPassword !== 'undefined') {
+            event.entity.password = await this.hashPassword(event.entity.password);
+        }
     }
     // TODO: Test if deleteUncopiedRecipesFromAuthor works correctly
-    BeforeRemove(event) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const queryBuilder = this.recipeRepository.queryBuilder();
-            yield queryBuilder.deleteUncopiedRecipesFromAuthor(event.entityId);
-        });
+    async BeforeRemove(event) {
+        const queryBuilder = this.recipeRepository.queryBuilder();
+        await queryBuilder.deleteUncopiedRecipesFromAuthor(event.entityId);
     }
-    hashPassword(password) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const salt = yield bcrypt_1.default.genSalt();
-            return yield bcrypt_1.default.hash(password, salt);
-        });
+    async hashPassword(password) {
+        const salt = await bcrypt_1.default.genSalt();
+        return await bcrypt_1.default.hash(password, salt);
     }
 };
 (0, tslib_1.__decorate)([
