@@ -1,18 +1,31 @@
-import { Container } from 'inversify'
-import { Instruction, RecipeIngredient, Section, Settings, User, Token, Application } from '../entities'
+import { Container } from "inversify"
 import {
-    Repository,
-    getRepository,
-    getCustomRepository,
-} from 'typeorm'
-import Redis from 'ioredis'
-import { AuthService, RecipeService, SectionService, UserService } from '../services'
-import { TYPES } from '../util/constants'
-import { ErrorMiddleware, AbilityMiddleware, PaginationMiddleware } from '../middlewares'
-import passport from 'passport'
-import { IngredientRepository, RecipeRepository } from '../repositories'
+    Instruction,
+    RecipeIngredient,
+    Section,
+    Settings,
+    User,
+    Token,
+    Application,
+} from "../entities"
+import { Repository, getRepository, getCustomRepository } from "typeorm"
+import Redis from "ioredis"
+import {
+    AuthService,
+    RecipeService,
+    SectionService,
+    UserService,
+} from "../services"
+import { TYPES } from "../util/constants"
+import {
+    ErrorMiddleware,
+    AbilityMiddleware,
+    PaginationMiddleware,
+} from "../middlewares"
+import passport from "passport"
+import { IngredientRepository, RecipeRepository } from "../repositories"
 
-import dotenv from 'dotenv'
+import dotenv from "dotenv"
 
 dotenv.config()
 
@@ -27,13 +40,11 @@ bind<any>(TYPES.Redis).toConstantValue(
 )
 
 bind<any>(TYPES.PassportMiddleware).toConstantValue(
-    passport.authenticate('bearer', { session: false })
+    passport.authenticate("bearer", { session: false })
 )
 bind<AbilityMiddleware>(TYPES.AbilityMiddleware).to(AbilityMiddleware)
 bind<ErrorMiddleware>(TYPES.ErrorMiddleware).to(ErrorMiddleware)
-bind<PaginationMiddleware>(TYPES.PaginationMiddleware).to(
-    PaginationMiddleware
-)
+bind<PaginationMiddleware>(TYPES.PaginationMiddleware).to(PaginationMiddleware)
 
 // Auth Repositories
 bind<Repository<User>>(TYPES.UserRepository)
@@ -53,16 +64,12 @@ bind<Repository<Token>>(TYPES.TokenRepository)
     .inRequestScope()
 
 // Recipe Repositories
-bind<Repository<Settings>>(TYPES.SettingsRepository).toDynamicValue(
-    () => {
-        return getRepository(Settings)
-    }
-)
-bind<Repository<Section>>(TYPES.SectionRepository).toDynamicValue(
-    () => {
-        return getRepository(Section)
-    }
-)
+bind<Repository<Settings>>(TYPES.SettingsRepository).toDynamicValue(() => {
+    return getRepository(Settings)
+})
+bind<Repository<Section>>(TYPES.SectionRepository).toDynamicValue(() => {
+    return getRepository(Section)
+})
 bind<IngredientRepository>(TYPES.IngredientRepository)
     .toDynamicValue(() => {
         return getCustomRepository(IngredientRepository)

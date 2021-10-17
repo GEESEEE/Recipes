@@ -10,14 +10,13 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true,
-        "react-native/react-native": true
+        "node": true
     },
     "extends": [
         "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "plugin:mocha/recommended"
+        "plugin:prettier/recommended"
     ],
     "plugins": [
     ],
