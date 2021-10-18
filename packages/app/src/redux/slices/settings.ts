@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Theme } from '@recipes/api-types/v1'
 import { authActions } from './auth'
 import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
@@ -15,7 +16,7 @@ const initialState: Settings = {
     theme: themeUtils.darkTheme(),
 }
 
-function getTheme(theme: string): themeUtils.Theme {
+function getTheme(theme: Theme): themeUtils.Theme {
     return theme === 'dark' ? themeUtils.darkTheme() : themeUtils.lightTheme()
 }
 
@@ -23,18 +24,18 @@ const settingsSlice = createSlice({
     name: 'settings',
     initialState,
     reducers: {
-        setInvertedColors(state, action) {
+        setInvertedColors(state, action: PayloadAction<boolean>) {
             state.invertedColors = action.payload
         },
-        setTheme(state, action) {
+        setTheme(state, action: PayloadAction<Theme>) {
             state.theme = getTheme(action.payload)
         },
-        setColor(state, action) {
+        setColor(state, action: PayloadAction<string>) {
             const color = action.payload
             colors.primary = color
             state.theme = { ...state.theme, primary: color }
         },
-        setTextSize(state, action) {
+        setTextSize(state, action: PayloadAction<Typography.TextSize>) {
             state.textSize = action.payload
         },
     },
