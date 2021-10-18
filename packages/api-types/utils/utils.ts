@@ -1,21 +1,18 @@
 import pickBy from 'lodash/pickBy'
 
 type Class<T> = new (...args: any[]) => T
+type Instance = { [key: string]: any }
 
-export function fit<T, U extends T>(object: U, subclass: Class<T>): T {
+export function fitToClass<T, U extends T>(object: U, subclass: Class<T>): T {
     const instance = new subclass()
-    console.log('\n')
-    return intersection(
-        object as Record<string, unknown>,
-        instance as Record<string, unknown>
-    ) as T
+    return fitToInstance(object, instance)
 }
 
-export function intersection(
-    obj1: Record<string, unknown>,
-    obj2: Record<string, unknown>
-): Record<string, unknown> {
-    obj1 = pickBy(obj1, (val, key) => {
+export function fitToInstance<T extends Instance, U extends T>(
+    obj1: U,
+    obj2: T
+): T {
+    const res = pickBy(obj1, (val, key) => {
         return key in obj2 && typeof val === typeof obj2[key]
     })
 
@@ -29,14 +26,11 @@ export function intersection(
                 val1 !== null &&
                 val2 !== null
             ) {
-                obj1[key] = intersection(
-                    val1 as Record<string, unknown>,
-                    val2 as Record<string, unknown>
-                )
+                res[key] = fitToInstance(val1, val2)
             }
         }
     }
-    return obj1
+    return res as T
 }
 
 export function capitalize(str: string): string {

@@ -3,7 +3,7 @@ import { authActions } from './auth'
 import { colors, themeUtils } from '@/utils'
 import { Typography } from '@/styles'
 
-export interface Settings {
+export type Settings = {
     invertedColors: boolean
     textSize: Typography.TextSize
     theme: themeUtils.Theme
