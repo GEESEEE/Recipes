@@ -16,6 +16,7 @@ import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
 import ValidationError from '../../errors/validation'
 import { User } from '../../entities'
+import { OutputUser } from '../../util/types'
 
 const { TYPES } = constants
 
@@ -31,7 +32,7 @@ export default class AuthController implements interfaces.Controller {
     )
     public async signUp(
         @requestBody() body: { name: string; password: string; email: string }
-    ): Promise<User> {
+    ): Promise<OutputUser> {
         let user
         try {
             user = await this.authService.signUp(body)

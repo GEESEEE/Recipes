@@ -14,7 +14,7 @@ export default class Settings {
         enum: Theme,
         default: Theme.DARK,
     })
-    public theme!: string
+    public theme!: Theme
 
     @Expose()
     @Column()

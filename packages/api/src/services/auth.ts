@@ -8,6 +8,7 @@ import Token from '../entities/token'
 import User from '../entities/user'
 import { TYPES } from '../util/constants'
 import { Settings } from '../entities'
+import { OutputUser } from '../util/types'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')
 const privateKey = fs.readFileSync('private.key', 'utf-8')
@@ -48,7 +49,7 @@ export default class AuthService {
         name: string
         password: string
         email: string
-    }): Promise<User | AuthError> {
+    }): Promise<OutputUser | AuthError> {
         let user = await this.userRepository.findOne({ name })
         if (typeof user !== 'undefined') {
             return AuthError.USER_EXISTS
