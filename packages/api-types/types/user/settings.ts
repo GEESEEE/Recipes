@@ -1,5 +1,3 @@
-import { Theme } from './theme'
-
 export class Settings {
     constructor(
         id = -1,
@@ -17,4 +15,9 @@ export class Settings {
     public theme!: Theme
     public color!: string
     public invertedColors!: boolean
+}
+
+export enum Theme {
+    LIGHT = 'light',
+    DARK = 'dark',
 }

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { APPLICATION_ID } from '@env'
+import { User } from '@recipes/api-types/v1'
 import { api } from './base'
-import { User } from '@/data'
 
 export type SignUpParams = { name: string; password: string; email: string }
 export type SignOutParams = { token: string }

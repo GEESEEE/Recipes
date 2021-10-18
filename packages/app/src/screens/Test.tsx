@@ -19,7 +19,7 @@ import {
     PressableTextWithElement,
 } from '@/components/atoms'
 import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
-import { Instruction, User } from '@/data'
+import { Instruction } from '@/data'
 import { useUpdateSettingsMutation } from '@/redux/services/user'
 
 const bigLogo = 1

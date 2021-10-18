@@ -1,4 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { User } from '@recipes/api-types/v1'
+
+type AuthUser = Omit<User, 'settings'>
 
 export interface Auth {
     dataLoaded: boolean
@@ -7,13 +10,6 @@ export interface Auth {
     error: string
     token: string
     user: AuthUser
-}
-
-export interface AuthUser {
-    id: number
-    name: string
-    email: string
-    settingsId: number
 }
 
 const initialState: Auth = {
@@ -26,7 +22,6 @@ const initialState: Auth = {
         id: -1,
         name: '',
         email: '',
-        settingsId: -1,
     },
 }
 

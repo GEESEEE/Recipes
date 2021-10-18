@@ -1,5 +1,5 @@
+import { Section, Settings, User } from '@recipes/api-types/v1'
 import handleError from './base'
-import { Section, Settings, User } from '@/data'
 
 export async function getUser(headers: { token: string }): Promise<User> {
     return handleError('GET', `/users`, { headers })
