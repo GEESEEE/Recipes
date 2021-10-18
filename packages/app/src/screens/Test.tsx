@@ -25,50 +25,6 @@ import { useUpdateSettingsMutation } from '@/redux/services/user'
 const bigLogo = 1
 const smallLogo = 0.5
 
-class A {
-    constructor(x = 0, y = 0) {
-        this.a1 = x
-        this.a2 = y
-    }
-    public a1!: number
-    public a2!: number
-}
-
-class AB {
-    constructor(x = 0) {
-        this.a2 = x
-    }
-    public a2!: number
-}
-
-class B {
-    constructor(a = new A(), b = new AB(), x = 1, y = 1, z = 1) {
-        this.a = a
-        this.x = x
-        this.y = y
-        this.z = z
-        this.b = b
-    }
-
-    public a!: A
-    public b!: AB
-    public x!: number
-    public y!: number
-    public z!: number
-}
-
-class C {
-    constructor(y = 0, a = new AB(), b = null) {
-        this.y = y
-        this.a = a
-        this.b = b
-    }
-
-    public y!: number
-    public a!: AB
-    public b!: AB | null
-}
-
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     // const { recipes } = useAppSelector((state) => state.myRecipes)
 
@@ -140,12 +96,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
         toggleVal(v)
     }
 
-    function testFit(): void {
-        const point = new B()
-        const res = fit(point, C)
-        console.log('res fit', res)
-    }
-
     return (
         <Container>
             {/* <LogoView>
@@ -161,13 +111,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 type="Solid"
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
-            />
-
-            <Button
-                marginVertical="m"
-                type="Solid"
-                text="Test Fit"
-                onPress={() => testFit()}
             />
 
             <StyledText width="s" paddingVertical="s" numberOfLines={1}>

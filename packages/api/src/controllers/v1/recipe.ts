@@ -14,7 +14,7 @@ import {
 import { Request } from 'express'
 import { inject } from 'inversify'
 import { RecipeService } from '../../services'
-import { constants } from '../../util'
+import { constants } from '../../utils'
 import { Instruction, Recipe, RecipeIngredient } from '../../entities'
 import { NotFoundError, ForbiddenError } from '../../errors'
 import { UserAbility } from '../../abilities'
@@ -22,7 +22,7 @@ import {
     decodeQueryParams,
     decodeSortQuery,
     SortQueryTuple,
-} from '../../util/request'
+} from '../../utils/request'
 import { RecipeScopeArgs } from '../../repositories/recipe'
 import { PaginationObject } from '../../repositories/base'
 import { ModifyError, methodMap } from './base'

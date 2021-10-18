@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
 import { Ingredient, Instruction, Recipe, RecipeIngredient } from '../entities'
-import { TYPES } from '../util/constants'
+import { TYPES } from '../utils/constants'
 import { IngredientRepository, RecipeRepository } from '../repositories'
 import { UnprocessableError } from '../errors'
-import { SortQueryTuple } from '../util/request'
+import { SortQueryTuple } from '../utils/request'
 import { RecipeScopeArgs } from '../repositories/recipe'
 import { PaginationObject } from '../repositories/base'
 

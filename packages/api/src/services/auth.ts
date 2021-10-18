@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
 import Token from '../entities/token'
 import User from '../entities/user'
-import { TYPES } from '../util/constants'
+import { TYPES } from '../utils/constants'
 import { Settings } from '../entities'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')

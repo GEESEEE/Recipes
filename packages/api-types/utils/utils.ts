@@ -29,8 +29,6 @@ export function intersection(
                 val1 !== null &&
                 val2 !== null
             ) {
-                console.log('Going to intersect on key', key)
-
                 obj1[key] = intersection(
                     val1 as Record<string, unknown>,
                     val2 as Record<string, unknown>

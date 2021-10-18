@@ -18,7 +18,7 @@ import {
     SectionService,
     UserService,
 } from '../services'
-import { TYPES } from '../util/constants'
+import { TYPES } from '../utils/constants'
 import {
     ErrorMiddleware,
     AbilityMiddleware,

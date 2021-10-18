@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
 import { Theme } from '@recipes/api-types/v1'
 import { User, Settings } from '../entities'
-import { TYPES } from '../util/constants'
+import { TYPES } from '../utils/constants'
 
 @injectable()
 export default class UserService {

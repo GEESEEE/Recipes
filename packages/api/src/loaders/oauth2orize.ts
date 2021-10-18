@@ -1,14 +1,9 @@
 import { Container } from 'inversify'
-import oauth2orize, {
-    DeserializeClientDoneFunction,
-    ExchangeDoneFunction,
-    SerializeClientDoneFunction,
-    TokenError,
-} from 'oauth2orize'
+import oauth2orize, { ExchangeDoneFunction, TokenError } from 'oauth2orize'
 import { Repository } from 'typeorm'
 import { User, Token, Application } from '../entities'
 import { AuthService } from '../services'
-import { TYPES } from '../util/constants'
+import { TYPES } from '../utils/constants'
 
 export default function init(container: Container): oauth2orize.OAuth2Server {
     const applicationRepository = container.get<Repository<Application>>(
@@ -23,25 +18,6 @@ export default function init(container: Container): oauth2orize.OAuth2Server {
     const authService = container.get<AuthService>(TYPES.AuthService)
 
     const server = oauth2orize.createServer()
-
-    server.serializeClient(function (
-        client: any,
-        done: SerializeClientDoneFunction
-    ) {
-        return done(null, client)
-    })
-
-    server.deserializeClient(function (
-        uid: string,
-        done: DeserializeClientDoneFunction
-    ) {
-        applicationRepository
-            .findOne({ where: { uid } })
-            .then((client) => {
-                return done(null, client)
-            })
-            .catch((err) => done(err))
-    })
 
     server.exchange(
         oauth2orize.exchange.password(

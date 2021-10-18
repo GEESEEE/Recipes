@@ -11,7 +11,7 @@ import {
 import { inject } from 'inversify'
 import { Request } from 'express'
 import { capitalize } from '@recipes/api-types/utils'
-import { constants } from '../../util'
+import { constants } from '../../utils'
 import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
 import ValidationError from '../../errors/validation'

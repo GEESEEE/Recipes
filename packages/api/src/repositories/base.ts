@@ -3,8 +3,8 @@ import isEqual from 'lodash/isEqual'
 import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
-import { SortQueryTuple } from '../util/request'
-import { groupBy } from '../util/util'
+import { SortQueryTuple } from '../utils/request'
+import { groupBy } from '../utils/util'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
     public transform(record: any): T {

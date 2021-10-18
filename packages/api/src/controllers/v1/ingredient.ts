@@ -11,7 +11,7 @@ import {
 import { inject } from 'inversify'
 import { Ingredient } from '../../entities'
 import { RecipeService } from '../../services'
-import { constants } from '../../util'
+import { constants } from '../../utils'
 import { NotFoundError } from '../../errors'
 
 const { TYPES } = constants
