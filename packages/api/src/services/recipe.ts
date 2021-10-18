@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
+import { PaginationObject } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
 import { RecipeScopeArgs } from '@/repositories/recipe'
 import { UnprocessableError } from '@/errors'
 import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
-import { PaginationObject } from '@/types'
 
 @injectable()
 export default class RecipeService {

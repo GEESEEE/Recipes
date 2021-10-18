@@ -13,7 +13,8 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import { ModifyError, methodMap } from './base'
+import { ModifyError, PaginationObject } from '@recipes/api-types/v1'
+import { methodMap } from './base'
 import { RecipeService } from '@/services'
 import { constants } from '@/utils'
 import { Instruction, Recipe, RecipeIngredient } from '@/entities'
@@ -25,7 +26,6 @@ import {
     SortQueryTuple,
 } from '@/utils/request'
 import { RecipeScopeArgs } from '@/repositories/recipe'
-import { PaginationObject } from '@/types'
 
 const { TYPES } = constants
 

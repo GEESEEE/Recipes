@@ -3,8 +3,8 @@ import isEqual from 'lodash/isEqual'
 import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
+import { PaginationObject } from '@recipes/api-types/v1'
 import { SortQueryTuple, groupBy } from '@/utils'
-import { PaginationObject } from '@/types'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
     public transform(record: any): T {

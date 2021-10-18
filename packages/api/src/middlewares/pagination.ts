@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from 'inversify-express-utils'
 import { injectable } from 'inversify'
+import { PaginationObject } from '@recipes/api-types/v1'
 import { BaseQueryBuilder } from '@/repositories/base'
-import { PaginationObject } from '@/types'
 
 @injectable()
 export default class PaginationMiddleware extends BaseMiddleware {
