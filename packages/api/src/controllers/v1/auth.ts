@@ -38,7 +38,7 @@ export default class AuthController implements interfaces.Controller {
         } catch (err) {
             if (err instanceof ValidationError) {
                 const property = err.data[0].property
-                throw new BadRequestError('Invalid ' + capitalize(property))
+                throw new BadRequestError(`Invalid ${capitalize(property)}`)
             }
             throw err
         }

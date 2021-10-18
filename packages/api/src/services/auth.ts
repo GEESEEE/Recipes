@@ -68,9 +68,10 @@ export default class AuthService {
                 name,
                 password,
                 email,
-                settingsId: settings.id,
+                settings,
             })
         )
+        user.password = ''
         return user
     }
 
