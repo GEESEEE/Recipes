@@ -1,6 +1,6 @@
 import type { Factory, Seeder } from '@zchapple/typeorm-seeding'
 import type { Connection } from 'typeorm'
-import { Application } from '../entities'
+import { Application } from '@/entities'
 
 export default class CreateApplication implements Seeder {
     public async run(_factory: Factory, connection: Connection): Promise<any> {

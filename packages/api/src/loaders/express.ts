@@ -5,9 +5,9 @@ import { InversifyExpressServer } from 'inversify-express-utils'
 import helmet from 'helmet'
 import hpp from 'hpp'
 import logger from 'morgan'
-import { constants } from '../utils'
-import { NotFoundError } from '../errors'
-import ErrorMiddleware from '../middlewares/error'
+import { constants } from '@/utils'
+import { ErrorMiddleware } from '@/middlewares'
+import { NotFoundError } from '@/errors'
 
 const { TYPES } = constants
 

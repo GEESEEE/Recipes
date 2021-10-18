@@ -11,20 +11,20 @@ import {
     User,
     Token,
     Application,
-} from '../entities'
+} from '@/entities'
 import {
     AuthService,
     RecipeService,
     SectionService,
     UserService,
-} from '../services'
-import { TYPES } from '../utils/constants'
+} from '@/services'
+import { TYPES } from '@/utils/constants'
 import {
     ErrorMiddleware,
     AbilityMiddleware,
     PaginationMiddleware,
-} from '../middlewares'
-import { IngredientRepository, RecipeRepository } from '../repositories'
+} from '@/middlewares'
+import { IngredientRepository, RecipeRepository } from '@/repositories'
 
 dotenv.config()
 

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from 'inversify-express-utils'
 import { injectable } from 'inversify'
-import defineUserAbilities from '../abilities'
-import { NotFoundError } from '../errors'
+import defineUserAbilities from '@/abilities'
+import { NotFoundError } from '@/errors'
 
 @injectable()
 export default class AbilityMiddleware extends BaseMiddleware {

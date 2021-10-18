@@ -6,9 +6,9 @@ import {
 } from 'typeorm'
 import { Redis } from 'ioredis'
 import getDecorators from 'inversify-inject-decorators'
-import { Settings, User } from '../entities'
-import { TYPES } from '../utils/constants'
-import { container } from '../config'
+import { Settings, User } from '@/entities'
+import { TYPES } from '@/utils/constants'
+import { container } from '@/config'
 const { lazyInject } = getDecorators(container)
 
 @EventSubscriber()

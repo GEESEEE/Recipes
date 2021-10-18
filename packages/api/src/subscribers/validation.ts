@@ -5,7 +5,7 @@ import {
     UpdateEvent,
 } from 'typeorm'
 import { validate } from 'class-validator'
-import ValidationError from '../errors/validation'
+import { ValidationError } from '@/errors'
 
 @EventSubscriber()
 export class ValidationSubscriber implements EntitySubscriberInterface {

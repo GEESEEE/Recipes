@@ -1,6 +1,6 @@
 import Faker from 'faker'
 import { define } from '@zchapple/typeorm-seeding'
-import { Recipe } from '../entities'
+import { Recipe } from '@/entities'
 
 define(Recipe, (faker: typeof Faker) => {
     const recipe = new Recipe()

@@ -5,7 +5,7 @@ import {
     MatchConditions,
     AbilityClass,
 } from '@casl/ability'
-import { Recipe, Section, User } from '../entities'
+import { Recipe, Section, User } from '@/entities'
 
 export type UserAbility = PureAbility<AbilityTuple, MatchConditions>
 const Ability = PureAbility as AbilityClass<UserAbility>

@@ -1,9 +1,9 @@
 import { Container } from 'inversify'
 import oauth2orize, { ExchangeDoneFunction, TokenError } from 'oauth2orize'
 import { Repository } from 'typeorm'
-import { User, Token, Application } from '../entities'
-import { AuthService } from '../services'
-import { TYPES } from '../utils/constants'
+import { User, Token, Application } from '@/entities'
+import { AuthService } from '@/services'
+import { TYPES } from '@/utils/constants'
 
 export default function init(container: Container): oauth2orize.OAuth2Server {
     const applicationRepository = container.get<Repository<Application>>(

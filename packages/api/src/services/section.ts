@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { Section } from '../entities'
 import { TYPES } from '../utils/constants'
+import { Section } from '@/entities'
 
 @injectable()
 export default class SectionService {

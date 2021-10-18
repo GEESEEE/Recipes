@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
 import { TYPES } from '../utils/constants'
-import { AuthError, OAuthError } from '../types'
+import { AuthError, OAuthError } from '@/types'
 import { Settings, User, Token } from '@/entities'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')

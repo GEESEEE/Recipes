@@ -1,9 +1,9 @@
 // import { expect } from 'chai'
 // import { Container } from 'inversify'
 // import { Connection, Repository } from 'typeorm'
-// import { User } from '../entities'
+// import { User } from '@/entities'
 // import containerLoader from '../loaders/container'
-// import { RecipeService } from '../services'
+// import { RecipeService } from '@/services'
 // import { TYPES } from '../util/constants'
 
 // describe('RecipeServiceTest', function () {

@@ -4,7 +4,7 @@ import {
     InsertEvent,
     UpdateEvent,
 } from 'typeorm'
-import { Recipe } from '../entities'
+import { Recipe } from '@/entities'
 
 @EventSubscriber()
 export class RecipeSubscriber implements EntitySubscriberInterface {

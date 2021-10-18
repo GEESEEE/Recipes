@@ -1,5 +1,5 @@
 import { Brackets, EntityRepository } from 'typeorm'
-import { Recipe } from '../entities'
+import { Recipe } from '@/entities'
 import BaseRepository, { BaseQueryBuilder } from './base'
 
 @EntityRepository(Recipe)

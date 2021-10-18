@@ -7,7 +7,7 @@
     "author": "Gies den Broeder",
     "scripts": {
         "start": "yarn build && node bin/www",
-        "build": "tsc",
+        "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
         "migration:run": "yarn build && typeorm migration:run",
         "migration:revert": "yarn build && typeorm migration:revert",
         "seed:run": "yarn build && yarn typeorm-seeding seed",

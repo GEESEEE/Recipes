@@ -4,7 +4,7 @@
 // import Application from '../entities/application'
 // import User from '../entities/user'
 // import containerLoader from '../loaders/container'
-// import { AuthService } from '../services'
+// import { AuthService } from '@/services'
 // import { AuthError, OAuthError } from '../services/auth'
 // import { TYPES } from '../util/constants'
 

@@ -8,7 +8,7 @@ import {
     // RecipeIngredient,
     Settings,
     User,
-} from '../entities'
+} from '@/entities'
 // import { getRandomInt } from '../util/util'
 
 export default class CreateUsers implements Seeder {

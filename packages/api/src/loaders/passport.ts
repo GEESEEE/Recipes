@@ -2,10 +2,10 @@ import passport from 'passport'
 import { Container } from 'inversify'
 import { Repository } from 'typeorm'
 import { Strategy } from 'passport-http-bearer'
-import { TYPES } from '../utils/constants'
-import { OAuthError } from '../types'
-import { AuthService } from '../services'
-import { Token, User } from '../entities'
+import { TYPES } from '@/utils/constants'
+import { OAuthError } from '@/types'
+import { AuthService } from '@/services'
+import { Token, User } from '@/entities'
 
 export default function init(container: Container): void {
     const userRepository = container.get<Repository<User>>(TYPES.UserRepository)
