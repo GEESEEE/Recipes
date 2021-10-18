@@ -3749,6 +3749,9 @@ __metadata:
 "@recipes/api-types@*, @recipes/api-types@workspace:packages/api-types":
   version: 0.0.0-use.local
   resolution: "@recipes/api-types@workspace:packages/api-types"
+  dependencies:
+    "@types/lodash": ^4
+    lodash: ^4.17.21
   languageName: unknown
   linkType: soft
 
@@ -4247,7 +4250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.172":
+"@types/lodash@npm:^4, @types/lodash@npm:^4.14.172":
   version: 4.14.175
   resolution: "@types/lodash@npm:4.14.175"
   checksum: 50721f33faa542f1b9f62f2ba769ed353c6036711e92bd89ce569f2ed247e38fb2a2899f6fd46466b1690fea7ae0239471e6a6093c54e8f2b0613e43e8eac19c

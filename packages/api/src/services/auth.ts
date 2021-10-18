@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
+import { fit } from '@recipes/api-types/utils'
 import Token from '../entities/token'
 import User from '../entities/user'
 import { TYPES } from '../util/constants'
@@ -73,6 +74,10 @@ export default class AuthService {
             })
         )
         user.password = ''
+
+        const res = fit(user, OutputUser)
+        console.log('res', res)
+
         return user
     }
 
