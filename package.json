@@ -58,7 +58,6 @@
         "eslint-plugin-react-hooks": "4.2.1-alpha-c3a19e5af-20211014",
         "eslint-plugin-react-native": "^3.11.0",
         "lerna": "^4.0.0",
-        "module-alias": "^2.2.2",
         "prettier": "^2.4.1",
         "pretty-quick": "^3.1.1",
         "react-native-bundle-visualizer": "^3.0.0",

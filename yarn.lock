@@ -14639,13 +14639,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"module-alias@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "module-alias@npm:2.2.2"
-  checksum: 4b5543f834b484033e5bd184096ca8276b9195e32e88883ee6ea8d3a4789d97c470d26f5fa7271bd7a26588bf67e4d27dbdb594ee327aef1c9619d855dc78342
-  languageName: node
-  linkType: hard
-
 "morgan@npm:^1.10.0":
   version: 1.10.0
   resolution: "morgan@npm:1.10.0"
@@ -18158,7 +18151,6 @@ fsevents@~2.3.2:
     eslint-plugin-react-hooks: 4.2.1-alpha-c3a19e5af-20211014
     eslint-plugin-react-native: ^3.11.0
     lerna: ^4.0.0
-    module-alias: ^2.2.2
     prettier: ^2.4.1
     pretty-quick: ^3.1.1
     react-native-bundle-visualizer: ^3.0.0

@@ -4,27 +4,12 @@ import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
-import Token from '../entities/token'
-import User from '../entities/user'
 import { TYPES } from '../utils/constants'
-import { Settings } from '../entities'
+import { AuthError, OAuthError } from '../types'
+import { Settings, User, Token } from '@/entities'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')
 const privateKey = fs.readFileSync('private.key', 'utf-8')
-
-export enum OAuthError {
-    INVALID_REQUEST,
-    INVALID_CLIENT,
-    INVALID_GRANT,
-    UNAUTHORIZED_CLIENT,
-    UNSUPPORTED_GRANT_TYPE,
-    INVALID_SCOPE,
-}
-
-export enum AuthError {
-    USER_EXISTS,
-    EMAIL_EXISTS,
-}
 
 @injectable()
 export default class AuthService {
