@@ -9,10 +9,10 @@ import {
     requestParam,
 } from 'inversify-express-utils'
 import { inject } from 'inversify'
-import { Ingredient } from '../../entities'
-import { RecipeService } from '../../services'
-import { constants } from '../../utils'
-import { NotFoundError } from '../../errors'
+import { Ingredient } from '@/entities'
+import { RecipeService } from '@/services'
+import { constants } from '@/utils'
+import { NotFoundError } from '@/errors'
 
 const { TYPES } = constants
 
