@@ -71,7 +71,7 @@ export default class AuthController implements interfaces.Controller {
     )
     public async signOut(
         @requestHeaders() headers: { authorization: string }
-    ): Promise<boolean> {
+    ): Promise<true> {
         const token = headers.authorization.split(' ')[1]
         const result = await this.authService.signOut(token)
 

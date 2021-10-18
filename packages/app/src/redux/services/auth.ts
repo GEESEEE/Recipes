@@ -1,10 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
 import { APPLICATION_ID } from '@env'
-import { User } from '@recipes/api-types/v1'
+import {
+    User,
+    RegisterParams,
+    LoginParams,
+    LoginResult,
+} from '@recipes/api-types/v1'
 import { api } from './base'
-
-export type SignUpParams = { name: string; password: string; email: string }
-export type SignInParams = { username: string; password: string }
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -18,7 +20,7 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signUp: builder.mutation<void, SignUpParams>({
+        signUp: builder.mutation<{ id: number }, RegisterParams>({
             query: (body) => ({
                 url: `/auth/register`,
                 method: 'POST',
@@ -26,7 +28,7 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signOut: builder.mutation<void, string>({
+        signOut: builder.mutation<true, string>({
             query: (token) => ({
                 url: `/auth/revoke`,
                 method: 'POST',
@@ -36,10 +38,7 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signIn: builder.mutation<
-            { access_token: string; token_type: string },
-            SignInParams
-        >({
+        signIn: builder.mutation<LoginResult, LoginParams>({
             query: (params) => {
                 const body = {
                     client_id: APPLICATION_ID,

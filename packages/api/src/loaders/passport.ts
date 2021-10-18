@@ -2,8 +2,10 @@ import passport from 'passport'
 import { Container } from 'inversify'
 import { Repository } from 'typeorm'
 import { Strategy } from 'passport-http-bearer'
+import { fitToClass } from '@recipes/api-types/utils'
+import { Settings } from '@recipes/api-types'
 import { TYPES } from '@/utils/constants'
-import { OAuthError } from '@/types'
+import { OAuthError, OutputUser } from '@/types'
 import { AuthService } from '@/services'
 import { Token, User } from '@/entities'
 
@@ -48,24 +50,19 @@ export default function init(container: Container): void {
                         return done(null, false, { message: 'Token not found' })
                     }
 
-                    const user = (await userRepository.findOne({
+                    const user = await userRepository.findOne({
                         where: { id: result.id },
                         relations: ['settings'],
-                        select: [
-                            'id',
-                            'name',
-                            'email',
-                            'settingsId',
-                            'settings',
-                        ],
-                    })) as User
+                    })
 
                     if (typeof user === 'undefined') {
                         return done(null, false, { message: 'User not found' })
                     }
 
-                    await redis.set(user.id, JSON.stringify(user))
-                    return done(null, user)
+                    const outputUser = fitToClass(user as any, OutputUser)
+
+                    await redis.set(outputUser.id, JSON.stringify(outputUser))
+                    return done(null, outputUser)
                 })
                 .catch((err: any) => console.log(err))
         })
