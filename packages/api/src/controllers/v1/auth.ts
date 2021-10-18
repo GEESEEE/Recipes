@@ -10,13 +10,12 @@ import {
 } from 'inversify-express-utils'
 import { inject } from 'inversify'
 import { Request } from 'express'
-import { capitalize, fit } from '@recipes/api-types/utils'
+import { capitalize } from '@recipes/api-types/utils'
 import { constants } from '../../util'
 import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
 import ValidationError from '../../errors/validation'
 import { User } from '../../entities'
-import { OutputUser } from '../../util/types'
 
 const { TYPES } = constants
 

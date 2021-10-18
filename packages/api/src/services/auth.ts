@@ -8,7 +8,6 @@ import Token from '../entities/token'
 import User from '../entities/user'
 import { TYPES } from '../util/constants'
 import { Settings } from '../entities'
-import { OutputUser } from '../util/types'
 
 const publicKey = fs.readFileSync('public.key', 'utf-8')
 const privateKey = fs.readFileSync('private.key', 'utf-8')
