@@ -16,7 +16,7 @@ export function handleNumericTextInput(
     return 0
 }
 
-export function capitalizeFirstLetter(str: string): string {
+export function capitalize(str: string): string {
     if (str.length > 0) {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
@@ -29,7 +29,7 @@ export function createDropDownItems(
 ): DropdownItem[] {
     return onPresses.map((onPress) => {
         // Slice recipe off the function name
-        const text = capitalizeFirstLetter(
+        const text = capitalize(
             onPress.name.slice(0, onPress.name.length - name.length)
         )
         return {

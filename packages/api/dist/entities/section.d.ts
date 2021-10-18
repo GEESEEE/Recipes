@@ -5,6 +5,6 @@ export default class Section {
     name: string;
     description: string;
     userId: number;
-    user: User;
+    user?: User;
     recipes?: Recipe[];
 }

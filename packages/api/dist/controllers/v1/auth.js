@@ -33,6 +33,7 @@ let AuthController = AuthController_1 = class AuthController {
         if (result === auth_1.AuthError.EMAIL_EXISTS) {
             throw new errors_1.ConflictError('Email already in use');
         }
+        console.log('Signing up', result);
         return { id: result.id };
     }
     signIn() { }

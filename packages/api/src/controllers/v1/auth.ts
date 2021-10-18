@@ -30,10 +30,10 @@ export default class AuthController implements interfaces.Controller {
     )
     public async signUp(
         @requestBody() body: { name: string; password: string; email: string }
-    ): Promise<{ id: number }> {
-        let result
+    ): Promise<User> {
+        let user
         try {
-            result = await this.authService.signUp(body)
+            user = await this.authService.signUp(body)
         } catch (err) {
             if (err instanceof ValidationError) {
                 const property = err.data[0].property
@@ -46,13 +46,16 @@ export default class AuthController implements interfaces.Controller {
             throw err
         }
 
-        if (result === AuthError.USER_EXISTS) {
+        if (user === AuthError.USER_EXISTS) {
             throw new ConflictError('Username already in use')
         }
-        if (result === AuthError.EMAIL_EXISTS) {
+        if (user === AuthError.EMAIL_EXISTS) {
             throw new ConflictError('Email already in use')
         }
-        return { id: result.id }
+
+        console.log('Signing up', user)
+
+        return user
     }
 
     @httpPost('/token', TYPES.TokenMiddleware)
