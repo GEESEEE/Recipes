@@ -1,6 +1,6 @@
 import { EntityRepository } from 'typeorm'
-import { Ingredient, RecipeIngredient } from '@/entities'
 import BaseRepository, { BaseQueryBuilder } from './base'
+import { Ingredient, RecipeIngredient } from '@/entities'
 
 @EntityRepository(Ingredient)
 export default class IngredientRepository extends BaseRepository<Ingredient> {

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
 import { Theme } from '@recipes/api-types/v1'
-import { TYPES } from '../utils/constants'
+import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
 
 @injectable()

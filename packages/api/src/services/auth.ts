@@ -4,7 +4,7 @@ import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
-import { TYPES } from '../utils/constants'
+import { TYPES } from '@/utils/constants'
 import { AuthError, OAuthError } from '@/types'
 import { Settings, User, Token } from '@/entities'
 

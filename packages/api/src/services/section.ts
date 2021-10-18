@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { TYPES } from '../utils/constants'
+import { TYPES } from '@/utils/constants'
 import { Section } from '@/entities'
 
 @injectable()

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import { TYPES } from '../utils/constants'
+import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
 import { RecipeScopeArgs } from '@/repositories/recipe'
