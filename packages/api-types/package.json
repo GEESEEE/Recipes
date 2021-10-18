@@ -12,6 +12,7 @@
     },
     "exports": {
         "./v1": "./v1.js",
-        "./utils": "./utils/index.ts"
+        "./utils": "./utils/index.js",
+        "./types": "./types/index.js"
     }
 }
