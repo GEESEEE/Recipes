@@ -4,6 +4,7 @@ import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import { SortQueryTuple, groupBy } from '@/utils'
+import { PaginationObject } from '@/types'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
     public transform(record: any): T {
@@ -41,18 +42,6 @@ export default abstract class BaseRepository<T> extends Repository<T> {
                 })
             )
     }
-}
-
-export interface PaginationObject {
-    from: any
-    to: any
-    per_page: any
-    total: number | any
-    current_page: number
-    prev_page?: number | null
-    next_page?: number | null
-    last_page: number | null
-    data: Array<object | any> | any
 }
 
 export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {

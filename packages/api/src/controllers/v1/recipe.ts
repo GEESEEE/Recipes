@@ -25,7 +25,7 @@ import {
     SortQueryTuple,
 } from '@/utils/request'
 import { RecipeScopeArgs } from '@/repositories/recipe'
-import { PaginationObject } from '@/repositories/base'
+import { PaginationObject } from '@/types'
 
 const { TYPES } = constants
 
