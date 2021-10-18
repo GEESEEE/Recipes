@@ -13,11 +13,11 @@ import {
 import { Request } from 'express'
 import { inject } from 'inversify'
 import { Theme } from '@recipes/api-types/v1'
-import { constants } from '../../utils'
-import { Section, Settings, User } from '../../entities'
-import { SectionService, UserService } from '../../services'
-import { BadRequestError } from '../../errors'
 import { ModifyError } from './base'
+import { constants } from '@/utils'
+import { Section, Settings, User } from '@/entities'
+import { SectionService, UserService } from '@/services'
+import { BadRequestError } from '@/errors'
 
 const { TYPES } = constants
 

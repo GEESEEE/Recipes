@@ -11,12 +11,12 @@ import {
 import { inject } from 'inversify'
 import { Request } from 'express'
 import { capitalize } from '@recipes/api-types/utils'
-import { constants } from '../../utils'
-import { AuthService } from '../../services'
-import { AuthError, OAuthError } from '../../types'
-import { BadRequestError, ConflictError } from '../../errors'
-import ValidationError from '../../errors/validation'
-import { User } from '../../entities'
+import { constants } from '@/utils'
+import { AuthService } from '@/services'
+import { AuthError, OAuthError } from '@/types'
+import { BadRequestError, ConflictError } from '@/errors'
+import ValidationError from '@/errors/validation'
+import { User } from '@/entities'
 
 const { TYPES } = constants
 
