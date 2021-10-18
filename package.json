@@ -13,6 +13,7 @@
     "scripts": {
         "app": "yarn workspace @recipes/app",
         "api": "yarn workspace @recipes/api",
+        "types": "yarn workspace @recipes/api-types",
         "lint": "yarn lerna run lint",
         "start": "yarn lerna run start --parallel"
     },

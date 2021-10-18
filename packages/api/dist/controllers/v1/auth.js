@@ -5,12 +5,12 @@ const tslib_1 = require("tslib");
 const express_validator_1 = require("express-validator");
 const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
-const util_1 = require("@recipes/api-types/src/util");
-const util_2 = require("../../util");
+const v1_1 = require("@recipes/api-types/v1");
+const util_1 = require("../../util");
 const auth_1 = (0, tslib_1.__importStar)(require("../../services/auth"));
 const errors_1 = require("../../errors");
 const validation_1 = (0, tslib_1.__importDefault)(require("../../errors/validation"));
-const { TYPES } = util_2.constants;
+const { TYPES } = util_1.constants;
 let AuthController = AuthController_1 = class AuthController {
     authService;
     // #region Auth
@@ -22,7 +22,7 @@ let AuthController = AuthController_1 = class AuthController {
         catch (err) {
             if (err instanceof validation_1.default) {
                 const property = err.data[0].property;
-                throw new errors_1.BadRequestError('Invalid ' + (0, util_1.capitalize)(property));
+                throw new errors_1.BadRequestError('Invalid ' + (0, v1_1.capitalize)(property));
             }
             throw err;
         }

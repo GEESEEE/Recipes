@@ -1,11 +1,13 @@
-
+# Should not commit Node modules, env files or other keys
 **/node_modules/
 **/.env
 **/public.key
 **/private.key
 
+# Plugin folders
 /.VSCodeCounter
 
+# Yarn
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -15,3 +17,16 @@
 !.yarn/versions
 
 
+# Should not commit build outputs
+# api
+**/dist/
+
+# api-types
+v*.js
+v*.d.ts
+
+**/utils/**/*.js
+**/utils/**/*.d.ts
+
+**/types/**/*.js
+**/types/**/*.d.ts

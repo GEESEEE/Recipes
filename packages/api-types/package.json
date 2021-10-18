@@ -3,9 +3,15 @@
     "version": "1.0.0",
     "description": "Api Types from Recipes Api for use in Recipes App",
     "license": "MIT",
+    "main": "v1.js",
+    "types": "v1.d.ts",
     "author": "Gies den Broeder",
     "scripts": {
         "build": "tsc",
         "lint": "tsc --noEmit && eslint --ext .js,.ts ./ --fix"
+    },
+    "exports": {
+        "./v1": "./v1.js",
+        "./utils": "./utils/index.ts"
     }
 }

@@ -24,7 +24,7 @@
     "compileOnSave": true,
     "include": [
         "v1.ts",
-        "util/**/*.ts",
+        "utils/**/*.ts",
         "types/**/*.ts"
     ]
 }

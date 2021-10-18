@@ -10,7 +10,7 @@ import {
 } from 'inversify-express-utils'
 import { inject } from 'inversify'
 import { Request } from 'express'
-import { capitalize } from '@recipes/api-types/util'
+import { capitalize } from '@recipes/api-types/v1'
 import { constants } from '../../util'
 import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
