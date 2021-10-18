@@ -1,3 +1,8 @@
-export default class User {
-    private readonly id!: number
+import { Settings } from './settings'
+
+export class User {
+    public readonly id!: number
+    public name!: string
+    public email!: string
+    public settings?: Settings
 }

@@ -9,6 +9,7 @@
         "skipLibCheck": true,
         "moduleResolution": "node",
         "resolveJsonModule": true,
+        "preserveConstEnums": true,
         "jsx": "react-native"
     }
 }

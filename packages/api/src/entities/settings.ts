@@ -1,6 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Expose } from 'class-transformer'
-import { ThemeType } from '../util/constants'
+import { Theme } from '@recipes/api-types'
 import { User } from '.'
 
 @Entity('settings')
@@ -11,8 +11,8 @@ export default class Settings {
     @Expose()
     @Column({
         type: 'enum',
-        enum: ThemeType,
-        default: ThemeType.dark,
+        enum: Theme,
+        default: Theme.DARK,
     })
     public theme!: string
 

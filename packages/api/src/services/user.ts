@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
+import { Theme } from '@recipes/api-types'
 import { User, Settings } from '../entities'
-import { ThemeType, TYPES } from '../util/constants'
+import { TYPES } from '../util/constants'
 
 @injectable()
 export default class UserService {
@@ -26,7 +27,7 @@ export default class UserService {
 
     public async updateSettings(settings: {
         id: number
-        theme?: ThemeType
+        theme?: Theme
         color?: string
         invertedColors?: boolean
     }): Promise<Settings> {

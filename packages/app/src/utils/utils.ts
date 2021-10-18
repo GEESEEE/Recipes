@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import { StyleProp, ViewStyle } from 'react-native'
+import { capitalize } from '@recipes/api-types/utils'
 import { DropdownItem } from '@/components/atoms'
 
 export function handleNumericTextInput(
@@ -14,13 +15,6 @@ export function handleNumericTextInput(
         return val
     }
     return 0
-}
-
-export function capitalize(str: string): string {
-    if (str.length > 0) {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-    return str
 }
 
 export function createDropDownItems(

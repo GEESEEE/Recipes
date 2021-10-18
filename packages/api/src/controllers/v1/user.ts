@@ -12,8 +12,8 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
+import { Theme } from '@recipes/api-types'
 import { constants } from '../../util'
-import { ThemeType } from '../../util/constants'
 import { Section, Settings, User } from '../../entities'
 import { SectionService, UserService } from '../../services'
 import { BadRequestError } from '../../errors'
@@ -60,7 +60,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-        body: { theme?: ThemeType; color?: string; invertedColors?: boolean }
+        body: { theme?: Theme; color?: string; invertedColors?: boolean }
     ): Promise<Settings> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (
@@ -195,7 +195,7 @@ export default class UserController implements interfaces.Controller {
 
             case 'updateSettings':
                 return [
-                    body('theme').optional().isIn(Object.values(ThemeType)),
+                    body('theme').optional().isIn(Object.values(Theme)),
                     body('color').optional().isString(),
                     body('invertedColors').optional().isBoolean(),
                 ]
