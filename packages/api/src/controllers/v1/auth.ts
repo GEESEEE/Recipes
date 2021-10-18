@@ -11,6 +11,7 @@ import {
 import { inject } from 'inversify'
 import { Request } from 'express'
 import { capitalize } from '@recipes/api-types/utils'
+import { RegisterParams } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
 import { AuthService } from '@/services'
 import { AuthError, OAuthError } from '@/types'
@@ -31,7 +32,7 @@ export default class AuthController implements interfaces.Controller {
         TYPES.ErrorMiddleware
     )
     public async signUp(
-        @requestBody() body: { name: string; password: string; email: string }
+        @requestBody() body: RegisterParams
     ): Promise<{ id: number }> {
         let user
         try {

@@ -17,6 +17,7 @@ import { constants } from '@/utils'
 import { Section, Settings, User } from '@/entities'
 import { SectionService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
+import { OutputSettings, OutputUser } from '@/types'
 
 const { TYPES } = constants
 
@@ -33,8 +34,8 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getUser'),
         TYPES.ErrorMiddleware
     )
-    public async getUser(@request() req: Request): Promise<User> {
-        return req.user as User
+    public async getUser(@request() req: Request): Promise<OutputUser> {
+        return req.user as OutputUser
     }
 
     // #region Settings
@@ -45,7 +46,7 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getSettings'),
         TYPES.ErrorMiddleware
     )
-    public async getSettings(@request() req: Request): Promise<Settings> {
+    public async getSettings(@request() req: Request): Promise<OutputSettings> {
         const settingsId = req.user?.settingsId as number
         return await this.userService.getSettings(settingsId)
     }
@@ -59,7 +60,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-        body: { theme?: Theme; color?: string; invertedColors?: boolean }
+        body: Partial<Omit<OutputSettings, 'id'>>
     ): Promise<Settings> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (

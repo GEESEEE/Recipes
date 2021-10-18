@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
+import { RegisterParams } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { AuthError, OAuthError } from '@/types'
 import { Settings, User, Token } from '@/entities'
@@ -29,11 +30,7 @@ export default class AuthService {
         name,
         password,
         email,
-    }: {
-        name: string
-        password: string
-        email: string
-    }): Promise<{ id: number } | AuthError> {
+    }: RegisterParams): Promise<{ id: number } | AuthError> {
         let user = await this.userRepository.findOne({ name })
         if (typeof user !== 'undefined') {
             return AuthError.USER_EXISTS
