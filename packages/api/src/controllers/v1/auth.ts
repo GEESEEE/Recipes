@@ -10,7 +10,7 @@ import {
 } from 'inversify-express-utils'
 import { inject } from 'inversify'
 import { Request } from 'express'
-import { capitalize } from '@recipes/api-types/v1'
+import { capitalize, fit } from '@recipes/api-types/utils'
 import { constants } from '../../util'
 import AuthService, { AuthError, OAuthError } from '../../services/auth'
 import { BadRequestError, ConflictError } from '../../errors'
@@ -32,7 +32,7 @@ export default class AuthController implements interfaces.Controller {
     )
     public async signUp(
         @requestBody() body: { name: string; password: string; email: string }
-    ): Promise<OutputUser> {
+    ): Promise<{ id: number }> {
         let user
         try {
             user = await this.authService.signUp(body)
@@ -50,8 +50,6 @@ export default class AuthController implements interfaces.Controller {
         if (user === AuthError.EMAIL_EXISTS) {
             throw new ConflictError('Email already in use')
         }
-
-        console.log('Signing up', user)
 
         return user
     }

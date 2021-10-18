@@ -4,7 +4,6 @@ import { Repository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Redis } from 'ioredis'
-import { fit } from '@recipes/api-types/utils'
 import Token from '../entities/token'
 import User from '../entities/user'
 import { TYPES } from '../util/constants'
@@ -50,7 +49,7 @@ export default class AuthService {
         name: string
         password: string
         email: string
-    }): Promise<OutputUser | AuthError> {
+    }): Promise<{ id: number } | AuthError> {
         let user = await this.userRepository.findOne({ name })
         if (typeof user !== 'undefined') {
             return AuthError.USER_EXISTS
@@ -73,15 +72,11 @@ export default class AuthService {
                 settings,
             })
         )
-        user.password = ''
 
-        const res = fit(user, OutputUser)
-        console.log('res', res)
-
-        return user
+        return { id: user.id }
     }
 
-    public async signOut(token: string): Promise<boolean | OAuthError> {
+    public async signOut(token: string): Promise<true | OAuthError> {
         const result = await this.tokenRepository.delete({ token })
         if (result.affected === 0) {
             return OAuthError.INVALID_GRANT
