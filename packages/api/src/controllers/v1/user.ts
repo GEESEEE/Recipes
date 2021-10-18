@@ -12,7 +12,7 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import { Theme } from '@recipes/api-types'
+import { Theme } from '@recipes/api-types/v1'
 import { constants } from '../../util'
 import { Section, Settings, User } from '../../entities'
 import { SectionService, UserService } from '../../services'
