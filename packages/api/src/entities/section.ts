@@ -32,7 +32,7 @@ export default class Section {
     @Type(() => User)
     @ManyToOne(() => User, (user) => user.sections, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })
-    public user!: User
+    public user?: User
 
     @OneToMany(() => Recipe, (recipe) => recipe.section)
     public recipes?: Recipe[]
