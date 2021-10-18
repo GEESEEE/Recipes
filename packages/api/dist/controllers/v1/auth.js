@@ -5,36 +5,35 @@ const tslib_1 = require("tslib");
 const express_validator_1 = require("express-validator");
 const inversify_express_utils_1 = require("inversify-express-utils");
 const inversify_1 = require("inversify");
-const util_1 = require("../../util");
+const util_1 = require("@recipes/api-types/src/util");
+const util_2 = require("../../util");
 const auth_1 = (0, tslib_1.__importStar)(require("../../services/auth"));
 const errors_1 = require("../../errors");
 const validation_1 = (0, tslib_1.__importDefault)(require("../../errors/validation"));
-const { TYPES } = util_1.constants;
+const { TYPES } = util_2.constants;
 let AuthController = AuthController_1 = class AuthController {
     authService;
     // #region Auth
     async signUp(body) {
-        let result;
+        let user;
         try {
-            result = await this.authService.signUp(body);
+            user = await this.authService.signUp(body);
         }
         catch (err) {
             if (err instanceof validation_1.default) {
                 const property = err.data[0].property;
-                throw new errors_1.BadRequestError('Invalid ' +
-                    property.charAt(0).toUpperCase() +
-                    property.slice(1));
+                throw new errors_1.BadRequestError('Invalid ' + (0, util_1.capitalize)(property));
             }
             throw err;
         }
-        if (result === auth_1.AuthError.USER_EXISTS) {
+        if (user === auth_1.AuthError.USER_EXISTS) {
             throw new errors_1.ConflictError('Username already in use');
         }
-        if (result === auth_1.AuthError.EMAIL_EXISTS) {
+        if (user === auth_1.AuthError.EMAIL_EXISTS) {
             throw new errors_1.ConflictError('Email already in use');
         }
-        console.log('Signing up', result);
-        return { id: result.id };
+        console.log('Signing up', user);
+        return user;
     }
     signIn() { }
     async verifyToken(req) {

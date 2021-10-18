@@ -2,7 +2,6 @@
     "name": "@recipes/api-types",
     "version": "1.0.0",
     "description": "Api Types from Recipes Api for use in Recipes App",
-    "main": "src/index.ts",
     "license": "MIT",
     "author": "Gies den Broeder",
     "scripts": {

@@ -1,16 +1,9 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"]
-        },
         "types": ["node"],
 
         "declaration": true,
-
-        "outDir": "./dist",
-        "rootDir": "./src",
 
         "importHelpers": true,
         "downlevelIteration": true,
@@ -28,5 +21,10 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
-    "compileOnSave": true
+    "compileOnSave": true,
+    "include": [
+        "v1.ts",
+        "util/**/*.ts",
+        "types/**/*.ts"
+    ]
 }

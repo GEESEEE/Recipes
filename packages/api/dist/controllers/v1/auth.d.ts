@@ -7,9 +7,7 @@ export default class AuthController implements interfaces.Controller {
         name: string;
         password: string;
         email: string;
-    }): Promise<{
-        id: number;
-    }>;
+    }): Promise<User>;
     signIn(): void;
     verifyToken(req: Request): Promise<User>;
     signOut(headers: {
