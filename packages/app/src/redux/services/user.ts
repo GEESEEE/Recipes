@@ -1,11 +1,7 @@
+import { Section, Settings, User } from '@recipes/api-types/v1'
 import { api } from './base'
-import { Section, Settings, User } from '@/data'
 
-export type UpdateSettingsParams = {
-    theme?: 'light' | 'dark'
-    color?: string
-    invertedColors?: boolean
-}
+export type UpdateSettingsParams = Partial<Omit<Settings, 'id'>>
 
 const userApi = api.injectEndpoints({
     endpoints: (builder) => ({

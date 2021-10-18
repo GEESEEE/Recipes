@@ -4,13 +4,12 @@ import { User } from '@recipes/api-types/v1'
 import { api } from './base'
 
 export type SignUpParams = { name: string; password: string; email: string }
-export type SignOutParams = { token: string }
 export type SignInParams = { username: string; password: string }
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         verifyToken: builder.mutation<User, string>({
-            query: (token: string) => ({
+            query: (token) => ({
                 url: '/auth/info',
                 method: 'GET',
                 headers: {
@@ -20,7 +19,7 @@ const authApi = api.injectEndpoints({
         }),
 
         signUp: builder.mutation<void, SignUpParams>({
-            query: (body: SignUpParams) => ({
+            query: (body) => ({
                 url: `/auth/register`,
                 method: 'POST',
                 body,
@@ -28,7 +27,7 @@ const authApi = api.injectEndpoints({
         }),
 
         signOut: builder.mutation<void, string>({
-            query: (token: string) => ({
+            query: (token) => ({
                 url: `/auth/revoke`,
                 method: 'POST',
                 headers: {
@@ -37,8 +36,11 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signIn: builder.mutation<any, SignInParams>({
-            query: (params: SignInParams) => {
+        signIn: builder.mutation<
+            { access_token: string; token_type: string },
+            SignInParams
+        >({
+            query: (params) => {
                 const body = {
                     client_id: APPLICATION_ID,
                     username: params.username,

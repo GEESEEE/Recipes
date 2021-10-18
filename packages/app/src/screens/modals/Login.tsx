@@ -111,8 +111,9 @@ function LoginModal(): JSX.Element {
                 password: data.password,
             }
             setError('')
-            let res = await signIn(loginData)
+            let res: any = await signIn(loginData)
             if ('data' in res) {
+                console.log('Signin type', res.data)
                 const token = res.data.access_token
                 await SecureStore.setItemAsync('token', token)
 
