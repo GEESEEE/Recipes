@@ -1,7 +1,7 @@
 import { Instruction } from './instruction'
 import { RecipeIngredient } from './recipe-ingredient'
 
-export default class Recipe {
+export class Recipe {
     constructor(
         id = -1,
         name = 'recipe_name',

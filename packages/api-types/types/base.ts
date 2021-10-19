@@ -1,6 +1,8 @@
-import { User } from './user'
-import { Section } from './section'
-import { Settings } from './settings'
+// import { Recipe } from './recipe'
+// import { RecipeIngredient } from './recipe-ingredient'
+// import { Ingredient } from './ingredient'
+// import { Instruction } from './instruction'
+// import { Section } from './section'
 
 export type Copy<T> = {
     [P in keyof T]: T[P]
@@ -9,8 +11,6 @@ export type Copy<T> = {
 export type Class<T> = new (...args: any[]) => T
 
 export type Instance = { [key: string]: any }
-
-export type Primitive = number | string | boolean
 
 // Helper Types
 
@@ -45,9 +45,9 @@ export type WritableKeys<T> = {
     >
 }[keyof T]
 
-export type PrimitiveKeys<T> = {
+export type ObjectKeys<T> = {
     [P in keyof T]: IfIncludes<
-        { [Q in P]: Primitive },
+        { [Q in P]: object },
         { [Q in P]: T[P] },
         P,
         never
@@ -63,8 +63,10 @@ export type JustWritable<T> = {
     [P in WritableKeys<T>]: T[P]
 }
 
-export type JustPrimitive<T> = {
-    [P in PrimitiveKeys<T>]: T[P]
+export type JustPrimitive<T> = Omit<T, ObjectKeys<T>>
+
+export type JustObjects<T> = {
+    [P in ObjectKeys<T>]: T[P]
 }
 
 // Useful types
@@ -73,3 +75,15 @@ export type Create<T> = JustWritable<JustPrimitive<T>>
 export type UpdatableFields<T> = Partial<Create<T>>
 
 export type Updatable<T> = JustReadonly<T> & UpdatableFields<T>
+
+// type createSection = Copy<Create<Section>>
+// type createRecipe = Copy<Create<Recipe>>
+// type createIngredient = Copy<Create<RecipeIngredient> & Create<Ingredient>>
+// type createInstruction = Copy<Create<Instruction>>
+
+// type updateSection = Copy<Updatable<Section>>
+// type updateRecipe = Copy<Updatable<Recipe>>
+// type updateIngredient = Copy<
+//     Updatable<RecipeIngredient> & Updatable<Ingredient>
+// >
+// type updateInstruction = Copy<Updatable<Instruction>>

@@ -5,7 +5,7 @@ export class Instruction {
         this.position = position
     }
 
-    public id!: number
+    public readonly id!: number
     public text!: string
     public position!: number
 }

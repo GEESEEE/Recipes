@@ -66,7 +66,7 @@ export default class RecipeService {
             description: string
             prepareTime: number
             peopleCount: number
-            publishedAt?: Date
+            publishedAt: Date | null
             createdAt?: Date
             copyOf?: number | null
             authorId: number
