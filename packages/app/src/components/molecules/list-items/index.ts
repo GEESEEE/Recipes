@@ -1,4 +1,3 @@
-import InstructionListItem from './Instruction'
-import IngredientListItem from './Ingredient'
-
-export { InstructionListItem, IngredientListItem }
+export { default as InstructionListItem } from './Instruction'
+export { default as IngredientListItem } from './Ingredient'
+export { default as SectionListItem } from './Section'

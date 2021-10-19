@@ -7,7 +7,6 @@ import { utils } from '@/utils'
 
 type IngredientListItemProps = {
     ingredient: RecipeIngredient
-    ingredients: RecipeIngredient[]
     editable?: boolean
     handleIngredientNameChange?: (key: string, text: string) => void
     handleIngredientAmountChange?: (key: string, text: string) => void
@@ -16,7 +15,6 @@ type IngredientListItemProps = {
 
 function IngredientListItem({
     ingredient,
-    ingredients,
     editable,
     handleIngredientNameChange,
     handleIngredientAmountChange,

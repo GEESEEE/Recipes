@@ -34,6 +34,7 @@
               ]
             }
           ],
+          "object-shorthand": ["error", "always"],
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/ban-types": "warn",
         "@typescript-eslint/no-var-requires": "warn"

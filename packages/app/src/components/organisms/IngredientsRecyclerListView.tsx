@@ -63,12 +63,7 @@ function IngredientsRecyclerListView({
     const rowRenderer = (type: any, data: any): JSX.Element | null => {
         switch (type) {
             case ViewTypes.Ingredient:
-                return (
-                    <IngredientListItem
-                        ingredients={ingredients}
-                        ingredient={data}
-                    />
-                )
+                return <IngredientListItem ingredient={data} />
 
             default:
                 return null
