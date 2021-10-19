@@ -20,7 +20,7 @@ const authApi = api.injectEndpoints({
             }),
         }),
 
-        signUp: builder.mutation<{ id: number }, RegisterParams>({
+        signUp: builder.mutation<true, RegisterParams>({
             query: (body) => ({
                 url: `/auth/register`,
                 method: 'POST',

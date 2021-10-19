@@ -31,12 +31,10 @@ export default class AuthController implements interfaces.Controller {
         ...AuthController.validate('signUp'),
         TYPES.ErrorMiddleware
     )
-    public async signUp(
-        @requestBody() body: RegisterParams
-    ): Promise<{ id: number }> {
-        let user
+    public async signUp(@requestBody() body: RegisterParams): Promise<true> {
+        let res
         try {
-            user = await this.authService.signUp(body)
+            res = await this.authService.signUp(body)
         } catch (err) {
             if (err instanceof ValidationError) {
                 const property = err.data[0].property
@@ -45,14 +43,14 @@ export default class AuthController implements interfaces.Controller {
             throw err
         }
 
-        if (user === AuthError.USER_EXISTS) {
+        if (res === AuthError.USER_EXISTS) {
             throw new ConflictError('Username already in use')
         }
-        if (user === AuthError.EMAIL_EXISTS) {
+        if (res === AuthError.EMAIL_EXISTS) {
             throw new ConflictError('Email already in use')
         }
 
-        return user
+        return res
     }
 
     @httpPost('/token', TYPES.TokenMiddleware)

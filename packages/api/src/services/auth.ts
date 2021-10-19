@@ -30,7 +30,7 @@ export default class AuthService {
         name,
         password,
         email,
-    }: RegisterParams): Promise<{ id: number } | AuthError> {
+    }: RegisterParams): Promise<true | AuthError> {
         let user = await this.userRepository.findOne({ name })
         if (typeof user !== 'undefined') {
             return AuthError.USER_EXISTS
@@ -54,7 +54,7 @@ export default class AuthService {
             })
         )
 
-        return { id: user.id }
+        return true
     }
 
     public async signOut(token: string): Promise<true | OAuthError> {
