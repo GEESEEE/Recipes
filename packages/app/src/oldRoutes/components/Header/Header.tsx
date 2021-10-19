@@ -25,7 +25,7 @@ const Config: { [key: string]: ScreenConfig } = {
         search: true,
         add: false,
     },
-    Recipes: {
+    Sections: {
         filter: true,
         search: false,
         add: true,

@@ -1,40 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as SecureStore from 'expo-secure-store'
-import { LoginModal } from '@/screens/Login'
-import { LoadingModal } from '@/screens/modals'
-import { useAppDispatch, useAppSelector } from '@/hooks'
-import { View } from '@/components/base'
-import { authActions, authService } from '@/redux'
+
+import { View, Text } from '@/components/base'
+import { useAppSelector } from '@/hooks'
 
 function BrowseScreen(): JSX.Element {
-    const { auth, settings } = useAppSelector((state) => state)
-    const { theme } = settings
-
-    const dispatch = useAppDispatch()
-    const [verifyToken, verifyTokenStatus] =
-        authService.useVerifyTokenMutation()
-
-    async function retrieveToken(): Promise<void> {
-        const token = await SecureStore.getItemAsync('token')
-        if (token) {
-            const res = await verifyToken(token)
-            if ('data' in res) {
-                await dispatch(authActions.login({ user: res.data, token }))
-            }
-        }
-    }
-
-    React.useEffect(() => {
-        console.log('Starting')
-        retrieveToken()
-    }, [])
+    const { theme } = useAppSelector((state) => state.settings)
 
     return (
         <Container backgroundColor={theme.background}>
-            {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
-
-            {auth.user.id < 0 ? <LoginModal /> : null}
+            <Text>Browse screen toch</Text>
         </Container>
     )
 }

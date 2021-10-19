@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { BrowseScreen, ViewRecipeScreen } from '@/screens'
+import BrowseScreen from './Browse'
 import { routeUtils } from '@/utils'
 import { HeaderComponent } from '@/oldRoutes/components'
 
@@ -23,12 +23,6 @@ function BrowseStack(): JSX.Element {
                         <HeaderComponent navigation={navigation} />
                     ),
                 }}
-            />
-
-            <Stack.Screen
-                name="ViewRecipe"
-                component={ViewRecipeScreen}
-                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     )
