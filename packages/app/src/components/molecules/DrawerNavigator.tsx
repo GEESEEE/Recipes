@@ -3,17 +3,20 @@ import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
+import { Theme } from '@recipes/api-types/v1'
 import { authActions, settingsActions, authService, userService } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import ColorPickerModal from '@/screens/modals/ColorPicker'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
 
+type DrawerNavigatorProps = {
+    navigation: any
+}
+
 export default function DrawerNavigator({
     navigation,
-}: {
-    navigation: any
-}): JSX.Element {
+}: DrawerNavigatorProps): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { user } = auth
     const { theme, invertedColors } = settings
@@ -33,7 +36,7 @@ export default function DrawerNavigator({
     }
 
     async function handleSetTheme(val: boolean): Promise<void> {
-        const newTheme = val ? 'light' : 'dark'
+        const newTheme = val ? Theme.LIGHT : Theme.DARK
         dispatch(settingsActions.setTheme(newTheme))
         await updateSettings({ theme: newTheme })
     }

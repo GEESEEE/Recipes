@@ -24,7 +24,7 @@ export class SettingsSubscriber implements EntitySubscriberInterface {
     }
 
     public async afterUpdate(event: UpdateEvent<Settings>): Promise<void> {
-        console.log('After Settings update', event.entity)
+        console.log('After Settings update', event.entity, this.userRepository)
         const user = (await this.userRepository.findOne({
             where: { settingsId: (event.entity as Settings).id },
             select: ['id'],

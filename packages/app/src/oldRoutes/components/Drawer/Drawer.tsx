@@ -87,9 +87,9 @@ export default function DrawerComponent({
                         element={
                             <Toggle
                                 switchValue={theme.mode === 'light'}
-                                onValueChange={(val: boolean) =>
-                                    dispatch(settingsActions.setTheme(val))
-                                }
+                                // onValueChange={(val: boolean) =>
+                                //     dispatch(settingsActions.setTheme(val))
+                                // }
                             />
                         }
                     />
