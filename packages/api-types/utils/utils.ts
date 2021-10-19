@@ -10,8 +10,8 @@ export function fitToInstance<T extends Instance, U extends T>(
     object: U,
     instance: T
 ): T {
-    const res = pickBy(object, (val, key) => {
-        return key in instance && typeof val === typeof instance[key]
+    const res = pickBy(object, (_, key) => {
+        return key in instance
     })
 
     for (const key in object) {

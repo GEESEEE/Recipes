@@ -12,7 +12,12 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import { Theme, ModifyError, RequestError } from '@recipes/api-types/v1'
+import {
+    Theme,
+    ModifyError,
+    RequestError,
+    UpdatableFields,
+} from '@recipes/api-types/v1'
 import { constants } from '@/utils'
 import { Section, Settings } from '@/entities'
 import { SectionService, UserService } from '@/services'
@@ -60,7 +65,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-        body: Partial<Omit<SettingsResult, 'id'>>
+        body: UpdatableFields<SettingsResult>
     ): Promise<Settings> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (

@@ -2,6 +2,13 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "types": ["node"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./*"]
+        },
+
+        "outDir": "./",
+        "rootDir": "./",
 
         "declaration": true,
 

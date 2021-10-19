@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { Theme } from '@recipes/api-types/v1'
-import { fitToClass } from '@recipes/api-types/utils'
+import { fitToClass, Updatable } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
 import { UserResult, SettingsResult } from '@/types'
@@ -31,12 +30,9 @@ export default class UserService {
         return fitToClass(settings, SettingsResult)
     }
 
-    public async updateSettings(settings: {
-        id: number
-        theme?: Theme
-        color?: string
-        invertedColors?: boolean
-    }): Promise<SettingsResult> {
+    public async updateSettings(
+        settings: Updatable<SettingsResult>
+    ): Promise<SettingsResult> {
         const output = await this.settingsRepository.save(settings)
         return fitToClass(output, SettingsResult)
     }
