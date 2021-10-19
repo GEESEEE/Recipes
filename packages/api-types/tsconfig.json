@@ -2,6 +2,13 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "types": ["node"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./*"]
+        },
+
+        "outDir": "./",
+        "rootDir": "./",
 
         "declaration": true,
 
@@ -22,7 +29,7 @@
     "compileOnSave": true,
     "include": [
         "v1.ts",
-        "utils/**/*.ts",
-        "types/**/*.ts"
-    ]
+        "utils/**/*.ts"
+    ],
+    "exclude": ["node_modules"]
 }

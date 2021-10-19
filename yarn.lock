@@ -3763,11 +3763,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@recipes/api-types@*, @recipes/api-types@workspace:packages/api-types":
+"@recipes/api-types@^1.0.0, @recipes/api-types@workspace:packages/api-types":
   version: 0.0.0-use.local
   resolution: "@recipes/api-types@workspace:packages/api-types"
   dependencies:
-    "@types/lodash": ^4
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
@@ -3777,7 +3776,7 @@ __metadata:
   resolution: "@recipes/api@workspace:packages/api"
   dependencies:
     "@casl/ability": ^5.4.3
-    "@recipes/api-types": "*"
+    "@recipes/api-types": ^1.0.0
     "@zchapple/typeorm-seeding": ^2.0.1
     bcrypt: ^5.0.1
     class-transformer: ^0.4.0
@@ -3815,7 +3814,7 @@ __metadata:
     "@react-navigation/material-top-tabs": ^6.0.2
     "@react-navigation/native": ^6.0.2
     "@react-navigation/stack": ^6.0.7
-    "@recipes/api-types": "*"
+    "@recipes/api-types": ^1.0.0
     "@reduxjs/toolkit": ^1.6.2
     axios: ^0.21.4
     expo: ~42.0.3
@@ -4267,7 +4266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4, @types/lodash@npm:^4.14.172":
+"@types/lodash@npm:^4.14.172":
   version: 4.14.175
   resolution: "@types/lodash@npm:4.14.175"
   checksum: 50721f33faa542f1b9f62f2ba769ed353c6036711e92bd89ce569f2ed247e38fb2a2899f6fd46466b1690fea7ae0239471e6a6093c54e8f2b0613e43e8eac19c
@@ -18220,6 +18219,7 @@ fsevents@~2.3.2:
     ts-node: ^10.1.0
     tsconfig-paths: ^3.11.0
     tscpaths: ^0.0.9
+    tslib: ^2.3.1
     typescript: ^4.4.4
   languageName: unknown
   linkType: soft
@@ -20770,7 +20770,7 @@ resolve@~1.7.1:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.1.0":
+"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.1":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9

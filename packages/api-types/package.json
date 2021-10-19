@@ -12,13 +12,9 @@
     },
     "exports": {
         "./v1": "./v1.js",
-        "./utils": "./utils/index.js",
-        "./types": "./types/index.js"
+        "./utils": "./utils/index.js"
     },
     "dependencies": {
         "lodash": "^4.17.21"
-    },
-    "devDependencies": {
-        "@types/lodash": "^4"
     }
 }

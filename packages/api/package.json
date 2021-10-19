@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "@casl/ability": "^5.4.3",
-        "@recipes/api-types": "*",
+        "@recipes/api-types": "^1.0.0",
         "@zchapple/typeorm-seeding": "^2.0.1",
         "bcrypt": "^5.0.1",
         "class-transformer": "^0.4.0",

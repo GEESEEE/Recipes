@@ -1,7 +1,5 @@
 import pickBy from 'lodash/pickBy'
-
-type Class<T> = new (...args: any[]) => T
-type Instance = { [key: string]: any }
+import { Class, Instance } from '../types'
 
 export function fitToClass<T, U extends T>(object: U, subclass: Class<T>): T {
     const instance = new subclass()
@@ -9,17 +7,17 @@ export function fitToClass<T, U extends T>(object: U, subclass: Class<T>): T {
 }
 
 export function fitToInstance<T extends Instance, U extends T>(
-    obj1: U,
-    obj2: T
+    object: U,
+    instance: T
 ): T {
-    const res = pickBy(obj1, (val, key) => {
-        return key in obj2 && typeof val === typeof obj2[key]
+    const res = pickBy(object, (val, key) => {
+        return key in instance && typeof val === typeof instance[key]
     })
 
-    for (const key in obj1) {
-        if (key in obj2) {
-            const val1 = obj1[key]
-            const val2 = obj2[key]
+    for (const key in object) {
+        if (key in instance) {
+            const val1 = object[key]
+            const val2 = instance[key]
             if (
                 typeof val1 === 'object' &&
                 typeof val2 === 'object' &&
