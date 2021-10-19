@@ -4,7 +4,7 @@ import { Theme } from '@recipes/api-types/v1'
 import { fitToClass } from '@recipes/api-types/utils'
 import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
-import { OutputUser, OutputSettings } from '@/types'
+import { UserResult, SettingsResult } from '@/types'
 
 @injectable()
 export default class UserService {
@@ -14,21 +14,21 @@ export default class UserService {
     @inject(TYPES.SettingsRepository)
     private readonly settingsRepository!: Repository<Settings>
 
-    public async getUser(id: number): Promise<OutputUser> {
+    public async getUser(id: number): Promise<UserResult> {
         const user = await this.userRepository.findOne({
             where: { id },
             relations: ['settings'],
         })
 
-        const outputUser = fitToClass(user as any, OutputUser)
-        return outputUser
+        const userResult = fitToClass(user as Required<User>, UserResult)
+        return userResult
     }
 
-    public async getSettings(id: number): Promise<OutputSettings> {
+    public async getSettings(id: number): Promise<SettingsResult> {
         const settings = (await this.settingsRepository.findOne({
             id,
         })) as Settings
-        return fitToClass(settings, OutputSettings)
+        return fitToClass(settings, SettingsResult)
     }
 
     public async updateSettings(settings: {
@@ -36,8 +36,8 @@ export default class UserService {
         theme?: Theme
         color?: string
         invertedColors?: boolean
-    }): Promise<OutputSettings> {
+    }): Promise<SettingsResult> {
         const output = await this.settingsRepository.save(settings)
-        return fitToClass(output, OutputSettings)
+        return fitToClass(output, SettingsResult)
     }
 }

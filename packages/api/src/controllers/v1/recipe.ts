@@ -13,7 +13,11 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import { ModifyError, PaginationObject } from '@recipes/api-types/v1'
+import {
+    ModifyError,
+    PaginationObject,
+    RequestError,
+} from '@recipes/api-types/v1'
 import { methodMap } from './base'
 import { RecipeService } from '@/services'
 import { constants } from '@/utils'
@@ -299,7 +303,7 @@ export default class RecipeController implements interfaces.Controller {
             } else {
                 res.push({
                     id: iToUpdate.recipeIngredientId,
-                    statusCode: 403,
+                    statusCode: RequestError.FORBIDDEN,
                     statusMessage:
                         'Provided recipeId does not match that of this recipe ingredient',
                 })
@@ -342,7 +346,7 @@ export default class RecipeController implements interfaces.Controller {
             } else {
                 errors.push({
                     id: recipeIngredient.id,
-                    statusCode: 403,
+                    statusCode: RequestError.FORBIDDEN,
                     statusMessage:
                         'Provided recipeId does not match that of this recipe ingredient',
                 })
@@ -399,7 +403,7 @@ export default class RecipeController implements interfaces.Controller {
             } else {
                 res.push({
                     id: iToUpdate.instructionId,
-                    statusCode: 403,
+                    statusCode: RequestError.FORBIDDEN,
                     statusMessage:
                         'Provided recipeId does not match that of this instruction',
                 })
@@ -435,7 +439,7 @@ export default class RecipeController implements interfaces.Controller {
             } else {
                 errors.push({
                     id: instruction.id,
-                    statusCode: 403,
+                    statusCode: RequestError.FORBIDDEN,
                     statusMessage:
                         'Provided recipeId does not match that of this instruction',
                 })

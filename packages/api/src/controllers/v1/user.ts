@@ -12,12 +12,12 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import { Theme, ModifyError } from '@recipes/api-types/v1'
+import { Theme, ModifyError, RequestError } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
-import { Section, Settings, User } from '@/entities'
+import { Section, Settings } from '@/entities'
 import { SectionService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
-import { OutputSettings, OutputUser } from '@/types'
+import { SettingsResult, UserResult } from '@/types'
 
 const { TYPES } = constants
 
@@ -34,8 +34,8 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getUser'),
         TYPES.ErrorMiddleware
     )
-    public async getUser(@request() req: Request): Promise<OutputUser> {
-        return req.user as OutputUser
+    public async getUser(@request() req: Request): Promise<UserResult> {
+        return req.user as UserResult
     }
 
     // #region Settings
@@ -46,7 +46,7 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getSettings'),
         TYPES.ErrorMiddleware
     )
-    public async getSettings(@request() req: Request): Promise<OutputSettings> {
+    public async getSettings(@request() req: Request): Promise<SettingsResult> {
         const settingsId = req.user?.settingsId as number
         return await this.userService.getSettings(settingsId)
     }
@@ -60,7 +60,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-        body: Partial<Omit<OutputSettings, 'id'>>
+        body: Partial<Omit<SettingsResult, 'id'>>
     ): Promise<Settings> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (
@@ -86,14 +86,14 @@ export default class UserController implements interfaces.Controller {
         if (typeof section === 'undefined') {
             return {
                 id: sectionId,
-                statusCode: 404,
+                statusCode: RequestError.NOT_FOUND,
                 statusMessage: 'Provided sectionId was not found',
             }
         }
         if (section.userId !== userId) {
             return {
                 id: sectionId,
-                statusCode: 403,
+                statusCode: RequestError.FORBIDDEN,
                 statusMessage:
                     'Provided section does not belong to the requesting user',
             }

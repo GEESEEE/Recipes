@@ -1,6 +1,11 @@
+export enum RequestError {
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+}
+
 export type ModifyError = {
     id: number
-    statusCode: number
+    statusCode: RequestError
     statusMessage: string
 }
 

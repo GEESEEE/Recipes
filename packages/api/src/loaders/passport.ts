@@ -3,9 +3,8 @@ import { Container } from 'inversify'
 import { Repository } from 'typeorm'
 import { Strategy } from 'passport-http-bearer'
 import { fitToClass } from '@recipes/api-types/utils'
-import { Settings } from '@recipes/api-types'
 import { TYPES } from '@/utils/constants'
-import { OAuthError, OutputUser } from '@/types'
+import { OAuthError, UserResult } from '@/types'
 import { AuthService } from '@/services'
 import { Token, User } from '@/entities'
 
@@ -59,10 +58,13 @@ export default function init(container: Container): void {
                         return done(null, false, { message: 'User not found' })
                     }
 
-                    const outputUser = fitToClass(user as any, OutputUser)
+                    const userResult = fitToClass(
+                        user as Required<User>,
+                        UserResult
+                    )
 
-                    await redis.set(outputUser.id, JSON.stringify(outputUser))
-                    return done(null, outputUser)
+                    await redis.set(userResult.id, JSON.stringify(userResult))
+                    return done(null, userResult)
                 })
                 .catch((err: any) => console.log(err))
         })
