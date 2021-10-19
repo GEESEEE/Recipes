@@ -3,11 +3,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { BrowseStack } from './BrowseStack'
 import { RecipesStack } from './RecipesStack'
 import TestScreen from './Test'
-import { TabNavigator, TabNavigatorConfig } from '@/components/molecules'
+import { TabComponent, TabConfig } from '@/components/molecules'
 
 const Tabs = createMaterialTopTabNavigator()
 
-const config: TabNavigatorConfig = {
+const config: TabConfig = {
     BrowseStack: {
         icon: 'book-search',
         name: 'Browse',
@@ -31,7 +31,7 @@ function MainTabs(): JSX.Element {
             backBehavior="history"
             tabBarPosition={position}
             tabBar={({ navigation, state }: any) => (
-                <TabNavigator
+                <TabComponent
                     navigation={navigation}
                     state={state}
                     config={config}

@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import BrowseScreen from './Browse'
 import { routeUtils } from '@/utils'
-import { HeaderNavigator } from '@/components/molecules'
+import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
 
@@ -20,7 +20,7 @@ function BrowseStack(): JSX.Element {
                 component={BrowseScreen}
                 options={{
                     header: ({ navigation }) => (
-                        <HeaderNavigator
+                        <HeaderComponent
                             navigation={navigation}
                             config={{ right: [] }}
                         />

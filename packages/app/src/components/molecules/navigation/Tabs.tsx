@@ -6,26 +6,26 @@ import { v4 as uuid } from 'uuid'
 import { useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Text, TouchableOpacity } from '@/components/base'
 
-export type TabNavigatorConfig = {
+export type TabConfig = {
     [key: string]: {
         icon?: string
         name: string
     }
 }
 
-type TabNavigatorProps = {
+type TabComponentProps = {
     state: any
     navigation: any
-    config: TabNavigatorConfig
+    config: TabConfig
     position: 'top' | 'bottom'
 }
 
-const TabNavigator = ({
+const TabComponent = ({
     state,
     navigation,
     config,
     position,
-}: TabNavigatorProps): JSX.Element => {
+}: TabComponentProps): JSX.Element => {
     const { routes } = state
 
     const totalWidth = Dimensions.get('window').width
@@ -139,7 +139,7 @@ const TabNavigator = ({
     )
 }
 
-export default TabNavigator
+export default TabComponent
 
 type TabProps = {
     icon?: string

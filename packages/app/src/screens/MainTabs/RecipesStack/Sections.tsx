@@ -6,7 +6,7 @@ import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService } from '@/redux'
-import { HeaderNavigator, HeaderNavigatorConfig } from '@/components/molecules'
+import { HeaderComponent, HeaderConfig } from '@/components/molecules'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -30,7 +30,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         retrieveToken()
     }, [])
 
-    const headerConfig: HeaderNavigatorConfig = {
+    const headerConfig: HeaderConfig = {
         right: [
             {
                 type: Icons.MyFeather,
@@ -43,7 +43,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     React.useLayoutEffect(() => {
         navigation.setOptions({
             header: () => (
-                <HeaderNavigator
+                <HeaderComponent
                     navigation={navigation}
                     config={headerConfig}
                 />

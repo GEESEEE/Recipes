@@ -1,11 +1,11 @@
-import TabNavigator, { TabNavigatorConfig } from './TabNavigator'
-import DrawerNavigator from './DrawerNavigator'
-import HeaderNavigator, { HeaderNavigatorConfig } from './HeaderNavigator'
+import TabComponent, { TabConfig } from './Tabs'
+import DrawerComponent from './Drawer'
+import HeaderComponent, { HeaderConfig } from './Header'
 
 export {
-    TabNavigator,
-    TabNavigatorConfig,
-    DrawerNavigator,
-    HeaderNavigator,
-    HeaderNavigatorConfig,
+    TabComponent,
+    TabConfig,
+    DrawerComponent,
+    HeaderComponent,
+    HeaderConfig,
 }

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { EditRecipeTabs } from './EditRecipeTabs'
 import SectionsScreen from './Sections'
 import { routeUtils } from '@/utils'
-import { HeaderNavigator } from '@/components/molecules'
+import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
 
@@ -21,7 +21,7 @@ function RecipesStack(): JSX.Element {
                 component={SectionsScreen}
                 options={{
                     header: ({ navigation }) => (
-                        <HeaderNavigator
+                        <HeaderComponent
                             navigation={navigation}
                             config={{ right: [] }}
                         />

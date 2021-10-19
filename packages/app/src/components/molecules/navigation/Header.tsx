@@ -13,19 +13,19 @@ type HeaderIcon = {
     onPress: () => void
 }
 
-export type HeaderNavigatorConfig = {
+export type HeaderConfig = {
     right: Array<HeaderIcon>
 }
 
-type HeaderNavigatorProps = {
+type HeaderComponentProps = {
     navigation: any
-    config: HeaderNavigatorConfig
+    config: HeaderConfig
 }
 
-function HeaderNavigator({
+function HeaderComponent({
     navigation,
     config,
-}: HeaderNavigatorProps): JSX.Element {
+}: HeaderComponentProps): JSX.Element {
     const { theme, invertedColors } = useAppSelector((state) => state.settings)
     const route = useRoute()
     const routeName = route.name
@@ -80,7 +80,7 @@ function HeaderNavigator({
     )
 }
 
-export default HeaderNavigator
+export default HeaderComponent
 
 const Container = styled(View)``
 
