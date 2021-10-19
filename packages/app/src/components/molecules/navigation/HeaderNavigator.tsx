@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
 import { View, Text, Icons } from '@/components/base'
@@ -66,6 +67,7 @@ function HeaderNavigator({
                 {config.right.map((icon) => {
                     return (
                         <HeaderIcon
+                            key={uuid()}
                             IconType={icon.type}
                             iconName={icon.name}
                             onPress={icon.onPress}

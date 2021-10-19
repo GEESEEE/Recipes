@@ -6,8 +6,7 @@ import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService } from '@/redux'
-import { HeaderNavigator } from '@/components/molecules'
-import { HeaderNavigatorConfig } from '@/components/molecules/HeaderNavigator'
+import { HeaderNavigator, HeaderNavigatorConfig } from '@/components/molecules'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
