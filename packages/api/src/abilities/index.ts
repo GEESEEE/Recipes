@@ -5,13 +5,14 @@ import {
     MatchConditions,
     AbilityClass,
 } from '@casl/ability'
-import { Recipe, Section, User } from '@/entities'
+import { Recipe, Section } from '@/entities'
+import { UserResult } from '@/types'
 
 export type UserAbility = PureAbility<AbilityTuple, MatchConditions>
 const Ability = PureAbility as AbilityClass<UserAbility>
 const lambdaMatcher = (matchConditions: MatchConditions): any => matchConditions
 
-export default function defineUserAbilities(user: User): UserAbility {
+export default function defineUserAbilities(user: UserResult): UserAbility {
     const { can, build } = new AbilityBuilder(Ability)
 
     // Users can only read Recipes from other people if they are published

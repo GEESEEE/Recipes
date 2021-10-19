@@ -1,8 +1,8 @@
-import { Recipe } from './recipe'
-import { RecipeIngredient } from './recipe-ingredient'
-import { Ingredient } from './ingredient'
-import { Instruction } from './instruction'
-import { Section } from './section'
+// import { Recipe } from './recipe'
+// import { RecipeIngredient } from './recipe-ingredient'
+// import { Ingredient } from './ingredient'
+// import { Instruction } from './instruction'
+// import { Section } from './section'
 
 export type Copy<T> = {
     [P in keyof T]: T[P]
@@ -79,16 +79,16 @@ export type UpdatableFields<T> = Partial<Creatable<T>>
 
 export type Updatable<T> = JustReadonly<T> & UpdatableFields<T>
 
-type createSection = Copy<Creatable<Section>>
-type createRecipe = Copy<Creatable<Recipe>>
-type createIngredient = Copy<
-    Creatable<RecipeIngredient> & Creatable<Ingredient>
->
-type createInstruction = Copy<Creatable<Instruction>>
+// type createSection = Copy<Creatable<Section>>
+// type createRecipe = Copy<Creatable<Recipe>>
+// type createIngredient = Copy<
+//     Creatable<RecipeIngredient> & Creatable<Ingredient>
+// >
+// type createInstruction = Copy<Creatable<Instruction>>
 
-type updateSection = Copy<Updatable<Section>>
-type updateRecipe = Copy<Updatable<Recipe>>
-type updateIngredient = Copy<
-    Updatable<RecipeIngredient> & Updatable<Ingredient>
->
-type updateInstruction = Copy<Updatable<Instruction>>
+// type updateSection = Copy<Updatable<Section>>
+// type updateRecipe = Copy<Updatable<Recipe>>
+// type updateIngredient = Copy<
+//     Updatable<RecipeIngredient> & Updatable<Ingredient>
+// >
+// type updateInstruction = Copy<Updatable<Instruction>>

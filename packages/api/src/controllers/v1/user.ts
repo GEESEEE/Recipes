@@ -20,7 +20,7 @@ import {
     Creatable,
 } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
-import { Section, Settings } from '@/entities'
+import { Section } from '@/entities'
 import { SectionService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
 import { SectionResult, SettingsResult, UserResult } from '@/types'
