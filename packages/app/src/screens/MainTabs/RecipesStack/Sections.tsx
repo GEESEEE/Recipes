@@ -1,12 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
+import { Section } from '@recipes/api-types/v1'
 import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { View, Icons } from '@/components/base'
+import { View, Icons, Text } from '@/components/base'
 import { authActions, authService } from '@/redux'
-import { HeaderComponent, HeaderConfig } from '@/components/molecules'
+import {
+    HeaderComponent,
+    HeaderConfig,
+    SectionListItem,
+} from '@/components/molecules'
+import { ListItemRecyclerView } from '@/components/organisms'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -51,11 +57,20 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
+    const sections = [new Section()]
+
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
             {auth.user.id < 0 ? <LoginModal /> : null}
+            <Text>Goeie shit</Text>
+            <ListItemRecyclerView
+                Element={SectionListItem}
+                data={sections}
+                props={{}}
+                height={100}
+            />
         </Container>
     )
 }
