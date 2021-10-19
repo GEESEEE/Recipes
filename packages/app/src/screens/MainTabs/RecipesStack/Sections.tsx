@@ -4,10 +4,12 @@ import * as SecureStore from 'expo-secure-store'
 import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { View } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import { authActions, authService } from '@/redux'
+import { HeaderNavigator } from '@/components/molecules'
+import { HeaderNavigatorConfig } from '@/components/molecules/HeaderNavigator'
 
-function SectionsScreen(): JSX.Element {
+function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
 
@@ -28,6 +30,27 @@ function SectionsScreen(): JSX.Element {
     React.useEffect(() => {
         retrieveToken()
     }, [])
+
+    const headerConfig: HeaderNavigatorConfig = {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () => navigation.navigate('EditRecipeTabs'),
+            },
+        ],
+    }
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            header: () => (
+                <HeaderNavigator
+                    navigation={navigation}
+                    config={headerConfig}
+                />
+            ),
+        })
+    }, [navigation])
 
     return (
         <Container backgroundColor={theme.background}>

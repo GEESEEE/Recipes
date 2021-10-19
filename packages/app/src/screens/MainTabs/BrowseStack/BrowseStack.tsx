@@ -20,7 +20,10 @@ function BrowseStack(): JSX.Element {
                 component={BrowseScreen}
                 options={{
                     header: ({ navigation }) => (
-                        <HeaderNavigator navigation={navigation} />
+                        <HeaderNavigator
+                            navigation={navigation}
+                            config={{ right: [] }}
+                        />
                     ),
                 }}
             />

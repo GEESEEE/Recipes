@@ -1,20 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { View, Text } from '@/components/base'
+import { useRoute } from '@react-navigation/native'
+import { View, Text, Icons } from '@/components/base'
+import { Button, IconButton } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
+
+type HeaderIcon = {
+    type: any
+    name: string
+    onPress: () => void
+}
+
+export type HeaderNavigatorConfig = {
+    right: Array<HeaderIcon>
+}
 
 type HeaderNavigatorProps = {
     navigation: any
+    config: HeaderNavigatorConfig
 }
 
-function HeaderNavigator({ navigation }: HeaderNavigatorProps): JSX.Element {
+function HeaderNavigator({
+    navigation,
+    config,
+}: HeaderNavigatorProps): JSX.Element {
     const { theme, invertedColors } = useAppSelector((state) => state.settings)
+    const route = useRoute()
+    const routeName = route.name
 
     const insets = useSafeAreaInsets()
 
     const height = 35
-    const sideOffset = 5
 
     const backgroundColor = invertedColors ? theme.primary : theme.background
     const color = invertedColors ? theme.background : theme.primary
@@ -28,14 +45,34 @@ function HeaderNavigator({ navigation }: HeaderNavigatorProps): JSX.Element {
 
     const safeContainerStyle = {
         paddingTop: insets.top,
-        paddingLeft: insets.left + sideOffset,
-        paddingRight: insets.right + sideOffset,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
     }
 
     return (
         <Container style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
-                <Text>Header</Text>
+                <HeaderIcon
+                    IconType={Icons.MyFeather}
+                    iconName="menu"
+                    onPress={() => navigation.toggleDrawer()}
+                    color={color}
+                />
+                <HeaderCenter>
+                    <Text type="SubHeader" color={color} paddingHorizontal="m">
+                        {routeName}
+                    </Text>
+                </HeaderCenter>
+                {config.right.map((icon) => {
+                    return (
+                        <HeaderIcon
+                            IconType={icon.type}
+                            iconName={icon.name}
+                            onPress={icon.onPress}
+                            color={color}
+                        />
+                    )
+                })}
             </SafeContainer>
         </Container>
     )
@@ -45,4 +82,38 @@ export default HeaderNavigator
 
 const Container = styled(View)``
 
-const SafeContainer = styled(View)``
+const SafeContainer = styled(View)`
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`
+
+const HeaderCenter = styled(View)`
+    flex: 1;
+`
+
+type HeaderIconProps = {
+    IconType: any
+    iconName: string
+    onPress: () => void
+    color: string
+}
+
+function HeaderIcon({
+    IconType,
+    iconName,
+    onPress,
+    color,
+}: HeaderIconProps): JSX.Element {
+    return (
+        <IconButton
+            IconType={IconType}
+            iconName={iconName}
+            onPress={onPress}
+            color={color}
+            size="l"
+            paddingHorizontal="s"
+        />
+    )
+}

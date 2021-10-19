@@ -21,7 +21,10 @@ function RecipesStack(): JSX.Element {
                 component={SectionsScreen}
                 options={{
                     header: ({ navigation }) => (
-                        <HeaderNavigator navigation={navigation} />
+                        <HeaderNavigator
+                            navigation={navigation}
+                            config={{ right: [] }}
+                        />
                     ),
                 }}
             />

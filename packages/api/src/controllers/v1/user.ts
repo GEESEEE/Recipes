@@ -76,7 +76,6 @@ export default class UserController implements interfaces.Controller {
         }
 
         const settings = { id: req.user?.settings.id as number, ...body }
-        console.log('Updating settings', settings)
         return await this.userService.updateSettings(settings)
     }
 
