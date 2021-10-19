@@ -1,4 +1,5 @@
 export * from './user'
 export * from './request'
-export * from './recipe'
+export * from './section'
+export * from './section'
 export * from './auth'
