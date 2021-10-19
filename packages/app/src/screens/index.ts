@@ -1,9 +1,9 @@
-import BrowseScreen from './Browse'
-import RecipesScreen from './Recipes'
-import TestScreen from './Test'
-import ViewRecipeScreen from './ViewRecipe'
+import BrowseScreen from './old/Browse'
+import RecipesScreen from './old/Recipes'
+import TestScreen from './MainTabs/Test'
+import ViewRecipeScreen from './old/ViewRecipe'
 import Popup from './Popup'
-import { LoginModal, RegisterModal } from './modals'
+import { LoginModal, RegisterModal } from './Login'
 
 export {
     ViewRecipeScreen,

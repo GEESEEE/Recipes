@@ -1,8 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
+import Popup from './Popup'
 import { routeUtils } from '@/utils'
-import { Popup } from '@/screens'
 
 const Stack = createStackNavigator()
 

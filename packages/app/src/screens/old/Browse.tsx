@@ -2,10 +2,11 @@ import React, { useLayoutEffect } from 'react'
 import { FlatList } from 'react-native'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
-import { LoginModal, LoadingModal } from './modals'
+import { LoginModal } from '@/screens/Login'
+import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { View } from '@/components/base'
-import { HeaderComponent } from '@/routes/components'
+import { HeaderComponent } from '@/oldRoutes/components'
 import { authActions, authService } from '@/redux'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {

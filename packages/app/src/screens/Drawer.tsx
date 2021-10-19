@@ -1,6 +1,6 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import MainTabs from './MainTabs'
+import MainTabs from './MainTabs/MainTabs'
 import { DrawerNavigator } from '@/components/molecules'
 
 const DrawerNav = createDrawerNavigator()
