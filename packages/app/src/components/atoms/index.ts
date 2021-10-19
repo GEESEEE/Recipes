@@ -7,6 +7,7 @@ import ListItem from './ListItem'
 import Editable from './Editable'
 import TextInputWithTitle from './TextInputWithTitle'
 import PressableTextWithElement from './PressableTextWithElement'
+import TextInputWithIcons from './TextInputWithIcons'
 
 export {
     Button,
@@ -19,4 +20,5 @@ export {
     Editable,
     TextInputWithTitle,
     PressableTextWithElement,
+    TextInputWithIcons,
 }
