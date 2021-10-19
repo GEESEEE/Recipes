@@ -2,8 +2,12 @@ import React, { useReducer } from 'react'
 import styled from 'styled-components'
 import { useAppSelector } from '@/hooks'
 import { Icons, Modal } from '@/components/base'
-import { Button, IconButton, Error } from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+import {
+    Button,
+    IconButton,
+    Error,
+    TextInputWithIcons,
+} from '@/components/atoms'
 import { authService } from '@/redux'
 
 const REGISTER_ACTIONS = {

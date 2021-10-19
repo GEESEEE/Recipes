@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import Error from './Error'
 import { TextInput, View, TextInputProps } from '@/components/base'
-import { Error } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
 
 type TextInputWithIconsProps = {

@@ -7,8 +7,12 @@ import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
-import { Button, IconButton, Error } from '@/components/atoms'
-import { TextInputWithIcons } from '@/components/molecules'
+import {
+    Button,
+    IconButton,
+    Error,
+    TextInputWithIcons,
+} from '@/components/atoms'
 import { authActions, userService, authService } from '@/redux'
 
 const LOGIN_ACTIONS = {
