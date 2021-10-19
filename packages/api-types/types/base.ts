@@ -1,8 +1,8 @@
-// import { Recipe } from './recipe'
-// import { RecipeIngredient } from './recipe-ingredient'
-// import { Ingredient } from './ingredient'
-// import { Instruction } from './instruction'
-// import { Section } from './section'
+import { Recipe } from './recipe'
+import { RecipeIngredient } from './recipe-ingredient'
+import { Ingredient } from './ingredient'
+import { Instruction } from './instruction'
+import { Section } from './section'
 
 export type Copy<T> = {
     [P in keyof T]: T[P]
@@ -70,20 +70,25 @@ export type JustObjects<T> = {
 }
 
 // Useful types
-export type Create<T> = JustWritable<JustPrimitive<T>>
+export type Require<T, Req extends keyof T> = Omit<T, Req> &
+    Required<Pick<T, Req>>
 
-export type UpdatableFields<T> = Partial<Create<T>>
+export type Creatable<T> = JustWritable<JustPrimitive<T>>
+
+export type UpdatableFields<T> = Partial<Creatable<T>>
 
 export type Updatable<T> = JustReadonly<T> & UpdatableFields<T>
 
-// type createSection = Copy<Create<Section>>
-// type createRecipe = Copy<Create<Recipe>>
-// type createIngredient = Copy<Create<RecipeIngredient> & Create<Ingredient>>
-// type createInstruction = Copy<Create<Instruction>>
+type createSection = Copy<Creatable<Section>>
+type createRecipe = Copy<Creatable<Recipe>>
+type createIngredient = Copy<
+    Creatable<RecipeIngredient> & Creatable<Ingredient>
+>
+type createInstruction = Copy<Creatable<Instruction>>
 
-// type updateSection = Copy<Updatable<Section>>
-// type updateRecipe = Copy<Updatable<Recipe>>
-// type updateIngredient = Copy<
-//     Updatable<RecipeIngredient> & Updatable<Ingredient>
-// >
-// type updateInstruction = Copy<Updatable<Instruction>>
+type updateSection = Copy<Updatable<Section>>
+type updateRecipe = Copy<Updatable<Recipe>>
+type updateIngredient = Copy<
+    Updatable<RecipeIngredient> & Updatable<Ingredient>
+>
+type updateInstruction = Copy<Updatable<Instruction>>

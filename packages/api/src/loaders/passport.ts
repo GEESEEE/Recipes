@@ -3,6 +3,7 @@ import { Container } from 'inversify'
 import { Repository } from 'typeorm'
 import { Strategy } from 'passport-http-bearer'
 import { fitToClass } from '@recipes/api-types/utils'
+import { Require } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { OAuthError, UserResult } from '@/types'
 import { AuthService } from '@/services'
@@ -59,7 +60,7 @@ export default function init(container: Container): void {
                     }
 
                     const userResult = fitToClass(
-                        user as Required<User>,
+                        user as Require<User, 'settings'>,
                         UserResult
                     )
 

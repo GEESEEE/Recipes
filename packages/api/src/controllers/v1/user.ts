@@ -17,12 +17,13 @@ import {
     ModifyError,
     RequestError,
     UpdatableFields,
+    Creatable,
 } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
 import { Section, Settings } from '@/entities'
 import { SectionService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
-import { SettingsResult, UserResult } from '@/types'
+import { SectionResult, SettingsResult, UserResult } from '@/types'
 
 const { TYPES } = constants
 
@@ -52,8 +53,7 @@ export default class UserController implements interfaces.Controller {
         TYPES.ErrorMiddleware
     )
     public async getSettings(@request() req: Request): Promise<SettingsResult> {
-        const settingsId = req.user?.settingsId as number
-        return await this.userService.getSettings(settingsId)
+        return req.user?.settings as SettingsResult
     }
 
     @httpPut(
@@ -66,7 +66,7 @@ export default class UserController implements interfaces.Controller {
         @request() req: Request,
         @requestBody()
         body: UpdatableFields<SettingsResult>
-    ): Promise<Settings> {
+    ): Promise<SettingsResult> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (
             typeof body.color !== 'undefined' &&
@@ -75,7 +75,7 @@ export default class UserController implements interfaces.Controller {
             throw new BadRequestError('Invalid color')
         }
 
-        const settings = { id: req.user?.settingsId as number, ...body }
+        const settings = { id: req.user?.settings.id as number, ...body }
         return await this.userService.updateSettings(settings)
     }
 
@@ -86,7 +86,7 @@ export default class UserController implements interfaces.Controller {
     private async validateSection(
         userId: number,
         sectionId: number
-    ): Promise<Section | ModifyError> {
+    ): Promise<SectionResult | ModifyError> {
         const section = await this.sectionsService.getSection(sectionId)
         if (typeof section === 'undefined') {
             return {
@@ -115,10 +115,7 @@ export default class UserController implements interfaces.Controller {
     public async createSection(
         @request() req: Request,
         @requestBody()
-        body: {
-            name: string
-            description: string
-        }
+        body: Omit<Creatable<SectionResult>, 'userId'>
     ): Promise<Section> {
         const section: any = {
             ...body,
@@ -149,16 +146,13 @@ export default class UserController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('sectionId') sectionId: number,
         @requestBody()
-        body: {
-            name?: string
-            description?: string
-        }
-    ): Promise<Section | ModifyError> {
+        body: Omit<UpdatableFields<SectionResult>, 'userId'>
+    ): Promise<SectionResult | ModifyError> {
         const validationResult = await this.validateSection(
             req.user?.id as number,
             sectionId
         )
-        if (validationResult instanceof Section) {
+        if (validationResult instanceof SectionResult) {
             return await this.sectionsService.updateSection(
                 validationResult,
                 body
@@ -181,7 +175,7 @@ export default class UserController implements interfaces.Controller {
             req.user?.id as number,
             sectionId
         )
-        if (validationResult instanceof Section) {
+        if (validationResult instanceof SectionResult) {
             return await this.sectionsService.deleteSection(sectionId)
         }
         return validationResult

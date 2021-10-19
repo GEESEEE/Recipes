@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { fitToClass, Updatable } from '@recipes/api-types/v1'
+import { fitToClass, Require, Updatable } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
 import { UserResult, SettingsResult } from '@/types'
@@ -19,7 +19,10 @@ export default class UserService {
             relations: ['settings'],
         })
 
-        const userResult = fitToClass(user as Required<User>, UserResult)
+        const userResult = fitToClass(
+            user as Require<User, 'settings'>,
+            UserResult
+        )
         return userResult
     }
 
