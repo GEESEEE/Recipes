@@ -6,9 +6,11 @@ import {
     DataProvider,
     LayoutProvider,
 } from 'recyclerlistview'
+
 import { View } from '@/components/base'
 import { listItemHeightMap, ListItem } from '@/components/molecules'
 import { useAppSelector } from '@/hooks'
+import { Loading4Dots } from '@/components/atoms'
 
 const ViewTypes = {
     Item: 0,
@@ -18,12 +20,14 @@ type ListItemRecyclerViewProps<T extends ListItem, U> = {
     data: Array<T>
     Element: (props: U & { item: T }) => JSX.Element
     props: U
+    loading?: boolean
 }
 
 function ListItemRecyclerView<T extends ListItem, U>({
     data,
     Element,
     props,
+    loading,
 }: ListItemRecyclerViewProps<T, U>): JSX.Element {
     const { width } = Dimensions.get('window')
     const { textSize } = useAppSelector((state) => state.settings)
@@ -62,6 +66,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
             }
         }
     )
+
+    if (loading) {
+        console.log('should be loading')
+        return <Loading4Dots width={50} />
+    }
 
     if (data.length > 0) {
         return (

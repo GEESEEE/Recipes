@@ -15,6 +15,7 @@ import {
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
+import { Button } from '@/components/atoms'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -84,11 +85,12 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
             {auth.user.id < 0 ? <LoginModal /> : null}
-            <Text>Goeie shit</Text>
+
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={sections}
                 props={{}}
+                loading={getSections.isLoading}
             />
         </Container>
     )
