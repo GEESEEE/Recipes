@@ -20,17 +20,17 @@ const ViewTypes = {
     Item: 0,
 }
 
-type ListItemRecyclerViewProps<T extends ListItem> = {
+type ListItemRecyclerViewProps<T extends ListItem, U> = {
     data: Array<T>
-    Element: (props: ListItemBaseProps<T>) => JSX.Element
-    props: Omit<ListItemBaseProps<T>, 'item'>
+    Element: (props: U & { item: T }) => JSX.Element
+    props: U
 }
 
 function ListItemRecyclerView<T extends ListItem, U>({
     data,
     Element,
     props,
-}: ListItemRecyclerViewProps<T>): JSX.Element {
+}: ListItemRecyclerViewProps<T, U>): JSX.Element {
     const { width } = Dimensions.get('window')
     const { textSize } = useAppSelector((state) => state.settings)
 
