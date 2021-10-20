@@ -35,7 +35,7 @@ const userApi = api.injectEndpoints({
             }),
         }),
 
-        getSections: builder.query<Section, void>({
+        getSections: builder.query<Section[], void>({
             query: () => `/users/sections`,
         }),
 
@@ -59,5 +59,8 @@ const userApi = api.injectEndpoints({
 export const {
     useGetUserMutation,
     useUpdateSettingsMutation,
+    useCreateSectionMutation,
     useGetSectionsQuery,
+    useUpdateSectionMutation,
+    useDeleteSectionMutation,
 } = userApi

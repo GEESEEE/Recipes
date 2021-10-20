@@ -4,16 +4,16 @@ import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
 import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
 import { View, Icons, Text } from '@/components/base'
-import { authActions, authService } from '@/redux'
+import { authActions, authService, userService } from '@/redux'
 import {
     HeaderComponent,
     HeaderConfig,
     SectionListItem,
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { sectionsSelector } from '@/redux/slices'
+import { sectionsActions, sectionsSelector } from '@/redux/slices'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -26,6 +26,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const dispatch = useAppDispatch()
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
+    const getSections = userService.useGetSectionsQuery()
 
     async function retrieveToken(): Promise<void> {
         const token = await SecureStore.getItemAsync('token')
@@ -37,9 +38,19 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
+    async function setSections(sections: Section[]): Promise<void> {
+        await dispatch(sectionsActions.setSections(sections))
+    }
+
     React.useEffect(() => {
         retrieveToken()
     }, [])
+
+    useUpdateEffect(() => {
+        if (typeof getSections.data !== 'undefined') {
+            setSections(getSections.data)
+        }
+    }, [getSections.data])
 
     const headerConfig: HeaderConfig = {
         right: [
