@@ -29,7 +29,7 @@ function IconButton({
 }: IconButtonProps): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress} {...rest}>
-            <Icon Type={Type} name={name} color={color} size={size} />
+            <Icon type={Type} name={name} color={color} size={size} />
         </TouchableOpacity>
     )
 }
