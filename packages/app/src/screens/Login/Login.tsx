@@ -156,7 +156,7 @@ function LoginModal(): JSX.Element {
             <TextInputWithIcons
                 leftIcon={
                     <Icon
-                        Type={Icons.MyFontAwesome}
+                        type={Icons.MyFontAwesome}
                         name="user-o"
                         color={theme.grey}
                     />
@@ -173,8 +173,8 @@ function LoginModal(): JSX.Element {
             <TextInputWithIcons
                 leftIcon={
                     <IconButton
-                        IconType={Icons.MyFontAwesome}
-                        iconName="lock"
+                        type={Icons.MyFontAwesome}
+                        name="lock"
                         color={theme.grey}
                         onPress={() => console.log('asd')}
                     />
@@ -184,8 +184,8 @@ function LoginModal(): JSX.Element {
                 secureTextEntry={data.securePasswordText}
                 rightIcon={
                     <IconButton
-                        IconType={Icons.MyFeather}
-                        iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                        type={Icons.MyFeather}
+                        name={data.securePasswordText ? 'eye-off' : 'eye'}
                         onPress={() => handleSecurePasswordChange()}
                         color={theme.grey}
                     />

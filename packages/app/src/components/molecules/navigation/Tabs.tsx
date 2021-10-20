@@ -174,7 +174,7 @@ const RouteTab = ({
         <TabContainer onPress={onPress}>
             {icon ? (
                 <Icon
-                    Type={Icons.MyMaterialCommunityIcons}
+                    type={Icons.MyMaterialCommunityIcons}
                     name={icon}
                     color={color}
                 />

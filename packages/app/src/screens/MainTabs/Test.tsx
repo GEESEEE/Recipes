@@ -18,7 +18,7 @@ import {
     Editable,
     PressableTextWithElement,
 } from '@/components/atoms'
-import { TextInputWithIcons, InstructionListItem } from '@/components/molecules'
+import { InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
 import { useUpdateSettingsMutation } from '@/redux/services/user'
 

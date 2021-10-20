@@ -110,8 +110,8 @@ function HeaderIcon({
 }: HeaderIconProps): JSX.Element {
     return (
         <IconButton
-            IconType={IconType}
-            iconName={iconName}
+            type={IconType}
+            name={iconName}
             onPress={onPress}
             color={color}
             size="l"

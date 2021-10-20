@@ -57,7 +57,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    const sections = [new Section()]
+    const sections = [new Section(), new Section()]
 
     return (
         <Container backgroundColor={theme.background}>
@@ -68,8 +68,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={sections}
-                props={{}}
-                height={100}
+                props={{ editable: true }}
+                height={50}
             />
         </Container>
     )

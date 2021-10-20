@@ -65,7 +65,7 @@ export default function DrawerNavigator({
                         text="Set Primary Color"
                         element={
                             <Icon
-                                Type={Icons.MyIonicons}
+                                type={Icons.MyIonicons}
                                 name="color-palette-outline"
                                 color={theme.primary}
                                 size="m"

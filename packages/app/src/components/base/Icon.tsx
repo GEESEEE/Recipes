@@ -6,7 +6,7 @@ import { useAppSelector } from '@/hooks'
 import { Spacing, Typography } from '@/styles'
 
 type IconProps = {
-    Type: any
+    type: any
     name: string
 
     color?: string
@@ -16,7 +16,7 @@ type IconProps = {
 } & LayoutProps
 
 function Icon({
-    Type: IconType,
+    type: Type,
     name,
     color,
     size,
@@ -39,7 +39,7 @@ function Icon({
             ]}
             {...rest}
         >
-            <IconType name={name} color={color} size={iconSize} />
+            <Type name={name} color={color} size={iconSize} />
         </StyledView>
     )
 }

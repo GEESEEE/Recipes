@@ -9,8 +9,8 @@ import { Spacing } from '@/styles'
 
 type IconButtonProps = {
     onPress: () => void
-    IconType: any
-    iconName: string
+    type: any
+    name: string
 
     color?: string
     size?: Spacing.Size
@@ -19,8 +19,8 @@ type IconButtonProps = {
 
 function IconButton({
     onPress,
-    IconType,
-    iconName,
+    type: Type,
+    name,
 
     color,
     size,
@@ -29,7 +29,7 @@ function IconButton({
 }: IconButtonProps): JSX.Element {
     return (
         <TouchableOpacity onPress={onPress} {...rest}>
-            <Icon Type={IconType} name={iconName} color={color} size={size} />
+            <Icon Type={Type} name={name} color={color} size={size} />
         </TouchableOpacity>
     )
 }

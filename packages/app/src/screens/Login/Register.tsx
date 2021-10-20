@@ -201,8 +201,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 placeholder="Password"
                 rightIcon={
                     <IconButton
-                        IconType={Icons.MyFeather}
-                        iconName={data.securePasswordText ? 'eye-off' : 'eye'}
+                        type={Icons.MyFeather}
+                        name={data.securePasswordText ? 'eye-off' : 'eye'}
                         onPress={() => handleSecurePassword1Change()}
                         color={theme.grey}
                     />

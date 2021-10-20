@@ -5,7 +5,7 @@ import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 
-type IngredientListItemProps = {
+type SectionListItemProps = {
     item: Section
     editable?: boolean
     handleSectionNameChange?: (key: string, text: string) => void
@@ -17,7 +17,7 @@ function SectionListItem({
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
-}: IngredientListItemProps): JSX.Element {
+}: SectionListItemProps): JSX.Element {
     function logSection(): void {
         console.log('Logging section')
     }
@@ -47,9 +47,4 @@ export default SectionListItem
 const Container = styled(View)`
     flex-direction: column;
     justify-content: center;
-`
-
-const SubContainer = styled(View)`
-    flex-direction: row;
-    align-items: center;
 `

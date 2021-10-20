@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
-import { Dimensions, StyleSheet } from 'react-native'
+import { Dimensions } from 'react-native'
 import {
     RecyclerListView,
     DataProvider,
@@ -17,12 +17,12 @@ const ViewTypes = {
 
 type ListItemRecyclerViewProps<T, U> = {
     data: Array<T>
-    Element: (props: U) => JSX.Element
-    props: any
+    Element: (props: U & { item: T }) => JSX.Element
+    props: U
     height: number
 }
 
-function ListItemRecyclerView<T extends { id: number }, U extends { item: T }>({
+function ListItemRecyclerView<T extends { id: number }, U>({
     data,
     Element,
     props,

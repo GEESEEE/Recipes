@@ -53,8 +53,8 @@ function DropdownMenu({
     return (
         <View style={containerStyle} onLayout={onPosition}>
             <IconButton
-                IconType={Icons.MyMaterialCommunityIcons}
-                iconName="dots-vertical"
+                type={Icons.MyMaterialCommunityIcons}
+                name="dots-vertical"
                 onPress={() => toggle()}
                 color={iconColor}
                 size={iconSize}
