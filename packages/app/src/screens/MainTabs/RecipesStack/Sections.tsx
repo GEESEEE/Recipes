@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
@@ -18,15 +19,11 @@ import { sectionsActions, sectionsSelector } from '@/redux/slices'
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
-
-    const sections = useAppSelector((state) =>
-        sectionsSelector.selectAll(state.sections)
-    )
-
     const dispatch = useAppDispatch()
+
+    // Verify Token stuff
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
-    const getSections = userService.useGetSectionsQuery()
 
     async function retrieveToken(): Promise<void> {
         const token = await SecureStore.getItemAsync('token')
@@ -38,20 +35,11 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    async function setSections(sections: Section[]): Promise<void> {
-        await dispatch(sectionsActions.setSections(sections))
-    }
-
     React.useEffect(() => {
         retrieveToken()
     }, [])
 
-    useUpdateEffect(() => {
-        if (typeof getSections.data !== 'undefined') {
-            setSections(getSections.data)
-        }
-    }, [getSections.data])
-
+    // Header configuration
     const headerConfig: HeaderConfig = {
         right: [
             {
@@ -73,7 +61,24 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    console.log('sec', sections)
+    // Sections configuration
+    async function setSections(sections: Section[]): Promise<void> {
+        await dispatch(sectionsActions.setSections(sections))
+    }
+
+    const sections = useAppSelector((state) =>
+        sectionsSelector.selectAll(state.sections)
+    )
+    const getSections = userService.useGetSectionsQuery(undefined, {
+        skip: !auth.token,
+    })
+
+    console.log('sections', getSections)
+    useUpdateEffect(() => {
+        if (typeof getSections.data !== 'undefined') {
+            setSections(getSections.data)
+        }
+    }, [getSections.data])
 
     return (
         <Container backgroundColor={theme.background}>
