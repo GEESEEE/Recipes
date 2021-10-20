@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { EditRecipeTabs } from './EditRecipeTabs'
 import SectionsScreen from './Sections'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
@@ -13,7 +13,7 @@ function RecipesStack(): JSX.Element {
             initialRouteName="Sections"
             screenOptions={{
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideVertical,
+                cardStyleInterpolator: screenUtils.slideVertical,
             }}
         >
             <Stack.Screen

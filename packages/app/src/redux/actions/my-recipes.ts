@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from 'redux'
-import { recipeUtils, utils, routeUtils } from '@/utils'
+import { recipeUtils, utils, screenUtils } from '@/utils'
 import { MY_RECIPE_ACTIONS } from '@/redux/reducers'
 import { Instruction, Recipe, RecipeIngredient } from '@/data'
 
@@ -61,7 +61,7 @@ export const createRecipe =
                 })
             }
         } catch (err) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -241,7 +241,7 @@ export const editRecipe =
                 })
             }
         } catch (err) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -282,7 +282,7 @@ export const retrieveRecipes =
                 payload: { newRecipes },
             })
         } catch (err) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -311,7 +311,7 @@ export const deleteRecipe =
                 payload: { recipe },
             })
         } catch (err) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,

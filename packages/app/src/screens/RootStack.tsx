@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
 import Popup from './Popup'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
 
@@ -13,7 +13,7 @@ function LoginStack(): JSX.Element {
             screenOptions={{
                 headerShown: false,
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideHorizontal,
+                cardStyleInterpolator: screenUtils.slideHorizontal,
             }}
         >
             <Stack.Screen
@@ -21,7 +21,7 @@ function LoginStack(): JSX.Element {
                 component={Drawer}
                 options={{
                     presentation: 'transparentModal',
-                    cardStyleInterpolator: routeUtils.slideVertical,
+                    cardStyleInterpolator: screenUtils.slideVertical,
                 }}
             />
 
@@ -31,7 +31,7 @@ function LoginStack(): JSX.Element {
                 options={{
                     cardStyle: { backgroundColor: 'rgba(0,0,0,0.4)' },
                     presentation: 'transparentModal',
-                    cardStyleInterpolator: routeUtils.fade,
+                    cardStyleInterpolator: screenUtils.fade,
                 }}
             />
         </Stack.Navigator>

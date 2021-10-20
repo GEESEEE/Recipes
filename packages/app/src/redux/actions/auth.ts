@@ -4,7 +4,7 @@ import { retrieveRecipes } from './my-recipes'
 import { getRecipes } from './browse-recipes'
 import { AUTH_ACTIONS, SETTINGS_ACTIONS } from '@/redux/reducers'
 import { authService, userService } from '@/oldServices'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 import { AuthUser } from '@/redux/reducers/auth'
 
 export const retrieveToken =
@@ -28,7 +28,7 @@ export const retrieveToken =
                 payload: { error: '' },
             })
         } catch (err: any) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -51,7 +51,7 @@ export const signUp =
             await authService.signUp(userData)
             dispatch({ type: AUTH_ACTIONS.SIGN_UP_SUCCES, payload: {} })
         } catch (err: any) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -73,7 +73,7 @@ export const signIn =
 
             await dispatch(retrieveUserData(token, true, navigation))
         } catch (err: any) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -115,7 +115,7 @@ export const retrieveUserData =
                 payload: { userData: authUser },
             })
         } catch (err: any) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,
@@ -134,7 +134,7 @@ export const signOut =
             dispatch({ type: SETTINGS_ACTIONS.RESET_SETTINGS, payload: {} })
             await authService.signOut({ token })
         } catch (err: any) {
-            routeUtils.handleAPIError(
+            screenUtils.handleAPIError(
                 err,
                 navigation,
                 dispatch,

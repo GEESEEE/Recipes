@@ -1,7 +1,7 @@
 import colors from './colors'
-import * as routeUtils from './routes'
+import * as screenUtils from './screen'
 import * as recipeUtils from './recipes'
 import * as utils from './utils'
 import * as themeUtils from './theme'
 
-export { colors, routeUtils, recipeUtils, utils, themeUtils }
+export { colors, screenUtils, recipeUtils, utils, themeUtils }

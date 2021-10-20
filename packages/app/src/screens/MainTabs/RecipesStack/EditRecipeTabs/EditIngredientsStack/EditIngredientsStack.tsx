@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import EditIngredientsScreen from './EditIngredients'
 import EditIngredientScreen from './EditIngredient'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
 
@@ -12,7 +12,7 @@ function EditIngredientsStack(): JSX.Element {
             initialRouteName="EditIngredients"
             screenOptions={{
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideVertical,
+                cardStyleInterpolator: screenUtils.slideVertical,
                 headerShown: false,
             }}
         >

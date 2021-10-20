@@ -7,7 +7,7 @@ import { IfEquals, ReadonlyKeys, User } from '@recipes/api-types/v1'
 import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 import { View, Text, TextInput, Icons, Toggle, Icon } from '@/components/base'
 
 import {
@@ -84,7 +84,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function showPopup(): void {
-        routeUtils.showPopup(navigation, 'Yes')
+        screenUtils.showPopup(navigation, 'Yes')
     }
 
     const [username, setUsername] = React.useState('username')

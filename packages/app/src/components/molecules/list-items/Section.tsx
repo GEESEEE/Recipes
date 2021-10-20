@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Section } from '@recipes/api-types/v1'
+import { ListItemBaseProps } from './base'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 
-type SectionListItemProps = {
-    item: Section
+interface SectionListItemProps extends ListItemBaseProps<Section> {
     editable?: boolean
     handleSectionNameChange?: (key: string, text: string) => void
     handleSectionDescriptionChange?: (key: string, text: string) => void
@@ -29,6 +29,7 @@ function SectionListItem({
                     editable={editable}
                     text={item.name}
                     handleTextChange={handleSectionNameChange}
+                    type="SubHeader"
                     paddingHorizontal="s"
                 />
                 <Editable
@@ -36,6 +37,7 @@ function SectionListItem({
                     text={item.description}
                     handleTextChange={handleSectionDescriptionChange}
                     paddingHorizontal="s"
+                    numberOfLines={2}
                 />
             </Container>
         </ListItem>

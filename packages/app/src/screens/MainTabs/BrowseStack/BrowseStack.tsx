@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import BrowseScreen from './Browse'
-import { routeUtils } from '@/utils'
+import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
@@ -12,7 +12,7 @@ function BrowseStack(): JSX.Element {
             initialRouteName="Browse"
             screenOptions={{
                 presentation: 'transparentModal',
-                cardStyleInterpolator: routeUtils.slideVertical,
+                cardStyleInterpolator: screenUtils.slideVertical,
             }}
         >
             <Stack.Screen

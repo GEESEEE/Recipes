@@ -8,6 +8,7 @@ import {
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import { View, Text } from '@/components/base'
+import { listItemHeightMap, ListItemBaseProps } from '@/components/molecules'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
@@ -36,7 +37,7 @@ function ListItemRecyclerView<T extends { id: number }, U>({
     ): JSX.Element | null => {
         switch (type) {
             case ViewTypes.Item:
-                return <Element {...props} item={item} />
+                return <Element item={item} {...props} />
 
             default:
                 return null
