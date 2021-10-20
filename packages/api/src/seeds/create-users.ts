@@ -1,17 +1,30 @@
 import type { Factory, Seeder } from '@zchapple/typeorm-seeding'
-// import _ from 'lodash'
+import range from 'lodash/range'
+import sampleSize from 'lodash/sampleSize'
+import sample from 'lodash/sample'
 import type { Connection } from 'typeorm'
+import { getRandomInt } from '@recipes/api-types/utils'
 import {
-    // Ingredient,
-    // Instruction,
-    // Recipe,
-    // RecipeIngredient,
+    Ingredient,
+    Instruction,
+    Recipe,
+    RecipeIngredient,
+    Section,
     Settings,
     User,
 } from '@/entities'
-// import { getRandomInt } from '../util/util'
 
 export default class CreateUsers implements Seeder {
+    private userCount = 30
+    private ingredientCount = 200
+
+    private sectionPerUser = 4
+    private recipePerSection = 5
+    private ingredientsPerRecipe = range(3, 6)
+    private instructionsPerRecipe = range(3, 6)
+
+    private ingredientIds = range(this.ingredientCount)
+
     public async run(factory: Factory, _connection: Connection): Promise<any> {
         const settings = await factory(Settings)().create()
         await factory(User)()
@@ -24,53 +37,84 @@ export default class CreateUsers implements Seeder {
             })
             .create()
 
-        // const userCount = 50
-        // const recipeCount = 200
-        // const ingredientCount = 100
-        // for (let i = 1; i < userCount; i++) {
-        //     const settings = await factory(Settings)().create()
-        //     await factory(User)({ settingsId: settings.id })
-        //         .map(async (user) => {
-        //             user.settingsId = settings.id
-        //             return user
-        //         })
-        //         .create()
-        // }
+        for (let i = 1; i < this.userCount - 1; i++) {
+            const settings = await factory(Settings)().create()
+            await factory(User)({ settingsId: settings.id })
+                .map(async (user) => {
+                    user.settingsId = settings.id
+                    return user
+                })
+                .create()
+        }
 
-        // await factory(Ingredient)().createMany(ingredientCount)
+        const userIds = range(1, this.userCount + 1)
 
-        // const userIds = _.range(1, userCount + 1)
+        userIds.forEach(async (userId) => {
+            await this.createSections(factory, userId)
+        })
 
-        // await factory(Recipe)()
-        //     .map(async (recipe) => {
-        //         recipe.authorId = _.sample(userIds) as number
-        //         return recipe
-        //     })
-        //     .createMany(recipeCount)
+        const sectionCount = this.userCount * this.sectionPerUser
+        const sectionIds = range(sectionCount)
 
-        // const recipeIds = _.range(1, recipeCount + 1)
-        // const ingredientIds = _.range(1, ingredientCount + 1)
+        sectionIds.forEach(async (sectionId) => {
+            await this.createRecipes(factory, sectionId)
+        })
 
-        // for (const recipeId of recipeIds) {
-        //     const iPerRecipe = getRandomInt(3, 6)
-        //     await factory(Instruction)()
-        //         .map(async (instruction) => {
-        //             instruction.recipeId = recipeId
-        //             return instruction
-        //         })
-        //         .createMany(iPerRecipe)
+        const recipeCount = sectionCount * this.recipePerSection
+        const recipeIds = range(recipeCount)
 
-        //     const riPerRecipe = getRandomInt(3, 6)
-        //     const ingredients = _.sampleSize(ingredientIds, riPerRecipe)
-        //     for (const ingredientId of ingredients) {
-        //         await factory(RecipeIngredient)()
-        //             .map(async (ri) => {
-        //                 ri.recipeId = recipeId
-        //                 ri.ingredientId = ingredientId
-        //                 return ri
-        //             })
-        //             .create()
-        //     }
-        // }
+        await factory(Ingredient)().createMany(this.ingredientCount)
+
+        recipeIds.forEach(async (recipeId) => {
+            await this.fillRecipe(factory, recipeId)
+        })
+    }
+
+    private async createSections(
+        factory: Factory,
+        userId: number
+    ): Promise<void> {
+        await factory(Section)()
+            .map(async (section) => {
+                section.userId = userId
+                return section
+            })
+            .createMany(this.sectionPerUser)
+    }
+
+    private async createRecipes(
+        factory: Factory,
+        sectionId: number
+    ): Promise<void> {
+        await factory(Recipe)()
+            .map(async (recipe) => {
+                recipe.sectionId = sectionId
+                return recipe
+            })
+            .createMany(this.recipePerSection)
+    }
+
+    private async fillRecipe(
+        factory: Factory,
+        recipeId: number
+    ): Promise<void> {
+        const ingredientCount = sample(this.ingredientsPerRecipe) as number
+        const instructionCount = sample(this.instructionsPerRecipe) as number
+        await factory(Instruction)()
+            .map(async (instruction) => {
+                instruction.recipeId = recipeId
+                return instruction
+            })
+            .createMany(instructionCount)
+
+        const ingredientIds = sampleSize(this.ingredientIds, ingredientCount)
+
+        ingredientIds.forEach(async (ingredientId) => {
+            await factory(RecipeIngredient)().map(async (recipeIngredient) => {
+                recipeIngredient.recipeId = recipeId
+                recipeIngredient.ingredientId = ingredientId
+                return recipeIngredient
+            })
+        })
     }
 }
