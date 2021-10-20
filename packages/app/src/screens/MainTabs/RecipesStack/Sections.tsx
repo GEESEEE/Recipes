@@ -13,10 +13,15 @@ import {
     SectionListItem,
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
+import { sectionsSelector } from '@/redux/slices'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
     const { theme } = settings
+
+    const sections = useAppSelector((state) =>
+        sectionsSelector.selectAll(state.sections)
+    )
 
     const dispatch = useAppDispatch()
     const [verifyToken, verifyTokenStatus] =
@@ -57,7 +62,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         })
     }, [navigation])
 
-    const sections = [new Section(), new Section()]
+    console.log('sec', sections)
 
     return (
         <Container backgroundColor={theme.background}>

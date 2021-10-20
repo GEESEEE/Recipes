@@ -6,15 +6,9 @@ import {
     DataProvider,
     LayoutProvider,
 } from 'recyclerlistview'
-import styled from 'styled-components'
-import { View, Text } from '@/components/base'
-import {
-    listItemHeightMap,
-    ListItemBaseProps,
-    ListItem,
-} from '@/components/molecules'
+import { View } from '@/components/base'
+import { listItemHeightMap, ListItem } from '@/components/molecules'
 import { useAppSelector } from '@/hooks'
-import { Typography } from '@/styles'
 
 const ViewTypes = {
     Item: 0,
@@ -69,14 +63,18 @@ function ListItemRecyclerView<T extends ListItem, U>({
         }
     )
 
-    return (
-        <RecyclerListView
-            style={{ width }}
-            layoutProvider={layoutProvider}
-            dataProvider={dataProvider}
-            rowRenderer={rowRenderer}
-        />
-    )
+    if (data.length > 0) {
+        return (
+            <RecyclerListView
+                style={{ width }}
+                layoutProvider={layoutProvider}
+                dataProvider={dataProvider}
+                rowRenderer={rowRenderer}
+            />
+        )
+    }
+
+    return <View />
 }
 
 export default ListItemRecyclerView
