@@ -13,6 +13,11 @@
         "node": true,
         "react-native/react-native": true
     },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "extends": [
         "plugin:react/recommended",
         "plugin:react-native/all",
