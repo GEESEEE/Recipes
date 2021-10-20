@@ -8,7 +8,11 @@ import {
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import { View, Text } from '@/components/base'
-import { listItemHeightMap, ListItemBaseProps } from '@/components/molecules'
+import {
+    listItemHeightMap,
+    ListItemBaseProps,
+    ListItem,
+} from '@/components/molecules'
 import { useAppSelector } from '@/hooks'
 import { Typography } from '@/styles'
 
@@ -16,20 +20,19 @@ const ViewTypes = {
     Item: 0,
 }
 
-type ListItemRecyclerViewProps<T, U> = {
+type ListItemRecyclerViewProps<T extends ListItem> = {
     data: Array<T>
-    Element: (props: U & { item: T }) => JSX.Element
-    props: U
-    height: number
+    Element: (props: ListItemBaseProps<T>) => JSX.Element
+    props: Omit<ListItemBaseProps<T>, 'item'>
 }
 
-function ListItemRecyclerView<T extends { id: number }, U>({
+function ListItemRecyclerView<T extends ListItem, U>({
     data,
     Element,
     props,
-    height,
-}: ListItemRecyclerViewProps<T, U>): JSX.Element {
+}: ListItemRecyclerViewProps<T>): JSX.Element {
     const { width } = Dimensions.get('window')
+    const { textSize } = useAppSelector((state) => state.settings)
 
     const rowRenderer = (
         type: string | number,
@@ -54,7 +57,7 @@ function ListItemRecyclerView<T extends { id: number }, U>({
             switch (type) {
                 case ViewTypes.Item: {
                     dim.width = width
-                    dim.height = height
+                    dim.height = listItemHeightMap(Element, textSize)
                     break
                 }
 
@@ -77,10 +80,3 @@ function ListItemRecyclerView<T extends { id: number }, U>({
 }
 
 export default ListItemRecyclerView
-
-const Container = styled(View)`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: ${(props) => props.theme.background};
-`

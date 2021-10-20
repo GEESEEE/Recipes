@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Instruction } from '@/data'
+import { Instruction } from '@recipes/api-types/v1'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'

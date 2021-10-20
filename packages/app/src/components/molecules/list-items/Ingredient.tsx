@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { RecipeIngredient } from '@/data'
+import { RecipeIngredient } from '@recipes/api-types/v1'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
@@ -31,7 +31,7 @@ function IngredientListItem({
             <Container>
                 <Editable
                     editable={editable}
-                    text={ingredient.ingredient?.name}
+                    text={ingredient.ingredient.name}
                     handleTextChange={handleIngredientNameChange}
                     paddingHorizontal="s"
                 />
@@ -44,7 +44,7 @@ function IngredientListItem({
                     />
                     <Editable
                         editable={editable}
-                        text={ingredient.ingredient?.unit}
+                        text={ingredient.ingredient.unit ?? ''}
                         handleTextChange={handleIngredientUnitChange}
                         width="m"
                     />

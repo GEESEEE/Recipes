@@ -68,8 +68,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={sections}
-                props={{ editable: true }}
-                height={50}
+                props={{}}
             />
         </Container>
     )
