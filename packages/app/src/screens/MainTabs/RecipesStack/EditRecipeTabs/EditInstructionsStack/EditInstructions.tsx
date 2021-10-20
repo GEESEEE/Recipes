@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Instruction } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
-import { InstructionsRecyclerListView } from '@/components/organisms'
+import { ListItemRecyclerView } from '@/components/organisms'
 import { useAppSelector } from '@/hooks'
-import { Instruction } from '@/data'
+import { InstructionListItem } from '@/components/molecules'
 
 function EditInstructionsScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
@@ -15,7 +16,11 @@ function EditInstructionsScreen(): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <InstructionsRecyclerListView instructions={instructions} />
+            <ListItemRecyclerView
+                Element={InstructionListItem}
+                data={instructions}
+                props={{ instructions }}
+            />
         </Container>
     )
 }

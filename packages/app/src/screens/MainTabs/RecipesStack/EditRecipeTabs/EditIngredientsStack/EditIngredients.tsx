@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Ingredient, RecipeIngredient } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
-import { IngredientsRecyclerListView } from '@/components/organisms'
+import { ListItemRecyclerView } from '@/components/organisms'
 import { useAppSelector } from '@/hooks'
-import { Ingredient, RecipeIngredient } from '@/data'
+import { IngredientListItem } from '@/components/molecules'
 
 function EditIngredientsScreen(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
@@ -18,7 +19,11 @@ function EditIngredientsScreen(): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <IngredientsRecyclerListView ingredients={ingredients} />
+            <ListItemRecyclerView
+                Element={IngredientListItem}
+                data={ingredients}
+                props={{ ingredients }}
+            />
         </Container>
     )
 }

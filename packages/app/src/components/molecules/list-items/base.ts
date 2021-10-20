@@ -28,8 +28,7 @@ export function listItemHeightMap<T>(
 
         case 'InstructionListItem':
             return (
-                listItemBaseOffset +
-                Typography.lineHeight('SubHeader', textSize)
+                listItemBaseOffset + 2 * Typography.lineHeight('Text', textSize)
             )
 
         default:

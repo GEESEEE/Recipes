@@ -1,24 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Instruction } from '@recipes/api-types/v1'
+import { ListItemBaseProps } from './base'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 
-type InstructionListItemProps = {
-    instruction: Instruction
+interface InstructionListItemProps extends ListItemBaseProps<Instruction> {
     instructions: Instruction[]
     editable?: boolean
     handleInstructionTextChange?: (key: string, text: string) => void
 }
 
 function InstructionListItem({
-    instruction,
+    item,
     instructions,
     editable,
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
-    const index = instructions.indexOf(instruction)
+    const index = instructions.indexOf(item)
 
     function logInstruction(): void {
         console.log('Logging instruction')
@@ -28,15 +28,13 @@ function InstructionListItem({
         <ListItem
             items={utils.createDropDownItems([logInstruction], 'instruction')}
         >
-            <Container>
-                <Number type="SubHeader" paddingHorizontal="s">
-                    {index + 1}
-                </Number>
+            <Container paddingHorizontal="s">
+                <Number type="SubHeader">{index + 1}</Number>
                 <Editable
                     editable={editable}
-                    text={instruction.text}
+                    text={item.text}
                     handleTextChange={handleInstructionTextChange}
-                    numberOfLines={3}
+                    numberOfLines={2}
                 />
             </Container>
         </ListItem>

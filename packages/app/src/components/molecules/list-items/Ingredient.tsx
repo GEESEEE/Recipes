@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RecipeIngredient } from '@recipes/api-types/v1'
+import { ListItemBaseProps } from './base'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 
-type IngredientListItemProps = {
-    ingredient: RecipeIngredient
+interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
     editable?: boolean
     handleIngredientNameChange?: (key: string, text: string) => void
     handleIngredientAmountChange?: (key: string, text: string) => void
@@ -14,7 +14,7 @@ type IngredientListItemProps = {
 }
 
 function IngredientListItem({
-    ingredient,
+    item,
     editable,
     handleIngredientNameChange,
     handleIngredientAmountChange,
@@ -31,20 +31,20 @@ function IngredientListItem({
             <Container>
                 <Editable
                     editable={editable}
-                    text={ingredient.ingredient.name}
+                    text={item.ingredient.name}
                     handleTextChange={handleIngredientNameChange}
                     paddingHorizontal="s"
                 />
                 <SubContainer>
                     <Editable
                         editable={editable}
-                        text={ingredient.amount.toString()}
+                        text={item.amount.toString()}
                         handleTextChange={handleIngredientAmountChange}
                         paddingHorizontal="s"
                     />
                     <Editable
                         editable={editable}
-                        text={ingredient.ingredient.unit ?? ''}
+                        text={item.ingredient.unit ?? ''}
                         handleTextChange={handleIngredientUnitChange}
                         width="m"
                     />
