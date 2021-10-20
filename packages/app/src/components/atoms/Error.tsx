@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { View, Text } from '@/components/base'
 import { Spacing, Typography } from '@/styles'
-import { useAppSelector, usePosition } from '@/hooks'
+import { useAppSelector } from '@/hooks'
 
 type ErrorMessageProps = {
     message?: string

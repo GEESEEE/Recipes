@@ -27,12 +27,12 @@ function ListItemWrapper({
 
     return (
         <Container
-            style={{
-                borderBottomWidth: index === listSize ? 3 : 0,
-                borderBottomLeftRadius: index === listSize ? 20 : 0,
-                borderBottomRightRadius: index === listSize ? 20 : 0,
-                paddingBottom: index === listSize ? 5 : 0,
-            }}
+        // style={{
+        //     borderBottomWidth: index === listSize ? 3 : 0,
+        //     borderBottomLeftRadius: index === listSize ? 20 : 0,
+        //     borderBottomRightRadius: index === listSize ? 20 : 0,
+        //     paddingBottom: index === listSize ? 5 : 0,
+        // }}
         >
             <ItemContainer>{children}</ItemContainer>
 

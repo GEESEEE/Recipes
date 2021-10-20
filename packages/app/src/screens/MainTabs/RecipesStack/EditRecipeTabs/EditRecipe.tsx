@@ -11,6 +11,9 @@ function EditRecipeScreen(): JSX.Element {
     const paddingHorizontal = 'm'
     const marginVertical = 's'
 
+    const prepareTimeText = 'Prepare time'
+    const peopleCountText = 'People count'
+
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">
             <TextInputWithTitle
@@ -31,7 +34,7 @@ function EditRecipeScreen(): JSX.Element {
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>Prepare time</PrepareTimeText>
+                <PrepareTimeText>{prepareTimeText}</PrepareTimeText>
                 <TextInputWithTitle
                     marginHorizontal="s"
                     title="Hours"
@@ -54,7 +57,7 @@ function EditRecipeScreen(): JSX.Element {
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>People count</PrepareTimeText>
+                <PrepareTimeText>{peopleCountText}</PrepareTimeText>
                 <TextInputWithTitle
                     placeholder="People count"
                     width="m"

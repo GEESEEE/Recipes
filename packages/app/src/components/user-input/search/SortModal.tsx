@@ -13,11 +13,13 @@ function Sort({
     routeName: string
     toggle: () => void
 }): JSX.Element {
+    const headerText = 'Sort (order matters)'
+
     return (
         <Modal animationType="fade" transparent>
             <Container>
                 <ReturnButton onPress={() => toggle()} />
-                <CategoryHeader>Sort (order matters)</CategoryHeader>
+                <CategoryHeader>{headerText}</CategoryHeader>
                 {sortActions.sorts.map((sort) => (
                     <SortRow
                         key={uuid()}

@@ -11,7 +11,9 @@
         "javascript",
         "javascriptreact",
         "typescript",
-        "typescriptreact"
+        "typescriptreact",
+        "JSX",
+        "TSX"
     ],
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }

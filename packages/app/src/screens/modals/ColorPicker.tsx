@@ -20,6 +20,7 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
     const [updateSettings] = useUpdateSettingsMutation()
 
     const [localColor, setLocalColor] = useState<string>(colors.primary)
+    const text = 'Change Primary Color'
 
     async function setPrimaryColor(color: string): Promise<void> {
         dispatch(settingsActions.setColor(color))
@@ -31,9 +32,7 @@ function ColorPickerModal({ toggle }: ColorPickerProps): JSX.Element {
             <ReturnButton onPress={() => toggle()} color={localColor} />
 
             <DifferenceContainer>
-                <SampleText style={{ color: localColor }}>
-                    Change Primary Color
-                </SampleText>
+                <SampleText style={{ color: localColor }}>{text}</SampleText>
             </DifferenceContainer>
 
             <Picker

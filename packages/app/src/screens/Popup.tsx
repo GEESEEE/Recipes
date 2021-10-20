@@ -8,6 +8,8 @@ const Popup = (): JSX.Element => {
     const navigation = useNavigation() as any
     const { title, description } = route.params as any
 
+    const confirmText = 'OK'
+
     return (
         <Container>
             <PopupMenu>
@@ -18,7 +20,7 @@ const Popup = (): JSX.Element => {
                 ) : undefined}
 
                 <ReturnButton onPress={() => navigation.pop()}>
-                    <ReturnText>OK</ReturnText>
+                    <ReturnText>{confirmText}</ReturnText>
                 </ReturnButton>
             </PopupMenu>
         </Container>

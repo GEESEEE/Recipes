@@ -26,6 +26,7 @@ const RecipesFlatList = React.forwardRef(
 
         const displayFooter = route.name === 'Browse'
         const displayFooterLoading = false
+        const footerText = 'End of list'
 
         const [scrollPosition, handleScroll] = useDropdownRerender(
             displayDropdown,
@@ -72,7 +73,7 @@ const RecipesFlatList = React.forwardRef(
                                     height={20}
                                 />
                             ) : (
-                                <FooterText>End of List</FooterText>
+                                <FooterText>{footerText}</FooterText>
                             )}
                         </FooterView>
                     ) : null

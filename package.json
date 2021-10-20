@@ -19,6 +19,7 @@
     },
     "devDependencies": {
         "@babel/core": "~7.9.0",
+        "@react-native-community/eslint-config": "^3.0.1",
         "@types/bcrypt": "^5.0.0",
         "@types/debug": "^4.1.5",
         "@types/dotenv": "^8.2.0",
@@ -53,9 +54,9 @@
         "eslint-import-resolver-typescript": "^2.5.0",
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-react": "^7.26.1",
         "eslint-plugin-react-hooks": "4.2.1-alpha-c3a19e5af-20211014",
         "eslint-plugin-react-native": "^3.11.0",
+        "eslint-plugin-react-redux": "^3.3.2",
         "lerna": "^4.0.0",
         "prettier": "^2.4.1",
         "pretty-quick": "^3.1.1",
@@ -66,5 +67,8 @@
         "tscpaths": "^0.0.9",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4"
+    },
+    "dependencies": {
+        "eslint-plugin-react": "^7.26.1"
     }
 }

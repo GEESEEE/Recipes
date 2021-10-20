@@ -18,7 +18,7 @@ export type TextProps = {
 const Text = ({
     fixHeight,
     numberOfLines,
-    type,
+    type: type,
     style,
     ...rest
 }: TextProps): JSX.Element => {
@@ -47,4 +47,4 @@ const Text = ({
     )
 }
 
-export default withLayoutProps(withTextProps(Text as any))
+export default withLayoutProps(withTextProps(Text))
