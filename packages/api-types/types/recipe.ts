@@ -8,11 +8,11 @@ export class Recipe {
         description = 'recipe_description',
         prepareTime = -1,
         peopleCount = -1,
-        recipeIngredients = [],
-        instructions = [],
-        publishedAt = null,
+        recipeIngredients: RecipeIngredient[] = [],
+        instructions: Instruction[] = [],
+        publishedAt: Date | null = null,
         createdAt = new Date(),
-        copyOf = null
+        copyOf: number | null = null
     ) {
         this.id = id
         this.name = name

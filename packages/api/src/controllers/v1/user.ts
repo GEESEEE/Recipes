@@ -116,7 +116,7 @@ export default class UserController implements interfaces.Controller {
         @request() req: Request,
         @requestBody()
         body: Omit<Creatable<SectionResult>, 'userId'>
-    ): Promise<Section> {
+    ): Promise<SectionResult> {
         const section: any = {
             ...body,
             userId: req.user?.id,
@@ -130,7 +130,9 @@ export default class UserController implements interfaces.Controller {
         ...UserController.validate('getSections'),
         TYPES.ErrorMiddleware
     )
-    public async getSections(@request() req: Request): Promise<Section[]> {
+    public async getSections(
+        @request() req: Request
+    ): Promise<SectionResult[]> {
         return await this.sectionsService.getSectionsFromUser(
             req.user?.id as number
         )

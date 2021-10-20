@@ -15,13 +15,7 @@ export type TextProps = {
 } & RNTextProps &
     LayoutProps
 
-const Text = ({
-    fixHeight,
-    numberOfLines,
-    type,
-    style,
-    ...rest
-}: TextProps): JSX.Element => {
+const Text = ({ fixHeight, type, style, ...rest }: TextProps): JSX.Element => {
     const { textSize } = useAppSelector((state) => state.settings)
 
     type = type || 'Text'
@@ -33,7 +27,7 @@ const Text = ({
     )
 
     function onTextLayout(e: any): void {
-        const lines = numberOfLines ?? e.nativeEvent.lines.length
+        const lines = e.nativeEvent.lines.length
         setHeight(lineHeight * lines + padding)
     }
 
@@ -41,7 +35,6 @@ const Text = ({
         <RNText
             style={[{ height }, style]}
             onTextLayout={(e) => onTextLayout(e)}
-            numberOfLines={numberOfLines}
             {...rest}
         />
     )

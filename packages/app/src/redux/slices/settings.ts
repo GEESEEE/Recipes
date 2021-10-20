@@ -56,4 +56,4 @@ const settingsSlice = createSlice({
 
 export const settingsActions = settingsSlice.actions
 
-export default settingsSlice.reducer
+export const settingsReducer = settingsSlice.reducer
