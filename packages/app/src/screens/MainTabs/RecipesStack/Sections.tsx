@@ -73,7 +73,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         skip: !auth.token,
     })
 
-    console.log('sections', getSections)
     useUpdateEffect(() => {
         if (typeof getSections.data !== 'undefined') {
             setSections(getSections.data)
