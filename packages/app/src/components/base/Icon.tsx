@@ -6,7 +6,7 @@ import { useAppSelector } from '@/hooks'
 import { Spacing, Typography } from '@/styles'
 
 type IconProps = {
-    type: any
+    type: React.ComponentType<any>
     name: string
 
     color?: string

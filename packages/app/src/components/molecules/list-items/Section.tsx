@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Section } from '@recipes/api-types/v1'
-import { View, Text } from '@/components/base'
+import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 

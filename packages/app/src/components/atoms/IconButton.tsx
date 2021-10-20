@@ -34,4 +34,4 @@ function IconButton({
     )
 }
 
-export default withLayoutProps(IconButton as any)
+export default withLayoutProps(IconButton)

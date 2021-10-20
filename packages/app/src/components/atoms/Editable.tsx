@@ -40,4 +40,4 @@ function Editable({
     )
 }
 
-export default withLayoutProps(withTextProps(Editable as any))
+export default withLayoutProps(withTextProps(Editable))
