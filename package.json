@@ -69,6 +69,8 @@
         "typescript": "^4.4.4"
     },
     "dependencies": {
-        "eslint-plugin-react": "^7.26.1"
+        "eslint-plugin-react": "^7.26.1",
+        "inversify": "^6.0.1",
+        "inversify-express-utils": "^6.4.3"
     }
 }

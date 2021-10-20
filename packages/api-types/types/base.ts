@@ -71,9 +71,3 @@ export type Optional<T, Opt extends keyof T> = Omit<T, Opt> &
     Partial<Pick<T, Opt>>
 
 export type WithoutId<T> = Omit<T, 'id'>
-
-// export type Creatable<T> = JustWritable<JustPrimitive<T>>
-
-// export type UpdatableFields<T> = Partial<Creatable<T>>
-
-// export type Updatable<T> = JustReadonly<T> & UpdatableFields<T>

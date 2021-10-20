@@ -1,5 +1,3 @@
-import { JustReadonly } from './base'
-
 export class Settings {
     constructor(
         id = -1,
