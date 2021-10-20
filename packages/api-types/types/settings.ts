@@ -1,3 +1,5 @@
+import { JustReadonly } from './base'
+
 export class Settings {
     constructor(
         id = -1,
@@ -21,3 +23,6 @@ export enum Theme {
     LIGHT = 'light',
     DARK = 'dark',
 }
+
+export type SettingsUpdate = Pick<Settings, 'id'> &
+    Partial<Omit<Settings, 'id'>>

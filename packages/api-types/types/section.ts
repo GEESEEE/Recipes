@@ -16,3 +16,7 @@ export class Section {
     public name!: string
     public description!: string
 }
+
+export type SectionCreate = Omit<Section, 'id' | 'userId'>
+
+export type SectionUpdate = Pick<Section, 'id'> & Partial<SectionCreate>

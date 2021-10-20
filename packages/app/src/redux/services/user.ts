@@ -1,10 +1,11 @@
 import {
     Section,
+    SectionCreate,
+    SectionUpdate,
     Settings,
+    SettingsUpdate,
     User,
-    UpdatableFields,
-    Creatable,
-    Updatable,
+    WithoutId,
 } from '@recipes/api-types/v1'
 import { api } from './base'
 
@@ -18,7 +19,7 @@ const userApi = api.injectEndpoints({
             }),
         }),
 
-        updateSettings: builder.mutation<Settings, UpdatableFields<Settings>>({
+        updateSettings: builder.mutation<Settings, WithoutId<SettingsUpdate>>({
             query: (body) => ({
                 url: `/users/settings`,
                 method: 'PUT',
@@ -26,10 +27,7 @@ const userApi = api.injectEndpoints({
             }),
         }),
 
-        createSection: builder.mutation<
-            Section,
-            Omit<Creatable<Section>, 'userId'>
-        >({
+        createSection: builder.mutation<Section, SectionCreate>({
             query: (body) => ({
                 url: `/users/sections`,
                 method: 'POST',
@@ -41,7 +39,7 @@ const userApi = api.injectEndpoints({
             query: () => `/users/sections`,
         }),
 
-        updateSection: builder.mutation<Section, Updatable<Section>>({
+        updateSection: builder.mutation<Section, SectionUpdate>({
             query: (body) => ({
                 url: `/users/sections/${body.id}`,
                 method: 'PUT',

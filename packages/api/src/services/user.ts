@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { fitToClass, Require, Updatable } from '@recipes/api-types/v1'
+import { fitToClass, Require, SettingsUpdate } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
 import { UserResult, SettingsResult } from '@/types'
@@ -34,7 +34,7 @@ export default class UserService {
     }
 
     public async updateSettings(
-        settings: Updatable<SettingsResult>
+        settings: SettingsUpdate
     ): Promise<SettingsResult> {
         const output = await this.settingsRepository.save(settings)
         return fitToClass(output, SettingsResult)

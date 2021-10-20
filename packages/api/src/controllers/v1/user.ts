@@ -16,11 +16,12 @@ import {
     Theme,
     ModifyError,
     RequestError,
-    UpdatableFields,
-    Creatable,
+    SettingsUpdate,
+    WithoutId,
+    SectionCreate,
+    SectionUpdate,
 } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
-import { Section } from '@/entities'
 import { SectionService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
 import { SectionResult, SettingsResult, UserResult } from '@/types'
@@ -65,7 +66,7 @@ export default class UserController implements interfaces.Controller {
     public async updateSettings(
         @request() req: Request,
         @requestBody()
-        body: UpdatableFields<SettingsResult>
+        body: WithoutId<SettingsUpdate>
     ): Promise<SettingsResult> {
         const colorRegex = /^#[0-9A-F]{6}$/i
         if (
@@ -115,7 +116,7 @@ export default class UserController implements interfaces.Controller {
     public async createSection(
         @request() req: Request,
         @requestBody()
-        body: Omit<Creatable<SectionResult>, 'userId'>
+        body: SectionCreate
     ): Promise<SectionResult> {
         const section: any = {
             ...body,
@@ -148,7 +149,7 @@ export default class UserController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('sectionId') sectionId: number,
         @requestBody()
-        body: Omit<UpdatableFields<SectionResult>, 'userId'>
+        body: WithoutId<SectionUpdate>
     ): Promise<SectionResult | ModifyError> {
         const validationResult = await this.validateSection(
             req.user?.id as number,

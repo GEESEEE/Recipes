@@ -1,6 +1,11 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
-import { UpdatableFields, fitToClass, Creatable } from '@recipes/api-types/v1'
+import {
+    fitToClass,
+    SectionCreate,
+    SectionUpdate,
+    WithoutId,
+} from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { Section } from '@/entities'
 import { SectionResult } from '@/types'
@@ -11,7 +16,7 @@ export default class SectionService {
     private readonly sectionRepository!: Repository<Section>
 
     public async createSections(
-        sectionObjects: Array<Creatable<SectionResult>>
+        sectionObjects: Array<SectionCreate>
     ): Promise<SectionResult[]> {
         let sections = await this.sectionRepository.save(
             sectionObjects.map((section) =>
@@ -42,9 +47,8 @@ export default class SectionService {
 
     public async updateSection(
         section: Section,
-        { userId, name, description }: UpdatableFields<SectionResult>
+        { name, description }: WithoutId<SectionUpdate>
     ): Promise<SectionResult> {
-        section.userId = userId ?? section.userId
         section.name = name ?? section.name
         section.description = description ?? section.description
 
