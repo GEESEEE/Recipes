@@ -15,7 +15,7 @@ export type LayoutProps = {
 
 function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<
-        { style: StyleProp<ViewStyle>[] } & Omit<
+        { style: StyleProp<ViewStyle> } & Omit<
             T,
             | 'paddingVertical'
             | 'paddingHorizontal'
