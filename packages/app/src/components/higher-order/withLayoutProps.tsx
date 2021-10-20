@@ -14,20 +14,8 @@ export type LayoutProps = {
 } & React.PropsWithChildren<ViewProps>
 
 function withLayoutProps<T extends LayoutProps>(
-    WrappedComponent: React.ComponentType<
-        { style: StyleProp<ViewStyle> } & Omit<
-            T,
-            | 'paddingVertical'
-            | 'paddingHorizontal'
-            | 'marginVertical'
-            | 'marginHorizontal'
-            | 'borderRadius'
-            | 'width'
-            | 'style'
-            | 'children'
-        >
-    >
-): (props: any) => JSX.Element {
+    WrappedComponent: React.ComponentType<T>
+): (props: T) => JSX.Element {
     return ({
         paddingVertical,
         paddingHorizontal,
@@ -39,8 +27,6 @@ function withLayoutProps<T extends LayoutProps>(
         children,
         ...rest
     }: T): JSX.Element => {
-        // console.log("withLayout", style)
-
         const myStyle: StyleProp<ViewStyle> = {}
 
         if (paddingVertical)
@@ -58,7 +44,7 @@ function withLayoutProps<T extends LayoutProps>(
         if (width) myStyle.width = Spacing.widths[width]
 
         return (
-            <WrappedComponent style={[myStyle, style]} {...rest}>
+            <WrappedComponent style={[myStyle, style]} {...(rest as T)}>
                 {children}
             </WrappedComponent>
         )

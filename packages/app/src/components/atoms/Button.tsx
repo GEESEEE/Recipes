@@ -120,7 +120,7 @@ const Button = ({
     )
 }
 
-export default withLayoutProps(Button as any)
+export default withLayoutProps(Button)
 
 const StyledTouchable = styled(TouchableOpacity)`
     align-items: center;

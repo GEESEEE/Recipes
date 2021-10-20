@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View } from 'react-native'
+import View from './View'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { useAppSelector } from '@/hooks'
 import { Spacing, Typography } from '@/styles'
@@ -44,7 +44,7 @@ function Icon({
     )
 }
 
-export default withLayoutProps(Icon as any)
+export default withLayoutProps(Icon)
 
 const StyledView = styled(View)`
     align-items: center;

@@ -11,13 +11,8 @@ export type TextProps = {
 } & RNTextProps
 
 function withTextProps<T extends React.PropsWithChildren<TextProps>>(
-    WrappedComponent: React.ComponentType<
-        Omit<
-            T,
-            'type' | 'weight' | 'color' | 'children' | 'transform' | 'style'
-        >
-    >
-): (props: any) => JSX.Element {
+    WrappedComponent: React.ComponentType<T>
+): (props: T) => JSX.Element {
     return ({
         type,
         weight,
@@ -50,7 +45,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
                 weight={weight}
                 color={color}
                 transform={transform}
-                {...rest}
+                {...(rest as T)}
             >
                 {children}
             </WrappedComponent>

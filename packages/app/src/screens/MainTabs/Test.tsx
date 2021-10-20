@@ -8,7 +8,7 @@ import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { routeUtils } from '@/utils'
-import { View, Text, TextInput, Icons, Toggle } from '@/components/base'
+import { View, Text, TextInput, Icons, Toggle, Icon } from '@/components/base'
 
 import {
     Error,
@@ -106,6 +106,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     }}
                 />
             </LogoView> */}
+
+            <Icon type={Icons.MyFeather} name="menu" />
 
             <Button
                 type="Solid"
