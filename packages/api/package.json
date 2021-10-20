@@ -10,7 +10,9 @@
         "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
         "migration:run": "yarn build && typeorm migration:run",
         "migration:revert": "yarn build && typeorm migration:revert",
-        "seed:run": "yarn build && yarn typeorm-seeding seed",
+        "migration:reset": "yarn build && typeorm migration:revert && typeorm migration:run",
+        "seed:run": "yarn typeorm-seeding seed",
+        "seed:reset": "yarn migration:reset && typeorm-seeding seed",
         "test": "yarn build && set NODE_ENV=test&& mocha --require dist/tests/helper.js dist/**/*.test.js",
         "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./src --fix"
     },
