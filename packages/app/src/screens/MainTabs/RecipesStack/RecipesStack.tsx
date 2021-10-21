@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { EditRecipeTabs } from './EditRecipeTabs'
 import SectionsScreen from './Sections'
+import EditSectionScreen from './EditSection'
 import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 
@@ -19,6 +20,19 @@ function RecipesStack(): JSX.Element {
             <Stack.Screen
                 name="Sections"
                 component={SectionsScreen}
+                options={{
+                    header: ({ navigation }) => (
+                        <HeaderComponent
+                            navigation={navigation}
+                            config={{ right: [] }}
+                        />
+                    ),
+                }}
+            />
+
+            <Stack.Screen
+                name="EditSection"
+                component={EditSectionScreen}
                 options={{
                     header: ({ navigation }) => (
                         <HeaderComponent

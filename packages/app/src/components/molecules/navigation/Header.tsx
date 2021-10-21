@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useRoute } from '@react-navigation/native'
+import { useNavigationState, useRoute } from '@react-navigation/native'
 import { View, Text, Icons } from '@/components/base'
 import { Button, IconButton } from '@/components/atoms'
 import { useAppSelector } from '@/hooks'
@@ -29,7 +29,8 @@ function HeaderComponent({
     const { theme, invertedColors } = useAppSelector((state) => state.settings)
     const route = useRoute()
     const routeName = route.name
-
+    const navState = useNavigationState((state) => state)
+    console.log('Header', navState)
     const insets = useSafeAreaInsets()
 
     const height = 35

@@ -87,11 +87,13 @@ const Menu = React.forwardRef(
 
         const width = 100
 
-        const menuStyle = {
+        const menuStyle: StyleProp<ViewStyle> = {
             position: 'absolute',
             width,
             marginLeft: coords.pageX - width + offset,
             marginTop: coords.pageY + insets.top - offset,
+            borderWidth: 1,
+            borderColor: theme.primary,
         }
 
         return (

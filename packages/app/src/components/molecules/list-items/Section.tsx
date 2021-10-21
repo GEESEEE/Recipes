@@ -8,12 +8,12 @@ import { utils } from '@/utils'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
     editable?: boolean
-    handleSectionNameChange?: (key: string, text: string) => void
-    handleSectionDescriptionChange?: (key: string, text: string) => void
+    handleSectionNameChange?: (text: string) => void
+    handleSectionDescriptionChange?: (text: string) => void
 }
 
 function SectionListItem({
-    item: item,
+    item,
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
