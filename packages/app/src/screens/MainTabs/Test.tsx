@@ -8,7 +8,15 @@ import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
-import { View, Text, TextInput, Icons, Toggle, Icon } from '@/components/base'
+import {
+    View,
+    Text,
+    TextInput,
+    Icons,
+    Toggle,
+    Icon,
+    TouchableOpacity,
+} from '@/components/base'
 import {
     Error,
     IconButton,
@@ -110,6 +118,10 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 value={username}
                 onChangeText={(t: string) => setUsername(t)}
             />
+
+            <TouchableOpacity onPress={(e: any) => console.log(e.nativeEvent)}>
+                <Text>Goeie shit</Text>
+            </TouchableOpacity>
 
             <Button
                 type="Solid"

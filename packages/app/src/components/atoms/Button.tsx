@@ -10,6 +10,7 @@ import {
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Typography, Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'
+import { TouchableEvent } from '@/types'
 
 type ButtonType = 'Solid' | 'Outline' | 'Clear'
 const TYPE = {
@@ -21,7 +22,7 @@ const TYPE = {
 type ButtonProps = {
     type: ButtonType
     text: string
-    onPress: () => void
+    onPress: (e?: TouchableEvent) => void
 
     color?: string
     backgroundColor?: string

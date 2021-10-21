@@ -8,9 +8,10 @@ import {
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
 import { useAppSelector } from '@/hooks'
+import { TouchableEvent } from '@/types'
 
 type IconButtonProps = {
-    onPress: () => void
+    onPress: (e?: TouchableEvent) => void
     type: any
     name: string
 
