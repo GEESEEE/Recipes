@@ -23,7 +23,7 @@ function SectionListItem({
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
 
     dropdownItems = dropdownItems || []
 

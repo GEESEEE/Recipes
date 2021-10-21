@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Section, SectionCreate } from '@recipes/api-types/v1'
+import { useRoute } from '@react-navigation/native'
 import { View, Icons } from '@/components/base'
 import {
     HeaderComponent,
@@ -8,7 +9,7 @@ import {
     SectionListItem,
 } from '@/components/molecules'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { userService, sectionsActions } from '@/redux'
+import { userService, sectionsActions, sectionsSelector } from '@/redux'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -19,6 +20,15 @@ function EditSectionScreen({
 }: EditSectionScreenProps): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
+
+    const route = useRoute()
+    console.log('Editsection', route)
+
+    if (route.params) {
+        console.log(route.params)
+        // const id = route.params.id
+        // section = useAppSelector(sectionsSelector.selectById(id))
+    }
 
     const [data, setData] = React.useState<Section>(new Section())
 
@@ -77,7 +87,6 @@ function EditSectionScreen({
             <SectionListItem
                 item={data}
                 editable
-                disableDropdown
                 handleSectionNameChange={handleSectionNameChange}
                 handleSectionDescriptionChange={handleSectionDescriptionChange}
             />

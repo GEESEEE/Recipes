@@ -155,13 +155,10 @@ export default class UserController implements interfaces.Controller {
             req.user?.id as number,
             sectionId
         )
-        if (validationResult instanceof SectionResult) {
-            return await this.sectionsService.updateSection(
-                validationResult,
-                body
-            )
+        if ('statusCode' in validationResult) {
+            return validationResult
         }
-        return validationResult
+        return await this.sectionsService.updateSection(validationResult, body)
     }
 
     @httpDelete(
@@ -178,10 +175,10 @@ export default class UserController implements interfaces.Controller {
             req.user?.id as number,
             sectionId
         )
-        if (validationResult instanceof SectionResult) {
-            return await this.sectionsService.deleteSection(sectionId)
+        if ('statusCode' in validationResult) {
+            return validationResult
         }
-        return validationResult
+        return await this.sectionsService.deleteSection(sectionId)
     }
 
     // //#endregion
