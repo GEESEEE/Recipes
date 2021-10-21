@@ -1,10 +1,5 @@
 export class Section {
-    constructor(
-        id = -1,
-        userId = -1,
-        name = 'section_name',
-        description = 'section_description'
-    ) {
+    constructor(id = -1, userId = -1, name = '', description = '') {
         this.id = id
         this.userId = userId
         this.name = name

@@ -4,8 +4,8 @@ import { RecipeIngredient } from './recipe-ingredient'
 export class Recipe {
     constructor(
         id = -1,
-        name = 'recipe_name',
-        description = 'recipe_description',
+        name = '',
+        description = '',
         prepareTime = -1,
         peopleCount = -1,
         recipeIngredients: RecipeIngredient[] = [],

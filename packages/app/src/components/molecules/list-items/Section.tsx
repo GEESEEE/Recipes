@@ -42,7 +42,6 @@ function SectionListItem({
     }
 
     function editSect(): void {
-        console.log('Should edit', navigation.navigate)
         navigation.navigate('EditSection', { id: item.id })
     }
 
