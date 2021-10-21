@@ -68,7 +68,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
     )
 
     if (loading) {
-        console.log('should be loading')
         return <Loading4Dots width={50} />
     }
 

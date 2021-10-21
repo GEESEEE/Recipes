@@ -33,8 +33,13 @@ function Editable({
         )
     }
 
+    let fixHeight = false
+    if (numberOfLines) {
+        fixHeight = true
+    }
+
     return (
-        <Text numberOfLines={numberOfLines} {...rest}>
+        <Text numberOfLines={numberOfLines} fixHeight={fixHeight} {...rest}>
             {text}
         </Text>
     )
