@@ -63,6 +63,7 @@ function SectionListItem({
                     type="SubHeader"
                     paddingHorizontal="s"
                     numberOfLines={1}
+                    placeholder="Section Name"
                 />
                 <Editable
                     editable={editable}
@@ -70,6 +71,7 @@ function SectionListItem({
                     handleTextChange={handleSectionDescriptionChange}
                     paddingHorizontal="s"
                     numberOfLines={2}
+                    placeholder="Description"
                 />
             </Container>
         </ListItem>

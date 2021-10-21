@@ -11,6 +11,7 @@ type EditableProps = {
     text: string
     numberOfLines?: number
     editable?: boolean
+    placeholder?: string
     handleTextChange?: (text: string, ...args: any[]) => void
 } & TextProps &
     LayoutProps
@@ -19,6 +20,7 @@ function Editable({
     text,
     numberOfLines,
     editable,
+    placeholder,
     handleTextChange,
     ...rest
 }: EditableProps): JSX.Element {
@@ -27,6 +29,7 @@ function Editable({
             <TextInput
                 onChangeText={handleTextChange}
                 value={text}
+                placeholder={placeholder}
                 multiline
                 {...rest}
             />
