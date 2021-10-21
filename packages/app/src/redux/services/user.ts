@@ -28,11 +28,14 @@ const userApi = api.injectEndpoints({
         }),
 
         createSection: builder.mutation<Section, SectionCreate>({
-            query: (body) => ({
-                url: `/users/sections`,
-                method: 'POST',
-                body,
-            }),
+            query: (body) => {
+                console.log('Creating section', body)
+                return {
+                    url: `/users/sections`,
+                    method: 'POST',
+                    body,
+                }
+            },
         }),
 
         getSections: builder.query<Section[], void>({

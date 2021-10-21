@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Section } from '@recipes/api-types/v1'
+import { Section, SectionCreate } from '@recipes/api-types/v1'
 import { View, Icons } from '@/components/base'
 import {
     HeaderComponent,
@@ -20,14 +20,22 @@ function EditSectionScreen({
     const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
+    const [data, setData] = React.useState<Section>(new Section())
+
     const [createSection, createSectionState] =
         userService.useCreateSectionMutation()
 
-    async function handleSaveSection(): Promise<void> {
-        console.log('Create Section')
-        const section = await createSection(data)
-        console.log('Section', section)
-        // dispatch(sectionsActions.addSection(section))
+    async function handleSaveSection(data: Section): Promise<void> {
+        console.log('Create Section', data)
+        const createData: SectionCreate = {
+            name: data.name,
+            description: data.description,
+        }
+        const section = await createSection(createData)
+
+        if ('data' in section) {
+            dispatch(sectionsActions.addSection(section.data))
+        }
     }
 
     // Header configuration
@@ -37,7 +45,7 @@ function EditSectionScreen({
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () => handleSaveSection(),
+                onPress: () => handleSaveSection(data),
                 loading: createSectionState.isLoading,
             },
         ],
@@ -55,7 +63,6 @@ function EditSectionScreen({
     }, [navigation])
 
     // Data handling
-    const [data, setData] = React.useState(new Section())
 
     function handleSectionNameChange(name: string): void {
         setData({ ...data, name })

@@ -31,6 +31,7 @@ function SectionListItem({
                     handleTextChange={handleSectionNameChange}
                     type="SubHeader"
                     paddingHorizontal="s"
+                    numberOfLines={1}
                 />
                 <Editable
                     editable={editable}
