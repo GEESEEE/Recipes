@@ -27,8 +27,7 @@ function SectionListItem({
 
     dropdownItems = dropdownItems || []
 
-    const [deleteSection, deleteSectionState] =
-        userService.useDeleteSectionMutation()
+    const [deleteSection] = userService.useDeleteSectionMutation()
 
     function logSect(): void {
         console.log('Section', item.name)
@@ -45,6 +44,10 @@ function SectionListItem({
         navigation.navigate('EditSection', { id: item.id })
     }
 
+    function onPress(): void {
+        console.log(`OnPress ${item.name}, navigate or somethings`)
+    }
+
     dropdownItems.push(logSect, deleteSect, editSect)
 
     return (
@@ -54,6 +57,7 @@ function SectionListItem({
                     ? utils.createDropDownItems(dropdownItems, 'sect')
                     : undefined
             }
+            onPress={onPress}
         >
             <Container>
                 <Editable

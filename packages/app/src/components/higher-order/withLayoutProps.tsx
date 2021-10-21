@@ -3,6 +3,8 @@ import { StyleProp, ViewProps, ViewStyle } from 'react-native'
 import { Spacing } from '@/styles'
 
 export type LayoutProps = {
+    backgroundColor?: string
+
     paddingVertical?: Spacing.Size
     paddingHorizontal?: Spacing.Size
 
@@ -17,6 +19,7 @@ function withLayoutProps<T extends LayoutProps>(
     WrappedComponent: React.ComponentType<T>
 ): (props: T) => JSX.Element {
     return ({
+        backgroundColor,
         paddingVertical,
         paddingHorizontal,
         marginVertical,
@@ -28,6 +31,8 @@ function withLayoutProps<T extends LayoutProps>(
         ...rest
     }: T): JSX.Element => {
         const myStyle: StyleProp<ViewStyle> = {}
+
+        if (backgroundColor) myStyle.backgroundColor = backgroundColor
 
         if (paddingVertical)
             myStyle.paddingVertical = Spacing.spacings[paddingVertical]

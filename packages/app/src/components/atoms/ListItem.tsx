@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
-import { View } from '@/components/base'
+import { View, TouchableOpacity } from '@/components/base'
 import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {
     items?: DropdownItem[]
+    onPress?: () => void
 }
 
 function ListItem({
     children,
     items,
+    onPress,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -22,6 +24,8 @@ function ListItem({
             paddingVertical="s"
             paddingHorizontal="s"
             marginVertical="s"
+            onPress={onPress}
+            disabled={!onPress}
         >
             <ItemContainer>{children}</ItemContainer>
             {items ? <DropdownMenu items={items} /> : null}
@@ -31,7 +35,7 @@ function ListItem({
 
 export default ListItem
 
-const Container = styled(View)`
+const Container = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
     align-content: space-between;
