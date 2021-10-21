@@ -6,11 +6,13 @@ import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {
     items: DropdownItem[]
+    disableDropdown?: boolean
 }
 
 function ListItem({
     children,
     items,
+    disableDropdown,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -24,7 +26,7 @@ function ListItem({
             marginVertical="s"
         >
             <ItemContainer>{children}</ItemContainer>
-            <DropdownMenu items={items} />
+            {disableDropdown ? null : <DropdownMenu items={items} />}
         </Container>
     )
 }

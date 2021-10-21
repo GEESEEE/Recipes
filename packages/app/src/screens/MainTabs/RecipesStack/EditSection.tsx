@@ -79,6 +79,7 @@ function EditSectionScreen({
                 editable
                 handleSectionNameChange={handleSectionNameChange}
                 handleSectionDescriptionChange={handleSectionDescriptionChange}
+                disableDropdown
             />
         </Container>
     )

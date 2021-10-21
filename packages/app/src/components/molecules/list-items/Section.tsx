@@ -14,6 +14,7 @@ interface SectionListItemProps extends ListItemBaseProps<Section> {
 
 function SectionListItem({
     item,
+    disableDropdown,
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
@@ -23,7 +24,10 @@ function SectionListItem({
     }
 
     return (
-        <ListItem items={utils.createDropDownItems([logSection], 'section')}>
+        <ListItem
+            items={utils.createDropDownItems([logSection], 'section')}
+            disableDropdown={disableDropdown}
+        >
             <Container>
                 <Editable
                     editable={editable}

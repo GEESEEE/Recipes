@@ -6,6 +6,7 @@ export interface ListItem {
 
 export interface ListItemBaseProps<T extends ListItem> {
     item: T
+    disableDropdown?: boolean
 }
 
 export function listItemHeightMap<T>(
