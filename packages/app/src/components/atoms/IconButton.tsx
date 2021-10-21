@@ -1,4 +1,5 @@
 import React from 'react'
+import Loading4Dots from './Loading4Dots'
 import {
     Icon,
     TouchableOpacity,
@@ -6,12 +7,14 @@ import {
 } from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
+import { useAppSelector } from '@/hooks'
 
 type IconButtonProps = {
     onPress: () => void
     type: any
     name: string
 
+    loading?: boolean
     color?: string
     size?: Spacing.Size
 } & LayoutProps &
@@ -22,14 +25,22 @@ function IconButton({
     type,
     name,
 
+    loading,
     color,
     size,
 
     ...rest
 }: IconButtonProps): JSX.Element {
+    const { textSize } = useAppSelector((state) => state.settings)
+    size = size || 's'
+    const iconSize = Spacing.iconSize(size, textSize)
     return (
-        <TouchableOpacity onPress={onPress} {...rest}>
-            <Icon type={type} name={name} color={color} size={size} />
+        <TouchableOpacity onPress={onPress} disabled={loading} {...rest}>
+            {loading ? (
+                <Loading4Dots width={iconSize} />
+            ) : (
+                <Icon type={type} name={name} color={color} size={size} />
+            )}
         </TouchableOpacity>
     )
 }

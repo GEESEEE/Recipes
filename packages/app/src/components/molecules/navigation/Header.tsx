@@ -11,9 +11,11 @@ type HeaderIcon = {
     type: any
     name: string
     onPress: () => void
+    loading?: boolean
 }
 
 export type HeaderConfig = {
+    drawer?: false
     right: Array<HeaderIcon>
 }
 
@@ -29,8 +31,7 @@ function HeaderComponent({
     const { theme, invertedColors } = useAppSelector((state) => state.settings)
     const route = useRoute()
     const routeName = route.name
-    const navState = useNavigationState((state) => state)
-    console.log('Header', navState)
+
     const insets = useSafeAreaInsets()
 
     const height = 35
@@ -54,12 +55,15 @@ function HeaderComponent({
     return (
         <Container style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
-                <HeaderIcon
-                    IconType={Icons.MyFeather}
-                    iconName="menu"
-                    onPress={() => navigation.toggleDrawer()}
-                    color={color}
-                />
+                {typeof config.drawer === 'undefined' ? (
+                    <HeaderIcon
+                        type={Icons.MyFeather}
+                        name="menu"
+                        onPress={() => navigation.toggleDrawer()}
+                        color={color}
+                    />
+                ) : null}
+
                 <HeaderCenter>
                     <Text type="SubHeader" color={color} paddingHorizontal="m">
                         {routeName}
@@ -69,10 +73,11 @@ function HeaderComponent({
                     return (
                         <HeaderIcon
                             key={uuid()}
-                            IconType={icon.type}
-                            iconName={icon.name}
+                            type={icon.type}
+                            name={icon.name}
                             onPress={icon.onPress}
                             color={color}
+                            loading={icon.loading}
                         />
                     )
                 })}
@@ -97,26 +102,13 @@ const HeaderCenter = styled(View)`
 `
 
 type HeaderIconProps = {
-    IconType: any
-    iconName: string
+    type: any
+    name: string
     onPress: () => void
     color: string
+    loading?: boolean
 }
 
-function HeaderIcon({
-    IconType,
-    iconName,
-    onPress,
-    color,
-}: HeaderIconProps): JSX.Element {
-    return (
-        <IconButton
-            type={IconType}
-            name={iconName}
-            onPress={onPress}
-            color={color}
-            size="l"
-            paddingHorizontal="s"
-        />
-    )
+function HeaderIcon({ ...rest }: HeaderIconProps): JSX.Element {
+    return <IconButton size="l" paddingHorizontal="s" {...rest} />
 }

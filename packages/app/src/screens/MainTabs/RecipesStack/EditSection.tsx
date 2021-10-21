@@ -7,7 +7,8 @@ import {
     HeaderConfig,
     SectionListItem,
 } from '@/components/molecules'
-import { useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { userService, sectionsActions } from '@/redux'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -17,15 +18,27 @@ function EditSectionScreen({
     navigation,
 }: EditSectionScreenProps): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
-    console.log('Edit section screen')
+    const dispatch = useAppDispatch()
+
+    const [createSection, createSectionState] =
+        userService.useCreateSectionMutation()
+
+    async function handleSaveSection(): Promise<void> {
+        console.log('Create Section')
+        const section = await createSection(data)
+        console.log('Section', section)
+        // dispatch(sectionsActions.addSection(section))
+    }
 
     // Header configuration
     const headerConfig: HeaderConfig = {
+        drawer: false,
         right: [
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () => console.log('Should save now'),
+                onPress: () => handleSaveSection(),
+                loading: createSectionState.isLoading,
             },
         ],
     }
