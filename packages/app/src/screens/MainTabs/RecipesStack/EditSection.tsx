@@ -34,13 +34,13 @@ function EditSectionScreen({
         const section = await createSection(createData)
 
         if ('data' in section) {
-            dispatch(sectionsActions.addSection(section.data))
+            await dispatch(sectionsActions.addSection(section.data))
+            navigation.pop()
         }
     }
 
     // Header configuration
     const headerConfig: HeaderConfig = {
-        drawer: false,
         right: [
             {
                 type: Icons.MyFeather,
@@ -77,9 +77,9 @@ function EditSectionScreen({
             <SectionListItem
                 item={data}
                 editable
+                disableDropdown
                 handleSectionNameChange={handleSectionNameChange}
                 handleSectionDescriptionChange={handleSectionDescriptionChange}
-                disableDropdown
             />
         </Container>
     )

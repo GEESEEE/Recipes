@@ -50,7 +50,7 @@ const userApi = api.injectEndpoints({
             }),
         }),
 
-        deleteSection: builder.mutation<Section, number>({
+        deleteSection: builder.mutation<boolean, number>({
             query: (id) => ({
                 url: `/users/sections/${id}`,
                 method: 'DELETE',

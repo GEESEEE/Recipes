@@ -6,7 +6,7 @@ export interface ListItem {
 
 export interface ListItemBaseProps<T extends ListItem> {
     item: T
-    disableDropdown?: boolean
+    dropdownItems?: (() => void | Promise<void>)[]
 }
 
 export function listItemHeightMap<T>(

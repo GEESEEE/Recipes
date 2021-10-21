@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Section } from '@recipes/api-types/v1'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { ListItemBaseProps } from './base'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
+import { sectionsActions, userService } from '@/redux'
+import { useAppDispatch } from '@/hooks'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
     editable?: boolean
@@ -14,19 +17,44 @@ interface SectionListItemProps extends ListItemBaseProps<Section> {
 
 function SectionListItem({
     item,
-    disableDropdown,
+    dropdownItems,
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
-    function logSection(): void {
-        console.log('Logging section')
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation()
+
+    dropdownItems = dropdownItems || []
+
+    const [deleteSection, deleteSectionState] =
+        userService.useDeleteSectionMutation()
+
+    function logSect(): void {
+        console.log('Section', item.name)
     }
+
+    async function deleteSect(): Promise<void> {
+        const res = await deleteSection(item.id)
+        if ('data' in res) {
+            dispatch(sectionsActions.removeSection(item.id))
+        }
+    }
+
+    function editSect(): void {
+        console.log('Should edit', navigation.navigate)
+        navigation.navigate('EditSection', { id: item.id })
+    }
+
+    dropdownItems.push(logSect, deleteSect, editSect)
 
     return (
         <ListItem
-            items={utils.createDropDownItems([logSection], 'section')}
-            disableDropdown={disableDropdown}
+            items={
+                dropdownItems
+                    ? utils.createDropDownItems(dropdownItems, 'sect')
+                    : undefined
+            }
         >
             <Container>
                 <Editable

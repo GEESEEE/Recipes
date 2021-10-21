@@ -15,7 +15,7 @@ type HeaderIcon = {
 }
 
 export type HeaderConfig = {
-    drawer: boolean
+    drawer?: boolean
     right: Array<HeaderIcon>
 }
 
@@ -31,6 +31,9 @@ function HeaderComponent({
     const { theme, invertedColors } = useAppSelector((state) => state.settings)
     const route = useRoute()
     const routeName = route.name
+
+    // const navState = useNavigationState((state) => state)
+    // console.log('header satet', navState)
 
     const insets = useSafeAreaInsets()
 
@@ -62,7 +65,14 @@ function HeaderComponent({
                         onPress={() => navigation.toggleDrawer()}
                         color={color}
                     />
-                ) : null}
+                ) : (
+                    <HeaderIcon
+                        type={Icons.MyMaterialIcons}
+                        name="arrow-back"
+                        onPress={() => navigation.pop()}
+                        color={color}
+                    />
+                )}
 
                 <HeaderCenter>
                     <Text type="SubHeader" color={color} paddingHorizontal="m">
