@@ -1,18 +1,17 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native'
+import {
+    Dimensions,
+    LayoutChangeEvent,
+    StyleProp,
+    ViewStyle,
+} from 'react-native'
 import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import IconButton from './IconButton'
 import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
-import { Spacing } from '@/styles'
-import {
-    Position,
-    useAppSelector,
-    usePosition,
-    useToggle,
-    useUpdateEffect,
-} from '@/hooks'
+import { Spacing, Typography } from '@/styles'
+import { Position, useAppSelector, usePosition, useToggle } from '@/hooks'
 
 export type DropdownItem = {
     id: number
@@ -99,19 +98,28 @@ type MenuProps = {
     toggle: () => void
 }
 
+const { height } = Dimensions.get('window')
+
 const Menu = React.forwardRef(
     ({ items, offset, toggle }: MenuProps, ref: any): JSX.Element => {
-        const { theme } = useAppSelector((state) => state.settings)
+        const { theme, textSize } = useAppSelector((state) => state.settings)
         const coords: Position = ref.current
-        const insets = useSafeAreaInsets()
 
         const width = 100
+
+        const menuHeight =
+            (16 + Typography.lineHeight('Text', textSize)) * items.length
+
+        let marginTop = coords.pageY + offset
+        if (marginTop + menuHeight > height) {
+            marginTop = height - menuHeight
+        }
 
         const menuStyle: StyleProp<ViewStyle> = {
             position: 'absolute',
             width,
             marginLeft: coords.pageX - width + offset,
-            marginTop: coords.pageY + insets.top - offset,
+            marginTop,
             borderWidth: 1,
             borderColor: theme.primary,
         }
