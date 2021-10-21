@@ -15,7 +15,7 @@ type HeaderIcon = {
 }
 
 export type HeaderConfig = {
-    drawer?: false
+    drawer: boolean
     right: Array<HeaderIcon>
 }
 
@@ -55,7 +55,7 @@ function HeaderComponent({
     return (
         <Container style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
-                {typeof config.drawer === 'undefined' ? (
+                {config.drawer ? (
                     <HeaderIcon
                         type={Icons.MyFeather}
                         name="menu"

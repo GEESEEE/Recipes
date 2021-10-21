@@ -22,7 +22,7 @@ function BrowseStack(): JSX.Element {
                     header: ({ navigation }) => (
                         <HeaderComponent
                             navigation={navigation}
-                            config={{ right: [] }}
+                            config={{ drawer: true, right: [] }}
                         />
                     ),
                 }}

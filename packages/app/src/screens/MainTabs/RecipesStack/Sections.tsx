@@ -42,6 +42,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // Header configuration
     const headerConfig: HeaderConfig = {
+        drawer: true,
         right: [
             {
                 type: Icons.MyFeather,

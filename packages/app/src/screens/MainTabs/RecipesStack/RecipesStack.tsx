@@ -24,7 +24,7 @@ function RecipesStack(): JSX.Element {
                     header: ({ navigation }) => (
                         <HeaderComponent
                             navigation={navigation}
-                            config={{ right: [] }}
+                            config={{ drawer: true, right: [] }}
                         />
                     ),
                 }}
@@ -37,7 +37,7 @@ function RecipesStack(): JSX.Element {
                     header: ({ navigation }) => (
                         <HeaderComponent
                             navigation={navigation}
-                            config={{ right: [] }}
+                            config={{ drawer: false, right: [] }}
                         />
                     ),
                 }}
