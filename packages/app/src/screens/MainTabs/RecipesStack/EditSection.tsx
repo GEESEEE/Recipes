@@ -10,7 +10,6 @@ import {
 } from '@/components/molecules'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { userService, sectionsActions, sectionsSelector } from '@/redux'
-import { Button } from '@/components/atoms'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -19,11 +18,9 @@ type EditSectionScreenProps = {
 function EditSectionScreen({
     navigation,
 }: EditSectionScreenProps): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
     const route = useRoute()
-
     const editing = Boolean(route.params)
 
     let sectionId = -1
@@ -39,7 +36,6 @@ function EditSectionScreen({
     }
 
     const [sectionData, setSectionData] = React.useState<Section>(section)
-    // console.log('edit', sectionData)
 
     const [createSection, createSectionState] =
         userService.useCreateSectionMutation()
@@ -82,6 +78,14 @@ function EditSectionScreen({
         [updateSection, dispatch, navigation]
     )
 
+    function handleSectionNameChange(name: string): void {
+        setSectionData({ ...sectionData, name })
+    }
+
+    function handleSectionDescriptionChange(description: string): void {
+        setSectionData({ ...sectionData, description })
+    }
+
     // Header configuration
     React.useLayoutEffect(() => {
         const headerConfig: HeaderConfig = {
@@ -117,16 +121,6 @@ function EditSectionScreen({
         handleEditSection,
         editing,
     ])
-
-    // Data handling
-
-    function handleSectionNameChange(name: string): void {
-        setSectionData({ ...sectionData, name })
-    }
-
-    function handleSectionDescriptionChange(description: string): void {
-        setSectionData({ ...sectionData, description })
-    }
 
     return (
         <Container>

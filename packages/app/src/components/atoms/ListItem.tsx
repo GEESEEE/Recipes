@@ -6,11 +6,13 @@ import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {
     items?: DropdownItem[]
+    dropDownDependencies?: number[]
 }
 
 function ListItem({
     children,
     items,
+    dropDownDependencies,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -24,7 +26,12 @@ function ListItem({
             marginVertical="s"
         >
             <ItemContainer>{children}</ItemContainer>
-            {items ? <DropdownMenu items={items} /> : null}
+            {items ? (
+                <DropdownMenu
+                    items={items}
+                    dependencies={dropDownDependencies}
+                />
+            ) : null}
         </Container>
     )
 }

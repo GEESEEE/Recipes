@@ -32,13 +32,29 @@ function ListItemRecyclerView<T extends ListItem, U>({
     const { width } = Dimensions.get('window')
     const { textSize } = useAppSelector((state) => state.settings)
 
+    const [scrollPosition, setScrollPosition] = React.useState(0)
+
+    function handleScroll(
+        _event: ScrollEvent,
+        _offsetX: number,
+        offsetY: number
+    ): void {
+        setScrollPosition(offsetY)
+    }
+
     const rowRenderer = (
         type: string | number,
         item: T
     ): JSX.Element | null => {
         switch (type) {
             case ViewTypes.Item:
-                return <Element item={item} {...props} />
+                return (
+                    <Element
+                        item={item}
+                        {...props}
+                        dropdownDependencies={[scrollPosition]}
+                    />
+                )
 
             default:
                 return null
@@ -78,6 +94,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
                 layoutProvider={layoutProvider}
                 dataProvider={dataProvider}
                 rowRenderer={rowRenderer}
+                handleScroll={handleScroll}
             />
         )
     }

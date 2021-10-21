@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
-import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
-import { View, Icons, Text } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import { authActions, authService, userService } from '@/redux'
 import {
     HeaderComponent,
@@ -15,7 +14,6 @@ import {
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
-import { Button } from '@/components/atoms'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
