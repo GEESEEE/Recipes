@@ -41,18 +41,17 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [])
 
     // Header configuration
-    const headerConfig: HeaderConfig = {
-        drawer: true,
-        right: [
-            {
-                type: Icons.MyFeather,
-                name: 'plus',
-                onPress: () => navigation.navigate('EditSection'),
-            },
-        ],
-    }
-
     React.useLayoutEffect(() => {
+        const headerConfig: HeaderConfig = {
+            drawer: true,
+            right: [
+                {
+                    type: Icons.MyFeather,
+                    name: 'plus',
+                    onPress: () => navigation.navigate('EditSection'),
+                },
+            ],
+        }
         navigation.setOptions({
             header: () => (
                 <HeaderComponent
