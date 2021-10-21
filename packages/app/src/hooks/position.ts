@@ -9,7 +9,7 @@ export type Position = {
 }
 
 const usePosition = (
-    callbackDependencies?: any[]
+    callbackDependencies?: Array<number>
 ): [
     positionRef: MutableRefObject<Position>,
     setPosition: (event: LayoutChangeEvent) => void
@@ -25,6 +25,7 @@ const usePosition = (
         positionRef.current = lay
     }
 
+    callbackDependencies = callbackDependencies || []
     const onLayout = React.useCallback((event: LayoutChangeEvent): void => {
         ;(event.target as any).measure(
             (
@@ -35,7 +36,6 @@ const usePosition = (
                 pageX: number,
                 pageY: number
             ) => {
-                console.log('Onlayout', x, y, width, height, pageX, pageY)
                 if (typeof x !== 'undefined') {
                     setPosition({ width, height, pageX, pageY })
                 } else {
@@ -43,7 +43,7 @@ const usePosition = (
                 }
             }
         )
-    }, callbackDependencies ?? [])
+    }, callbackDependencies)
 
     return [positionRef, onLayout]
 }

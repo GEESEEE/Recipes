@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { StyleProp, ViewStyle } from 'react-native'
+import { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native'
+import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import IconButton from './IconButton'
 import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
 import { Spacing } from '@/styles'
-import { Position, useAppSelector, usePosition, useToggle } from '@/hooks'
+import {
+    Position,
+    useAppSelector,
+    usePosition,
+    useToggle,
+    useUpdateEffect,
+} from '@/hooks'
 
 export type DropdownItem = {
     id: number
@@ -18,7 +25,6 @@ type DropdownMenuProps = {
     iconOffset?: Spacing.Size
     iconSize?: Spacing.Size
     iconColor?: string
-    dependencies?: number[]
 }
 
 function DropdownMenu({
@@ -26,11 +32,19 @@ function DropdownMenu({
     iconOffset,
     iconSize,
     iconColor,
-    dependencies,
 }: DropdownMenuProps): JSX.Element {
     const { theme, textSize } = useAppSelector((state) => state.settings)
     const [open, toggle] = useToggle(false)
-    const [positionRef, onPosition] = usePosition(dependencies)
+    const [positionRef, onPosition] = usePosition()
+
+    const [viewKey, setViewKey] = React.useState(uuid())
+
+    function onClick(): void {
+        setViewKey(uuid())
+        setTimeout(() => {
+            toggle()
+        }, 40)
+    }
 
     iconSize = iconSize || 'm'
     iconColor = iconColor || theme.primary
@@ -51,11 +65,17 @@ function DropdownMenu({
     }
 
     return (
-        <View style={containerStyle} onLayout={onPosition}>
+        <View
+            style={containerStyle}
+            key={viewKey}
+            onLayout={(e: LayoutChangeEvent) => {
+                onPosition(e)
+            }}
+        >
             <IconButton
                 type={Icons.MyMaterialCommunityIcons}
                 name="dots-vertical"
-                onPress={() => toggle()}
+                onPress={() => onClick()}
                 color={iconColor}
                 size={iconSize}
             />

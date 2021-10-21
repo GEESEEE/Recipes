@@ -83,7 +83,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
             {auth.user.id < 0 ? <LoginModal /> : null}
-
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={sections}

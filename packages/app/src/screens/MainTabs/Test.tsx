@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Animated, Keyboard } from 'react-native'
+import { Animated, Keyboard, TextInput as RNT } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
@@ -9,7 +9,6 @@ import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
 import { View, Text, TextInput, Icons, Toggle, Icon } from '@/components/base'
-
 import {
     Error,
     IconButton,
@@ -107,7 +106,10 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <Icon type={Icons.MyFeather} name="menu" />
+            <RNT
+                value={username}
+                onChangeText={(t: string) => setUsername(t)}
+            />
 
             <Button
                 type="Solid"

@@ -7,7 +7,6 @@ export interface ListItem {
 export interface ListItemBaseProps<T extends ListItem> {
     item: T
     dropdownItems?: (() => void | Promise<void>)[]
-    dropdownDependencies?: number[]
 }
 
 export function listItemHeightMap<T>(
