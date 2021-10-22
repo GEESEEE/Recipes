@@ -1,7 +1,10 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
-import Animated, { useSharedValue } from 'react-native-reanimated'
+import Animated, {
+    useAnimatedGestureHandler,
+    useSharedValue,
+} from 'react-native-reanimated'
 import { Dimensions, LayoutChangeEvent } from 'react-native'
 import {
     RecyclerListView,
@@ -60,8 +63,6 @@ function moveData(arr: Array<any>, from: number, to: number): Array<any> {
     return arr
 }
 
-const { cond, eq, add, call, set, Value, event, or } = Animated
-
 function DragDropTest(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -70,13 +71,11 @@ function DragDropTest(): JSX.Element {
     const dragIndex = useSharedValue(-1)
     const scrolling = useSharedValue(false)
 
-    const [containerHeight, setContainerHeight] = useState(0)
+    const [maxHeight, setMaxHeight] = useState(0)
     const [topOffset, setTopOffset] = useState(0)
 
     const [dragging, setDragging] = useToggle(false)
     const [posY, setPosY] = useState(0)
-
-    const [gestureState, setGestureState] = useState(0)
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
@@ -89,7 +88,7 @@ function DragDropTest(): JSX.Element {
     function onContainerLayout(e: LayoutChangeEvent): void {
         const layout = e.nativeEvent.layout
         setTopOffset(layout.y)
-        setContainerHeight(layout.height)
+        setMaxHeight(layout.height - itemLayout.height)
     }
 
     function onScroll(e: ScrollEvent): void {
@@ -97,17 +96,9 @@ function DragDropTest(): JSX.Element {
         scrollOffset.value = event.contentOffset.y
     }
 
-    function currentY(): number {
-        return posY - itemLayout.height / 2
-    }
-
     function toIndex(posY: number): number {
-        let index = Math.round(
-            (posY + scrollOffset.value - itemLayout.height / 2) /
-                itemLayout.height
-        )
+        let index = Math.round((posY + scrollOffset.value) / itemLayout.height)
         index = Math.min(dataProvider.getSize() - 1, Math.max(0, index))
-
         return index
     }
 
@@ -115,7 +106,6 @@ function DragDropTest(): JSX.Element {
         const index = toIndex(posY)
         dragIndex.value = index
         currentIndex.value = index
-
         setDragging(true)
     }
 
@@ -128,13 +118,14 @@ function DragDropTest(): JSX.Element {
     }
 
     function move(pos: number): void {
-        console.log('Move', pos, topOffset, containerHeight)
-        if (pos - topOffset < 100) {
+        // TODO: Streamline these values for a nicer scrolling experience
+        if (pos < 100) {
             scrolling.value = true
-            moveList(-20)
-        } else if (pos > containerHeight - 100) {
+            moveList(-25)
+        } else if (pos > maxHeight - 100) {
             scrolling.value = true
-            moveList(20)
+            console.log(pos - maxHeight)
+            moveList(25)
         } else {
             scrolling.value = false
         }
@@ -171,26 +162,17 @@ function DragDropTest(): JSX.Element {
 
     function onGesture(e: GestureChangeEvent): void {
         const event = e.nativeEvent
-        const pos = event.absoluteY - topOffset
+        let pos = event.absoluteY - topOffset - itemLayout.height / 2
+        pos = Math.max(0, Math.min(maxHeight, pos))
+        console.log('Pos', pos, maxHeight)
         setPosY(pos)
-        setGestureState(event.state)
-    }
-
-    useUpdateEffect(() => {
-        console.log('State Change', gestureState, posY)
-        if (gestureState === State.BEGAN) {
-            console.log('Started')
-            start(posY)
-        } else if (gestureState === State.ACTIVE) {
-            console.log('Active')
-            // move(posY)
+        if (event.state === State.BEGAN) {
+            start(pos)
+        } else if (event.state === State.ACTIVE) {
+            move(pos)
         } else {
             reset()
         }
-    }, [gestureState])
-
-    if (gestureState === State.ACTIVE) {
-        move(posY)
     }
 
     const rowRenderer = (
@@ -201,10 +183,8 @@ function DragDropTest(): JSX.Element {
             <StyledView backgroundColor={item.color}>
                 <PanGestureHandler
                     maxPointers={1}
-                    onGestureEvent={(e: GestureChangeEvent) => onGesture(e)}
-                    onHandlerStateChange={(e: GestureStateEvent) =>
-                        onGesture(e)
-                    }
+                    onGestureEvent={onGesture}
+                    onHandlerStateChange={onGesture}
                 >
                     <Animated.View>
                         <Icon
@@ -225,7 +205,7 @@ function DragDropTest(): JSX.Element {
             {dragging ? (
                 <AnimatedView
                     style={{
-                        top: currentY(),
+                        top: posY,
                         ...itemLayout,
                     }}
                 >

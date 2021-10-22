@@ -36,8 +36,7 @@ function DropdownMenu({
         locationY: 0,
     })
 
-    function on(e: any): void {
-        console.log(e.nativeEvent)
+    function onPress(e: any): void {
         setPos(e.nativeEvent)
         toggle()
     }
@@ -65,7 +64,7 @@ function DropdownMenu({
             <IconButton
                 type={Icons.MyMaterialCommunityIcons}
                 name="dots-vertical"
-                onPress={(e?: TouchableEvent) => on(e)}
+                onPress={(e?: TouchableEvent) => onPress(e)}
                 color={iconColor}
                 size={iconSize}
             />

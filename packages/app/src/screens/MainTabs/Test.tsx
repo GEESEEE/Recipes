@@ -31,6 +31,7 @@ import { Instruction } from '@/data'
 import { useUpdateSettingsMutation } from '@/redux/services/user'
 import DragDropCopy from '@/components/organisms/DragAndDropCopy'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
+import DragDropTest2 from '@/components/organisms/DragAndDropTest2'
 
 const bigLogo = 1
 const smallLogo = 0.5
