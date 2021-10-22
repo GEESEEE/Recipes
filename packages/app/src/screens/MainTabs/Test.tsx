@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import { IfEquals, ReadonlyKeys, User } from '@recipes/api-types/v1'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
@@ -28,6 +29,8 @@ import {
 import { InstructionListItem } from '@/components/molecules'
 import { Instruction } from '@/data'
 import { useUpdateSettingsMutation } from '@/redux/services/user'
+import DragDropCopy from '@/components/organisms/DragAndDropCopy'
+import DragDropTest from '@/components/organisms/DragAndDropTest'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -114,31 +117,20 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 />
             </LogoView> */}
 
-            <RNT
-                value={username}
-                onChangeText={(t: string) => setUsername(t)}
-            />
-
-            <TouchableOpacity onPress={(e: any) => console.log(e.nativeEvent)}>
-                <Text>Goeie shit</Text>
-            </TouchableOpacity>
-
             <Button
                 type="Solid"
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
 
-            <StyledText width="s" paddingVertical="s" numberOfLines={1}>
-                Teextkjansdknlkamsdlkmasdlkmasdlkmasdlkansdlkmasda
-            </StyledText>
+            <DragDropTest />
         </Container>
     )
 }
 
 export default TestScreen
 
-const Container = styled(View)`
+const Container = styled(SafeAreaView)`
     flex: 1;
     justify-content: center;
     align-items: center;
