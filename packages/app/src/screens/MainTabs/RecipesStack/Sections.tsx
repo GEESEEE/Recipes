@@ -13,6 +13,7 @@ import {
     SectionListItem,
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
+import ListItemDragDropView from '@/components/organisms/ListItemWithDragDrop'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
@@ -83,11 +84,12 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
             {auth.user.id < 0 ? <LoginModal /> : null}
-            <ListItemRecyclerView
+            <ListItemDragDropView
                 Element={SectionListItem}
                 data={sections}
                 props={{}}
                 loading={getSections.isLoading}
+                dragDrop
             />
         </Container>
     )

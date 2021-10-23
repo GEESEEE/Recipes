@@ -1,21 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import Animated from 'react-native-reanimated'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
-import { View, TouchableOpacity } from '@/components/base'
+import { View, TouchableOpacity, Icon, Icons } from '@/components/base'
 import { useAppSelector } from '@/hooks'
 
 type ListItemProps = {
     items?: DropdownItem[]
     onPress?: () => void
+    onGesture?: any
 }
 
 function ListItem({
     children,
     items,
     onPress,
+    onGesture,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
-
     return (
         <Container
             width="l"
@@ -27,6 +30,21 @@ function ListItem({
             onPress={onPress}
             disabled={!onPress}
         >
+            {onGesture ? (
+                <PanGestureHandler
+                    maxPointers={1}
+                    onGestureEvent={onGesture}
+                    onHandlerStateChange={onGesture}
+                >
+                    <Animated.View>
+                        <Icon
+                            type={Icons.MyFeather}
+                            name="menu"
+                            color={theme.text}
+                        />
+                    </Animated.View>
+                </PanGestureHandler>
+            ) : null}
             <ItemContainer>{children}</ItemContainer>
             {items ? <DropdownMenu items={items} /> : null}
         </Container>

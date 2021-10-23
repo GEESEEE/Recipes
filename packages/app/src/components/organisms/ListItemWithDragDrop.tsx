@@ -1,60 +1,48 @@
 import React, { useRef, useState } from 'react'
-import styled from 'styled-components'
-import { PanGestureHandler, State } from 'react-native-gesture-handler'
-import Animated, {
-    useAnimatedGestureHandler,
-    useSharedValue,
-} from 'react-native-reanimated'
+import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
 import { Dimensions, LayoutChangeEvent } from 'react-native'
 import {
     RecyclerListView,
-    LayoutProvider,
     DataProvider,
+    LayoutProvider,
 } from 'recyclerlistview'
-import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
-import { View, Text, Icon, Icons } from '@/components/base'
-import { useAppSelector, useToggle, useUpdateEffect } from '@/hooks'
-import { GestureChangeEvent, GestureStateEvent } from '@/types'
+import styled from 'styled-components'
+import { useHeaderHeight } from '@react-navigation/elements'
+import Animated, { useSharedValue } from 'react-native-reanimated'
+import { State } from 'react-native-gesture-handler'
+import { SectionListItem } from '@/components/molecules'
+import { View } from '@/components/base'
+import { listItemHeightMap, ListItem } from '@/components/molecules'
+import { Loading4Dots } from '@/components/atoms'
+import { useAppSelector, useToggle } from '@/hooks'
+import { GestureChangeEvent } from '@/types'
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const ViewTypes = {
     Item: 0,
 }
 
+type ListItemRecyclerViewProps<T extends ListItem, U> = {
+    data: Array<T>
+    Element: (props: U & { item: T }) => JSX.Element
+    props: U
+    loading?: boolean
+    dragDrop?: boolean
+}
+
 const itemLayout = {
     width,
-    height: 70,
+    height: listItemHeightMap(SectionListItem, 'm'),
 }
 
 const layoutProvider = new LayoutProvider(
     () => ViewTypes.Item,
-    (type, dim) => {
-        switch (type) {
-            case ViewTypes.Item: {
-                dim.height = itemLayout.height
-                dim.width = itemLayout.width
-                break
-            }
-
-            default:
-                dim.height = 0
-                dim.width = 0
-                break
-        }
+    (_, dim) => {
+        dim.width = itemLayout.width
+        dim.height = itemLayout.height
     }
 )
-
-function generateData(): Array<{ id: number; color: string }> {
-    const res = []
-    const ids = [...Array(100).keys()]
-    for (const id of ids) {
-        res.push({ id, color: getRandomColor() })
-    }
-    return res
-}
-
-const data = generateData()
 
 function moveData(arr: Array<any>, from: number, to: number): Array<any> {
     const element = arr[from]
@@ -63,16 +51,22 @@ function moveData(arr: Array<any>, from: number, to: number): Array<any> {
     return arr
 }
 
-function DragDropTest(): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+function ListItemRecyclerView<T extends ListItem, U>({
+    data,
+    Element,
+    props,
+    loading,
+    dragDrop,
+}: ListItemRecyclerViewProps<T, U>): JSX.Element {
+    const { textSize } = useAppSelector((state) => state.settings)
 
     const scrollOffset = useSharedValue(0)
     const currentIndex = useSharedValue(-1)
     const scrolling = useSharedValue(false)
 
     const [dragIndex, setDragIndex] = useState(-1)
+    const topOffset = useHeaderHeight()
     const [maxHeight, setMaxHeight] = useState(0)
-    const [topOffset, setTopOffset] = useState(0)
 
     const [dragging, setDragging] = useToggle(false)
     const [posY, setPosY] = useState(0)
@@ -84,12 +78,6 @@ function DragDropTest(): JSX.Element {
     const [dataProvider, setDataProvider] = useState(
         dataProviderInstance.cloneWithRows(data)
     )
-
-    function onContainerLayout(e: LayoutChangeEvent): void {
-        const layout = e.nativeEvent.layout
-        setTopOffset(layout.y)
-        setMaxHeight(layout.height - itemLayout.height)
-    }
 
     function onScroll(e: ScrollEvent): void {
         const event = e.nativeEvent
@@ -172,60 +160,58 @@ function DragDropTest(): JSX.Element {
         }
     }
 
-    const rowRenderer = (
-        _type: string | number,
-        item: { id: number; color: string }
-    ) => {
+    const rowRenderer = (_: string | number, item: T): JSX.Element | null => {
         return (
-            <StyledView backgroundColor={item.color}>
-                <PanGestureHandler
-                    maxPointers={1}
-                    onGestureEvent={onGesture}
-                    onHandlerStateChange={onGesture}
-                >
-                    <Animated.View>
-                        <Icon
-                            type={Icons.MyFeather}
-                            name="menu"
-                            color={theme.text}
-                            size="l"
-                        />
-                    </Animated.View>
-                </PanGestureHandler>
-                <Text type="Header">{item.id.toString()}</Text>
-            </StyledView>
+            <Element
+                item={item}
+                onGesture={dragDrop ? onGesture : undefined}
+                {...props}
+            />
         )
     }
 
-    return (
-        <Container onLayout={onContainerLayout}>
-            {dragging ? (
-                <AnimatedView
-                    style={{
-                        top: posY,
-                        ...itemLayout,
-                    }}
-                >
-                    {rowRenderer(
-                        ViewTypes.Item,
-                        dataProvider.getDataForIndex(dragIndex)
-                    )}
-                </AnimatedView>
-            ) : null}
+    function onContainerLayout(e: LayoutChangeEvent): void {
+        const layout = e.nativeEvent.layout
+        setMaxHeight(layout.height - itemLayout.height)
+    }
 
-            <RecyclerListView
-                ref={listRef}
-                style={{ width }}
-                layoutProvider={layoutProvider}
-                dataProvider={dataProvider}
-                rowRenderer={rowRenderer}
-                onScroll={onScroll}
-            />
-        </Container>
-    )
+    if (loading) {
+        return <Loading4Dots width={50} />
+    }
+
+    if (data.length > 0) {
+        return (
+            <Container onLayout={onContainerLayout}>
+                {/* {dragging ? (
+                    <AnimatedView
+                        style={{
+                            top: posY,
+                            ...itemLayout,
+                        }}
+                    >
+                        {rowRenderer(
+                            ViewTypes.Item,
+                            dataProvider.getDataForIndex(dragIndex)
+                        )}
+                    </AnimatedView>
+                ) : null} */}
+
+                <RecyclerListView
+                    ref={listRef}
+                    style={{ width }}
+                    layoutProvider={layoutProvider}
+                    dataProvider={dataProvider}
+                    rowRenderer={rowRenderer}
+                    onScroll={onScroll}
+                />
+            </Container>
+        )
+    }
+
+    return <View />
 }
 
-export default DragDropTest
+export default ListItemRecyclerView
 
 const Container = styled(View)`
     flex: 1;
@@ -235,18 +221,3 @@ const AnimatedView = styled(Animated.View)`
     position: absolute;
     elevation: 10;
 `
-
-const StyledView = styled(View)`
-    flex: 1;
-    flex-direction: row;
-    align-items: center;
-`
-
-function getRandomColor() {
-    const letters = '0123456789ABCDEF'
-    let color = '#'
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
-}

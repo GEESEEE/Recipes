@@ -18,6 +18,7 @@ interface SectionListItemProps extends ListItemBaseProps<Section> {
 function SectionListItem({
     item,
     dropdownItems,
+    onGesture,
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
@@ -58,6 +59,7 @@ function SectionListItem({
                     : undefined
             }
             onPress={onPress}
+            onGesture={onGesture}
         >
             <Container>
                 <Editable
