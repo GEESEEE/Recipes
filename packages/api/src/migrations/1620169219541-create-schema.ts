@@ -189,6 +189,10 @@ export class createSchema1620169219541 implements MigrationInterface {
                         name: 'user_id',
                         type: 'int',
                     },
+                    {
+                        name: 'position',
+                        type: 'int',
+                    },
                 ],
                 foreignKeys: [
                     {

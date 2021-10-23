@@ -201,6 +201,7 @@ export default class UserController implements interfaces.Controller {
 
             case 'createSection':
                 return [
+                    body('position').isInt().toInt(),
                     body('name').exists().isString(),
                     body('description').exists().isString(),
                 ]
@@ -210,6 +211,7 @@ export default class UserController implements interfaces.Controller {
             case 'updateSection':
                 return [
                     param('sectionId').isInt().toInt(),
+                    body('position').optional().isInt(),
                     body('name').optional().isString(),
                     body('description').optional().isString(),
                 ]

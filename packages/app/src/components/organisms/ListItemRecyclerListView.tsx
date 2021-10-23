@@ -11,7 +11,11 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
 import { View } from '@/components/base'
-import { listItemHeightMap, ListItem } from '@/components/molecules'
+import {
+    listItemHeightMap,
+    ListItem,
+    ListItemBaseProps,
+} from '@/components/molecules'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent } from '@/types'
@@ -36,15 +40,21 @@ let layoutProvider = new LayoutProvider(
     }
 )
 
-type ListItemRecyclerViewProps<T extends ListItem, U> = {
+type ListItemRecyclerViewProps<
+    T extends ListItem,
+    U extends ListItemBaseProps<T>
+> = {
     data: Array<T>
     Element: (props: U & { item: T }) => JSX.Element
-    props: U
+    props: Omit<U, 'item'>
     loading?: boolean
     dragDrop?: boolean
 }
 
-function ListItemRecyclerView<T extends ListItem, U>({
+function ListItemRecyclerView<
+    T extends ListItem,
+    U extends ListItemBaseProps<T>
+>({
     data,
     Element,
     props,
@@ -178,9 +188,9 @@ function ListItemRecyclerView<T extends ListItem, U>({
     const rowRenderer = (_: string | number, item: T): JSX.Element | null => {
         return (
             <Element
-                item={item}
                 onGesture={dragDrop ? onGesture : undefined}
-                {...props}
+                {...(props as U)}
+                item={item}
             />
         )
     }

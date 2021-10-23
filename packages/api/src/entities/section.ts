@@ -36,4 +36,8 @@ export default class Section {
 
     @OneToMany(() => Recipe, (recipe) => recipe.section)
     public recipes?: Recipe[]
+
+    @Expose()
+    @Column()
+    public position!: number
 }
