@@ -13,7 +13,6 @@ import {
     SectionListItem,
 } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
-import ListItemDragDropView from '@/components/organisms/ListItemWithDragDrop'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
