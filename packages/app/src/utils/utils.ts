@@ -34,6 +34,13 @@ export function createDropDownItems(
     })
 }
 
+export function moveItem<T>(arr: Array<T>, from: number, to: number): Array<T> {
+    const element = arr[from]
+    arr.splice(from, 1)
+    arr.splice(to, 0, element)
+    return arr
+}
+
 export function inElementOf(arr: string[], val: string): boolean {
     return arr.some((el) => el.includes(val))
 }

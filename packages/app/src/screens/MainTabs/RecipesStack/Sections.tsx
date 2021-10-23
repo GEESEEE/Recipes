@@ -84,7 +84,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
 
             {auth.user.id < 0 ? <LoginModal /> : null}
-            <ListItemDragDropView
+            <ListItemRecyclerView
                 Element={SectionListItem}
                 data={sections}
                 props={{}}
