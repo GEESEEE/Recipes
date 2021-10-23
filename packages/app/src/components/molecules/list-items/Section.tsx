@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Section } from '@recipes/api-types/v1'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { ListItemBaseProps } from './base'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
-import { sectionsActions, userService } from '@/redux'
+import { sectionsActions, sectionService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
@@ -28,7 +28,7 @@ function SectionListItem({
 
     dropdownItems = dropdownItems || []
 
-    const [deleteSection] = userService.useDeleteSectionMutation()
+    const [deleteSection] = sectionService.useDeleteSectionMutation()
 
     function logSect(): void {
         console.log('Section', item.name)

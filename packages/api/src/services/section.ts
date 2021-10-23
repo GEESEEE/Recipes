@@ -9,6 +9,7 @@ import {
 import { TYPES } from '@/utils/constants'
 import { Section } from '@/entities'
 import { SectionResult } from '@/types'
+import section from '@/entities/section'
 
 @injectable()
 export default class SectionService {
@@ -40,6 +41,7 @@ export default class SectionService {
     public async getSectionsFromUser(userId: number): Promise<SectionResult[]> {
         let sections = await this.sectionRepository.find({
             where: { userId },
+            order: { position: 'ASC' },
         })
         sections = sections.map((section) => fitToClass(section, SectionResult))
         return sections
@@ -59,5 +61,12 @@ export default class SectionService {
     public async deleteSection(sectionId: number): Promise<boolean> {
         const result = await this.sectionRepository.delete(sectionId)
         return result.affected !== 0
+    }
+
+    public async updateSections(
+        sections: Array<SectionUpdate>
+    ): Promise<Array<SectionResult>> {
+        const saved = await this.sectionRepository.save(sections)
+        return saved.map((sect) => fitToClass(sect, SectionResult))
     }
 }

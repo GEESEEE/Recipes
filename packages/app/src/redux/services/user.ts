@@ -1,7 +1,4 @@
 import {
-    Section,
-    SectionCreate,
-    SectionUpdate,
     Settings,
     SettingsUpdate,
     User,
@@ -26,41 +23,7 @@ const userApi = api.injectEndpoints({
                 body,
             }),
         }),
-
-        createSection: builder.mutation<Section, SectionCreate>({
-            query: (body) => ({
-                url: `/users/sections`,
-                method: 'POST',
-                body,
-            }),
-        }),
-
-        getSections: builder.query<Section[], void>({
-            query: () => `/users/sections`,
-        }),
-
-        updateSection: builder.mutation<Section, SectionUpdate>({
-            query: (body) => ({
-                url: `/users/sections/${body.id}`,
-                method: 'PUT',
-                body,
-            }),
-        }),
-
-        deleteSection: builder.mutation<boolean, number>({
-            query: (id) => ({
-                url: `/users/sections/${id}`,
-                method: 'DELETE',
-            }),
-        }),
     }),
 })
 
-export const {
-    useGetUserMutation,
-    useUpdateSettingsMutation,
-    useCreateSectionMutation,
-    useGetSectionsQuery,
-    useUpdateSectionMutation,
-    useDeleteSectionMutation,
-} = userApi
+export const { useGetUserMutation, useUpdateSettingsMutation } = userApi

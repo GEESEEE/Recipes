@@ -6,7 +6,7 @@ import { LoginModal } from '@/screens/Login'
 import { LoadingModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
 import { View, Icons } from '@/components/base'
-import { authActions, authService, userService } from '@/redux'
+import { authActions, authService, sectionService } from '@/redux'
 import {
     HeaderComponent,
     HeaderConfig,
@@ -68,7 +68,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const sections = useAppSelector((state) =>
         sectionsSelector.selectAll(state.sections)
     )
-    const getSections = userService.useGetSectionsQuery(undefined, {
+    const getSections = sectionService.useGetSectionsQuery(undefined, {
         skip: !auth.token,
     })
 

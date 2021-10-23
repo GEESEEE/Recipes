@@ -1,5 +1,4 @@
-import { api } from './base'
-import * as authService from './auth'
-import * as userService from './user'
-
-export { api, authService, userService }
+export { api } from './base'
+export * as authService from './auth'
+export * as userService from './user'
+export * as sectionService from './section'

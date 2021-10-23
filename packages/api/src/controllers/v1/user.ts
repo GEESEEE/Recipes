@@ -82,107 +82,6 @@ export default class UserController implements interfaces.Controller {
 
     // #endregion
 
-    // #region Sections
-
-    private async validateSection(
-        userId: number,
-        sectionId: number
-    ): Promise<SectionResult | ModifyError> {
-        const section = await this.sectionsService.getSection(sectionId)
-        if (typeof section === 'undefined') {
-            return {
-                id: sectionId,
-                statusCode: RequestError.NOT_FOUND,
-                statusMessage: 'Provided sectionId was not found',
-            }
-        }
-        if (section.userId !== userId) {
-            return {
-                id: sectionId,
-                statusCode: RequestError.FORBIDDEN,
-                statusMessage:
-                    'Provided section does not belong to the requesting user',
-            }
-        }
-        return section
-    }
-
-    @httpPost(
-        '/sections',
-        TYPES.PassportMiddleware,
-        ...UserController.validate('createSection'),
-        TYPES.ErrorMiddleware
-    )
-    public async createSection(
-        @request() req: Request,
-        @requestBody()
-        body: SectionCreate
-    ): Promise<SectionResult> {
-        const section: any = {
-            ...body,
-            userId: req.user?.id,
-        }
-        return (await this.sectionsService.createSections([section]))[0]
-    }
-
-    @httpGet(
-        '/sections',
-        TYPES.PassportMiddleware,
-        ...UserController.validate('getSections'),
-        TYPES.ErrorMiddleware
-    )
-    public async getSections(
-        @request() req: Request
-    ): Promise<SectionResult[]> {
-        return await this.sectionsService.getSectionsFromUser(
-            req.user?.id as number
-        )
-    }
-
-    @httpPut(
-        '/sections/:sectionId',
-        TYPES.PassportMiddleware,
-        ...UserController.validate('updateSection'),
-        TYPES.ErrorMiddleware
-    )
-    public async updateSection(
-        @request() req: Request,
-        @requestParam('sectionId') sectionId: number,
-        @requestBody()
-        body: WithoutId<SectionUpdate>
-    ): Promise<SectionResult | ModifyError> {
-        const validationResult = await this.validateSection(
-            req.user?.id as number,
-            sectionId
-        )
-        if ('statusCode' in validationResult) {
-            return validationResult
-        }
-        return await this.sectionsService.updateSection(validationResult, body)
-    }
-
-    @httpDelete(
-        '/sections/:sectionId',
-        TYPES.PassportMiddleware,
-        ...UserController.validate('deleteSection'),
-        TYPES.ErrorMiddleware
-    )
-    public async deleteSection(
-        @request() req: Request,
-        @requestParam('sectionId') sectionId: number
-    ): Promise<boolean | ModifyError> {
-        const validationResult = await this.validateSection(
-            req.user?.id as number,
-            sectionId
-        )
-        if ('statusCode' in validationResult) {
-            return validationResult
-        }
-        return await this.sectionsService.deleteSection(sectionId)
-    }
-
-    // //#endregion
-
     // #region validate
     private static validate(method: string): ValidationChain[] {
         switch (method) {
@@ -198,26 +97,6 @@ export default class UserController implements interfaces.Controller {
                     body('color').optional().isString(),
                     body('invertedColors').optional().isBoolean(),
                 ]
-
-            case 'createSection':
-                return [
-                    body('position').isInt().toInt(),
-                    body('name').exists().isString(),
-                    body('description').exists().isString(),
-                ]
-
-            case 'getSections':
-                return []
-            case 'updateSection':
-                return [
-                    param('sectionId').isInt().toInt(),
-                    body('position').optional().isInt(),
-                    body('name').optional().isString(),
-                    body('description').optional().isString(),
-                ]
-
-            case 'deleteSection':
-                return [param('sectionId').isInt().toInt()]
 
             default:
                 return []

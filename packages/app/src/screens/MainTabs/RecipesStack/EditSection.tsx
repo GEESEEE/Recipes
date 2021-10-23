@@ -9,7 +9,7 @@ import {
     SectionListItem,
 } from '@/components/molecules'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { userService, sectionsActions, sectionsSelector } from '@/redux'
+import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -38,14 +38,15 @@ function EditSectionScreen({
     const [sectionData, setSectionData] = React.useState<Section>(section)
 
     const [createSection, createSectionState] =
-        userService.useCreateSectionMutation()
+        sectionService.useCreateSectionMutation()
 
     const [updateSection, updateSectionState] =
-        userService.useUpdateSectionMutation()
+        sectionService.useUpdateSectionMutation()
 
     const handleSaveSection = React.useCallback(
         async (sectionData: Section): Promise<void> => {
             const createData: SectionCreate = {
+                position: -1,
                 name: sectionData.name,
                 description: sectionData.description,
             }
