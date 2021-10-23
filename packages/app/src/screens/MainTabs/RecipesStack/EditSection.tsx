@@ -45,7 +45,6 @@ function EditSectionScreen({
 
     const handleSaveSection = React.useCallback(
         async (sectionData: Section): Promise<void> => {
-            console.log('Creating Section', sectionData)
             const createData: SectionCreate = {
                 name: sectionData.name,
                 description: sectionData.description,

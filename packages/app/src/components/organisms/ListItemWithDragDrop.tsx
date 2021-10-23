@@ -33,10 +33,10 @@ type ListItemRecyclerViewProps<T extends ListItem, U> = {
 
 const itemLayout = {
     width,
-    height: listItemHeightMap(SectionListItem, 'm'),
+    height: 70,
 }
 
-const layoutProvider = new LayoutProvider(
+let layoutProvider = new LayoutProvider(
     () => ViewTypes.Item,
     (_, dim) => {
         dim.width = itemLayout.width
@@ -66,6 +66,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const [dragIndex, setDragIndex] = useState(-1)
     const topOffset = useHeaderHeight()
+    const [containerHeight, setContainerHeight] = useState(0)
     const [maxHeight, setMaxHeight] = useState(0)
 
     const [dragging, setDragging] = useToggle(false)
@@ -83,6 +84,24 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
+    React.useEffect(() => {
+        console.log('Updating value')
+        itemLayout.height = listItemHeightMap(Element, textSize)
+        layoutProvider = new LayoutProvider(
+            () => 0,
+            (_, dim) => {
+                dim.width = itemLayout.width
+                dim.height = itemLayout.height
+            }
+        )
+        setMaxHeight(containerHeight - itemLayout.height)
+    }, [Element, textSize, containerHeight])
+
+    function onContainerLayout(e: LayoutChangeEvent): void {
+        const layout = e.nativeEvent.layout
+        setContainerHeight(layout.height)
+    }
+
     function onScroll(e: ScrollEvent): void {
         const event = e.nativeEvent
         scrollOffset.value = event.contentOffset.y
@@ -95,6 +114,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }
 
     function start(posY: number): void {
+        console.log('start', posY)
         const index = toIndex(posY)
         setDragIndex(index)
         currentIndex.value = index
@@ -102,6 +122,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }
 
     function reset(): void {
+        console.log('reset')
         setPosY(0)
         setDragging(false)
         setDragIndex(-1)
@@ -110,6 +131,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }
 
     function move(posY: number): void {
+        console.log('moving', posY)
         if (posY < 100) {
             scrolling.value = true
             moveList(-25)
@@ -152,8 +174,9 @@ function ListItemRecyclerView<T extends ListItem, U>({
     function onGesture(e: GestureChangeEvent): void {
         const event = e.nativeEvent
         let pos = event.absoluteY - topOffset - itemLayout.height / 2
+        console.log('Ongesture', pos, event.absoluteY, maxHeight)
         pos = Math.max(0, Math.min(maxHeight, pos))
-
+        console.log('actual pos', pos)
         setPosY(pos)
         if (event.state === State.BEGAN) {
             start(pos)
@@ -172,11 +195,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
                 {...props}
             />
         )
-    }
-
-    function onContainerLayout(e: LayoutChangeEvent): void {
-        const layout = e.nativeEvent.layout
-        setMaxHeight(layout.height - itemLayout.height)
     }
 
     if (loading) {

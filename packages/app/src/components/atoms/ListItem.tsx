@@ -38,7 +38,6 @@ function ListItem({
                         <Icon
                             type={Icons.MyMaterialCommunityIcons}
                             name="drag-variant"
-                            color={theme.text}
                         />
                     </Animated.View>
                 </PanGestureHandler>
