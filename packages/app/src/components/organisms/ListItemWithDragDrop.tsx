@@ -14,7 +14,7 @@ import { SectionListItem } from '@/components/molecules'
 import { View } from '@/components/base'
 import { listItemHeightMap, ListItem } from '@/components/molecules'
 import { Loading4Dots } from '@/components/atoms'
-import { useAppSelector, useToggle } from '@/hooks'
+import { useAppSelector, useToggle, useUpdateEffect } from '@/hooks'
 import { GestureChangeEvent } from '@/types'
 
 const { width } = Dimensions.get('window')
@@ -78,6 +78,10 @@ function ListItemRecyclerView<T extends ListItem, U>({
     const [dataProvider, setDataProvider] = useState(
         dataProviderInstance.cloneWithRows(data)
     )
+
+    React.useEffect(() => {
+        setDataProvider(dataProviderInstance.cloneWithRows(data))
+    }, [data])
 
     function onScroll(e: ScrollEvent): void {
         const event = e.nativeEvent
@@ -182,7 +186,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     if (data.length > 0) {
         return (
             <Container onLayout={onContainerLayout}>
-                {/* {dragging ? (
+                {dragging ? (
                     <AnimatedView
                         style={{
                             top: posY,
@@ -194,7 +198,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
                             dataProvider.getDataForIndex(dragIndex)
                         )}
                     </AnimatedView>
-                ) : null} */}
+                ) : null}
 
                 <RecyclerListView
                     ref={listRef}

@@ -27,8 +27,6 @@ function ListItem({
             paddingVertical="s"
             paddingHorizontal="s"
             marginVertical="s"
-            onPress={onPress}
-            disabled={!onPress}
         >
             {onGesture ? (
                 <PanGestureHandler
@@ -38,14 +36,16 @@ function ListItem({
                 >
                     <Animated.View>
                         <Icon
-                            type={Icons.MyFeather}
-                            name="menu"
+                            type={Icons.MyMaterialCommunityIcons}
+                            name="drag-variant"
                             color={theme.text}
                         />
                     </Animated.View>
                 </PanGestureHandler>
             ) : null}
-            <ItemContainer>{children}</ItemContainer>
+            <ItemContainer onPress={onPress} disabled={!onPress}>
+                {children}
+            </ItemContainer>
             {items ? <DropdownMenu items={items} /> : null}
         </Container>
     )
@@ -53,13 +53,13 @@ function ListItem({
 
 export default ListItem
 
-const Container = styled(TouchableOpacity)`
+const Container = styled(View)`
     flex-direction: row;
     align-items: center;
     align-content: space-between;
     align-self: center;
 `
 
-const ItemContainer = styled(View)`
+const ItemContainer = styled(TouchableOpacity)`
     flex: 1;
 `

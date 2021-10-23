@@ -199,7 +199,7 @@ function DragDropTest(): JSX.Element {
 
     return (
         <Container onLayout={onContainerLayout}>
-            {dragging ? (
+            {scrolling.value ? (
                 <AnimatedView
                     style={{
                         top: posY,
