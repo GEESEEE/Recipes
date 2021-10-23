@@ -1,39 +1,25 @@
-import { body, param, ValidationChain } from 'express-validator'
+import { body, ValidationChain } from 'express-validator'
 import {
     controller,
-    httpDelete,
     httpGet,
-    httpPost,
     httpPut,
     interfaces,
     request,
     requestBody,
-    requestParam,
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import {
-    Theme,
-    ModifyError,
-    RequestError,
-    SettingsUpdate,
-    WithoutId,
-    SectionCreate,
-    SectionUpdate,
-} from '@recipes/api-types/v1'
+import { Theme, SettingsUpdate, WithoutId } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
-import { SectionService, UserService } from '@/services'
+import { UserService } from '@/services'
 import { BadRequestError } from '@/errors'
-import { SectionResult, SettingsResult, UserResult } from '@/types'
+import { SettingsResult, UserResult } from '@/types'
 
 const { TYPES } = constants
 
 @controller('/v1/users')
 export default class UserController implements interfaces.Controller {
     @inject(TYPES.UserService) private readonly userService!: UserService
-
-    @inject(TYPES.SectionService)
-    private readonly sectionsService!: SectionService
 
     @httpGet(
         '/',

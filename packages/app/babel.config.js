@@ -5,6 +5,7 @@ module.exports = function config(api) {
     const presets = ['babel-preset-expo']
 
     const plugins = [
+        ['@babel/plugin-proposal-export-namespace-from'],
         [
             'module:react-native-dotenv',
             {

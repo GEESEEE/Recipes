@@ -3838,6 +3838,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@recipes/app@workspace:packages/app"
   dependencies:
+    "@babel/plugin-proposal-export-namespace-from": ^7.14.5
     "@react-native-async-storage/async-storage": ~1.15.0
     "@react-native-community/hooks": ^2.6.0
     "@react-native-community/masked-view": 0.1.10

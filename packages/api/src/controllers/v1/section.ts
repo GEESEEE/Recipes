@@ -13,7 +13,6 @@ import {
 import { Request } from 'express'
 import { inject } from 'inversify'
 import {
-    Theme,
     ModifyError,
     RequestError,
     WithoutId,

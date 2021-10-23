@@ -9,7 +9,6 @@ import {
 import { TYPES } from '@/utils/constants'
 import { Section } from '@/entities'
 import { SectionResult } from '@/types'
-import section from '@/entities/section'
 
 @injectable()
 export default class SectionService {
