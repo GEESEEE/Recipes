@@ -9,6 +9,7 @@ import useForceUpdate from './force-update'
 import useDropdownRerender from './dropdown-rerender'
 
 export * from './header'
+export * from './search'
 export {
     usePosition,
     Position,

@@ -8,6 +8,7 @@ import {
     useAppDispatch,
     useAppSelector,
     useHeader,
+    useSearch,
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
@@ -51,18 +52,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         ],
     })
 
-    let dragDrop = true
-    const route = useRoute() as {
-        params?: { headerSearch: string }
-    }
-    let search = ''
-    if (
-        typeof route.params !== 'undefined' &&
-        route.params.headerSearch.length > 0
-    ) {
-        search = route.params.headerSearch
-        dragDrop = false
-    }
+    const search = useSearch()
 
     console.log('Seac', search)
 
@@ -96,7 +86,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 data={sections}
                 props={{}}
                 loading={getSections.isLoading}
-                dragDrop={dragDrop}
+                dragDrop
                 updateDatabase={updateSections}
             />
         </Container>
