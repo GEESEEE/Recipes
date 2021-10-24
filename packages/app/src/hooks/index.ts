@@ -5,11 +5,10 @@ import useTimeout from './timeout'
 import useUpdateEffect from './update-effect'
 import useDebounce from './debounce'
 import useAsync from './async'
-import usePrevious from './previous'
-import useArray from './array'
 import useForceUpdate from './force-update'
 import useDropdownRerender from './dropdown-rerender'
 
+export * from './header'
 export {
     usePosition,
     Position,
@@ -20,8 +19,6 @@ export {
     useUpdateEffect,
     useDebounce,
     useAsync,
-    usePrevious,
-    useArray,
     useForceUpdate,
     useDropdownRerender,
 }

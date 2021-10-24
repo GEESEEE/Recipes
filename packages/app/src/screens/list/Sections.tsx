@@ -4,7 +4,13 @@ import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
 import { useNavigationState, useRoute } from '@react-navigation/native'
 import { LoadingModal, LoginModal } from '@/screens/modals'
-import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
+import {
+    useAppDispatch,
+    useAppSelector,
+    useHeader,
+    useToggle,
+    useUpdateEffect,
+} from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService, sectionService } from '@/redux'
 import {
@@ -38,46 +44,34 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         retrieveToken()
     }, [])
 
-    // Header configuration
-    React.useLayoutEffect(() => {
-        const headerConfig: HeaderConfig = {
-            drawer: true,
-            search: true,
-            right: [
-                {
-                    type: Icons.MyFeather,
-                    name: 'plus',
-                    onPress: () => navigation.navigate('EditSection'),
-                },
-            ],
-        }
-        navigation.setOptions({
-            header: () => (
-                <HeaderComponent
-                    navigation={navigation}
-                    config={headerConfig}
-                />
-            ),
-        })
-    }, [navigation])
+    useHeader(navigation, {
+        drawer: true,
+        search: true,
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () => navigation.navigate('EditSection'),
+            },
+        ],
+    })
 
-    // Sections configuration
-
-    let listDragDrop = true
-    let search = ''
+    let dragDrop = true
     const route = useRoute() as {
         params?: { headerSearch: string }
     }
+    let search = ''
     if (
         typeof route.params !== 'undefined' &&
         route.params.headerSearch.length > 0
     ) {
-        listDragDrop = false
         search = route.params.headerSearch
+        dragDrop = false
     }
 
     console.log('Seac', search)
 
+    // Sections configuration
     async function setSections(sections: Section[]): Promise<void> {
         await dispatch(sectionsActions.setSections(sections))
     }
@@ -107,7 +101,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 data={sections}
                 props={{}}
                 loading={getSections.isLoading}
-                dragDrop={listDragDrop}
+                dragDrop={dragDrop}
                 updateDatabase={updateSections}
             />
         </Container>

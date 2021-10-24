@@ -41,15 +41,15 @@ type ListItemRecyclerViewProps<
     U extends Omit<ListItemBaseProps<T>, 'item' | 'onGesture'>
 > = {
     data: Array<T>
-    Element: (
-        props: U & { item: T; onGesture?: (e: GestureChangeEvent) => void }
-    ) => JSX.Element
     props: U
     loading?: boolean
     dragDrop?: boolean
     updateDatabase?: (
         items: Array<ListItem>
     ) => Promise<{ data: Array<T> } | { error: any }>
+    Element: (
+        props: U & { item: T; onGesture?: (e: GestureChangeEvent) => void }
+    ) => JSX.Element
 }
 
 function ListItemRecyclerView<T extends ListItem, U>({
