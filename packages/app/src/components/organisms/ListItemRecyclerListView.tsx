@@ -10,15 +10,12 @@ import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
+import { Optional } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
-import {
-    listItemHeightMap,
-    ListItem,
-    ListItemBaseProps,
-} from '@/components/molecules'
+import { listItemHeightMap } from '@/components/molecules'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector, useToggle } from '@/hooks'
-import { GestureChangeEvent } from '@/types'
+import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { utils } from '@/utils'
 import { sectionService } from '@/redux'
 
@@ -43,24 +40,27 @@ let layoutProvider = new LayoutProvider(
 
 type ListItemRecyclerViewProps<
     T extends ListItem,
-    U extends ListItemBaseProps<T>
+    U extends Omit<ListItemBaseProps<T>, 'item' | 'onGesture'>
 > = {
     data: Array<T>
-    Element: (props: U & { item: T }) => JSX.Element
-    props: Omit<U, 'item'>
+    Element: (
+        props: U & { item: T; onGesture?: (e: GestureChangeEvent) => void }
+    ) => JSX.Element
+    props: U
     loading?: boolean
     dragDrop?: boolean
+    updateDatabase?: (
+        items: Array<ListItem>
+    ) => Promise<{ data: Array<T> } | { error: any }>
 }
 
-function ListItemRecyclerView<
-    T extends ListItem,
-    U extends ListItemBaseProps<T>
->({
+function ListItemRecyclerView<T extends ListItem, U>({
     data,
     Element,
     props,
     loading,
     dragDrop,
+    updateDatabase,
 }: ListItemRecyclerViewProps<T, U>): JSX.Element {
     const { textSize } = useAppSelector((state) => state.settings)
 
@@ -118,8 +118,6 @@ function ListItemRecyclerView<
 
     const [currentData, setCurrentData] = React.useState(data)
     const [from, setFrom] = React.useState(-1)
-    const [updateSections, updateSectionsState] =
-        sectionService.useUpdateSectionsMutation()
 
     function start(posY: number): void {
         const index = toIndex(posY)
@@ -137,10 +135,10 @@ function ListItemRecyclerView<
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
-        updateDatabase(currentData, dataProvider.getAllData(), from, to)
+        updateData(currentData, dataProvider.getAllData(), from, to)
     }
 
-    async function updateDatabase(
+    async function updateData(
         oldOrder: Array<T>,
         newOrder: Array<T>,
         from: number,
@@ -157,7 +155,7 @@ function ListItemRecyclerView<
             end = from
         }
 
-        const updateObjects: Array<{ id: number; position: number }> = []
+        const updateObjects: Array<ListItem> = []
         for (let i = start; i <= end; i++) {
             updateObjects.push({
                 id: newOrder[i].id,
@@ -172,8 +170,9 @@ function ListItemRecyclerView<
             }
             return { ...item, ...update }
         })
-
-        await updateSections(updateObjects)
+        if (typeof updateDatabase !== 'undefined') {
+            await updateDatabase(updateObjects)
+        }
     }
 
     function move(posY: number): void {
@@ -235,8 +234,8 @@ function ListItemRecyclerView<
         return (
             <Element
                 onGesture={dragDrop ? onGesture : undefined}
-                {...(props as U)}
                 item={item}
+                {...props}
             />
         )
     }

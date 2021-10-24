@@ -1,16 +1,5 @@
 import { Typography } from '@/styles'
 
-export interface ListItem {
-    id: number
-    position: number
-}
-
-export interface ListItemBaseProps<T extends ListItem> {
-    item: T
-    dropdownItems?: (() => void | Promise<void>)[]
-    onGesture?: any
-}
-
 export function listItemHeightMap<T>(
     listItem: React.ComponentType<T>,
     textSize: Typography.TextSize

@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Section } from '@recipes/api-types/v1'
 import { useNavigation } from '@react-navigation/native'
-import { ListItemBaseProps } from './base'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 import { sectionsActions, sectionService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
+import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
     editable?: boolean

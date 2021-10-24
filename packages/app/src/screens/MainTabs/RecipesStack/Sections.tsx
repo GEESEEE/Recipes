@@ -78,6 +78,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }, [getSections.data])
 
+    const [updateSections] = sectionService.useUpdateSectionsMutation()
+
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
@@ -89,6 +91,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 props={{}}
                 loading={getSections.isLoading}
                 dragDrop
+                updateDatabase={updateSections}
             />
         </Container>
     )
