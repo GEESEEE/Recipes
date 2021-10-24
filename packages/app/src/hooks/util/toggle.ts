@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function useToggle(
+export function useToggle(
     defaultValue: boolean
 ): [boolean, (arg?: boolean) => void] {
     const [value, setValue] = useState(defaultValue)

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function useUpdateEffect(
+export function useUpdateEffect(
     callback: () => any,
     dependencies: any[]
 ): void {

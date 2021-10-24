@@ -1,6 +1,6 @@
 import React from 'react'
 import { useIsFocused } from '@react-navigation/native'
-import useDebounce from './debounce'
+import useDebounce from './util/debounce'
 
 export default function useDropdownRerender(
     condition: boolean,

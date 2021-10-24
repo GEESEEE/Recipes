@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-export default function useTimeout(
+export function useTimeout(
     callback: () => any,
     delay: number
 ): {
