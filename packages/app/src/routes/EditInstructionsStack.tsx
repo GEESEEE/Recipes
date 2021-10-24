@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import EditInstructionsScreen from './EditInstructions'
-import EditInstructionScreen from './EditInstruction'
+import { InstructionsScreen, EditInstructionScreen } from '@/screens'
+
 import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
@@ -18,7 +18,7 @@ function EditInstructionsStack(): JSX.Element {
         >
             <Stack.Screen
                 name="EditInstructions"
-                component={EditInstructionsScreen}
+                component={InstructionsScreen}
             />
 
             <Stack.Screen

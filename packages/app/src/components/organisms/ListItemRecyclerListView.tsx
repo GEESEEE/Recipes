@@ -10,14 +10,12 @@ import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
-import { Optional } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
 import { listItemHeightMap } from '@/components/molecules'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { utils } from '@/utils'
-import { sectionService } from '@/redux'
 
 const { width } = Dimensions.get('window')
 

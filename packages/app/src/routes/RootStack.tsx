@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
-import Popup from './Popup'
+import { PopupScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
@@ -27,7 +27,7 @@ function LoginStack(): JSX.Element {
 
             <Stack.Screen
                 name="Popup"
-                component={Popup}
+                component={PopupScreen}
                 options={{
                     cardStyle: { backgroundColor: 'rgba(0,0,0,0.4)' },
                     presentation: 'transparentModal',

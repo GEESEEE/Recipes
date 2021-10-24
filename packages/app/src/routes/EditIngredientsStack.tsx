@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import EditIngredientsScreen from './EditIngredients'
-import EditIngredientScreen from './EditIngredient'
+import { EditIngredientScreen, IngredientsScreen } from '@/screens'
+
 import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
@@ -18,7 +18,7 @@ function EditIngredientsStack(): JSX.Element {
         >
             <Stack.Screen
                 name="EditIngredients"
-                component={EditIngredientsScreen}
+                component={IngredientsScreen}
             />
 
             <Stack.Screen

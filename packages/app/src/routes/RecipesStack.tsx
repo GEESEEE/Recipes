@@ -1,8 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { EditRecipeTabs } from './EditRecipeTabs'
-import SectionsScreen from './Sections'
-import EditSectionScreen from './EditSection'
+import EditRecipeTabs from './EditRecipeTabs'
+import { SectionsScreen, EditSectionScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 

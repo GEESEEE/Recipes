@@ -19,11 +19,11 @@ function EditIngredientsScreen(): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <ListItemRecyclerView
+            {/* <ListItemRecyclerView
                 Element={IngredientListItem}
                 data={ingredients}
                 props={{ ingredients }}
-            />
+            /> */}
         </Container>
     )
 }

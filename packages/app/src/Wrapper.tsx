@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
-import { RootStack } from '@/screens'
+import { RootStack } from '@/routes'
 import { useAppSelector } from '@/hooks'
 
 function Wrapper(): JSX.Element {

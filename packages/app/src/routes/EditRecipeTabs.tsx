@@ -1,8 +1,8 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import EditRecipeScreen from './EditRecipe'
-import { EditInstructionsStack } from './EditInstructionsStack'
-import { EditIngredientsStack } from './EditIngredientsStack'
+import EditRecipeScreen from '../screens/edit/EditRecipe'
+import EditInstructionsStack from './EditInstructionsStack'
+import EditIngredientsStack from './EditIngredientsStack'
 import { TabComponent, TabConfig } from '@/components/molecules'
 
 const Tabs = createMaterialTopTabNavigator()

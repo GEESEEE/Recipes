@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import BrowseScreen from './Browse'
+import { BrowseScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 

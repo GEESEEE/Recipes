@@ -1,8 +1,8 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { BrowseStack } from './BrowseStack'
-import { RecipesStack } from './RecipesStack'
-import TestScreen from './Test'
+import RecipesStack from './RecipesStack'
+import BrowseStack from './BrowseStack'
+import { TestScreen } from '@/screens'
 import { TabComponent, TabConfig } from '@/components/molecules'
 
 const Tabs = createMaterialTopTabNavigator()
