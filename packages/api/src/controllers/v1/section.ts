@@ -34,7 +34,7 @@ export default class SectionController implements interfaces.Controller {
     private async validateSections(
         userId: number,
         sectionIds: number[]
-    ): Promise<Array<number | ModifyError>> {
+    ): Promise<Array<SectionResult | ModifyError>> {
         const sections = await this.sectionsService.getSectionsById(sectionIds)
 
         const res = sectionIds.map((id) => {
@@ -54,7 +54,7 @@ export default class SectionController implements interfaces.Controller {
                         'Provided section does not belong to the requesting user',
                 }
             }
-            return section.id
+            return section
         })
 
         return res
@@ -107,30 +107,6 @@ export default class SectionController implements interfaces.Controller {
     }
 
     @httpPut(
-        '/:sectionId',
-        TYPES.PassportMiddleware,
-        ...SectionController.validate('updateSection'),
-        TYPES.ErrorMiddleware
-    )
-    public async updateSection(
-        @request() req: Request,
-        @requestParam('sectionId') sectionId: number,
-        @requestBody()
-        body: WithoutId<SectionUpdate>
-    ): Promise<SectionResult | ModifyError> {
-        const validationResult = (
-            await this.validateSections(req.user?.id as number, [sectionId])
-        )[0]
-        if (typeof validationResult !== 'number') {
-            return this.validateOne(validationResult)
-        }
-        return await this.sectionsService.updateSection({
-            id: validationResult,
-            ...body,
-        })
-    }
-
-    @httpPut(
         '/bulk',
         TYPES.PassportMiddleware,
         ...SectionController.validate('updateSections'),
@@ -145,20 +121,51 @@ export default class SectionController implements interfaces.Controller {
             userId,
             body.map((section) => section.id)
         )
-        const validIds: number[] = []
+
+        const validSections: SectionResult[] = []
         const modifyErrors: ModifyError[] = []
         validationResults.forEach((result) => {
-            if (typeof result !== 'number') {
+            if ('statusCode' in result) {
                 modifyErrors.push(result)
             } else {
-                validIds.push(result)
+                validSections.push(result)
             }
         })
-        const updateObjects = body.filter((section) => section.id in validIds)
+
+        const updateObjects = validSections.map((section) => {
+            const updateObj = body.find(
+                (s) => s.id === section.id
+            ) as SectionUpdate
+            return { ...section, ...updateObj }
+        })
         const newSections = await this.sectionsService.updateSections(
             updateObjects
         )
         return [...newSections, ...modifyErrors]
+    }
+
+    @httpPut(
+        '/:sectionId',
+        TYPES.PassportMiddleware,
+        ...SectionController.validate('updateSection'),
+        TYPES.ErrorMiddleware
+    )
+    public async updateSection(
+        @request() req: Request,
+        @requestParam('sectionId') sectionId: number,
+        @requestBody()
+        body: WithoutId<SectionUpdate>
+    ): Promise<SectionResult | ModifyError> {
+        const validationResult = (
+            await this.validateSections(req.user?.id as number, [sectionId])
+        )[0]
+        if ('statusCode' in validationResult) {
+            return this.validateOne(validationResult)
+        }
+        return await this.sectionsService.updateSection({
+            ...validationResult,
+            ...body,
+        })
     }
 
     @httpDelete(
@@ -174,7 +181,7 @@ export default class SectionController implements interfaces.Controller {
         const validationResult = (
             await this.validateSections(req.user?.id as number, [sectionId])
         )[0]
-        if (typeof validationResult !== 'number') {
+        if ('statusCode' in validationResult) {
             return this.validateOne(validationResult)
         }
         return await this.sectionsService.deleteSection(sectionId)

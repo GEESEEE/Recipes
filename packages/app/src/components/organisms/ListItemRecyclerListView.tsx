@@ -20,6 +20,7 @@ import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent } from '@/types'
 import { utils } from '@/utils'
+import { sectionService } from '@/redux'
 
 const { width } = Dimensions.get('window')
 
@@ -115,19 +116,64 @@ function ListItemRecyclerView<
         return index
     }
 
+    const [currentData, setCurrentData] = React.useState(data)
+    const [from, setFrom] = React.useState(-1)
+    const [updateSections, updateSectionsState] =
+        sectionService.useUpdateSectionsMutation()
+
     function start(posY: number): void {
         const index = toIndex(posY)
         setDragIndex(index)
         currentIndex.value = index
         setDragging(true)
+        setCurrentData(new Array(...data))
+        setFrom(index)
     }
 
-    function reset(): void {
+    function reset(posY: number): void {
+        const to = toIndex(posY)
         setPosY(0)
         setDragging(false)
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
+        updateDatabase(currentData, dataProvider.getAllData(), from, to)
+    }
+
+    async function updateDatabase(
+        oldOrder: Array<T>,
+        newOrder: Array<T>,
+        from: number,
+        to: number
+    ): Promise<void> {
+        if (from === to) {
+            return
+        }
+
+        let start = from
+        let end = to
+        if (from > to) {
+            start = to
+            end = from
+        }
+
+        const updateObjects: Array<{ id: number; position: number }> = []
+        for (let i = start; i <= end; i++) {
+            updateObjects.push({
+                id: newOrder[i].id,
+                position: oldOrder[i].position,
+            })
+        }
+
+        data = data.map((item) => {
+            const update = updateObjects.find((obj) => obj.id === item.id)
+            if (typeof update === 'undefined') {
+                return item
+            }
+            return { ...item, ...update }
+        })
+
+        await updateSections(updateObjects)
     }
 
     function move(posY: number): void {
@@ -181,7 +227,7 @@ function ListItemRecyclerView<
         } else if (event.state === State.ACTIVE) {
             move(pos)
         } else {
-            reset()
+            reset(pos)
         }
     }
 

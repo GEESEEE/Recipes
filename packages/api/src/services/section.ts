@@ -1,11 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import {
-    fitToClass,
-    SectionCreate,
-    SectionUpdate,
-    WithoutId,
-} from '@recipes/api-types/v1'
+import { fitToClass, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { Section } from '@/entities'
 import { SectionResult } from '@/types'

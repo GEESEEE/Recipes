@@ -2,6 +2,7 @@ import { Typography } from '@/styles'
 
 export interface ListItem {
     id: number
+    position: number
 }
 
 export interface ListItemBaseProps<T extends ListItem> {
