@@ -2,22 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
-import { useNavigationState, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import { LoadingModal, LoginModal } from '@/screens/modals'
 import {
     useAppDispatch,
     useAppSelector,
     useHeader,
-    useToggle,
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService, sectionService } from '@/redux'
-import {
-    HeaderComponent,
-    HeaderConfig,
-    SectionListItem,
-} from '@/components/molecules'
+import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
 
