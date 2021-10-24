@@ -67,4 +67,6 @@ const InputFieldContainer = styled(View)`
     align-items: center;
 `
 
-const StyledTextInput = styled(TextInput)``
+const StyledTextInput = styled(TextInput)`
+    flex: 1;
+`

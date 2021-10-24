@@ -163,6 +163,7 @@ function LoginModal(): JSX.Element {
                 }
                 placeholder="Your Username or Email"
                 onChangeText={(text: string) => handleUsernameInputChange(text)}
+                error
                 errorMessage={
                     !data.isValidUsername
                         ? 'Invalid Username or Email'
@@ -190,6 +191,7 @@ function LoginModal(): JSX.Element {
                         color={theme.grey}
                     />
                 }
+                error
                 errorMessage={
                     !data.isValidPassword ? 'Invalid Password' : undefined
                 }

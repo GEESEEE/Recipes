@@ -180,6 +180,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             <TextInputWithIcons
                 onChangeText={(text: string) => handleUsernameInputChange(text)}
                 placeholder="Username"
+                error
                 errorMessage={
                     !data.isValidUsername ? 'Invalid Username' : undefined
                 }
@@ -189,6 +190,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             <TextInputWithIcons
                 onChangeText={(text: string) => handleEmailInputChange(text)}
                 placeholder="E-mail"
+                error
                 errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
             />
 
@@ -207,6 +209,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                         color={theme.grey}
                     />
                 }
+                error
                 errorMessage={
                     !data.isValidPassword1 ? 'Invalid Password' : undefined
                 }
@@ -219,6 +222,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                     handlePassword2InputChange(text)
                 }
                 placeholder="Password"
+                error
                 errorMessage={
                     !data.isValidPassword2
                         ? 'Invalid Password'

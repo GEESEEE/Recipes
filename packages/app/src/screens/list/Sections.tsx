@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
+import { useNavigationState, useRoute } from '@react-navigation/native'
 import { LoadingModal, LoginModal } from '@/screens/modals'
 import { useAppDispatch, useAppSelector, useUpdateEffect } from '@/hooks'
 import { View, Icons } from '@/components/base'
@@ -61,6 +62,22 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [navigation])
 
     // Sections configuration
+
+    let listDragDrop = true
+    let search = ''
+    const route = useRoute() as {
+        params?: { headerSearch: string }
+    }
+    if (
+        typeof route.params !== 'undefined' &&
+        route.params.headerSearch.length > 0
+    ) {
+        listDragDrop = false
+        search = route.params.headerSearch
+    }
+
+    console.log('Seac', search)
+
     async function setSections(sections: Section[]): Promise<void> {
         await dispatch(sectionsActions.setSections(sections))
     }
@@ -90,7 +107,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 data={sections}
                 props={{}}
                 loading={getSections.isLoading}
-                dragDrop
+                dragDrop={listDragDrop}
                 updateDatabase={updateSections}
             />
         </Container>

@@ -46,6 +46,15 @@ function HeaderComponent({
 
     const [search, toggleSearch] = useToggle(false)
 
+    function handleSearchToggle(): void {
+        navigation.setParams({ headerSearch: '' })
+        toggleSearch()
+    }
+
+    function onChangeText(text: string): void {
+        navigation.setParams({ headerSearch: text })
+    }
+
     const height = 40
     const insets = useSafeAreaInsets()
     const horizontalInsets = 4
@@ -92,12 +101,12 @@ function HeaderComponent({
                                 <HeaderIcon
                                     type={Icons.MyMaterialIcons}
                                     name="arrow-back"
-                                    onPress={() => toggleSearch()}
+                                    onPress={() => handleSearchToggle()}
                                     color={color}
                                     size="m"
                                 />
                             }
-                            onChangeText={() => console.log('asda')}
+                            onChangeText={(text: string) => onChangeText(text)}
                             placeholder="Search"
                             paddingVertical="s"
                             paddingHorizontal="s"
@@ -119,7 +128,7 @@ function HeaderComponent({
                     <HeaderIcon
                         type={Icons.MyMaterialIcons}
                         name="search"
-                        onPress={() => toggleSearch()}
+                        onPress={() => handleSearchToggle()}
                         color={color}
                     />
                 ) : null}
