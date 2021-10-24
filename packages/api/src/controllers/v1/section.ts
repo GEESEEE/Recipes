@@ -22,6 +22,7 @@ import {
 import { constants } from '@/utils'
 import { SectionService } from '@/services'
 import { SectionResult } from '@/types'
+import { ForbiddenError, NotFoundError } from '@/errors'
 
 const { TYPES } = constants
 
@@ -30,27 +31,47 @@ export default class SectionController implements interfaces.Controller {
     @inject(TYPES.SectionService)
     private readonly sectionsService!: SectionService
 
-    private async validateSection(
+    private async validateSections(
         userId: number,
-        sectionId: number
-    ): Promise<SectionResult | ModifyError> {
-        const section = await this.sectionsService.getSection(sectionId)
-        if (typeof section === 'undefined') {
-            return {
-                id: sectionId,
-                statusCode: RequestError.NOT_FOUND,
-                statusMessage: 'Provided sectionId was not found',
+        sectionIds: number[]
+    ): Promise<Array<number | ModifyError>> {
+        const sections = await this.sectionsService.getSectionsById(sectionIds)
+
+        const res = sectionIds.map((id) => {
+            const section = sections.find((s) => s.id === id)
+            if (typeof section === 'undefined') {
+                return {
+                    id,
+                    statusCode: RequestError.NOT_FOUND,
+                    statusMessage: 'Provided sectionId was not found',
+                }
             }
-        }
-        if (section.userId !== userId) {
-            return {
-                id: sectionId,
-                statusCode: RequestError.FORBIDDEN,
-                statusMessage:
-                    'Provided section does not belong to the requesting user',
+            if (section.userId !== userId) {
+                return {
+                    id,
+                    statusCode: RequestError.FORBIDDEN,
+                    statusMessage:
+                        'Provided section does not belong to the requesting user',
+                }
             }
+            return section.id
+        })
+
+        return res
+    }
+
+    private validateOne(error: ModifyError): ModifyError {
+        switch (error.statusCode) {
+            case RequestError.NOT_FOUND:
+                throw new NotFoundError(error.statusMessage)
+
+            case RequestError.FORBIDDEN:
+                throw new ForbiddenError(error.statusMessage)
+
+            default:
+                break
         }
-        return section
+        return error
     }
 
     @httpPost(
@@ -97,14 +118,47 @@ export default class SectionController implements interfaces.Controller {
         @requestBody()
         body: WithoutId<SectionUpdate>
     ): Promise<SectionResult | ModifyError> {
-        const validationResult = await this.validateSection(
-            req.user?.id as number,
-            sectionId
-        )
-        if ('statusCode' in validationResult) {
-            return validationResult
+        const validationResult = (
+            await this.validateSections(req.user?.id as number, [sectionId])
+        )[0]
+        if (typeof validationResult !== 'number') {
+            return this.validateOne(validationResult)
         }
-        return await this.sectionsService.updateSection(validationResult, body)
+        return await this.sectionsService.updateSection({
+            id: validationResult,
+            ...body,
+        })
+    }
+
+    @httpPut(
+        '/bulk',
+        TYPES.PassportMiddleware,
+        ...SectionController.validate('updateSections'),
+        TYPES.ErrorMiddleware
+    )
+    public async updateSections(
+        @request() req: Request,
+        @requestBody() body: Array<SectionUpdate>
+    ): Promise<Array<SectionResult | ModifyError>> {
+        const userId = req.user?.id as number
+        const validationResults = await this.validateSections(
+            userId,
+            body.map((section) => section.id)
+        )
+        const validIds: number[] = []
+        const modifyErrors: ModifyError[] = []
+        validationResults.forEach((result) => {
+            if (typeof result !== 'number') {
+                modifyErrors.push(result)
+            } else {
+                validIds.push(result)
+            }
+        })
+        const updateObjects = body.filter((section) => section.id in validIds)
+        const newSections = await this.sectionsService.updateSections(
+            updateObjects
+        )
+        return [...newSections, ...modifyErrors]
     }
 
     @httpDelete(
@@ -117,12 +171,11 @@ export default class SectionController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('sectionId') sectionId: number
     ): Promise<boolean | ModifyError> {
-        const validationResult = await this.validateSection(
-            req.user?.id as number,
-            sectionId
-        )
-        if ('statusCode' in validationResult) {
-            return validationResult
+        const validationResult = (
+            await this.validateSections(req.user?.id as number, [sectionId])
+        )[0]
+        if (typeof validationResult !== 'number') {
+            return this.validateOne(validationResult)
         }
         return await this.sectionsService.deleteSection(sectionId)
     }
@@ -141,12 +194,21 @@ export default class SectionController implements interfaces.Controller {
 
             case 'getSections':
                 return []
+
             case 'updateSection':
                 return [
                     param('sectionId').isInt().toInt(),
                     body('position').optional().isInt(),
                     body('name').optional().isString(),
                     body('description').optional().isString(),
+                ]
+
+            case 'updateSections':
+                return [
+                    body('*.id').isInt().toInt(),
+                    body('*.position').optional().isInt(),
+                    body('*.name').optional().isString(),
+                    body('*.description').optional().isString(),
                 ]
 
             case 'deleteSection':
