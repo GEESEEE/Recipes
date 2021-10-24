@@ -41,6 +41,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     React.useLayoutEffect(() => {
         const headerConfig: HeaderConfig = {
             drawer: true,
+            search: true,
             right: [
                 {
                     type: Icons.MyFeather,

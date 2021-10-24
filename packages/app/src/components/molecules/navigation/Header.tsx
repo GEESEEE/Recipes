@@ -2,10 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useNavigationState, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import { View, Text, Icons } from '@/components/base'
-import { Button, IconButton } from '@/components/atoms'
-import { useAppSelector } from '@/hooks'
+import { IconButton, TextInputWithIcons } from '@/components/atoms'
+import { useAppSelector, useToggle } from '@/hooks'
+import { Spacing } from '@/styles'
 
 type HeaderIcon = {
     type: any
@@ -14,8 +15,19 @@ type HeaderIcon = {
     loading?: boolean
 }
 
+type HeaderIconProps = HeaderIcon & {
+    color: string
+    size?: Spacing.Size
+}
+
+function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
+    size = size || 'l'
+    return <IconButton size={size} paddingHorizontal="n" {...rest} />
+}
+
 export type HeaderConfig = {
     drawer?: boolean
+    search?: boolean
     right: Array<HeaderIcon>
 }
 
@@ -32,12 +44,11 @@ function HeaderComponent({
     const route = useRoute()
     const routeName = route.name
 
-    // const navState = useNavigationState((state) => state)
-    // console.log('header satet', navState)
+    const [search, toggleSearch] = useToggle(false)
 
+    const height = 40
     const insets = useSafeAreaInsets()
-
-    const height = 35
+    const horizontalInsets = 4
 
     const backgroundColor = invertedColors ? theme.primary : theme.background
     const color = invertedColors ? theme.background : theme.primary
@@ -50,9 +61,9 @@ function HeaderComponent({
     }
 
     const safeContainerStyle = {
-        paddingTop: insets.top,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
+        marginTop: insets.top,
+        paddingLeft: insets.left + horizontalInsets,
+        paddingRight: insets.right + horizontalInsets,
     }
 
     return (
@@ -75,10 +86,43 @@ function HeaderComponent({
                 )}
 
                 <HeaderCenter>
-                    <Text type="SubHeader" color={color} paddingHorizontal="m">
-                        {routeName}
-                    </Text>
+                    {search ? (
+                        <TextInputWithIcons
+                            leftIcon={
+                                <HeaderIcon
+                                    type={Icons.MyMaterialIcons}
+                                    name="arrow-back"
+                                    onPress={() => toggleSearch()}
+                                    color={color}
+                                    size="m"
+                                />
+                            }
+                            onChangeText={() => console.log('asda')}
+                            placeholder="Search"
+                            paddingVertical="s"
+                            paddingHorizontal="s"
+                            marginHorizontal="s"
+                            width="n"
+                        />
+                    ) : (
+                        <Text
+                            type="SubHeader"
+                            color={color}
+                            paddingHorizontal="m"
+                        >
+                            {routeName}
+                        </Text>
+                    )}
                 </HeaderCenter>
+
+                {config.search && !search ? (
+                    <HeaderIcon
+                        type={Icons.MyMaterialIcons}
+                        name="search"
+                        onPress={() => toggleSearch()}
+                        color={color}
+                    />
+                ) : null}
                 {config.right.map((icon) => {
                     return (
                         <HeaderIcon
@@ -110,15 +154,3 @@ const SafeContainer = styled(View)`
 const HeaderCenter = styled(View)`
     flex: 1;
 `
-
-type HeaderIconProps = {
-    type: any
-    name: string
-    onPress: () => void
-    color: string
-    loading?: boolean
-}
-
-function HeaderIcon({ ...rest }: HeaderIconProps): JSX.Element {
-    return <IconButton size="l" paddingHorizontal="s" {...rest} />
-}
