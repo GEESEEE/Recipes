@@ -23,6 +23,14 @@ const sectionApi = api.injectEndpoints({
             }),
         }),
 
+        updateSections: builder.mutation<Array<Section>, Array<SectionUpdate>>({
+            query: (body) => ({
+                url: `/sections/bulk`,
+                method: 'PUT',
+                body,
+            }),
+        }),
+
         deleteSection: builder.mutation<boolean, number>({
             query: (id) => ({
                 url: `/sections/${id}`,
@@ -36,5 +44,6 @@ export const {
     useCreateSectionMutation,
     useGetSectionsQuery,
     useUpdateSectionMutation,
+    useUpdateSectionsMutation,
     useDeleteSectionMutation,
 } = sectionApi
