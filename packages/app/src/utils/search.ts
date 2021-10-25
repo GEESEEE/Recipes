@@ -1,19 +1,16 @@
-import { Copy, ObjectKeys, Recipe, StringKeys } from '@recipes/api-types/v1'
-
-type SearchField<T> = StringKeys<T>
-
-type Rec = Copy<SearchField<Recipe>>
+import { StringKeys, StringLeaves } from '@recipes/api-types/v1'
 
 export function applySearch<T>(
     items: T[],
     search: string[],
-    properties: string[]
+    properties: StringLeaves<T>[]
 ): T[] {
     if (search.length > 0) {
         const queries = search.map((s) => s.toLowerCase())
 
         return items.filter((item) => {
             return properties.some((property) => {
+                // @ts-ignore
                 const props = property.split('.')
 
                 if (typeof item === 'object') {

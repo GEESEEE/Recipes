@@ -20,8 +20,6 @@ const recipes = [
     ]),
 ]
 
-type Rec = Copy<Recipe>
-
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
@@ -29,9 +27,9 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const search = useSearch()
 
-    const filtered = applySearch(
+    const filtered = applySearch<Recipe>(
         recipes,
-        ['kip', 'sperziebonen'],
+        [search],
         ['name', 'description', 'recipeIngredients.ingredient.name']
     )
 

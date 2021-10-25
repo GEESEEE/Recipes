@@ -74,7 +74,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         sectionsSelector.selectAll(state.sections)
     )
     const search = useSearch()
-    const filteredSections = applySearch(
+    const filteredSections = applySearch<Section>(
         sections,
         [search],
         ['name', 'description']

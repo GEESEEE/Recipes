@@ -7,7 +7,6 @@ export type Class<T> = new (...args: any[]) => T
 export type Instance = { [key: string]: any }
 
 // Helper Types
-
 export type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X
     ? 1
     : 2) extends <T>() => T extends Y ? 1 : 2
@@ -19,6 +18,18 @@ export type IfIncludes<X, Y, A = X, B = never> = (<T>() => X extends T
     : 2) extends <T>() => Y extends T ? 1 : 2
     ? A
     : B
+
+export type Join<K, P> = K extends string | number
+    ? P extends string | number
+        ? `${K}${'' extends P ? '' : '' extends K ? '' : '.'}${P}`
+        : never
+    : never
+
+export type JoinWithoutNumber<K, P> = K extends string | number
+    ? P extends string
+        ? `${K}${'' extends P ? '' : '' extends K ? '' : '.'}${P}`
+        : never
+    : never
 
 // Key Types
 export type ReadonlyKeys<T> = {
@@ -48,7 +59,27 @@ export type ObjectKeys<T> = {
     >
 }[keyof T]
 
-export type StringKeys<T> = keyof T extends string ? keyof T : string
+export type StringKeys<T> = keyof T extends string ? keyof T : never
+
+export type Paths<T> = T extends object
+    ? {
+          [K in keyof T]-?: K extends string
+              ? JoinWithoutNumber<K, Paths<T[K]>>
+              : K extends number
+              ? JoinWithoutNumber<'', Paths<T[K]>>
+              : never
+      }[keyof T]
+    : ''
+
+export type StringLeaves<T> = T extends object
+    ? {
+          [K in keyof T]-?: T[K] extends object | string
+              ? K extends number
+                  ? JoinWithoutNumber<'', StringLeaves<T[K]>>
+                  : JoinWithoutNumber<K, StringLeaves<T[K]>>
+              : never
+      }[keyof T]
+    : ''
 
 // Just Types
 export type JustReadonly<T> = {
