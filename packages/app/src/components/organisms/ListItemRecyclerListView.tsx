@@ -11,11 +11,10 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
 import { View } from '@/components/base'
-import { listItemHeightMap } from '@/components/molecules'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
-import { utils } from '@/utils'
+import { utils, listItemUtils } from '@/utils'
 
 const { width } = Dimensions.get('window')
 
@@ -87,7 +86,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }, [data])
 
     React.useEffect(() => {
-        itemLayout.height = listItemHeightMap(Element, textSize)
+        itemLayout.height = listItemUtils.heightMap(Element, textSize)
         layoutProvider = new LayoutProvider(
             () => 0,
             (_, dim) => {

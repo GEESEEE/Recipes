@@ -58,16 +58,20 @@ export default class Recipe {
     @JoinColumn({ name: 'section_id' })
     public section!: Section
 
+    @Expose({ name: 'created_at' })
+    @Column('timestamp with time zone', { name: 'created_at' })
+    public createdAt!: Date
+
+    @Expose()
+    @Column()
+    public position!: number
+
     @Expose({ name: 'published_at' })
     @Column('timestamp with time zone', {
         name: 'published_at',
         nullable: true,
     })
     public publishedAt!: Date | null
-
-    @Expose({ name: 'created_at' })
-    @Column('timestamp with time zone', { name: 'created_at' })
-    public createdAt!: Date
 
     @Expose({ name: 'copy_of' })
     @Column({ type: 'int', name: 'copy_of', nullable: true })

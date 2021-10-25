@@ -9,6 +9,7 @@ define(Recipe, (faker: typeof Faker) => {
     recipe.peopleCount = faker.datatype.number(5)
     recipe.prepareTime = faker.datatype.number(60)
     recipe.createdAt = faker.date.recent()
+    recipe.position = faker.datatype.number(999999)
 
     const x = faker.datatype.number(1)
     if (x > 0) {

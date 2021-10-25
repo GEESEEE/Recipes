@@ -1,6 +1,6 @@
 import { Typography } from '@/styles'
 
-export function listItemHeightMap<T>(
+export function heightMap<T>(
     listItem: React.ComponentType<T>,
     textSize: Typography.TextSize
 ): number {

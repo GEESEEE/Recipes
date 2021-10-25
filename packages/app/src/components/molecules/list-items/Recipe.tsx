@@ -1,21 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Section } from '@recipes/api-types/v1'
+import { Recipe } from '@recipes/api-types/v1'
 import { useNavigation } from '@react-navigation/native'
-import { View } from '@/components/base'
+import { Icon, Icons, View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 import { sectionsActions, sectionService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
-interface SectionListItemProps extends ListItemBaseProps<Section> {
+interface SectionListItemProps extends ListItemBaseProps<Recipe> {
     editable?: boolean
     handleSectionNameChange?: (text: string) => void
     handleSectionDescriptionChange?: (text: string) => void
 }
 
-function SectionListItem({
+function RecipeListItem({
     item,
     dropdownItems,
     onGesture,
@@ -79,14 +79,21 @@ function SectionListItem({
                     numberOfLines={2}
                     placeholder="Description"
                 />
+                <PropertyRow>
+                    <Icon type={Icons.MyFeather} name="menu" />
+                </PropertyRow>
             </Container>
         </ListItem>
     )
 }
 
-export default SectionListItem
+export default RecipeListItem
 
 const Container = styled(View)`
     flex-direction: column;
     justify-content: center;
+`
+const PropertyRow = styled(View)`
+    flex-direction: row;
+    align-items: center;
 `

@@ -1,3 +1,5 @@
+import { GestureChangeEvent } from './events'
+
 export interface ListItem {
     id: number
     position: number
@@ -6,5 +8,5 @@ export interface ListItem {
 export interface ListItemBaseProps<T extends ListItem> {
     item: T
     dropdownItems?: (() => void | Promise<void>)[]
-    onGesture?: any
+    onGesture?: (e: GestureChangeEvent) => void
 }

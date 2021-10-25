@@ -10,8 +10,9 @@ export class Recipe {
         peopleCount = -1,
         recipeIngredients: RecipeIngredient[] = [],
         instructions: Instruction[] = [],
-        publishedAt: Date | null = null,
         createdAt = new Date(),
+        position = -1,
+        publishedAt: Date | null = null,
         copyOf: number | null = null
     ) {
         this.id = id
@@ -21,8 +22,9 @@ export class Recipe {
         this.peopleCount = peopleCount
         this.recipeIngredients = recipeIngredients
         this.instructions = instructions
-        this.publishedAt = publishedAt
         this.createdAt = createdAt
+        this.position = position
+        this.publishedAt = publishedAt
         this.copyOf = copyOf
     }
 
@@ -35,7 +37,9 @@ export class Recipe {
     public peopleCount!: number
     public recipeIngredients!: RecipeIngredient[]
     public instructions!: Instruction[]
-    public publishedAt!: Date | null
     public createdAt!: Date
+    public position!: number
+
+    public publishedAt!: Date | null
     public copyOf!: number | null
 }

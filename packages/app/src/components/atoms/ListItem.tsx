@@ -5,11 +5,12 @@ import Animated from 'react-native-reanimated'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import { View, TouchableOpacity, Icon, Icons } from '@/components/base'
 import { useAppSelector } from '@/hooks'
+import { GestureChangeEvent } from '@/types'
 
 type ListItemProps = {
     items?: DropdownItem[]
     onPress?: () => void
-    onGesture?: any
+    onGesture?: (e: GestureChangeEvent) => void
 }
 
 function ListItem({
