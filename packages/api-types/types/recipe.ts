@@ -12,6 +12,7 @@ export class Recipe {
         instructions: Instruction[] = [],
         createdAt = new Date(),
         position = -1,
+
         publishedAt: Date | null = null,
         copyOf: number | null = null
     ) {
@@ -24,6 +25,7 @@ export class Recipe {
         this.instructions = instructions
         this.createdAt = createdAt
         this.position = position
+
         this.publishedAt = publishedAt
         this.copyOf = copyOf
     }

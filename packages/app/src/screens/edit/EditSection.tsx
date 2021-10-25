@@ -8,8 +8,13 @@ import {
     HeaderConfig,
     SectionListItem,
 } from '@/components/molecules'
-import { useAppDispatch, useAppSelector } from '@/hooks'
-import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
+import { useAppDispatch, useAppSelector, useHeader } from '@/hooks'
+import {
+    sectionsActions,
+    sectionsSelector,
+    sectionService,
+    recipeService,
+} from '@/redux'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -87,41 +92,24 @@ function EditSectionScreen({
     }
 
     // Header configuration
-    React.useLayoutEffect(() => {
-        const headerConfig: HeaderConfig = {
-            right: [
-                {
-                    type: Icons.MyFeather,
-                    name: 'save',
-                    onPress: () =>
-                        editing
-                            ? handleEditSection(sectionData)
-                            : handleSaveSection(sectionData),
-                    loading:
-                        createSectionState.isLoading ||
-                        updateSectionState.isLoading,
-                },
-            ],
-        }
+    useHeader(navigation, {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'save',
+                onPress: () =>
+                    editing
+                        ? handleEditSection(sectionData)
+                        : handleSaveSection(sectionData),
+                loading:
+                    createSectionState.isLoading ||
+                    updateSectionState.isLoading,
+            },
+        ],
+    })
 
-        navigation.setOptions({
-            header: () => (
-                <HeaderComponent
-                    navigation={navigation}
-                    config={headerConfig}
-                />
-            ),
-        })
-    }, [
-        navigation,
-        sectionData,
-        createSectionState.isLoading,
-        updateSectionState.isLoading,
-        handleSaveSection,
-        handleEditSection,
-        editing,
-    ])
-
+    const recipes = recipeService.useGetRecipesBySectionIdQuery(1)
+    console.log('Recipes', recipes)
     return (
         <Container>
             <SectionListItem

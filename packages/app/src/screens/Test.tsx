@@ -1,47 +1,14 @@
 import React, { useRef } from 'react'
 import { Animated, Keyboard, TextInput as RNT } from 'react-native'
 import styled from 'styled-components'
-import LottieView from 'lottie-react-native'
-import Feather from 'react-native-vector-icons/Feather'
-import {
-    IfEquals,
-    Ingredient,
-    ReadonlyKeys,
-    Recipe,
-    RecipeIngredient,
-    User,
-} from '@recipes/api-types/v1'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { settingsActions } from '@/redux'
-import { ButtonFilled } from '@/components/user-input/Buttons'
-import {
-    useAppDispatch,
-    useAppSelector,
-    useHeader,
-    useSearch,
-    useToggle,
-} from '@/hooks'
+import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { applySearch, screenUtils } from '@/utils'
-import {
-    View,
-    Text,
-    TextInput,
-    Icons,
-    Toggle,
-    Icon,
-    TouchableOpacity,
-} from '@/components/base'
-import {
-    Error,
-    IconButton,
-    Button,
-    DropdownMenu,
-    Editable,
-    PressableTextWithElement,
-} from '@/components/atoms'
-import { InstructionListItem } from '@/components/molecules'
-import { useUpdateSettingsMutation } from '@/redux/services/user'
-import DragDropTest from '@/components/organisms/DragAndDropTest'
+import { View, Text, TextInput } from '@/components/base'
+import { Error, Button } from '@/components/atoms'
+
+import { userService, recipeService } from '@/redux'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -49,7 +16,7 @@ const smallLogo = 0.5
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     // const { recipes } = useAppSelector((state) => state.myRecipes)
 
-    const [updateSettings] = useUpdateSettingsMutation()
+    const [updateSettings] = userService.useUpdateSettingsMutation()
 
     const { settings } = useAppSelector((state) => state)
 

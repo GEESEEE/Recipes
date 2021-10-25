@@ -60,16 +60,18 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
 }
 
 export interface RecipeScopeArgs {
-    authorId?: number
+    sectionId?: number
     searchQuery?: string[]
 }
+
+export type RecipeScopes = keyof RecipeQueryBuilder['scopes']
 
 export type RecipeSortQuery = 'preparetime' | 'ingredientcount' | 'publishtime'
 
 export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
     public override readonly scopes = {
         published: null,
-        author: 'authorId',
+        section: 'sectionId',
         search: 'searchQuery',
     }
 
@@ -82,7 +84,7 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
         instructioncount: 'COUNT(instruction.id)',
     }
 
-    private readonly authorId?: number
+    private readonly sectionId?: number
     private readonly searchQuery?: string[]
 
     private makeBaseQuery(): this {
@@ -109,10 +111,9 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
     }
 
     public finish(): this {
-        return this.addOrderBy('instruction.position', 'ASC').addOrderBy(
-            'recipe_ingredient.position',
-            'ASC'
-        )
+        return this.addOrderBy('instruction.position', 'ASC')
+            .addOrderBy('recipe_ingredient.position', 'ASC')
+            .addOrderBy('recipe.position', 'ASC')
     }
 
     public get default(): this {
@@ -123,9 +124,9 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
         return this.makeBaseQuery().andWhere('recipe.published_at IS NOT NULL')
     }
 
-    public get author(): this {
-        return this.makeBaseQuery().andWhere('recipe.authorId = :authorId', {
-            authorId: this.authorId,
+    public get section(): this {
+        return this.makeBaseQuery().andWhere('recipe.sectionId = :sectionId', {
+            sectionId: this.sectionId,
         })
     }
 

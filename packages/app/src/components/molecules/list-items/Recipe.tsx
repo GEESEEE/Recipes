@@ -30,32 +30,32 @@ function RecipeListItem({
 
     const [deleteSection] = sectionService.useDeleteSectionMutation()
 
-    function logSect(): void {
-        console.log('Section', item.name)
+    function logRecip(): void {
+        console.log('Recipe', item.name)
     }
 
-    async function deleteSect(): Promise<void> {
+    async function deleteRecip(): Promise<void> {
         const res = await deleteSection(item.id)
         if ('data' in res) {
             dispatch(sectionsActions.removeSection(item.id))
         }
     }
 
-    function editSect(): void {
-        navigation.navigate('EditSection', { id: item.id })
+    function editRecip(): void {
+        navigation.navigate('EditRecipeTabs', { id: item.id })
     }
 
     function onPress(): void {
         console.log(`OnPress ${item.name}, navigate or somethings`)
     }
 
-    dropdownItems.push(logSect, editSect, deleteSect)
+    dropdownItems.push(logRecip, editRecip, deleteRecip)
 
     return (
         <ListItem
             items={
                 !editable
-                    ? utils.createDropDownItems(dropdownItems, 'sect')
+                    ? utils.createDropDownItems(dropdownItems, 'recip')
                     : undefined
             }
             onPress={onPress}

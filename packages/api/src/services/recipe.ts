@@ -4,7 +4,7 @@ import { PaginationObject } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
-import { RecipeScopeArgs } from '@/repositories/recipe'
+import { RecipeScopeArgs, RecipeScopes } from '@/repositories/recipe'
 import { UnprocessableError } from '@/errors'
 import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
 
@@ -88,7 +88,7 @@ export default class RecipeService {
     }
 
     public async getRecipesByScopes(
-        scopes: string[],
+        scopes: RecipeScopes[],
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
     ): Promise<PaginationObject> {

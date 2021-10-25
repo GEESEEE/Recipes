@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
-import { sectionsActions, sectionService } from '@/redux'
+import { sectionsActions, sectionService, recipeService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
