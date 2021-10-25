@@ -62,8 +62,11 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         this.repository = repository
         if (typeof args !== 'undefined') {
             for (const entry of Object.entries(args)) {
+                console.log('Creating query builder, rag:', entry)
                 // @ts-expect-error
                 this[entry[0]] = entry[1]
+                // @ts-expect-error
+                console.log('After', entry[0], this[entry[0]])
             }
         }
     }
@@ -89,9 +92,15 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
         for (const scope of scopes) {
             const arg = this.scopes[scope]
+            console.log(
+                'Checking args',
+                scope,
+                arg,
+                this[arg as string as keyof this]
+            )
             // @ts-expect-error
             if (arg !== null && typeof this[arg] === 'undefined') {
-                invalid.push(arg)
+                invalid.push(scope)
             }
         }
 

@@ -3819,7 +3819,7 @@ __metadata:
     express-validator: ^6.10.1
     helmet: ^4.6.0
     hpp: ^0.2.3
-    inversify: ^6.0.1
+    inversify: ^5.1.1
     inversify-express-utils: ^6.3.2
     inversify-inject-decorators: ^3.1.0
     ioredis: ^4.27.9
@@ -12296,6 +12296,13 @@ fsevents@~2.3.2:
   version: 3.1.0
   resolution: "inversify-inject-decorators@npm:3.1.0"
   checksum: 61fd6948c0914ec1c6f10a87903c949d3987903fdb2d23952a1257223f192d0386862974568044dd73d2fcf4f0f37d59eb4dc83124b1d143ed4852266e1585b6
+  languageName: node
+  linkType: hard
+
+"inversify@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "inversify@npm:5.1.1"
+  checksum: 22d201647b572024333c58bed8ac929da4724a4c0c8a261ecc261a180afcb899359013fafb8d87ce4d606000149fb4590dc5c8278b9feb544a5f69a6159e4ffb
   languageName: node
   linkType: hard
 

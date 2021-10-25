@@ -92,8 +92,9 @@ export default class RecipeService {
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
     ): Promise<PaginationObject> {
+        console.log('Recipes by scopes', scopes, args)
         let qb = this.recipeRepository.queryBuilder(args)
-
+        console.log('qb', qb)
         if (!qb.hasScopes(scopes)) {
             throw new UnprocessableError('Invalid Scope')
         }

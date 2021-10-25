@@ -1,4 +1,4 @@
-import { ValidationChain } from 'express-validator'
+import { param, ValidationChain } from 'express-validator'
 import {
     controller,
     httpGet,
@@ -31,7 +31,12 @@ export default class RecipeController implements interfaces.Controller {
         @request() req: Request,
         @requestParam('sectionId') sectionId: number
     ): Promise<RecipeResult> {
-        console.log('Getting recipes by sectionid', sectionId, req.user?.name)
+        console.log(
+            'Getting recipes by sectionid',
+            sectionId,
+            typeof sectionId,
+            req.user?.name
+        )
         const recipes = await this.recipeService.getRecipesByScopes(
             ['section'],
             { sectionId },
@@ -43,9 +48,10 @@ export default class RecipeController implements interfaces.Controller {
 
     // #region validate
     private static validate(method: string): ValidationChain[] {
+        const base = [param('sectionId').isInt().toInt()]
         switch (method) {
             case 'getRecipesBySectionId':
-                return []
+                return [...base]
 
             default:
                 return []
