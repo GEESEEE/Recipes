@@ -13,6 +13,8 @@ export type DropdownItem = {
     onPress: (e?: TouchableEvent) => void | Promise<void>
 }
 
+const { height } = Dimensions.get('window')
+
 type DropdownMenuProps = {
     items: DropdownItem[]
     iconOffset?: Spacing.Size
@@ -29,17 +31,12 @@ function DropdownMenu({
     const { theme, textSize } = useAppSelector((state) => state.settings)
     const [open, toggle] = useToggle(false)
 
-    const [pos, setPos] = React.useState<Position>({
+    const [position, setPosition] = React.useState<Position>({
         pageX: 0,
         pageY: 0,
         locationX: 0,
         locationY: 0,
     })
-
-    function onPress(e: any): void {
-        setPos(e.nativeEvent)
-        toggle()
-    }
 
     iconSize = iconSize || 'm'
     iconColor = iconColor || theme.primary
@@ -59,44 +56,18 @@ function DropdownMenu({
         }
     }
 
-    return (
-        <View style={containerStyle}>
-            <IconButton
-                type={Icons.MyMaterialCommunityIcons}
-                name="dots-vertical"
-                onPress={(e?: TouchableEvent) => onPress(e)}
-                color={iconColor}
-                size={iconSize}
-            />
-            {open ? (
-                <Menu
-                    position={pos}
-                    items={items}
-                    toggle={() => toggle()}
-                    offset={offset}
-                />
-            ) : null}
-        </View>
-    )
-}
-
-export default DropdownMenu
-
-type MenuProps = {
-    items: DropdownItem[]
-    position: Position
-    offset: number
-    toggle: () => void
-}
-
-const { height } = Dimensions.get('window')
-
-const Menu = ({ items, position, offset, toggle }: MenuProps): JSX.Element => {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
-
     const width = 100
     const menuHeight =
         (16 + Typography.lineHeight('Text', textSize)) * items.length
+
+    function onOpen(e: any): void {
+        setPosition(e.nativeEvent)
+        toggle(true)
+    }
+
+    function onClose(): void {
+        toggle(false)
+    }
 
     const pageX = position.pageX - position.locationX
     const pageY = position.pageY - position.locationY
@@ -116,38 +87,57 @@ const Menu = ({ items, position, offset, toggle }: MenuProps): JSX.Element => {
     }
 
     return (
-        <Modal animationType="none">
-            <Return onPress={() => toggle()} />
+        <View style={containerStyle}>
+            <IconButton
+                type={Icons.MyMaterialCommunityIcons}
+                name="dots-vertical"
+                onPress={(e?: TouchableEvent) => onOpen(e)}
+                color={iconColor}
+                size={iconSize}
+            />
+            {open ? (
+                <Modal animationType="none">
+                    <Return onPress={() => onClose()} />
 
-            <View
-                borderRadius="s"
-                backgroundColor={theme.backgroundVariant}
-                style={menuStyle}
-            >
-                {items.map((item) => {
-                    const separator = items.indexOf(item) !== items.length - 1
-                    return (
-                        <View key={item.id}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    item.onPress()
-                                    toggle()
-                                }}
-                            >
-                                <Text paddingHorizontal="m" marginVertical="m">
-                                    {item.text}
-                                </Text>
-                            </TouchableOpacity>
-                            {separator ? (
-                                <Separator backgroundColor={theme.text} />
-                            ) : null}
-                        </View>
-                    )
-                })}
-            </View>
-        </Modal>
+                    <View
+                        borderRadius="s"
+                        backgroundColor={theme.backgroundVariant}
+                        style={menuStyle}
+                    >
+                        {items.map((item) => {
+                            const separator =
+                                items.indexOf(item) !== items.length - 1
+                            return (
+                                <View key={item.id}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            item.onPress()
+                                            onClose()
+                                        }}
+                                    >
+                                        <Text
+                                            paddingHorizontal="m"
+                                            marginVertical="m"
+                                        >
+                                            {item.text}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    {separator ? (
+                                        <Separator
+                                            backgroundColor={theme.text}
+                                        />
+                                    ) : null}
+                                </View>
+                            )
+                        })}
+                    </View>
+                </Modal>
+            ) : null}
+        </View>
     )
 }
+
+export default DropdownMenu
 
 const Return = styled(TouchableOpacity)`
     flex: 1;

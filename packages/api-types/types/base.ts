@@ -48,6 +48,8 @@ export type ObjectKeys<T> = {
     >
 }[keyof T]
 
+export type StringKeys<T> = keyof T extends string ? keyof T : string
+
 // Just Types
 export type JustReadonly<T> = {
     readonly [P in ReadonlyKeys<T>]: T[P]

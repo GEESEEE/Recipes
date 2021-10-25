@@ -16,6 +16,7 @@ import { authActions, authService, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
+import { applySearch } from '@/utils'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -52,18 +53,11 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         ],
     })
 
-    const search = useSearch()
-
-    console.log('Seac', search)
-
     // Sections configuration
     async function setSections(sections: Section[]): Promise<void> {
         await dispatch(sectionsActions.setSections(sections))
     }
 
-    const sections = useAppSelector((state) =>
-        sectionsSelector.selectAll(state.sections)
-    )
     const getSections = sectionService.useGetSectionsQuery(undefined, {
         skip: !auth.token,
     })
@@ -76,6 +70,16 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [updateSections] = sectionService.useUpdateSectionsMutation()
 
+    const sections = useAppSelector((state) =>
+        sectionsSelector.selectAll(state.sections)
+    )
+    const search = useSearch()
+    const filteredSections = applySearch(
+        sections,
+        [search],
+        ['name', 'description']
+    )
+
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
@@ -83,7 +87,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {auth.user.id < 0 ? <LoginModal /> : null}
             <ListItemRecyclerView
                 Element={SectionListItem}
-                data={sections}
+                data={filteredSections}
                 props={{}}
                 loading={getSections.isLoading}
                 dragDrop

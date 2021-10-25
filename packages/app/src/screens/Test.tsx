@@ -3,12 +3,25 @@ import { Animated, Keyboard, TextInput as RNT } from 'react-native'
 import styled from 'styled-components'
 import LottieView from 'lottie-react-native'
 import Feather from 'react-native-vector-icons/Feather'
-import { IfEquals, ReadonlyKeys, User } from '@recipes/api-types/v1'
+import {
+    IfEquals,
+    Ingredient,
+    ReadonlyKeys,
+    Recipe,
+    RecipeIngredient,
+    User,
+} from '@recipes/api-types/v1'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { settingsActions } from '@/redux'
 import { ButtonFilled } from '@/components/user-input/Buttons'
-import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { screenUtils } from '@/utils'
+import {
+    useAppDispatch,
+    useAppSelector,
+    useHeader,
+    useSearch,
+    useToggle,
+} from '@/hooks'
+import { applySearch, screenUtils } from '@/utils'
 import {
     View,
     Text,
@@ -27,7 +40,6 @@ import {
     PressableTextWithElement,
 } from '@/components/atoms'
 import { InstructionListItem } from '@/components/molecules'
-import { Instruction } from '@/data'
 import { useUpdateSettingsMutation } from '@/redux/services/user'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
 
@@ -121,8 +133,6 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 text="Change Primary Color"
                 onPress={() => changePrimaryColor()}
             />
-
-            <DragDropTest />
         </Container>
     )
 }

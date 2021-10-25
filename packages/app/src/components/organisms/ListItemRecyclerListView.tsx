@@ -201,7 +201,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
         if (currentIndex.value !== newIndex) {
             setDataProvider(
                 dataProviderInstance.cloneWithRows(
-                    utils.moveItem(
+                    utils.moveElement(
                         dataProvider.getAllData(),
                         currentIndex.value,
                         newIndex

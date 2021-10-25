@@ -34,7 +34,11 @@ export function createDropDownItems(
     })
 }
 
-export function moveItem<T>(arr: Array<T>, from: number, to: number): Array<T> {
+export function moveElement<T>(
+    arr: Array<T>,
+    from: number,
+    to: number
+): Array<T> {
     const element = arr[from]
     arr.splice(from, 1)
     arr.splice(to, 0, element)
