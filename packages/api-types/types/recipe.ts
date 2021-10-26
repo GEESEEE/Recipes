@@ -1,9 +1,12 @@
+import { Optional } from './base'
 import { Instruction } from './instruction'
 import { RecipeIngredient } from './recipe-ingredient'
 
 export class Recipe {
     constructor(
         id = -1,
+        sectionId = -1,
+
         name = '',
         description = '',
         prepareTime = -1,
@@ -17,6 +20,8 @@ export class Recipe {
         copyOf: number | null = null
     ) {
         this.id = id
+        this.sectionId = sectionId
+
         this.name = name
         this.description = description
         this.prepareTime = prepareTime
@@ -31,7 +36,7 @@ export class Recipe {
     }
 
     public readonly id!: number
-
+    public sectionId!: number
     public name!: string
     public description!: string
     public prepareTime!: number
@@ -44,3 +49,10 @@ export class Recipe {
     public publishedAt!: Date | null
     public copyOf!: number | null
 }
+
+export type RecipeCreate = Optional<
+    Omit<Recipe, 'id' | 'recipeIngredients' | 'instructions'>,
+    'createdAt' | 'publishedAt' | 'copyOf'
+>
+
+export type RecipeUpdate = Pick<Recipe, 'id'> & Partial<RecipeCreate>

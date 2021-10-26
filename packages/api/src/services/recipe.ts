@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import { fitToClass } from '@recipes/api-types/v1'
+import { fitToClass, RecipeCreate } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
@@ -61,22 +61,14 @@ export default class RecipeService {
 
     // #region Recipe
     public async createRecipes(
-        recipes: Array<{
-            name: string
-            description: string
-            prepareTime: number
-            peopleCount: number
-            publishedAt: Date | null
-            createdAt?: Date
-            copyOf?: number | null
-            authorId: number
-        }>
-    ): Promise<Recipe[]> {
+        recipes: Array<RecipeCreate>
+    ): Promise<RecipeResult[]> {
         const rs = recipes.map((recipe) => this.recipeRepository.create(recipe))
         const recipe = await this.recipeRepository.save(rs)
-        return recipe
+        return recipe.map((r) => fitToClass(r as RecipeResult, RecipeResult))
     }
 
+    // TODO: Remove, because recipescopes can do the same thing
     public async getRecipe(recipeId: number): Promise<Recipe | undefined> {
         return (
             await this.recipeRepository
@@ -92,7 +84,6 @@ export default class RecipeService {
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
     ): Promise<RecipeResult[]> {
-        console.log('Getting recipes y scopes')
         let qb = this.recipeRepository.queryBuilder(args)
 
         if (!qb.hasScopes(scopes)) {
@@ -117,7 +108,7 @@ export default class RecipeService {
         qb = qb.applySorts(sort)
 
         const recipes = await qb.finish().getMany()
-        console.log('Recipes', recipes)
+
         return recipes.map((recipe) =>
             fitToClass(recipe as RecipeResult, RecipeResult)
         )

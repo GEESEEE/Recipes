@@ -20,6 +20,7 @@ export class Section {
     public position!: number
 }
 
-export type SectionCreate = Omit<Section, 'id' | 'userId'>
+export type SectionCreate = Omit<Section, 'id'>
 
-export type SectionUpdate = Pick<Section, 'id'> & Partial<SectionCreate>
+export type SectionUpdate = Pick<Section, 'id'> &
+    Partial<Omit<SectionCreate, 'userId'>>

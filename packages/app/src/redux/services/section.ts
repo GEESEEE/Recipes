@@ -3,13 +3,15 @@ import { api } from './base'
 
 const sectionApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        createSection: builder.mutation<Section, SectionCreate>({
-            query: (body) => ({
-                url: `/sections`,
-                method: 'POST',
-                body,
-            }),
-        }),
+        createSection: builder.mutation<Section, Omit<SectionCreate, 'userId'>>(
+            {
+                query: (body) => ({
+                    url: `/sections`,
+                    method: 'POST',
+                    body,
+                }),
+            }
+        ),
 
         getSections: builder.query<Section[], void>({
             query: () => `/sections`,

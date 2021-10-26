@@ -14,7 +14,6 @@ import { Request } from 'express'
 import { inject } from 'inversify'
 import {
     ModifyError,
-    RequestError,
     WithoutId,
     SectionCreate,
     SectionUpdate,
@@ -39,11 +38,11 @@ export default class SectionController implements interfaces.Controller {
     public async createSection(
         @request() req: Request,
         @requestBody()
-        body: SectionCreate
+        body: Omit<SectionCreate, 'userId'>
     ): Promise<SectionResult> {
-        const section: any = {
+        const section: SectionCreate = {
             ...body,
-            userId: req.user?.id,
+            userId: req.user?.id as number,
         }
         return (await this.sectionsService.createSections([section]))[0]
     }

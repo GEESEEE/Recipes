@@ -70,84 +70,84 @@ export default class RecipeController implements interfaces.Controller {
         return recipe
     }
 
-    @httpPost(
-        '/',
-        TYPES.PassportMiddleware,
-        ...RecipeController.validate('createRecipe'),
-        TYPES.ErrorMiddleware
-    )
-    public async createRecipe(
-        @request() req: Request,
-        @requestBody()
-        body: {
-            name: string
-            description: string
-            prepareTime: number
-            peopleCount: number
-            publishedAt?: Date | null
-            createdAt?: Date
-            copyOf?: number | null
-        }
-    ): Promise<Recipe> {
-        const recipe: any = {
-            name: body.name,
-            description: body.description,
-            prepareTime: body.prepareTime,
-            peopleCount: body.peopleCount,
-            authorId: req.user?.id,
-        }
-        if (typeof body.publishedAt !== 'undefined') {
-            recipe.publishedAt = body.publishedAt
-        }
-        if (typeof body.createdAt !== 'undefined') {
-            recipe.createdAt = body.createdAt
-        }
-        if (typeof body.copyOf !== 'undefined') {
-            recipe.copyOf = body.copyOf
-        }
-        return (await this.recipeService.createRecipes([recipe]))[0]
-    }
+    // @httpPost(
+    //     '/',
+    //     TYPES.PassportMiddleware,
+    //     ...RecipeController.validate('createRecipe'),
+    //     TYPES.ErrorMiddleware
+    // )
+    // public async createRecipe(
+    //     @request() req: Request,
+    //     @requestBody()
+    //     body: {
+    //         name: string
+    //         description: string
+    //         prepareTime: number
+    //         peopleCount: number
+    //         publishedAt?: Date | null
+    //         createdAt?: Date
+    //         copyOf?: number | null
+    //     }
+    // ): Promise<Recipe> {
+    //     const recipe: any = {
+    //         name: body.name,
+    //         description: body.description,
+    //         prepareTime: body.prepareTime,
+    //         peopleCount: body.peopleCount,
+    //         authorId: req.user?.id,
+    //     }
+    //     if (typeof body.publishedAt !== 'undefined') {
+    //         recipe.publishedAt = body.publishedAt
+    //     }
+    //     if (typeof body.createdAt !== 'undefined') {
+    //         recipe.createdAt = body.createdAt
+    //     }
+    //     if (typeof body.copyOf !== 'undefined') {
+    //         recipe.copyOf = body.copyOf
+    //     }
+    //     return (await this.recipeService.createRecipes([recipe]))[0]
+    // }
 
-    @httpPost(
-        '/bulk',
-        TYPES.PassportMiddleware,
-        ...RecipeController.validate('createRecipes'),
-        TYPES.ErrorMiddleware
-    )
-    public async createRecipes(
-        @request() req: Request,
-        @requestBody()
-        body: Array<{
-            name: string
-            description: string
-            prepareTime: number
-            peopleCount: number
-            publishedAt?: Date | null
-            createdAt?: Date
-            copyOf?: number | null
-        }>
-    ): Promise<Recipe[]> {
-        const recipes = body.map((b) => {
-            const r: any = {
-                name: b.name,
-                description: b.description,
-                prepareTime: b.prepareTime,
-                peopleCount: b.peopleCount,
-                authorId: req.user?.id as number,
-            }
-            if (typeof b.publishedAt !== 'undefined') {
-                r.publishedAt = b.publishedAt
-            }
-            if (typeof b.createdAt !== 'undefined') {
-                r.createdAt = b.createdAt
-            }
-            if (typeof b.copyOf !== 'undefined') {
-                r.copyOf = b.copyOf
-            }
-            return r
-        })
-        return await this.recipeService.createRecipes(recipes)
-    }
+    // @httpPost(
+    //     '/bulk',
+    //     TYPES.PassportMiddleware,
+    //     ...RecipeController.validate('createRecipes'),
+    //     TYPES.ErrorMiddleware
+    // )
+    // public async createRecipes(
+    //     @request() req: Request,
+    //     @requestBody()
+    //     body: Array<{
+    //         name: string
+    //         description: string
+    //         prepareTime: number
+    //         peopleCount: number
+    //         publishedAt?: Date | null
+    //         createdAt?: Date
+    //         copyOf?: number | null
+    //     }>
+    // ): Promise<Recipe[]> {
+    //     const recipes = body.map((b) => {
+    //         const r: any = {
+    //             name: b.name,
+    //             description: b.description,
+    //             prepareTime: b.prepareTime,
+    //             peopleCount: b.peopleCount,
+    //             authorId: req.user?.id as number,
+    //         }
+    //         if (typeof b.publishedAt !== 'undefined') {
+    //             r.publishedAt = b.publishedAt
+    //         }
+    //         if (typeof b.createdAt !== 'undefined') {
+    //             r.createdAt = b.createdAt
+    //         }
+    //         if (typeof b.copyOf !== 'undefined') {
+    //             r.copyOf = b.copyOf
+    //         }
+    //         return r
+    //     })
+    //     return await this.recipeService.createRecipes(recipes)
+    // }
 
     @httpGet(
         '/:recipeId',

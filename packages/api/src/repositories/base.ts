@@ -82,12 +82,6 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
         for (const scope of scopes) {
             const arg = this.scopes[scope]
-            console.log(
-                'Checking args',
-                scope,
-                arg,
-                this[arg as string as keyof this]
-            )
             // @ts-expect-error
             if (arg !== null && typeof this[arg] === 'undefined') {
                 invalid.push(scope)

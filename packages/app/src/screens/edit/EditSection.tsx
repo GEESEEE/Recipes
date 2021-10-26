@@ -3,18 +3,9 @@ import styled from 'styled-components'
 import { Section, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import { View, Icons } from '@/components/base'
-import {
-    HeaderComponent,
-    HeaderConfig,
-    SectionListItem,
-} from '@/components/molecules'
+import { SectionListItem } from '@/components/molecules'
 import { useAppDispatch, useAppSelector, useHeader } from '@/hooks'
-import {
-    sectionsActions,
-    sectionsSelector,
-    sectionService,
-    recipeService,
-} from '@/redux'
+import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -50,7 +41,7 @@ function EditSectionScreen({
 
     const handleSaveSection = React.useCallback(
         async (sectionData: Section): Promise<void> => {
-            const createData: SectionCreate = {
+            const createData: Omit<SectionCreate, 'userId'> = {
                 position: -1,
                 name: sectionData.name,
                 description: sectionData.description,
@@ -108,8 +99,6 @@ function EditSectionScreen({
         ],
     })
 
-    const recipes = recipeService.useGetRecipesBySectionIdQuery(1)
-    console.log('Recipes', recipes)
     return (
         <Container>
             <SectionListItem

@@ -1,4 +1,4 @@
-import { ModifyError, RequestError } from '@recipes/api-types'
+import { ModifyError, RequestError } from '@recipes/api-types/v1'
 import { inject, injectable } from 'inversify'
 import { TYPES } from './constants'
 import { NotFoundError, ForbiddenError } from '@/errors'
@@ -9,6 +9,20 @@ import { SectionService } from '@/services'
 class Validator {
     @inject(TYPES.SectionService)
     private readonly sectionsService!: SectionService
+
+    public validateError(error: ModifyError): ModifyError {
+        switch (error.statusCode) {
+            case RequestError.NOT_FOUND:
+                throw new NotFoundError(error.statusMessage)
+
+            case RequestError.FORBIDDEN:
+                throw new ForbiddenError(error.statusMessage)
+
+            default:
+                break
+        }
+        return error
+    }
 
     public async validateSections(
         userId: number,
@@ -37,20 +51,6 @@ class Validator {
         })
 
         return res
-    }
-
-    public validateError(error: ModifyError): ModifyError {
-        switch (error.statusCode) {
-            case RequestError.NOT_FOUND:
-                throw new NotFoundError(error.statusMessage)
-
-            case RequestError.FORBIDDEN:
-                throw new ForbiddenError(error.statusMessage)
-
-            default:
-                break
-        }
-        return error
     }
 }
 

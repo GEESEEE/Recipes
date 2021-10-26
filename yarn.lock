@@ -3816,7 +3816,7 @@ __metadata:
     dotenv: ^10.0.0
     express: ^4.17.1
     express-async-errors: ^3.1.1
-    express-validator: ^6.10.1
+    express-validator: ^6.13.0
     helmet: ^4.6.0
     hpp: ^0.2.3
     inversify: ^6.0.1
@@ -3830,6 +3830,7 @@ __metadata:
     passport: ^0.4.1
     passport-http-bearer: ^1.0.1
     pg: ^8.6.0
+    reflect-metadata: ^0.1.13
     typeorm: ^0.2.32
   languageName: unknown
   linkType: soft
@@ -10033,7 +10034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-validator@npm:^6.10.1":
+"express-validator@npm:^6.13.0":
   version: 6.13.0
   resolution: "express-validator@npm:6.13.0"
   dependencies:
@@ -18465,7 +18466,6 @@ fsevents@~2.3.2:
     prettier: ^2.4.1
     pretty-quick: ^3.1.1
     react-native-bundle-visualizer: ^3.0.0
-    reflect-metadata: ^0.1.13
     ts-node: ^10.1.0
     tsconfig-paths: ^3.11.0
     tscpaths: ^0.0.9
