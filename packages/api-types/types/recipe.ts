@@ -8,8 +8,8 @@ export class Recipe {
         description = '',
         prepareTime = -1,
         peopleCount = -1,
-        recipeIngredients: RecipeIngredient[] = [],
-        instructions: Instruction[] = [],
+        recipeIngredients: RecipeIngredient[] = [new RecipeIngredient()],
+        instructions: Instruction[] = [new Instruction()],
         createdAt = new Date(),
         position = -1,
 

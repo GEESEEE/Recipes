@@ -92,6 +92,7 @@ export default class RecipeService {
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
     ): Promise<RecipeResult[]> {
+        console.log('Getting recipes y scopes')
         let qb = this.recipeRepository.queryBuilder(args)
 
         if (!qb.hasScopes(scopes)) {

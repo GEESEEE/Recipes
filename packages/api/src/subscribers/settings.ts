@@ -9,8 +9,6 @@ import { Settings, User } from '@/entities'
 import { TYPES } from '@/utils/constants'
 import { lazyInject } from '@/config'
 
-console.log('Subscriber', lazyInject)
-
 @EventSubscriber()
 export class SettingsSubscriber implements EntitySubscriberInterface {
     @lazyInject(TYPES.Redis)

@@ -16,15 +16,24 @@ export function fitToInstance<T extends Instance, U extends T>(
 
     for (const key in object) {
         if (key in instance) {
-            const val1 = object[key]
-            const val2 = instance[key]
-            if (
-                typeof val1 === 'object' &&
-                typeof val2 === 'object' &&
-                val1 !== null &&
-                val2 !== null
-            ) {
-                res[key] = fitToInstance(val1, val2)
+            const val1 = object[key] as any
+            const val2 = instance[key] as any
+            if (typeof val1 === 'object' && typeof val2 === 'object') {
+                if (val1 === null || val2 === null) {
+                    res[key] = val1
+                } else if (val1 instanceof Date || val2 instanceof Date) {
+                    res[key] = val1
+                } else if (val1 instanceof Array || val2 instanceof Array) {
+                    if (val2.length > 0) {
+                        res[key] = val1.map((item: any) =>
+                            fitToInstance(item, val2[0])
+                        )
+                    } else {
+                        res[key] = []
+                    }
+                } else {
+                    res[key] = fitToInstance(val1, val2)
+                }
             }
         }
     }
