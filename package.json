@@ -15,6 +15,7 @@
         "api": "yarn workspace @recipes/api",
         "types": "yarn workspace @recipes/api-types",
         "lint": "yarn lerna run lint",
+        "build": "yarn lerna run build",
         "start": "yarn lerna run start --parallel"
     },
     "devDependencies": {
@@ -54,6 +55,7 @@
         "eslint-import-resolver-typescript": "^2.5.0",
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.26.1",
         "eslint-plugin-react-hooks": "4.2.1-alpha-c3a19e5af-20211014",
         "eslint-plugin-react-native": "^3.11.0",
         "eslint-plugin-react-redux": "^3.3.2",
@@ -67,10 +69,5 @@
         "tscpaths": "^0.0.9",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4"
-    },
-    "dependencies": {
-        "eslint-plugin-react": "^7.26.1",
-        "inversify": "^6.0.1",
-        "inversify-express-utils": "^6.4.3"
     }
 }

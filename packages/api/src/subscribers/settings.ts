@@ -11,6 +11,8 @@ import { TYPES } from '@/utils/constants'
 import { container } from '@/config'
 const { lazyInject } = getDecorators(container)
 
+console.log('Subscriber', container, lazyInject)
+
 @EventSubscriber()
 export class SettingsSubscriber implements EntitySubscriberInterface {
     @lazyInject(TYPES.Redis)
@@ -24,7 +26,12 @@ export class SettingsSubscriber implements EntitySubscriberInterface {
     }
 
     public async afterUpdate(event: UpdateEvent<Settings>): Promise<void> {
-        console.log('After Settings update', event.entity, this.userRepository)
+        console.log(
+            'After Settings update',
+            event.entity,
+            this.userRepository,
+            this.redis
+        )
         const user = (await this.userRepository.findOne({
             where: { settingsId: (event.entity as Settings).id },
             select: ['id'],

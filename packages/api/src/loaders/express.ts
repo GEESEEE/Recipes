@@ -1,4 +1,4 @@
-import '../controllers'
+import '@/controllers'
 import express, { Application, NextFunction, Request, Response } from 'express'
 import { Container } from 'inversify'
 import { InversifyExpressServer } from 'inversify-express-utils'
