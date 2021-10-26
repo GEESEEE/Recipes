@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Section } from '@recipes/api-types/v1'
-import { useRoute } from '@react-navigation/native'
 import { LoadingModal, LoginModal } from '@/screens/modals'
 import {
     useAppDispatch,

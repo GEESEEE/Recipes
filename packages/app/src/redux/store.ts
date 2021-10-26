@@ -1,6 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react'
-import { settingsReducer, authReducer, sectionsReducer } from './slices'
+import {
+    settingsReducer,
+    authReducer,
+    sectionsReducer,
+    recipesReducer,
+} from './slices'
 import { api } from './services'
 import { logMiddleware } from './middleware'
 
@@ -12,6 +17,7 @@ export const store = configureStore({
         settings: settingsReducer,
         auth: authReducer,
         sections: sectionsReducer,
+        recipes: recipesReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(api.middleware).concat(logMiddleware),
