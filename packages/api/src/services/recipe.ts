@@ -4,7 +4,7 @@ import { PaginationObject } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
-import { RecipeScopeArgs, RecipeScopes } from '@/repositories/recipe'
+import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
 import { UnprocessableError } from '@/errors'
 import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
 
@@ -91,7 +91,7 @@ export default class RecipeService {
         scopes: RecipeScopes[],
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
-    ): Promise<PaginationObject> {
+    ): Promise<RecipeResult[]> {
         console.log('Recipes by scopes', scopes, args)
         let qb = this.recipeRepository.queryBuilder(args)
         console.log('qb', qb)
@@ -116,7 +116,7 @@ export default class RecipeService {
 
         qb = qb.applySorts(sort)
 
-        return await qb.finish().paginate()
+        return await qb.finish().getMany()
     }
 
     public async updateRecipe(
