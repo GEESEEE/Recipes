@@ -41,7 +41,6 @@ export default class RecipeController implements interfaces.Controller {
             { sectionId },
             []
         )
-        console.log('Recipes', recipes)
         return recipes
     }
 

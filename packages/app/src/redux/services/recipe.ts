@@ -1,9 +1,9 @@
-import { PaginationObject } from '@recipes/api-types/v1'
+import { Recipe } from '@recipes/api-types/v1'
 import { api } from './base'
 
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getRecipesBySectionId: builder.query<PaginationObject, number>({
+        getRecipesBySectionId: builder.query<Recipe[], number>({
             query: (sectionId) => ({
                 url: `/sections/${sectionId}/recipes`,
                 method: 'GET',

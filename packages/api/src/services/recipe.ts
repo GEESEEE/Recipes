@@ -116,6 +116,7 @@ export default class RecipeService {
         qb = qb.applySorts(sort)
 
         const recipes = await qb.finish().getMany()
+        console.log('Recipes', recipes)
         return recipes.map((recipe) =>
             fitToClass(recipe as RecipeResult, RecipeResult)
         )

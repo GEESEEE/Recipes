@@ -15,8 +15,8 @@ import {
 } from '@/entities'
 
 export default class CreateUsers implements Seeder {
-    private userCount = 30
-    private ingredientCount = 200
+    private userCount = 10
+    private ingredientCount = 50
 
     private sectionPerUser = 4
     private recipePerSection = 5
@@ -50,32 +50,32 @@ export default class CreateUsers implements Seeder {
         await factory(Ingredient)().createMany(this.ingredientCount)
 
         const userIds = range(1, this.userCount)
-        console.log('Userids', userIds)
+
         for (const userId of userIds) {
-            console.log('for user', userId)
             const sections = await factory(Section)()
                 .map(async (section) => {
                     section.userId = userId
-                    console.log('Creating Section', section)
                     return section
                 })
                 .createMany(this.sectionPerUser)
 
             const sectionIds = sections.map((section) => section.id)
-            let recipes: Recipe[] = []
+
+            const recipes: Recipe[] = []
             for (const sectionId of sectionIds) {
-                console.log('For section', sectionId)
-                recipes = await factory(Recipe)()
-                    .map(async (recipe) => {
-                        recipe.sectionId = sectionId
-                        return recipe
-                    })
-                    .createMany(this.recipePerSection)
+                recipes.push(
+                    ...(await factory(Recipe)()
+                        .map(async (recipe) => {
+                            recipe.sectionId = sectionId
+                            return recipe
+                        })
+                        .createMany(this.recipePerSection))
+                )
             }
 
             const recipeIds = recipes.map((recipe) => recipe.id)
+            console.log('RecipeIds for user', userId, recipeIds)
             for (const recipeId of recipeIds) {
-                console.log('For Recipe', recipeId)
                 const instructionCount = sample(
                     this.instructionsPerRecipe
                 ) as number
