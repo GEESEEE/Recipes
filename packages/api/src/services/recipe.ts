@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import { PaginationObject } from '@recipes/api-types/v1'
+import { fitToClass } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
@@ -92,9 +92,8 @@ export default class RecipeService {
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
     ): Promise<RecipeResult[]> {
-        console.log('Recipes by scopes', scopes, args)
         let qb = this.recipeRepository.queryBuilder(args)
-        console.log('qb', qb)
+
         if (!qb.hasScopes(scopes)) {
             throw new UnprocessableError('Invalid Scope')
         }
@@ -116,7 +115,10 @@ export default class RecipeService {
 
         qb = qb.applySorts(sort)
 
-        return await qb.finish().getMany()
+        const recipes = await qb.finish().getMany()
+        return recipes.map((recipe) =>
+            fitToClass(recipe as RecipeResult, RecipeResult)
+        )
     }
 
     public async updateRecipe(

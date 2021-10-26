@@ -32,7 +32,6 @@ export class Recipe {
 
     public readonly id!: number
 
-    public authorId!: number
     public name!: string
     public description!: string
     public prepareTime!: number

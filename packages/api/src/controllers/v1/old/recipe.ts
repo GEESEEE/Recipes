@@ -13,11 +13,7 @@ import {
 } from 'inversify-express-utils'
 import { Request } from 'express'
 import { inject } from 'inversify'
-import {
-    ModifyError,
-    PaginationObject,
-    RequestError,
-} from '@recipes/api-types/v1'
+import { ModifyError, RequestError } from '@recipes/api-types/v1'
 import { methodMap } from '../base'
 import { RecipeService } from '@/services'
 import { constants } from '@/utils'
@@ -29,7 +25,7 @@ import {
     decodeSortQuery,
     SortQueryTuple,
 } from '@/utils/request'
-import { RecipeScopeArgs, RecipeScopes } from '@/types'
+import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
 
 const { TYPES } = constants
 
@@ -184,7 +180,7 @@ export default class RecipeController implements interfaces.Controller {
         @queryParam('scopes') scopes?: RecipeScopes[],
         @queryParam('search') search?: string[],
         @queryParam('sort') sort?: SortQueryTuple[]
-    ): Promise<PaginationObject> {
+    ): Promise<RecipeResult[]> {
         if (typeof scopes === 'undefined') {
             scopes = []
         }

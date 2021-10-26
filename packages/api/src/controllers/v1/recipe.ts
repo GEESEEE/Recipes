@@ -24,13 +24,12 @@ export default class RecipeController implements interfaces.Controller {
         '/',
         TYPES.PassportMiddleware,
         ...RecipeController.validate('getRecipesBySectionId'),
-        TYPES.ErrorMiddleware,
-        TYPES.PaginationMiddleware
+        TYPES.ErrorMiddleware
     )
-    public async getSectionsBySectionId(
+    public async getRecipesBySectionId(
         @request() req: Request,
         @requestParam('sectionId') sectionId: number
-    ): Promise<RecipeResult> {
+    ): Promise<RecipeResult[]> {
         console.log(
             'Getting recipes by sectionid',
             sectionId,
@@ -43,7 +42,7 @@ export default class RecipeController implements interfaces.Controller {
             []
         )
         console.log('Recipes', recipes)
-        return recipes.data
+        return recipes
     }
 
     // #region validate
