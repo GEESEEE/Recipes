@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from 'inversify-express-utils'
-import { injectable } from 'inversify'
 import { PaginationObject } from '@recipes/api-types/v1'
 import { BaseQueryBuilder } from '@/repositories/base'
 
-@injectable()
 export default class PaginationMiddleware extends BaseMiddleware {
     public async handler(
         req: Request,
@@ -14,6 +12,7 @@ export default class PaginationMiddleware extends BaseMiddleware {
         BaseQueryBuilder.prototype.paginate = async function (
             perPage?: number
         ): Promise<PaginationObject> {
+            console.log('BaseQueryBuilder paginate')
             const currentPage = getPage(req)
             const pageSize =
                 typeof perPage === 'undefined'

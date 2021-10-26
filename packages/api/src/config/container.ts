@@ -3,6 +3,7 @@ import { Repository, getRepository, getCustomRepository } from 'typeorm'
 import Redis from 'ioredis'
 import passport from 'passport'
 import dotenv from 'dotenv'
+import getDecorators from 'inversify-inject-decorators'
 import {
     Instruction,
     RecipeIngredient,
@@ -94,5 +95,7 @@ bind<SectionService>(TYPES.SectionService).to(SectionService)
 bind<RecipeService>(TYPES.RecipeService).to(RecipeService)
 bind<AuthService>(TYPES.AuthService).to(AuthService)
 bind<UserService>(TYPES.UserService).to(UserService)
+
+export const { lazyInject } = getDecorators(container)
 
 export default container

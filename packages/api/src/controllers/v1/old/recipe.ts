@@ -29,7 +29,7 @@ import {
     decodeSortQuery,
     SortQueryTuple,
 } from '@/utils/request'
-import { RecipeScopeArgs, RecipeScopes } from '@/repositories/recipe'
+import { RecipeScopeArgs, RecipeScopes } from '@/types'
 
 const { TYPES } = constants
 

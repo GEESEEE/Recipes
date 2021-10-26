@@ -55,20 +55,10 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
     public constructor(
         repository: BaseRepository<T>,
-        queryBuilder: SelectQueryBuilder<T>,
-        args?: object
+        queryBuilder: SelectQueryBuilder<T>
     ) {
         super(queryBuilder)
         this.repository = repository
-        if (typeof args !== 'undefined') {
-            for (const entry of Object.entries(args)) {
-                console.log('Creating query builder, rag:', entry)
-                // @ts-expect-error
-                this[entry[0]] = entry[1]
-                // @ts-expect-error
-                console.log('After', entry[0], this[entry[0]])
-            }
-        }
     }
 
     public abstract get default(): this

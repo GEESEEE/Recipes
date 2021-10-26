@@ -1,6 +1,7 @@
-import { Brackets, EntityRepository } from 'typeorm'
+import { Brackets, EntityRepository, SelectQueryBuilder } from 'typeorm'
 import BaseRepository, { BaseQueryBuilder } from './base'
 import { Recipe } from '@/entities'
+import { RecipeScopeArgs } from '@/types'
 
 @EntityRepository(Recipe)
 export default class RecipeRepository extends BaseRepository<Recipe> {
@@ -59,15 +60,6 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
     }
 }
 
-export interface RecipeScopeArgs {
-    sectionId?: number
-    searchQuery?: string[]
-}
-
-export type RecipeScopes = keyof RecipeQueryBuilder['scopes']
-
-export type RecipeSortQuery = 'preparetime' | 'ingredientcount' | 'publishtime'
-
 export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
     public override readonly scopes = {
         published: null,
@@ -86,6 +78,19 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
 
     private readonly sectionId?: number
     private readonly searchQuery?: string[]
+
+    public constructor(
+        repository: BaseRepository<Recipe>,
+        queryBuilder: SelectQueryBuilder<Recipe>,
+        args?: RecipeScopeArgs
+    ) {
+        super(repository, queryBuilder)
+        if (typeof args !== 'undefined') {
+            for (const entry of Object.entries(args)) {
+                this[entry[0] as keyof this] = entry[1]
+            }
+        }
+    }
 
     private makeBaseQuery(): this {
         return this.addSelect('recipe.*')

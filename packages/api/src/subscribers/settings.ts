@@ -5,13 +5,11 @@ import {
     UpdateEvent,
 } from 'typeorm'
 import { Redis } from 'ioredis'
-import getDecorators from 'inversify-inject-decorators'
 import { Settings, User } from '@/entities'
 import { TYPES } from '@/utils/constants'
-import { container } from '@/config'
-const { lazyInject } = getDecorators(container)
+import { lazyInject } from '@/config'
 
-console.log('Subscriber', container, lazyInject)
+console.log('Subscriber', lazyInject)
 
 @EventSubscriber()
 export class SettingsSubscriber implements EntitySubscriberInterface {
