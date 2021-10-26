@@ -1,5 +1,4 @@
-import * as constants from './constants'
+export * as constants from './constants'
 export * from './util'
 export * from './request'
-
-export { constants }
+export { default as validator } from './validation'
