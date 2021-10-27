@@ -46,7 +46,6 @@ function SectionListItem({
     }
 
     function onPress(): void {
-        console.log(`OnPress ${item.name}, navigate or somethings`)
         navigation.navigate('Recipes', { sectionId: item.id })
     }
 

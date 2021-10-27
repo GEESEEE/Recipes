@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Recipe, Section } from '@recipes/api-types/v1'
+import { Recipe } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
@@ -10,7 +10,7 @@ import {
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
-import { recipeService } from '@/redux'
+import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch } from '@/utils'
@@ -40,20 +40,35 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         sectionId = route.params.sectionId
     }
 
-    console.log('Recipes State', recipes)
+    async function setRecipes(
+        sectionId: number,
+        recipes: Recipe[]
+    ): Promise<void> {
+        await dispatch(recipesActions.setRecipes({ sectionId, recipes }))
+    }
 
-    console.log('SectionId', sectionId)
+    const skip =
+        sectionId < 0 &&
+        typeof recipes[sectionId] !== 'undefined' &&
+        !(auth.token.length > 0)
 
     const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
-        skip: sectionId < 0 && auth.token.length <= 0,
+        skip,
     })
 
-    console.log('Recipes Query', getRecipes)
+    useUpdateEffect(() => {
+        console.log('Recipes data updated')
+        if (typeof getRecipes.data !== 'undefined') {
+            setRecipes(sectionId, getRecipes.data)
+        }
+    }, [getRecipes.data])
 
-    const recipess: Recipe[] = []
+    const sectionRecipes =
+        typeof recipes[sectionId] === 'undefined' ? [] : recipes[sectionId]
+
     const search = useSearch()
     const filteredRecipes = applySearch<Recipe>(
-        recipess,
+        sectionRecipes,
         [search],
         ['name', 'description', 'recipeIngredients.ingredient.name']
     )
@@ -64,7 +79,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 Element={RecipeListItem}
                 data={filteredRecipes}
                 props={{}}
-                loading={false}
+                loading={getRecipes.isLoading}
                 dragDrop
             />
         </Container>

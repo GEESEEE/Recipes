@@ -1,16 +1,14 @@
 import {
     createSlice,
     createEntityAdapter,
-    EntityState,
     PayloadAction,
-    createDraftSafeSelector,
 } from '@reduxjs/toolkit'
 import { Recipe } from '@recipes/api-types/v1'
 
 const recipesAdapter = createEntityAdapter<Recipe>({})
 
 export type RecipesState = {
-    [key: number]: EntityState<Recipe>
+    [key: number]: Recipe[]
 }
 
 const recipesSlice = createSlice({
@@ -22,38 +20,38 @@ const recipesSlice = createSlice({
             action: PayloadAction<{ sectionId: number; recipes: Recipe[] }>
         ) {
             const { sectionId, recipes } = action.payload
-            state[sectionId] = recipesAdapter.setAll(state[sectionId], recipes)
+            state[sectionId] = recipes
         },
 
-        addRecipe(
-            state,
-            action: PayloadAction<{ sectionId: number; recipe: Recipe }>
-        ) {
-            const { sectionId, recipe } = action.payload
-            state[sectionId] = recipesAdapter.addOne(state[sectionId], recipe)
-        },
+        // addRecipe(
+        //     state,
+        //     action: PayloadAction<{ sectionId: number; recipe: Recipe }>
+        // ) {
+        //     const { sectionId, recipe } = action.payload
+        //     state[sectionId] = recipesAdapter.addOne(state[sectionId], recipe)
+        // },
 
-        removeRecipe(
-            state,
-            action: PayloadAction<{ sectionId: number; recipeId: number }>
-        ) {
-            const { sectionId, recipeId } = action.payload
-            state[sectionId] = recipesAdapter.removeOne(
-                state[sectionId],
-                recipeId
-            )
-        },
+        // removeRecipe(
+        //     state,
+        //     action: PayloadAction<{ sectionId: number; recipeId: number }>
+        // ) {
+        //     const { sectionId, recipeId } = action.payload
+        //     state[sectionId] = recipesAdapter.removeOne(
+        //         state[sectionId],
+        //         recipeId
+        //     )
+        // },
 
-        upsertRecipe(
-            state,
-            action: PayloadAction<{ sectionId: number; recipe: Recipe }>
-        ) {
-            const { sectionId, recipe } = action.payload
-            state[sectionId] = recipesAdapter.upsertOne(
-                state[sectionId],
-                recipe
-            )
-        },
+        // upsertRecipe(
+        //     state,
+        //     action: PayloadAction<{ sectionId: number; recipe: Recipe }>
+        // ) {
+        //     const { sectionId, recipe } = action.payload
+        //     state[sectionId] = recipesAdapter.upsertOne(
+        //         state[sectionId],
+        //         recipe
+        //     )
+        // },
     },
 })
 

@@ -28,7 +28,6 @@ export default class Validator {
         userId: number,
         sectionIds: number[]
     ): Promise<Array<SectionResult | ModifyError>> {
-        console.log('ValidateSection', this.sectionsService)
         const sections = await this.sectionsService.getSectionsById(sectionIds)
 
         const res = sectionIds.map((id) => {

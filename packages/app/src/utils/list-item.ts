@@ -23,6 +23,9 @@ export function heightMap<T>(
                 listItemBaseOffset + 2 * Typography.lineHeight('Text', textSize)
             )
 
+        case 'RecipeListItem':
+            return 100
+
         default:
             console.log(
                 `ListItem ${listItem.name} not registered in height map`

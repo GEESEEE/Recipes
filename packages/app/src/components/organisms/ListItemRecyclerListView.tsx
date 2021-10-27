@@ -5,6 +5,8 @@ import {
     RecyclerListView,
     DataProvider,
     LayoutProvider,
+    BaseLayoutProvider,
+    Dimension,
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
@@ -22,18 +24,26 @@ const ViewTypes = {
     Item: 0,
 }
 
-const itemLayout = {
+const defaultItemLayout = {
     width,
     height: 70,
 }
 
-let layoutProvider = new LayoutProvider(
+const defaultLayoutProvider = new LayoutProvider(
     () => ViewTypes.Item,
     (_, dim) => {
-        dim.width = itemLayout.width
-        dim.height = itemLayout.height
+        dim.width = defaultItemLayout.width
+        dim.height = defaultItemLayout.height
     }
 )
+
+const layoutProviders: {
+    [key: string]: BaseLayoutProvider
+} = {}
+
+const itemLayouts: {
+    [key: string]: Dimension
+} = {}
 
 type ListItemRecyclerViewProps<
     T extends ListItem,
@@ -85,16 +95,25 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
+    const itemLay =
+        typeof itemLayouts[Element.name] === 'undefined'
+            ? defaultItemLayout
+            : itemLayouts[Element.name]
+
     React.useEffect(() => {
-        itemLayout.height = listItemUtils.heightMap(Element, textSize)
-        layoutProvider = new LayoutProvider(
-            () => 0,
+        const layout = {
+            width,
+            height: listItemUtils.heightMap(Element, textSize),
+        }
+        itemLayouts[Element.name] = layout
+        layoutProviders[Element.name] = new LayoutProvider(
+            () => ViewTypes.Item,
             (_, dim) => {
-                dim.width = itemLayout.width
-                dim.height = itemLayout.height
+                dim.width = layout.width
+                dim.height = layout.height
             }
         )
-        setMaxHeight(containerHeight - itemLayout.height)
+        setMaxHeight(containerHeight - layout.height)
     }, [Element, textSize, containerHeight])
 
     function onContainerLayout(e: LayoutChangeEvent): void {
@@ -108,7 +127,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }
 
     function toIndex(posY: number): number {
-        let index = Math.round((posY + scrollOffset.value) / itemLayout.height)
+        let index = Math.round((posY + scrollOffset.value) / itemLay.height)
         index = Math.min(dataProvider.getSize() - 1, Math.max(0, index))
         return index
     }
@@ -214,7 +233,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     function onGesture(e: GestureChangeEvent): void {
         const event = e.nativeEvent
-        let pos = event.absoluteY - topOffset - itemLayout.height / 2
+        let pos = event.absoluteY - topOffset - itemLay.height / 2
         pos = Math.max(0, Math.min(maxHeight, pos))
 
         setPosY(pos)
@@ -248,7 +267,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
                     <AnimatedView
                         style={{
                             top: posY,
-                            ...itemLayout,
+                            ...itemLay,
                         }}
                     >
                         {rowRenderer(
@@ -261,7 +280,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
                 <RecyclerListView
                     ref={listRef}
                     style={{ width }}
-                    layoutProvider={layoutProvider}
+                    layoutProvider={
+                        typeof layoutProviders[Element.name] === 'undefined'
+                            ? defaultLayoutProvider
+                            : layoutProviders[Element.name]
+                    }
                     dataProvider={dataProvider}
                     rowRenderer={rowRenderer}
                     onScroll={onScroll}
