@@ -13,4 +13,5 @@ export type SectionScopes = keyof SectionQueryBuilder['scopes']
 export interface SectionScopeArgs {
     userId?: number
     recipeIds?: number[]
+    sectionIds?: number[]
 }

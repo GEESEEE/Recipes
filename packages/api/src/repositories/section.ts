@@ -18,10 +18,12 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
     public override readonly scopes = {
         user: 'userId',
         recipes: 'recipeIds',
+        ids: 'sectionIds',
     }
 
     private readonly userId?: number
     private readonly recipeIds?: number[]
+    private readonly sectionIds?: number[]
 
     public constructor(
         repository: BaseRepository<Section>,
@@ -62,5 +64,11 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
                 `recipe.sectionId = section.id`
             )
             .andWhere('recipe.id IN :recipeIds', { recipeIds: this.recipeIds })
+    }
+
+    public get ids(): this {
+        return this.makeBaseQuery().andWhere('section.id IN :sectionIds', {
+            sectionIds: this.sectionIds,
+        })
     }
 }

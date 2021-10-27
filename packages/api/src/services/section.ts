@@ -1,10 +1,9 @@
 import { inject, injectable } from 'inversify'
-import { In } from 'typeorm'
 import { fitToClass, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { SectionResult, SectionScopeArgs, SectionScopes } from '@/types'
 import { SectionRepository } from '@/repositories'
-import { UnprocessableError } from '@/errors'
+import { Section } from '@/entities'
 
 @injectable()
 export default class SectionService {
@@ -32,30 +31,24 @@ export default class SectionService {
         return section
     }
 
-    public async getSectionsById(
-        sectionIds: number[]
-    ): Promise<SectionResult[]> {
-        const sections = await this.sectionRepository.find({
-            where: {
-                id: In(sectionIds),
-            },
-        })
-        return sections.map((section) => fitToClass(section, SectionResult))
-    }
-
     public async getSections(
         scopes: SectionScopes[],
         args: SectionScopeArgs
-    ): Promise<SectionResult[]> {
+    ): Promise<Section[]> {
         let qb = this.sectionRepository.queryBuilder(args)
 
         qb = qb.validate({ scopes })
 
-        const sections = await qb.finish().getMany()
+        return await qb.finish().getMany()
+    }
 
-        return sections.map((section) =>
-            fitToClass(section as SectionResult, SectionResult)
-        )
+    public async getSectionResults(
+        scopes: SectionScopes[],
+        args: SectionScopeArgs
+    ): Promise<SectionResult[]> {
+        const sections = await this.getSections(scopes, args)
+
+        return sections.map((section) => fitToClass(section, SectionResult))
     }
 
     public async getSectionsFromUser(userId: number): Promise<SectionResult[]> {

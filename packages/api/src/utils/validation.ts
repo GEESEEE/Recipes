@@ -28,8 +28,10 @@ export default class Validator {
         userId: number,
         sectionIds: number[]
     ): Promise<Array<SectionResult | ModifyError>> {
-        const sections = await this.sectionsService.getSectionsById(sectionIds)
-
+        const sections = await this.sectionsService.getSectionResults(['ids'], {
+            sectionIds,
+        })
+        console.log('Validating Sections', sections, sectionIds)
         const res = sectionIds.map((id) => {
             const section = sections.find((s) => s.id === id)
             if (typeof section === 'undefined') {

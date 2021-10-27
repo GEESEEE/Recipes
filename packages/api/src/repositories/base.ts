@@ -70,7 +70,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
     }): this {
         const { scopes, sort } = props
 
-        if (typeof scopes !== 'undefined') {
+        if (typeof scopes !== 'undefined' && scopes.length > 0) {
             if (!this.hasScopes(scopes)) {
                 throw new UnprocessableError('Invalid Scope')
             }
@@ -87,7 +87,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
             this.applyScopes(scopes)
         }
 
-        if (typeof sort !== 'undefined') {
+        if (typeof sort !== 'undefined' && sort.length > 0) {
             if (!this.hasSorts(sort)) {
                 throw new UnprocessableError('Invalid Sort')
             }

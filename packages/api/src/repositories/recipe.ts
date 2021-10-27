@@ -62,6 +62,7 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
 
 export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
     public override readonly scopes = {
+        ids: 'recipeIds',
         published: null,
         section: 'sectionId',
         search: 'searchQuery',
@@ -76,6 +77,7 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
         instructioncount: 'COUNT(instruction.id)',
     }
 
+    private readonly recipeIds?: number[]
     private readonly sectionId?: number
     private readonly searchQuery?: string[]
 
@@ -123,6 +125,12 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
 
     public get default(): this {
         return this.makeBaseQuery()
+    }
+
+    public get ids(): this {
+        return this.makeBaseQuery().andWhere('recipe.id IN :recipeIds', {
+            recipeIds: this.recipeIds,
+        })
     }
 
     public get published(): this {

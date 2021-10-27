@@ -59,9 +59,9 @@ export default class SectionController implements interfaces.Controller {
     public async getSections(
         @request() req: Request
     ): Promise<SectionResult[]> {
-        return await this.sectionsService.getSectionsFromUser(
-            req.user?.id as number
-        )
+        return await this.sectionsService.getSectionResults(['user'], {
+            userId: req.user?.id as number,
+        })
     }
 
     @httpPut(
