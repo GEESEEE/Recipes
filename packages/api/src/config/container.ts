@@ -7,7 +7,6 @@ import getDecorators from 'inversify-inject-decorators'
 import {
     Instruction,
     RecipeIngredient,
-    Section,
     Settings,
     User,
     Token,
@@ -25,7 +24,11 @@ import {
     AbilityMiddleware,
     PaginationMiddleware,
 } from '@/middlewares'
-import { IngredientRepository, RecipeRepository } from '@/repositories'
+import {
+    IngredientRepository,
+    RecipeRepository,
+    SectionRepository,
+} from '@/repositories'
 import { Validator } from '@/utils'
 
 dotenv.config()
@@ -68,8 +71,8 @@ bind<Repository<Token>>(TYPES.TokenRepository)
 bind<Repository<Settings>>(TYPES.SettingsRepository).toDynamicValue(() => {
     return getRepository(Settings)
 })
-bind<Repository<Section>>(TYPES.SectionRepository).toDynamicValue(() => {
-    return getRepository(Section)
+bind<SectionRepository>(TYPES.SectionRepository).toDynamicValue(() => {
+    return getCustomRepository(SectionRepository)
 })
 bind<IngredientRepository>(TYPES.IngredientRepository)
     .toDynamicValue(() => {

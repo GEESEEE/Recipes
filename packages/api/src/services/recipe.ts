@@ -5,7 +5,6 @@ import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
 import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
-import { UnprocessableError } from '@/errors'
 import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
 
 @injectable()
@@ -86,26 +85,7 @@ export default class RecipeService {
     ): Promise<RecipeResult[]> {
         let qb = this.recipeRepository.queryBuilder(args)
 
-        if (!qb.hasScopes(scopes)) {
-            throw new UnprocessableError('Invalid Scope')
-        }
-
-        const scopesWithoutArgs = qb.checkArgs(scopes)
-        if (scopesWithoutArgs.length > 0) {
-            throw new UnprocessableError(
-                `The following scopes have no arguments: ${scopesWithoutArgs.join(
-                    ', '
-                )}`
-            )
-        }
-
-        qb = qb.applyScopes(scopes)
-
-        if (!qb.hasSorts(sort)) {
-            throw new UnprocessableError('Invalid Sort')
-        }
-
-        qb = qb.applySorts(sort)
+        qb = qb.validate({ scopes, sort })
 
         const recipes = await qb.finish().getMany()
 

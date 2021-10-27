@@ -52,4 +52,12 @@ export default class Validator {
 
         return res
     }
+
+    // public async validateRecipes(
+    //     userId: number,
+    //     sectionId: number,
+    //     recipeIds: number[]
+    // ): Promise<Array<RecipeResult | ModifyError>> {
+    //     const section = await this.sectionsService.getSectionsById([sectionId])
+    // }
 }

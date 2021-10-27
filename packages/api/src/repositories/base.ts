@@ -5,6 +5,7 @@ import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginationObject } from '@recipes/api-types/v1'
 import { SortQueryTuple, groupBy } from '@/utils'
+import { UnprocessableError } from '@/errors'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
     public transform(record: any): T {
@@ -63,7 +64,41 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
     public abstract get default(): this
 
-    public hasScopes(scopes?: string[]): boolean {
+    public validate(props: {
+        scopes?: string[]
+        sort?: SortQueryTuple[]
+    }): this {
+        const { scopes, sort } = props
+
+        if (typeof scopes !== 'undefined') {
+            if (!this.hasScopes(scopes)) {
+                throw new UnprocessableError('Invalid Scope')
+            }
+
+            const scopesWithoutArgs = this.checkArgs(scopes)
+            if (scopesWithoutArgs.length > 0) {
+                throw new UnprocessableError(
+                    `The following scopes have no arguments: ${scopesWithoutArgs.join(
+                        ', '
+                    )}`
+                )
+            }
+
+            this.applyScopes(scopes)
+        }
+
+        if (typeof sort !== 'undefined') {
+            if (!this.hasSorts(sort)) {
+                throw new UnprocessableError('Invalid Sort')
+            }
+
+            this.applySorts(sort)
+        }
+
+        return this
+    }
+
+    private hasScopes(scopes?: string[]): boolean {
         if (typeof scopes === 'undefined') {
             return true
         }
@@ -74,7 +109,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         )
     }
 
-    public checkArgs(scopes?: string[]): string[] {
+    private checkArgs(scopes?: string[]): string[] {
         const invalid: string[] = []
         if (typeof scopes === 'undefined') {
             return invalid
@@ -91,7 +126,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         return invalid
     }
 
-    public applyScopes(scopes?: string[]): this {
+    private applyScopes(scopes?: string[]): this {
         if (typeof scopes === 'undefined') {
             return this.default
         }
@@ -107,13 +142,13 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         }, this)
     }
 
-    public hasSorts(sortQuery: SortQueryTuple[]): boolean {
+    private hasSorts(sortQuery: SortQueryTuple[]): boolean {
         return sortQuery.every((sort: SortQueryTuple) =>
             Object.keys(this.sorts).includes(sort[0])
         )
     }
 
-    public applySorts(sortQuery: SortQueryTuple[]): this {
+    private applySorts(sortQuery: SortQueryTuple[]): this {
         if (sortQuery.length === 0) return this
 
         return sortQuery.reduce((qb, sort) => {

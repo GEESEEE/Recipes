@@ -5,7 +5,7 @@ import { RecipeScopeArgs } from '@/types'
 
 @EntityRepository(Recipe)
 export default class RecipeRepository extends BaseRepository<Recipe> {
-    public queryBuilder(args?: object): RecipeQueryBuilder {
+    public queryBuilder(args?: RecipeScopeArgs): RecipeQueryBuilder {
         return new RecipeQueryBuilder(
             this,
             this.createQueryBuilder('recipe'),
@@ -180,7 +180,7 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
 
     public async deleteUncopiedRecipesFromAuthor(
         authorId: number
-    ): Promise<any> {
+    ): Promise<void> {
         const query = this.delete()
             .andWhere(`recipe.authorId = :authorId`, { authorId })
             .andWhere(
