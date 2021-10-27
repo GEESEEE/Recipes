@@ -63,12 +63,13 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
                 'recipe',
                 `recipe.sectionId = section.id`
             )
-            .andWhere('recipe.id IN :recipeIds', { recipeIds: this.recipeIds })
+            .andWhere(`recipe.id IN (${this.recipeIds})`)
     }
 
     public get ids(): this {
-        return this.makeBaseQuery().andWhere('section.id IN :sectionIds', {
-            sectionIds: this.sectionIds,
-        })
+        console.log('Ids', this.sectionIds)
+        return this.makeBaseQuery().andWhere(
+            `section.id IN (${this.sectionIds})`
+        )
     }
 }

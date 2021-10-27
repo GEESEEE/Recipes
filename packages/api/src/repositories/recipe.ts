@@ -128,9 +128,7 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
     }
 
     public get ids(): this {
-        return this.makeBaseQuery().andWhere('recipe.id IN :recipeIds', {
-            recipeIds: this.recipeIds,
-        })
+        return this.makeBaseQuery().andWhere(`recipe.id IN (${this.recipeIds})`)
     }
 
     public get published(): this {

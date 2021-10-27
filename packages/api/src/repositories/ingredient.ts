@@ -13,8 +13,8 @@ export default class IngredientRepository extends BaseRepository<Ingredient> {
 }
 
 export class IngredientQueryBuilder extends BaseQueryBuilder<Ingredient> {
-    public async deleteOrphanIngredients(): Promise<any> {
-        return await this.delete()
+    public async deleteOrphanIngredients(): Promise<void> {
+        await this.delete()
             .where(
                 `id NOT IN (${this.repository.manager
                     .createQueryBuilder(RecipeIngredient, 'ri')
