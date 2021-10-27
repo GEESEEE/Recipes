@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { View } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
-import { sectionsActions, sectionService, recipeService } from '@/redux'
+import { sectionsActions, sectionService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
@@ -47,6 +47,7 @@ function SectionListItem({
 
     function onPress(): void {
         console.log(`OnPress ${item.name}, navigate or somethings`)
+        navigation.navigate('Recipes', { sectionId: item.id })
     }
 
     dropdownItems.push(logSect, editSect, deleteSect)
@@ -58,7 +59,7 @@ function SectionListItem({
                     ? utils.createDropDownItems(dropdownItems, 'sect')
                     : undefined
             }
-            onPress={onPress}
+            onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
         >
             <Container>

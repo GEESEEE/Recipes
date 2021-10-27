@@ -16,12 +16,12 @@ import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch } from '@/utils'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { settings } = useAppSelector((state) => state)
+    const { settings, recipes, auth } = useAppSelector((state) => state)
     const { theme } = settings
     const dispatch = useAppDispatch()
 
     useHeader(navigation, {
-        drawer: true,
+        drawer: false,
         search: true,
         right: [
             {
@@ -35,19 +35,25 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const route = useRoute() as {
         params?: { sectionId: number }
     }
-    console.log('Route', route)
     let sectionId = -1
     if (typeof route.params !== 'undefined') {
         sectionId = route.params.sectionId
     }
+
+    console.log('Recipes State', recipes)
+
+    console.log('SectionId', sectionId)
+
     const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
-        skip: sectionId < 0,
+        skip: sectionId < 0 && auth.token.length <= 0,
     })
 
-    const recipes: Recipe[] = []
+    console.log('Recipes Query', getRecipes)
+
+    const recipess: Recipe[] = []
     const search = useSearch()
     const filteredRecipes = applySearch<Recipe>(
-        recipes,
+        recipess,
         [search],
         ['name', 'description', 'recipeIngredients.ingredient.name']
     )

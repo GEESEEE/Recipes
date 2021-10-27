@@ -27,4 +27,6 @@ export const TYPES = {
     RecipeService: Symbol.for('RecipeService'),
     AuthService: Symbol.for('AuthService'),
     UserService: Symbol.for('UserService'),
+
+    Validator: Symbol.for('Validator'),
 }

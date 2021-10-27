@@ -12,7 +12,7 @@ import {
 import { Request } from 'express'
 import { inject } from 'inversify'
 import { ModifyError, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
-import { constants, validator } from '@/utils'
+import { constants, Validator } from '@/utils'
 import { RecipeService } from '@/services'
 import { RecipeResult } from '@/types'
 
@@ -22,6 +22,9 @@ const { TYPES } = constants
 export default class RecipeController implements interfaces.Controller {
     @inject(TYPES.RecipeService)
     private readonly recipeService!: RecipeService
+
+    @inject(TYPES.Validator)
+    private readonly validator!: Validator
 
     @httpGet(
         '/',
@@ -34,12 +37,12 @@ export default class RecipeController implements interfaces.Controller {
         @requestParam('sectionId') sectionId: number
     ): Promise<RecipeResult[] | ModifyError> {
         const validationResult = (
-            await validator.validateSections(req.user?.id as number, [
+            await this.validator.validateSections(req.user?.id as number, [
                 sectionId,
             ])
         )[0]
         if ('statusCode' in validationResult) {
-            return validator.validateError(validationResult)
+            return this.validator.validateError(validationResult)
         }
         const recipes = await this.recipeService.getRecipesByScopes(
             ['section'],
@@ -61,12 +64,12 @@ export default class RecipeController implements interfaces.Controller {
         @requestBody() body: Array<Omit<RecipeCreate, 'sectionId'>>
     ): Promise<RecipeResult[] | ModifyError> {
         const validationResult = (
-            await validator.validateSections(req.user?.id as number, [
+            await this.validator.validateSections(req.user?.id as number, [
                 sectionId,
             ])
         )[0]
         if ('statusCode' in validationResult) {
-            return validator.validateError(validationResult)
+            return this.validator.validateError(validationResult)
         }
         return await this.recipeService.createRecipes(
             body.map((recipe) => ({ ...recipe, sectionId }))
@@ -86,12 +89,12 @@ export default class RecipeController implements interfaces.Controller {
         @requestBody() body: RecipeUpdate
     ): Promise<RecipeResult | ModifyError> {
         const validationResult = (
-            await validator.validateSections(req.user?.id as number, [
+            await this.validator.validateSections(req.user?.id as number, [
                 sectionId,
             ])
         )[0]
         if ('statusCode' in validationResult) {
-            return validator.validateError(validationResult)
+            return this.validator.validateError(validationResult)
         }
         // TODO validate that recipe is included in section
         console.log('Update recipe', recipeId, body)

@@ -15,7 +15,5 @@ const sectionsSlice = createSlice({
 })
 
 export const sectionsSelector = sectionsAdapter.getSelectors()
-
 export const sectionsActions = sectionsSlice.actions
-
 export const sectionsReducer = sectionsSlice.reducer

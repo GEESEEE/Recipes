@@ -6,7 +6,7 @@ import { SectionResult } from '@/types'
 import { SectionService } from '@/services'
 
 @injectable()
-class Validator {
+export default class Validator {
     @inject(TYPES.SectionService)
     private readonly sectionsService!: SectionService
 
@@ -28,6 +28,7 @@ class Validator {
         userId: number,
         sectionIds: number[]
     ): Promise<Array<SectionResult | ModifyError>> {
+        console.log('ValidateSection', this.sectionsService)
         const sections = await this.sectionsService.getSectionsById(sectionIds)
 
         const res = sectionIds.map((id) => {
@@ -53,8 +54,3 @@ class Validator {
         return res
     }
 }
-
-const validator = new Validator()
-Object.freeze(validator)
-
-export default validator

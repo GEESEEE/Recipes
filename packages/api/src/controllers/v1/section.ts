@@ -18,7 +18,7 @@ import {
     SectionCreate,
     SectionUpdate,
 } from '@recipes/api-types/v1'
-import { constants, validator } from '@/utils'
+import { constants, Validator } from '@/utils'
 import { SectionService } from '@/services'
 import { SectionResult } from '@/types'
 
@@ -28,6 +28,9 @@ const { TYPES } = constants
 export default class SectionController implements interfaces.Controller {
     @inject(TYPES.SectionService)
     private readonly sectionsService!: SectionService
+
+    @inject(TYPES.Validator)
+    private readonly validator!: Validator
 
     @httpPost(
         '/',
@@ -72,7 +75,7 @@ export default class SectionController implements interfaces.Controller {
         @requestBody() body: Array<SectionUpdate>
     ): Promise<Array<SectionResult | ModifyError>> {
         const userId = req.user?.id as number
-        const validationResults = await validator.validateSections(
+        const validationResults = await this.validator.validateSections(
             userId,
             body.map((section) => section.id)
         )
@@ -112,12 +115,12 @@ export default class SectionController implements interfaces.Controller {
         body: WithoutId<SectionUpdate>
     ): Promise<SectionResult | ModifyError> {
         const validationResult = (
-            await validator.validateSections(req.user?.id as number, [
+            await this.validator.validateSections(req.user?.id as number, [
                 sectionId,
             ])
         )[0]
         if ('statusCode' in validationResult) {
-            return validator.validateError(validationResult)
+            return this.validator.validateError(validationResult)
         }
         return await this.sectionsService.updateSection({
             ...validationResult,
@@ -136,12 +139,12 @@ export default class SectionController implements interfaces.Controller {
         @requestParam('sectionId') sectionId: number
     ): Promise<boolean | ModifyError> {
         const validationResult = (
-            await validator.validateSections(req.user?.id as number, [
+            await this.validator.validateSections(req.user?.id as number, [
                 sectionId,
             ])
         )[0]
         if ('statusCode' in validationResult) {
-            return validator.validateError(validationResult)
+            return this.validator.validateError(validationResult)
         }
         return await this.sectionsService.deleteSection(sectionId)
     }

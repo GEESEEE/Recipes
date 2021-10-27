@@ -26,6 +26,7 @@ import {
     PaginationMiddleware,
 } from '@/middlewares'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
+import { Validator } from '@/utils'
 
 dotenv.config()
 
@@ -95,6 +96,8 @@ bind<SectionService>(TYPES.SectionService).to(SectionService)
 bind<RecipeService>(TYPES.RecipeService).to(RecipeService)
 bind<AuthService>(TYPES.AuthService).to(AuthService)
 bind<UserService>(TYPES.UserService).to(UserService)
+
+bind<Validator>(TYPES.Validator).to(Validator)
 
 export const { lazyInject } = getDecorators(container)
 

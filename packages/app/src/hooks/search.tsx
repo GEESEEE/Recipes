@@ -7,6 +7,7 @@ export function useSearch(): string {
     let search = ''
     if (
         typeof route.params !== 'undefined' &&
+        typeof route.params.headerSearch !== 'undefined' &&
         route.params.headerSearch.length > 0
     ) {
         search = route.params.headerSearch
