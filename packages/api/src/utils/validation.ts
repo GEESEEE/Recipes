@@ -31,7 +31,7 @@ export default class Validator {
         const sections = await this.sectionsService.getSectionResults(['ids'], {
             sectionIds,
         })
-        console.log('Validating Sections', sections, sectionIds)
+
         const res = sectionIds.map((id) => {
             const section = sections.find((s) => s.id === id)
             if (typeof section === 'undefined') {

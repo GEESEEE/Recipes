@@ -42,7 +42,7 @@ function SectionListItem({
     }
 
     function editSect(): void {
-        navigation.navigate('EditSection', { id: item.id })
+        navigation.navigate('EditSection', { sectionId: item.id })
     }
 
     function onPress(): void {

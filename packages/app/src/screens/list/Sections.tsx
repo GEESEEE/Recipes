@@ -72,6 +72,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const sections = useAppSelector((state) =>
         sectionsSelector.selectAll(state.sections)
     )
+    console.log('Sectionsss', sections)
     const search = useSearch()
     const filteredSections = applySearch<Section>(
         sections,
@@ -86,7 +87,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {auth.user.id < 0 ? <LoginModal /> : null}
             <ListItemRecyclerView
                 Element={SectionListItem}
-                data={filteredSections}
+                data={sections}
                 props={{}}
                 loading={getSections.isLoading}
                 dragDrop

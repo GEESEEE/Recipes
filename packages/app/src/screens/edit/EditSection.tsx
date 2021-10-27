@@ -6,6 +6,7 @@ import { View, Icons } from '@/components/base'
 import { SectionListItem } from '@/components/molecules'
 import { useAppDispatch, useAppSelector, useHeader } from '@/hooks'
 import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
+import { getNewPosition, sectionUpdateObject } from '@/utils'
 
 type EditSectionScreenProps = {
     navigation: any
@@ -21,8 +22,13 @@ function EditSectionScreen({
 
     let sectionId = -1
     if (route.params) {
-        sectionId = (route.params as any).id
+        const params = route.params as any
+        sectionId = params.sectionId
     }
+
+    const sections = useAppSelector((state) =>
+        sectionsSelector.selectAll(state.sections)
+    )
 
     let section = useAppSelector((state) =>
         sectionsSelector.selectById(state.sections, sectionId)
@@ -42,7 +48,7 @@ function EditSectionScreen({
     const handleSaveSection = React.useCallback(
         async (sectionData: Section): Promise<void> => {
             const createData: Omit<SectionCreate, 'userId'> = {
-                position: -1,
+                position: getNewPosition(sections),
                 name: sectionData.name,
                 description: sectionData.description,
             }
@@ -53,25 +59,23 @@ function EditSectionScreen({
                 navigation.pop()
             }
         },
-        [createSection, dispatch, navigation]
+        [createSection, dispatch, navigation, sections]
     )
 
     const handleEditSection = React.useCallback(
         async (sectionData: Section): Promise<void> => {
-            console.log('Editing Section', sectionData)
-            const updateData: SectionUpdate = {
-                id: sectionData.id,
-                name: sectionData.name,
-                description: sectionData.description,
-            }
-            const section = await updateSection(updateData)
+            const updatedSection = await updateSection(
+                sectionUpdateObject(section as Section, sectionData)
+            )
 
-            if ('data' in section) {
-                await dispatch(sectionsActions.upsertSection(section.data))
+            if ('data' in updatedSection) {
+                await dispatch(
+                    sectionsActions.upsertSection(updatedSection.data)
+                )
                 navigation.pop()
             }
         },
-        [updateSection, dispatch, navigation]
+        [updateSection, dispatch, navigation, section]
     )
 
     function handleSectionNameChange(name: string): void {
