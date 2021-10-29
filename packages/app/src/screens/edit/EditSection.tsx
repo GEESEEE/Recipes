@@ -70,7 +70,7 @@ function EditSectionScreen({
 
             if ('data' in updatedSection) {
                 await dispatch(
-                    sectionsActions.upsertSection(updatedSection.data)
+                    sectionsActions.updateSection(updatedSection.data)
                 )
                 navigation.pop()
             }

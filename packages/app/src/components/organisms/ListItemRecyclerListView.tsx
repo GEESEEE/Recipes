@@ -12,11 +12,14 @@ import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
+import { ActionCreatorWithPayload, EntityId } from '@reduxjs/toolkit'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
-import { useAppSelector, useToggle } from '@/hooks'
+import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { utils, listItemUtils } from '@/utils'
+import { logPosition } from '@/utils/list-item'
+import { sectionsActions, sectionsSelector } from '@/redux'
 
 const { width } = Dimensions.get('window')
 
@@ -53,6 +56,10 @@ type ListItemRecyclerViewProps<
     props: U
     loading?: boolean
     dragDrop?: boolean
+    updateSlice: ActionCreatorWithPayload<
+        readonly T[] | Record<EntityId, T>,
+        string
+    >
     updateDatabase?: (
         items: Array<ListItem>
     ) => Promise<{ data: Array<T> } | { error: any }>
@@ -67,9 +74,14 @@ function ListItemRecyclerView<T extends ListItem, U>({
     props,
     loading,
     dragDrop,
+    updateSlice,
     updateDatabase,
 }: ListItemRecyclerViewProps<T, U>): JSX.Element {
     const { textSize } = useAppSelector((state) => state.settings)
+    const dispatch = useAppDispatch()
+
+    console.log('List')
+    logPosition(data)
 
     const scrollOffset = useSharedValue(0)
     const currentIndex = useSharedValue(-1)
@@ -132,7 +144,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         return index
     }
 
-    const [currentData, setCurrentData] = React.useState(data)
     const [from, setFrom] = React.useState(-1)
 
     function start(posY: number): void {
@@ -140,7 +151,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(index)
         currentIndex.value = index
         setDragging(true)
-        setCurrentData(new Array(...data))
         setFrom(index)
     }
 
@@ -151,12 +161,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
-        updateData(currentData, dataProvider.getAllData(), from, to)
+        updateData(dataProvider.getAllData(), from, to)
     }
 
     async function updateData(
-        oldOrder: Array<T>,
-        newOrder: Array<T>,
+        newState: Array<T>,
         from: number,
         to: number
     ): Promise<void> {
@@ -164,30 +173,22 @@ function ListItemRecyclerView<T extends ListItem, U>({
             return
         }
 
-        let start = from
-        let end = to
-        if (from > to) {
-            start = to
-            end = from
-        }
+        const ids = newState.map((item) => item.id)
+        const positions = newState
+            .map((item) => item.position)
+            .sort((a, b) => a - b)
 
         const updateObjects: Array<ListItem> = []
-        for (let i = start; i <= end; i++) {
+        for (let i = 0; i < newState.length; i++) {
             updateObjects.push({
-                id: newOrder[i].id,
-                position: oldOrder[i].position,
+                id: ids[i],
+                position: positions[i],
             })
         }
 
-        data = data.map((item) => {
-            const update = updateObjects.find((obj) => obj.id === item.id)
-            if (typeof update === 'undefined') {
-                return item
-            }
-            return { ...item, ...update }
-        })
+        dispatch(updateSlice(updateObjects as T[]))
         if (typeof updateDatabase !== 'undefined') {
-            await updateDatabase(updateObjects)
+            updateDatabase(updateObjects)
         }
     }
 
@@ -246,7 +247,12 @@ function ListItemRecyclerView<T extends ListItem, U>({
         }
     }
 
-    const rowRenderer = (_: string | number, item: T): JSX.Element | null => {
+    const rowRenderer = (
+        _: string | number,
+        item: T,
+        index?: number
+    ): JSX.Element | null => {
+        console.log('Row renderer', index)
         return (
             <Element
                 onGesture={dragDrop ? onGesture : undefined}

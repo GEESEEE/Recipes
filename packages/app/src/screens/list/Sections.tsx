@@ -11,11 +11,12 @@ import {
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
-import { authActions, authService, sectionService } from '@/redux'
+import { authActions, authService, RootState, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
 import { applySearch } from '@/utils'
+import { logPosition } from '@/utils/list-item'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { auth, settings } = useAppSelector((state) => state)
@@ -71,8 +72,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const sections = useAppSelector((state) =>
         sectionsSelector.selectAll(state.sections)
-    )
-    console.log('Sectionsss', sections)
+    ).sort((a, b) => a.position - b.position)
+
     const search = useSearch()
     const filteredSections = applySearch<Section>(
         sections,
@@ -80,6 +81,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         ['name', 'description']
     )
 
+    console.log('Sectionsss')
+    logPosition(sections)
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
@@ -87,10 +90,11 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             {auth.user.id < 0 ? <LoginModal /> : null}
             <ListItemRecyclerView
                 Element={SectionListItem}
-                data={sections}
+                data={filteredSections}
                 props={{}}
                 loading={getSections.isLoading}
                 dragDrop
+                updateSlice={sectionsActions.updateSections}
                 updateDatabase={updateSections}
             />
         </Container>

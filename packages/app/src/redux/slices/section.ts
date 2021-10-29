@@ -10,7 +10,8 @@ const sectionsSlice = createSlice({
         setSections: sectionsAdapter.setAll,
         addSection: sectionsAdapter.addOne,
         removeSection: sectionsAdapter.removeOne,
-        upsertSection: sectionsAdapter.upsertOne,
+        updateSection: sectionsAdapter.upsertOne,
+        updateSections: sectionsAdapter.upsertMany,
     },
 })
 

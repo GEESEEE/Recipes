@@ -1,4 +1,10 @@
 import { Typography } from '@/styles'
+import { ListItem } from '@/types'
+
+export function logPosition<T extends ListItem>(list: Array<T>): void {
+    console.log(list.map((item) => item.id))
+    console.log(list.map((item) => item.position))
+}
 
 export function heightMap<T>(
     listItem: React.ComponentType<T>,

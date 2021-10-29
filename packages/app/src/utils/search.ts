@@ -49,7 +49,6 @@ function objectIncludesSearch<T>(
                 properties.slice(propIndex - 1)
             )
         } else {
-            console.log('Object, Val not object or array', val, property)
             res = false
         }
     })
