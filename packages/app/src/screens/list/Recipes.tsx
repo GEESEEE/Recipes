@@ -73,6 +73,12 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         ['name', 'description', 'recipeIngredients.ingredient.name']
     )
 
+    function updateSlice(sectionId: number) {
+        return (recipes: Recipe[]) => {
+            return recipesActions.updateRecipes({ sectionId, recipes })
+        }
+    }
+
     return (
         <Container backgroundColor={theme.background}>
             <ListItemRecyclerView
@@ -81,6 +87,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 props={{}}
                 loading={getRecipes.isLoading}
                 dragDrop
+                updateSlice={updateSlice(sectionId)}
             />
         </Container>
     )

@@ -35,16 +35,17 @@ const recipesSlice = createSlice({
             )
         },
 
-        upsertRecipe(
+        updateRecipes(
             state,
-            action: PayloadAction<{ sectionId: number; recipe: Recipe }>
+            action: PayloadAction<{ sectionId: number; recipes: Recipe[] }>
         ) {
-            const { sectionId, recipe } = action.payload
+            const { sectionId, recipes } = action.payload
             state[sectionId] = state[sectionId].map((oldRecipe) => {
-                if (oldRecipe.id === recipe.id) {
-                    return recipe
+                const newRecipe = recipes.find((r) => r.id === oldRecipe.id)
+                if (typeof newRecipe === 'undefined') {
+                    return oldRecipe
                 }
-                return oldRecipe
+                return { ...oldRecipe, ...newRecipe }
             })
         },
     },

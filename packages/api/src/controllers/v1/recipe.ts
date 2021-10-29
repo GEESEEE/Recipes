@@ -50,6 +50,12 @@ export default class RecipeController implements interfaces.Controller {
             { sectionId },
             []
         )
+
+        await this.validator.validateRecipes(
+            req.user?.id as number,
+            sectionId,
+            recipes.map((recipe) => recipe.id)
+        )
         return recipes
     }
 

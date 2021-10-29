@@ -19,7 +19,6 @@ import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { utils, listItemUtils } from '@/utils'
 import { logPosition } from '@/utils/list-item'
-import { sectionsActions, sectionsSelector } from '@/redux'
 
 const { width } = Dimensions.get('window')
 
@@ -56,10 +55,7 @@ type ListItemRecyclerViewProps<
     props: U
     loading?: boolean
     dragDrop?: boolean
-    updateSlice: ActionCreatorWithPayload<
-        readonly T[] | Record<EntityId, T>,
-        string
-    >
+    updateSlice: (arr: T[]) => { payload: any; type: string }
     updateDatabase?: (
         items: Array<ListItem>
     ) => Promise<{ data: Array<T> } | { error: any }>

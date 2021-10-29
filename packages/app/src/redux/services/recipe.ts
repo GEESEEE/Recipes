@@ -1,6 +1,8 @@
 import { Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
 import { api } from './base'
 
+type BaseArg = { sectionId: number }
+
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getRecipesBySectionId: builder.query<Recipe[], number>({
@@ -12,7 +14,7 @@ const recipeApi = api.injectEndpoints({
 
         createRecipes: builder.mutation<
             Recipe[],
-            { sectionId: number; body: Array<Omit<RecipeCreate, 'sectionId'>> }
+            BaseArg & { body: Array<Omit<RecipeCreate, 'sectionId'>> }
         >({
             query: (args) => ({
                 url: `/sections/${args.sectionId}/recipes/bulk`,
@@ -23,7 +25,7 @@ const recipeApi = api.injectEndpoints({
 
         updateRecipes: builder.mutation<
             Recipe[],
-            { sectionId: number; body: Array<RecipeUpdate> }
+            BaseArg & { body: Array<RecipeUpdate> }
         >({
             query: (args) => ({
                 url: `/sections/${args.sectionId}/recipes/bulk`,
@@ -32,15 +34,14 @@ const recipeApi = api.injectEndpoints({
             }),
         }),
 
-        deleteRecipe: builder.mutation<
-            boolean,
-            { sectionId: number; recipeId: number }
-        >({
-            query: (args) => ({
-                url: `/sections/${args.sectionId}/recipes/${args.recipeId}`,
-                method: 'DELETE',
-            }),
-        }),
+        deleteRecipe: builder.mutation<boolean, BaseArg & { recipeId: number }>(
+            {
+                query: (args) => ({
+                    url: `/sections/${args.sectionId}/recipes/${args.recipeId}`,
+                    method: 'DELETE',
+                }),
+            }
+        ),
     }),
 })
 
