@@ -1,6 +1,7 @@
 import { body, param, ValidationChain } from 'express-validator'
 import {
     controller,
+    httpDelete,
     httpGet,
     httpPost,
     httpPut,
@@ -63,42 +64,61 @@ export default class RecipeController implements interfaces.Controller {
         @requestParam('sectionId') sectionId: number,
         @requestBody() body: Array<Omit<RecipeCreate, 'sectionId'>>
     ): Promise<RecipeResult[] | ModifyError> {
-        const validationResult = (
-            await this.validator.validateSections(req.user?.id as number, [
-                sectionId,
-            ])
-        )[0]
-        if ('statusCode' in validationResult) {
-            return this.validator.validateError(validationResult)
-        }
+        const validationResults = await this.validator.validateSections(
+            req.user?.id as number,
+            [sectionId]
+        )
+        console.log('Creating recipes, validation results', validationResults)
         return await this.recipeService.createRecipes(
             body.map((recipe) => ({ ...recipe, sectionId }))
         )
     }
 
     @httpPut(
-        '/:recipeId',
+        '/bulk',
         TYPES.PassportMiddleware,
-        ...RecipeController.validate('updateRecipe'),
+        ...RecipeController.validate('updateRecipes'),
         TYPES.ErrorMiddleware
     )
-    public async updateRecipe(
+    public async updateRecipes(
         @request() req: Request,
         @requestParam('sectionId') sectionId: number,
-        @requestParam('recipeId') recipeId: number,
-        @requestBody() body: RecipeUpdate
-    ): Promise<RecipeResult | ModifyError> {
+        @requestBody() body: Array<RecipeUpdate>
+    ): Promise<Array<RecipeResult | ModifyError>> {
+        const recipeIds = body.map((recipe) => recipe.id)
+        const validationResults = await this.validator.validateRecipes(
+            req.user?.id as number,
+            sectionId,
+            recipeIds
+        )
+        console.log('Updating recipes', validationResults)
+        // TODO validate that recipe is included in section
+        console.log('Update recipe', body)
+        return [new RecipeResult()]
+    }
+
+    @httpDelete(
+        '/:recipeId',
+        TYPES.PassportMiddleware,
+        ...RecipeController.validate('deleteRecipe'),
+        TYPES.ErrorMiddleware
+    )
+    public async deleteRecipe(
+        @request() req: Request,
+        @requestParam('sectionId') sectionId: number,
+        @requestParam('recipeId') recipeId: number
+    ): Promise<boolean | ModifyError> {
         const validationResult = (
-            await this.validator.validateSections(req.user?.id as number, [
+            await this.validator.validateRecipes(
+                req.user?.id as number,
                 sectionId,
-            ])
+                [recipeId]
+            )
         )[0]
         if ('statusCode' in validationResult) {
             return this.validator.validateError(validationResult)
         }
-        // TODO validate that recipe is included in section
-        console.log('Update recipe', recipeId, body)
-        return new RecipeResult()
+        return await this.recipeService.deleteRecipe(recipeId)
     }
 
     // #region validate
@@ -116,12 +136,30 @@ export default class RecipeController implements interfaces.Controller {
                     body('*.description').exists().isString(),
                     body('*.prepareTime').isInt().toInt(),
                     body('*.peopleCount').isInt().toInt(),
+                    body('*.position').isInt().toInt(),
+                    body('*.publishedAt').optional({ nullable: true }).isDate(),
                     body('*.createdAt').optional().isDate(),
-                    body('*.publishedAt').optional().isDate(), // Should also check null
-                    body('*.copyOf').optional().isInt().toInt(), // should also check null?
+                    body('*.copyOf')
+                        .optional({ nullable: true })
+                        .isInt()
+                        .toInt(),
                 ]
 
-            case 'updateRecipe':
+            case 'updateRecipes':
+                return [
+                    ...base,
+                    body().isArray(),
+                    body('*.id').optional().toInt(),
+                    body('*.sectionId').isInt().toInt(),
+                    body('*.name').optional().isString(),
+                    body('*.description').optional().isString(),
+                    body('*.prepareTime').optional().isInt().toInt(),
+                    body('*.peopleCount').optional().isInt().toInt(),
+                    body('*.position').optional().isInt().toInt(),
+                    body('*.publishedAt').optional({ nullable: true }).isDate(), // Should also check null]
+                ]
+
+            case 'deleteRecipe':
                 return [...base, param('recipeId').isInt().toInt()]
 
             default:

@@ -2,7 +2,7 @@ import { ModifyError, RequestError } from '@recipes/api-types/v1'
 import { inject, injectable } from 'inversify'
 import { TYPES } from './constants'
 import { NotFoundError, ForbiddenError } from '@/errors'
-import { SectionResult } from '@/types'
+import { RecipeResult, SectionResult } from '@/types'
 import { SectionService } from '@/services'
 
 @injectable()
@@ -55,11 +55,18 @@ export default class Validator {
         return res
     }
 
-    // public async validateRecipes(
-    //     userId: number,
-    //     sectionId: number,
-    //     recipeIds: number[]
-    // ): Promise<Array<RecipeResult | ModifyError>> {
-    //     const section = await this.sectionsService.getSectionsById([sectionId])
-    // }
+    public async validateRecipes(
+        userId: number,
+        sectionId: number,
+        recipeIds: number[]
+    ): Promise<Array<RecipeResult | ModifyError>> {
+        console.log('Validating Recipes', userId, sectionId, recipeIds)
+        const section = await this.sectionsService.getSections(
+            ['ids', 'recipes'],
+            { sectionIds: [sectionId], recipeIds }
+        )
+
+        console.log('ValidateRecipes', section)
+        return []
+    }
 }

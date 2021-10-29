@@ -55,4 +55,5 @@ export type RecipeCreate = Optional<
     'createdAt' | 'publishedAt' | 'copyOf'
 >
 
-export type RecipeUpdate = Pick<Recipe, 'id'> & Partial<RecipeCreate>
+export type RecipeUpdate = Pick<Recipe, 'id'> &
+    Partial<Omit<RecipeCreate, 'createdAt' | 'copyOf'>>
