@@ -14,7 +14,6 @@ export default class SectionRespository extends BaseRepository<Section> {
     }
 
     public override transform(record: any): Section {
-        console.log('Transforming section', record)
         if (record.recipe_id == null) {
             record.recipes = []
         } else {
@@ -30,7 +29,6 @@ export default class SectionRespository extends BaseRepository<Section> {
                               recipe_id: record.instruction_recipe_id,
                           },
                       ]
-            console.log('Instructions', instructions)
             const recipeIngredients =
                 record.recipe_ingredient_id == null ||
                 record.ingredient_id == null ||
@@ -52,7 +50,6 @@ export default class SectionRespository extends BaseRepository<Section> {
                               },
                           },
                       ]
-            console.log('Recipe Ingredients', recipeIngredients)
             record.recipes = [
                 {
                     id: record.recipe_id,
@@ -69,24 +66,7 @@ export default class SectionRespository extends BaseRepository<Section> {
                 },
             ]
         }
-        if (typeof record.recipe_id !== 'undefined') {
-            record.recipes =
-                record.recipe_id === null
-                    ? []
-                    : [
-                          {
-                              id: record.recipe_id,
-                              name: record.recipe_name,
-                              description: record.recipe_description,
-                              prepare_time: record.recipe_prepare_time,
-                              people_count: record.recipe_people_count,
-                              created_at: record.recipe_created_at,
-                              position: record.recipe_position,
-                              published_at: record.recipe_published_at,
-                              copy_of: record.recipe_copy_of,
-                          },
-                      ]
-        }
+
         return super.transform(record)
     }
 }

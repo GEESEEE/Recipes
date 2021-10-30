@@ -56,11 +56,10 @@ export default class Validator {
     }
 
     public async validateRecipes(
-        userId: number,
+        _userId: number,
         sectionId: number,
         recipeIds: number[]
     ): Promise<Array<RecipeResult | ModifyError>> {
-        console.log('Validating Recipes', userId, sectionId, recipeIds)
         const section = (
             await this.sectionsService.getSections(['ids', 'recipes'], {
                 sectionIds: [sectionId],
@@ -68,7 +67,7 @@ export default class Validator {
             })
         )[0]
 
-        console.log('ValidateRecipes', section)
+        console.log('ValidateRecipes', section?.recipes?.length)
         return []
     }
 }

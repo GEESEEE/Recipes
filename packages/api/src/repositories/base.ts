@@ -24,7 +24,7 @@ export default abstract class BaseRepository<T> extends Repository<T> {
         if (typeof take !== 'undefined') {
             groups = groups.filter((_group, index) => index < take)
         }
-        console.log('Transforming many', groups)
+
         return groups
             .map((groupedRecords) =>
                 groupedRecords.map(this.transform.bind(this))
@@ -32,6 +32,7 @@ export default abstract class BaseRepository<T> extends Repository<T> {
             .map(([first, ...rest]) =>
                 mergeWith(first, ...rest, (objValue: any, srcValue: any) => {
                     if (Array.isArray(objValue)) {
+                        console.log('Merging Array', objValue, srcValue)
                         const srcVal = srcValue[0]
                         objValue = objValue.filter(
                             (item) => !isEqual(item, srcVal)

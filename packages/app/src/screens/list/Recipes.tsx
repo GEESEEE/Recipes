@@ -27,7 +27,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
             {
                 type: Icons.MyFeather,
                 name: 'plus',
-                onPress: () => navigation.navigate('EditRecipe'),
+                onPress: () => navigation.navigate('EditRecipeTabs'),
             },
         ],
     })

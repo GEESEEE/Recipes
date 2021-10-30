@@ -44,7 +44,11 @@ function RecipesStack(): JSX.Element {
 
             <Stack.Screen name="Recipes" component={RecipesScreen} />
 
-            <Stack.Screen name="EditRecipe" component={EditRecipeScreen} />
+            <Stack.Screen
+                name="EditRecipe"
+                component={EditRecipeScreen}
+                options={{ headerShown: false }}
+            />
 
             <Stack.Screen
                 name="EditRecipeTabs"

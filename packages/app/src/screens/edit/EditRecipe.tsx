@@ -70,6 +70,7 @@ function EditRecipeScreen(): JSX.Element {
                 type="Solid"
                 text="SAVE"
                 onPress={() => console.log('Should save now or soething')}
+                marginVertical="l"
             />
         </Container>
     )
