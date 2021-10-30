@@ -24,7 +24,7 @@ export default abstract class BaseRepository<T> extends Repository<T> {
         if (typeof take !== 'undefined') {
             groups = groups.filter((_group, index) => index < take)
         }
-
+        console.log('Transforming many', groups)
         return groups
             .map((groupedRecords) =>
                 groupedRecords.map(this.transform.bind(this))

@@ -4,7 +4,7 @@ import { RootState } from '@/redux/store'
 const V1 = 'v1'
 
 export const baseQuery = fetchBaseQuery({
-    baseUrl: `${'http://7fc9-5-132-11-58.ngrok.io' ?? '127.0.0.1'}/${V1}`,
+    baseUrl: `${'http://9e71-85-145-4-64.ngrok.io' ?? '127.0.0.1'}/${V1}`,
     prepareHeaders: (headers, { getState }) => {
         const { token } = (getState() as RootState).auth
         if (token.length > 0) {

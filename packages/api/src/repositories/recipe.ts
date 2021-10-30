@@ -55,7 +55,6 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
                 ]
             }
         }
-
         return super.transform(record)
     }
 }

@@ -11,7 +11,7 @@ import {
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
-import { authActions, authService, RootState, sectionService } from '@/redux'
+import { authActions, authService, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'

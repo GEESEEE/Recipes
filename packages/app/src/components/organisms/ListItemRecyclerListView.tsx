@@ -76,9 +76,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
     const { textSize } = useAppSelector((state) => state.settings)
     const dispatch = useAppDispatch()
 
-    console.log('List')
-    logPosition(data)
-
     const scrollOffset = useSharedValue(0)
     const currentIndex = useSharedValue(-1)
     const scrolling = useSharedValue(false)
@@ -243,12 +240,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
         }
     }
 
-    const rowRenderer = (
-        _: string | number,
-        item: T,
-        index?: number
-    ): JSX.Element | null => {
-        console.log('Row renderer', index)
+    const rowRenderer = (_: string | number, item: T): JSX.Element | null => {
         return (
             <Element
                 onGesture={dragDrop ? onGesture : undefined}

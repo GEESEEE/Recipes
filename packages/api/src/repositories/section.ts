@@ -12,6 +12,83 @@ export default class SectionRespository extends BaseRepository<Section> {
             args
         )
     }
+
+    public override transform(record: any): Section {
+        console.log('Transforming section', record)
+        if (record.recipe_id == null) {
+            record.recipes = []
+        } else {
+            const instructions =
+                record.instruction_id == null ||
+                record.instruction_recipe_id !== record.recipe_id
+                    ? []
+                    : [
+                          {
+                              id: record.instruction_id,
+                              text: record.instruction_text,
+                              position: record.instruction_position,
+                              recipe_id: record.instruction_recipe_id,
+                          },
+                      ]
+            console.log('Instructions', instructions)
+            const recipeIngredients =
+                record.recipe_ingredient_id == null ||
+                record.ingredient_id == null ||
+                record.recipe_ingredient_recipe_id !== record.recipe_id ||
+                record.recipe_ingredient_ingredient_id !== record.ingredient_id
+                    ? []
+                    : [
+                          {
+                              id: record.recipe_ingredient_id,
+                              ingredient_id:
+                                  record.recipe_ingredient_ingredient_id,
+                              recipe_id: record.recipe_ingredient_recipe_id,
+                              amount: record.recipe_ingredient_amount,
+                              position: record.recipe_ingredient_position,
+                              ingredient: {
+                                  id: record.ingredient_id,
+                                  name: record.ingredient_name,
+                                  unit: record.ingredient_unit,
+                              },
+                          },
+                      ]
+            console.log('Recipe Ingredients', recipeIngredients)
+            record.recipes = [
+                {
+                    id: record.recipe_id,
+                    name: record.recipe_name,
+                    description: record.recipe_description,
+                    prepare_time: record.recipe_prepare_time,
+                    people_count: record.recipe_people_count,
+                    created_at: record.recipe_created_at,
+                    position: record.recipe_position,
+                    published_at: record.recipe_published_at,
+                    copy_of: record.recipe_copy_of,
+                    instructions,
+                    recipeIngredients,
+                },
+            ]
+        }
+        if (typeof record.recipe_id !== 'undefined') {
+            record.recipes =
+                record.recipe_id === null
+                    ? []
+                    : [
+                          {
+                              id: record.recipe_id,
+                              name: record.recipe_name,
+                              description: record.recipe_description,
+                              prepare_time: record.recipe_prepare_time,
+                              people_count: record.recipe_people_count,
+                              created_at: record.recipe_created_at,
+                              position: record.recipe_position,
+                              published_at: record.recipe_published_at,
+                              copy_of: record.recipe_copy_of,
+                          },
+                      ]
+        }
+        return super.transform(record)
+    }
 }
 
 export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
@@ -63,7 +140,26 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
                 'recipe',
                 `recipe.sectionId = section.id`
             )
+            .leftJoinAndSelect(
+                'instruction',
+                'instruction',
+                'instruction.recipe_id = recipe.id'
+            )
+            .leftJoinAndSelect(
+                'recipe_ingredient',
+                'recipe_ingredient',
+                'recipe_ingredient.recipe_id = recipe.id'
+            )
+            .leftJoinAndSelect(
+                'ingredient',
+                'ingredient',
+                'recipe_ingredient.ingredient_id = ingredient.id'
+            )
+            .addGroupBy('instruction.id')
+            .addGroupBy('recipe_ingredient.id')
+            .addGroupBy('ingredient.id')
             .andWhere(`recipe.id IN (${this.recipeIds})`)
+            .addGroupBy('recipe.id')
     }
 
     public get ids(): this {

@@ -34,6 +34,8 @@ export default class Section {
     @JoinColumn({ name: 'user_id' })
     public user?: User
 
+    @Expose()
+    @Type(() => Recipe)
     @OneToMany(() => Recipe, (recipe) => recipe.section)
     public recipes?: Recipe[]
 

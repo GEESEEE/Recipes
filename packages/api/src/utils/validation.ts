@@ -61,10 +61,12 @@ export default class Validator {
         recipeIds: number[]
     ): Promise<Array<RecipeResult | ModifyError>> {
         console.log('Validating Recipes', userId, sectionId, recipeIds)
-        const section = await this.sectionsService.getSections(
-            ['ids', 'recipes'],
-            { sectionIds: [sectionId], recipeIds }
-        )
+        const section = (
+            await this.sectionsService.getSections(['ids', 'recipes'], {
+                sectionIds: [sectionId],
+                recipeIds,
+            })
+        )[0]
 
         console.log('ValidateRecipes', section)
         return []
