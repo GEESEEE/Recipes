@@ -48,8 +48,8 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     const skip =
-        sectionId < 0 &&
-        typeof recipes[sectionId] !== 'undefined' &&
+        sectionId < 0 ||
+        // typeof recipes[sectionId] !== 'undefined' ||
         !(auth.token.length > 0)
 
     const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {

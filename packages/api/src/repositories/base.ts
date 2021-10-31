@@ -1,5 +1,7 @@
 import mergeWith from 'lodash/mergeWith'
 import isEqual from 'lodash/isEqual'
+import isArray from 'lodash/isArray'
+// import isEqualWith from 'lodash/isEqualWith'
 import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
@@ -25,24 +27,52 @@ export default abstract class BaseRepository<T> extends Repository<T> {
             groups = groups.filter((_group, index) => index < take)
         }
 
-        return groups
-            .map((groupedRecords) =>
-                groupedRecords.map(this.transform.bind(this))
-            )
-            .map(([first, ...rest]) =>
-                mergeWith(first, ...rest, (objValue: any, srcValue: any) => {
-                    if (Array.isArray(objValue)) {
-                        console.log('Merging Array', objValue, srcValue)
-                        const srcVal = srcValue[0]
-                        objValue = objValue.filter(
-                            (item) => !isEqual(item, srcVal)
-                        )
-                        objValue.push(srcVal)
-                        return objValue
-                    }
-                    return undefined
-                })
-            )
+        const grouped = groups.map((groupedRecords) =>
+            groupedRecords.map(this.transform.bind(this))
+        )
+
+        const res = grouped.map(([first, ...rest]) =>
+            mergeWith(first, ...rest, (objValue: any, srcValue: any) => {
+                if (Array.isArray(objValue)) {
+                    const srcVal = srcValue[0]
+                    objValue = objValue.filter((item) => !isEqual(item, srcVal))
+                    objValue.push(srcVal)
+                    return objValue
+                }
+                return undefined
+            })
+        )
+
+        console.log('Input', res)
+
+        const x = this.mergeStuff(res)
+
+        console.log('Merged Stuff', x)
+
+        return res
+    }
+
+    mergeArray = (arr: any[]): any[] => {
+        // console.log('Merging Array', arr)
+        const [first, ...rest] = arr
+        console.log('Arraaayy', first, rest)
+        return mergeWith(first, ...rest, (obj1: any, obj2: any) => {
+            console.log('Merging', obj1, obj2)
+            return undefined
+        })
+    }
+
+    mergeStuff = (arr: any[]) => {
+        return arr.map((obj) => {
+            for (const [key, value] of Object.entries(obj)) {
+                if (isArray(value)) {
+                    console.log('Is array, will merge')
+                    obj[key] = this.mergeArray(value)
+                    console.log('Set new array')
+                }
+            }
+            return obj
+        })
     }
 }
 
