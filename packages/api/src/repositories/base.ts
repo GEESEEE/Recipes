@@ -1,12 +1,11 @@
-import mergeWith from 'lodash/mergeWith'
-import isEqual from 'lodash/isEqual'
-import isArray from 'lodash/isArray'
+// import mergeWith from 'lodash/mergeWith'
+// import isEqual from 'lodash/isEqual'
 // import isEqualWith from 'lodash/isEqualWith'
 import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginationObject } from '@recipes/api-types/v1'
-import { SortQueryTuple, groupBy } from '@/utils'
+import { SortQueryTuple, groupBy, mergeGroup } from '@/utils'
 import { UnprocessableError } from '@/errors'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
@@ -31,48 +30,41 @@ export default abstract class BaseRepository<T> extends Repository<T> {
             groupedRecords.map(this.transform.bind(this))
         )
 
-        const res = grouped.map(([first, ...rest]) =>
-            mergeWith(first, ...rest, (objValue: any, srcValue: any) => {
-                if (Array.isArray(objValue)) {
-                    const srcVal = srcValue[0]
-                    objValue = objValue.filter((item) => !isEqual(item, srcVal))
-                    objValue.push(srcVal)
-                    return objValue
-                }
-                return undefined
-            })
-        )
-
-        console.log('Input', res)
-
-        const x = this.mergeStuff(res)
-
-        console.log('Merged Stuff', x)
+        const res = grouped.map((group) => mergeGroup(group))
 
         return res
     }
 
-    mergeArray = (arr: any[]): any[] => {
-        // console.log('Merging Array', arr)
-        const [first, ...rest] = arr
-        console.log('Arraaayy', first, rest)
-        return mergeWith(first, ...rest, (obj1: any, obj2: any) => {
-            console.log('Merging', obj1, obj2)
-            return undefined
-        })
+    mergeAll(arr: any[]): any[] {
+        const temp: any[][] = groupBy(arr, 'id')
+        console.log('temp', temp)
+        return temp.map((arr) => this.mergeArray(arr))
     }
 
-    mergeStuff = (arr: any[]) => {
-        return arr.map((obj) => {
-            for (const [key, value] of Object.entries(obj)) {
-                if (isArray(value)) {
-                    console.log('Is array, will merge')
-                    obj[key] = this.mergeArray(value)
-                    console.log('Set new array')
+    mergeArray(arr: any[]): any {
+        if (arr.length <= 1) return arr
+        let res = arr[0]
+        arr = arr.slice(1)
+        for (const obj of arr) {
+            res = this.mergeObjects(res, obj)
+        }
+        return res
+    }
+
+    mergeObjects(obj1: object, obj2: object): object {
+        const res: any = {}
+        for (const [key1, value1] of Object.entries(obj1)) {
+            for (const [key2, value2] of Object.entries(obj2)) {
+                if (key1 === key2) {
+                    if (Array.isArray(value1) && Array.isArray(value2)) {
+                        res[key1] = this.mergeAll(value1.concat(value2))
+                    } else {
+                        res[key1] = value2
+                    }
                 }
             }
-            return obj
-        })
+        }
+        return res
     }
 }
 

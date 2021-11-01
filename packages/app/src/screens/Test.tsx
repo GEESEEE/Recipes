@@ -2,7 +2,13 @@ import React, { useRef } from 'react'
 import { Animated, Keyboard, TextInput as RNT } from 'react-native'
 import styled from 'styled-components'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { fitToClass, Recipe, Instruction } from '@recipes/api-types/v1'
+import {
+    fitToClass,
+    Recipe,
+    Instruction,
+    RecipeIngredient,
+    Section,
+} from '@recipes/api-types/v1'
 import { settingsActions } from '@/redux'
 import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
 import { applySearch, screenUtils } from '@/utils'
@@ -14,18 +20,11 @@ import { userService, recipeService } from '@/redux'
 const bigLogo = 1
 const smallLogo = 0.5
 
-const recipe = new Recipe()
-recipe.instructions = [new Instruction(), new Instruction()]
-recipe.copyOf = 1
-recipe.recipeIngredients = []
-
 const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     // const { recipes } = useAppSelector((state) => state.myRecipes)
 
-    function toClass(): void {
-        console.log('toClass')
-        console.log('Recipe before', recipe)
-        console.log('Recipe after', fitToClass(recipe, Recipe))
+    function mergeTest(): void {
+        console.log('\n\nStarting Merging\n')
     }
 
     const [updateSettings] = userService.useUpdateSettingsMutation()
@@ -116,8 +115,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
             <Button
                 marginVertical="m"
                 type="Solid"
-                text="Class test"
-                onPress={() => toClass()}
+                text="Merge test"
+                onPress={() => mergeTest()}
             />
         </Container>
     )
