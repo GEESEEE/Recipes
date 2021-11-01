@@ -22,7 +22,7 @@ import { RecipeIngredientResult } from '@/types'
 
 const { TYPES } = constants
 
-@controller('/v1/sections/:sectionId/recipes/:recipeId')
+@controller('/v1/sections/:sectionId/recipes/:recipeId/ingredients')
 export default class IngredientController implements interfaces.Controller {
     @inject(TYPES.RecipeService)
     private readonly recipeService!: RecipeService
@@ -31,7 +31,7 @@ export default class IngredientController implements interfaces.Controller {
     private readonly validator!: Validator
 
     @httpPost(
-        '/ingredients/bulk',
+        '/bulk',
         TYPES.PassportMiddleware,
         ...IngredientController.validate('addIngredients'),
         TYPES.ErrorMiddleware
@@ -56,7 +56,7 @@ export default class IngredientController implements interfaces.Controller {
     }
 
     @httpPut(
-        '/ingredients/bulk',
+        '/bulk',
         TYPES.PassportMiddleware,
         ...IngredientController.validate('updateIngredients'),
         TYPES.ErrorMiddleware
@@ -89,7 +89,7 @@ export default class IngredientController implements interfaces.Controller {
     }
 
     @httpDelete(
-        '/ingredients/bulk',
+        '/bulk',
         TYPES.PassportMiddleware,
         ...IngredientController.validate('deleteIngredients'),
         TYPES.ErrorMiddleware
