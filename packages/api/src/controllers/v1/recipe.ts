@@ -45,7 +45,7 @@ export default class RecipeController implements interfaces.Controller {
         if ('statusCode' in validationResult) {
             return this.validator.validateError(validationResult)
         }
-        const recipes = await this.recipeService.getRecipesByScopes(
+        const recipes = await this.recipeService.getRecipes(
             ['section'],
             { sectionId },
             []

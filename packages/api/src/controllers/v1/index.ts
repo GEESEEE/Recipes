@@ -1,5 +1,5 @@
-export { default as IngredientController } from './old/ingredient'
 export { default as AuthController } from './auth'
 export { default as Usercontroller } from './user'
 export { default as SectionController } from './section'
 export { default as RecipeController } from './recipe'
+export { default as InstructionController } from './instruction'

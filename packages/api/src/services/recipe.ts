@@ -5,7 +5,7 @@ import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
 import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
-import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
+import { Ingredient, Instruction, RecipeIngredient } from '@/entities'
 
 @injectable()
 export default class RecipeService {
@@ -21,43 +21,6 @@ export default class RecipeService {
     @inject(TYPES.InstructionRepository)
     private readonly instructionRepository!: Repository<Instruction>
 
-    // #region ingredient
-    public async createIngredient({
-        name,
-        unit,
-    }: {
-        name: string
-        unit?: string
-    }): Promise<Ingredient> {
-        let ingredient = await this.ingredientRepository.findOne({
-            where: { name, unit },
-        })
-
-        if (typeof ingredient === 'undefined') {
-            ingredient = await this.ingredientRepository.save({
-                name,
-                unit,
-            })
-        }
-
-        return ingredient
-    }
-
-    public async deleteIngredient(ingredientId: number): Promise<boolean> {
-        const result = await this.ingredientRepository.delete(ingredientId)
-        return result.affected !== 0
-    }
-
-    public async getIngredient(
-        ingredientId: number
-    ): Promise<Ingredient | undefined> {
-        const ingredient = await this.ingredientRepository.findOne({
-            where: { id: ingredientId },
-        })
-        return ingredient
-    }
-    // #endregion
-
     // #region Recipe
     public async createRecipes(
         recipes: Array<RecipeCreate>
@@ -67,18 +30,7 @@ export default class RecipeService {
         return recipe.map((r) => fitToClass(r as RecipeResult, RecipeResult))
     }
 
-    // TODO: Remove, because recipescopes can do the same thing
-    public async getRecipe(recipeId: number): Promise<Recipe | undefined> {
-        return (
-            await this.recipeRepository
-                .queryBuilder()
-                .byId(recipeId)
-                .finish()
-                .getMany()
-        )[0]
-    }
-
-    public async getRecipesByScopes(
+    public async getRecipes(
         scopes: RecipeScopes[],
         args: RecipeScopeArgs,
         sort: SortQueryTuple[]
@@ -284,13 +236,6 @@ export default class RecipeService {
     public async deleteInstructions(instructionIds: number[]): Promise<number> {
         const result = await this.instructionRepository.delete(instructionIds)
         return result.affected || 0
-    }
-
-    public async getInstructions(recipeId: number): Promise<Instruction[]> {
-        const instructions = await this.instructionRepository.find({
-            where: { recipeId },
-        })
-        return instructions
     }
 
     public async updateInstructions(
