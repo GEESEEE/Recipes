@@ -50,12 +50,6 @@ export default class RecipeController implements interfaces.Controller {
             { sectionId },
             []
         )
-
-        await this.validator.validateRecipes(
-            req.user?.id as number,
-            sectionId,
-            recipes.map((recipe) => recipe.id)
-        )
         return recipes
     }
 
@@ -70,11 +64,16 @@ export default class RecipeController implements interfaces.Controller {
         @requestParam('sectionId') sectionId: number,
         @requestBody() body: Array<Omit<RecipeCreate, 'sectionId'>>
     ): Promise<RecipeResult[] | ModifyError> {
-        const validationResults = await this.validator.validateSections(
-            req.user?.id as number,
-            [sectionId]
-        )
-        console.log('Creating recipes, validation results', validationResults)
+        const validationResult = (
+            await this.validator.validateSections(req.user?.id as number, [
+                sectionId,
+            ])
+        )[0]
+
+        if ('statusCode' in validationResult) {
+            return this.validator.validateError(validationResult)
+        }
+
         return await this.recipeService.createRecipes(
             body.map((recipe) => ({ ...recipe, sectionId }))
         )
@@ -97,10 +96,18 @@ export default class RecipeController implements interfaces.Controller {
             sectionId,
             recipeIds
         )
-        console.log('Updating recipes', validationResults)
-        // TODO validate that recipe is included in section
-        console.log('Update recipe', body)
-        return [new RecipeResult()]
+
+        const [validRecipes, modifyErrors] =
+            this.validator.splitResults(validationResults)
+
+        const updateObjects = validRecipes.map((recipe) => {
+            const updateObj = body.find((r) => r.id === recipe.id)
+            return { ...recipe, ...updateObj }
+        })
+
+        const newRecipes = await this.recipeService.updateRecipes(updateObjects)
+
+        return [...newRecipes, ...modifyErrors]
     }
 
     @httpDelete(

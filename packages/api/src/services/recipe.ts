@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import { fitToClass, RecipeCreate } from '@recipes/api-types/v1'
+import { fitToClass, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
@@ -94,29 +94,13 @@ export default class RecipeService {
         )
     }
 
-    public async updateRecipe(
-        recipe: Recipe,
-        {
-            name,
-            description,
-            prepareTime,
-            peopleCount,
-            publishedAt,
-        }: {
-            name?: string
-            description?: string
-            prepareTime?: number
-            peopleCount?: number
-            publishedAt?: Date | null
-        }
-    ): Promise<Recipe> {
-        recipe.name = name ?? recipe.name
-        recipe.description = description ?? recipe.description
-        recipe.prepareTime = prepareTime ?? recipe.prepareTime
-        recipe.peopleCount = peopleCount ?? recipe.peopleCount
-        if (typeof publishedAt !== 'undefined') recipe.publishedAt = publishedAt
-
-        return await this.recipeRepository.save(recipe)
+    public async updateRecipes(
+        recipes: Array<RecipeUpdate>
+    ): Promise<RecipeResult[]> {
+        const saved = await this.recipeRepository.save(recipes)
+        return saved.map((recipe) =>
+            fitToClass(recipe as RecipeResult, RecipeResult)
+        )
     }
 
     public async deleteRecipe(recipeId: number): Promise<boolean> {

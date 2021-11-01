@@ -21,8 +21,8 @@ export function groupBy<T>(records: T[], key: string): T[][] {
     return result
 }
 
-export function mergeArray(arr: any[], mergeBy?: string): any[] {
-    const temp: any[][] = groupBy(arr, mergeBy || 'id')
+export function mergeArray<T>(arr: T[], mergeBy?: string): T[] {
+    const temp: T[][] = groupBy(arr, mergeBy || 'id')
     return temp.map((group) => mergeGroup(group))
 }
 

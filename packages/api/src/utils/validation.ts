@@ -1,4 +1,4 @@
-import { ModifyError, RequestError } from '@recipes/api-types/v1'
+import { fitToClass, ModifyError, RequestError } from '@recipes/api-types/v1'
 import { inject, injectable } from 'inversify'
 import { TYPES } from './constants'
 import { NotFoundError, ForbiddenError } from '@/errors'
@@ -24,6 +24,42 @@ export default class Validator {
         return error
     }
 
+    private toError(
+        objectName: string,
+        id: number,
+        error: RequestError
+    ): ModifyError {
+        let statusMessage = `${objectName} with id ${id}`
+        switch (error) {
+            case RequestError.NOT_FOUND:
+                statusMessage += `was not found`
+                break
+
+            case RequestError.FORBIDDEN:
+                statusMessage += `does not belong to requesting user`
+                break
+        }
+
+        return {
+            id,
+            statusCode: error,
+            statusMessage,
+        }
+    }
+
+    public splitResults<T>(arr: Array<T | ModifyError>): [T[], ModifyError[]] {
+        const newArr: T[] = []
+        const errors: ModifyError[] = []
+        arr.forEach((result) => {
+            if ('statusCode' in result) {
+                errors.push(result)
+            } else {
+                newArr.push(result)
+            }
+        })
+        return [newArr, errors]
+    }
+
     public async validateSections(
         userId: number,
         sectionIds: number[]
@@ -35,19 +71,10 @@ export default class Validator {
         const res = sectionIds.map((id) => {
             const section = sections.find((s) => s.id === id)
             if (typeof section === 'undefined') {
-                return {
-                    id,
-                    statusCode: RequestError.NOT_FOUND,
-                    statusMessage: 'Provided sectionId was not found',
-                }
+                return this.toError('Section', id, RequestError.NOT_FOUND)
             }
             if (section.userId !== userId) {
-                return {
-                    id,
-                    statusCode: RequestError.FORBIDDEN,
-                    statusMessage:
-                        'Provided section does not belong to the requesting user',
-                }
+                return this.toError('Section', id, RequestError.FORBIDDEN)
             }
             return section
         })
@@ -56,7 +83,7 @@ export default class Validator {
     }
 
     public async validateRecipes(
-        _userId: number,
+        userId: number,
         sectionId: number,
         recipeIds: number[]
     ): Promise<Array<RecipeResult | ModifyError>> {
@@ -67,7 +94,23 @@ export default class Validator {
             })
         )[0]
 
-        console.log('ValidateRecipes', section?.recipes?.length)
-        return []
+        if (section.userId !== userId) {
+            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        }
+
+        const res = recipeIds.map((id) => {
+            const recipe = section.recipes?.find((rec) => rec.id === id)
+            if (typeof recipe === 'undefined') {
+                return this.toError('Recipe', id, RequestError.NOT_FOUND)
+            }
+            return recipe
+        })
+
+        return res.map((item) => {
+            if ('statusCode' in item) {
+                return item
+            }
+            return fitToClass(item as RecipeResult, RecipeResult)
+        })
     }
 }

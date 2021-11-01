@@ -80,20 +80,11 @@ export default class SectionController implements interfaces.Controller {
             body.map((section) => section.id)
         )
 
-        const validSections: SectionResult[] = []
-        const modifyErrors: ModifyError[] = []
-        validationResults.forEach((result) => {
-            if ('statusCode' in result) {
-                modifyErrors.push(result)
-            } else {
-                validSections.push(result)
-            }
-        })
+        const [validSections, modifyErrors] =
+            this.validator.splitResults(validationResults)
 
         const updateObjects = validSections.map((section) => {
-            const updateObj = body.find(
-                (s) => s.id === section.id
-            ) as SectionUpdate
+            const updateObj = body.find((s) => s.id === section.id)
             return { ...section, ...updateObj }
         })
         const newSections = await this.sectionsService.updateSections(
