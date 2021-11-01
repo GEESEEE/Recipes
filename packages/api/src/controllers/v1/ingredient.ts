@@ -2,6 +2,7 @@ import { body, param, ValidationChain } from 'express-validator'
 import {
     controller,
     httpDelete,
+    httpGet,
     httpPost,
     httpPut,
     interfaces,
@@ -125,7 +126,7 @@ export default class InstructionController implements interfaces.Controller {
             param('recipeId').isInt().toInt(),
         ]
         switch (method) {
-            case 'addInstructions':
+            case 'addIngredients':
                 return [
                     ...base,
                     body().isArray(),
@@ -133,7 +134,7 @@ export default class InstructionController implements interfaces.Controller {
                     body('*.position').isInt().toInt(),
                 ]
 
-            case 'updateInstructions':
+            case 'updateIngredients':
                 return [
                     ...base,
                     body().isArray(),
@@ -142,7 +143,7 @@ export default class InstructionController implements interfaces.Controller {
                     body('*.position').optional().isInt(),
                 ]
 
-            case 'deleteInstructions':
+            case 'deleteIngredients':
                 return [...base, body().isArray(), body('*').isInt().toInt()]
 
             default:

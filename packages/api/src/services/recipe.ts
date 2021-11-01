@@ -281,8 +281,9 @@ export default class RecipeService {
         return await this.instructionRepository.save(instructionObjects)
     }
 
-    public async deleteInstructions(instructionIds: number[]): Promise<void> {
-        await this.instructionRepository.delete(instructionIds)
+    public async deleteInstructions(instructionIds: number[]): Promise<number> {
+        const result = await this.instructionRepository.delete(instructionIds)
+        return result.affected || 0
     }
 
     public async getInstructions(recipeId: number): Promise<Instruction[]> {
