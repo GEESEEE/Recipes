@@ -2,7 +2,12 @@ import { fitToClass, ModifyError, RequestError } from '@recipes/api-types/v1'
 import { inject, injectable } from 'inversify'
 import { TYPES } from './constants'
 import { NotFoundError, ForbiddenError } from '@/errors'
-import { RecipeResult, SectionResult } from '@/types'
+import {
+    InstructionResult,
+    RecipeIngredientResult,
+    RecipeResult,
+    SectionResult,
+} from '@/types'
 import { SectionService } from '@/services'
 
 @injectable()
@@ -111,6 +116,89 @@ export default class Validator {
                 return item
             }
             return fitToClass(item as RecipeResult, RecipeResult)
+        })
+    }
+
+    public async validateInstructions(
+        userId: number,
+        sectionId: number,
+        recipeId: number,
+        instructionIds: number[]
+    ): Promise<Array<InstructionResult | ModifyError>> {
+        const section = (
+            await this.sectionsService.getSections(['ids', 'recipes'], {
+                sectionIds: [sectionId],
+                recipeIds: [recipeId],
+            })
+        )[0]
+
+        if (section.userId !== userId) {
+            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        }
+
+        const recipe = section.recipes?.[0]
+        if (typeof recipe === 'undefined') {
+            return [this.toError('Recipe', recipeId, RequestError.NOT_FOUND)]
+        }
+
+        const res = instructionIds.map((id) => {
+            const instruction = recipe.instructions?.find(
+                (instr) => instr.id === id
+            )
+            if (typeof instruction === 'undefined') {
+                return this.toError('Instruction', id, RequestError.NOT_FOUND)
+            }
+            return instruction
+        })
+
+        return res.map((item) => {
+            if ('statusCode' in item) {
+                return item
+            }
+            return fitToClass(item, InstructionResult)
+        })
+    }
+
+    public async validateIngredients(
+        userId: number,
+        sectionId: number,
+        recipeId: number,
+        ingredientIds: number[]
+    ): Promise<Array<RecipeIngredientResult | ModifyError>> {
+        const section = (
+            await this.sectionsService.getSections(['ids', 'recipes'], {
+                sectionIds: [sectionId],
+                recipeIds: [recipeId],
+            })
+        )[0]
+
+        if (section.userId !== userId) {
+            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        }
+
+        const recipe = section.recipes?.[0]
+        if (typeof recipe === 'undefined') {
+            return [this.toError('Recipe', recipeId, RequestError.NOT_FOUND)]
+        }
+
+        const res = ingredientIds.map((id) => {
+            const ingredient = recipe.recipeIngredients?.find(
+                (ingr) => ingr.id === id
+            )
+            if (typeof ingredient === 'undefined') {
+                return this.toError('Ingredient', id, RequestError.NOT_FOUND)
+            }
+            return ingredient
+        })
+
+        return res.map((item) => {
+            if ('statusCode' in item) {
+                return item
+            }
+            return fitToClass(
+                item as RecipeIngredientResult,
+                RecipeIngredientResult
+            )
         })
     }
 }

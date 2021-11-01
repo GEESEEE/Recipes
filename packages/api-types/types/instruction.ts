@@ -9,3 +9,8 @@ export class Instruction {
     public text!: string
     public position!: number
 }
+
+export type InstructionCreate = Omit<Instruction, 'id'>
+
+export type InstructionUpdate = Pick<Instruction, 'id'> &
+    Partial<InstructionCreate>

@@ -165,6 +165,7 @@ export default class SectionController implements interfaces.Controller {
 
             case 'updateSections':
                 return [
+                    body().isArray(),
                     body('*.id').isInt().toInt(),
                     body('*.position').optional().isInt(),
                     body('*.name').optional().isString(),
