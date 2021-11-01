@@ -1,4 +1,4 @@
-import { Ingredient } from './ingredient'
+import { Ingredient, IngredientCreate } from './ingredient'
 
 export class RecipeIngredient {
     constructor(
@@ -20,3 +20,12 @@ export class RecipeIngredient {
 
     public ingredient!: Ingredient
 }
+
+export type RecipeIngredientCreate = Omit<
+    RecipeIngredient,
+    'id' | 'ingredient'
+> &
+    IngredientCreate
+
+export type RecipeIngredientUpdate = Pick<RecipeIngredient, 'id'> &
+    Partial<RecipeIngredientCreate>

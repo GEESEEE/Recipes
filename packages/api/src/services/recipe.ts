@@ -1,10 +1,25 @@
 import { inject, injectable } from 'inversify'
 import { In, Repository } from 'typeorm'
-import { fitToClass, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
+import {
+    fitToClass,
+    RecipeCreate,
+    RecipeUpdate,
+    IngredientCreate,
+    RecipeIngredientCreate,
+    RecipeIngredientUpdate,
+    InstructionCreate,
+    InstructionUpdate,
+} from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { IngredientRepository, RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
-import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
+import {
+    InstructionResult,
+    RecipeIngredientResult,
+    RecipeResult,
+    RecipeScopeArgs,
+    RecipeScopes,
+} from '@/types'
 import { Ingredient, Instruction, RecipeIngredient } from '@/entities'
 
 @injectable()
@@ -62,7 +77,7 @@ export default class RecipeService {
     }
 
     public async addIngredients(
-        ingredients: Array<{ name: string; unit: string | null }>
+        ingredients: Array<IngredientCreate>
     ): Promise<Ingredient[]> {
         const existingIngredients = await this.ingredientRepository.find({
             where: ingredients.map((ingr) => ({
@@ -97,13 +112,8 @@ export default class RecipeService {
 
     public async addRecipeIngredients(
         recipeId: number,
-        ingredients: Array<{
-            amount: number
-            position: number
-            name: string
-            unit: string | null
-        }>
-    ): Promise<RecipeIngredient[]> {
+        ingredients: Array<RecipeIngredientCreate>
+    ): Promise<RecipeIngredientResult[]> {
         const existingIngredients = await this.addIngredients(
             ingredients.map((i) => ({ unit: i.unit, name: i.name }))
         )
@@ -119,32 +129,27 @@ export default class RecipeService {
             }
         )
 
-        return await this.recipeIngredientRepository.save(
+        const recipeIngredients = await this.recipeIngredientRepository.save(
             recipeIngredientObjects
+        )
+        return recipeIngredients.map((ingr) =>
+            fitToClass(ingr as RecipeIngredientResult, RecipeIngredientResult)
         )
     }
 
     public async updateRecipeIngredients(
-        recipeIngredients: Array<{
-            recipeIngredientId: number
-            amount?: number
-            position?: number
-            name?: string
-            unit?: string
-        }>
-    ): Promise<RecipeIngredient[]> {
+        recipeIngredients: Array<RecipeIngredientUpdate>
+    ): Promise<RecipeIngredientResult[]> {
         const existingRecipeIngredients =
             await this.recipeIngredientRepository.find({
                 where: {
-                    id: In(
-                        recipeIngredients.map((ri) => ri.recipeIngredientId)
-                    ),
+                    id: In(recipeIngredients.map((ri) => ri.id)),
                 },
                 relations: ['ingredient'],
             })
 
         const ingredientUpdateObjects: {
-            [key: number]: { name: string; unit: string | null }
+            [key: number]: IngredientCreate
         } = {}
         recipeIngredients.forEach((ri) => {
             if (
@@ -152,13 +157,13 @@ export default class RecipeService {
                 typeof ri.unit !== 'undefined'
             ) {
                 const existRi = existingRecipeIngredients.find(
-                    (exRi) => exRi.id === ri.recipeIngredientId
+                    (exRi) => exRi.id === ri.id
                 )
                 if (
                     typeof existRi !== 'undefined' &&
                     typeof existRi.ingredient !== 'undefined'
                 ) {
-                    ingredientUpdateObjects[ri.recipeIngredientId] = {
+                    ingredientUpdateObjects[ri.id] = {
                         name: ri.name ?? existRi.ingredient.name,
                         unit: ri.unit ?? existRi.ingredient.unit,
                     }
@@ -186,7 +191,7 @@ export default class RecipeService {
             }
             // If amount or position were given, set to recipeIngredient
             const recipeIngredient = recipeIngredients.find(
-                (i) => i.recipeIngredientId === ri.id
+                (i) => i.id === ri.id
             )
             if (typeof recipeIngredient !== 'undefined') {
                 if (typeof recipeIngredient.amount !== 'undefined')
@@ -200,19 +205,21 @@ export default class RecipeService {
             recipeIngredientsToSave
         )
         await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
-        return newRecipeIngredients
+        return newRecipeIngredients.map((ingr) =>
+            fitToClass(ingr as RecipeIngredientResult, RecipeIngredientResult)
+        )
     }
 
     public async removeRecipeIngredients(
         recipeId: number,
         ingredientIds: number[]
-    ): Promise<void> {
-        await this.recipeIngredientRepository.delete({
+    ): Promise<number> {
+        const result = await this.recipeIngredientRepository.delete({
             recipeId,
             ingredientId: In(ingredientIds),
         })
-
         await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
+        return result.affected || 0
     }
 
     // #endregion
@@ -221,8 +228,8 @@ export default class RecipeService {
 
     public async addInstructions(
         recipeId: number,
-        instructions: Array<{ text: string; position: number }>
-    ): Promise<Instruction[]> {
+        instructions: Array<InstructionCreate>
+    ): Promise<InstructionResult[]> {
         const instructionObjects = instructions.map((instruction) =>
             this.instructionRepository.create({
                 recipeId,
@@ -230,7 +237,12 @@ export default class RecipeService {
                 position: instruction.position,
             })
         )
-        return await this.instructionRepository.save(instructionObjects)
+        const newInstructions = await this.instructionRepository.save(
+            instructionObjects
+        )
+        return newInstructions.map((instruction) =>
+            fitToClass(instruction, InstructionResult)
+        )
     }
 
     public async deleteInstructions(instructionIds: number[]): Promise<number> {
@@ -239,20 +251,10 @@ export default class RecipeService {
     }
 
     public async updateInstructions(
-        instructions: Array<{
-            instructionId: number
-            text?: string
-            position?: number
-        }>
-    ): Promise<Instruction[]> {
-        const res = await this.instructionRepository.save(
-            instructions.map((i) => ({
-                id: i.instructionId,
-                text: i.text,
-                position: i.position,
-            }))
-        )
-        return res
+        instructions: Array<InstructionUpdate>
+    ): Promise<InstructionResult[]> {
+        const res = await this.instructionRepository.save(instructions)
+        return res.map((instr) => fitToClass(instr, InstructionResult))
     }
 
     // #endregion

@@ -9,3 +9,8 @@ export class Ingredient {
     public name!: string
     public unit!: string | null
 }
+
+export type IngredientCreate = Omit<Ingredient, 'id'>
+
+export type IngredientUpdate = Pick<Ingredient, 'id'> &
+    Partial<IngredientCreate>

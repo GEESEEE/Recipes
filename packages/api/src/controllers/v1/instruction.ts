@@ -83,8 +83,7 @@ export default class InstructionController implements interfaces.Controller {
             return { ...instr, ...updateObj }
         })
 
-        const newInstructions = await this.recipeService.addInstructions(
-            recipeId,
+        const newInstructions = await this.recipeService.updateInstructions(
             updateObjects
         )
         return [...newInstructions, ...modifyErrors]
