@@ -57,7 +57,6 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     })
 
     useUpdateEffect(() => {
-        console.log('Recipes data updated')
         if (typeof getRecipes.data !== 'undefined') {
             setRecipes(sectionId, getRecipes.data)
         }
@@ -77,16 +76,12 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         ['name', 'description', 'recipeIngredients.ingredient.name']
     )
 
-    function updateSlice(sectionId: number) {
-        return (recipes: Recipe[]) => {
-            return recipesActions.updateRecipes({ sectionId, recipes })
-        }
+    function updateSlice(recipes: Recipe[]) {
+        return recipesActions.updateRecipes({ sectionId, recipes })
     }
 
-    function updateDatabase(sectionId: number) {
-        return (recipes: RecipeUpdate[]) => {
-            return updateRecipes({ sectionId, body: recipes })
-        }
+    function updateDatabase(recipes: RecipeUpdate[]) {
+        return updateRecipes({ sectionId, body: recipes })
     }
 
     return (
@@ -97,8 +92,8 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 props={{}}
                 loading={getRecipes.isLoading}
                 dragDrop
-                updateSlice={updateSlice(sectionId)}
-                updateDatabase={updateDatabase(sectionId)}
+                updateSlice={updateSlice}
+                updateDatabase={updateDatabase}
             />
         </Container>
     )

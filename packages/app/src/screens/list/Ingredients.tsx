@@ -1,29 +1,47 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Ingredient, RecipeIngredient } from '@recipes/api-types/v1'
+import {
+    Ingredient,
+    RecipeIngredient,
+    RecipeIngredientUpdate,
+} from '@recipes/api-types/v1'
 import { View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { useAppSelector } from '@/hooks'
 import { IngredientListItem } from '@/components/molecules'
+import { utils } from '@/utils'
+import { editRecipeActions, ingredientService } from '@/redux'
 
 function EditIngredientsScreen(): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { settings, editRecipe } = useAppSelector((state) => state)
+    const { theme } = settings
 
-    const ingredients: RecipeIngredient[] = []
-    const instrs = [0, 1, 2, 3, 4]
-    instrs.forEach((i) => {
-        const ingredient = new Ingredient(i, `Ingredient ${i}`, 'g')
-        const recipeIngredient = new RecipeIngredient(i, i * 10, i, ingredient)
-        ingredients.push(recipeIngredient)
-    })
+    const ingredients = utils.sortPosition(editRecipe.recipeIngredients)
+
+    const [updateIngredients] = ingredientService.useUpdateIngredientsMutation()
+
+    const updateSlice = (ingredients: RecipeIngredient[]) => {
+        return editRecipeActions.updateIngredients(ingredients)
+    }
+
+    const updateDatabase = (ingredients: RecipeIngredientUpdate[]) => {
+        return updateIngredients({
+            sectionId: editRecipe.sectionId,
+            recipeId: editRecipe.id,
+            body: ingredients,
+        })
+    }
 
     return (
         <Container backgroundColor={theme.background}>
-            {/* <ListItemRecyclerView
+            <ListItemRecyclerView
                 Element={IngredientListItem}
                 data={ingredients}
                 props={{ ingredients }}
-            /> */}
+                dragDrop
+                updateSlice={updateSlice}
+                updateDatabase={updateDatabase}
+            />
         </Container>
     )
 }

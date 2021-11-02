@@ -5,6 +5,7 @@ import {
     authReducer,
     sectionsReducer,
     recipesReducer,
+    editRecipeReducer,
 } from './slices'
 import { api } from './services'
 import { logMiddleware } from './middleware'
@@ -18,9 +19,14 @@ export const store = configureStore({
         auth: authReducer,
         sections: sectionsReducer,
         recipes: recipesReducer,
+        editRecipe: editRecipeReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware).concat(logMiddleware),
+        getDefaultMiddleware({
+            serializableCheck: false,
+        })
+            .concat(api.middleware)
+            .concat(logMiddleware),
 })
 
 setupListeners(store.dispatch)

@@ -5,20 +5,47 @@ import {
     RecipeIngredient,
     Ingredient,
     Instruction,
+    InstructionUpdate,
+    RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
 import maxBy from 'lodash/maxBy'
 
+function mapIngredient(
+    state: Recipe,
+    ingredient: RecipeIngredient
+): RecipeIngredient[] {
+    return state.recipeIngredients.map((ingr) => {
+        if (ingr.id === ingredient.id) {
+            return ingredient
+        }
+        return ingr
+    })
+}
+
+function mapInstruction(
+    state: Recipe,
+    instruction: Instruction
+): Instruction[] {
+    return state.instructions.map((instr) => {
+        if (instr.id === instruction.id) {
+            return instruction
+        }
+        return instr
+    })
+}
+
 type Id = { id: number }
+
+const initialState: Recipe = { ...new Recipe() }
 
 const editRecipeSlice = createSlice({
     name: 'editRecipe',
-    initialState: new Recipe(),
+    initialState,
     reducers: {
         // Recipe State
         setRecipe(state, action: PayloadAction<Recipe>) {
             state = action.payload
         },
-
         setName(state, action: PayloadAction<string>) {
             state.name = action.payload
         },
@@ -31,7 +58,6 @@ const editRecipeSlice = createSlice({
         setPeopleCount(state, action: PayloadAction<number>) {
             state.peopleCount = action.payload
         },
-
         // Ingredients State
         addIngredient(state, action: PayloadAction<Id>) {
             const { id } = action.payload
@@ -40,8 +66,19 @@ const editRecipeSlice = createSlice({
             const maxPosition = maxBy(oldIngredients, 'position')?.position
             const position = maxPosition ? maxPosition + 1 : 1
             ingredient.position = position
-
             state.recipeIngredients = [...oldIngredients, ingredient]
+        },
+        updateIngredients(
+            state,
+            action: PayloadAction<RecipeIngredientUpdate[]>
+        ) {
+            state.recipeIngredients = state.recipeIngredients.map((oldIngr) => {
+                const newIngr = action.payload.find((i) => i.id === oldIngr.id)
+                if (typeof newIngr === 'undefined') {
+                    return oldIngr
+                }
+                return { ...oldIngr, ...newIngr }
+            })
         },
         removeIngredient(state, action: PayloadAction<Id>) {
             const { id } = action.payload
@@ -85,7 +122,6 @@ const editRecipeSlice = createSlice({
                 state.recipeIngredients = mapIngredient(state, ingredient)
             }
         },
-
         // Instruction State
         addInstruction(state, action: PayloadAction<Id>) {
             const { id } = action.payload
@@ -94,8 +130,18 @@ const editRecipeSlice = createSlice({
             const maxPosition = maxBy(oldInstructions, 'position')?.position
             const position = maxPosition ? maxPosition + 1 : 1
             instruction.position = position
-
             state.instructions = [...oldInstructions, instruction]
+        },
+        updateInstructions(state, action: PayloadAction<InstructionUpdate[]>) {
+            state.instructions = state.instructions.map((oldInstr) => {
+                const newInstr = action.payload.find(
+                    (i) => i.id === oldInstr.id
+                )
+                if (typeof newInstr === 'undefined') {
+                    return oldInstr
+                }
+                return { ...oldInstr, ...newInstr }
+            })
         },
         removeInstruction(state, action: PayloadAction<Id>) {
             const { id } = action.payload
@@ -119,26 +165,5 @@ const editRecipeSlice = createSlice({
     },
 })
 
-function mapIngredient(
-    state: Recipe,
-    ingredient: RecipeIngredient
-): RecipeIngredient[] {
-    return state.recipeIngredients.map((ingr) => {
-        if (ingr.id === ingredient.id) {
-            return ingredient
-        }
-        return ingr
-    })
-}
-
-function mapInstruction(
-    state: Recipe,
-    instruction: Instruction
-): Instruction[] {
-    return state.instructions.map((instr) => {
-        if (instr.id === instruction.id) {
-            return instruction
-        }
-        return instr
-    })
-}
+export const editRecipeActions = editRecipeSlice.actions
+export const editRecipeReducer = editRecipeSlice.reducer

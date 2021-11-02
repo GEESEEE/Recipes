@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RecipeIngredient } from '@recipes/api-types/v1'
-import { ListItemBaseProps } from './base'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
+import { ListItemBaseProps } from '@/types'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
     editable?: boolean
