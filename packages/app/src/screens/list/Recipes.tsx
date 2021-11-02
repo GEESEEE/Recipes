@@ -14,7 +14,6 @@ import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch, utils } from '@/utils'
-import { logPosition } from '@/utils/list-item'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const { settings, recipes, auth } = useAppSelector((state) => state)
@@ -90,8 +89,6 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    console.log('Recipes')
-    logPosition(sectionRecipes)
     return (
         <Container backgroundColor={theme.background}>
             <ListItemRecyclerView
