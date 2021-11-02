@@ -11,12 +11,12 @@ import {
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { utils } from '@/utils'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 
 export type TextInputProps = RNTextInputProps & TextProps & LayoutProps
 
 const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
+    const { theme, textSize } = useSettings()
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
     const padding = 2 * (utils.searchStyles(style, 'paddingVertical') ?? 0)

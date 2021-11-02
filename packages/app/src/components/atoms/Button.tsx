@@ -9,7 +9,7 @@ import {
 } from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Typography, Spacing } from '@/styles'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useSettings } from '@/hooks'
 import { TouchableEvent } from '@/types'
 
 type ButtonType = 'Solid' | 'Outline' | 'Clear'
@@ -54,7 +54,7 @@ const Button = ({
     style,
     ...rest
 }: ButtonProps): JSX.Element => {
-    const { settings } = useAppSelector((state) => state)
+    const settings = useSettings()
     const { theme } = settings
 
     color = color || theme.primary

@@ -8,25 +8,35 @@ import { ListItemBaseProps } from '@/types'
 
 interface InstructionListItemProps extends ListItemBaseProps<Instruction> {
     instructions: Instruction[]
-    editable?: boolean
     handleInstructionTextChange?: (key: string, text: string) => void
 }
 
 function InstructionListItem({
     item,
-    instructions,
+    dropdownItems,
+    onGesture,
     editable,
+    instructions,
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
     const index = instructions.indexOf(item)
 
+    dropdownItems = dropdownItems || []
+
     function logInstruction(): void {
-        console.log('Logging instruction')
+        console.log('Logging instruction', item.text)
     }
+
+    dropdownItems.push(logInstruction)
 
     return (
         <ListItem
-            items={utils.createDropDownItems([logInstruction], 'instruction')}
+            items={
+                !editable
+                    ? utils.createDropDownItems(dropdownItems, 'instruction')
+                    : undefined
+            }
+            onGesture={onGesture}
         >
             <Container paddingHorizontal="s">
                 <Number type="SubHeader">{index + 1}</Number>

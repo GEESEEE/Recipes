@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Lottie from 'lottie-react-native'
 import { View } from '@/components/base'
 import * as LoadingAnimation from '@/assets/animations/Loading4Dots.json'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 
 type Loading4DotsProps = {
     backgroundColor?: string
@@ -18,7 +18,7 @@ function Loading4Dots({
     height,
     width,
 }: Loading4DotsProps): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
 
     const dots = Array.from({ length: 4 }, (_, i) => i + 1)
     const colorFilters = dots.map((dot) => ({

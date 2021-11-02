@@ -4,7 +4,7 @@ import { Dimensions, StyleProp, ViewStyle } from 'react-native'
 import IconButton from './IconButton'
 import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
 import { Spacing, Typography } from '@/styles'
-import { useAppSelector, useToggle } from '@/hooks'
+import { useAppSelector, useSettings, useToggle } from '@/hooks'
 import { Position, TouchableEvent } from '@/types'
 
 export type DropdownItem = {
@@ -28,7 +28,7 @@ function DropdownMenu({
     iconSize,
     iconColor,
 }: DropdownMenuProps): JSX.Element {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
+    const { theme, textSize } = useSettings()
     const [open, toggle] = useToggle(false)
 
     const [position, setPosition] = React.useState<Position>({

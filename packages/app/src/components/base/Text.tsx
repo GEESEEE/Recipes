@@ -7,7 +7,7 @@ import {
     TextProps as RNTextProps,
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { utils } from '@/utils'
 
 export type TextProps = {
@@ -22,7 +22,7 @@ const Text = ({
     style,
     ...rest
 }: TextProps): JSX.Element => {
-    const { textSize } = useAppSelector((state) => state.settings)
+    const { textSize } = useSettings()
 
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)

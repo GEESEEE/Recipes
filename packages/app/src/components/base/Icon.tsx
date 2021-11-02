@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import View from './View'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { Spacing, Typography } from '@/styles'
 
 type IconProps = {
@@ -23,7 +23,7 @@ function Icon({
     style,
     ...rest
 }: IconProps): JSX.Element {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
+    const { theme, textSize } = useSettings()
 
     color = color || theme.primary
     size = size || 's'

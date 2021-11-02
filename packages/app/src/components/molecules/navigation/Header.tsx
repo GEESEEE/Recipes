@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
 import { View, Text, Icons } from '@/components/base'
 import { IconButton, TextInputWithIcons } from '@/components/atoms'
-import { useAppSelector, useToggle } from '@/hooks'
+import { useAppSelector, useSettings, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
 
 type HeaderIcon = {
@@ -41,7 +41,7 @@ function HeaderComponent({
     navigation,
     config,
 }: HeaderComponentProps): JSX.Element {
-    const { theme, invertedColors } = useAppSelector((state) => state.settings)
+    const { theme, invertedColors } = useSettings()
     const route = useRoute()
     const routeName = route.name
 

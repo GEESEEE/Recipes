@@ -1,12 +1,12 @@
 import React from 'react'
 import { Switch, SwitchProps } from 'react-native'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 
 export type ToggleProps = LayoutProps & SwitchProps
 
 function Toggle({ disabled, ...rest }: ToggleProps): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
 
     const thumbColor = disabled ? theme.grey : theme.primary
 

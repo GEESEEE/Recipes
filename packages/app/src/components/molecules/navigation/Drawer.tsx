@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import * as SecureStore from 'expo-secure-store'
 import { Theme } from '@recipes/api-types/v1'
 import { authActions, settingsActions, authService, userService } from '@/redux'
-import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
+import { useAppDispatch, useAuth, useSettings, useToggle } from '@/hooks'
 import ColorPickerModal from '@/screens/modals/ColorPicker'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
@@ -17,7 +17,9 @@ type DrawerNavigatorProps = {
 export default function DrawerNavigator({
     navigation,
 }: DrawerNavigatorProps): JSX.Element {
-    const { auth, settings } = useAppSelector((state) => state)
+    const auth = useAuth()
+    const settings = useSettings()
+
     const { user } = auth
     const { theme, invertedColors } = settings
 

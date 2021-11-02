@@ -3,7 +3,7 @@ import { Animated, Dimensions, ViewStyle, StyleProp } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useSettings } from '@/hooks'
 import { Icon, Icons, View, Text, TouchableOpacity } from '@/components/base'
 
 export type TabConfig = {
@@ -32,9 +32,7 @@ const TabComponent = ({
     const tabWidth = totalWidth / routes.length
     const insets = useSafeAreaInsets()
 
-    const { theme, invertedColors } = useAppSelector(
-        (globalState) => globalState.settings
-    )
+    const { theme, invertedColors } = useSettings()
 
     function navigate(routeName: string): void {
         navigation.navigate(routeName)

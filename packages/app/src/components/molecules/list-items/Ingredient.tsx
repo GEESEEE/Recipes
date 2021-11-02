@@ -7,7 +7,6 @@ import { utils } from '@/utils'
 import { ListItemBaseProps } from '@/types'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
-    editable?: boolean
     handleIngredientNameChange?: (key: string, text: string) => void
     handleIngredientAmountChange?: (key: string, text: string) => void
     handleIngredientUnitChange?: (key: string, text: string) => void
@@ -15,18 +14,29 @@ interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
 
 function IngredientListItem({
     item,
+    dropdownItems,
+    onGesture,
     editable,
     handleIngredientNameChange,
     handleIngredientAmountChange,
     handleIngredientUnitChange,
 }: IngredientListItemProps): JSX.Element {
+    dropdownItems = dropdownItems || []
+
     function logIngredient(): void {
-        console.log('Logging ingredient')
+        console.log('Logging ingredient', item.ingredient.name)
     }
+
+    dropdownItems.push(logIngredient)
 
     return (
         <ListItem
-            items={utils.createDropDownItems([logIngredient], 'ingredient')}
+            items={
+                !editable
+                    ? utils.createDropDownItems(dropdownItems, 'ingredient')
+                    : undefined
+            }
+            onGesture={onGesture}
         >
             <Container>
                 <Editable

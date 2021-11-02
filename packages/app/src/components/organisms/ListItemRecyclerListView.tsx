@@ -12,13 +12,11 @@ import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
-import { ActionCreatorWithPayload, EntityId } from '@reduxjs/toolkit'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
-import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
+import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { utils, listItemUtils } from '@/utils'
-import { logPosition } from '@/utils/list-item'
 
 const { width } = Dimensions.get('window')
 
@@ -73,7 +71,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     updateSlice,
     updateDatabase,
 }: ListItemRecyclerViewProps<T, U>): JSX.Element {
-    const { textSize } = useAppSelector((state) => state.settings)
+    const { textSize } = useSettings()
     const dispatch = useAppDispatch()
 
     const scrollOffset = useSharedValue(0)

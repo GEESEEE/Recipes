@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { View, Text } from '@/components/base'
 import { Spacing, Typography } from '@/styles'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 
 type ErrorMessageProps = {
     message?: string
@@ -13,13 +13,14 @@ const sizeMap: Record<Spacing.Size, Typography.TextType> = {
     s: 'TinyText',
     m: 'SubText',
     l: 'Text',
+    n: 'Text',
 }
 
 function Error({
     message: errorMessage,
     size,
 }: ErrorMessageProps): JSX.Element {
-    const { theme, textSize } = useAppSelector((state) => state.settings)
+    const { theme, textSize } = useSettings()
     size = size || 's'
 
     const textType = sizeMap[size]

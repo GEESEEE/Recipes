@@ -10,7 +10,6 @@ import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
-    editable?: boolean
     handleSectionNameChange?: (text: string) => void
     handleSectionDescriptionChange?: (text: string) => void
 }

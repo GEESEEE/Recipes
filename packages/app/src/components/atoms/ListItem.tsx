@@ -4,7 +4,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import { View, TouchableOpacity, Icon, Icons } from '@/components/base'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useSettings } from '@/hooks'
 import { GestureChangeEvent } from '@/types'
 
 type ListItemProps = {
@@ -19,7 +19,7 @@ function ListItem({
     onPress,
     onGesture,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
     return (
         <Container
             width="l"

@@ -7,7 +7,7 @@ import {
 } from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Spacing } from '@/styles'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { TouchableEvent } from '@/types'
 
 type IconButtonProps = {
@@ -32,7 +32,7 @@ function IconButton({
 
     ...rest
 }: IconButtonProps): JSX.Element {
-    const { textSize } = useAppSelector((state) => state.settings)
+    const { textSize } = useSettings()
     size = size || 's'
     const iconSize = Spacing.iconSize(size, textSize)
     return (

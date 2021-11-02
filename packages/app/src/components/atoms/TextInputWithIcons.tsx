@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Error from './Error'
 import { TextInput, View, TextInputProps } from '@/components/base'
-import { useAppSelector } from '@/hooks'
-import { Spacing } from '@/styles'
+import { useSettings } from '@/hooks'
 
 type TextInputWithIconsProps = {
     onChangeText: (text: string) => void
@@ -28,7 +27,7 @@ export const TextInputWithIcons = ({
     width,
     ...rest
 }: TextInputWithIconsProps): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
 
     paddingHorizontal = paddingHorizontal || 'm'
     paddingVertical = paddingVertical || 'm'

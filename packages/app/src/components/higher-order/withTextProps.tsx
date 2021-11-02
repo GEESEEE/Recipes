@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextProps as RNTextProps } from 'react-native'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { Typography } from '@/styles'
 
 export type TextProps = {
@@ -22,7 +22,7 @@ function withTextProps<T extends React.PropsWithChildren<TextProps>>(
         style,
         ...rest
     }: T): JSX.Element => {
-        const { theme, textSize } = useAppSelector((state) => state.settings)
+        const { theme, textSize } = useSettings()
 
         type = type || 'Text'
         weight = weight || Typography.textWeight[type]
