@@ -2,7 +2,7 @@ import { Settings } from './settings'
 
 export class User {
     constructor(
-        id = -1,
+        id = 0,
         name = 'name',
         email = 'email',
         settings = new Settings()

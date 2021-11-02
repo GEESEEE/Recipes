@@ -1,5 +1,5 @@
 export class Instruction {
-    constructor(id = -1, text = '', position = -1) {
+    constructor(id = 0, text = '', position = 0) {
         this.id = id
         this.text = text
         this.position = position

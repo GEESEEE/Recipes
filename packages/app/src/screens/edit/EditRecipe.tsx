@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
+import { Recipe } from '@recipes/api-types/v1'
 import {
     useAppDispatch,
     useEditRecipe,
@@ -11,6 +12,10 @@ import {
 import { View, Text } from '@/components/base'
 import { TextInputWithTitle } from '@/components/atoms'
 import { editRecipeActions } from '@/redux'
+
+const emptyRecipe = new Recipe()
+emptyRecipe.instructions = []
+emptyRecipe.recipeIngredients = []
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const settings = useSettings()
@@ -41,6 +46,8 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     dispatch(editRecipeActions.setRecipe(recipe))
                 }
             }
+        } else {
+            dispatch(editRecipeActions.setRecipe({ ...emptyRecipe }))
         }
     }, [recipeId, dispatch, sectionId, recipes])
 

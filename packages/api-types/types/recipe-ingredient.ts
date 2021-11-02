@@ -2,9 +2,9 @@ import { Ingredient, IngredientCreate } from './ingredient'
 
 export class RecipeIngredient {
     constructor(
-        id = -1,
-        amount = -1,
-        position = -1,
+        id = 0,
+        amount = 0,
+        position = 0,
         ingredient = new Ingredient()
     ) {
         this.id = id

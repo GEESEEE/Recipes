@@ -1,5 +1,5 @@
 export class Ingredient {
-    constructor(id = -1, name = '', unit: string | null = null) {
+    constructor(id = 0, name = '', unit: string | null = null) {
         this.id = id
         this.name = name
         this.unit = unit

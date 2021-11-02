@@ -1,6 +1,6 @@
 export class Settings {
     constructor(
-        id = -1,
+        id = 0,
         theme = Theme.DARK,
         color = '#fff',
         invertedColors = false

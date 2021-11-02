@@ -4,17 +4,17 @@ import { RecipeIngredient } from './recipe-ingredient'
 
 export class Recipe {
     constructor(
-        id = -1,
-        sectionId = -1,
+        id = 0,
+        sectionId = 0,
 
         name = '',
         description = '',
-        prepareTime = -1,
-        peopleCount = -1,
+        prepareTime = 0,
+        peopleCount = 0,
         recipeIngredients: RecipeIngredient[] = [new RecipeIngredient()],
         instructions: Instruction[] = [new Instruction()],
         createdAt = new Date(),
-        position = -1,
+        position = 0,
 
         publishedAt: Date | null = null,
         copyOf: number | null = null
