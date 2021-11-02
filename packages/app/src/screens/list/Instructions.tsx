@@ -3,14 +3,20 @@ import styled from 'styled-components'
 import { Instruction, InstructionUpdate } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useHeader } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
 import { utils } from '@/utils'
 import { editRecipeActions, instructionService } from '@/redux'
 
-function EditInstructionsScreen(): JSX.Element {
+function EditInstructionsScreen({
+    navigation,
+}: {
+    navigation: any
+}): JSX.Element {
     const { settings, editRecipe } = useAppSelector((state) => state)
     const { theme } = settings
+
+    useHeader(navigation, { right: [] })
 
     const instructions = utils.sortPosition(editRecipe.instructions)
 

@@ -1,7 +1,5 @@
 import React from 'react'
-import { StyleProp, Text as RNText, TextStyle, ViewStyle } from 'react-native'
-import styled from 'styled-components'
-import View from './View'
+import { StyleProp, Text as RNText, TextStyle } from 'react-native'
 import {
     withLayoutProps,
     LayoutProps,
@@ -14,8 +12,8 @@ import { utils } from '@/utils'
 
 export type TextProps = {
     fixHeight?: boolean
-} & RNTextProps &
-    LayoutProps
+} & LayoutProps &
+    RNTextProps
 
 const Text = ({
     fixHeight,

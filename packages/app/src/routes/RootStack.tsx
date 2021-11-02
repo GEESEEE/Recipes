@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
+import EditRecipeTabs from './EditRecipeTabs'
 import { PopupScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 
@@ -24,6 +25,8 @@ function LoginStack(): JSX.Element {
                     cardStyleInterpolator: screenUtils.slideVertical,
                 }}
             />
+
+            <Stack.Screen name="EditRecipeTabs" component={EditRecipeTabs} />
 
             <Stack.Screen
                 name="Popup"

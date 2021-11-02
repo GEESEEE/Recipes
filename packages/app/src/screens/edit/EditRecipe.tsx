@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useHeader } from '@/hooks'
 import { View, Text, TextInput } from '@/components/base'
 import { TextInputWithTitle, Button } from '@/components/atoms'
 
-function EditRecipeScreen(): JSX.Element {
+function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
+
+    useHeader(navigation, { right: [] })
 
     const width = 'l'
     const paddingHorizontal = 'm'
