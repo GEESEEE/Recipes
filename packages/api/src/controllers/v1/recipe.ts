@@ -43,7 +43,7 @@ export default class RecipeController implements interfaces.Controller {
             ])
         )[0]
         if (this.validator.isError(validationResult)) {
-            return this.validator.validateError(validationResult)
+            return this.validator.throwError(validationResult)
         }
         const recipes = await this.recipeService.getRecipes(
             ['section'],
@@ -71,7 +71,7 @@ export default class RecipeController implements interfaces.Controller {
         )[0]
 
         if (this.validator.isError(validationResult)) {
-            return this.validator.validateError(validationResult)
+            return this.validator.throwError(validationResult)
         }
 
         return await this.recipeService.createRecipes(
@@ -129,7 +129,7 @@ export default class RecipeController implements interfaces.Controller {
             )
         )[0]
         if (this.validator.isError(validationResult)) {
-            return this.validator.validateError(validationResult)
+            return this.validator.throwError(validationResult)
         }
         return await this.recipeService.deleteRecipe(recipeId)
     }

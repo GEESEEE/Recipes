@@ -51,7 +51,7 @@ export default class InstructionController implements interfaces.Controller {
             )
         )[0]
         if (this.validator.isError(validationResult)) {
-            return this.validator.validateError(validationResult)
+            return this.validator.throwError(validationResult)
         }
         return await this.recipeService.addInstructions(recipeId, body)
     }

@@ -15,7 +15,7 @@ export default class Validator {
     @inject(TYPES.SectionService)
     private readonly sectionsService!: SectionService
 
-    public validateError(error: ModifyError): ModifyError {
+    public throwError(error: ModifyError): ModifyError {
         switch (error.statusCode) {
             case RequestError.NOT_FOUND:
                 throw new NotFoundError(error.statusMessage)
@@ -38,7 +38,7 @@ export default class Validator {
         id: number,
         error: RequestError
     ): ModifyError {
-        let statusMessage = `${objectName} with id ${id}`
+        let statusMessage = `${objectName} with id ${id} `
         switch (error) {
             case RequestError.NOT_FOUND:
                 statusMessage += `was not found`
