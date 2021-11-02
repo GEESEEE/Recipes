@@ -42,7 +42,17 @@ function RecipeListItem({
     }
 
     function editRecip(): void {
-        navigation.navigate('EditRecipeTabs', { id: item.id })
+        console.log('navigating', item.sectionId, item.id)
+        navigation.navigate('EditRecipeTabs', {
+            screen: 'EditRecipeStack',
+            params: {
+                screen: 'EditRecipe',
+                params: {
+                    sectionId: item.sectionId,
+                    recipeId: item.id,
+                },
+            },
+        })
     }
 
     function onPress(): void {

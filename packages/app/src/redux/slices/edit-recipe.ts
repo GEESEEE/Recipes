@@ -43,8 +43,8 @@ const editRecipeSlice = createSlice({
     initialState,
     reducers: {
         // Recipe State
-        setRecipe(state, action: PayloadAction<Recipe>) {
-            state = action.payload
+        setRecipe(_, action: PayloadAction<Recipe>) {
+            return action.payload
         },
         setName(state, action: PayloadAction<string>) {
             state.name = action.payload
@@ -58,6 +58,7 @@ const editRecipeSlice = createSlice({
         setPeopleCount(state, action: PayloadAction<number>) {
             state.peopleCount = action.payload
         },
+
         // Ingredients State
         addIngredient(state, action: PayloadAction<Id>) {
             const { id } = action.payload
@@ -122,6 +123,7 @@ const editRecipeSlice = createSlice({
                 state.recipeIngredients = mapIngredient(state, ingredient)
             }
         },
+
         // Instruction State
         addInstruction(state, action: PayloadAction<Id>) {
             const { id } = action.payload

@@ -29,7 +29,7 @@ function EditIngredientsScreen({
             },
         ],
     })
-
+    console.log('Ingredients', editRecipe.recipeIngredients)
     const ingredients = utils.sortPosition(editRecipe.recipeIngredients)
 
     const [updateIngredients] = ingredientService.useUpdateIngredientsMutation()
