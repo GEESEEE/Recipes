@@ -4,7 +4,13 @@ import { Section, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import { View, Icons } from '@/components/base'
 import { SectionListItem } from '@/components/molecules'
-import { useAppDispatch, useAppSelector, useHeader } from '@/hooks'
+import {
+    useAppDispatch,
+    useAppSelector,
+    useHeader,
+    useSectionById,
+    useSections,
+} from '@/hooks'
 import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
 import { getNewPosition, sectionUpdateObject } from '@/utils'
 
@@ -26,13 +32,9 @@ function EditSectionScreen({
         sectionId = params.sectionId
     }
 
-    const sections = useAppSelector((state) =>
-        sectionsSelector.selectAll(state.sections)
-    )
+    const sections = useSections()
 
-    let section = useAppSelector((state) =>
-        sectionsSelector.selectById(state.sections, sectionId)
-    )
+    let section = useSectionById(sectionId)
     if (typeof section === 'undefined') {
         section = new Section()
     }

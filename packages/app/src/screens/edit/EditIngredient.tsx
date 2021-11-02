@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { View, Text, Icons } from '@/components/base'
-import { useAppSelector, useHeader } from '@/hooks'
+import { useHeader, useSettings } from '@/hooks'
 
 function EditIngredientScreen({
     navigation,
 }: {
     navigation: any
 }): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
 
     useHeader(navigation, {
         right: [

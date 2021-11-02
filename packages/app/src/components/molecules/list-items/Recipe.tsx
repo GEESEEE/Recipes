@@ -42,7 +42,6 @@ function RecipeListItem({
     }
 
     function editRecip(): void {
-        console.log('navigating', item.sectionId, item.id)
         navigation.navigate('EditRecipeTabs', {
             screen: 'EditRecipeStack',
             params: {

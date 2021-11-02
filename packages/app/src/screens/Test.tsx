@@ -10,12 +10,12 @@ import {
     Section,
 } from '@recipes/api-types/v1'
 import { settingsActions } from '@/redux'
-import { useAppDispatch, useAppSelector, useToggle } from '@/hooks'
-import { applySearch, screenUtils } from '@/utils'
+import { useAppDispatch, useSettings, useToggle } from '@/hooks'
+import { screenUtils } from '@/utils'
 import { View, Text, TextInput } from '@/components/base'
 import { Error, Button } from '@/components/atoms'
 
-import { userService, recipeService } from '@/redux'
+import { userService } from '@/redux'
 
 const bigLogo = 1
 const smallLogo = 0.5
@@ -29,7 +29,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const [updateSettings] = userService.useUpdateSettingsMutation()
 
-    const { settings } = useAppSelector((state) => state)
+    const settings = useSettings()
 
     const { theme } = settings
     const dispatch = useAppDispatch()

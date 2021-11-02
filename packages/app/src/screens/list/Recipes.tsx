@@ -5,8 +5,11 @@ import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
     useAppSelector,
+    useAuth,
     useHeader,
+    useRecipes,
     useSearch,
+    useSettings,
     useUpdateEffect,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
@@ -16,7 +19,9 @@ import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch, utils } from '@/utils'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { settings, recipes, auth } = useAppSelector((state) => state)
+    const settings = useSettings()
+    const auth = useAuth()
+    const recipes = useRecipes()
     const { theme } = settings
     const dispatch = useAppDispatch()
 

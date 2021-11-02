@@ -5,23 +5,27 @@ import { Section } from '@recipes/api-types/v1'
 import { LoadingModal, LoginModal } from '@/screens/modals'
 import {
     useAppDispatch,
-    useAppSelector,
+    useAuth,
+    useSettings,
     useHeader,
     useSearch,
     useUpdateEffect,
+    useSections,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { sectionsActions, sectionsSelector } from '@/redux/slices'
+import { sectionsActions } from '@/redux/slices'
 import { applySearch, utils } from '@/utils'
-import { logPosition } from '@/utils/list-item'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { auth, settings } = useAppSelector((state) => state)
+    const auth = useAuth()
+    const settings = useSettings()
     const { theme } = settings
     const dispatch = useAppDispatch()
+
+    console.log('SetionsScreen rerender')
 
     // Verify Token stuff
     const [verifyToken, verifyTokenStatus] =
@@ -70,9 +74,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [updateSections] = sectionService.useUpdateSectionsMutation()
 
-    const sections = utils.sortPosition(
-        useAppSelector((state) => sectionsSelector.selectAll(state.sections))
-    )
+    const allSections = useSections()
+    const sections = utils.sortPosition(allSections)
 
     const search = useSearch()
     const filteredSections = applySearch<Section>(

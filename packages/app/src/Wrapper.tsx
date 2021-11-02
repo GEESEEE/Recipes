@@ -2,10 +2,10 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
 import { RootStack } from '@/routes'
-import { useAppSelector } from '@/hooks'
+import { useSettings } from '@/hooks'
 
 function Wrapper(): JSX.Element {
-    const { theme } = useAppSelector((state) => state.settings)
+    const { theme } = useSettings()
 
     React.useEffect(() => {
         console.log('Starting')

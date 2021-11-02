@@ -1,18 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useNavigationState, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
-    useAppSelector,
+    useEditRecipe,
     useHeader,
-    useUpdateEffect,
+    useRecipes,
+    useSettings,
 } from '@/hooks'
-import { View, Text, TextInput } from '@/components/base'
-import { TextInputWithTitle, Button } from '@/components/atoms'
+import { View, Text } from '@/components/base'
+import { TextInputWithTitle } from '@/components/atoms'
 import { editRecipeActions } from '@/redux'
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const { settings, editRecipe, recipes } = useAppSelector((state) => state)
+    const settings = useSettings()
+    const editRecipe = useEditRecipe()
+    const recipes = useRecipes()
     const { theme } = settings
     const dispatch = useAppDispatch()
 
@@ -58,14 +61,18 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             <TextInputWithTitle
                 title="Title"
                 type="SubHeader"
-                onChangeText={(t: string) => console.log('')}
+                onChangeText={(t: string) =>
+                    dispatch(editRecipeActions.setName(t))
+                }
                 multiline
                 value={editRecipe.name}
             />
 
             <TextInputWithTitle
                 title="Description"
-                onChangeText={(t: string) => console.log('')}
+                onChangeText={(t: string) =>
+                    dispatch(editRecipeActions.setDescription(t))
+                }
                 multiline
                 value={editRecipe.description}
             />
@@ -80,7 +87,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     value={prepareTimeHours.toString()}
                     marginHorizontal="s"
                     title="Hours"
-                    onChangeText={(t: string) => console.log('')}
+                    onChangeText={(t: string) => console.log(t)}
                     width="s"
                     keyboardType="numeric"
                     maxLength={2}
@@ -88,7 +95,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <TextInputWithTitle
                     value={prepareTimeMinutes.toString()}
                     title="Minutes"
-                    onChangeText={(t: string) => console.log('')}
+                    onChangeText={(t: string) => console.log(t)}
                     width="s"
                     keyboardType="numeric"
                     maxLength={2}
