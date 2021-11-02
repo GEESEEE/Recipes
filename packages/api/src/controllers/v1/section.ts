@@ -110,7 +110,7 @@ export default class SectionController implements interfaces.Controller {
                 sectionId,
             ])
         )[0]
-        if ('statusCode' in validationResult) {
+        if (this.validator.isError(validationResult)) {
             return this.validator.validateError(validationResult)
         }
         return await this.sectionsService.updateSection({
@@ -134,7 +134,7 @@ export default class SectionController implements interfaces.Controller {
                 sectionId,
             ])
         )[0]
-        if ('statusCode' in validationResult) {
+        if (this.validator.isError(validationResult)) {
             return this.validator.validateError(validationResult)
         }
         return await this.sectionsService.deleteSection(sectionId)

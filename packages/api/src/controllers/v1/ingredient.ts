@@ -49,7 +49,7 @@ export default class IngredientController implements interfaces.Controller {
                 [recipeId]
             )
         )[0]
-        if ('statusCode' in validationResult) {
+        if (this.validator.isError(validationResult)) {
             return this.validator.validateError(validationResult)
         }
         return await this.recipeService.addRecipeIngredients(recipeId, body)

@@ -29,6 +29,10 @@ export default class Validator {
         return error
     }
 
+    public isError<T>(item: T | ModifyError): item is ModifyError {
+        return 'statusCode' in item
+    }
+
     private toError(
         objectName: string,
         id: number,
@@ -56,7 +60,7 @@ export default class Validator {
         const newArr: T[] = []
         const errors: ModifyError[] = []
         arr.forEach((result) => {
-            if ('statusCode' in result) {
+            if (this.isError(result)) {
                 errors.push(result)
             } else {
                 newArr.push(result)
@@ -75,16 +79,24 @@ export default class Validator {
 
         const res = sectionIds.map((id) => {
             const section = sections.find((s) => s.id === id)
-            if (typeof section === 'undefined') {
-                return this.toError('Section', id, RequestError.NOT_FOUND)
-            }
-            if (section.userId !== userId) {
-                return this.toError('Section', id, RequestError.FORBIDDEN)
-            }
-            return section
+            return this.validateSection(userId, section, id)
         })
 
         return res
+    }
+
+    public validateSection(
+        userId: number,
+        section: SectionResult | undefined,
+        id: number
+    ): ModifyError | SectionResult {
+        if (typeof section === 'undefined') {
+            return this.toError('Section', id, RequestError.NOT_FOUND)
+        }
+        if (section.userId !== userId) {
+            return this.toError('Section', id, RequestError.FORBIDDEN)
+        }
+        return section
     }
 
     public async validateRecipes(
@@ -99,8 +111,13 @@ export default class Validator {
             })
         )[0]
 
-        if (section.userId !== userId) {
-            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        const validatedSection = this.validateSection(
+            userId,
+            section,
+            sectionId
+        )
+        if (this.isError(validatedSection)) {
+            return [validatedSection]
         }
 
         const res = recipeIds.map((id) => {
@@ -112,7 +129,7 @@ export default class Validator {
         })
 
         return res.map((item) => {
-            if ('statusCode' in item) {
+            if (this.isError(item)) {
                 return item
             }
             return fitToClass(item as RecipeResult, RecipeResult)
@@ -132,8 +149,13 @@ export default class Validator {
             })
         )[0]
 
-        if (section.userId !== userId) {
-            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        const validatedSection = this.validateSection(
+            userId,
+            section,
+            sectionId
+        )
+        if (this.isError(validatedSection)) {
+            return [validatedSection]
         }
 
         const recipe = section.recipes?.[0]
@@ -152,7 +174,7 @@ export default class Validator {
         })
 
         return res.map((item) => {
-            if ('statusCode' in item) {
+            if (this.isError(item)) {
                 return item
             }
             return fitToClass(item, InstructionResult)
@@ -172,8 +194,13 @@ export default class Validator {
             })
         )[0]
 
-        if (section.userId !== userId) {
-            return [this.toError('Section', section.id, RequestError.FORBIDDEN)]
+        const validatedSection = this.validateSection(
+            userId,
+            section,
+            sectionId
+        )
+        if (this.isError(validatedSection)) {
+            return [validatedSection]
         }
 
         const recipe = section.recipes?.[0]
@@ -192,7 +219,7 @@ export default class Validator {
         })
 
         return res.map((item) => {
-            if ('statusCode' in item) {
+            if (this.isError(item)) {
                 return item
             }
             return fitToClass(
