@@ -5,7 +5,7 @@ import {
     RecipeIngredient,
     RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
-import { View } from '@/components/base'
+import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { useAppSelector, useHeader } from '@/hooks'
 import { IngredientListItem } from '@/components/molecules'
@@ -20,7 +20,15 @@ function EditIngredientsScreen({
     const { settings, editRecipe } = useAppSelector((state) => state)
     const { theme } = settings
 
-    useHeader(navigation, { right: [] })
+    useHeader(navigation, {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () => navigation.navigate('EditIngredient'),
+            },
+        ],
+    })
 
     const ingredients = utils.sortPosition(editRecipe.recipeIngredients)
 

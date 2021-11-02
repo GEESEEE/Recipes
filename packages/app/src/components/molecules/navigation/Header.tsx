@@ -28,6 +28,7 @@ function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
 export type HeaderConfig = {
     drawer?: boolean
     search?: boolean
+    title?: string
     right: Array<HeaderIcon>
 }
 
@@ -89,7 +90,7 @@ function HeaderComponent({
                     <HeaderIcon
                         type={Icons.MyMaterialIcons}
                         name="arrow-back"
-                        onPress={() => navigation.pop()}
+                        onPress={() => navigation.goBack()}
                         color={color}
                     />
                 )}
@@ -119,7 +120,7 @@ function HeaderComponent({
                             color={color}
                             paddingHorizontal="m"
                         >
-                            {routeName}
+                            {config.title || routeName}
                         </Text>
                     )}
                 </HeaderCenter>

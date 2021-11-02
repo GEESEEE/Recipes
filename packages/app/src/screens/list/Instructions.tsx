@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Instruction, InstructionUpdate } from '@recipes/api-types/v1'
-import { View } from '@/components/base'
+import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { useAppSelector, useHeader } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
@@ -16,7 +16,15 @@ function EditInstructionsScreen({
     const { settings, editRecipe } = useAppSelector((state) => state)
     const { theme } = settings
 
-    useHeader(navigation, { right: [] })
+    useHeader(navigation, {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () => navigation.navigate('EditInstruction'),
+            },
+        ],
+    })
 
     const instructions = utils.sortPosition(editRecipe.instructions)
 

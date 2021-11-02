@@ -12,12 +12,15 @@ const Tabs = createMaterialTopTabNavigator()
 const config: TabConfig = {
     EditRecipeStack: {
         name: 'Recipe',
+        icon: 'text-box-outline',
     },
     EditIngredientsStack: {
         name: 'Ingredients',
+        icon: 'corn',
     },
     EditInstructionsStack: {
         name: 'Instructions',
+        icon: 'format-list-bulleted',
     },
 }
 

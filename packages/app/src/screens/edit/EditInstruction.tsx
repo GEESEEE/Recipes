@@ -1,10 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View, Text } from '@/components/base'
-import { useAppSelector } from '@/hooks'
+import { View, Text, Icons } from '@/components/base'
+import { useAppSelector, useHeader } from '@/hooks'
 
-function EditInstructionScreen(): JSX.Element {
+function EditInstructionScreen({
+    navigation,
+}: {
+    navigation: any
+}): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
+
+    useHeader(navigation, {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'save',
+                onPress: () => console.log('Saving instruction'),
+            },
+        ],
+    })
 
     return (
         <Container backgroundColor={theme.background}>
