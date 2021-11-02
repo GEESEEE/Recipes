@@ -2,6 +2,7 @@ import isEqual from 'lodash/isEqual'
 import { StyleProp, ViewStyle } from 'react-native'
 import { capitalize } from '@recipes/api-types/utils'
 import { DropdownItem } from '@/components/atoms'
+import { ListItem } from '@/types'
 
 export function handleNumericTextInput(
     number: string,
@@ -32,6 +33,12 @@ export function createDropDownItems(
             onPress,
         }
     })
+}
+
+export function sortPosition<T extends ListItem>(arr: T[], ascending = true) {
+    return new Array(...arr).sort((a, b) =>
+        ascending ? a.position - b.position : b.position - a.position
+    )
 }
 
 export function moveElement<T>(

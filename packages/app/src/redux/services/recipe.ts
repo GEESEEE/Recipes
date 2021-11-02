@@ -1,7 +1,9 @@
-import { Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
+import { Copy, Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
 import { api } from './base'
 
 type BaseArg = { sectionId: number }
+
+type x = Copy<RecipeUpdate>
 
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({

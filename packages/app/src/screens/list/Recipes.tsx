@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Recipe } from '@recipes/api-types/v1'
+import { Recipe, RecipeUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
@@ -13,7 +13,8 @@ import { View, Icons } from '@/components/base'
 import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { applySearch } from '@/utils'
+import { applySearch, utils } from '@/utils'
+import { logPosition } from '@/utils/list-item'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const { settings, recipes, auth } = useAppSelector((state) => state)
@@ -63,8 +64,12 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }, [getRecipes.data])
 
+    const [updateRecipes] = recipeService.useUpdateRecipesMutation()
+
     const sectionRecipes =
-        typeof recipes[sectionId] === 'undefined' ? [] : recipes[sectionId]
+        typeof recipes[sectionId] === 'undefined'
+            ? []
+            : utils.sortPosition(recipes[sectionId])
 
     const search = useSearch()
     const filteredRecipes = applySearch<Recipe>(
@@ -79,6 +84,14 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
+    function updateDatabase(sectionId: number) {
+        return (recipes: RecipeUpdate[]) => {
+            return updateRecipes({ sectionId, body: recipes })
+        }
+    }
+
+    console.log('Recipes')
+    logPosition(sectionRecipes)
     return (
         <Container backgroundColor={theme.background}>
             <ListItemRecyclerView
@@ -88,6 +101,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 loading={getRecipes.isLoading}
                 dragDrop
                 updateSlice={updateSlice(sectionId)}
+                updateDatabase={updateDatabase(sectionId)}
             />
         </Container>
     )

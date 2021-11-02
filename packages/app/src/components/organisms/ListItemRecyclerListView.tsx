@@ -181,6 +181,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
         dispatch(updateSlice(updateObjects as T[]))
         if (typeof updateDatabase !== 'undefined') {
+            console.log('Updating database', updateObjects)
             updateDatabase(updateObjects)
         }
     }

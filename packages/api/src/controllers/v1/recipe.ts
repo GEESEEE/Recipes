@@ -162,8 +162,8 @@ export default class RecipeController implements interfaces.Controller {
                 return [
                     ...base,
                     body().isArray(),
-                    body('*.id').optional().toInt(),
-                    body('*.sectionId').isInt().toInt(),
+                    body('*.id').isInt().toInt(),
+                    body('*.sectionId').optional().toInt(),
                     body('*.name').optional().isString(),
                     body('*.description').optional().isString(),
                     body('*.prepareTime').optional().isInt().toInt(),

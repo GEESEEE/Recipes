@@ -15,7 +15,7 @@ import { authActions, authService, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions, sectionsSelector } from '@/redux/slices'
-import { applySearch } from '@/utils'
+import { applySearch, utils } from '@/utils'
 import { logPosition } from '@/utils/list-item'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
@@ -70,9 +70,9 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [updateSections] = sectionService.useUpdateSectionsMutation()
 
-    const sections = useAppSelector((state) =>
-        sectionsSelector.selectAll(state.sections)
-    ).sort((a, b) => a.position - b.position)
+    const sections = utils.sortPosition(
+        useAppSelector((state) => sectionsSelector.selectAll(state.sections))
+    )
 
     const search = useSearch()
     const filteredSections = applySearch<Section>(
@@ -81,8 +81,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         ['name', 'description']
     )
 
-    console.log('Sectionsss')
-    logPosition(sections)
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
