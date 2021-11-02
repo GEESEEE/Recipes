@@ -347,10 +347,6 @@ export class createSchema1620169219541 implements MigrationInterface {
                         columnNames: ['recipe_id', 'ingredient_id'],
                         isUnique: true,
                     },
-                    {
-                        columnNames: ['recipe_id', 'position'],
-                        isUnique: true,
-                    },
                 ],
             })
         )
@@ -384,12 +380,6 @@ export class createSchema1620169219541 implements MigrationInterface {
                         referencedColumnNames: ['id'],
                         referencedTableName: 'recipe',
                         onDelete: 'CASCADE',
-                    },
-                ],
-                indices: [
-                    {
-                        columnNames: ['recipe_id', 'position'],
-                        isUnique: true,
                     },
                 ],
             })
