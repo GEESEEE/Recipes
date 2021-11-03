@@ -11,8 +11,20 @@ import {
 } from '@/hooks'
 import { View, Text, Icons } from '@/components/base'
 import { TextInputWithTitle, Counter } from '@/components/atoms'
-import { editRecipeActions } from '@/redux'
-import { utils } from '@/utils'
+import {
+    editRecipeActions,
+    ingredientService,
+    instructionService,
+    recipesActions,
+    recipeService,
+} from '@/redux'
+import {
+    getNewPosition,
+    ingredientCreateObjects,
+    instructionCreateObjects,
+    recipeCreateObject,
+    utils,
+} from '@/utils'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -36,22 +48,19 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         sectionId = route.params.sectionId
     }
 
+    let passedRecipe: Recipe | undefined
+    const sectionRecipes = recipes[sectionId]
+    if (typeof sectionRecipes !== 'undefined') {
+        passedRecipe = sectionRecipes.find((recipe) => recipe.id === recipeId)
+    }
+
     React.useEffect(() => {
-        console.log('Edit Recipe Use effect', sectionId, recipeId)
-        if (sectionId >= 0 && recipeId >= 0) {
-            const sectionRecipes = recipes[sectionId]
-            if (typeof sectionRecipes !== 'undefined') {
-                const recipe = sectionRecipes.find(
-                    (recipe) => recipe.id === recipeId
-                )
-                if (typeof recipe !== 'undefined') {
-                    dispatch(editRecipeActions.setRecipe(recipe))
-                }
-            }
-        } else {
-            dispatch(editRecipeActions.setRecipe({ ...emptyRecipe }))
-        }
-    }, [recipeId, dispatch, sectionId, recipes])
+        dispatch(
+            editRecipeActions.setRecipe(passedRecipe || { ...emptyRecipe })
+        )
+    }, [dispatch, passedRecipe])
+
+    const editing = typeof passedRecipe !== 'undefined'
 
     const prepareTimeHours = Math.floor(editRecipe.prepareTime / 60)
     const prepareTimeMinutes = editRecipe.prepareTime - prepareTimeHours * 60
@@ -76,12 +85,95 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(editRecipeActions.setPeopleCount(editRecipe.peopleCount - 1))
     }
 
+    const [createRecipes, createRecipesState] =
+        recipeService.useCreateRecipesMutation()
+    const [addIngredients, addIngredientsState] =
+        ingredientService.useAddIngredientsMutation()
+    const [addInstructions, addInstructionsState] =
+        instructionService.useAddInstructionsMutation()
+
+    const createLoading =
+        createRecipesState.isLoading ||
+        addInstructionsState.isLoading ||
+        addIngredientsState.isLoading
+
+    const handleCreateRecipe = React.useCallback(async (): Promise<void> => {
+        console.log('Creating recipe', sectionId)
+
+        const newRecipe = recipeCreateObject(editRecipe)
+        newRecipe.position = getNewPosition(sectionRecipes || [])
+
+        const recipeResult = await createRecipes({
+            sectionId,
+            body: [newRecipe],
+        })
+
+        if ('data' in recipeResult) {
+            const newRecipe = recipeResult.data[0]
+            const recipe = { ...newRecipe }
+            const baseCreateObj = {
+                sectionId,
+                recipeId: recipe.id,
+            }
+
+            if (editRecipe.recipeIngredients.length > 0) {
+                const ingredients = await addIngredients({
+                    ...baseCreateObj,
+                    body: ingredientCreateObjects(editRecipe.recipeIngredients),
+                })
+                if ('data' in ingredients) {
+                    recipe.recipeIngredients = ingredients.data
+                }
+            }
+
+            if (editRecipe.instructions.length > 0) {
+                const instructions = await addInstructions({
+                    ...baseCreateObj,
+                    body: instructionCreateObjects(editRecipe.instructions),
+                })
+                console.log('Instructions', instructions)
+                if ('data' in instructions) {
+                    console.log('instruction data', instructions.data)
+                    recipe.instructions = instructions.data
+                }
+            }
+
+            dispatch(recipesActions.addRecipe({ sectionId, recipe }))
+        }
+    }, [
+        addIngredients,
+        addInstructions,
+        createRecipes,
+        dispatch,
+        editRecipe,
+        sectionId,
+        sectionRecipes,
+    ])
+
+    const [updateRecipes, updateRecipesState] =
+        recipeService.useUpdateRecipesMutation()
+    const [updateIngredients, updateIngredientsState] =
+        ingredientService.useUpdateIngredientsMutation()
+    const [updateInstructions, updateInstructionsState] =
+        instructionService.useUpdateInstructionsMutation()
+
+    const updateLoading =
+        updateRecipesState.isLoading ||
+        updateIngredientsState.isLoading ||
+        updateInstructionsState.isLoading
+
+    const handleEditRecipe = React.useCallback((): void => {
+        console.log('Editing recipe')
+    }, [passedRecipe, editRecipe])
+
     useHeader(navigation, {
         right: [
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () => console.log('Saving Recipe'),
+                onPress: () =>
+                    editing ? handleEditRecipe() : handleCreateRecipe(),
+                loading: createLoading || updateLoading,
             },
         ],
     })

@@ -29,19 +29,9 @@ function EditIngredientsScreen({
 
     const ingredients = utils.sortPosition(editRecipe.recipeIngredients)
 
-    // const [updateIngredients] = ingredientService.useUpdateIngredientsMutation()
-
     const updateSlice = (ingredients: RecipeIngredient[]) => {
         return editRecipeActions.updateIngredients(ingredients)
     }
-
-    // const updateDatabase = (ingredients: RecipeIngredientUpdate[]) => {
-    //     return updateIngredients({
-    //         sectionId: editRecipe.sectionId,
-    //         recipeId: editRecipe.id,
-    //         body: ingredients,
-    //     })
-    // }
 
     return (
         <Container backgroundColor={theme.background}>

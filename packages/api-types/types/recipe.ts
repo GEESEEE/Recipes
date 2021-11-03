@@ -51,7 +51,7 @@ export class Recipe {
 }
 
 export type RecipeCreate = Optional<
-    Omit<Recipe, 'id' | 'recipeIngredients' | 'instructions'>,
+    Omit<Recipe, 'id' | 'recipeIngredients' | 'instructions' | 'sectionId'>,
     'createdAt' | 'publishedAt' | 'copyOf'
 >
 

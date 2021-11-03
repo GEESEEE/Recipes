@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Instruction, InstructionUpdate } from '@recipes/api-types/v1'
+import { Instruction } from '@recipes/api-types/v1'
 import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { useEditRecipe, useHeader, useSettings } from '@/hooks'
@@ -27,24 +27,11 @@ function EditInstructionsScreen({
         ],
     })
 
-    console.log('Instructions List')
-
     const instructions = utils.sortPosition(editRecipe.instructions)
-
-    // const [updateInstructions] =
-    //     instructionService.useUpdateInstructionsMutation()
 
     const updateSlice = (instructions: Instruction[]) => {
         return editRecipeActions.updateInstructions(instructions)
     }
-
-    // const updateDatabase = (instructions: InstructionUpdate[]) => {
-    //     return updateInstructions({
-    //         sectionId: editRecipe.sectionId,
-    //         recipeId: editRecipe.id,
-    //         body: instructions,
-    //     })
-    // }
 
     return (
         <Container backgroundColor={theme.background}>

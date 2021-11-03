@@ -6,7 +6,7 @@ import ListItem from './ListItem'
 import { Icon, Icons, View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { utils } from '@/utils'
-import { sectionsActions, sectionService } from '@/redux'
+import { recipesActions, recipeService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
@@ -28,16 +28,17 @@ function RecipeListItem({
 
     dropdownItems = dropdownItems || []
 
-    const [deleteSection] = sectionService.useDeleteSectionMutation()
+    const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
     function logRecip(): void {
         console.log('Recipe', item.name)
     }
 
     async function deleteRecip(): Promise<void> {
-        const res = await deleteSection(item.id)
+        const args = { sectionId: item.sectionId, recipeId: item.id }
+        const res = await deleteRecipe(args)
         if ('data' in res) {
-            dispatch(sectionsActions.removeSection(item.id))
+            dispatch(recipesActions.removeRecipe(args))
         }
     }
 

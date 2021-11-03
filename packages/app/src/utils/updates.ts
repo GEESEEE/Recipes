@@ -1,4 +1,13 @@
-import { SectionUpdate, Section } from '@recipes/api-types/v1'
+import {
+    SectionUpdate,
+    Section,
+    RecipeIngredient,
+    RecipeIngredientCreate,
+    InstructionCreate,
+    Instruction,
+    RecipeCreate,
+    Recipe,
+} from '@recipes/api-types/v1'
 import { ListItem } from '@/types'
 
 export function getNewPosition(list: ListItem[], last = true): number {
@@ -33,4 +42,41 @@ export function sectionUpdateObject(
     if (old.position !== newObject.position)
         update.position = newObject.position
     return update
+}
+
+export function recipeCreateObject(recipe: Recipe): RecipeCreate {
+    return {
+        name: recipe.name,
+        description: recipe.description,
+        peopleCount: recipe.peopleCount,
+        prepareTime: recipe.prepareTime,
+        position: recipe.position,
+    }
+}
+
+export function ingredientCreateObjects(
+    ingredients: RecipeIngredient[]
+): RecipeIngredientCreate[] {
+    return ingredients.map((ingr) => {
+        let unit = ingr.ingredient.unit
+        if (typeof unit === 'string' && unit.length === 0) {
+            unit = null
+        }
+        console.log('Unit', unit)
+        return {
+            amount: ingr.amount,
+            position: ingr.position,
+            name: ingr.ingredient.name,
+            unit,
+        }
+    })
+}
+
+export function instructionCreateObjects(
+    instructions: Instruction[]
+): InstructionCreate[] {
+    return instructions.map((instr) => ({
+        text: instr.text,
+        position: instr.position,
+    }))
 }

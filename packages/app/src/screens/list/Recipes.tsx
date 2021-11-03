@@ -25,18 +25,6 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const { theme } = settings
     const dispatch = useAppDispatch()
 
-    useHeader(navigation, {
-        drawer: false,
-        search: true,
-        right: [
-            {
-                type: Icons.MyFeather,
-                name: 'plus',
-                onPress: () => navigation.navigate('EditRecipeTabs'),
-            },
-        ],
-    })
-
     const route = useRoute() as {
         params?: { sectionId: number }
     }
@@ -88,6 +76,27 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     function updateDatabase(recipes: RecipeUpdate[]) {
         return updateRecipes({ sectionId, body: recipes })
     }
+
+    useHeader(navigation, {
+        drawer: false,
+        search: true,
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () =>
+                    navigation.navigate('EditRecipeTabs', {
+                        screen: 'EditRecipeStack',
+                        params: {
+                            screen: 'EditRecipe',
+                            params: {
+                                sectionId,
+                            },
+                        },
+                    }),
+            },
+        ],
+    })
 
     return (
         <Container backgroundColor={theme.background}>
