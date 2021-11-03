@@ -22,7 +22,6 @@ function InstructionListItem({
     instructions,
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
-    console.log('Instrciton list item', item)
     const index = instructions.indexOf(item)
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()

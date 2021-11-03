@@ -143,7 +143,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(index)
         currentIndex.value = index
         setDragging(true)
-        console.log('Starting', posY, index)
     }
 
     function reset(posY: number): void {
@@ -153,7 +152,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
-        console.log('Resetting', posY, from, to)
         updateData(dataProvider.getAllData(), from, to)
     }
 
@@ -162,7 +160,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         from: number,
         to: number
     ): Promise<void> {
-        console.log('Updating list item data', from, to)
         if (from === to) {
             return
         }
