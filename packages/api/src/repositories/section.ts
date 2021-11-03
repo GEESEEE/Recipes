@@ -1,6 +1,6 @@
 import { EntityRepository, SelectQueryBuilder } from 'typeorm'
 import BaseRepository from './base'
-import { BaseSectionQueryBuilder } from './base-section'
+import { BaseRecipeQueryBuilder } from './base-section'
 import { Section } from '@/entities'
 import { SectionScopeArgs } from '@/types'
 
@@ -72,7 +72,7 @@ export default class SectionRespository extends BaseRepository<Section> {
     }
 }
 
-export class SectionQueryBuilder extends BaseSectionQueryBuilder<Section> {
+export class SectionQueryBuilder extends BaseRecipeQueryBuilder<Section> {
     public override readonly scopes = {
         user: 'userId',
         recipes: 'recipeIds',

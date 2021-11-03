@@ -1,6 +1,6 @@
 import { BaseQueryBuilder } from './base'
 
-export abstract class BaseSectionQueryBuilder<T> extends BaseQueryBuilder<T> {
+export abstract class BaseRecipeQueryBuilder<T> extends BaseQueryBuilder<T> {
     public joinRecipeItems(): this {
         return this.leftJoinAndSelect(
             'recipe_ingredient',
