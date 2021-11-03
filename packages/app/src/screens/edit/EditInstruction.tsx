@@ -36,8 +36,6 @@ function EditInstructionScreen({
     const [instructionData, setInstructionData] =
         React.useState<Instruction>(instruction)
 
-    console.log('Edit isntructions', editRecipe.instructions)
-
     const handleCreateInstruction = React.useCallback((): void => {
         dispatch(editRecipeActions.addInstruction(instructionData))
     }, [dispatch, instructionData])

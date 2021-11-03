@@ -1,14 +1,12 @@
-import { stat } from 'fs/promises'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
     Recipe,
     RecipeIngredient,
-    Ingredient,
     Instruction,
     InstructionUpdate,
     RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
-import maxBy from 'lodash/maxBy'
+import { getNewPosition } from '@/utils'
 
 function mapIngredient(
     state: Recipe,
@@ -60,12 +58,10 @@ const editRecipeSlice = createSlice({
         },
 
         // Ingredients State
-        addIngredient(state, action: PayloadAction<Id>) {
-            const { id } = action.payload
-            const ingredient = new RecipeIngredient(id)
+        addIngredient(state, action: PayloadAction<RecipeIngredient>) {
+            const ingredient = action.payload
             const oldIngredients = state.recipeIngredients
-            const maxPosition = maxBy(oldIngredients, 'position')?.position
-            const position = maxPosition ? maxPosition + 1 : 1
+            const position = getNewPosition(oldIngredients)
             ingredient.position = position
             state.recipeIngredients = [...oldIngredients, ingredient]
         },
@@ -128,8 +124,7 @@ const editRecipeSlice = createSlice({
         addInstruction(state, action: PayloadAction<Instruction>) {
             const instruction = action.payload
             const oldInstructions = state.instructions
-            const maxPosition = maxBy(oldInstructions, 'position')?.position
-            const position = maxPosition ? maxPosition + 1 : 1
+            const position = getNewPosition(oldInstructions)
             instruction.position = position
             state.instructions = [...oldInstructions, instruction]
         },
