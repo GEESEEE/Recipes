@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useRoute } from '@react-navigation/native'
+import { Instruction } from '@recipes/api-types/v1'
 import { View, Text, Icons } from '@/components/base'
-import { useHeader, useSettings } from '@/hooks'
+import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
+import { InstructionListItem } from '@/components/molecules'
+import { getNewPosition } from '@/utils'
+import { editRecipeActions } from '@/redux'
 
 function EditInstructionScreen({
     navigation,
@@ -9,20 +14,63 @@ function EditInstructionScreen({
     navigation: any
 }): JSX.Element {
     const { theme } = useSettings()
+    const editRecipe = useEditRecipe()
+    const dispatch = useAppDispatch()
+
+    const route = useRoute()
+    const editing = Boolean(route.params)
+
+    let instructionId = -1
+    if (route.params) {
+        const params = route.params as any
+        instructionId = params.instructionId
+    }
+
+    let instruction = editRecipe.instructions.find(
+        (instruction) => instruction.id === instructionId
+    )
+    if (typeof instruction === 'undefined') {
+        instruction = new Instruction()
+    }
+
+    const [instructionData, setInstructionData] =
+        React.useState<Instruction>(instruction)
+
+    console.log('Edit isntructions', editRecipe.instructions)
+
+    const handleCreateInstruction = React.useCallback((): void => {
+        dispatch(editRecipeActions.addInstruction(instructionData))
+    }, [dispatch, instructionData])
+
+    const handleEditInstruction = React.useCallback((): void => {
+        dispatch(editRecipeActions.updateInstructions([instructionData]))
+    }, [dispatch, instructionData])
+
+    function handleInstructionTextChange(text: string) {
+        setInstructionData({ ...instructionData, text })
+    }
 
     useHeader(navigation, {
         right: [
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () => console.log('Saving instruction'),
+                onPress: () =>
+                    editing
+                        ? handleEditInstruction()
+                        : handleCreateInstruction(),
             },
         ],
     })
 
     return (
         <Container backgroundColor={theme.background}>
-            <Text>Edit 1 instruction Screen enzo</Text>
+            <InstructionListItem
+                item={instructionData}
+                editable
+                instructions={[instructionData]}
+                handleInstructionTextChange={handleInstructionTextChange}
+            />
         </Container>
     )
 }

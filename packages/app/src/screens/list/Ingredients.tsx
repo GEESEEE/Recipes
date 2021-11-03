@@ -1,16 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-    Ingredient,
-    RecipeIngredient,
-    RecipeIngredientUpdate,
-} from '@recipes/api-types/v1'
+import { RecipeIngredient } from '@recipes/api-types/v1'
 import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { useAppSelector, useEditRecipe, useHeader, useSettings } from '@/hooks'
+import { useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { IngredientListItem } from '@/components/molecules'
 import { utils } from '@/utils'
-import { editRecipeActions, ingredientService } from '@/redux'
+import { editRecipeActions } from '@/redux'
 
 function EditIngredientsScreen({
     navigation,
@@ -33,19 +29,19 @@ function EditIngredientsScreen({
 
     const ingredients = utils.sortPosition(editRecipe.recipeIngredients)
 
-    const [updateIngredients] = ingredientService.useUpdateIngredientsMutation()
+    // const [updateIngredients] = ingredientService.useUpdateIngredientsMutation()
 
     const updateSlice = (ingredients: RecipeIngredient[]) => {
         return editRecipeActions.updateIngredients(ingredients)
     }
 
-    const updateDatabase = (ingredients: RecipeIngredientUpdate[]) => {
-        return updateIngredients({
-            sectionId: editRecipe.sectionId,
-            recipeId: editRecipe.id,
-            body: ingredients,
-        })
-    }
+    // const updateDatabase = (ingredients: RecipeIngredientUpdate[]) => {
+    //     return updateIngredients({
+    //         sectionId: editRecipe.sectionId,
+    //         recipeId: editRecipe.id,
+    //         body: ingredients,
+    //     })
+    // }
 
     return (
         <Container backgroundColor={theme.background}>
@@ -55,7 +51,6 @@ function EditIngredientsScreen({
                 props={{}}
                 dragDrop
                 updateSlice={updateSlice}
-                updateDatabase={updateDatabase}
             />
         </Container>
     )

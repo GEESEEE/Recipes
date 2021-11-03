@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { Instruction, InstructionUpdate } from '@recipes/api-types/v1'
 import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { useAppSelector, useEditRecipe, useHeader, useSettings } from '@/hooks'
+import { useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
 import { utils } from '@/utils'
-import { editRecipeActions, instructionService } from '@/redux'
+import { editRecipeActions } from '@/redux'
 
 function EditInstructionsScreen({
     navigation,
@@ -29,20 +29,20 @@ function EditInstructionsScreen({
 
     const instructions = utils.sortPosition(editRecipe.instructions)
 
-    const [updateInstructions] =
-        instructionService.useUpdateInstructionsMutation()
+    // const [updateInstructions] =
+    //     instructionService.useUpdateInstructionsMutation()
 
     const updateSlice = (instructions: Instruction[]) => {
         return editRecipeActions.updateInstructions(instructions)
     }
 
-    const updateDatabase = (instructions: InstructionUpdate[]) => {
-        return updateInstructions({
-            sectionId: editRecipe.sectionId,
-            recipeId: editRecipe.id,
-            body: instructions,
-        })
-    }
+    // const updateDatabase = (instructions: InstructionUpdate[]) => {
+    //     return updateInstructions({
+    //         sectionId: editRecipe.sectionId,
+    //         recipeId: editRecipe.id,
+    //         body: instructions,
+    //     })
+    // }
 
     return (
         <Container backgroundColor={theme.background}>
@@ -52,7 +52,6 @@ function EditInstructionsScreen({
                 props={{ instructions }}
                 dragDrop
                 updateSlice={updateSlice}
-                updateDatabase={updateDatabase}
             />
         </Container>
     )

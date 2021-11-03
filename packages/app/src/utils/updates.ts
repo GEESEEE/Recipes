@@ -6,7 +6,7 @@ export function getNewPosition(list: ListItem[], last = true): number {
         return 1
     }
 
-    const sorted = list.sort((i1, i2) => i1.position - i2.position)
+    const sorted = [...list].sort((i1, i2) => i1.position - i2.position)
 
     if (last) {
         return sorted[sorted.length - 1].position + 1

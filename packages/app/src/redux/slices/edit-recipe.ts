@@ -125,9 +125,8 @@ const editRecipeSlice = createSlice({
         },
 
         // Instruction State
-        addInstruction(state, action: PayloadAction<Id>) {
-            const { id } = action.payload
-            const instruction = new Instruction(id)
+        addInstruction(state, action: PayloadAction<Instruction>) {
+            const instruction = action.payload
             const oldInstructions = state.instructions
             const maxPosition = maxBy(oldInstructions, 'position')?.position
             const position = maxPosition ? maxPosition + 1 : 1

@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RecipeIngredient } from '@recipes/api-types/v1'
+import { useNavigation } from '@react-navigation/native'
 import { View, Text } from '@/components/base'
 import { ListItem, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 import { ListItemBaseProps } from '@/types'
+import { useAppDispatch } from '@/hooks'
+import { editRecipeActions } from '@/redux'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
     handleIngredientNameChange?: (key: string, text: string) => void
@@ -21,13 +24,24 @@ function IngredientListItem({
     handleIngredientAmountChange,
     handleIngredientUnitChange,
 }: IngredientListItemProps): JSX.Element {
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation<any>()
+
     dropdownItems = dropdownItems || []
 
     function logIngredient(): void {
         console.log('Logging ingredient', item.ingredient.name)
     }
 
-    dropdownItems.push(logIngredient)
+    function editIngredient(): void {
+        navigation.navigate('EditIngredient', { ingredientId: item.id })
+    }
+
+    function deleteIngredient(): void {
+        dispatch(editRecipeActions.removeIngredient({ id: item.id }))
+    }
+
+    dropdownItems.push(logIngredient, editIngredient, deleteIngredient)
 
     return (
         <ListItem

@@ -1,17 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Section, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
+import { Section, SectionCreate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import { View, Icons } from '@/components/base'
 import { SectionListItem } from '@/components/molecules'
-import {
-    useAppDispatch,
-    useAppSelector,
-    useHeader,
-    useSectionById,
-    useSections,
-} from '@/hooks'
-import { sectionsActions, sectionsSelector, sectionService } from '@/redux'
+import { useAppDispatch, useHeader, useSectionById, useSections } from '@/hooks'
+import { sectionsActions, sectionService } from '@/redux'
 import { getNewPosition, sectionUpdateObject } from '@/utils'
 
 type EditSectionScreenProps = {
@@ -47,38 +41,30 @@ function EditSectionScreen({
     const [updateSection, updateSectionState] =
         sectionService.useUpdateSectionMutation()
 
-    const handleSaveSection = React.useCallback(
-        async (sectionData: Section): Promise<void> => {
-            const createData: Omit<SectionCreate, 'userId'> = {
-                position: getNewPosition(sections),
-                name: sectionData.name,
-                description: sectionData.description,
-            }
-            const section = await createSection(createData)
+    const handleSaveSection = React.useCallback(async (): Promise<void> => {
+        const createData: Omit<SectionCreate, 'userId'> = {
+            position: getNewPosition(sections),
+            name: sectionData.name,
+            description: sectionData.description,
+        }
+        const section = await createSection(createData)
 
-            if ('data' in section) {
-                await dispatch(sectionsActions.addSection(section.data))
-                navigation.pop()
-            }
-        },
-        [createSection, dispatch, navigation, sections]
-    )
+        if ('data' in section) {
+            await dispatch(sectionsActions.addSection(section.data))
+            navigation.pop()
+        }
+    }, [createSection, dispatch, navigation, sections, sectionData])
 
-    const handleEditSection = React.useCallback(
-        async (sectionData: Section): Promise<void> => {
-            const updatedSection = await updateSection(
-                sectionUpdateObject(section as Section, sectionData)
-            )
+    const handleEditSection = React.useCallback(async (): Promise<void> => {
+        const updatedSection = await updateSection(
+            sectionUpdateObject(section as Section, sectionData)
+        )
 
-            if ('data' in updatedSection) {
-                await dispatch(
-                    sectionsActions.updateSection(updatedSection.data)
-                )
-                navigation.pop()
-            }
-        },
-        [updateSection, dispatch, navigation, section]
-    )
+        if ('data' in updatedSection) {
+            await dispatch(sectionsActions.updateSection(updatedSection.data))
+            navigation.pop()
+        }
+    }, [updateSection, dispatch, navigation, section, sectionData])
 
     function handleSectionNameChange(name: string): void {
         setSectionData({ ...sectionData, name })
@@ -95,9 +81,7 @@ function EditSectionScreen({
                 type: Icons.MyFeather,
                 name: 'save',
                 onPress: () =>
-                    editing
-                        ? handleEditSection(sectionData)
-                        : handleSaveSection(sectionData),
+                    editing ? handleEditSection() : handleSaveSection(),
                 loading:
                     createSectionState.isLoading ||
                     updateSectionState.isLoading,
