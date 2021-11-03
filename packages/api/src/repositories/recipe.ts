@@ -1,6 +1,6 @@
 import { Brackets, EntityRepository, SelectQueryBuilder } from 'typeorm'
 import BaseRepository from './base'
-import { BaseRecipeQueryBuilder } from './base-section'
+import { BaseRecipeQueryBuilder } from './base-recipe'
 import { Recipe } from '@/entities'
 import { RecipeScopeArgs } from '@/types'
 
