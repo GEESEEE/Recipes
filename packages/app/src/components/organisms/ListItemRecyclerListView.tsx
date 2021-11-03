@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
+import isEqual from 'lodash/isEqual'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppDispatch, useSettings, useToggle } from '@/hooks'
@@ -45,7 +46,7 @@ const itemLayouts: {
     [key: string]: Dimension
 } = {}
 
-const dataProviderInstance = new DataProvider((r1, r2) => r1.id !== r2.id)
+const dataProviderInstance = new DataProvider((r1, r2) => !isEqual(r1, r2))
 
 type ListItemRecyclerViewProps<
     T extends ListItem,
