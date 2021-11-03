@@ -9,9 +9,10 @@ import {
     useRecipes,
     useSettings,
 } from '@/hooks'
-import { View, Text } from '@/components/base'
-import { TextInputWithTitle } from '@/components/atoms'
+import { View, Text, Icons } from '@/components/base'
+import { TextInputWithTitle, Counter } from '@/components/atoms'
 import { editRecipeActions } from '@/redux'
+import { utils } from '@/utils'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -36,6 +37,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     React.useEffect(() => {
+        console.log('Edit Recipe Use effect', sectionId, recipeId)
         if (sectionId >= 0 && recipeId >= 0) {
             const sectionRecipes = recipes[sectionId]
             if (typeof sectionRecipes !== 'undefined') {
@@ -51,10 +53,38 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }, [recipeId, dispatch, sectionId, recipes])
 
-    useHeader(navigation, { right: [] })
-
     const prepareTimeHours = Math.floor(editRecipe.prepareTime / 60)
     const prepareTimeMinutes = editRecipe.prepareTime - prepareTimeHours * 60
+
+    function handlePrepareTimeHours(text: string): void {
+        const hours = utils.handleNumericTextInput(text, true)
+        const newTime = hours * 60 + prepareTimeMinutes
+        dispatch(editRecipeActions.setPrepareTime(newTime))
+    }
+
+    function handlePrepareTimeMinutes(text: string): void {
+        const minutes = utils.handleNumericTextInput(text, true)
+        const newTime = prepareTimeHours * 60 + minutes
+        dispatch(editRecipeActions.setPrepareTime(newTime))
+    }
+
+    function incrementPeopleCount(): void {
+        dispatch(editRecipeActions.setPeopleCount(editRecipe.peopleCount + 1))
+    }
+
+    function decrementPeopleCount(): void {
+        dispatch(editRecipeActions.setPeopleCount(editRecipe.peopleCount - 1))
+    }
+
+    useHeader(navigation, {
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'save',
+                onPress: () => console.log('Saving Recipe'),
+            },
+        ],
+    })
 
     const width = 'l'
     const paddingHorizontal = 'm'
@@ -84,17 +114,17 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 value={editRecipe.description}
             />
 
-            <PrepareTimeContainer
+            <RowContainer
                 width={width}
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>{prepareTimeText}</PrepareTimeText>
+                <FlexText>{prepareTimeText}</FlexText>
                 <TextInputWithTitle
                     value={prepareTimeHours.toString()}
                     marginHorizontal="s"
                     title="Hours"
-                    onChangeText={(t: string) => console.log(t)}
+                    onChangeText={(t: string) => handlePrepareTimeHours(t)}
                     width="s"
                     keyboardType="numeric"
                     maxLength={2}
@@ -102,27 +132,28 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <TextInputWithTitle
                     value={prepareTimeMinutes.toString()}
                     title="Minutes"
-                    onChangeText={(t: string) => console.log(t)}
+                    onChangeText={(t: string) => handlePrepareTimeMinutes(t)}
                     width="s"
                     keyboardType="numeric"
                     maxLength={2}
                 />
-            </PrepareTimeContainer>
+            </RowContainer>
 
-            <PrepareTimeContainer
+            <RowContainer
                 width={width}
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
-                <PrepareTimeText>{peopleCountText}</PrepareTimeText>
-                <TextInputWithTitle
-                    value={editRecipe.peopleCount.toString()}
-                    placeholder="People count"
-                    width="m"
+                <FlexText>{peopleCountText}</FlexText>
+                <Counter
+                    width="s"
                     marginHorizontal="s"
-                    keyboardType="numeric"
+                    increment={incrementPeopleCount}
+                    decrement={decrementPeopleCount}
+                    value={editRecipe.peopleCount}
                 />
-            </PrepareTimeContainer>
+                <View width="s" />
+            </RowContainer>
         </Container>
     )
 }
@@ -134,13 +165,11 @@ const Container = styled(View)`
     align-items: center;
 `
 
-const PrepareTimeContainer = styled(View)`
+const RowContainer = styled(View)`
     flex-direction: row;
     align-items: center;
 `
 
-const PrepareTimeText = styled(Text)`
+const FlexText = styled(Text)`
     flex: 1;
 `
-
-const PeopleCountContainer = styled(View)``
