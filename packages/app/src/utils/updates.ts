@@ -5,7 +5,6 @@ export function getNewPosition(list: ListItem[], last = true): number {
     if (list.length === 0) {
         return 1
     }
-
     const sorted = [...list].sort((i1, i2) => i1.position - i2.position)
 
     if (last) {
@@ -13,6 +12,14 @@ export function getNewPosition(list: ListItem[], last = true): number {
     } else {
         return sorted[0].position - 1
     }
+}
+
+export function getNewId(list: ListItem[]): number {
+    if (list.length === 0) {
+        return 1
+    }
+    const sorted = [...list].sort((i1, i2) => i1.id - i2.id)
+    return sorted[0].id - 1
 }
 
 export function sectionUpdateObject(

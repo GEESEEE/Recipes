@@ -6,7 +6,7 @@ import { View, Text, Icons } from '@/components/base'
 import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 import { IngredientListItem } from '@/components/molecules'
-import { utils } from '@/utils'
+import { getNewId, utils } from '@/utils'
 
 function EditIngredientScreen({
     navigation,
@@ -30,11 +30,15 @@ function EditIngredientScreen({
         (ingredient) => ingredient.id === ingredientId
     )
     if (typeof ingredient === 'undefined') {
-        ingredient = new RecipeIngredient()
+        ingredient = new RecipeIngredient(
+            getNewId(editRecipe.recipeIngredients)
+        )
     }
 
     const [ingredientData, setIngredientData] =
         React.useState<RecipeIngredient>(ingredient)
+
+    console.log('Edit Ingredient', ingredientId, ingredientData)
 
     const handleCreateIngredient = React.useCallback((): void => {
         dispatch(editRecipeActions.addIngredient(ingredientData))
@@ -45,13 +49,20 @@ function EditIngredientScreen({
     }, [dispatch, ingredientData])
 
     function handleNameChange(name: string) {
-        const newData = { ...ingredientData }
+        const newData = {
+            ...ingredientData,
+            ingredient: { ...ingredientData.ingredient },
+        }
         newData.ingredient.name = name
+        console.log('Name change', newData)
         setIngredientData(newData)
     }
 
     function handleUnitChange(unit: string) {
-        const newData = { ...ingredientData }
+        const newData = {
+            ...ingredientData,
+            ingredient: { ...ingredientData.ingredient },
+        }
         newData.ingredient.unit = unit
         setIngredientData(newData)
     }

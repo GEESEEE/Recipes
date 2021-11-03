@@ -6,7 +6,7 @@ import {
     InstructionUpdate,
     RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
-import { getNewPosition } from '@/utils'
+import { getNewId, getNewPosition } from '@/utils'
 
 function mapIngredient(
     state: Recipe,
@@ -61,8 +61,7 @@ const editRecipeSlice = createSlice({
         addIngredient(state, action: PayloadAction<RecipeIngredient>) {
             const ingredient = action.payload
             const oldIngredients = state.recipeIngredients
-            const position = getNewPosition(oldIngredients)
-            ingredient.position = position
+            ingredient.position = getNewPosition(oldIngredients)
             state.recipeIngredients = [...oldIngredients, ingredient]
         },
         updateIngredients(

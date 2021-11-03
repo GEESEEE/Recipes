@@ -5,7 +5,7 @@ import { Instruction } from '@recipes/api-types/v1'
 import { View, Text, Icons } from '@/components/base'
 import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
-import { getNewPosition } from '@/utils'
+import { getNewId, getNewPosition } from '@/utils'
 import { editRecipeActions } from '@/redux'
 
 function EditInstructionScreen({
@@ -30,7 +30,7 @@ function EditInstructionScreen({
         (instruction) => instruction.id === instructionId
     )
     if (typeof instruction === 'undefined') {
-        instruction = new Instruction()
+        instruction = new Instruction(getNewId(editRecipe.instructions))
     }
 
     const [instructionData, setInstructionData] =
