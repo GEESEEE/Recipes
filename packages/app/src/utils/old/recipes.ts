@@ -1,7 +1,4 @@
-import { RecipeSortType } from '../../redux/actions/sort'
-import * as recipeService from '../../oldServices/recipe'
 import { Instruction, Recipe, RecipeIngredient } from '../../data'
-import { PaginationObject } from '../../oldServices/recipe'
 
 type IngredientDifferenceObject = {
     recipeIngredientId: number
@@ -25,151 +22,151 @@ type RecipeDifferenceObject = {
     publishedAt?: Date | null
 }
 
-export function recipeDifference(
-    oldRecipe: Recipe,
-    recipe: Recipe
-): RecipeDifferenceObject {
-    const recipeObj: RecipeDifferenceObject = {}
-    if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
-    if (recipe.description !== oldRecipe.description)
-        recipeObj.description = recipe.description
-    if (recipe.peopleCount !== oldRecipe.peopleCount)
-        recipeObj.peopleCount = recipe.peopleCount
-    if (recipe.prepareTime !== oldRecipe.prepareTime)
-        recipeObj.prepareTime = recipe.prepareTime
-    if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
-        recipeObj.publishedAt = recipe.publishedAt
+// export function recipeDifference(
+//     oldRecipe: Recipe,
+//     recipe: Recipe
+// ): RecipeDifferenceObject {
+//     const recipeObj: RecipeDifferenceObject = {}
+//     if (recipe.name !== oldRecipe.name) recipeObj.name = recipe.name
+//     if (recipe.description !== oldRecipe.description)
+//         recipeObj.description = recipe.description
+//     if (recipe.peopleCount !== oldRecipe.peopleCount)
+//         recipeObj.peopleCount = recipe.peopleCount
+//     if (recipe.prepareTime !== oldRecipe.prepareTime)
+//         recipeObj.prepareTime = recipe.prepareTime
+//     if (Boolean(recipe.publishedAt) !== Boolean(oldRecipe.publishedAt))
+//         recipeObj.publishedAt = recipe.publishedAt
 
-    return recipeObj
-}
+//     return recipeObj
+// }
 
-export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
-    return recipeService.createRecipes(
-        recipes.map((recipe) => ({
-            name: recipe.name,
-            description: recipe.description,
-            peopleCount: recipe.peopleCount,
-            prepareTime: recipe.prepareTime,
-            publishedAt: recipe.publishedAt,
-            createdAt: recipe.createdAt,
-            copyOf: recipe.copyOf,
-        }))
-    )
-}
+// export async function createRecipes(recipes: Recipe[]): Promise<Recipe[]> {
+//     return recipeService.createRecipes(
+//         recipes.map((recipe) => ({
+//             name: recipe.name,
+//             description: recipe.description,
+//             peopleCount: recipe.peopleCount,
+//             prepareTime: recipe.prepareTime,
+//             publishedAt: recipe.publishedAt,
+//             createdAt: recipe.createdAt,
+//             copyOf: recipe.copyOf,
+//         }))
+//     )
+// }
 
-export async function updateRecipe(
-    recipe: Recipe,
-    oldRecipe: Recipe
-): Promise<Recipe> {
-    const recipeObj = recipeDifference(oldRecipe, recipe)
+// export async function updateRecipe(
+//     recipe: Recipe,
+//     oldRecipe: Recipe
+// ): Promise<Recipe> {
+//     const recipeObj = recipeDifference(oldRecipe, recipe)
 
-    if (Object.keys(recipeObj).length > 0) {
-        return recipeService.updateRecipe(recipe.id, recipeObj)
-    }
-    // Deepcopy input recipe if nothing changed, so will always be a new Recipe than what was put in
-    return JSON.parse(JSON.stringify(recipe))
-}
+//     if (Object.keys(recipeObj).length > 0) {
+//         return recipeService.updateRecipe(recipe.id, recipeObj)
+//     }
+//     // Deepcopy input recipe if nothing changed, so will always be a new Recipe than what was put in
+//     return JSON.parse(JSON.stringify(recipe))
+// }
 
-export async function getMyRecipes(): Promise<PaginationObject> {
-    return recipeService.getRecipes({
-        scopes: ['author'],
-        sort: ['-createtime'],
-        perPage: 9999,
-    })
-}
+// export async function getMyRecipes(): Promise<PaginationObject> {
+//     return recipeService.getRecipes({
+//         scopes: ['author'],
+//         sort: ['-createtime'],
+//         perPage: 9999,
+//     })
+// }
 
-export async function deleteRecipe(recipeId: number): Promise<void> {
-    await recipeService.deleteRecipe(recipeId)
-}
+// export async function deleteRecipe(recipeId: number): Promise<void> {
+//     await recipeService.deleteRecipe(recipeId)
+// }
 
-export async function addIngredients(
-    recipeId: number,
-    ingredients: RecipeIngredient[]
-): Promise<RecipeIngredient[]> {
-    return recipeService.addIngredients(
-        recipeId,
-        ingredients.map((ri) => ({
-            amount: ri.amount,
-            position: ri.position,
-            unit:
-                ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
-            name: ri.ingredient!.name,
-        }))
-    )
-}
+// export async function addIngredients(
+//     recipeId: number,
+//     ingredients: RecipeIngredient[]
+// ): Promise<RecipeIngredient[]> {
+//     return recipeService.addIngredients(
+//         recipeId,
+//         ingredients.map((ri) => ({
+//             amount: ri.amount,
+//             position: ri.position,
+//             unit:
+//                 ri.ingredient!.unit?.length === 0 ? null : ri.ingredient!.unit,
+//             name: ri.ingredient!.name,
+//         }))
+//     )
+// }
 
-export async function updateIngredients(
-    recipeId: number,
-    ingredients: RecipeIngredient[],
-    oldIngredients: RecipeIngredient[]
-): Promise<RecipeIngredient[]> {
-    const updateObjects: IngredientDifferenceObject[] = []
-    ingredients.forEach((ingr) => {
-        const obj: IngredientDifferenceObject = { recipeIngredientId: ingr.id }
-        const oldIngr = oldIngredients.find((i) => i.id === ingr.id)
-        if (typeof oldIngr !== 'undefined') {
-            if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
-            if (oldIngr.position !== ingr.position) obj.position = ingr.position
-            if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit)
-                obj.unit = ingr.ingredient!.unit
-            if (oldIngr.ingredient!.name !== ingr.ingredient!.name)
-                obj.name = ingr.ingredient!.name
-        }
-        if (Object.keys(obj).length > 1) updateObjects.push(obj)
-    })
+// export async function updateIngredients(
+//     recipeId: number,
+//     ingredients: RecipeIngredient[],
+//     oldIngredients: RecipeIngredient[]
+// ): Promise<RecipeIngredient[]> {
+//     const updateObjects: IngredientDifferenceObject[] = []
+//     ingredients.forEach((ingr) => {
+//         const obj: IngredientDifferenceObject = { recipeIngredientId: ingr.id }
+//         const oldIngr = oldIngredients.find((i) => i.id === ingr.id)
+//         if (typeof oldIngr !== 'undefined') {
+//             if (oldIngr.amount !== ingr.amount) obj.amount = ingr.amount
+//             if (oldIngr.position !== ingr.position) obj.position = ingr.position
+//             if (oldIngr.ingredient!.unit !== ingr.ingredient!.unit)
+//                 obj.unit = ingr.ingredient!.unit
+//             if (oldIngr.ingredient!.name !== ingr.ingredient!.name)
+//                 obj.name = ingr.ingredient!.name
+//         }
+//         if (Object.keys(obj).length > 1) updateObjects.push(obj)
+//     })
 
-    return recipeService.updateIngredients(recipeId, updateObjects)
-}
+//     return recipeService.updateIngredients(recipeId, updateObjects)
+// }
 
-export async function removeIngredients(
-    recipeId: number,
-    ingredients: RecipeIngredient[]
-): Promise<void> {
-    await recipeService.removeIngredients(
-        recipeId,
-        ingredients.map((i) => i.ingredient!.id)
-    )
-}
+// export async function removeIngredients(
+//     recipeId: number,
+//     ingredients: RecipeIngredient[]
+// ): Promise<void> {
+//     await recipeService.removeIngredients(
+//         recipeId,
+//         ingredients.map((i) => i.ingredient!.id)
+//     )
+// }
 
-export async function addInstructions(
-    recipeId: number,
-    instructions: Instruction[]
-): Promise<Instruction[]> {
-    return recipeService.addInstructions(
-        recipeId,
-        instructions.map((i) => ({ text: i.text, position: i.position }))
-    )
-}
+// export async function addInstructions(
+//     recipeId: number,
+//     instructions: Instruction[]
+// ): Promise<Instruction[]> {
+//     return recipeService.addInstructions(
+//         recipeId,
+//         instructions.map((i) => ({ text: i.text, position: i.position }))
+//     )
+// }
 
-export async function updateInstructions(
-    recipeId: number,
-    instructions: Instruction[],
-    oldInstructions: Instruction[]
-): Promise<Instruction[]> {
-    const updateObjects: InstructionDifferenceObject[] = []
-    instructions.forEach((instr) => {
-        const obj: InstructionDifferenceObject = { instructionId: instr.id }
-        const oldInstr = oldInstructions.find((i) => i.id === instr.id)
-        if (typeof oldInstr !== 'undefined') {
-            if (oldInstr.text !== instr.text) obj.text = instr.text
-            if (oldInstr.position !== instr.position)
-                obj.position = instr.position
-        }
-        if (Object.keys(obj).length > 1) updateObjects.push(obj)
-    })
+// export async function updateInstructions(
+//     recipeId: number,
+//     instructions: Instruction[],
+//     oldInstructions: Instruction[]
+// ): Promise<Instruction[]> {
+//     const updateObjects: InstructionDifferenceObject[] = []
+//     instructions.forEach((instr) => {
+//         const obj: InstructionDifferenceObject = { instructionId: instr.id }
+//         const oldInstr = oldInstructions.find((i) => i.id === instr.id)
+//         if (typeof oldInstr !== 'undefined') {
+//             if (oldInstr.text !== instr.text) obj.text = instr.text
+//             if (oldInstr.position !== instr.position)
+//                 obj.position = instr.position
+//         }
+//         if (Object.keys(obj).length > 1) updateObjects.push(obj)
+//     })
 
-    return recipeService.updateInstructions(recipeId, updateObjects)
-}
+//     return recipeService.updateInstructions(recipeId, updateObjects)
+// }
 
-export async function deleteInstructions(
-    recipeId: number,
-    instructions: Instruction[]
-): Promise<void> {
-    await recipeService.deleteInstructions(
-        recipeId,
-        instructions.map((i) => i.id)
-    )
-}
+// export async function deleteInstructions(
+//     recipeId: number,
+//     instructions: Instruction[]
+// ): Promise<void> {
+//     await recipeService.deleteInstructions(
+//         recipeId,
+//         instructions.map((i) => i.id)
+//     )
+// }
 
 export function applySearch(recipes: Recipe[], search: string[]): Recipe[] {
     if (search.length > 0) {
@@ -204,44 +201,44 @@ export function applySearch(recipes: Recipe[], search: string[]): Recipe[] {
     return recipes
 }
 
-const sortFieldMap: { [key in RecipeSortType]: keyof Recipe } = {
-    createtime: 'createdAt',
-    publishtime: 'publishedAt',
-    preparetime: 'prepareTime',
-    peoplecount: 'peopleCount',
-    ingredientcount: 'recipeIngredients',
-    instructioncount: 'instructions',
-}
+// const sortFieldMap: { [key in RecipeSortType]: keyof Recipe } = {
+//     createtime: 'createdAt',
+//     publishtime: 'publishedAt',
+//     preparetime: 'prepareTime',
+//     peoplecount: 'peopleCount',
+//     ingredientcount: 'recipeIngredients',
+//     instructioncount: 'instructions',
+// }
 
-const nullableProperties: (keyof Recipe)[] = ['publishedAt']
+// const nullableProperties: (keyof Recipe)[] = ['publishedAt']
 
-export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
-    if (sort.length > 0) {
-        const fields: (keyof Recipe)[] = []
-        // Map the sort strings to the corresponding field names
-        const sortFields = sort.map((s) => {
-            const reverse = s.charAt(0) === '-'
-            const field =
-                sortFieldMap[(reverse ? s.substring(1) : s) as RecipeSortType]
-            fields.push(field)
+// export function applySort(recipes: Recipe[], sort: string[]): Recipe[] {
+//     if (sort.length > 0) {
+//         const fields: (keyof Recipe)[] = []
+//         // Map the sort strings to the corresponding field names
+//         const sortFields = sort.map((s) => {
+//             const reverse = s.charAt(0) === '-'
+//             const field =
+//                 sortFieldMap[(reverse ? s.substring(1) : s) as RecipeSortType]
+//             fields.push(field)
 
-            return reverse ? `-${field}` : field
-        })
+//             return reverse ? `-${field}` : field
+//         })
 
-        // Filter out the null values if we sort by a nullable property, because we can't sort null values
-        let filteredRecipes = recipes
-        nullableProperties.forEach((prop) => {
-            if (fields.includes(prop)) {
-                filteredRecipes = filteredRecipes.filter(
-                    (recipe) => recipe[prop] !== null
-                )
-            }
-        })
+//         // Filter out the null values if we sort by a nullable property, because we can't sort null values
+//         let filteredRecipes = recipes
+//         nullableProperties.forEach((prop) => {
+//             if (fields.includes(prop)) {
+//                 filteredRecipes = filteredRecipes.filter(
+//                     (recipe) => recipe[prop] !== null
+//                 )
+//             }
+//         })
 
-        return filteredRecipes.sort(recipeFieldSorter(sortFields))
-    }
-    return recipes
-}
+//         return filteredRecipes.sort(recipeFieldSorter(sortFields))
+//     }
+//     return recipes
+// }
 
 const recipeFieldSorter = (fields: string[]) => (r1: Recipe, r2: Recipe) =>
     fields
