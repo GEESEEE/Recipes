@@ -12,7 +12,7 @@ import { editRecipeActions } from '@/redux'
 
 interface InstructionListItemProps extends ListItemBaseProps<Instruction> {
     instructions: Instruction[]
-    handleInstructionTextChange?: (key: string, text: string) => void
+    handleInstructionTextChange?: (text: string) => void
 }
 
 function InstructionListItem({
@@ -54,11 +54,12 @@ function InstructionListItem({
         >
             <Container paddingHorizontal="s">
                 <Number type="SubHeader">{index + 1}</Number>
-                <Editable
+                <FlexEditable
                     editable={editable}
                     text={item.text}
                     handleTextChange={handleInstructionTextChange}
                     numberOfLines={2}
+                    placeholder="Instruction Text"
                 />
             </Container>
         </ListItem>
@@ -74,4 +75,8 @@ const Container = styled(View)`
 
 const Number = styled(Text)`
     width: 10%;
+`
+
+const FlexEditable = styled(Editable)`
+    flex: 1;
 `

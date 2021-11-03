@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { RecipeIngredient } from '@recipes/api-types/v1'
 import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
-import { View, Text } from '@/components/base'
+import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 import { ListItemBaseProps } from '@/types'
@@ -11,9 +11,9 @@ import { useAppDispatch } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
-    handleIngredientNameChange?: (key: string, text: string) => void
-    handleIngredientAmountChange?: (key: string, text: string) => void
-    handleIngredientUnitChange?: (key: string, text: string) => void
+    handleIngredientNameChange?: (text: string) => void
+    handleIngredientAmountChange?: (text: string) => void
+    handleIngredientUnitChange?: (text: string) => void
 }
 
 function IngredientListItem({
@@ -59,6 +59,8 @@ function IngredientListItem({
                     text={item.ingredient.name}
                     handleTextChange={handleIngredientNameChange}
                     paddingHorizontal="s"
+                    numberOfLines={1}
+                    placeholder="Ingredient Name"
                 />
                 <SubContainer>
                     <Editable
@@ -66,12 +68,14 @@ function IngredientListItem({
                         text={item.amount.toString()}
                         handleTextChange={handleIngredientAmountChange}
                         paddingHorizontal="s"
+                        numberOfLines={1}
                     />
-                    <Editable
+                    <FlexEditable
                         editable={editable}
                         text={item.ingredient.unit ?? ''}
                         handleTextChange={handleIngredientUnitChange}
-                        width="m"
+                        placeholder="Unit?"
+                        numberOfLines={1}
                     />
                 </SubContainer>
             </Container>
@@ -89,4 +93,7 @@ const Container = styled(View)`
 const SubContainer = styled(View)`
     flex-direction: row;
     align-items: center;
+`
+const FlexEditable = styled(Editable)`
+    flex: 1;
 `
