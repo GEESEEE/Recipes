@@ -19,9 +19,9 @@ export default class CreateUsers implements Seeder {
     private ingredientCount = 50
 
     private sectionPerUser = 5
-    private recipePerSection = 2
-    private ingredientsPerRecipe = range(2, 3)
-    private instructionsPerRecipe = range(2, 3)
+    private recipePerSection = 5
+    private ingredientsPerRecipe = range(5, 8)
+    private instructionsPerRecipe = range(5, 8)
 
     private ingredientIds = range(1, this.ingredientCount + 1)
 

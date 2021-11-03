@@ -45,6 +45,8 @@ const itemLayouts: {
     [key: string]: Dimension
 } = {}
 
+const dataProviderInstance = new DataProvider((r1, r2) => r1.id !== r2.id)
+
 type ListItemRecyclerViewProps<
     T extends ListItem,
     U extends Omit<ListItemBaseProps<T>, 'item' | 'onGesture'>
@@ -88,13 +90,12 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
-    const dataProviderInstance = new DataProvider((r1, r2) => r1.id !== r2.id)
-
     const [dataProvider, setDataProvider] = useState(
         dataProviderInstance.cloneWithRows(data)
     )
 
     React.useEffect(() => {
+        // console.log('Listitem Data updated', data)
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 

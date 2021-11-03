@@ -39,7 +39,13 @@ export default class SectionService {
 
         qb = qb.validate({ scopes })
 
-        return await qb.finish().getMany()
+        if (scopes.includes('recipes')) {
+            qb = qb.finishRecipes()
+        } else {
+            qb = qb.finish()
+        }
+
+        return await qb.getMany()
     }
 
     public async getSectionResults(

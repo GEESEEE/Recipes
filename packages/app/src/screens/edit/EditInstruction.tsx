@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { Instruction } from '@recipes/api-types/v1'
-import { View, Text, Icons } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
-import { getNewId, getNewPosition } from '@/utils'
+import { getNewId } from '@/utils'
 import { editRecipeActions } from '@/redux'
 
 function EditInstructionScreen({

@@ -96,13 +96,12 @@ export class RecipeQueryBuilder extends BaseSectionQueryBuilder<Recipe> {
 
     private makeBaseQuery(): this {
         return this.addSelect('recipe.*')
-            .joinInstruction()
-            .joinIngredient()
             .addGroupBy('recipe.id')
+            .joinRecipeItems()
     }
 
     public finish(): this {
-        return this.finishIngredient().finishInstruction().finishRecipe()
+        return this.finishRecipe()
     }
 
     public get default(): this {

@@ -102,9 +102,6 @@ export class SectionQueryBuilder extends BaseSectionQueryBuilder<Section> {
 
     public finish(): this {
         return this.addOrderBy('section.position', 'ASC')
-            .finishIngredient()
-            .finishInstruction()
-            .finishRecipe()
     }
 
     public get default(): this {
@@ -117,11 +114,19 @@ export class SectionQueryBuilder extends BaseSectionQueryBuilder<Section> {
         })
     }
 
+    public finishRecipes(): this {
+        return this.finish().finishRecipe()
+    }
+
     public get recipes(): this {
         return this.makeBaseQuery()
-            .joinRecipe()
-            .joinInstruction()
-            .joinIngredient()
+            .leftJoinAndSelect(
+                'recipe',
+                'recipe',
+                `recipe.sectionId = section.id`
+            )
+            .addGroupBy('recipe.id')
+            .joinRecipeItems()
             .andWhere(`recipe.id IN (${this.recipeIds})`)
     }
 

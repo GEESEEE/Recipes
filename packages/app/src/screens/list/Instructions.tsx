@@ -27,7 +27,7 @@ function EditInstructionsScreen({
         ],
     })
 
-    console.log('Instructions List', editRecipe.instructions)
+    console.log('Instructions List')
 
     const instructions = utils.sortPosition(editRecipe.instructions)
 
