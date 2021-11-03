@@ -4,7 +4,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import DropdownMenu, { DropdownItem } from './DropdownMenu'
 import { View, TouchableOpacity, Icon, Icons } from '@/components/base'
-import { useAppSelector, useSettings } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { GestureChangeEvent } from '@/types'
 
 type ListItemProps = {

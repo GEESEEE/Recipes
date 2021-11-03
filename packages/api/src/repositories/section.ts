@@ -1,5 +1,6 @@
 import { EntityRepository, SelectQueryBuilder } from 'typeorm'
-import BaseRepository, { BaseQueryBuilder } from './base'
+import BaseRepository from './base'
+import { BaseSectionQueryBuilder } from './base-section'
 import { Section } from '@/entities'
 import { SectionScopeArgs } from '@/types'
 
@@ -71,7 +72,7 @@ export default class SectionRespository extends BaseRepository<Section> {
     }
 }
 
-export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
+export class SectionQueryBuilder extends BaseSectionQueryBuilder<Section> {
     public override readonly scopes = {
         user: 'userId',
         recipes: 'recipeIds',
@@ -101,6 +102,9 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
 
     public finish(): this {
         return this.addOrderBy('section.position', 'ASC')
+            .finishIngredient()
+            .finishInstruction()
+            .finishRecipe()
     }
 
     public get default(): this {
@@ -115,35 +119,13 @@ export class SectionQueryBuilder extends BaseQueryBuilder<Section> {
 
     public get recipes(): this {
         return this.makeBaseQuery()
-            .leftJoinAndSelect(
-                'recipe',
-                'recipe',
-                `recipe.sectionId = section.id`
-            )
-            .leftJoinAndSelect(
-                'instruction',
-                'instruction',
-                'instruction.recipe_id = recipe.id'
-            )
-            .leftJoinAndSelect(
-                'recipe_ingredient',
-                'recipe_ingredient',
-                'recipe_ingredient.recipe_id = recipe.id'
-            )
-            .leftJoinAndSelect(
-                'ingredient',
-                'ingredient',
-                'recipe_ingredient.ingredient_id = ingredient.id'
-            )
-            .addGroupBy('instruction.id')
-            .addGroupBy('recipe_ingredient.id')
-            .addGroupBy('ingredient.id')
+            .joinRecipe()
+            .joinInstruction()
+            .joinIngredient()
             .andWhere(`recipe.id IN (${this.recipeIds})`)
-            .addGroupBy('recipe.id')
     }
 
     public get ids(): this {
-        console.log('Ids', this.sectionIds)
         return this.makeBaseQuery().andWhere(
             `section.id IN (${this.sectionIds})`
         )

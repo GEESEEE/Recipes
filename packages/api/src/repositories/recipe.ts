@@ -1,5 +1,6 @@
 import { Brackets, EntityRepository, SelectQueryBuilder } from 'typeorm'
-import BaseRepository, { BaseQueryBuilder } from './base'
+import BaseRepository from './base'
+import { BaseSectionQueryBuilder } from './base-section'
 import { Recipe } from '@/entities'
 import { RecipeScopeArgs } from '@/types'
 
@@ -59,7 +60,7 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
     }
 }
 
-export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
+export class RecipeQueryBuilder extends BaseSectionQueryBuilder<Recipe> {
     public override readonly scopes = {
         ids: 'recipeIds',
         published: null,
@@ -95,31 +96,13 @@ export class RecipeQueryBuilder extends BaseQueryBuilder<Recipe> {
 
     private makeBaseQuery(): this {
         return this.addSelect('recipe.*')
-            .leftJoinAndSelect(
-                'instruction',
-                'instruction',
-                'instruction.recipe_id = recipe.id'
-            )
-            .leftJoinAndSelect(
-                'recipe_ingredient',
-                'recipe_ingredient',
-                'recipe_ingredient.recipe_id = recipe.id'
-            )
-            .leftJoinAndSelect(
-                'ingredient',
-                'ingredient',
-                'recipe_ingredient.ingredient_id = ingredient.id'
-            )
-            .groupBy('recipe.id')
-            .addGroupBy('instruction.id')
-            .addGroupBy('recipe_ingredient.id')
-            .addGroupBy('ingredient.id')
+            .joinInstruction()
+            .joinIngredient()
+            .addGroupBy('recipe.id')
     }
 
     public finish(): this {
-        return this.addOrderBy('instruction.position', 'ASC')
-            .addOrderBy('recipe_ingredient.position', 'ASC')
-            .addOrderBy('recipe.position', 'ASC')
+        return this.finishIngredient().finishInstruction().finishRecipe()
     }
 
     public get default(): this {
