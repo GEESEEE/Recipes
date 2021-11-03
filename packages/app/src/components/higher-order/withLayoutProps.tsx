@@ -12,6 +12,8 @@ export type LayoutProps = {
     marginHorizontal?: Spacing.Size
 
     borderRadius?: Spacing.Size
+    borderWidth?: Spacing.Size
+    borderColor?: string
     width?: Spacing.Size
 } & React.PropsWithChildren<ViewProps>
 
@@ -25,6 +27,8 @@ function withLayoutProps<T extends LayoutProps>(
         marginVertical,
         marginHorizontal,
         borderRadius,
+        borderWidth,
+        borderColor,
         width,
         style,
         children,
@@ -46,6 +50,8 @@ function withLayoutProps<T extends LayoutProps>(
 
         if (borderRadius)
             myStyle.borderRadius = Spacing.borderRadii[borderRadius]
+        if (borderWidth) myStyle.borderWidth = Spacing.borderWidths[borderWidth]
+        if (borderColor) myStyle.borderColor = borderColor
         if (width) myStyle.width = Spacing.widths[width]
 
         return (

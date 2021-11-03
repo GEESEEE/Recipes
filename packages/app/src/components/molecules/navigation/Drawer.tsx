@@ -6,7 +6,7 @@ import * as SecureStore from 'expo-secure-store'
 import { Theme } from '@recipes/api-types/v1'
 import { authActions, settingsActions, authService, userService } from '@/redux'
 import { useAppDispatch, useAuth, useSettings, useToggle } from '@/hooks'
-import ColorPickerModal from '@/screens/modals/ColorPicker'
+import { ColorPicker } from '@/screens'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
 import { Button, PressableTextWithElement } from '@/components/atoms'
 
@@ -51,7 +51,7 @@ export default function DrawerNavigator({
     return (
         <Container>
             {openColorPicker ? (
-                <ColorPickerModal toggle={toggleColorPicker} />
+                <ColorPicker toggle={toggleColorPicker} />
             ) : null}
 
             <ScrollView>

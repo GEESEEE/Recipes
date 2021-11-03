@@ -1,4 +1,4 @@
 export { default as LoadingModal } from './Loading'
-export { default as ColorPickerModal } from './ColorPicker'
-export { default as LoginModal } from '../modals/Login'
-export { default as RegisterModal } from '../modals/Register'
+export { default as LoginModal } from './Login'
+export { default as RegisterModal } from './Register'
+export { default as ColorPicker } from './Color'

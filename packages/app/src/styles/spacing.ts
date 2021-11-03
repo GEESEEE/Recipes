@@ -18,7 +18,7 @@ export const widths: Record<Size, string> = {
     l: '90%',
 }
 
-const borderWidths: Record<Size, number> = {
+export const borderWidths: Record<Size, number> = {
     n: 0,
     s: 1,
     m: 2,
