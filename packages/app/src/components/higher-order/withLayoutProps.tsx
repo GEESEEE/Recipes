@@ -52,6 +52,7 @@ function withLayoutProps<T extends LayoutProps>(
             myStyle.borderRadius = Spacing.borderRadii[borderRadius]
         if (borderWidth) myStyle.borderWidth = Spacing.borderWidths[borderWidth]
         if (borderColor) myStyle.borderColor = borderColor
+
         if (width) myStyle.width = Spacing.widths[width]
 
         return (

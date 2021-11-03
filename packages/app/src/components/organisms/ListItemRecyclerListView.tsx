@@ -90,12 +90,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
-    const [dataProvider, setDataProvider] = useState(
+    const [dataProvider, setDataProvider] = useState<DataProvider>(
         dataProviderInstance.cloneWithRows(data)
     )
 
     React.useEffect(() => {
-        // console.log('Listitem Data updated', data)
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
@@ -140,10 +139,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     function start(posY: number): void {
         const index = toIndex(posY)
+        setFrom(index)
         setDragIndex(index)
         currentIndex.value = index
         setDragging(true)
-        setFrom(index)
+        console.log('Starting', posY, index)
     }
 
     function reset(posY: number): void {
@@ -153,6 +153,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
+        console.log('Resetting', posY, from, to)
         updateData(dataProvider.getAllData(), from, to)
     }
 
@@ -161,6 +162,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
         from: number,
         to: number
     ): Promise<void> {
+        console.log('Updating list item data', from, to)
         if (from === to) {
             return
         }
