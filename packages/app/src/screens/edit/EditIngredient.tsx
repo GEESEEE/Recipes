@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { RecipeIngredient } from '@recipes/api-types/v1'
-import { View, Text, Icons } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 import { IngredientListItem } from '@/components/molecules'
@@ -38,8 +38,6 @@ function EditIngredientScreen({
     const [ingredientData, setIngredientData] =
         React.useState<RecipeIngredient>(ingredient)
 
-    console.log('Edit Ingredient', ingredientId, ingredientData)
-
     const handleCreateIngredient = React.useCallback((): void => {
         dispatch(editRecipeActions.addIngredient(ingredientData))
     }, [dispatch, ingredientData])
@@ -54,7 +52,6 @@ function EditIngredientScreen({
             ingredient: { ...ingredientData.ingredient },
         }
         newData.ingredient.name = name
-        console.log('Name change', newData)
         setIngredientData(newData)
     }
 
@@ -77,8 +74,10 @@ function EditIngredientScreen({
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () =>
-                    editing ? handleEditIngredient() : handleCreateIngredient(),
+                onPress: () => {
+                    editing ? handleEditIngredient() : handleCreateIngredient()
+                    navigation.pop()
+                },
             },
         ],
     })

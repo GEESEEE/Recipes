@@ -1,18 +1,21 @@
 import colors from './colors'
 
-export type Theme = {
-    mode: string
+type BaseTheme = {
     primary: string
+    grey: string
+    error: string
+}
+
+export type Theme = BaseTheme & {
+    mode: string
     background: string
     backgroundVariant: string
     text: string
     textVariant: string
-    grey: string
     greyVariant: string
-    error: string
 }
 
-const baseTheme = (): any => ({
+const baseTheme = (): BaseTheme => ({
     primary: colors.primary,
     grey: colors.grey,
     error: colors.red,

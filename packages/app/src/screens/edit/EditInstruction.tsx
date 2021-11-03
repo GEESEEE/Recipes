@@ -53,10 +53,12 @@ function EditInstructionScreen({
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () =>
+                onPress: () => {
                     editing
                         ? handleEditInstruction()
-                        : handleCreateInstruction(),
+                        : handleCreateInstruction()
+                    navigation.pop()
+                },
             },
         ],
     })
