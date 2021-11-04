@@ -20,6 +20,7 @@ function SectionListItem({
     dropdownItems,
     onGesture,
     editable,
+    releaseHeight,
     handleSectionNameChange,
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
@@ -63,6 +64,7 @@ function SectionListItem({
         >
             <Container>
                 <Editable
+                    releaseHeight={releaseHeight}
                     editable={editable}
                     text={item.name}
                     handleTextChange={handleSectionNameChange}
@@ -72,6 +74,7 @@ function SectionListItem({
                     placeholder="Section Name"
                 />
                 <Editable
+                    releaseHeight={releaseHeight}
                     editable={editable}
                     text={item.description}
                     handleTextChange={handleSectionDescriptionChange}

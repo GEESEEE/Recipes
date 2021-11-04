@@ -21,6 +21,7 @@ function IngredientListItem({
     dropdownItems,
     onGesture,
     editable,
+    releaseHeight,
     handleIngredientNameChange,
     handleIngredientAmountChange,
     handleIngredientUnitChange,
@@ -55,6 +56,7 @@ function IngredientListItem({
         >
             <Container>
                 <Editable
+                    releaseHeight={releaseHeight}
                     editable={editable}
                     text={item.ingredient.name}
                     handleTextChange={handleIngredientNameChange}
@@ -64,6 +66,7 @@ function IngredientListItem({
                 />
                 <SubContainer>
                     <Editable
+                        releaseHeight={releaseHeight}
                         editable={editable}
                         text={item.amount.toString()}
                         handleTextChange={handleIngredientAmountChange}
@@ -71,6 +74,7 @@ function IngredientListItem({
                         numberOfLines={1}
                     />
                     <FlexEditable
+                        releaseHeight={releaseHeight}
                         editable={editable}
                         text={item.ingredient.unit ?? ''}
                         handleTextChange={handleIngredientUnitChange}

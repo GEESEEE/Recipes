@@ -10,4 +10,5 @@ export interface ListItemBaseProps<T extends ListItem> {
     dropdownItems?: (() => void | Promise<void>)[]
     onGesture?: (e: GestureChangeEvent) => void
     editable?: boolean
+    releaseHeight?: boolean
 }

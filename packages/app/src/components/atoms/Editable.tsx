@@ -32,7 +32,7 @@ function Editable({
                 onChangeText={handleTextChange}
                 value={text}
                 placeholder={placeholder}
-                editable={!releaseHeight}
+                editable={releaseHeight}
                 multiline
                 {...rest}
             />

@@ -22,6 +22,7 @@ function RecipeListItem({
     dropdownItems,
     onGesture,
     editable,
+    releaseHeight,
     handleSectionNameChange,
     handleSectionDescriptionChange,
     incrementPeopleCount,
@@ -85,6 +86,7 @@ function RecipeListItem({
         >
             <Container>
                 <Editable
+                    releaseHeight={releaseHeight}
                     text={item.name}
                     handleTextChange={handleSectionNameChange}
                     type="SubHeader"
@@ -93,7 +95,7 @@ function RecipeListItem({
                     placeholder="Section Name"
                 />
                 <Editable
-                    releaseHeight
+                    releaseHeight={releaseHeight}
                     text={item.description}
                     handleTextChange={handleSectionDescriptionChange}
                     paddingHorizontal="s"

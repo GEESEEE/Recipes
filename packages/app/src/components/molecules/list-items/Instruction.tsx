@@ -20,6 +20,7 @@ function InstructionListItem({
     dropdownItems,
     onGesture,
     editable,
+    releaseHeight,
     instructions,
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
@@ -55,6 +56,7 @@ function InstructionListItem({
             <Container paddingHorizontal="s">
                 <Number type="SubHeader">{index + 1}</Number>
                 <FlexEditable
+                    releaseHeight={releaseHeight}
                     editable={editable}
                     text={item.text}
                     handleTextChange={handleInstructionTextChange}

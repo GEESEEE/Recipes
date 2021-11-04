@@ -42,6 +42,8 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const peopleCount = passedRecipe?.peopleCount || 1
     const [recipe, setRecipe] = React.useState<Recipe>(existRecipe)
 
+    console.log('rec', recipe)
+
     function mapIngredients(): void {
         const multiplier = recipe.peopleCount / peopleCount
 
@@ -75,7 +77,12 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
             key: 'Ingredients',
             data: recipe.recipeIngredients,
             renderItem: ({ item }: any) => {
-                return <IngredientListItem item={item as RecipeIngredient} />
+                return (
+                    <IngredientListItem
+                        item={item as RecipeIngredient}
+                        releaseHeight
+                    />
+                )
             },
             keyExtractor,
         },
@@ -87,6 +94,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
                     <InstructionListItem
                         item={item as Instruction}
                         instructions={recipe.instructions}
+                        releaseHeight
                     />
                 )
             },
@@ -110,6 +118,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
                         editable
                         incrementPeopleCount={incrementPeopleCount}
                         decrementPeopleCount={decrementPeopleCount}
+                        releaseHeight
                     />
                 }
                 renderSectionHeader={({ section }: any) => (
