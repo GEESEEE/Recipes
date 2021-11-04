@@ -30,6 +30,7 @@ import {
     recipeUpdateObject,
     utils,
 } from '@/utils'
+import { sortPosition } from '@/utils/utils'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -130,7 +131,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     body: ingredientCreateObjects(editRecipe.recipeIngredients),
                 })
                 if ('data' in ingredients) {
-                    recipe.recipeIngredients = ingredients.data
+                    recipe.recipeIngredients = sortPosition(ingredients.data)
                 }
             }
 
@@ -140,7 +141,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     body: instructionCreateObjects(editRecipe.instructions),
                 })
                 if ('data' in instructions) {
-                    recipe.instructions = instructions.data
+                    recipe.instructions = sortPosition(instructions.data)
                 }
             }
             dispatch(recipesActions.addRecipe({ sectionId, recipe }))
@@ -228,8 +229,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
         const finalRecipe = {
             ...updatedRecipe,
-            recipeIngredients: [...unchangedIngrs, ...newIngredients],
-            instructions: [...unchangedInstrs, ...newInstructions],
+            recipeIngredients: sortPosition([
+                ...unchangedIngrs,
+                ...newIngredients,
+            ]),
+            instructions: sortPosition([
+                ...unchangedInstrs,
+                ...newInstructions,
+            ]),
         }
 
         dispatch(

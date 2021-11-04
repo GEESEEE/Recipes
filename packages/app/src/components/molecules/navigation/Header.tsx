@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
 import { View, Text, Icons } from '@/components/base'
 import { IconButton, TextInputWithIcons } from '@/components/atoms'
-import { useAppSelector, useSettings, useToggle } from '@/hooks'
+import { useSettings, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
 
 type HeaderIcon = {
@@ -119,6 +119,7 @@ function HeaderComponent({
                             type="SubHeader"
                             color={color}
                             paddingHorizontal="m"
+                            numberOfLines={1}
                         >
                             {config.title || routeName}
                         </Text>
