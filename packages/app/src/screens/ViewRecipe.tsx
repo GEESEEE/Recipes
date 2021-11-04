@@ -11,7 +11,7 @@ import {
     RecipeListItem,
 } from '@/components/molecules'
 import { ListItem } from '@/types'
-import { round } from '@/utils'
+import { round, utils } from '@/utils'
 
 type ViewRecipeProps = {
     navigation: any
@@ -42,8 +42,6 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const peopleCount = passedRecipe?.peopleCount || 1
     const [recipe, setRecipe] = React.useState<Recipe>(existRecipe)
 
-    console.log('rec', recipe)
-
     function mapIngredients(): void {
         const multiplier = recipe.peopleCount / peopleCount
 
@@ -68,6 +66,12 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
 
     function decrementPeopleCount(): void {
         recipe.peopleCount = recipe.peopleCount - 1
+        mapIngredients()
+    }
+
+    function changePeopleCount(text: string): void {
+        const val = utils.handleNumericTextInput(text, true)
+        recipe.peopleCount = val
         mapIngredients()
     }
 
@@ -118,6 +122,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
                         editable
                         incrementPeopleCount={incrementPeopleCount}
                         decrementPeopleCount={decrementPeopleCount}
+                        changePeopleCount={changePeopleCount}
                         releaseHeight
                     />
                 }

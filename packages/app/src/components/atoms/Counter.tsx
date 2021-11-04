@@ -1,14 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import IconButton from './IconButton'
 import { LayoutProps } from '@/components/higher-order'
-import { View, Icons, Text } from '@/components/base'
-import { useSettings } from '@/hooks'
+import { View, Icons } from '@/components/base'
+import { IconButton, Editable } from '@/components/atoms'
+import { useSettings, useToggle } from '@/hooks'
 
 type CounterProps = {
     increment: () => void
     decrement: () => void
     value: number | string
+    onChange?: (text: string) => void
+    iconType?: any
+    iconName?: string
     icon?: JSX.Element
 } & LayoutProps
 
@@ -16,10 +19,16 @@ function Counter({
     increment,
     decrement,
     value,
-    icon,
+    iconType,
+    iconName,
+    onChange,
     ...rest
 }: CounterProps): JSX.Element {
     const { theme } = useSettings()
+
+    const [editable, toggleEditable] = useToggle(false)
+
+    const displayIcon = iconName && iconType && onChange
 
     return (
         <Container
@@ -34,14 +43,22 @@ function Counter({
                 onPress={decrement}
                 color={theme.primary}
             />
-            {icon}
-            <Text
-                paddingHorizontal={icon ? 's' : 'm'}
+            {displayIcon ? (
+                <IconButton
+                    type={iconType}
+                    name={iconName}
+                    onPress={() => toggleEditable()}
+                />
+            ) : null}
+            <Editable
+                editable={editable}
+                paddingHorizontal={displayIcon ? 's' : 'm'}
                 paddingVertical="s"
-                type={icon ? 'SubHeader' : 'Text'}
-            >
-                {value}
-            </Text>
+                type={displayIcon ? 'SubHeader' : 'Text'}
+                text={value.toString()}
+                handleTextChange={onChange}
+            />
+
             <IconButton
                 type={Icons.MyFeather}
                 name="plus"

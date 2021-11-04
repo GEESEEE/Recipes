@@ -15,6 +15,7 @@ interface SectionListItemProps extends ListItemBaseProps<Recipe> {
     handleSectionDescriptionChange?: (text: string) => void
     incrementPeopleCount?: () => void
     decrementPeopleCount?: () => void
+    changePeopleCount?: (text: string) => void
 }
 
 function RecipeListItem({
@@ -27,6 +28,7 @@ function RecipeListItem({
     handleSectionDescriptionChange,
     incrementPeopleCount,
     decrementPeopleCount,
+    changePeopleCount,
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
@@ -113,12 +115,9 @@ function RecipeListItem({
                             increment={incrementPeopleCount}
                             decrement={decrementPeopleCount}
                             value={item.peopleCount}
-                            icon={
-                                <Icon
-                                    type={Icons.MyMaterialIcons}
-                                    name="person"
-                                />
-                            }
+                            iconType={Icons.MyMaterialIcons}
+                            iconName="person"
+                            onChange={changePeopleCount}
                         />
                     ) : (
                         <Property
