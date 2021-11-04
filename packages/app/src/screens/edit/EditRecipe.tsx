@@ -255,6 +255,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     ])
 
     useHeader(navigation, {
+        title: editing ? 'Edit Recipe' : 'Create Recipe',
         right: [
             {
                 type: Icons.MyFeather,

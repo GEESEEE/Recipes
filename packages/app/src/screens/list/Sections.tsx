@@ -44,6 +44,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     }, [])
 
     useHeader(navigation, {
+        title: 'Sections',
         drawer: true,
         search: true,
         right: [

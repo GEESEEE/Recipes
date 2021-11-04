@@ -71,6 +71,7 @@ function EditIngredientScreen({
     }
 
     useHeader(navigation, {
+        title: editing ? 'Edit Ingredient' : 'Create Ingredient',
         right: [
             {
                 type: Icons.MyFeather,

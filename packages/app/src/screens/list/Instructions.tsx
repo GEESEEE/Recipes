@@ -18,6 +18,7 @@ function EditInstructionsScreen({
     const { theme } = settings
 
     useHeader(navigation, {
+        title: 'Instructions',
         right: [
             {
                 type: Icons.MyFeather,

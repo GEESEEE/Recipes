@@ -18,6 +18,7 @@ function EditIngredientsScreen({
     const { theme } = settings
 
     useHeader(navigation, {
+        title: 'Ingredients',
         right: [
             {
                 type: Icons.MyFeather,

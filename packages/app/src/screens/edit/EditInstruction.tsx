@@ -49,6 +49,7 @@ function EditInstructionScreen({
     }
 
     useHeader(navigation, {
+        title: editing ? 'Edit Instruction' : 'Create Instruction',
         right: [
             {
                 type: Icons.MyFeather,

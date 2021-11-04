@@ -78,6 +78,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     useHeader(navigation, {
+        title: 'Recipes',
         drawer: false,
         search: true,
         right: [

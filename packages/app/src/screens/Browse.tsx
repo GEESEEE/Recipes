@@ -6,7 +6,12 @@ import { useHeader, useSettings } from '@/hooks'
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const { theme } = useSettings()
 
-    useHeader(navigation, { drawer: true, search: true, right: [] })
+    useHeader(navigation, {
+        title: 'Browse',
+        drawer: true,
+        search: true,
+        right: [],
+    })
 
     return (
         <Container backgroundColor={theme.background}>

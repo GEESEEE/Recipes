@@ -76,6 +76,7 @@ function EditSectionScreen({
 
     // Header configuration
     useHeader(navigation, {
+        title: editing ? 'Edit Section' : 'Create Section',
         right: [
             {
                 type: Icons.MyFeather,
