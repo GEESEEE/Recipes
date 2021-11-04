@@ -9,12 +9,14 @@ type CounterProps = {
     increment: () => void
     decrement: () => void
     value: number | string
+    icon?: JSX.Element
 } & LayoutProps
 
 function Counter({
     increment,
     decrement,
     value,
+    icon,
     ...rest
 }: CounterProps): JSX.Element {
     const { theme } = useSettings()
@@ -32,7 +34,12 @@ function Counter({
                 onPress={decrement}
                 color={theme.primary}
             />
-            <Text paddingHorizontal="m" paddingVertical="s">
+            {icon}
+            <Text
+                paddingHorizontal={icon ? 's' : 'm'}
+                paddingVertical="s"
+                type={icon ? 'SubHeader' : 'Text'}
+            >
                 {value}
             </Text>
             <IconButton

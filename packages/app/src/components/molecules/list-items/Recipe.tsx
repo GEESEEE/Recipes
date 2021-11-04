@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { Recipe } from '@recipes/api-types/v1'
 import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
-import { Icon, Icons, View } from '@/components/base'
-import { Editable } from '@/components/atoms'
+import { Icon, Icons, View, Text } from '@/components/base'
+import { Counter, Editable } from '@/components/atoms'
 import { utils } from '@/utils'
 import { recipesActions, recipeService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
@@ -13,6 +13,8 @@ import { ListItemBaseProps } from '@/types'
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
     handleSectionNameChange?: (text: string) => void
     handleSectionDescriptionChange?: (text: string) => void
+    incrementPeopleCount?: () => void
+    decrementPeopleCount?: () => void
 }
 
 function RecipeListItem({
@@ -22,6 +24,8 @@ function RecipeListItem({
     editable,
     handleSectionNameChange,
     handleSectionDescriptionChange,
+    incrementPeopleCount,
+    decrementPeopleCount,
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
@@ -60,10 +64,14 @@ function RecipeListItem({
             sectionId: item.sectionId,
             recipeId: item.id,
         })
-        console.log(`OnPress ${item.name}, navigate or somethings`)
     }
 
     dropdownItems.push(logRecip, editRecip, deleteRecip)
+
+    const editPeopleCount =
+        editable &&
+        typeof incrementPeopleCount !== 'undefined' &&
+        typeof decrementPeopleCount !== 'undefined'
 
     return (
         <ListItem
@@ -72,12 +80,11 @@ function RecipeListItem({
                     ? utils.createDropDownItems(dropdownItems, 'recip')
                     : undefined
             }
-            onPress={onPress}
+            onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
         >
             <Container>
                 <Editable
-                    editable={editable}
                     text={item.name}
                     handleTextChange={handleSectionNameChange}
                     type="SubHeader"
@@ -86,7 +93,7 @@ function RecipeListItem({
                     placeholder="Section Name"
                 />
                 <Editable
-                    editable={editable}
+                    releaseHeight
                     text={item.description}
                     handleTextChange={handleSectionDescriptionChange}
                     paddingHorizontal="s"
@@ -94,7 +101,30 @@ function RecipeListItem({
                     placeholder="Description"
                 />
                 <PropertyRow>
-                    <Icon type={Icons.MyFeather} name="menu" />
+                    <Property
+                        iconType={Icons.MyMaterialCommunityIcons}
+                        iconName="timer-sand"
+                        text={item.prepareTime}
+                    />
+                    {editPeopleCount ? (
+                        <Counter
+                            increment={incrementPeopleCount}
+                            decrement={decrementPeopleCount}
+                            value={item.peopleCount}
+                            icon={
+                                <Icon
+                                    type={Icons.MyMaterialIcons}
+                                    name="person"
+                                />
+                            }
+                        />
+                    ) : (
+                        <Property
+                            iconType={Icons.MyMaterialIcons}
+                            iconName="person"
+                            text={item.peopleCount}
+                        />
+                    )}
                 </PropertyRow>
             </Container>
         </ListItem>
@@ -103,6 +133,23 @@ function RecipeListItem({
 
 export default RecipeListItem
 
+const Property = ({
+    iconType,
+    iconName,
+    text,
+}: {
+    iconType: any
+    iconName: string
+    text: string | number
+}): JSX.Element => {
+    return (
+        <PropertyContainer paddingVertical="s" width="s">
+            <Icon type={iconType} name={iconName} />
+            <Text type="SubHeader">{text}</Text>
+        </PropertyContainer>
+    )
+}
+
 const Container = styled(View)`
     flex-direction: column;
     justify-content: center;
@@ -110,4 +157,8 @@ const Container = styled(View)`
 const PropertyRow = styled(View)`
     flex-direction: row;
     align-items: center;
+`
+
+const PropertyContainer = styled(View)`
+    flex-direction: row;
 `

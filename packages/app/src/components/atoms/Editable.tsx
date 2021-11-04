@@ -11,6 +11,7 @@ type EditableProps = {
     text: string
     numberOfLines?: number
     editable?: boolean
+    releaseHeight?: boolean
     placeholder?: string
     handleTextChange?: (text: string, ...args: any[]) => void
 } & TextProps &
@@ -20,29 +21,30 @@ function Editable({
     text,
     numberOfLines,
     editable,
+    releaseHeight,
     placeholder,
     handleTextChange,
     ...rest
 }: EditableProps): JSX.Element {
-    if (editable) {
+    if (editable || releaseHeight) {
         return (
             <TextInput
                 onChangeText={handleTextChange}
                 value={text}
                 placeholder={placeholder}
+                editable={!releaseHeight}
                 multiline
                 {...rest}
             />
         )
     }
 
-    let fixHeight = false
-    if (numberOfLines) {
-        fixHeight = true
-    }
-
     return (
-        <Text numberOfLines={numberOfLines} fixHeight={fixHeight} {...rest}>
+        <Text
+            numberOfLines={numberOfLines}
+            fixHeight={!!numberOfLines && !releaseHeight}
+            {...rest}
+        >
             {text}
         </Text>
     )

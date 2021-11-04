@@ -1,4 +1,4 @@
-import { Typography } from '@/styles'
+import { Spacing, Typography } from '@/styles'
 import { ListItem } from '@/types'
 
 export function logPosition<T extends ListItem>(list: Array<T>): void {
@@ -30,7 +30,13 @@ export function heightMap<T>(
             )
 
         case 'RecipeListItem':
-            return 100
+            return (
+                listItemBaseOffset +
+                Typography.lineHeight('SubHeader', textSize) +
+                2 * Typography.lineHeight('Text', textSize) +
+                Spacing.standardIconSize[textSize] +
+                8
+            )
 
         default:
             console.log(
