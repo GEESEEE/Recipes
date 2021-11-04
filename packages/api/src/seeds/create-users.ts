@@ -74,7 +74,7 @@ export default class CreateUsers implements Seeder {
             }
 
             const recipeIds = recipes.map((recipe) => recipe.id)
-            console.log('RecipeIds for user', userId, recipeIds)
+
             for (const recipeId of recipeIds) {
                 const instructionCount = sample(
                     this.instructionsPerRecipe

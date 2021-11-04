@@ -31,7 +31,7 @@ function RecipeListItem({
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
     function logRecip(): void {
-        console.log('Recipe', item.name)
+        console.log('Logging Recipe', item.name)
     }
 
     async function deleteRecip(): Promise<void> {

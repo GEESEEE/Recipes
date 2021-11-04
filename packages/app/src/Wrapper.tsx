@@ -7,10 +7,6 @@ import { useSettings } from '@/hooks'
 function Wrapper(): JSX.Element {
     const { theme } = useSettings()
 
-    React.useEffect(() => {
-        console.log('Starting')
-    }, [])
-
     return (
         <ThemeProvider theme={theme}>
             <NavigationContainer>

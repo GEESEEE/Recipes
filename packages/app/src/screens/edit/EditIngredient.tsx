@@ -29,6 +29,7 @@ function EditIngredientScreen({
     let ingredient = editRecipe.recipeIngredients.find(
         (ingredient) => ingredient.id === ingredientId
     )
+
     if (typeof ingredient === 'undefined') {
         ingredient = new RecipeIngredient(
             getNewId(editRecipe.recipeIngredients)

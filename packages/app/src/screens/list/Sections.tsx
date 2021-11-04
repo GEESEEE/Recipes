@@ -25,8 +25,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const { theme } = settings
     const dispatch = useAppDispatch()
 
-    console.log('SetionsScreen rerender')
-
     // Verify Token stuff
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()

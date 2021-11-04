@@ -159,7 +159,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             }
             setError('')
             const res = await signUp(userData)
-            console.log('Signing up', res)
+
             if ('error' in res) {
                 const errorMessage =
                     (res.error as any)?.data?.errors?.[0].message ??

@@ -114,7 +114,11 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
         if ('data' in recipeResult) {
             const newRecipe = recipeResult.data[0]
-            const recipe = { ...newRecipe }
+            const recipe: Recipe = {
+                ...newRecipe,
+                instructions: [],
+                recipeIngredients: [],
+            }
             const baseCreateObj = {
                 sectionId,
                 recipeId: recipe.id,
@@ -139,7 +143,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     recipe.instructions = instructions.data
                 }
             }
-
             dispatch(recipesActions.addRecipe({ sectionId, recipe }))
             navigation.pop()
         }
@@ -177,7 +180,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const handleEditRecipe = React.useCallback(async (): Promise<void> => {
         const oldRecipe = passedRecipe as Recipe
-        console.log('Editing recipe', oldRecipe)
         const recipeUpdate = recipeUpdateObject(oldRecipe as Recipe, editRecipe)
 
         let updatedRecipe = oldRecipe
@@ -229,7 +231,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             recipeIngredients: [...unchangedIngrs, ...newIngredients],
             instructions: [...unchangedInstrs, ...newInstructions],
         }
-        console.log('Updated recipe', finalRecipe)
+
         dispatch(
             recipesActions.updateRecipes({
                 sectionId,

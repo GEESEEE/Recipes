@@ -75,16 +75,6 @@ export function getListItemChanges<
     const unchanged = oldArr.filter(
         (item) => changedIds.indexOf(item.id) === -1
     )
-    console.log(
-        'unChanged',
-        unchanged,
-        'Toadd',
-        toAdd,
-        'ToUpdate',
-        toUpdate,
-        'ToDelete',
-        toDelete
-    )
     return [unchanged, toAdd, toUpdate, toDelete]
 }
 

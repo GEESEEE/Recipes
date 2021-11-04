@@ -22,7 +22,6 @@ export function applySearch<T>(
                         item.toLowerCase().includes(query)
                     )
                 } else {
-                    console.log('Item not object or array', item)
                     return false
                 }
             })
@@ -65,7 +64,6 @@ function listIncludesSearch<T extends object>(
     search: string[],
     properties: string[]
 ): boolean {
-    console.log('List Search:', properties)
     return items.some((val) => {
         let res = false
         properties.forEach((property) => {
@@ -74,7 +72,6 @@ function listIncludesSearch<T extends object>(
             } else if (val instanceof Array) {
                 res = listIncludesSearch(val, search, properties)
             } else {
-                console.log('List, Val not object or array', val, property)
                 return false
             }
         })

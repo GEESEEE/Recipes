@@ -103,7 +103,6 @@ export function replaceElements<T extends { id: number }>(
 
 // Can be used to merge 2 styles to 1 object containing all style props
 export function mergeStyles(styles: Array<any>): StyleProp<ViewStyle> {
-    console.log('Merging', styles)
     let res: any = {}
     styles.forEach((style) => {
         if (typeof style === 'undefined') {
@@ -120,7 +119,7 @@ export function mergeStyles(styles: Array<any>): StyleProp<ViewStyle> {
             }
         }
     })
-    console.log('Merged:', res)
+
     return res
 }
 

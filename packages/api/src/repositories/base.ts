@@ -34,7 +34,6 @@ export default abstract class BaseRepository<T> extends Repository<T> {
 
     mergeAll(arr: any[]): any[] {
         const temp: any[][] = groupBy(arr, 'id')
-        console.log('temp', temp)
         return temp.map((arr) => this.mergeArray(arr))
     }
 
