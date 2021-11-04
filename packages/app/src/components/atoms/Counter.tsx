@@ -12,7 +12,6 @@ type CounterProps = {
     onChange?: (text: string) => void
     iconType?: any
     iconName?: string
-    icon?: JSX.Element
 } & LayoutProps
 
 function Counter({
