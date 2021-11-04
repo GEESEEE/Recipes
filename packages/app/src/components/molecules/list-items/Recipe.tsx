@@ -56,6 +56,10 @@ function RecipeListItem({
     }
 
     function onPress(): void {
+        navigation.navigate('ViewRecipe', {
+            sectionId: item.sectionId,
+            recipeId: item.id,
+        })
         console.log(`OnPress ${item.name}, navigate or somethings`)
     }
 

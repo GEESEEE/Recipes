@@ -17,13 +17,14 @@ function EditIngredientScreen({
     const editRecipe = useEditRecipe()
     const dispatch = useAppDispatch()
 
-    const route = useRoute()
+    const route = useRoute() as {
+        params?: { ingredientId: number }
+    }
     const editing = Boolean(route.params)
 
     let ingredientId = -1
-    if (route.params) {
-        const params = route.params as any
-        ingredientId = params.ingredientId
+    if (typeof route.params !== 'undefined') {
+        ingredientId = route.params.ingredientId
     }
 
     let ingredient = editRecipe.recipeIngredients.find(

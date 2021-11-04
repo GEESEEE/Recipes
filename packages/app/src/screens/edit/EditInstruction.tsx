@@ -17,13 +17,14 @@ function EditInstructionScreen({
     const editRecipe = useEditRecipe()
     const dispatch = useAppDispatch()
 
-    const route = useRoute()
+    const route = useRoute() as {
+        params?: { instructionId: number }
+    }
     const editing = Boolean(route.params)
 
     let instructionId = -1
-    if (route.params) {
-        const params = route.params as any
-        instructionId = params.instructionId
+    if (typeof route.params !== 'undefined') {
+        instructionId = route.params.instructionId
     }
 
     let instruction = editRecipe.instructions.find(
