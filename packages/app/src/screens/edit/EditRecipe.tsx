@@ -19,10 +19,15 @@ import {
     recipeService,
 } from '@/redux'
 import {
+    getListItemChanges,
+    getNewListItems,
     getNewPosition,
     ingredientCreateObjects,
+    ingredientUpdateObject,
     instructionCreateObjects,
+    instructionUpdateObject,
     recipeCreateObject,
+    recipeUpdateObject,
     utils,
 } from '@/utils'
 
@@ -85,6 +90,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         dispatch(editRecipeActions.setPeopleCount(editRecipe.peopleCount - 1))
     }
 
+    // Recipe Creation in database
     const [createRecipes, createRecipesState] =
         recipeService.useCreateRecipesMutation()
     const [addIngredients, addIngredientsState] =
@@ -98,8 +104,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         addIngredientsState.isLoading
 
     const handleCreateRecipe = React.useCallback(async (): Promise<void> => {
-        console.log('Creating recipe', sectionId)
-
         const newRecipe = recipeCreateObject(editRecipe)
         newRecipe.position = getNewPosition(sectionRecipes || [])
 
@@ -131,14 +135,13 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     ...baseCreateObj,
                     body: instructionCreateObjects(editRecipe.instructions),
                 })
-                console.log('Instructions', instructions)
                 if ('data' in instructions) {
-                    console.log('instruction data', instructions.data)
                     recipe.instructions = instructions.data
                 }
             }
 
             dispatch(recipesActions.addRecipe({ sectionId, recipe }))
+            navigation.pop()
         }
     }, [
         addIngredients,
@@ -146,33 +149,115 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         createRecipes,
         dispatch,
         editRecipe,
+        navigation,
         sectionId,
         sectionRecipes,
     ])
 
+    // Recipe update in database
     const [updateRecipes, updateRecipesState] =
         recipeService.useUpdateRecipesMutation()
     const [updateIngredients, updateIngredientsState] =
         ingredientService.useUpdateIngredientsMutation()
+    const [deleteIngredients, deleteIngredientsState] =
+        ingredientService.useDeleteIngredientsMutation()
     const [updateInstructions, updateInstructionsState] =
         instructionService.useUpdateInstructionsMutation()
+    const [deleteInstructions, deleteInstructionsState] =
+        instructionService.useDeleteInstructionsMutation()
 
     const updateLoading =
         updateRecipesState.isLoading ||
+        addInstructionsState.isLoading ||
         updateIngredientsState.isLoading ||
-        updateInstructionsState.isLoading
+        deleteIngredientsState.isLoading ||
+        addInstructionsState.isLoading ||
+        updateInstructionsState.isLoading ||
+        deleteInstructionsState.isLoading
 
-    const handleEditRecipe = React.useCallback((): void => {
-        console.log('Editing recipe')
-    }, [passedRecipe, editRecipe])
+    const handleEditRecipe = React.useCallback(async (): Promise<void> => {
+        const oldRecipe = passedRecipe as Recipe
+        console.log('Editing recipe', oldRecipe)
+        const recipeUpdate = recipeUpdateObject(oldRecipe as Recipe, editRecipe)
+
+        let updatedRecipe = { ...oldRecipe }
+        if (Object.keys(recipeUpdate).length > 1) {
+            const recipe = await updateRecipes({
+                sectionId,
+                body: [recipeUpdate],
+            })
+            if ('data' in recipe) {
+                updatedRecipe = recipe.data[0]
+            }
+        }
+
+        const baseArgs = {
+            sectionId,
+            recipeId: oldRecipe.id,
+        }
+
+        const [unchangedIngrs, ...ingrChanges] = getListItemChanges(
+            oldRecipe.recipeIngredients,
+            editRecipe.recipeIngredients,
+            ingredientCreateObjects,
+            ingredientUpdateObject
+        )
+        const newIngredients = await getNewListItems(
+            baseArgs,
+            ingrChanges,
+            addIngredients,
+            updateIngredients,
+            deleteIngredients
+        )
+
+        const [unchangedInstrs, ...instructionChanges] = getListItemChanges(
+            oldRecipe.instructions,
+            editRecipe.instructions,
+            instructionCreateObjects,
+            instructionUpdateObject
+        )
+        const newInstructions = await getNewListItems(
+            baseArgs,
+            instructionChanges,
+            addInstructions,
+            updateInstructions,
+            deleteInstructions
+        )
+        console.log('New Ingredients', newIngredients)
+        console.log('New Instructions', newInstructions)
+        updatedRecipe.recipeIngredients = [...unchangedIngrs, ...newIngredients]
+        updatedRecipe.instructions = [...unchangedInstrs, ...newInstructions]
+        console.log('Updated recipe', updatedRecipe)
+        dispatch(
+            recipesActions.updateRecipes({
+                sectionId,
+                recipes: [updatedRecipe],
+            })
+        )
+        navigation.pop()
+    }, [
+        passedRecipe,
+        editRecipe,
+        sectionId,
+        addIngredients,
+        updateIngredients,
+        deleteIngredients,
+        addInstructions,
+        updateInstructions,
+        deleteInstructions,
+        dispatch,
+        navigation,
+        updateRecipes,
+    ])
 
     useHeader(navigation, {
         right: [
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () =>
-                    editing ? handleEditRecipe() : handleCreateRecipe(),
+                onPress: () => {
+                    editing ? handleEditRecipe() : handleCreateRecipe()
+                },
                 loading: createLoading || updateLoading,
             },
         ],

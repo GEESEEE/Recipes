@@ -253,7 +253,6 @@ export default class RecipeService {
     public async updateInstructions(
         instructions: Array<InstructionUpdate>
     ): Promise<InstructionResult[]> {
-        console.log('Updating instructions:', instructions)
         const res = await this.instructionRepository.save(instructions)
         return res.map((instr) => fitToClass(instr, InstructionResult))
     }
