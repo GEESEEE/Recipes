@@ -180,7 +180,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         console.log('Editing recipe', oldRecipe)
         const recipeUpdate = recipeUpdateObject(oldRecipe as Recipe, editRecipe)
 
-        let updatedRecipe = { ...oldRecipe }
+        let updatedRecipe = oldRecipe
         if (Object.keys(recipeUpdate).length > 1) {
             const recipe = await updateRecipes({
                 sectionId,
@@ -223,15 +223,17 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             updateInstructions,
             deleteInstructions
         )
-        console.log('New Ingredients', newIngredients)
-        console.log('New Instructions', newInstructions)
-        updatedRecipe.recipeIngredients = [...unchangedIngrs, ...newIngredients]
-        updatedRecipe.instructions = [...unchangedInstrs, ...newInstructions]
-        console.log('Updated recipe', updatedRecipe)
+
+        const finalRecipe = {
+            ...updatedRecipe,
+            recipeIngredients: [...unchangedIngrs, ...newIngredients],
+            instructions: [...unchangedInstrs, ...newInstructions],
+        }
+        console.log('Updated recipe', finalRecipe)
         dispatch(
             recipesActions.updateRecipes({
                 sectionId,
-                recipes: [updatedRecipe],
+                recipes: [finalRecipe],
             })
         )
         navigation.pop()

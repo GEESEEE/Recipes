@@ -73,7 +73,7 @@ export function getListItemChanges<
     })
     const changedIds = [...toUpdate.map((item) => item.id), ...toDelete]
     const unchanged = oldArr.filter(
-        (item) => changedIds.indexOf(item.id) !== -1
+        (item) => changedIds.indexOf(item.id) === -1
     )
     console.log(
         'unChanged',
