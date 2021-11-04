@@ -106,7 +106,6 @@ export default class IngredientController implements interfaces.Controller {
             recipeId,
             body
         )
-
         const [validIngredients, modifyErrors] =
             this.validator.splitResults(validationResults)
 

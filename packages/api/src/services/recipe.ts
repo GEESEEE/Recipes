@@ -216,8 +216,9 @@ export default class RecipeService {
     ): Promise<number> {
         const result = await this.recipeIngredientRepository.delete({
             recipeId,
-            ingredientId: In(ingredientIds),
+            id: In(ingredientIds),
         })
+
         await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
         return result.affected || 0
     }
