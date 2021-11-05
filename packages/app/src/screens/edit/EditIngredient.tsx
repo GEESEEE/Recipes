@@ -13,7 +13,7 @@ import {
 } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 import { IngredientListItem } from '@/components/molecules'
-import { getNewId, utils } from '@/utils'
+import { getNewId, handleNumericTextInput } from '@/utils'
 
 function EditIngredientScreen({
     navigation,
@@ -86,7 +86,7 @@ function EditIngredientScreen({
     }
 
     function handleAmountChange(text: string) {
-        const amount = utils.handleNumericTextInput(text)
+        const amount = handleNumericTextInput(text)
         setIngredientData({ ...ingredientData, amount })
     }
 

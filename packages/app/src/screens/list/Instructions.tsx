@@ -5,7 +5,7 @@ import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
-import { utils } from '@/utils'
+import { sortPosition } from '@/utils'
 import { editRecipeActions } from '@/redux'
 
 function EditInstructionsScreen({
@@ -28,7 +28,7 @@ function EditInstructionsScreen({
         ],
     })
 
-    const instructions = utils.sortPosition(editRecipe.instructions)
+    const instructions = sortPosition(editRecipe.instructions)
 
     const updateSlice = (instructions: Instruction[]) => {
         return editRecipeActions.updateInstructions(instructions)

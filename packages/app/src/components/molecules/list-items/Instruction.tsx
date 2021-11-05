@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { View, Text } from '@/components/base'
 import { Editable } from '@/components/atoms'
-import { utils } from '@/utils'
+import { createDropDownItems } from '@/utils'
 import { ListItemBaseProps } from '@/types'
 import { useAppDispatch } from '@/hooks'
 import { editRecipeActions } from '@/redux'
@@ -48,7 +48,7 @@ function InstructionListItem({
         <ListItem
             items={
                 !editable
-                    ? utils.createDropDownItems(dropdownItems, 'instruction')
+                    ? createDropDownItems(dropdownItems, 'instruction')
                     : undefined
             }
             onGesture={onGesture}

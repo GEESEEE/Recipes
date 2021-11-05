@@ -28,9 +28,8 @@ import {
     instructionUpdateObject,
     recipeCreateObject,
     recipeUpdateObject,
-    utils,
 } from '@/utils'
-import { sortPosition } from '@/utils/utils'
+import { handleNumericTextInput, sortPosition } from '@/utils/utils'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -72,13 +71,13 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const prepareTimeMinutes = editRecipe.prepareTime - prepareTimeHours * 60
 
     function handlePrepareTimeHours(text: string): void {
-        const hours = utils.handleNumericTextInput(text, true)
+        const hours = handleNumericTextInput(text, true)
         const newTime = hours * 60 + prepareTimeMinutes
         dispatch(editRecipeActions.setPrepareTime(newTime))
     }
 
     function handlePrepareTimeMinutes(text: string): void {
-        const minutes = utils.handleNumericTextInput(text, true)
+        const minutes = handleNumericTextInput(text, true)
         const newTime = prepareTimeHours * 60 + minutes
         dispatch(editRecipeActions.setPrepareTime(newTime))
     }

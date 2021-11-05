@@ -8,7 +8,7 @@ import {
 } from '@/components/higher-order'
 import { Typography } from '@/styles'
 import { useSettings } from '@/hooks'
-import { utils } from '@/utils'
+import { searchStyles } from '@/utils'
 
 export type TextProps = {
     fixHeight?: boolean
@@ -26,7 +26,7 @@ const Text = ({
 
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
-    const padding = 2 * (utils.searchStyles(style, 'paddingVertical') ?? 0)
+    const padding = 2 * (searchStyles(style, 'paddingVertical') ?? 0)
 
     const [height, setHeight] = React.useState<undefined | number>(undefined)
 

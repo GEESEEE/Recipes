@@ -4,7 +4,6 @@ import { Recipe, RecipeUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
-    useAppSelector,
     useAuth,
     useHeader,
     useRecipes,
@@ -16,7 +15,7 @@ import { View, Icons } from '@/components/base'
 import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { applySearch, utils } from '@/utils'
+import { applySearch, sortPosition } from '@/utils'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const settings = useSettings()
@@ -60,7 +59,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const sectionRecipes =
         typeof recipes[sectionId] === 'undefined'
             ? []
-            : utils.sortPosition(recipes[sectionId])
+            : sortPosition(recipes[sectionId])
 
     const search = useSearch()
     const filteredRecipes = applySearch<Recipe>(

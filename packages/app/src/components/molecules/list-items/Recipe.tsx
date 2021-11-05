@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
-import { utils } from '@/utils'
+import { createDropDownItems } from '@/utils'
 import { recipesActions, recipeService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
@@ -80,7 +80,7 @@ function RecipeListItem({
         <ListItem
             items={
                 !editable
-                    ? utils.createDropDownItems(dropdownItems, 'recip')
+                    ? createDropDownItems(dropdownItems, 'recip')
                     : undefined
             }
             onPress={!editable ? onPress : undefined}

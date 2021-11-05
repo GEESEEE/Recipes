@@ -15,10 +15,6 @@ import {
 import { sortPosition } from './utils'
 import { ListItem } from '@/types'
 
-export function round(value: number, decimals: number) {
-    return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals)
-}
-
 export function getNewPosition(list: ListItem[], last = true): number {
     if (list.length === 0) {
         return 1

@@ -11,7 +11,7 @@ import {
     RecipeListItem,
 } from '@/components/molecules'
 import { ListItem } from '@/types'
-import { round, utils } from '@/utils'
+import { handleNumericTextInput, round } from '@/utils'
 
 type ViewRecipeProps = {
     navigation: any
@@ -70,7 +70,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     }
 
     function changePeopleCount(text: string): void {
-        const val = utils.handleNumericTextInput(text, true)
+        const val = handleNumericTextInput(text, true)
         recipe.peopleCount = val
         mapIngredients()
     }

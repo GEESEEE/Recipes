@@ -17,7 +17,7 @@ import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
-import { utils, listItemUtils } from '@/utils'
+import { moveElement, heightMap } from '@/utils'
 
 const { width } = Dimensions.get('window')
 
@@ -109,7 +109,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     React.useEffect(() => {
         const layout = {
             width,
-            height: listItemUtils.heightMap(Element, textSize),
+            height: heightMap(Element, textSize),
         }
         itemLayouts[Element.name] = layout
         layoutProviders[Element.name] = new LayoutProvider(
@@ -214,7 +214,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
         if (currentIndex.value !== newIndex) {
             setDataProvider(
                 dataProviderInstance.cloneWithRows(
-                    utils.moveElement(
+                    moveElement(
                         dataProvider.getAllData(),
                         currentIndex.value,
                         newIndex

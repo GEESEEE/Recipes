@@ -17,7 +17,7 @@ import { authActions, authService, sectionService } from '@/redux'
 import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions } from '@/redux/slices'
-import { applySearch, utils } from '@/utils'
+import { applySearch, sortPosition } from '@/utils'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
@@ -74,7 +74,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const [updateSections] = sectionService.useUpdateSectionsMutation()
 
     const allSections = useSections()
-    const sections = utils.sortPosition(allSections)
+    const sections = sortPosition(allSections)
 
     const search = useSearch()
     const filteredSections = applySearch<Section>(

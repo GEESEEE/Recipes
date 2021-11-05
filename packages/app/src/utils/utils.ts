@@ -41,6 +41,10 @@ export function sortPosition<T extends ListItem>(arr: T[], ascending = true) {
     )
 }
 
+export function round(value: number, decimals: number) {
+    return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals)
+}
+
 export function moveElement<T>(
     arr: Array<T>,
     from: number,
