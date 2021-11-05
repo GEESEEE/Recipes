@@ -11,6 +11,7 @@ type EditableProps = {
     text: string
     numberOfLines?: number
     editable?: boolean
+    maxLength?: number
     releaseHeight?: boolean
     placeholder?: string
     handleTextChange?: (text: string, ...args: any[]) => void
@@ -21,6 +22,7 @@ function Editable({
     text,
     numberOfLines,
     editable,
+    maxLength,
     releaseHeight,
     placeholder,
     handleTextChange,
@@ -33,6 +35,7 @@ function Editable({
                 value={text}
                 placeholder={placeholder}
                 editable={!releaseHeight}
+                maxLength={maxLength}
                 multiline
                 {...rest}
             />

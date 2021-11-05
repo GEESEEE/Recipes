@@ -80,6 +80,7 @@ function SectionListItem({
                     handleTextChange={handleSectionDescriptionChange}
                     paddingHorizontal="s"
                     numberOfLines={2}
+                    maxLength={1023}
                     placeholder="Description"
                 />
             </Container>

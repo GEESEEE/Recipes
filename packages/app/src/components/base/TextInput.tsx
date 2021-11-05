@@ -37,6 +37,7 @@ const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
             autoCapitalize="none"
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
+            maxLength={255}
             {...rest}
         />
     )
