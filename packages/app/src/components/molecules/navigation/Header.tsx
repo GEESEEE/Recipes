@@ -13,6 +13,7 @@ type HeaderIcon = {
     name: string
     onPress: () => void
     loading?: boolean
+    disabled?: boolean
 }
 
 type HeaderIconProps = HeaderIcon & {
@@ -143,6 +144,7 @@ function HeaderComponent({
                             onPress={icon.onPress}
                             color={color}
                             loading={icon.loading}
+                            disabled={icon.disabled}
                         />
                     )
                 })}

@@ -3,7 +3,14 @@ import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { RecipeIngredient } from '@recipes/api-types/v1'
 import { View, Icons } from '@/components/base'
-import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
+import { Error } from '@/components/atoms'
+import {
+    useAppDispatch,
+    useEditRecipe,
+    useHeader,
+    useSettings,
+    useToggle,
+} from '@/hooks'
 import { editRecipeActions } from '@/redux'
 import { IngredientListItem } from '@/components/molecules'
 import { getNewId, utils } from '@/utils'
@@ -39,6 +46,7 @@ function EditIngredientScreen({
 
     const [ingredientData, setIngredientData] =
         React.useState<RecipeIngredient>(ingredient)
+    const [valid, setValid] = useToggle(true)
 
     const handleCreateIngredient = React.useCallback((): void => {
         dispatch(editRecipeActions.addIngredient(ingredientData))
@@ -48,6 +56,16 @@ function EditIngredientScreen({
         dispatch(editRecipeActions.updateIngredients([ingredientData]))
     }, [dispatch, ingredientData])
 
+    function checkValidity(name: string): void {
+        let validIngredients = true
+        editRecipe.recipeIngredients.forEach((ingr) => {
+            if (ingr.ingredient.name === name) {
+                validIngredients = false
+            }
+        })
+        setValid(validIngredients)
+    }
+
     function handleNameChange(name: string) {
         const newData = {
             ...ingredientData,
@@ -55,6 +73,7 @@ function EditIngredientScreen({
         }
         newData.ingredient.name = name
         setIngredientData(newData)
+        checkValidity(name)
     }
 
     function handleUnitChange(unit: string) {
@@ -71,16 +90,21 @@ function EditIngredientScreen({
         setIngredientData({ ...ingredientData, amount })
     }
 
+    function onPress(): void {
+        if (valid) {
+            editing ? handleEditIngredient() : handleCreateIngredient()
+            navigation.pop()
+        }
+    }
+
     useHeader(navigation, {
         title: editing ? 'Edit Ingredient' : 'Create Ingredient',
         right: [
             {
                 type: Icons.MyFeather,
                 name: 'save',
-                onPress: () => {
-                    editing ? handleEditIngredient() : handleCreateIngredient()
-                    navigation.pop()
-                },
+                onPress,
+                disabled: !valid,
             },
         ],
     })
@@ -93,6 +117,13 @@ function EditIngredientScreen({
                 handleIngredientNameChange={handleNameChange}
                 handleIngredientUnitChange={handleUnitChange}
                 handleIngredientAmountChange={handleAmountChange}
+            />
+            <Error
+                message={
+                    valid
+                        ? undefined
+                        : 'Ingredient with that name already exists'
+                }
             />
         </Container>
     )

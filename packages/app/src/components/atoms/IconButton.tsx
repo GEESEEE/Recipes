@@ -29,6 +29,7 @@ function IconButton({
     loading,
     color,
     size,
+    disabled,
 
     ...rest
 }: IconButtonProps): JSX.Element {
@@ -36,7 +37,11 @@ function IconButton({
     size = size || 's'
     const iconSize = Spacing.iconSize(size, textSize)
     return (
-        <TouchableOpacity onPress={onPress} disabled={loading} {...rest}>
+        <TouchableOpacity
+            onPress={onPress}
+            disabled={disabled || loading}
+            {...rest}
+        >
             {loading ? (
                 <Loading4Dots width={iconSize} />
             ) : (
