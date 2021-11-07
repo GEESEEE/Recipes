@@ -12,8 +12,6 @@ type PickerProps = {
     current: string
 } & LayoutProps
 
-const { width, height } = Dimensions.get('window')
-
 function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
     const { theme } = useSettings()
     const [open, toggle] = useToggle(false)
@@ -32,7 +30,6 @@ function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
         position: 'absolute',
         marginLeft: pageX,
         marginTop: pageY,
-        // width: width / 2,
     }
 
     return (

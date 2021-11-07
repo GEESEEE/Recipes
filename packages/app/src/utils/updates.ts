@@ -34,7 +34,7 @@ export function getNewId(list: ListItem[]): number {
     }
     const sorted = [...list].sort((i1, i2) => i1.id - i2.id)
     const lowestId = sorted[0].id
-    return lowestId > 0 ? 0 : sorted[0].id - 1
+    return lowestId > 0 ? 0 : lowestId - 1
 }
 
 export function getListItemChanges<
@@ -193,6 +193,8 @@ export function recipeUpdateObject(
         update.peopleCount = newObject.peopleCount
     if (old.position !== newObject.position)
         update.position = newObject.position
+    if (old.sectionId !== newObject.sectionId)
+        update.sectionId = newObject.sectionId
     return update
 }
 

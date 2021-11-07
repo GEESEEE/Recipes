@@ -112,7 +112,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         newRecipe.position = getNewPosition(sectionRecipes || [])
 
         const recipeResult = await createRecipes({
-            sectionId,
+            sectionId: editRecipe.sectionId,
             body: [newRecipe],
         })
 
@@ -124,7 +124,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 recipeIngredients: [],
             }
             const baseCreateObj = {
-                sectionId,
+                sectionId: editRecipe.sectionId,
                 recipeId: recipe.id,
             }
 
@@ -185,7 +185,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const handleEditRecipe = React.useCallback(async (): Promise<void> => {
         const oldRecipe = passedRecipe as Recipe
         const recipeUpdate = recipeUpdateObject(oldRecipe as Recipe, editRecipe)
-
+        console.log('recipe Update', recipeUpdate)
         let updatedRecipe = oldRecipe
         if (Object.keys(recipeUpdate).length > 1) {
             const recipe = await updateRecipes({
@@ -198,7 +198,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         }
 
         const baseArgs = {
-            sectionId,
+            sectionId: editRecipe.sectionId,
             recipeId: oldRecipe.id,
         }
 
@@ -242,13 +242,28 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             ]),
         }
 
-        dispatch(
-            recipesActions.updateRecipes({
-                sectionId,
-                recipes: [finalRecipe],
-            })
-        )
         navigation.pop()
+        if (sectionId !== editRecipe.sectionId) {
+            dispatch(
+                recipesActions.removeRecipe({
+                    sectionId,
+                    recipeId: finalRecipe.id,
+                })
+            )
+            dispatch(
+                recipesActions.addRecipe({
+                    sectionId: finalRecipe.sectionId,
+                    recipe: finalRecipe,
+                })
+            )
+        } else {
+            dispatch(
+                recipesActions.updateRecipes({
+                    sectionId,
+                    recipes: [finalRecipe],
+                })
+            )
+        }
     }, [
         passedRecipe,
         editRecipe,
@@ -267,7 +282,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const [showConfirmation, toggleConfirmation] = useToggle(false)
 
     function goBack(): void {
-        console.log('Should go back')
         toggleConfirmation(true)
     }
 

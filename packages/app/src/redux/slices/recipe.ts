@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Recipe } from '@recipes/api-types/v1'
+import { getNewPosition } from '@/utils'
 
 export type RecipesState = {
     [key: number]: Recipe[]
@@ -22,7 +23,9 @@ const recipesSlice = createSlice({
             action: PayloadAction<{ sectionId: number; recipe: Recipe }>
         ) {
             const { sectionId, recipe } = action.payload
-            state[sectionId] = [...state[sectionId], recipe]
+            if (typeof state[sectionId] !== 'undefined') {
+                state[sectionId] = [...state[sectionId], recipe]
+            }
         },
 
         removeRecipe(
