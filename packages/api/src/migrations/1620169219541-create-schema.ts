@@ -245,16 +245,6 @@ export class createSchema1620169219541 implements MigrationInterface {
                         name: 'position',
                         type: 'int',
                     },
-                    {
-                        name: 'published_at',
-                        type: 'timestamp with time zone',
-                        isNullable: true,
-                    },
-                    {
-                        name: 'copy_of',
-                        type: 'int',
-                        isNullable: true,
-                    },
                 ],
                 foreignKeys: [
                     {

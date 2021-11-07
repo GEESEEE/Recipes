@@ -6,18 +6,11 @@ import {
     UpdateEvent,
 } from 'typeorm'
 import bcrypt from 'bcrypt'
-import getDecorators from 'inversify-inject-decorators'
-import { RecipeRepository } from '../repositories'
-import { container } from '../config'
+
 import { User } from '@/entities'
-import { TYPES } from '@/utils/constants'
-const { lazyInject } = getDecorators(container)
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface {
-    @lazyInject(TYPES.RecipeRepository)
-    private readonly recipeRepository!: RecipeRepository
-
     public listenTo(): any {
         return User
     }
@@ -39,12 +32,6 @@ export class UserSubscriber implements EntitySubscriberInterface {
                 event.entity.password
             )
         }
-    }
-
-    // TODO: Test if deleteUncopiedRecipesFromAuthor works correctly
-    public async BeforeRemove(event: RemoveEvent<User>): Promise<void> {
-        const queryBuilder = this.recipeRepository.queryBuilder()
-        await queryBuilder.deleteUncopiedRecipesFromAuthor(event.entityId)
     }
 
     private async hashPassword(password: string): Promise<string> {

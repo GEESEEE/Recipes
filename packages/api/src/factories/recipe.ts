@@ -11,12 +11,5 @@ define(Recipe, (faker: typeof Faker) => {
     recipe.createdAt = faker.date.recent()
     recipe.position = faker.datatype.number(999999)
 
-    const x = faker.datatype.number(1)
-    if (x > 0) {
-        recipe.publishedAt = faker.date.recent()
-    } else {
-        recipe.publishedAt = null
-    }
-
     return recipe
 })

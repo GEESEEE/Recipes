@@ -60,8 +60,6 @@ export default class SectionRespository extends BaseRepository<Section> {
                     people_count: record.recipe_people_count,
                     created_at: record.recipe_created_at,
                     position: record.recipe_position,
-                    published_at: record.recipe_published_at,
-                    copy_of: record.recipe_copy_of,
                     instructions,
                     recipeIngredients,
                 },

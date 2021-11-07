@@ -150,12 +150,7 @@ export default class RecipeController implements interfaces.Controller {
                     body('*.prepareTime').isInt().toInt(),
                     body('*.peopleCount').isInt().toInt(),
                     body('*.position').isInt().toInt(),
-                    body('*.publishedAt').optional({ nullable: true }).isDate(),
                     body('*.createdAt').optional().isDate(),
-                    body('*.copyOf')
-                        .optional({ nullable: true })
-                        .isInt()
-                        .toInt(),
                 ]
 
             case 'updateRecipes':
@@ -169,7 +164,6 @@ export default class RecipeController implements interfaces.Controller {
                     body('*.prepareTime').optional().isInt().toInt(),
                     body('*.peopleCount').optional().isInt().toInt(),
                     body('*.position').optional().isInt().toInt(),
-                    body('*.publishedAt').optional({ nullable: true }).isDate(), // Should also check null]
                 ]
 
             case 'deleteRecipe':

@@ -63,14 +63,12 @@ export default class RecipeRepository extends BaseRepository<Recipe> {
 export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
     public override readonly scopes = {
         ids: 'recipeIds',
-        published: null,
         section: 'sectionId',
         search: 'searchQuery',
     }
 
     public override readonly sorts = {
         createtime: 'created_at',
-        publishtime: 'published_at',
         preparetime: 'prepare_time',
         peoplecount: 'people_count',
         ingredientcount: 'COUNT(recipe_ingredient.id)',
@@ -110,10 +108,6 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
 
     public get ids(): this {
         return this.makeBaseQuery().andWhere(`recipe.id IN (${this.recipeIds})`)
-    }
-
-    public get published(): this {
-        return this.makeBaseQuery().andWhere('recipe.published_at IS NOT NULL')
     }
 
     public get section(): this {
@@ -163,19 +157,5 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         return this.makeBaseQuery().andWhere('recipe.id = :recipeId', {
             recipeId,
         })
-    }
-
-    public async deleteUncopiedRecipesFromAuthor(
-        authorId: number
-    ): Promise<void> {
-        const query = this.delete()
-            .andWhere(`recipe.authorId = :authorId`, { authorId })
-            .andWhere(
-                `recipe.id NOT IN (${this.repository
-                    .createQueryBuilder('other_recipe')
-                    .select('other_recipe.copy_of', 'copy_id')
-                    .getSql()})`
-            )
-        await query.execute()
     }
 }
