@@ -11,7 +11,7 @@ import { useSettings } from '@/hooks'
 import { TouchableEvent } from '@/types'
 
 type IconButtonProps = {
-    onPress: (e?: TouchableEvent) => void
+    onPress: (e: TouchableEvent) => void
     type: any
     name: string
 

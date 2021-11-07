@@ -1,28 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Dimensions, StyleProp, ViewStyle } from 'react-native'
-import IconButton from './IconButton'
-import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
-import { Spacing, Typography } from '@/styles'
+import { View, Text, TouchableOpacity, Modal } from '@/components/base'
+import { Editable, TextInputWithTitle } from '@/components/atoms'
 import { useSettings, useToggle } from '@/hooks'
+import { LayoutProps } from '@/components/higher-order'
 import { DropdownItem, Position, TouchableEvent } from '@/types'
 
-const { height } = Dimensions.get('window')
-
-type DropdownMenuProps = {
+type PickerProps = {
     items: DropdownItem[]
-    iconOffset?: Spacing.Size
-    iconSize?: Spacing.Size
-    iconColor?: string
-}
+    current: string
+} & LayoutProps
 
-function DropdownMenu({
-    items,
-    iconOffset,
-    iconSize,
-    iconColor,
-}: DropdownMenuProps): JSX.Element {
-    const { theme, textSize } = useSettings()
+const { width, height } = Dimensions.get('window')
+
+function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
+    const { theme } = useSettings()
     const [open, toggle] = useToggle(false)
 
     const [position, setPosition] = React.useState<Position>({
@@ -32,59 +25,36 @@ function DropdownMenu({
         locationY: 0,
     })
 
-    iconSize = iconSize || 'm'
-    iconColor = iconColor || theme.primary
-
-    let containerStyle: StyleProp<ViewStyle> = {}
-
-    let offset = Spacing.iconSize(iconSize, textSize)
-    if (typeof iconOffset !== 'undefined') {
-        const totalOffset = Spacing.spacings[iconOffset]
-        offset += totalOffset
-        containerStyle = {
-            ...containerStyle,
-            alignSelf: 'flex-end',
-            position: 'absolute',
-            paddingTop: totalOffset,
-            paddingEnd: totalOffset,
-        }
-    }
-
-    const width = 100
-    const menuHeight =
-        (16 + Typography.lineHeight('Text', textSize)) * items.length
-
     const pageX = position.pageX - position.locationX
     const pageY = position.pageY - position.locationY
 
-    let marginTop = pageY + offset
-    if (marginTop + menuHeight > height) {
-        marginTop = height - menuHeight
-    }
-
     const menuStyle: StyleProp<ViewStyle> = {
         position: 'absolute',
-        width,
-        marginLeft: pageX - width + offset,
-        marginTop,
+        marginLeft: pageX,
+        marginTop: pageY,
+        // width: width / 2,
     }
 
     return (
-        <View>
-            <IconButton
-                type={Icons.MyMaterialCommunityIcons}
-                name="dots-vertical"
+        <Container {...rest}>
+            <TouchableOpacity
                 onPress={(e: TouchableEvent) => {
                     setPosition(e.nativeEvent)
                     toggle(true)
                 }}
-                color={iconColor}
-                size={iconSize}
-            />
+            >
+                <Text
+                    borderRadius="s"
+                    backgroundColor={theme.backgroundVariant}
+                    paddingVertical="s"
+                    paddingHorizontal="s"
+                >
+                    {current}
+                </Text>
+            </TouchableOpacity>
             {open ? (
                 <Modal animationType="none">
                     <Return onPress={() => toggle(false)} />
-
                     <View
                         borderRadius="s"
                         borderWidth="s"
@@ -121,11 +91,13 @@ function DropdownMenu({
                     </View>
                 </Modal>
             ) : null}
-        </View>
+        </Container>
     )
 }
 
-export default DropdownMenu
+export default Picker
+
+const Container = styled(View)``
 
 const Return = styled(TouchableOpacity)`
     flex: 1;

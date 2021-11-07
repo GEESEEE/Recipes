@@ -7,11 +7,13 @@ import {
     useEditRecipe,
     useHeader,
     useRecipes,
+    useSections,
     useSettings,
     useToggle,
 } from '@/hooks'
 import { View, Text, Icons } from '@/components/base'
-import { TextInputWithTitle, Counter } from '@/components/atoms'
+import { TextInputWithTitle, Counter, DropdownMenu } from '@/components/atoms'
+import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
     editRecipeActions,
     ingredientService,
@@ -31,7 +33,6 @@ import {
     recipeUpdateObject,
 } from '@/utils'
 import { handleNumericTextInput, sortPosition } from '@/utils/utils'
-import { ConfirmationModal } from '@/components/molecules'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -41,6 +42,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const settings = useSettings()
     const editRecipe = useEditRecipe()
     const recipes = useRecipes()
+    const sections = useSections()
     const { theme } = settings
     const dispatch = useAppDispatch()
 
@@ -290,13 +292,29 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const prepareTimeText = 'Prepare time'
     const peopleCountText = 'People count'
+    const sectionText = 'Section'
+
+    const [newSectionId, setSectionId] = React.useState<number>(sectionId)
+
+    function handleChangeSection(id: number) {
+        setSectionId(id)
+        dispatch(editRecipeActions.setSectionId(id))
+    }
+
+    const sectionDropdownItems = sections.map((section) => ({
+        id: section.id,
+        text: section.name,
+        onPress: () => handleChangeSection(section.id),
+    }))
+
+    // console.log('EditRecipe', sections)
 
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">
             {showConfirmation ? (
                 <ConfirmationModal
-                    title={'Are you sure you want to stop editing this recipe?'}
-                    message={'All changes will be lost'}
+                    title="Are you sure you want to stop editing this recipe?"
+                    message="All changes will be lost"
                     onConfirm={() => {
                         navigation.goBack()
                         toggleConfirmation(false)
@@ -362,6 +380,22 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     value={editRecipe.peopleCount}
                 />
                 <View width="s" />
+            </RowContainer>
+
+            <RowContainer
+                width={width}
+                paddingHorizontal={paddingHorizontal}
+                marginVertical={marginVertical}
+            >
+                <FlexText>{sectionText}</FlexText>
+                <Picker
+                    width="m"
+                    marginHorizontal="s"
+                    items={sectionDropdownItems}
+                    current={
+                        sections.find((s) => s.id === newSectionId)?.name || ''
+                    }
+                />
             </RowContainer>
         </Container>
     )

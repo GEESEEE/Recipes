@@ -38,13 +38,13 @@ function ConfirmationModal({
                 <Text type="SubHeader">{title}</Text>
                 <Text paddingVertical="m">{message}</Text>
                 <ButtonRow>
-                    <Butt
+                    <RowButton
                         type="Clear"
                         text={confirm ? confirm : 'Confirm'}
                         onPress={onConfirm}
                         width="s"
                     />
-                    <Butt
+                    <RowButton
                         type="Clear"
                         text={cancel ? cancel : 'Cancel'}
                         onPress={onCancel}
@@ -73,6 +73,6 @@ const ButtonRow = styled(View)`
     flex-direction: row;
 `
 
-const Butt = styled(Button)`
+const RowButton = styled(Button)`
     width: 50%;
 `

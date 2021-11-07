@@ -56,6 +56,9 @@ const editRecipeSlice = createSlice({
         setPeopleCount(state, action: PayloadAction<number>) {
             state.peopleCount = action.payload
         },
+        setSectionId(state, action: PayloadAction<number>) {
+            state.sectionId = action.payload
+        },
 
         // Ingredients State
         addIngredient(state, action: PayloadAction<RecipeIngredient>) {
