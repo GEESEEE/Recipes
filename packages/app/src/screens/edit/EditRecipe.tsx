@@ -12,7 +12,7 @@ import {
     useToggle,
 } from '@/hooks'
 import { View, Text, Icons } from '@/components/base'
-import { TextInputWithTitle, Counter, DropdownMenu } from '@/components/atoms'
+import { TextInputWithTitle, Counter } from '@/components/atoms'
 import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
     editRecipeActions,
@@ -65,9 +65,11 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     React.useEffect(() => {
         dispatch(
-            editRecipeActions.setRecipe(passedRecipe || { ...emptyRecipe })
+            editRecipeActions.setRecipe(
+                passedRecipe || { ...emptyRecipe, sectionId }
+            )
         )
-    }, [dispatch, passedRecipe])
+    }, [dispatch, passedRecipe, sectionId])
 
     const editing = typeof passedRecipe !== 'undefined'
 
@@ -320,8 +322,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         text: section.name,
         onPress: () => handleChangeSection(section.id),
     }))
-
-    // console.log('EditRecipe', sections)
 
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">

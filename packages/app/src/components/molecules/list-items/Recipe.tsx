@@ -7,7 +7,7 @@ import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
 import { createDropDownItems } from '@/utils'
 import { recipesActions, recipeService } from '@/redux'
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useSettings } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
@@ -32,6 +32,7 @@ function RecipeListItem({
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
+    const { theme } = useSettings()
 
     dropdownItems = dropdownItems || []
 
@@ -76,6 +77,9 @@ function RecipeListItem({
         typeof incrementPeopleCount !== 'undefined' &&
         typeof decrementPeopleCount !== 'undefined'
 
+    const prepareTimeHours = Math.floor(item.prepareTime / 60)
+    const prepareTimeMinutes = item.prepareTime - prepareTimeHours * 60
+
     return (
         <ListItem
             items={
@@ -109,8 +113,11 @@ function RecipeListItem({
                     <Property
                         iconType={Icons.MyMaterialCommunityIcons}
                         iconName="timer-sand"
-                        text={item.prepareTime}
+                        text={`${prepareTimeHours}:${
+                            prepareTimeMinutes < 10 ? '0' : ''
+                        }${prepareTimeMinutes}`}
                     />
+
                     {editPeopleCount ? (
                         <Counter
                             increment={incrementPeopleCount}
