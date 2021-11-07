@@ -18,8 +18,8 @@ export default class CreateUsers implements Seeder {
     private userCount = 10
     private ingredientCount = 50
 
-    private sectionPerUser = 5
-    private recipePerSection = 5
+    private sectionPerUser = 12
+    private recipePerSection = 10
     private ingredientsPerRecipe = range(5, 8)
     private instructionsPerRecipe = range(5, 8)
 

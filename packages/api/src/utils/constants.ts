@@ -5,7 +5,6 @@ export const TYPES = {
 
     PassportMiddleware: Symbol.for('PassportMiddleware'),
     TokenMiddleware: Symbol.for('TokenMiddleware'),
-    AbilityMiddleware: Symbol.for('AbilityMiddleware'),
     ErrorMiddleware: Symbol.for('ErrorMiddleware'),
     PaginationMiddleware: Symbol.for('PaginationMiddleware'),
 

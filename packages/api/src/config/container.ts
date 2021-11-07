@@ -19,11 +19,7 @@ import {
     UserService,
 } from '@/services'
 import { TYPES } from '@/utils/constants'
-import {
-    ErrorMiddleware,
-    AbilityMiddleware,
-    PaginationMiddleware,
-} from '@/middlewares'
+import { ErrorMiddleware, PaginationMiddleware } from '@/middlewares'
 import {
     IngredientRepository,
     RecipeRepository,
@@ -46,7 +42,6 @@ bind<any>(TYPES.Redis).toConstantValue(
 bind<any>(TYPES.PassportMiddleware).toConstantValue(
     passport.authenticate('bearer', { session: false })
 )
-bind<AbilityMiddleware>(TYPES.AbilityMiddleware).to(AbilityMiddleware)
 bind<ErrorMiddleware>(TYPES.ErrorMiddleware).to(ErrorMiddleware)
 bind<PaginationMiddleware>(TYPES.PaginationMiddleware).to(PaginationMiddleware)
 
