@@ -48,7 +48,7 @@ export default class RecipeService {
     public async getRecipes(
         scopes: RecipeScopes[],
         args: RecipeScopeArgs,
-        sort: SortQueryTuple[]
+        sort?: SortQueryTuple[]
     ): Promise<RecipeResult[]> {
         let qb = this.recipeRepository.queryBuilder(args)
 
