@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
-import DropdownMenu, { DropdownItem } from '../../atoms/DropdownMenu'
+import DropdownMenu from '../DropdownMenu'
 import { View, TouchableOpacity, Icon, Icons } from '@/components/base'
 import { useSettings } from '@/hooks'
-import { GestureChangeEvent } from '@/types'
+import { DropdownItem, GestureChangeEvent } from '@/types'
 
 type ListItemProps = {
     items?: DropdownItem[]

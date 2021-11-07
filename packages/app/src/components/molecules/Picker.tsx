@@ -1,16 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Dimensions, StyleProp, ViewStyle } from 'react-native'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Modal,
-    ScrollView,
-} from '@/components/base'
-import { useSettings, useToggle } from '@/hooks'
+import { View, Text, TouchableOpacity } from '@/components/base'
+import { Menu } from '@/components/atoms'
+import { useSettings, useToggle, usePosition } from '@/hooks'
 import { LayoutProps } from '@/components/higher-order'
-import { DropdownItem, Position, TouchableEvent } from '@/types'
+import { DropdownItem, TouchableEvent } from '@/types'
 
 type PickerProps = {
     items: DropdownItem[]
@@ -29,15 +24,7 @@ function Picker({
     const { theme } = useSettings()
     const [open, toggle] = useToggle(false)
 
-    const [position, setPosition] = React.useState<Position>({
-        pageX: 0,
-        pageY: 0,
-        locationX: 0,
-        locationY: 0,
-    })
-
-    const pageX = position.pageX - position.locationX
-    const pageY = position.pageY - position.locationY
+    const [pageX, pageY, setPosition] = usePosition()
 
     const menuStyle: StyleProp<ViewStyle> = {
         position: 'absolute',
@@ -64,53 +51,13 @@ function Picker({
                 </Text>
             </TouchableOpacity>
             {open ? (
-                <Modal animationType="none">
-                    <Return onPress={() => toggle(false)} />
-                    <ScrollView
-                        borderRadius="s"
-                        borderWidth="s"
-                        borderColor={theme.primary}
-                        backgroundColor={theme.backgroundVariant}
-                        style={menuStyle}
-                    >
-                        {items.map((item) => {
-                            const separator =
-                                items.indexOf(item) !== items.length - 1
-                            return (
-                                <View key={item.id}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            item.onPress()
-                                            toggle(false)
-                                        }}
-                                    >
-                                        <Text
-                                            paddingHorizontal="m"
-                                            marginVertical="m"
-                                            type={
-                                                item.text === current
-                                                    ? 'SubHeader'
-                                                    : 'Text'
-                                            }
-                                            color={
-                                                item.text === original
-                                                    ? theme.primary
-                                                    : theme.text
-                                            }
-                                        >
-                                            {item.text}
-                                        </Text>
-                                    </TouchableOpacity>
-                                    {separator ? (
-                                        <Separator
-                                            backgroundColor={theme.text}
-                                        />
-                                    ) : null}
-                                </View>
-                            )
-                        })}
-                    </ScrollView>
-                </Modal>
+                <Menu
+                    toggle={toggle}
+                    items={items}
+                    style={menuStyle}
+                    current={current}
+                    original={original}
+                />
             ) : null}
         </Container>
     )
@@ -119,12 +66,3 @@ function Picker({
 export default Picker
 
 const Container = styled(View)``
-
-const Return = styled(TouchableOpacity)`
-    flex: 1;
-`
-
-const Separator = styled(View)`
-    height: 1px;
-    width: 100%;
-`

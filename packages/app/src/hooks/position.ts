@@ -1,51 +1,20 @@
-import React, { MutableRefObject } from 'react'
-import { LayoutChangeEvent } from 'react-native'
+import React, { useState } from 'react'
+import { Position } from '@/types'
 
-export type Position = {
-    width: number
-    height: number
-    pageX: number
-    pageY: number
-}
-
-const usePosition = (
-    callbackDependencies?: Array<number>
-): [
-    positionRef: MutableRefObject<Position>,
-    setPosition: (event: LayoutChangeEvent) => void
-] => {
-    const positionRef = React.useRef<Position>({
-        width: 0,
-        height: 0,
+export function usePosition(): [
+    number,
+    number,
+    React.Dispatch<React.SetStateAction<Position>>
+] {
+    const [position, setPosition] = useState<Position>({
         pageX: 0,
         pageY: 0,
+        locationX: 0,
+        locationY: 0,
     })
 
-    const setPosition = (lay: Position): void => {
-        positionRef.current = lay
-    }
+    const pageX = position.pageX - position.locationX
+    const pageY = position.pageY - position.locationY
 
-    callbackDependencies = callbackDependencies || []
-    const onLayout = React.useCallback((event: LayoutChangeEvent): void => {
-        ;(event.target as any).measure(
-            (
-                x: number,
-                y: number,
-                width: number,
-                height: number,
-                pageX: number,
-                pageY: number
-            ) => {
-                if (typeof x !== 'undefined') {
-                    setPosition({ width, height, pageX, pageY })
-                } else {
-                    setPosition({ width: 1, height: 1, pageX: 1, pageY: 1 })
-                }
-            }
-        )
-    }, callbackDependencies)
-
-    return [positionRef, onLayout]
+    return [pageX, pageY, setPosition]
 }
-
-export default usePosition
