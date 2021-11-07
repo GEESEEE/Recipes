@@ -28,6 +28,7 @@ function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
 
 export type HeaderConfig = {
     drawer?: boolean
+    return?: () => void
     search?: boolean
     title?: string
     right: Array<HeaderIcon>
@@ -87,14 +88,19 @@ function HeaderComponent({
                         onPress={() => navigation.toggleDrawer()}
                         color={color}
                     />
-                ) : (
+                ) : null}
+                {!config.drawer || config.return ? (
                     <HeaderIcon
                         type={Icons.MyMaterialIcons}
                         name="arrow-back"
-                        onPress={() => navigation.goBack()}
+                        onPress={() => {
+                            config.return
+                                ? config.return()
+                                : navigation.goBack()
+                        }}
                         color={color}
                     />
-                )}
+                ) : null}
 
                 <HeaderCenter>
                     {search ? (

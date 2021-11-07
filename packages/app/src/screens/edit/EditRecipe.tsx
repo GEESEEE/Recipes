@@ -8,6 +8,7 @@ import {
     useHeader,
     useRecipes,
     useSettings,
+    useToggle,
 } from '@/hooks'
 import { View, Text, Icons } from '@/components/base'
 import { TextInputWithTitle, Counter } from '@/components/atoms'
@@ -30,6 +31,7 @@ import {
     recipeUpdateObject,
 } from '@/utils'
 import { handleNumericTextInput, sortPosition } from '@/utils/utils'
+import { ConfirmationModal } from '@/components/molecules'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -260,7 +262,15 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         updateRecipes,
     ])
 
+    const [showConfirmation, toggleConfirmation] = useToggle(false)
+
+    function goBack(): void {
+        console.log('Should go back')
+        toggleConfirmation(true)
+    }
+
     useHeader(navigation, {
+        return: goBack,
         title: editing ? 'Edit Recipe' : 'Create Recipe',
         right: [
             {
@@ -283,6 +293,17 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">
+            {showConfirmation ? (
+                <ConfirmationModal
+                    title={'Are you sure you want to stop editing this recipe?'}
+                    message={'All changes will be lost'}
+                    onConfirm={() => {
+                        navigation.goBack()
+                        toggleConfirmation(false)
+                    }}
+                    onCancel={() => toggleConfirmation(false)}
+                />
+            ) : null}
             <TextInputWithTitle
                 title="Title"
                 type="SubHeader"
