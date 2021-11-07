@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Error from './Error'
+import Error from '../Error'
 import { TextInput, View, TextInputProps } from '@/components/base'
 import { useSettings } from '@/hooks'
 
