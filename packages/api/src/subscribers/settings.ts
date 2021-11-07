@@ -22,20 +22,20 @@ export class SettingsSubscriber implements EntitySubscriberInterface {
     }
 
     public async afterUpdate(event: UpdateEvent<Settings>): Promise<void> {
-        console.log(
-            'After Settings update',
-            event.entity,
-            this.userRepository,
-            this.redis
-        )
+        await this.updateRedis(event.entity as Settings)
+    }
+
+    private async updateRedis(settings: Settings): Promise<void> {
         const user = (await this.userRepository.findOne({
-            where: { settingsId: (event.entity as Settings).id },
+            where: { settingsId: settings.id },
             select: ['id'],
         })) as User
+
         const redisUser = JSON.parse(
             (await this.redis.get(user.id as any)) as string
         )
-        redisUser.settings = { ...redisUser.settings, ...event.entity }
+
+        redisUser.settings = { ...redisUser.settings, ...settings }
         await this.redis.set(user.id as any, JSON.stringify(redisUser))
     }
 }
