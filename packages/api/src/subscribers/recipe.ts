@@ -22,28 +22,11 @@ export class RecipeSubscriber implements EntitySubscriberInterface {
     }
 
     public async beforeUpdate(event: UpdateEvent<Recipe>): Promise<void> {
-        console.log(
-            'Before Recipe Update',
-            event,
-            event.entity,
-            this.recipeService
-        )
         if (typeof event.entity !== 'undefined') {
             this.unpublishCopies(event.entity as Recipe)
+
             if (event.databaseEntity.sectionId !== event.entity.sectionId) {
-                const recipes = await this.recipeService.getRecipes(
-                    ['section'],
-                    {
-                        sectionId: event.entity.sectionId,
-                    }
-                )
-                let maxPosition = 0
-                recipes.forEach((recipe) => {
-                    if (recipe.position > maxPosition) {
-                        maxPosition = recipe.position
-                    }
-                })
-                event.entity.position = maxPosition + 1
+                this.setNewPosition(event.entity as Recipe)
             }
         }
     }
@@ -52,5 +35,18 @@ export class RecipeSubscriber implements EntitySubscriberInterface {
         if (recipe.copyOf != null) {
             recipe.publishedAt = null
         }
+    }
+
+    private async setNewPosition(recipe: Recipe): Promise<void> {
+        const recipes = await this.recipeService.getRecipes(['section'], {
+            sectionId: recipe.sectionId,
+        })
+        let maxPosition = 0
+        recipes.forEach((recipe) => {
+            if (recipe.position > maxPosition) {
+                maxPosition = recipe.position
+            }
+        })
+        recipe.position = maxPosition + 1
     }
 }
