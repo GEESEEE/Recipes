@@ -409,6 +409,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     current={
                         sections.find((s) => s.id === newSectionId)?.name || ''
                     }
+                    original={
+                        sections.find((s) => s.id === sectionId)?.name || ''
+                    }
                 />
             </RowContainer>
         </Container>

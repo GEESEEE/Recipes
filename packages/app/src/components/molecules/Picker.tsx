@@ -1,8 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Dimensions, StyleProp, ViewStyle } from 'react-native'
-import { View, Text, TouchableOpacity, Modal } from '@/components/base'
-import { Editable, TextInputWithTitle } from '@/components/atoms'
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Modal,
+    ScrollView,
+} from '@/components/base'
 import { useSettings, useToggle } from '@/hooks'
 import { LayoutProps } from '@/components/higher-order'
 import { DropdownItem, Position, TouchableEvent } from '@/types'
@@ -10,9 +15,17 @@ import { DropdownItem, Position, TouchableEvent } from '@/types'
 type PickerProps = {
     items: DropdownItem[]
     current: string
+    original: string
 } & LayoutProps
 
-function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
+const { height } = Dimensions.get('window')
+
+function Picker({
+    items,
+    current,
+    original,
+    ...rest
+}: PickerProps): JSX.Element {
     const { theme } = useSettings()
     const [open, toggle] = useToggle(false)
 
@@ -30,6 +43,7 @@ function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
         position: 'absolute',
         marginLeft: pageX,
         marginTop: pageY,
+        maxHeight: height - pageY,
     }
 
     return (
@@ -52,7 +66,7 @@ function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
             {open ? (
                 <Modal animationType="none">
                     <Return onPress={() => toggle(false)} />
-                    <View
+                    <ScrollView
                         borderRadius="s"
                         borderWidth="s"
                         borderColor={theme.primary}
@@ -73,6 +87,16 @@ function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
                                         <Text
                                             paddingHorizontal="m"
                                             marginVertical="m"
+                                            type={
+                                                item.text === current
+                                                    ? 'SubHeader'
+                                                    : 'Text'
+                                            }
+                                            color={
+                                                item.text === original
+                                                    ? theme.primary
+                                                    : theme.text
+                                            }
                                         >
                                             {item.text}
                                         </Text>
@@ -85,7 +109,7 @@ function Picker({ items, current, ...rest }: PickerProps): JSX.Element {
                                 </View>
                             )
                         })}
-                    </View>
+                    </ScrollView>
                 </Modal>
             ) : null}
         </Container>

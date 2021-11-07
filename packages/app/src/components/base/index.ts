@@ -6,6 +6,7 @@ import Toggle, { ToggleProps } from './Toggle'
 import Icon from './Icon'
 import TouchableOpacity, { TouchableOpacityProps } from './TouchableOpacity'
 import * as Icons from './Icons'
+import ScrollView from './ScrollView'
 
 export {
     View,
@@ -21,4 +22,5 @@ export {
     TouchableOpacity,
     TouchableOpacityProps,
     Icons,
+    ScrollView,
 }

@@ -2,7 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Dimensions, StyleProp, ViewStyle } from 'react-native'
 import IconButton from './IconButton'
-import { View, Text, Modal, Icons, TouchableOpacity } from '@/components/base'
+import {
+    View,
+    Text,
+    Modal,
+    Icons,
+    TouchableOpacity,
+    ScrollView,
+} from '@/components/base'
 import { Spacing, Typography } from '@/styles'
 import { useSettings, useToggle } from '@/hooks'
 import { DropdownItem, Position, TouchableEvent } from '@/types'
@@ -85,7 +92,7 @@ function DropdownMenu({
                 <Modal animationType="none">
                     <Return onPress={() => toggle(false)} />
 
-                    <View
+                    <ScrollView
                         borderRadius="s"
                         borderWidth="s"
                         borderColor={theme.primary}
@@ -118,7 +125,7 @@ function DropdownMenu({
                                 </View>
                             )
                         })}
-                    </View>
+                    </ScrollView>
                 </Modal>
             ) : null}
         </View>

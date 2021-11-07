@@ -15,10 +15,10 @@ import {
 } from '@/entities'
 
 export default class CreateUsers implements Seeder {
-    private userCount = 10
+    private userCount = 5
     private ingredientCount = 50
 
-    private sectionPerUser = 12
+    private sectionPerUser = 20
     private recipePerSection = 10
     private ingredientsPerRecipe = range(5, 8)
     private instructionsPerRecipe = range(5, 8)
