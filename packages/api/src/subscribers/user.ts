@@ -2,7 +2,6 @@ import {
     EntitySubscriberInterface,
     EventSubscriber,
     InsertEvent,
-    RemoveEvent,
     UpdateEvent,
 } from 'typeorm'
 import bcrypt from 'bcrypt'

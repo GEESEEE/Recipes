@@ -1,7 +1,6 @@
 import {
     EntitySubscriberInterface,
     EventSubscriber,
-    InsertEvent,
     UpdateEvent,
 } from 'typeorm'
 import { Recipe } from '@/entities'

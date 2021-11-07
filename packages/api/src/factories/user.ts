@@ -5,7 +5,7 @@ import { User } from '@/entities'
 define(User, (faker: typeof Faker) => {
     const user = new User()
     user.name = faker.name.firstName()
-    user.password = faker.name.prefix()
+    user.password = 'admin'
     user.email = faker.internet.email()
     return user
 })
