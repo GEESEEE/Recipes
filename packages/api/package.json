@@ -17,7 +17,6 @@
         "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./src --fix"
     },
     "dependencies": {
-        "@casl/ability": "^5.4.3",
         "@recipes/api-types": "^1.0.0",
         "@zchapple/typeorm-seeding": "^2.0.1",
         "bcrypt": "^5.0.1",

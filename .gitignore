@@ -5,6 +5,7 @@
 **/private.key
 
 # Plugin folders
+.vscode/
 /.VSCodeCounter
 
 # Yarn
@@ -15,6 +16,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+yarn.lock
 
 
 # Should not commit build outputs
