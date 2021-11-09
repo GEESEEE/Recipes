@@ -165,6 +165,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                     (res.error as any)?.data?.errors?.[0].message ??
                     'Could not connect to the server'
                 setError(errorMessage)
+            } else {
+                showLogin()
             }
         }
     }

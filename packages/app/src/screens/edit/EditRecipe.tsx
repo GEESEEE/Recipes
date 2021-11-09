@@ -39,11 +39,10 @@ emptyRecipe.instructions = []
 emptyRecipe.recipeIngredients = []
 
 function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
-    const settings = useSettings()
+    const { theme } = useSettings()
     const editRecipe = useEditRecipe()
     const recipes = useRecipes()
     const sections = useSections()
-    const { theme } = settings
     const dispatch = useAppDispatch()
 
     const route = useRoute() as {
