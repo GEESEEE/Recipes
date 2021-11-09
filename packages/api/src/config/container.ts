@@ -99,4 +99,8 @@ bind<Validator>(TYPES.Validator).to(Validator)
 
 export const { lazyInject } = getDecorators(container)
 
+console.log('Container', container)
+
+console.log('Decorator Lazyinject', lazyInject)
+
 export default container

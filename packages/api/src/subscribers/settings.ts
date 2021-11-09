@@ -17,7 +17,7 @@ export class SettingsSubscriber implements EntitySubscriberInterface {
     @lazyInject(TYPES.UserRepository)
     private readonly userRepository!: Repository<User>
 
-    public listenTo(): any {
+    public listenTo() {
         return Settings
     }
 

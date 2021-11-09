@@ -1,7 +1,7 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Expose } from 'class-transformer'
 import { Theme } from '@recipes/api-types/v1'
-import { User } from '.'
+import User from './user'
 
 @Entity('settings')
 export default class Settings {

@@ -10,7 +10,7 @@ import { User } from '@/entities'
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface {
-    public listenTo(): any {
+    public listenTo() {
         return User
     }
 

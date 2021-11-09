@@ -12,7 +12,7 @@ import { TYPES } from '@/utils/constants'
 export class RecipeSubscriber implements EntitySubscriberInterface {
     @lazyInject(TYPES.RecipeService) recipeService!: RecipeService
 
-    public listenTo(): any {
+    public listenTo() {
         return Recipe
     }
 
