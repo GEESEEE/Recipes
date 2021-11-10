@@ -5,6 +5,7 @@ import {
     WithoutId,
 } from '@recipes/api-types/v1'
 import { api } from './base'
+import { withPopupMutation } from '@/hooks'
 
 const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -26,4 +27,10 @@ const userApi = api.injectEndpoints({
     }),
 })
 
-export const { useGetUserMutation, useUpdateSettingsMutation } = userApi
+export const { useGetUserMutation } = userApi
+
+const { endpoints } = userApi
+
+export const useUpdateSettingsMutation = withPopupMutation<
+    typeof endpoints.updateSettings
+>(userApi.useUpdateSettingsMutation)
