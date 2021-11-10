@@ -14,7 +14,12 @@ function PressableTextWithElement({
     onPress,
 }: TextWithElementProps): JSX.Element {
     return (
-        <Container onPress={onPress} paddingHorizontal="m">
+        <Container
+            onPress={onPress}
+            disabled={!onPress}
+            paddingHorizontal="m"
+            paddingVertical="s"
+        >
             <StyledText type="SubHeader" weight="normal">
                 {text}
             </StyledText>
