@@ -6,6 +6,7 @@ import {
     useAppDispatch,
     useAuth,
     useHeader,
+    usePopup,
     useRecipes,
     useSearch,
     useSettings,
@@ -32,29 +33,32 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         sectionId = route.params.sectionId
     }
 
-    async function setRecipes(
-        sectionId: number,
-        recipes: Recipe[]
-    ): Promise<void> {
-        await dispatch(recipesActions.setRecipes({ sectionId, recipes }))
-    }
-
     const skip =
         sectionId < 0 ||
         typeof recipes[sectionId] !== 'undefined' ||
         auth.token.length <= 0
 
-    const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
-        skip,
-    })
+    // const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
+    //     skip,
+    // })
+
+    const getRecipes = usePopup(
+        recipeService.useGetRecipesBySectionIdQuery,
+        sectionId,
+        { skip }
+    )
 
     useUpdateEffect(() => {
+        console.log('Trying to update getRecipes.data')
         if (typeof getRecipes.data !== 'undefined') {
-            setRecipes(sectionId, getRecipes.data)
+            dispatch(
+                recipesActions.setRecipes({
+                    sectionId,
+                    recipes: getRecipes.data,
+                })
+            )
         }
     }, [getRecipes.data])
-
-    const [updateRecipes] = recipeService.useUpdateRecipesMutation()
 
     const sectionRecipes =
         typeof recipes[sectionId] === 'undefined'
@@ -72,6 +76,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         return recipesActions.updateRecipes({ sectionId, recipes })
     }
 
+    const [updateRecipes] = recipeService.useUpdateRecipesMutation()
     function updateDatabase(recipes: RecipeUpdate[]) {
         return updateRecipes({ sectionId, body: recipes })
     }
