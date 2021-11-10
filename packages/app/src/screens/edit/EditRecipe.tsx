@@ -186,7 +186,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const handleEditRecipe = React.useCallback(async (): Promise<void> => {
         const oldRecipe = passedRecipe as Recipe
         const recipeUpdate = recipeUpdateObject(oldRecipe as Recipe, editRecipe)
-        console.log('recipe Update', recipeUpdate)
+
         let updatedRecipe = oldRecipe
         if (Object.keys(recipeUpdate).length > 1) {
             const recipe = await updateRecipes({
