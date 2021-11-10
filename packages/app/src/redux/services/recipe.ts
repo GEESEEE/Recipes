@@ -1,6 +1,6 @@
 import { Copy, Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
 import { api } from './base'
-import { withPopupMutation, withPopupQuery } from './types'
+import { withPopupMutation, withPopupQuery } from '@/hooks'
 
 type BaseArg = { sectionId: number }
 

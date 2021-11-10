@@ -4,8 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { PopupMenu } from '@/components/atoms'
 
-function NewPopup(): JSX.Element {
-    console.log('NewPopup')
+function PopupScreen(): JSX.Element {
     const route = useRoute()
     const navigation = useNavigation<any>()
     const { title, description } = route.params as any
@@ -26,7 +25,7 @@ function NewPopup(): JSX.Element {
     )
 }
 
-export default NewPopup
+export default PopupScreen
 
 const Container = styled(SafeAreaView)`
     flex: 1;

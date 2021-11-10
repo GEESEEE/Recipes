@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Recipe, RecipeUpdate } from '@recipes/api-types/v1'
+import { Copy, Recipe, RecipeUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
@@ -42,7 +42,6 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     })
 
     useUpdateEffect(() => {
-        console.log('Trying to update getRecipes.data')
         if (typeof getRecipes.data !== 'undefined') {
             dispatch(
                 recipesActions.setRecipes({
