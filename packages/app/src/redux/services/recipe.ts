@@ -1,6 +1,6 @@
-import { Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
+import { Copy, Recipe, RecipeCreate, RecipeUpdate } from '@recipes/api-types/v1'
 import { api } from './base'
-import { withPopupQuery } from '@/hooks'
+import { withPopupMutation, withPopupQuery } from './types'
 
 type BaseArg = { sectionId: number }
 
@@ -46,8 +46,6 @@ const recipeApi = api.injectEndpoints({
     }),
 })
 
-type x = keyof typeof recipeApi.endpoints
-
 export const {
     // useGetRecipesBySectionIdQuery,
     useCreateRecipesMutation,
@@ -55,6 +53,10 @@ export const {
     useDeleteRecipeMutation,
 } = recipeApi
 
-export const useGetRecipesBySectionIdQuery = withPopupQuery(
-    recipeApi.useGetRecipesBySectionIdQuery
-)
+export const useGetRecipesBySectionIdQuery = withPopupQuery<
+    typeof recipeApi.endpoints.getRecipesBySectionId
+>(recipeApi.useGetRecipesBySectionIdQuery)
+
+// export const useCreateRecipesMutation = withPopupMutation<
+//     typeof recipeApi.endpoints.createRecipes
+// >(recipeApi.useCreateRecipesMutation)

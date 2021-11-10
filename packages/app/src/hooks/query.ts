@@ -14,7 +14,7 @@ export function withPopupMutation(hook: any) {
         }
         return funcRes
     }
-    return [useFunc, state]
+    return () => [useFunc, state]
 }
 
 export function withPopupQuery(hook: any) {

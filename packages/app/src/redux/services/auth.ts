@@ -7,6 +7,7 @@ import {
     LoginResult,
 } from '@recipes/api-types/v1'
 import { api } from './base'
+import { withPopupMutation } from './types'
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -61,5 +62,9 @@ export const {
     useVerifyTokenMutation,
     useSignUpMutation,
     useSignOutMutation,
-    useSignInMutation,
+    // useSignInMutation,
 } = authApi
+
+export const useSignInMutation = withPopupMutation<
+    typeof authApi.endpoints.signIn
+>(authApi.useSignInMutation)

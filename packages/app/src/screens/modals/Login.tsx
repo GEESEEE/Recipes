@@ -56,9 +56,8 @@ function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     const dispatch = useAppDispatch()
-    const [signIn, signInStatus] = withPopupMutation(
-        authService.useSignInMutation
-    )
+    const [signIn, signInStatus] = authService.useSignInMutation()
+
     const [getUser, getUserStatus] = userService.useGetUserMutation()
 
     const [error, setError] = React.useState('')
