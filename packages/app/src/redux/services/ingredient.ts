@@ -4,6 +4,7 @@ import {
     RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
 import { api } from './base'
+import { withPopupMutation } from '@/hooks'
 
 type BaseArg = { sectionId: number; recipeId: number }
 
@@ -44,8 +45,16 @@ const ingredientApi = api.injectEndpoints({
     }),
 })
 
-export const {
-    useAddIngredientsMutation,
-    useUpdateIngredientsMutation,
-    useDeleteIngredientsMutation,
-} = ingredientApi
+const { endpoints } = ingredientApi
+
+export const useAddIngredientsMutation = withPopupMutation<
+    typeof endpoints.addIngredients
+>(ingredientApi.useAddIngredientsMutation)
+
+export const useUpdateIngredientsMutation = withPopupMutation<
+    typeof endpoints.updateIngredients
+>(ingredientApi.useUpdateIngredientsMutation)
+
+export const useDeleteIngredientsMutation = withPopupMutation<
+    typeof endpoints.deleteIngredients
+>(ingredientApi.useDeleteIngredientsMutation)

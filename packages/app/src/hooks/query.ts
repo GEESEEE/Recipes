@@ -17,13 +17,14 @@ import {
 
 export function withPopupQuery<E>(hook: InferUseQuery<E>) {
     return (args: InferQueryArgs<E>, extraArgs: UseQueryOptions) => {
+        type Res = InferQueryResult<E>
         const navigation = useNavigation<any>()
         const hookRes = hook(args, extraArgs)
 
         if (isFetchError(hookRes)) {
             showPopup(navigation, hookRes.error.message)
         }
-        return hookRes as UseQueryResult<InferQueryResult<E>>
+        return hookRes as UseQueryResult<Res>
     }
 }
 

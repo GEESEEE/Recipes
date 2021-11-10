@@ -46,17 +46,20 @@ const recipeApi = api.injectEndpoints({
     }),
 })
 
-export const {
-    // useGetRecipesBySectionIdQuery,
-    useCreateRecipesMutation,
-    useUpdateRecipesMutation,
-    useDeleteRecipeMutation,
-} = recipeApi
+const { endpoints } = recipeApi
 
 export const useGetRecipesBySectionIdQuery = withPopupQuery<
-    typeof recipeApi.endpoints.getRecipesBySectionId
+    typeof endpoints.getRecipesBySectionId
 >(recipeApi.useGetRecipesBySectionIdQuery)
 
-// export const useCreateRecipesMutation = withPopupMutation<
-//     typeof recipeApi.endpoints.createRecipes
-// >(recipeApi.useCreateRecipesMutation)
+export const useCreateRecipesMutation = withPopupMutation<
+    typeof endpoints.createRecipes
+>(recipeApi.useCreateRecipesMutation)
+
+export const useUpdateRecipesMutation = withPopupMutation<
+    typeof endpoints.updateRecipes
+>(recipeApi.useUpdateRecipesMutation)
+
+export const useDeleteRecipeMutation = withPopupMutation<
+    typeof endpoints.deleteRecipe
+>(recipeApi.useDeleteRecipeMutation)

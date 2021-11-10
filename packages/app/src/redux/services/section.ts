@@ -1,5 +1,6 @@
 import { Section, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
 import { api } from './base'
+import { withPopupMutation, withPopupQuery } from '@/hooks'
 
 const sectionApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -42,10 +43,24 @@ const sectionApi = api.injectEndpoints({
     }),
 })
 
-export const {
-    useCreateSectionMutation,
-    useGetSectionsQuery,
-    useUpdateSectionMutation,
-    useUpdateSectionsMutation,
-    useDeleteSectionMutation,
-} = sectionApi
+const { endpoints } = sectionApi
+
+export const useCreateSectionMutation = withPopupMutation<
+    typeof endpoints.createSection
+>(sectionApi.useCreateSectionMutation)
+
+export const useGetSectionsQuery = withPopupQuery<typeof endpoints.getSections>(
+    sectionApi.useGetSectionsQuery
+)
+
+export const useUpdateSectionMutation = withPopupMutation<
+    typeof endpoints.updateSection
+>(sectionApi.useUpdateSectionMutation)
+
+export const useUpdateSectionsMutation = withPopupMutation<
+    typeof endpoints.updateSections
+>(sectionApi.useUpdateSectionsMutation)
+
+export const useDeleteSectionMutation = withPopupMutation<
+    typeof endpoints.deleteSection
+>(sectionApi.useDeleteSectionMutation)

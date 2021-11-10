@@ -62,9 +62,5 @@ export const {
     useVerifyTokenMutation,
     useSignUpMutation,
     useSignOutMutation,
-    // useSignInMutation,
+    useSignInMutation,
 } = authApi
-
-export const useSignInMutation = withPopupMutation<
-    typeof authApi.endpoints.signIn
->(authApi.useSignInMutation)
