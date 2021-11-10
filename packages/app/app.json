@@ -22,13 +22,13 @@
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/temp-icon.png",
+        "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "app.recipes"
     },
     "web": {
-      "favicon": "./src/assets/temp_icon.png"
+      "favicon": "./src/assets/favicon.png"
     }
   }
 }
