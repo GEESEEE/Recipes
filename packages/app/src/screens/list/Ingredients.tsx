@@ -39,7 +39,7 @@ function EditIngredientsScreen({
             <ListItemRecyclerView
                 Element={IngredientListItem}
                 data={ingredients}
-                props={{}}
+                props={{ useDropdown: true }}
                 dragDrop
                 updateSlice={updateSlice}
             />

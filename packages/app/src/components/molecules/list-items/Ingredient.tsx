@@ -18,7 +18,7 @@ interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
 
 function IngredientListItem({
     item,
-    dropdownItems,
+    useDropdown,
     onGesture,
     editable,
     releaseHeight,
@@ -29,7 +29,7 @@ function IngredientListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    dropdownItems = dropdownItems || []
+    const dropdownItems = []
 
     function logIngredient(): void {
         console.log('Logging ingredient', item.ingredient.name)
@@ -48,7 +48,7 @@ function IngredientListItem({
     return (
         <ListItem
             items={
-                !editable
+                useDropdown
                     ? createDropDownItems(dropdownItems, 'ingredient')
                     : undefined
             }

@@ -17,7 +17,7 @@ interface InstructionListItemProps extends ListItemBaseProps<Instruction> {
 
 function InstructionListItem({
     item,
-    dropdownItems,
+    useDropdown,
     onGesture,
     editable,
     releaseHeight,
@@ -28,7 +28,7 @@ function InstructionListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    dropdownItems = dropdownItems || []
+    const dropdownItems = []
 
     function logInstruction(): void {
         console.log('Logging instruction', item.text)
@@ -47,7 +47,7 @@ function InstructionListItem({
     return (
         <ListItem
             items={
-                !editable
+                useDropdown
                     ? createDropDownItems(dropdownItems, 'instruction')
                     : undefined
             }

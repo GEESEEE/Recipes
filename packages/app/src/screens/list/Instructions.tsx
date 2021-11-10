@@ -39,7 +39,7 @@ function EditInstructionsScreen({
             <ListItemRecyclerView
                 Element={InstructionListItem}
                 data={instructions}
-                props={{ instructions }}
+                props={{ instructions, useDropdown: true }}
                 dragDrop
                 updateSlice={updateSlice}
             />

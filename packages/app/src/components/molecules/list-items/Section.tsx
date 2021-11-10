@@ -17,7 +17,7 @@ interface SectionListItemProps extends ListItemBaseProps<Section> {
 
 function SectionListItem({
     item,
-    dropdownItems,
+    useDropdown,
     onGesture,
     editable,
     releaseHeight,
@@ -27,7 +27,7 @@ function SectionListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    dropdownItems = dropdownItems || []
+    const dropdownItems = []
 
     const [deleteSection] = sectionService.useDeleteSectionMutation()
 
@@ -55,7 +55,7 @@ function SectionListItem({
     return (
         <ListItem
             items={
-                !editable
+                useDropdown
                     ? createDropDownItems(dropdownItems, 'sect')
                     : undefined
             }

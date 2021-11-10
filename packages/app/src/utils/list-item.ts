@@ -42,6 +42,6 @@ export function heightMap<T>(
             console.log(
                 `ListItem ${listItem.name} not registered in height map`
             )
-            return 100
+            return 50
     }
 }

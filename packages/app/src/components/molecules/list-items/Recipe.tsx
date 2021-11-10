@@ -20,7 +20,7 @@ interface SectionListItemProps extends ListItemBaseProps<Recipe> {
 
 function RecipeListItem({
     item,
-    dropdownItems,
+    useDropdown,
     onGesture,
     editable,
     releaseHeight,
@@ -34,7 +34,7 @@ function RecipeListItem({
     const navigation = useNavigation<any>()
     const { theme } = useSettings()
 
-    dropdownItems = dropdownItems || []
+    const dropdownItems = []
 
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
@@ -83,7 +83,7 @@ function RecipeListItem({
     return (
         <ListItem
             items={
-                !editable
+                useDropdown
                     ? createDropDownItems(dropdownItems, 'recip')
                     : undefined
             }

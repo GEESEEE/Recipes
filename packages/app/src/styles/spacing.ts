@@ -33,16 +33,16 @@ export const borderRadii: Record<Size, number> = {
 }
 
 export const standardIconSize: Record<Typography.TextSize, number> = {
-    m: 20,
-    l: 24,
-    xl: 28,
+    m: 22,
+    l: 26,
+    xl: 30,
 }
 
 export const iconOffset: Record<Size, number> = {
     n: 0,
     s: 0,
-    m: 3,
-    l: 6,
+    m: 4,
+    l: 8,
 }
 
 export const iconSize = (size: Size, textSize: Typography.TextSize): number =>

@@ -91,7 +91,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={filteredSections}
-                props={{}}
+                props={{ useDropdown: true }}
                 loading={getSections.isLoading}
                 dragDrop
                 updateSlice={sectionsActions.updateSections}

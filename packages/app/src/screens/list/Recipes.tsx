@@ -103,7 +103,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
             <ListItemRecyclerView
                 Element={RecipeListItem}
                 data={filteredRecipes}
-                props={{}}
+                props={{ useDropdown: true }}
                 loading={getRecipes.isLoading}
                 dragDrop
                 updateSlice={updateSlice}

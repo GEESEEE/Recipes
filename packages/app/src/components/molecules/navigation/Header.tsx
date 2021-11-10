@@ -58,7 +58,7 @@ function HeaderComponent({
         navigation.setParams({ headerSearch: text })
     }
 
-    const height = 40
+    const height = 45
     const insets = useSafeAreaInsets()
     const horizontalInsets = 4
 
@@ -114,6 +114,7 @@ function HeaderComponent({
                                     size="m"
                                 />
                             }
+                            type="SubHeader"
                             onChangeText={(text: string) => onChangeText(text)}
                             placeholder="Search"
                             paddingVertical="s"
@@ -123,7 +124,7 @@ function HeaderComponent({
                         />
                     ) : (
                         <Text
-                            type="SubHeader"
+                            type="Header"
                             color={color}
                             paddingHorizontal="m"
                             numberOfLines={1}
