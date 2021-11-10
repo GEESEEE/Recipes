@@ -1,5 +1,6 @@
-import React, { useReducer } from 'react'
+import React, { Dispatch, useReducer } from 'react'
 import styled from 'styled-components'
+import { LOGIN_ACTIONS } from './Login'
 import { useAppSelector } from '@/hooks'
 import { Icons, Modal } from '@/components/base'
 import {
