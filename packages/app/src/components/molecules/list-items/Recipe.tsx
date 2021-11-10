@@ -24,6 +24,7 @@ function RecipeListItem({
     onGesture,
     editable,
     releaseHeight,
+    hide,
     handleSectionNameChange,
     handleSectionDescriptionChange,
     incrementPeopleCount,
@@ -89,6 +90,7 @@ function RecipeListItem({
             }
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
+            hide={hide}
         >
             <Container>
                 <Editable

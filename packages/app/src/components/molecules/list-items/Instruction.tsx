@@ -21,6 +21,7 @@ function InstructionListItem({
     onGesture,
     editable,
     releaseHeight,
+    hide,
     instructions,
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
@@ -52,6 +53,7 @@ function InstructionListItem({
                     : undefined
             }
             onGesture={onGesture}
+            hide={hide}
         >
             <Container paddingHorizontal="s">
                 <Number type="SubHeader">{index + 1}</Number>

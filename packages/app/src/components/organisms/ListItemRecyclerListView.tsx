@@ -61,7 +61,11 @@ type ListItemRecyclerViewProps<
         items: Array<ListItem>
     ) => Promise<{ data: Array<T> } | { error: any }>
     Element: (
-        props: U & { item: T; onGesture?: (e: GestureChangeEvent) => void }
+        props: U & {
+            item: T
+            onGesture?: (e: GestureChangeEvent) => void
+            hide?: boolean
+        }
     ) => JSX.Element
 }
 
@@ -241,9 +245,14 @@ function ListItemRecyclerView<T extends ListItem, U>({
         }
     }
 
-    const rowRenderer = (_: string | number, item: T): JSX.Element | null => {
+    const rowRenderer = (
+        _: string | number,
+        item: T,
+        index: number
+    ): JSX.Element | null => {
         return (
             <Element
+                hide={index === currentIndex.value}
                 onGesture={dragDrop ? onGesture : undefined}
                 item={item}
                 {...props}
@@ -267,7 +276,8 @@ function ListItemRecyclerView<T extends ListItem, U>({
                     >
                         {rowRenderer(
                             ViewTypes.Item,
-                            dataProvider.getDataForIndex(dragIndex)
+                            dataProvider.getDataForIndex(dragIndex),
+                            -1
                         )}
                     </AnimatedView>
                 ) : null}

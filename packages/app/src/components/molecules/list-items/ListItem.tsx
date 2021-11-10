@@ -11,6 +11,7 @@ type ListItemProps = {
     items?: DropdownItem[]
     onPress?: () => void
     onGesture?: (e: GestureChangeEvent) => void
+    hide?: boolean
 }
 
 function ListItem({
@@ -18,8 +19,14 @@ function ListItem({
     items,
     onPress,
     onGesture,
+    hide,
 }: React.PropsWithChildren<ListItemProps>): JSX.Element {
     const { theme } = useSettings()
+
+    const style = {
+        opacity: hide ? 0 : 1,
+    }
+
     return (
         <Container
             width="l"
@@ -28,6 +35,7 @@ function ListItem({
             paddingVertical="s"
             paddingHorizontal="s"
             marginVertical="s"
+            style={style}
         >
             {onGesture ? (
                 <PanGestureHandler

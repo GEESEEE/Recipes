@@ -22,6 +22,7 @@ function IngredientListItem({
     onGesture,
     editable,
     releaseHeight,
+    hide,
     handleIngredientNameChange,
     handleIngredientAmountChange,
     handleIngredientUnitChange,
@@ -53,6 +54,7 @@ function IngredientListItem({
                     : undefined
             }
             onGesture={onGesture}
+            hide={hide}
         >
             <Container>
                 <Editable

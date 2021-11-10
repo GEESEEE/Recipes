@@ -11,4 +11,5 @@ export interface ListItemBaseProps<T extends ListItem> {
     onGesture?: (e: GestureChangeEvent) => void
     editable?: boolean
     releaseHeight?: boolean
+    hide?: boolean
 }

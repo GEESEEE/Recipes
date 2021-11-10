@@ -21,6 +21,7 @@ function SectionListItem({
     onGesture,
     editable,
     releaseHeight,
+    hide,
     handleSectionNameChange,
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
@@ -61,6 +62,7 @@ function SectionListItem({
             }
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
+            hide={hide}
         >
             <Container>
                 <Editable
