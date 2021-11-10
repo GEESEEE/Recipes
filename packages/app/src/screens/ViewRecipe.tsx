@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SectionList } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { Instruction, Recipe, RecipeIngredient } from '@recipes/api-types/v1'
-import { View, Text } from '@/components/base'
+import { View, Text, Icons } from '@/components/base'
 import { useSettings, useHeader, useRecipes } from '@/hooks'
 import {
     IngredientListItem,
@@ -109,7 +109,23 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     useHeader(navigation, {
         title:
             typeof passedRecipe !== 'undefined' ? recipe.name : 'View Recipe',
-        right: [],
+        right: [
+            {
+                type: Icons.MyMaterialIcons,
+                name: 'edit',
+                onPress: () =>
+                    navigation.navigate('EditRecipeTabs', {
+                        screen: 'EditRecipeStack',
+                        params: {
+                            screen: 'EditRecipe',
+                            params: {
+                                sectionId: recipe.sectionId,
+                                recipeId: recipe.id,
+                            },
+                        },
+                    }),
+            },
+        ],
     })
 
     return (
