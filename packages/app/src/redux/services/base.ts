@@ -8,7 +8,6 @@ import {
     BaseQueryApi,
     QueryReturnValue,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
-import { useNavigation } from '@react-navigation/native'
 import { RootState } from '@/redux/store'
 import { FetchError } from '@/types'
 
