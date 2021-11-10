@@ -49,8 +49,8 @@ function Menu({
                                 }}
                             >
                                 <Text
-                                    paddingHorizontal="l"
-                                    marginVertical="l"
+                                    paddingHorizontal="m"
+                                    marginVertical="m"
                                     type={
                                         item.text === current
                                             ? 'Header'
