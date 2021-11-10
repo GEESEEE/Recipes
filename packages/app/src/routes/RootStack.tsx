@@ -7,7 +7,7 @@ import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
 
-function LoginStack(): JSX.Element {
+function RootStack(): JSX.Element {
     return (
         <Stack.Navigator
             initialRouteName="Drawer"
@@ -41,4 +41,4 @@ function LoginStack(): JSX.Element {
     )
 }
 
-export default LoginStack
+export default RootStack
