@@ -49,13 +49,14 @@ function Menu({
                                 }}
                             >
                                 <Text
-                                    paddingHorizontal="m"
-                                    marginVertical="m"
+                                    paddingHorizontal="l"
+                                    marginVertical="l"
                                     type={
                                         item.text === current
-                                            ? 'SubHeader'
-                                            : 'Text'
+                                            ? 'Header'
+                                            : 'SubHeader'
                                     }
+                                    weight="semiBold"
                                     color={
                                         item.text === original
                                             ? theme.primary
