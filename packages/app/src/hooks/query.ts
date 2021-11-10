@@ -4,10 +4,13 @@ import { showPopup } from '@/utils/screen'
 import {
     FetchError,
     InferMutationArgs,
+    InferMutationResult,
     InferQueryArgs,
     InferQueryResult,
     InferUseMutation,
     InferUseQuery,
+    UseMutationResult,
+    UseMutationTrigger,
     UseQueryOptions,
     UseQueryResult,
 } from '@/types'
@@ -25,7 +28,8 @@ export function withPopupQuery<E>(hook: InferUseQuery<E>) {
 }
 
 export function withPopupMutation<E>(hook: InferUseMutation<E>) {
-    return () => {
+    type Res = InferMutationResult<E>
+    return (): [UseMutationTrigger<Res>, UseMutationResult<Res>] => {
         const [func, state] = hook()
         const navigation = useNavigation<any>()
 
@@ -37,6 +41,6 @@ export function withPopupMutation<E>(hook: InferUseMutation<E>) {
             }
             return funcRes
         }
-        return [useFunc, state]
+        return [useFunc as UseMutationTrigger<Res>, state]
     }
 }
