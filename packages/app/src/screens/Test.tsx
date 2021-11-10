@@ -83,7 +83,10 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
     }
 
     function showPopup(): void {
-        screenUtils.showPopup(navigation, 'Yes')
+        screenUtils.showPopup(
+            navigation,
+            'Are you sure you want to stop editing this Recipe'
+        )
     }
 
     const [username, setUsername] = React.useState('username')
@@ -116,7 +119,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 marginVertical="m"
                 type="Solid"
                 text="Merge test"
-                onPress={() => mergeTest()}
+                onPress={() => showPopup()}
             />
         </Container>
     )

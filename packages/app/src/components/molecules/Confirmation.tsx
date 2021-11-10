@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { View, Text, Modal } from '@/components/base'
-import { Button } from '@/components/atoms'
-import { useSettings } from '@/hooks'
+import { Modal } from '@/components/base'
+import { PopupMenu } from '@/components/atoms'
 
 type ConfirmationModalProps = {
-    // toggle: () => void
     title: string
     message: string
     confirm?: string
@@ -22,36 +20,22 @@ function ConfirmationModal({
     onConfirm,
     onCancel,
 }: ConfirmationModalProps): JSX.Element {
-    const { theme } = useSettings()
-
     return (
         <Container>
-            <MessageContainer
-                borderColor={theme.primary}
-                borderWidth="s"
-                borderRadius="s"
-                width="m"
-                paddingVertical="m"
-                paddingHorizontal="m"
-                backgroundColor={theme.background}
-            >
-                <Text type="SubHeader">{title}</Text>
-                <Text paddingVertical="m">{message}</Text>
-                <ButtonRow>
-                    <RowButton
-                        type="Clear"
-                        text={confirm ? confirm : 'Confirm'}
-                        onPress={onConfirm}
-                        width="s"
-                    />
-                    <RowButton
-                        type="Clear"
-                        text={cancel ? cancel : 'Cancel'}
-                        onPress={onCancel}
-                        width="s"
-                    />
-                </ButtonRow>
-            </MessageContainer>
+            <PopupMenu
+                title={title}
+                message={message}
+                buttons={[
+                    {
+                        text: confirm ? confirm : 'Confirm',
+                        callback: onConfirm,
+                    },
+                    {
+                        text: cancel ? cancel : 'Cancel',
+                        callback: onCancel,
+                    },
+                ]}
+            />
         </Container>
     )
 }
@@ -62,17 +46,4 @@ const Container = styled(Modal)`
     flex: 1;
     align-items: center;
     justify-content: center;
-`
-
-const MessageContainer = styled(View)`
-    align-items: center;
-    justify-content: center;
-`
-
-const ButtonRow = styled(View)`
-    flex-direction: row;
-`
-
-const RowButton = styled(Button)`
-    width: 50%;
 `

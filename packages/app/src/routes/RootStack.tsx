@@ -28,7 +28,7 @@ function LoginStack(): JSX.Element {
 
             <Stack.Screen name="EditRecipeTabs" component={EditRecipeTabs} />
 
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="Popup"
                 component={PopupScreen}
                 options={{
@@ -36,7 +36,7 @@ function LoginStack(): JSX.Element {
                     presentation: 'transparentModal',
                     cardStyleInterpolator: screenUtils.fade,
                 }}
-            />
+            /> */}
         </Stack.Navigator>
     )
 }

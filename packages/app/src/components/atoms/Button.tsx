@@ -9,7 +9,7 @@ import {
 } from '@/components/base'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 import { Typography, Spacing } from '@/styles'
-import { useAppSelector, useSettings } from '@/hooks'
+import { useSettings } from '@/hooks'
 import { TouchableEvent } from '@/types'
 
 type ButtonType = 'Solid' | 'Outline' | 'Clear'
@@ -64,14 +64,15 @@ const Button = ({
     backgroundColor = backgroundColor || theme.background
     const borderColor = type === TYPE.Clear ? backgroundColor : color
 
+    if (type === TYPE.Clear) {
+        textWeight = textWeight || 'normal'
+        textTransform = textTransform || 'lowercase'
+    }
+
     textType = textType || 'Text'
     textWeight = textWeight || 'bold'
     textTransform = textTransform || 'uppercase'
 
-    if (type === TYPE.Clear) {
-        textWeight = 'normal'
-        textTransform = 'lowercase'
-    }
     borderRadius = borderRadius || 's'
     width = width || 'm'
 
