@@ -2,16 +2,30 @@ import { useNavigation } from '@react-navigation/native'
 import { isFetchError } from '@/utils'
 import { showPopup } from '@/utils/screen'
 
-export function usePopup(hook: any, args: any, extraArgs?: any) {
-    const navigation = useNavigation<any>()
-    const hookRes = hook(args, extraArgs)
-    console.log('Hookres', Object.keys(hookRes))
-    if (isFetchError(hookRes)) {
-        console.log('IsFetchError', hookRes)
-        navigation.navigate('Popup', {
-            title: hookRes.error.message,
-        })
-        // showPopup(navigation, hookRes.error.message)
+export function withPopupMutation(hook: any) {
+    const [func, state] = hook()
+
+    const useFunc = async (args: any, extraArgs: any) => {
+        const navigation = useNavigation<any>()
+        const funcRes = await func(args, extraArgs)
+
+        if (isFetchError(funcRes)) {
+            showPopup(navigation, funcRes.error.message)
+        }
+        return funcRes
     }
-    return hookRes
+    return [useFunc, state]
+}
+
+export function withPopupQuery(hook: any) {
+    return (args: any, extraArgs: any) => {
+        const navigation = useNavigation<any>()
+        const hookRes = hook(args, extraArgs)
+
+        if (isFetchError(hookRes)) {
+            showPopup(navigation, hookRes.error.message)
+        }
+
+        return hookRes
+    }
 }

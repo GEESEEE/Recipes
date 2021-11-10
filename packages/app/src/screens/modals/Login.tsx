@@ -5,7 +5,7 @@ import * as SecureStore from 'expo-secure-store'
 import LoadingModal from './Loading'
 import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector, withPopupMutation } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import {
     Button,
@@ -56,7 +56,9 @@ function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
     const dispatch = useAppDispatch()
-    const [signIn, signInStatus] = authService.useSignInMutation()
+    const [signIn, signInStatus] = withPopupMutation(
+        authService.useSignInMutation
+    )
     const [getUser, getUserStatus] = userService.useGetUserMutation()
 
     const [error, setError] = React.useState('')

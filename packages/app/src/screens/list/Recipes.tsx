@@ -6,7 +6,6 @@ import {
     useAppDispatch,
     useAuth,
     useHeader,
-    usePopup,
     useRecipes,
     useSearch,
     useSettings,
@@ -38,15 +37,9 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
         typeof recipes[sectionId] !== 'undefined' ||
         auth.token.length <= 0
 
-    // const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
-    //     skip,
-    // })
-
-    const getRecipes = usePopup(
-        recipeService.useGetRecipesBySectionIdQuery,
-        sectionId,
-        { skip }
-    )
+    const getRecipes = recipeService.useGetRecipesBySectionIdQuery(sectionId, {
+        skip,
+    })
 
     useUpdateEffect(() => {
         console.log('Trying to update getRecipes.data')
