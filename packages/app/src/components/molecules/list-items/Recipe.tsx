@@ -33,7 +33,6 @@ function RecipeListItem({
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
-    const { theme } = useSettings()
 
     const dropdownItems = []
 
@@ -71,7 +70,7 @@ function RecipeListItem({
         })
     }
 
-    dropdownItems.push(logRecip, editRecip, deleteRecip)
+    dropdownItems.push(editRecip, deleteRecip)
 
     const editPeopleCount =
         editable &&

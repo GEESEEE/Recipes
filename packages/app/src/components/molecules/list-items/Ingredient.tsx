@@ -32,10 +32,6 @@ function IngredientListItem({
 
     const dropdownItems = []
 
-    function logIngredient(): void {
-        console.log('Logging ingredient', item.ingredient.name)
-    }
-
     function editIngredient(): void {
         navigation.navigate('EditIngredient', { ingredientId: item.id })
     }
@@ -44,7 +40,7 @@ function IngredientListItem({
         dispatch(editRecipeActions.removeIngredient({ id: item.id }))
     }
 
-    dropdownItems.push(logIngredient, editIngredient, deleteIngredient)
+    dropdownItems.push(editIngredient, deleteIngredient)
 
     return (
         <ListItem

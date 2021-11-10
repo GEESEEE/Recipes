@@ -31,10 +31,6 @@ function InstructionListItem({
 
     const dropdownItems = []
 
-    function logInstruction(): void {
-        console.log('Logging instruction', item.text)
-    }
-
     function editInstruction(): void {
         navigation.navigate('EditInstruction', { instructionId: item.id })
     }
@@ -43,7 +39,7 @@ function InstructionListItem({
         dispatch(editRecipeActions.removeInstruction({ id: item.id }))
     }
 
-    dropdownItems.push(logInstruction, editInstruction, deleteInstruction)
+    dropdownItems.push(editInstruction, deleteInstruction)
 
     return (
         <ListItem

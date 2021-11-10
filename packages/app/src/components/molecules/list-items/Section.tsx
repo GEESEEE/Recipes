@@ -32,10 +32,6 @@ function SectionListItem({
 
     const [deleteSection] = sectionService.useDeleteSectionMutation()
 
-    function logSect(): void {
-        console.log('Section', item.name)
-    }
-
     async function deleteSect(): Promise<void> {
         const res = await deleteSection(item.id)
         if ('data' in res) {
@@ -51,7 +47,7 @@ function SectionListItem({
         navigation.navigate('Recipes', { sectionId: item.id })
     }
 
-    dropdownItems.push(logSect, editSect, deleteSect)
+    dropdownItems.push(editSect, deleteSect)
 
     return (
         <ListItem
