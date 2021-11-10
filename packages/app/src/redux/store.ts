@@ -10,8 +10,6 @@ import {
 import { api } from './services'
 import { logMiddleware } from './middleware'
 
-// const middleware = [logMiddleware, api.middleware, getDefaultMiddleware()]
-
 export const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,

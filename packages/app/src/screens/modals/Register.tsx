@@ -10,6 +10,7 @@ import {
     TextInputWithIcons,
 } from '@/components/atoms'
 import { authService } from '@/redux'
+import { isFetchError } from '@/utils'
 
 const REGISTER_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -161,18 +162,15 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             setError('')
             const res = await signUp(userData)
 
-            if ('error' in res) {
-                const errorMessage =
-                    (res.error as any)?.data?.errors?.[0].message ??
-                    'Could not connect to the server'
-                setError(errorMessage)
+            if (isFetchError(res)) {
+                setError(res.error.message)
             } else {
                 showLogin()
             }
         }
     }
 
-    function handleGoBackButton(): void {
+    async function handleGoBackButton(): Promise<void> {
         showLogin()
     }
 

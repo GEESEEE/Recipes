@@ -14,9 +14,9 @@ import {
     TextInputWithIcons,
 } from '@/components/atoms'
 import { authActions, userService, authService } from '@/redux'
+import { isFetchError } from '@/utils'
 
 export const LOGIN_ACTIONS = {
-    SET_LOGIN: 'setLogin',
     USERNAME_CHANGE: 'usernameChange',
     PASSWORD_CHANGE: 'passwordChange',
     PASSWORD_SECURE_CHANGE: 'passwordSecureChange',
@@ -31,20 +31,7 @@ interface LoginState {
 }
 
 function reducer(state: LoginState, action: any): LoginState {
-    console.log('LoginReducer', action)
     switch (action.type) {
-        case LOGIN_ACTIONS.SET_LOGIN: {
-            const { username, password } = action.payload
-            console.log('Setting Login', username, password)
-            return {
-                securePasswordText: state.securePasswordText,
-                username,
-                password,
-                isValidUsername: true,
-                isValidPassword: true,
-            }
-        }
-
         case LOGIN_ACTIONS.USERNAME_CHANGE: {
             const { username, isValidUsername } = action.payload
             return { ...state, username, isValidUsername }
@@ -130,6 +117,11 @@ function LoginModal(): JSX.Element {
             }
             setError('')
             let res: any = await signIn(loginData)
+            if (isFetchError(res)) {
+                setError(res.error.message)
+                return
+            }
+
             if ('data' in res) {
                 const token = res.data.access_token
                 await SecureStore.setItemAsync('token', token)
@@ -140,11 +132,6 @@ function LoginModal(): JSX.Element {
                     return
                 }
             }
-
-            const errorMessage =
-                (res.error as any)?.data?.errors?.[0].message ??
-                'Could not connect to the server'
-            setError(errorMessage)
         }
     }
 
