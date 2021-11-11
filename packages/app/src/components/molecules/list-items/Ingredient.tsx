@@ -30,8 +30,6 @@ function IngredientListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    const dropdownItems = []
-
     function editIngredient(): void {
         navigation.navigate('EditIngredient', { ingredientId: item.id })
     }
@@ -40,15 +38,22 @@ function IngredientListItem({
         dispatch(editRecipeActions.removeIngredient({ id: item.id }))
     }
 
-    dropdownItems.push(editIngredient, deleteIngredient)
+    const dropdownItems = [
+        {
+            id: 0,
+            text: 'Edit',
+            onPress: editIngredient,
+        },
+        {
+            id: 1,
+            text: 'Delete',
+            onPress: deleteIngredient,
+        },
+    ]
 
     return (
         <ListItem
-            items={
-                useDropdown
-                    ? createDropDownItems(dropdownItems, 'ingredient')
-                    : undefined
-            }
+            items={useDropdown ? dropdownItems : undefined}
             onGesture={onGesture}
             hide={hide}
         >

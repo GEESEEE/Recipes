@@ -29,8 +29,6 @@ function InstructionListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    const dropdownItems = []
-
     function editInstruction(): void {
         navigation.navigate('EditInstruction', { instructionId: item.id })
     }
@@ -39,15 +37,22 @@ function InstructionListItem({
         dispatch(editRecipeActions.removeInstruction({ id: item.id }))
     }
 
-    dropdownItems.push(editInstruction, deleteInstruction)
+    const dropdownItems = [
+        {
+            id: 0,
+            text: 'Edit',
+            onPress: editInstruction,
+        },
+        {
+            id: 1,
+            text: 'Delete',
+            onPress: deleteInstruction,
+        },
+    ]
 
     return (
         <ListItem
-            items={
-                useDropdown
-                    ? createDropDownItems(dropdownItems, 'instruction')
-                    : undefined
-            }
+            items={useDropdown ? dropdownItems : undefined}
             onGesture={onGesture}
             hide={hide}
         >

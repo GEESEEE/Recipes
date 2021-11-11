@@ -7,7 +7,7 @@ import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
 import { createDropDownItems } from '@/utils'
 import { recipesActions, recipeService } from '@/redux'
-import { useAppDispatch, useSettings } from '@/hooks'
+import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
@@ -33,8 +33,6 @@ function RecipeListItem({
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
-
-    const dropdownItems = []
 
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
@@ -66,7 +64,18 @@ function RecipeListItem({
         })
     }
 
-    dropdownItems.push(editRecip, deleteRecip)
+    const dropdownItems = [
+        {
+            id: 0,
+            text: 'Edit',
+            onPress: editRecip,
+        },
+        {
+            id: 1,
+            text: 'Delete',
+            onPress: deleteRecip,
+        },
+    ]
 
     const editPeopleCount =
         editable &&
@@ -78,11 +87,7 @@ function RecipeListItem({
 
     return (
         <ListItem
-            items={
-                useDropdown
-                    ? createDropDownItems(dropdownItems, 'recip')
-                    : undefined
-            }
+            items={useDropdown ? dropdownItems : undefined}
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
             hide={hide}

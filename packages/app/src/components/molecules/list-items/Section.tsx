@@ -28,8 +28,6 @@ function SectionListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
-    const dropdownItems = []
-
     const [deleteSection] = sectionService.useDeleteSectionMutation()
 
     async function deleteSect(): Promise<void> {
@@ -39,7 +37,7 @@ function SectionListItem({
         }
     }
 
-    function editSect(): void {
+    function editSection(): void {
         navigation.navigate('EditSection', { sectionId: item.id })
     }
 
@@ -47,15 +45,22 @@ function SectionListItem({
         navigation.navigate('Recipes', { sectionId: item.id })
     }
 
-    dropdownItems.push(editSect, deleteSect)
+    const dropdownItems = [
+        {
+            id: 0,
+            text: 'Edit',
+            onPress: editSection,
+        },
+        {
+            id: 1,
+            text: 'Delete',
+            onPress: deleteSect,
+        },
+    ]
 
     return (
         <ListItem
-            items={
-                useDropdown
-                    ? createDropDownItems(dropdownItems, 'sect')
-                    : undefined
-            }
+            items={useDropdown ? dropdownItems : undefined}
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
             hide={hide}
