@@ -155,13 +155,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         return this.andWhere(`recipe.id IN (${queries.join(' INTERSECT ')})`)
     }
 
-    public byId(recipeId: number): this {
-        return this.makeBaseQuery().andWhere('recipe.id = :recipeId', {
-            recipeId,
-        })
-    }
-
-    public async getMaxPosition(sectionId: number): Promise<number> {
+    public async getMaxRecipePosition(sectionId: number): Promise<number> {
         const res = await this.repository.manager.query(`
            SELECT MAX(recipe.position)
            FROM recipe

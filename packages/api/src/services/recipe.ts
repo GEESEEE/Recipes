@@ -68,7 +68,7 @@ export default class RecipeService {
             if (typeof recipe.sectionId !== 'undefined') {
                 const maxPos = await this.recipeRepository
                     .queryBuilder()
-                    .getMaxPosition(recipe.sectionId)
+                    .getMaxRecipePosition(recipe.sectionId)
 
                 recipe.position = maxPos + 1
             }
