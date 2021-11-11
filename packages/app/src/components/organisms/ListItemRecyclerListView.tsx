@@ -5,8 +5,6 @@ import {
     RecyclerListView,
     DataProvider,
     LayoutProvider,
-    BaseLayoutProvider,
-    Dimension,
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
@@ -15,9 +13,9 @@ import { State } from 'react-native-gesture-handler'
 import isEqual from 'lodash/isEqual'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
-import { useAppDispatch, useSettings, useToggle } from '@/hooks'
+import { useAppDispatch, useToggle } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
-import { moveElement, heightMap } from '@/utils'
+import { moveElement } from '@/utils'
 
 const { width } = Dimensions.get('window')
 
@@ -30,25 +28,9 @@ const defaultItemLayout = {
     height: 70,
 }
 
-const defaultLayoutProvider = new LayoutProvider(
-    () => ViewTypes.Item,
-    (_, dim) => {
-        dim.width = defaultItemLayout.width
-        dim.height = defaultItemLayout.height
-    }
-)
-
 const dataProviderInstance = new DataProvider(
     (r1, r2) => r1 !== r2 || !isEqual(r1, r2)
 )
-
-const layoutProviders: {
-    [key: string]: BaseLayoutProvider
-} = {}
-
-const itemLayouts: {
-    [key: string]: Dimension
-} = {}
 
 type ListItemRecyclerViewProps<
     T extends ListItem,
@@ -69,6 +51,7 @@ type ListItemRecyclerViewProps<
             hide?: boolean
         }
     ) => JSX.Element
+    itemHeight: number
 }
 
 function ListItemRecyclerView<T extends ListItem, U>({
@@ -79,8 +62,8 @@ function ListItemRecyclerView<T extends ListItem, U>({
     dragDrop,
     updateSlice,
     updateDatabase,
+    itemHeight,
 }: ListItemRecyclerViewProps<T, U>): JSX.Element {
-    const { textSize } = useSettings()
     const dispatch = useAppDispatch()
 
     const scrollOffset = useSharedValue(0)
@@ -97,6 +80,19 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
+    const itemLayout = {
+        width,
+        height: itemHeight,
+    }
+
+    const defaultLayoutProvider = new LayoutProvider(
+        () => ViewTypes.Item,
+        (_, dim) => {
+            dim.width = width
+            dim.height = itemHeight
+        }
+    )
+
     const [dataProvider, setDataProvider] = useState<DataProvider>(
         dataProviderInstance.cloneWithRows(data)
     )
@@ -105,26 +101,10 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
-    const itemLay =
-        typeof itemLayouts[Element.name] === 'undefined'
-            ? defaultItemLayout
-            : itemLayouts[Element.name]
-
     React.useEffect(() => {
-        const layout = {
-            width,
-            height: heightMap(Element, textSize),
-        }
-        itemLayouts[Element.name] = layout
-        layoutProviders[Element.name] = new LayoutProvider(
-            () => ViewTypes.Item,
-            (_, dim) => {
-                dim.width = layout.width
-                dim.height = layout.height
-            }
-        )
-        setMaxHeight(containerHeight - layout.height)
-    }, [Element, textSize, containerHeight])
+        defaultItemLayout.height = itemHeight
+        setMaxHeight(containerHeight - itemHeight)
+    }, [containerHeight, itemHeight])
 
     function onContainerLayout(e: LayoutChangeEvent): void {
         const layout = e.nativeEvent.layout
@@ -137,7 +117,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
     }
 
     function toIndex(posY: number): number {
-        let index = Math.round((posY + scrollOffset.value) / itemLay.height)
+        let index = Math.round((posY + scrollOffset.value) / itemLayout.height)
         index = Math.min(dataProvider.getSize() - 1, Math.max(0, index))
         return index
     }
@@ -237,7 +217,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     function onGesture(e: GestureChangeEvent): void {
         const event = e.nativeEvent
-        let pos = event.absoluteY - topOffset - itemLay.height / 2
+        let pos = event.absoluteY - topOffset - itemLayout.height / 2
         pos = Math.max(0, Math.min(maxHeight, pos))
 
         setPosY(pos)
@@ -276,7 +256,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
                     <AnimatedView
                         style={{
                             top: posY,
-                            ...itemLay,
+                            ...itemLayout,
                         }}
                     >
                         {rowRenderer(
@@ -290,11 +270,7 @@ function ListItemRecyclerView<T extends ListItem, U>({
                 <RecyclerListView
                     ref={listRef}
                     style={{ width }}
-                    layoutProvider={
-                        typeof layoutProviders[Element.name] === 'undefined'
-                            ? defaultLayoutProvider
-                            : layoutProviders[Element.name]
-                    }
+                    layoutProvider={defaultLayoutProvider}
                     dataProvider={dataProvider}
                     rowRenderer={rowRenderer}
                     onScroll={onScroll}

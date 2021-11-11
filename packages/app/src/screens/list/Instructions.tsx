@@ -7,6 +7,7 @@ import { useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
 import { sortPosition } from '@/utils'
 import { editRecipeActions } from '@/redux'
+import { Typography } from '@/styles'
 
 function EditInstructionsScreen({
     navigation,
@@ -15,7 +16,7 @@ function EditInstructionsScreen({
 }): JSX.Element {
     const settings = useSettings()
     const editRecipe = useEditRecipe()
-    const { theme } = settings
+    const { theme, textSize } = settings
 
     useHeader(navigation, {
         title: 'Instructions',
@@ -42,6 +43,7 @@ function EditInstructionsScreen({
                 props={{ instructions, useDropdown: true }}
                 dragDrop
                 updateSlice={updateSlice}
+                itemHeight={16 + 2 * Typography.lineHeight('Text', textSize)}
             />
         </Container>
     )

@@ -18,11 +18,12 @@ import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions } from '@/redux/slices'
 import { applySearch, sortPosition } from '@/utils'
+import { Typography } from '@/styles'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const settings = useSettings()
-    const { theme } = settings
+    const { theme, textSize } = settings
     const dispatch = useAppDispatch()
 
     // Verify Token stuff
@@ -96,6 +97,11 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 dragDrop
                 updateSlice={sectionsActions.updateSections}
                 updateDatabase={updateSections}
+                itemHeight={
+                    16 +
+                    Typography.lineHeight('SubHeader', textSize) +
+                    2 * Typography.lineHeight('Text', textSize)
+                }
             />
         </Container>
     )

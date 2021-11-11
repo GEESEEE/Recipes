@@ -16,12 +16,13 @@ import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch, sortPosition } from '@/utils'
+import { Spacing, Typography } from '@/styles'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const settings = useSettings()
     const auth = useAuth()
     const recipes = useRecipes()
-    const { theme } = settings
+    const { theme, textSize } = settings
     const dispatch = useAppDispatch()
 
     const route = useRoute() as {
@@ -105,6 +106,13 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 dragDrop
                 updateSlice={updateSlice}
                 updateDatabase={updateDatabase}
+                itemHeight={
+                    16 +
+                    Typography.lineHeight('SubHeader', textSize) +
+                    2 * Typography.lineHeight('Text', textSize) +
+                    Spacing.standardIconSize[textSize] +
+                    8
+                }
             />
         </Container>
     )

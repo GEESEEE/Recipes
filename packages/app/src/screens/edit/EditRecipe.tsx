@@ -404,6 +404,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <Picker
                     width="m"
                     marginHorizontal="s"
+                    marginVertical={marginVertical}
                     items={sectionDropdownItems}
                     current={
                         sections.find((s) => s.id === newSectionId)?.name || ''
