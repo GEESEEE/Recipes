@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+
 import { Dimensions, StyleProp, ViewStyle } from 'react-native'
-import { View, Icons, TouchableOpacity } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import { IconButton, Menu } from '@/components/atoms'
 import { Spacing, Typography } from '@/styles'
 import { usePosition, useSettings, useToggle } from '@/hooks'

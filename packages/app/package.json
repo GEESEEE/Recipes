@@ -7,6 +7,7 @@
     "author": "Gies den Broeder",
     "scripts": {
         "start": "expo start",
+        "start:prod": "expo start --no-dev --minify",
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
