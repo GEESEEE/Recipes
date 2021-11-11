@@ -38,6 +38,10 @@ const defaultLayoutProvider = new LayoutProvider(
     }
 )
 
+const dataProviderInstance = new DataProvider(
+    (r1, r2) => r1 !== r2 || !isEqual(r1, r2)
+)
+
 const layoutProviders: {
     [key: string]: BaseLayoutProvider
 } = {}
@@ -93,16 +97,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
-    const dataProviderInstance = new DataProvider(
-        (r1, r2) => r1 !== r2 || !isEqual(r1, r2)
-    )
-
     const [dataProvider, setDataProvider] = useState<DataProvider>(
         dataProviderInstance.cloneWithRows(data)
     )
 
     React.useEffect(() => {
-        console.log('Data changed')
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
@@ -256,7 +255,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
         item: T,
         index: number
     ): JSX.Element | null => {
-        console.log('DragIndex', dragIndex, index)
         return (
             <Element
                 hide={index === dragIndex}
