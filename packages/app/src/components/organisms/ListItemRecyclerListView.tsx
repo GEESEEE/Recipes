@@ -46,8 +46,6 @@ const itemLayouts: {
     [key: string]: Dimension
 } = {}
 
-const dataProviderInstance = new DataProvider((r1, r2) => !isEqual(r1, r2))
-
 type ListItemRecyclerViewProps<
     T extends ListItem,
     U extends Omit<ListItemBaseProps<T>, 'item' | 'onGesture'>
@@ -95,11 +93,16 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
+    const dataProviderInstance = new DataProvider(
+        (r1, r2) => r1 !== r2 || !isEqual(r1, r2)
+    )
+
     const [dataProvider, setDataProvider] = useState<DataProvider>(
         dataProviderInstance.cloneWithRows(data)
     )
 
     React.useEffect(() => {
+        console.log('Data changed')
         setDataProvider(dataProviderInstance.cloneWithRows(data))
     }, [data])
 
@@ -146,8 +149,9 @@ function ListItemRecyclerView<T extends ListItem, U>({
         const index = toIndex(posY)
         setFrom(index)
         setDragIndex(index)
-        currentIndex.value = index
         setDragging(true)
+        currentIndex.value = index
+        data[index] = { ...data[index] }
     }
 
     function reset(posY: number): void {
@@ -157,7 +161,11 @@ function ListItemRecyclerView<T extends ListItem, U>({
         setDragIndex(-1)
         currentIndex.value = -1
         scrolling.value = false
-        updateData(dataProvider.getAllData(), from, to)
+        if (from !== to) {
+            updateData(dataProvider.getAllData(), from, to)
+        } else {
+            data[from] = { ...data[from] }
+        }
     }
 
     async function updateData(
@@ -248,9 +256,10 @@ function ListItemRecyclerView<T extends ListItem, U>({
         item: T,
         index: number
     ): JSX.Element | null => {
+        console.log('DragIndex', dragIndex, index)
         return (
             <Element
-                hide={index === currentIndex.value}
+                hide={index === dragIndex}
                 onGesture={dragDrop ? onGesture : undefined}
                 item={item}
                 {...props}
