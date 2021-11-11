@@ -1,12 +1,16 @@
 import { inject, injectable } from 'inversify'
 import { Repository } from 'typeorm'
 import { fitToClass, Require, SettingsUpdate } from '@recipes/api-types/v1'
+import { Redis } from 'ioredis'
 import { TYPES } from '@/utils/constants'
 import { User, Settings } from '@/entities'
 import { UserResult, SettingsResult } from '@/types'
 
 @injectable()
 export default class UserService {
+    @inject(TYPES.Redis)
+    private readonly redis!: Redis
+
     @inject(TYPES.UserRepository)
     private readonly userRepository!: Repository<User>
 
@@ -36,7 +40,21 @@ export default class UserService {
     public async updateSettings(
         settings: SettingsUpdate
     ): Promise<SettingsResult> {
-        const output = await this.settingsRepository.save(settings)
-        return fitToClass(output, SettingsResult)
+        const newSettings = await this.settingsRepository.save(settings)
+        await this.updateRedis(newSettings)
+        return fitToClass(newSettings, SettingsResult)
+    }
+    private async updateRedis(settings: Settings): Promise<void> {
+        const user = (await this.userRepository.findOne({
+            where: { settingsId: settings.id },
+            select: ['id'],
+        })) as User
+
+        const redisUser = JSON.parse(
+            (await this.redis.get(user.id as any)) as string
+        )
+
+        redisUser.settings = { ...redisUser.settings, ...settings }
+        await this.redis.set(user.id as any, JSON.stringify(redisUser))
     }
 }

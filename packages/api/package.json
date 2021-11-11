@@ -31,7 +31,6 @@
         "hpp": "^0.2.3",
         "inversify": "^6.0.1",
         "inversify-express-utils": "^6.4.3",
-        "inversify-inject-decorators": "^3.1.0",
         "ioredis": "^4.27.9",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
