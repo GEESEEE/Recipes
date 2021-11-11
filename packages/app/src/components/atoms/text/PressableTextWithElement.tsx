@@ -32,6 +32,8 @@ export default PressableTextWithElement
 
 const Container = styled(TouchableOpacity)`
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `
 
 const StyledText = styled(Text)`

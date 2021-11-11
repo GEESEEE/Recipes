@@ -1,5 +1,7 @@
 import React from 'react'
-import { HeaderComponent, HeaderConfig } from '@/components/molecules'
+import HeaderComponent, {
+    HeaderConfig,
+} from '@/components/molecules/navigation/Header'
 
 export function useHeader(navigation: any, config: HeaderConfig): void {
     React.useLayoutEffect(() => {

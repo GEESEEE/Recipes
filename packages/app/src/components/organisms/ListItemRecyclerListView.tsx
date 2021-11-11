@@ -95,8 +95,6 @@ function ListItemRecyclerView<T extends ListItem, U>({
 
     const listRef = useRef<RecyclerListView<any, any>>(null)
 
-    const dataProviderInstance = new DataProvider((r1, r2) => !isEqual(r1, r2))
-
     const [dataProvider, setDataProvider] = useState<DataProvider>(
         dataProviderInstance.cloneWithRows(data)
     )
