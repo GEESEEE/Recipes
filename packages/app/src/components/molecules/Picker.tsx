@@ -42,6 +42,7 @@ function Picker({
                 }}
             >
                 <Text
+                    key={current}
                     borderRadius="s"
                     backgroundColor={theme.backgroundVariant}
                     paddingVertical="s"

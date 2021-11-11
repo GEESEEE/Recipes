@@ -114,6 +114,7 @@ function HeaderComponent({
                                     size="m"
                                 />
                             }
+                            autoFocus
                             type="SubHeader"
                             onChangeText={(text: string) => onChangeText(text)}
                             placeholder="Search"
