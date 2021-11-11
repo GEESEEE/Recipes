@@ -66,19 +66,15 @@ export default class RecipeService {
     ): Promise<RecipeResult[]> {
         const finalRecipes = recipes.map(async (recipe) => {
             if (typeof recipe.sectionId !== 'undefined') {
-                const recipes = await this.getRecipes(['section'], {
-                    sectionId: recipe.sectionId,
-                })
-                let maxPosition = 0
-                recipes.forEach((recipe) => {
-                    if (recipe.position > maxPosition) {
-                        maxPosition = recipe.position
-                    }
-                })
-                recipe.position = maxPosition + 1
+                const maxPos = await this.recipeRepository
+                    .queryBuilder()
+                    .getMaxPosition(recipe.sectionId)
+
+                recipe.position = maxPos + 1
             }
             return recipe
         })
+
         const saved = await this.recipeRepository.save(
             await Promise.all(finalRecipes)
         )

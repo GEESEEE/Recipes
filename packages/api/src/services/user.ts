@@ -44,6 +44,7 @@ export default class UserService {
         await this.updateRedis(newSettings)
         return fitToClass(newSettings, SettingsResult)
     }
+
     private async updateRedis(settings: Settings): Promise<void> {
         const user = (await this.userRepository.findOne({
             where: { settingsId: settings.id },

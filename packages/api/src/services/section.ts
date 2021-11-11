@@ -21,16 +21,6 @@ export default class SectionService {
         return sections.map((section) => fitToClass(section, SectionResult))
     }
 
-    public async getSection(
-        sectionId: number
-    ): Promise<SectionResult | undefined> {
-        const section = await this.sectionRepository.findOne(sectionId)
-        if (typeof section !== 'undefined') {
-            return fitToClass(section, SectionResult)
-        }
-        return section
-    }
-
     public async getSections(
         scopes: SectionScopes[],
         args: SectionScopeArgs

@@ -117,7 +117,7 @@ export class SectionQueryBuilder extends BaseRecipeQueryBuilder<Section> {
     }
 
     public get recipes(): this {
-        return this.makeBaseQuery()
+        const qb = this.makeBaseQuery()
             .leftJoinAndSelect(
                 'recipe',
                 'recipe',
@@ -125,7 +125,11 @@ export class SectionQueryBuilder extends BaseRecipeQueryBuilder<Section> {
             )
             .addGroupBy('recipe.id')
             .joinRecipeItems()
-            .andWhere(`recipe.id IN (${this.recipeIds})`)
+
+        if (typeof this.recipeIds !== 'undefined') {
+            return qb.andWhere(`recipe.id IN (${this.recipeIds})`)
+        }
+        return qb
     }
 
     public get ids(): this {

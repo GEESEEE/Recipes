@@ -175,11 +175,10 @@ function LoginModal(): JSX.Element {
 
             <TextInputWithIcons
                 leftIcon={
-                    <IconButton
+                    <Icon
                         type={Icons.MyFontAwesome}
                         name="lock"
                         color={theme.grey}
-                        onPress={() => console.log('asd')}
                     />
                 }
                 placeholder="Your Password"

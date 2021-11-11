@@ -92,10 +92,12 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         }
     }
 
+    private withoutItems(): this {
+        return this.addSelect('recipe.*').addGroupBy('recipe.id')
+    }
+
     private makeBaseQuery(): this {
-        return this.addSelect('recipe.*')
-            .addGroupBy('recipe.id')
-            .joinRecipeItems()
+        return this.withoutItems().joinRecipeItems()
     }
 
     public finish(): this {
@@ -157,5 +159,14 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         return this.makeBaseQuery().andWhere('recipe.id = :recipeId', {
             recipeId,
         })
+    }
+
+    public async getMaxPosition(sectionId: number): Promise<number> {
+        const res = await this.repository.manager.query(`
+           SELECT MAX(recipe.position)
+           FROM recipe
+           WHERE recipe.section_id = ${sectionId}
+        `)
+        return res[0].max
     }
 }
