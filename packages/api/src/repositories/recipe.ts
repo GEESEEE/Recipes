@@ -65,6 +65,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         ids: 'recipeIds',
         section: 'sectionId',
         search: 'searchQuery',
+        published: null,
     }
 
     public override readonly sorts = {
@@ -73,6 +74,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         peoplecount: 'people_count',
         ingredientcount: 'COUNT(recipe_ingredient.id)',
         instructioncount: 'COUNT(instruction.id)',
+        publishtime: 'published_at',
     }
 
     private readonly recipeIds?: number[]
@@ -106,6 +108,10 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
 
     public get default(): this {
         return this.makeBaseQuery()
+    }
+
+    public get published(): this {
+        return this.makeBaseQuery().andWhere('recipe.published_at IS NOT NULL')
     }
 
     public get ids(): this {
