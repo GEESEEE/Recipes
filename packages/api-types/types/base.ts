@@ -104,3 +104,5 @@ export type Optional<T, Opt extends keyof T> = Omit<T, Opt> &
     Partial<Pick<T, Opt>>
 
 export type WithoutId<T> = Omit<T, 'id'>
+
+export type Sort<T extends string> = `${T}` | `-${T}`

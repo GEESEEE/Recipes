@@ -10,13 +10,19 @@ import {
 import { inject } from 'inversify'
 import { Request } from 'express'
 import {
+    RecipeScopeArgs,
+    RecipeScopes,
+    RecipeSortOptions,
+    Sort,
+} from '@recipes/api-types/v1'
+import {
     constants,
     decodeQueryParams,
     decodeSortQuery,
     SortQueryTuple,
 } from '@/utils'
 import { RecipeService } from '@/services'
-import { RecipeResult, RecipeScopeArgs, RecipeScopes } from '@/types'
+import { RecipeResult } from '@/types'
 
 const { TYPES } = constants
 
@@ -36,7 +42,7 @@ export default class RecipeController implements interfaces.Controller {
         @requestBody() body: RecipeScopeArgs,
         @queryParam('scopes') scopes?: RecipeScopes[],
         @queryParam('search') search?: string[],
-        @queryParam('sort') sort?: SortQueryTuple[]
+        @queryParam('sort') sort?: SortQueryTuple<RecipeSortOptions>[]
     ): Promise<RecipeResult[]> {
         if (typeof scopes === 'undefined') {
             scopes = []

@@ -18,3 +18,11 @@ export type SectionCreate = Omit<Section, 'id'>
 
 export type SectionUpdate = Pick<Section, 'id'> &
     Partial<Omit<SectionCreate, 'userId'>>
+
+export type SectionScopes = 'user' | 'recipes' | 'ids'
+
+export type SectionScopeArgs = {
+    userId?: number
+    recipeIds?: number[]
+    sectionIds?: number[]
+}

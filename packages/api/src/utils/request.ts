@@ -1,4 +1,4 @@
-export type SortQueryTuple = [string, 'ASC' | 'DESC']
+export type SortQueryTuple<T extends string> = [T, 'ASC' | 'DESC']
 
 export function decodeQueryParams(param = ''): string[] | undefined {
     const result = param.split(',').filter((value) => value !== '')
@@ -6,15 +6,17 @@ export function decodeQueryParams(param = ''): string[] | undefined {
     return result.length > 0 ? result : undefined
 }
 
-export function decodeSortQuery(param = ''): SortQueryTuple[] | undefined {
+export function decodeSortQuery<T extends string>(
+    param = ''
+): SortQueryTuple<T>[] | undefined {
     const result = param
         .split(',')
         .filter((value) => value !== '')
         .map((sort) => {
             if (sort.charAt(0) === '-') {
-                return [sort.substring(1), 'DESC'] as SortQueryTuple
+                return [sort.substring(1), 'DESC'] as SortQueryTuple<T>
             } else {
-                return [sort, 'ASC'] as SortQueryTuple
+                return [sort, 'ASC'] as SortQueryTuple<T>
             }
         })
 

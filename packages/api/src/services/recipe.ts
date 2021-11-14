@@ -9,6 +9,10 @@ import {
     RecipeIngredientUpdate,
     InstructionCreate,
     InstructionUpdate,
+    RecipeSortOptions,
+    Sort,
+    RecipeScopes,
+    RecipeScopeArgs,
 } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { RecipeRepository } from '@/repositories'
@@ -17,8 +21,6 @@ import {
     InstructionResult,
     RecipeIngredientResult,
     RecipeResult,
-    RecipeScopeArgs,
-    RecipeScopes,
 } from '@/types'
 import { Ingredient, Instruction, RecipeIngredient } from '@/entities'
 
@@ -48,7 +50,7 @@ export default class RecipeService {
     public async getRecipes(
         scopes: RecipeScopes[],
         args: RecipeScopeArgs,
-        sort?: SortQueryTuple[]
+        sort?: SortQueryTuple<RecipeSortOptions>[]
     ): Promise<RecipeResult[]> {
         let qb = this.recipeRepository.queryBuilder(args)
 

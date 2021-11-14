@@ -1,8 +1,8 @@
 import { Brackets, EntityRepository, SelectQueryBuilder } from 'typeorm'
+import { RecipeScopeArgs } from '@recipes/api-types/v1'
 import BaseRepository from './base'
 import { BaseRecipeQueryBuilder } from './base-recipe'
 import { Recipe } from '@/entities'
-import { RecipeScopeArgs } from '@/types'
 
 @EntityRepository(Recipe)
 export default class RecipeRepository extends BaseRepository<Recipe> {
@@ -72,10 +72,10 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
     public override readonly sorts = {
         createtime: 'created_at',
         preparetime: 'prepare_time',
+        publishtime: 'published_at',
         peoplecount: 'people_count',
         ingredientcount: 'COUNT(recipe_ingredient.id)',
         instructioncount: 'COUNT(instruction.id)',
-        publishtime: 'published_at',
     }
 
     private readonly recipeIds?: number[]
@@ -91,7 +91,8 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         super(repository, queryBuilder)
         if (typeof args !== 'undefined') {
             for (const entry of Object.entries(args)) {
-                this[entry[0] as keyof this] = entry[1]
+                // @ts-expect-error
+                this[entry[0]] = entry[1]
             }
         }
     }

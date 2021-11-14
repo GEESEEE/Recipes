@@ -1,4 +1,4 @@
-import { Optional } from './base'
+import { Optional, Sort } from './base'
 import { Instruction } from './instruction'
 import { RecipeIngredient } from './recipe-ingredient'
 
@@ -57,3 +57,20 @@ export type RecipeUpdate = Optional<
     'sectionId'
 > &
     Partial<Omit<RecipeCreate, 'createdAt' | 'copyOf'>>
+
+export type RecipeScopes = 'ids' | 'section' | 'search' | 'author' | 'published'
+
+export type RecipeScopeArgs = {
+    recipeIds?: number[]
+    sectionId?: number
+    searchQuery?: string[]
+    authorId?: number
+}
+
+export type RecipeSortOptions =
+    | 'createtime'
+    | 'preparetime'
+    | 'publishtime'
+    | 'peoplecount'
+    | 'ingredientcount'
+    | 'instructioncount'
