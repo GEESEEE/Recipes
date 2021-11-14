@@ -42,8 +42,8 @@ export default class RecipeService {
         recipes: Array<RecipeCreate>
     ): Promise<RecipeResult[]> {
         const rs = recipes.map((recipe) => this.recipeRepository.create(recipe))
-        const recipe = await this.recipeRepository.save(rs)
-        return recipe.map((r) => fitToClass(r as RecipeResult, RecipeResult))
+        const saved = await this.recipeRepository.save(rs)
+        return saved.map((r) => fitToClass(r as RecipeResult, RecipeResult))
     }
 
     public async getRecipes(

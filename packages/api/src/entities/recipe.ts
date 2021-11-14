@@ -75,6 +75,6 @@ export default class Recipe {
     public publishedAt!: Date | null
 
     @Expose({ name: 'copy_of' })
-    @Column({ name: 'copy_of', nullable: true, default: null })
+    @Column({ type: 'int', name: 'copy_of', nullable: true, default: null })
     public copyOf!: number | null
 }
