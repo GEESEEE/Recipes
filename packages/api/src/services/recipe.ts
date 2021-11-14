@@ -85,7 +85,6 @@ export default class RecipeService {
 
     public async deleteRecipe(recipeId: number): Promise<boolean> {
         const result = await this.recipeRepository.delete(recipeId)
-        await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
         return result.affected !== 0
     }
 
@@ -217,7 +216,6 @@ export default class RecipeService {
         const newRecipeIngredients = await this.recipeIngredientRepository.save(
             recipeIngredientsToSave
         )
-        await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
         return newRecipeIngredients.map((ingr) =>
             fitToClass(ingr as RecipeIngredientResult, RecipeIngredientResult)
         )
@@ -232,7 +230,6 @@ export default class RecipeService {
             id: In(ingredientIds),
         })
 
-        await this.ingredientRepository.queryBuilder.deleteOrphanIngredients()
         return result.affected || 0
     }
 

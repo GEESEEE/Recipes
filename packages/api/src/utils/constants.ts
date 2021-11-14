@@ -3,6 +3,8 @@ export const TYPES = {
 
     Redis: Symbol.for('Redis'),
 
+    Bree: Symbol.for('Bree'),
+
     PassportMiddleware: Symbol.for('PassportMiddleware'),
     TokenMiddleware: Symbol.for('TokenMiddleware'),
     ErrorMiddleware: Symbol.for('ErrorMiddleware'),
