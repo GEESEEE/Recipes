@@ -11,7 +11,7 @@ import {
     useSettings,
     useToggle,
 } from '@/hooks'
-import { View, Text, Icons } from '@/components/base'
+import { View, Text, Icons, Toggle } from '@/components/base'
 import { TextInputWithTitle, Counter } from '@/components/atoms'
 import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
@@ -308,11 +308,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const prepareTimeText = 'Prepare time'
     const peopleCountText = 'People count'
     const sectionText = 'Section'
-
-    const [newSectionId, setSectionId] = React.useState<number>(sectionId)
+    const publishedText = 'Published'
 
     function handleChangeSection(id: number) {
-        setSectionId(id)
         dispatch(editRecipeActions.setSectionId(id))
     }
 
@@ -400,6 +398,23 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 paddingHorizontal={paddingHorizontal}
                 marginVertical={marginVertical}
             >
+                <FlexText>{publishedText}</FlexText>
+                <Toggle
+                    width="s"
+                    marginHorizontal="s"
+                    onValueChange={(val: boolean) =>
+                        dispatch(editRecipeActions.setPublished(val))
+                    }
+                    value={!!editRecipe.publishedAt}
+                />
+                <View width="s" />
+            </RowContainer>
+
+            <RowContainer
+                width={width}
+                paddingHorizontal={paddingHorizontal}
+                marginVertical={marginVertical}
+            >
                 <FlexText>{sectionText}</FlexText>
                 <Picker
                     width="m"
@@ -407,7 +422,8 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     marginVertical={marginVertical}
                     items={sectionDropdownItems}
                     current={
-                        sections.find((s) => s.id === newSectionId)?.name || ''
+                        sections.find((s) => s.id === editRecipe.sectionId)
+                            ?.name || ''
                     }
                     original={
                         sections.find((s) => s.id === sectionId)?.name || ''

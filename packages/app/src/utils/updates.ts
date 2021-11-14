@@ -130,13 +130,20 @@ export async function getNewListItems<
 
 // Create objects
 export function recipeCreateObject(recipe: Recipe): RecipeCreate {
-    return {
+    const res: any = {
         name: recipe.name,
         description: recipe.description,
         peopleCount: recipe.peopleCount,
         prepareTime: recipe.prepareTime,
         position: recipe.position,
     }
+    if (recipe.publishedAt !== null) {
+        res.publishedAt = recipe.publishedAt
+    }
+    if (recipe.copyOf !== null) {
+        res.copyOf = recipe.copyOf
+    }
+    return res
 }
 
 export function ingredientCreateObjects(
@@ -195,6 +202,8 @@ export function recipeUpdateObject(
         update.position = newObject.position
     if (old.sectionId !== newObject.sectionId)
         update.sectionId = newObject.sectionId
+    if (old.publishedAt !== newObject.publishedAt)
+        update.publishedAt = newObject.publishedAt
     return update
 }
 

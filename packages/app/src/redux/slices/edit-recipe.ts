@@ -6,7 +6,7 @@ import {
     InstructionUpdate,
     RecipeIngredientUpdate,
 } from '@recipes/api-types/v1'
-import { getNewId, getNewPosition } from '@/utils'
+import { getNewPosition } from '@/utils'
 
 function mapIngredient(
     state: Recipe,
@@ -58,6 +58,13 @@ const editRecipeSlice = createSlice({
         },
         setSectionId(state, action: PayloadAction<number>) {
             state.sectionId = action.payload
+        },
+        setPublished(state, action: PayloadAction<boolean>) {
+            if (action.payload) {
+                state.publishedAt = new Date()
+            } else {
+                state.publishedAt = null
+            }
         },
 
         // Ingredients State
