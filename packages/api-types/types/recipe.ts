@@ -1,4 +1,4 @@
-import { Optional, Sort } from './base'
+import { Optional } from './base'
 import { Instruction } from './instruction'
 import { RecipeIngredient } from './recipe-ingredient'
 

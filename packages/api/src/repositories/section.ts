@@ -1,8 +1,8 @@
 import { EntityRepository, SelectQueryBuilder } from 'typeorm'
+import { SectionScopeArgs } from '@recipes/api-types/v1'
 import BaseRepository from './base'
 import { BaseRecipeQueryBuilder } from './base-recipe'
 import { Section } from '@/entities'
-import { SectionScopeArgs } from '@/types'
 
 @EntityRepository(Section)
 export default class SectionRespository extends BaseRepository<Section> {
@@ -89,7 +89,8 @@ export class SectionQueryBuilder extends BaseRecipeQueryBuilder<Section> {
         super(repository, queryBuilder)
         if (typeof args !== 'undefined') {
             for (const entry of Object.entries(args)) {
-                this[entry[0] as keyof this] = entry[1]
+                // @ts-expect-error
+                this[entry[0]] = entry[1]
             }
         }
     }

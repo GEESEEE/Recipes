@@ -13,7 +13,6 @@ import {
     RecipeScopeArgs,
     RecipeScopes,
     RecipeSortOptions,
-    Sort,
 } from '@recipes/api-types/v1'
 import {
     constants,

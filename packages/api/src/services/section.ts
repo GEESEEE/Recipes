@@ -1,7 +1,13 @@
 import { inject, injectable } from 'inversify'
-import { fitToClass, SectionCreate, SectionUpdate } from '@recipes/api-types/v1'
+import {
+    fitToClass,
+    SectionCreate,
+    SectionScopeArgs,
+    SectionScopes,
+    SectionUpdate,
+} from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
-import { SectionResult, SectionScopeArgs, SectionScopes } from '@/types'
+import { SectionResult } from '@/types'
 import { SectionRepository } from '@/repositories'
 import { Section } from '@/entities'
 

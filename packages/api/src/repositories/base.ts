@@ -85,7 +85,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
     public validate(props: {
         scopes?: string[]
-        sort?: SortQueryTuple[]
+        sort?: SortQueryTuple<string>[]
     }): this {
         const { scopes, sort } = props
 
@@ -161,13 +161,13 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         }, this)
     }
 
-    private hasSorts(sortQuery: SortQueryTuple[]): boolean {
-        return sortQuery.every((sort: SortQueryTuple) =>
+    private hasSorts(sortQuery: SortQueryTuple<string>[]): boolean {
+        return sortQuery.every((sort: SortQueryTuple<string>) =>
             Object.keys(this.sorts).includes(sort[0])
         )
     }
 
-    private applySorts(sortQuery: SortQueryTuple[]): this {
+    private applySorts(sortQuery: SortQueryTuple<string>[]): this {
         if (sortQuery.length === 0) return this
 
         return sortQuery.reduce((qb, sort) => {

@@ -10,7 +10,6 @@ import {
     InstructionCreate,
     InstructionUpdate,
     RecipeSortOptions,
-    Sort,
     RecipeScopes,
     RecipeScopeArgs,
 } from '@recipes/api-types/v1'
