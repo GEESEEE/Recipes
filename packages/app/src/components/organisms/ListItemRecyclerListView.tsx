@@ -40,7 +40,7 @@ type ListItemRecyclerViewProps<
     props: U
     loading?: boolean
     dragDrop?: boolean
-    updateSlice: (arr: T[]) => { payload: any; type: string }
+    updateSlice?: (arr: T[]) => { payload: any; type: string }
     updateDatabase?: (
         items: Array<ListItem>
     ) => Promise<{ data: Array<T> } | { error: any }>
@@ -168,8 +168,9 @@ function ListItemRecyclerView<T extends ListItem, U>({
                 position: positions[i],
             })
         }
-
-        dispatch(updateSlice(updateObjects as T[]))
+        if (typeof updateSlice !== 'undefined') {
+            dispatch(updateSlice(updateObjects as T[]))
+        }
         if (typeof updateDatabase !== 'undefined') {
             updateDatabase(updateObjects)
         }

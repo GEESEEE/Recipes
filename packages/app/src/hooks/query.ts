@@ -16,7 +16,7 @@ import {
 } from '@/types'
 
 export function withPopupQuery<E>(hook: InferUseQuery<E>) {
-    return (args: InferQueryArgs<E>, extraArgs: UseQueryOptions) => {
+    return (args: InferQueryArgs<E>, extraArgs?: UseQueryOptions) => {
         type Res = InferQueryResult<E>
         const navigation = useNavigation<any>()
         const hookRes = hook(args, extraArgs)

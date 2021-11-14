@@ -22,27 +22,31 @@ type GetRecipeParams = {
 
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getRecipesByScopes: builder.query<Recipe[], any>({
-            query: (params: GetRecipeParams) => {
+        getRecipesByScopes: builder.query<Recipe[], GetRecipeParams>({
+            query: (params) => {
                 let suffix = ''
 
                 for (const param of ['scopes', 'search', 'sort']) {
                     const par = params[
                         param as keyof GetRecipeParams
-                    ] as Array<any>
+                    ] as Array<string>
 
                     if (typeof par !== 'undefined' && par.length > 0) {
-                        suffix.length === 0
-                            ? suffix.concat('?')
-                            : suffix.concat('&')
-                        suffix = suffix.concat(`?${param}=${par.join(',')}`)
+                        suffix =
+                            suffix.length === 0
+                                ? suffix.concat('?')
+                                : suffix.concat('&')
+                        suffix = suffix.concat(`${param}=${par.join(',')}`)
                     }
                 }
 
-                suffix.length === 0 ? suffix.concat('?') : suffix.concat('&')
+                suffix =
+                    suffix.length === 0
+                        ? suffix.concat('?')
+                        : suffix.concat('&')
                 const page = params.page || 1
                 suffix = suffix.concat(`page=${page}`)
-
+                console.log('Suffix', suffix)
                 return {
                     url: `/recipes${suffix}`,
                     method: 'GET',

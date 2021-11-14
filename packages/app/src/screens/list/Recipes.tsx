@@ -19,10 +19,9 @@ import { applySearch, sortPosition } from '@/utils'
 import { Spacing, Typography } from '@/styles'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
-    const settings = useSettings()
     const auth = useAuth()
     const recipes = useRecipes()
-    const { theme, textSize } = settings
+    const { theme, textSize } = useSettings()
     const dispatch = useAppDispatch()
 
     const route = useRoute() as {
