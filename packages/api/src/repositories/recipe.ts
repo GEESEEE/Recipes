@@ -65,6 +65,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         ids: 'recipeIds',
         section: 'sectionId',
         search: 'searchQuery',
+        author: 'authorId',
         published: null,
     }
 
@@ -80,6 +81,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
     private readonly recipeIds?: number[]
     private readonly sectionId?: number
     private readonly searchQuery?: string[]
+    private readonly authorId?: number
 
     public constructor(
         repository: BaseRepository<Recipe>,
@@ -112,6 +114,14 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
 
     public get published(): this {
         return this.makeBaseQuery().andWhere('recipe.published_at IS NOT NULL')
+    }
+
+    public get author(): this {
+        return this.makeBaseQuery()
+            .leftJoin('section', 'section', 'section.id = recipe.section_id')
+            .andWhere('section.user_id = :authorId', {
+                authorId: this.authorId,
+            })
     }
 
     public get ids(): this {

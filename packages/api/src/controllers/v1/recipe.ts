@@ -1,12 +1,14 @@
-import { ValidationChain, query } from 'express-validator'
+import { ValidationChain, query, body } from 'express-validator'
 import {
     controller,
     httpGet,
     interfaces,
     queryParam,
+    request,
+    requestBody,
 } from 'inversify-express-utils'
-
 import { inject } from 'inversify'
+import { Request } from 'express'
 import {
     constants,
     decodeQueryParams,
@@ -30,6 +32,8 @@ export default class RecipeController implements interfaces.Controller {
         TYPES.ErrorMiddleware
     )
     public async getRecipes(
+        @request() req: Request,
+        @requestBody() body: RecipeScopeArgs,
         @queryParam('scopes') scopes?: RecipeScopes[],
         @queryParam('search') search?: string[],
         @queryParam('sort') sort?: SortQueryTuple[]
@@ -38,15 +42,20 @@ export default class RecipeController implements interfaces.Controller {
             scopes = []
         }
 
-        // Only allowed to query published recipes through this route
+        const args = body
+
+        // If not looking for published recipes, only return recipes where requesting user is the author
         if (!scopes.includes('published')) {
-            scopes.push('published')
+            if (!scopes.includes('author')) {
+                scopes.push('author')
+            }
+            args.authorId = req.user?.id as number
         }
 
-        const args: RecipeScopeArgs = {}
-
         if (typeof search !== 'undefined') {
-            scopes.push('search')
+            if (!scopes.includes('search')) {
+                scopes.push('search')
+            }
             args.searchQuery = search
         }
 
@@ -62,6 +71,18 @@ export default class RecipeController implements interfaces.Controller {
         switch (method) {
             case 'getRecipes':
                 return [
+                    body('recipeIds')
+                        .optional()
+                        .isArray()
+                        .toArray()
+                        .custom((arr) => {
+                            return arr.every(
+                                (val: any) => typeof val === 'number'
+                            )
+                        }),
+                    body('authorId').optional().isInt().toInt(),
+                    body('sectionId').optional().isInt().toInt(),
+                    body('sectionQuery').optional().isString(),
                     query('scopes').customSanitizer(decodeQueryParams),
                     query('sort').customSanitizer(decodeSortQuery),
                     query('search').customSanitizer(decodeQueryParams),
