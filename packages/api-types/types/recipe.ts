@@ -14,7 +14,9 @@ export class Recipe {
         recipeIngredients: RecipeIngredient[] = [new RecipeIngredient()],
         instructions: Instruction[] = [new Instruction()],
         createdAt = new Date(),
-        position = 0
+        position = 0,
+        publishedAt = new Date(),
+        copyOf = null
     ) {
         this.id = id
         this.sectionId = sectionId
@@ -27,6 +29,8 @@ export class Recipe {
         this.instructions = instructions
         this.createdAt = createdAt
         this.position = position
+        this.publishedAt = publishedAt
+        this.copyOf = copyOf
     }
 
     public readonly id!: number
@@ -39,15 +43,17 @@ export class Recipe {
     public instructions!: Instruction[]
     public createdAt!: Date
     public position!: number
+    public publishedAt!: Date | null
+    public copyOf!: number | null
 }
 
 export type RecipeCreate = Optional<
     Omit<Recipe, 'id' | 'recipeIngredients' | 'instructions' | 'sectionId'>,
-    'createdAt'
+    'createdAt' | 'publishedAt' | 'copyOf'
 >
 
 export type RecipeUpdate = Optional<
     Pick<Recipe, 'id' | 'sectionId'>,
     'sectionId'
 > &
-    Partial<Omit<RecipeCreate, 'createdAt'>>
+    Partial<Omit<RecipeCreate, 'createdAt' | 'copyOf'>>

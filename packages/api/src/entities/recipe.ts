@@ -65,4 +65,16 @@ export default class Recipe {
     @Expose()
     @Column()
     public position!: number
+
+    @Expose({ name: 'published_at' })
+    @Column('timestamp with time zone', {
+        name: 'published_at',
+        nullable: true,
+        default: null,
+    })
+    public publishedAt!: Date | null
+
+    @Expose({ name: 'copy_of' })
+    @Column({ name: 'copy_of', nullable: true, default: null })
+    public copyOf!: number | null
 }
