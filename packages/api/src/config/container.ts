@@ -10,6 +10,7 @@ import {
     User,
     Token,
     Application,
+    Ingredient,
 } from '@/entities'
 import {
     AuthService,
@@ -19,11 +20,7 @@ import {
 } from '@/services'
 import { TYPES } from '@/utils/constants'
 import { ErrorMiddleware, PaginationMiddleware } from '@/middlewares'
-import {
-    IngredientRepository,
-    RecipeRepository,
-    SectionRepository,
-} from '@/repositories'
+import { RecipeRepository, SectionRepository } from '@/repositories'
 import { Validator } from '@/utils'
 
 dotenv.config()
@@ -68,9 +65,9 @@ bind<Repository<Settings>>(TYPES.SettingsRepository).toDynamicValue(() => {
 bind<SectionRepository>(TYPES.SectionRepository).toDynamicValue(() => {
     return getCustomRepository(SectionRepository)
 })
-bind<IngredientRepository>(TYPES.IngredientRepository)
+bind<Repository<Ingredient>>(TYPES.IngredientRepository)
     .toDynamicValue(() => {
-        return getCustomRepository(IngredientRepository)
+        return getRepository(Ingredient)
     })
     .inRequestScope()
 bind<RecipeRepository>(TYPES.RecipeRepository)

@@ -1,6 +1,4 @@
 export { default as RecipeRepository } from './recipe'
-export { default as IngredientRepository } from './ingredient'
 export { default as SectionRepository } from './section'
-export * from './ingredient'
 export * from './recipe'
 export * from './section'

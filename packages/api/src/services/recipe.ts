@@ -11,7 +11,7 @@ import {
     InstructionUpdate,
 } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
-import { IngredientRepository, RecipeRepository } from '@/repositories'
+import { RecipeRepository } from '@/repositories'
 import { SortQueryTuple } from '@/utils/request'
 import {
     InstructionResult,
@@ -28,7 +28,7 @@ export default class RecipeService {
     private readonly recipeRepository!: RecipeRepository
 
     @inject(TYPES.IngredientRepository)
-    private readonly ingredientRepository!: IngredientRepository
+    private readonly ingredientRepository!: Repository<Ingredient>
 
     @inject(TYPES.RecipeIngredientRepository)
     private readonly recipeIngredientRepository!: Repository<RecipeIngredient>
