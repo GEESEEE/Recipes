@@ -128,6 +128,17 @@ export async function getNewListItems<
     return sortPosition(newItems)
 }
 
+export function isComplete(recipe: Recipe): boolean {
+    return (
+        recipe.description.length !== 0 &&
+        recipe.name.length !== 0 &&
+        recipe.prepareTime > 0 &&
+        recipe.peopleCount > 0 &&
+        recipe.recipeIngredients.length > 0 &&
+        recipe.instructions.length > 0
+    )
+}
+
 // Create objects
 export function recipeCreateObject(recipe: Recipe): RecipeCreate {
     const res: any = {

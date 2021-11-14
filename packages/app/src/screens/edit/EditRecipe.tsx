@@ -29,10 +29,12 @@ import {
     ingredientUpdateObject,
     instructionCreateObjects,
     instructionUpdateObject,
+    isComplete,
     recipeCreateObject,
     recipeUpdateObject,
 } from '@/utils'
 import { handleNumericTextInput, sortPosition } from '@/utils/utils'
+import { showPopup } from '@/utils/screen'
 
 const emptyRecipe = new Recipe()
 emptyRecipe.instructions = []
@@ -310,6 +312,14 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const sectionText = 'Section'
     const publishedText = 'Published'
 
+    function handlePublish(val: boolean) {
+        if (isComplete(editRecipe)) {
+            dispatch(editRecipeActions.setPublished(val))
+        } else {
+            showPopup(navigation, 'Can not publish an incomplete recipe')
+        }
+    }
+
     function handleChangeSection(id: number) {
         dispatch(editRecipeActions.setSectionId(id))
     }
@@ -402,9 +412,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <Toggle
                     width="s"
                     marginHorizontal="s"
-                    onValueChange={(val: boolean) =>
-                        dispatch(editRecipeActions.setPublished(val))
-                    }
+                    onValueChange={(val: boolean) => handlePublish(val)}
                     value={!!editRecipe.publishedAt}
                 />
                 <View width="s" />
