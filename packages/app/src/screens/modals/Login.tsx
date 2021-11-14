@@ -5,7 +5,7 @@ import * as SecureStore from 'expo-secure-store'
 import LoadingModal from './Loading'
 import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
-import { useAppDispatch, useAppSelector, withPopupMutation } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import {
     Button,
@@ -201,6 +201,12 @@ function LoginModal(): JSX.Element {
             <Button
                 type="Solid"
                 text="Sign in"
+                disabled={
+                    !data.isValidPassword ||
+                    !data.isValidUsername ||
+                    data.password.length === 0 ||
+                    data.username.length === 0
+                }
                 onPress={() => handleLoginButton()}
                 loading={signInStatus.isLoading}
                 marginVertical="s"

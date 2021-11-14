@@ -143,7 +143,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             data.isValidUsername &&
             data.isValidPassword1 &&
             data.isValidPassword2 &&
-            data.isValidUsername &&
+            data.isValidEmail &&
             samePasswords()
         )
     }
@@ -237,6 +237,16 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
             <Button
                 type="Solid"
                 text="Register"
+                disabled={
+                    data.username.length === 0 ||
+                    data.email.length === 0 ||
+                    data.password1.length === 0 ||
+                    data.password2.length === 0 ||
+                    !data.isValidUsername ||
+                    !data.isValidPassword1 ||
+                    !data.isValidPassword2 ||
+                    !data.isValidEmail
+                }
                 onPress={() => handleRegisterButton()}
                 loading={signUpStatus.isLoading}
                 marginVertical="s"
