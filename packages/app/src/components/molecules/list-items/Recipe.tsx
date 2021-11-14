@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
-import { createDropDownItems } from '@/utils'
 import { recipesActions, recipeService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
@@ -136,6 +135,13 @@ function RecipeListItem({
                             text={item.peopleCount}
                         />
                     )}
+
+                    {item.publishedAt !== null ? (
+                        <Property
+                            iconType={Icons.MyMaterialIcons}
+                            iconName="published-with-changes"
+                        />
+                    ) : null}
                 </PropertyRow>
             </Container>
         </ListItem>
@@ -151,12 +157,12 @@ const Property = ({
 }: {
     iconType: any
     iconName: string
-    text: string | number
+    text?: string | number
 }): JSX.Element => {
     return (
         <PropertyContainer paddingVertical="s" width="s">
             <Icon type={iconType} name={iconName} />
-            <Text type="SubHeader">{text}</Text>
+            {text ? <Text type="SubHeader">{text}</Text> : null}
         </PropertyContainer>
     )
 }
