@@ -89,13 +89,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <Text>Browse screen toch</Text>
-            <Button
-                type="Solid"
-                text="Load more Recipes"
-                onPress={() => fetch(page + 1)}
-                loading={isFetching}
-            />
             <ListItemRecyclerView
                 data={recipes}
                 props={{}}

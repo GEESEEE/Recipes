@@ -302,7 +302,7 @@ const ListItemRecyclerView = React.forwardRef(
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
                         onEndReached={onEndReached}
-                        renderAheadOffset={itemHeight * renderItemsAhead}
+                        // renderAheadOffset={itemHeight * renderItemsAhead}
                         scrollViewProps={{
                             showsVerticalScrollIndicator: false,
                         }}
