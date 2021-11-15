@@ -11,6 +11,7 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
 import isEqual from 'lodash/isEqual'
+import cloneDeep from 'lodash/cloneDeep'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
 import { useAppDispatch, useToggle } from '@/hooks'
@@ -21,11 +22,6 @@ const { width } = Dimensions.get('window')
 
 const ViewTypes = {
     Item: 0,
-}
-
-const defaultItemLayout = {
-    width,
-    height: 70,
 }
 
 const dataProviderInstance = new DataProvider(
@@ -110,12 +106,14 @@ const ListItemRecyclerView = React.forwardRef(
             height: itemHeight,
         }
 
-        const defaultLayoutProvider = new LayoutProvider(
-            () => ViewTypes.Item,
-            (_, dim) => {
-                dim.width = width
-                dim.height = itemHeight
-            }
+        const [layoutProvider] = React.useState(
+            new LayoutProvider(
+                () => ViewTypes.Item,
+                (_, dim) => {
+                    dim.width = width
+                    dim.height = itemHeight
+                }
+            )
         )
 
         const [dataProvider, setDataProvider] = useState<DataProvider>(
@@ -127,7 +125,6 @@ const ListItemRecyclerView = React.forwardRef(
         }, [data])
 
         React.useEffect(() => {
-            defaultItemLayout.height = itemHeight
             setMaxHeight(containerHeight - itemHeight)
         }, [containerHeight, itemHeight])
 
@@ -170,7 +167,7 @@ const ListItemRecyclerView = React.forwardRef(
             if (from !== to) {
                 updateData(dataProvider.getAllData(), from, to)
             } else {
-                data[from] = { ...data[from] }
+                data[from] = cloneDeep(data[from])
             }
         }
 
@@ -220,12 +217,7 @@ const ListItemRecyclerView = React.forwardRef(
             if (!scrolling.value) {
                 return
             }
-            const curr = listRef.current?.getCurrentScrollOffset()
-            listRef.current?.scrollToOffset(
-                0,
-                (curr || scrollOffset.value) + speed,
-                true
-            )
+            listRef.current?.scrollToOffset(0, scrollOffset.value + speed, true)
             requestAnimationFrame(() => {
                 moveList(speed)
             })
@@ -303,11 +295,12 @@ const ListItemRecyclerView = React.forwardRef(
                     <RecyclerListView
                         ref={combinedRef}
                         style={{ width }}
-                        layoutProvider={defaultLayoutProvider}
+                        layoutProvider={layoutProvider}
                         dataProvider={dataProvider}
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
                         onEndReached={onEndReached}
+                        renderAheadOffset={100}
                     />
                 </Container>
             )

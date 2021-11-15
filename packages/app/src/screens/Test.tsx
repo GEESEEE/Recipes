@@ -16,6 +16,7 @@ import { View, Text, TextInput } from '@/components/base'
 import { Error, Button } from '@/components/atoms'
 
 import { userService } from '@/redux'
+import DragDropTest from '@/components/organisms/DragAndDropTest'
 
 const bigLogo = 1
 const smallLogo = 0.5

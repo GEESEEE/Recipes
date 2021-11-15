@@ -56,7 +56,7 @@ function generateData(): Array<{ id: number; color: string }> {
 
 const data = generateData()
 
-function moveData(arr: Array<any>, from: number, to: number): Array<any> {
+function moveData<T>(arr: Array<T>, from: number, to: number): Array<T> {
     const element = arr[from]
     arr.splice(from, 1)
     arr.splice(to, 0, element)
