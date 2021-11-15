@@ -27,7 +27,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     function addRecipes(newRecipes: Recipe[]) {
         setRecipes([...recipes, ...newRecipes])
     }
-    console.log('Recipes', recipes.length)
+
     const search = useSearch()
     const [skip, setSkip] = React.useState(true)
 
@@ -37,7 +37,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         setSkip(auth.token.length <= 0)
     }, [auth.token])
 
-    const { data, isLoading, isError } =
+    const { data, isLoading, isFetching } =
         recipeService.useGetRecipesByScopesQuery(
             {
                 scopes: ['published'],
@@ -58,12 +58,13 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 addRecipes(res)
             }
         }
-    }, [data, isError])
+    }, [data])
 
     function fetch(page: number) {
         if (page === 1) {
             listRef.current?.scrollToTop(true)
         }
+        console.log(`Fetching ${page} `)
         setPage(page)
         setSkip(false)
     }
@@ -75,6 +76,11 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         250,
         [search]
     )
+
+    function onEndReached() {
+        console.log('onEndReached fetching', page + 1)
+        fetch(page + 1)
+    }
 
     useHeader(navigation, {
         title: 'Browse',
@@ -88,8 +94,9 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
             <Text>Browse screen toch</Text>
             <Button
                 type="Solid"
-                text="NewPage"
+                text="Load more Recipes"
                 onPress={() => fetch(page + 1)}
+                loading={isFetching}
             />
             <ListItemRecyclerView
                 data={recipes}
@@ -103,7 +110,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                     8
                 }
                 loading={isLoading}
-                onEndReached={() => fetch(page + 1)}
+                onEndReached={onEndReached}
                 ref={listRef}
             />
         </Container>

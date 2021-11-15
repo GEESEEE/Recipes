@@ -8,7 +8,6 @@ import {
     RecipeSortOptions,
     RecipeUpdate,
     ScopeParams,
-    Sort,
 } from '@recipes/api-types/v1'
 import { api } from './base'
 import { withPopupMutation, withPopupQuery } from '@/hooks'
@@ -52,8 +51,6 @@ const recipeApi = api.injectEndpoints({
                         suffix = suffix.concat(`${param}=${val}`)
                     }
                 }
-
-                console.log('Suffix', params, suffix)
 
                 return {
                     url: `/recipes${suffix}`,
