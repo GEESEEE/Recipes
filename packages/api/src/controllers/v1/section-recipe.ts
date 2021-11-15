@@ -45,11 +45,10 @@ export default class SectionRecipeController implements interfaces.Controller {
         if (this.validator.isError(validationResult)) {
             return this.validator.throwError(validationResult)
         }
-        const recipes = await this.recipeService.getRecipes(
-            ['section'],
-            { sectionId },
-            []
-        )
+        const recipes = await this.recipeService.getRecipes({
+            scopes: ['section'],
+            args: { sectionId },
+        })
         return recipes
     }
 

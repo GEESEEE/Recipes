@@ -1,8 +1,8 @@
 import countBy from 'lodash/countBy'
 import { ClassConstructor, plainToClass } from 'class-transformer'
 import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
-import { PaginationObject } from '@recipes/api-types/v1'
-import { SortQueryTuple, groupBy, mergeGroup } from '@/utils'
+import { SortQueryTuple, PaginationObject } from '@recipes/api-types/v1'
+import { groupBy, mergeGroup } from '@/utils'
 import { UnprocessableError } from '@/errors'
 
 export default abstract class BaseRepository<T> extends Repository<T> {
@@ -68,10 +68,6 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
     public readonly scopes: { [key: string]: string | null } = {}
     public readonly sorts: { [key: string]: string } = {}
     public readonly repository: BaseRepository<T>
-
-    public paginate!: (
-        perPage?: number | undefined
-    ) => Promise<PaginationObject>
 
     public constructor(
         repository: BaseRepository<T>,
@@ -177,11 +173,11 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
         }, this)
     }
 
-    public async pagination(
-        page: number,
-        perPage: number,
+    public async paginate(
+        page = 1,
+        perPage = 15,
         property?: string
-    ): Promise<PaginationObject> {
+    ): Promise<PaginationObject<any>> {
         const skip = (page - 1) * perPage
         const rawRecords = await this.getRawMany()
         const count = Object.keys(countBy(rawRecords, property ?? 'id')).length

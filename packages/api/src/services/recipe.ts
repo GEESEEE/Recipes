@@ -12,16 +12,25 @@ import {
     RecipeSortOptions,
     RecipeScopes,
     RecipeScopeArgs,
+    PaginationObject,
+    ScopeParams,
+    PaginationParams,
 } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
-import { RecipeRepository } from '@/repositories'
-import { SortQueryTuple } from '@/utils/request'
+import { RecipeQueryBuilder, RecipeRepository } from '@/repositories'
 import {
     InstructionResult,
     RecipeIngredientResult,
     RecipeResult,
 } from '@/types'
-import { Ingredient, Instruction, RecipeIngredient } from '@/entities'
+import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
+
+type RecipeScopeParams = ScopeParams<
+    RecipeScopes,
+    RecipeScopeArgs,
+    RecipeSortOptions,
+    false
+>
 
 @injectable()
 export default class RecipeService {
@@ -46,20 +55,38 @@ export default class RecipeService {
         return saved.map((r) => fitToClass(r as RecipeResult, RecipeResult))
     }
 
-    public async getRecipes(
-        scopes: RecipeScopes[],
-        args: RecipeScopeArgs,
-        sort?: SortQueryTuple<RecipeSortOptions>[]
-    ): Promise<RecipeResult[]> {
+    public async getRecipesBase({
+        scopes,
+        args,
+        sort,
+    }: RecipeScopeParams): Promise<RecipeQueryBuilder> {
         let qb = this.recipeRepository.queryBuilder(args)
-
         qb = qb.validate({ scopes, sort })
+        qb = qb.finish()
+        return qb
+    }
 
-        const recipes = await qb.finish().getMany()
+    public async getRecipes(
+        params: RecipeScopeParams
+    ): Promise<RecipeResult[]> {
+        const qb = await this.getRecipesBase(params)
+        const recipes = await qb.getMany()
 
         return recipes.map((recipe) =>
             fitToClass(recipe as RecipeResult, RecipeResult)
         )
+    }
+
+    public async getPaginatedRecipes(
+        params: RecipeScopeParams & PaginationParams
+    ): Promise<PaginationObject<RecipeResult>> {
+        const qb = await this.getRecipesBase(params)
+        const paginated = await qb.paginate(params.page, params.perPage)
+
+        paginated.data.map((recipe: Recipe) =>
+            fitToClass(recipe as RecipeResult, RecipeResult)
+        )
+        return paginated
     }
 
     public async updateRecipes(

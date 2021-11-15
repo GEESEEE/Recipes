@@ -11,13 +11,10 @@ export default class PaginationMiddleware extends BaseMiddleware {
     ): Promise<void> {
         BaseQueryBuilder.prototype.paginate = async function (
             perPage?: number
-        ): Promise<PaginationObject> {
+        ): Promise<PaginationObject<any>> {
             const currentPage = getPage(req)
-            const pageSize =
-                typeof perPage === 'undefined'
-                    ? getPerPage(req)
-                    : getPerPage(req, perPage)
-            return await this.pagination(currentPage, pageSize)
+            const pageSize = getPerPage(req, perPage)
+            return await this.paginate(currentPage, pageSize)
         }
 
         return next()

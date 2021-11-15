@@ -10,16 +10,13 @@ import {
 import { inject } from 'inversify'
 import { Request } from 'express'
 import {
+    PaginationObject,
     RecipeScopeArgs,
     RecipeScopes,
     RecipeSortOptions,
-} from '@recipes/api-types/v1'
-import {
-    constants,
-    decodeQueryParams,
-    decodeSortQuery,
     SortQueryTuple,
-} from '@/utils'
+} from '@recipes/api-types/v1'
+import { constants, decodeQueryParams, decodeSortQuery } from '@/utils'
 import { RecipeService } from '@/services'
 import { RecipeResult } from '@/types'
 
@@ -41,8 +38,10 @@ export default class RecipeController implements interfaces.Controller {
         @requestBody() body: RecipeScopeArgs,
         @queryParam('scopes') scopes?: RecipeScopes[],
         @queryParam('search') search?: string[],
-        @queryParam('sort') sort?: SortQueryTuple<RecipeSortOptions>[]
-    ): Promise<RecipeResult[]> {
+        @queryParam('sort') sort?: SortQueryTuple<RecipeSortOptions>[],
+        @queryParam('page') page?: number,
+        @queryParam('perPage') perPage?: number
+    ): Promise<PaginationObject<RecipeResult>> {
         if (typeof scopes === 'undefined') {
             scopes = []
         }
@@ -64,11 +63,13 @@ export default class RecipeController implements interfaces.Controller {
             args.searchQuery = search
         }
 
-        if (typeof sort === 'undefined') {
-            sort = []
-        }
-
-        return await this.recipeService.getRecipes(scopes, args, sort)
+        return await this.recipeService.getPaginatedRecipes({
+            scopes,
+            args,
+            sort,
+            page,
+            perPage,
+        })
     }
 
     // #region validate

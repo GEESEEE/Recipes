@@ -37,26 +37,28 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         setSkip(auth.token.length <= 0)
     }, [auth.token])
 
-    const { data, isLoading } = recipeService.useGetRecipesByScopesQuery(
-        {
-            scopes: ['published'],
-            search: search.length > 0 ? [search] : undefined,
-            sort: ['createtime'],
-            page,
-        },
-        { skip }
-    )
+    const { data, isLoading, isError } =
+        recipeService.useGetRecipesByScopesQuery(
+            {
+                scopes: ['published'],
+                search: search.length > 0 ? [search] : undefined,
+                sort: ['createtime'],
+                page,
+            },
+            { skip }
+        )
 
     useUpdateEffect(() => {
         setSkip(true)
         if (typeof data !== 'undefined') {
+            const res = data.data
             if (page === 1) {
-                setRecipes(data)
+                setRecipes(res)
             } else {
-                addRecipes(data)
+                addRecipes(res)
             }
         }
-    }, [data])
+    }, [data, isError])
 
     function fetch(page: number) {
         if (page === 1) {

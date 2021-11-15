@@ -1,4 +1,4 @@
-export type SortQueryTuple<T extends string> = [T, 'ASC' | 'DESC']
+import { SortQueryTuple } from '@recipes/api-types/v1'
 
 export function decodeQueryParams(param = ''): string[] | undefined {
     const result = param.split(',').filter((value) => value !== '')

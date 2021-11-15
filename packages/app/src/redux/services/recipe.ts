@@ -1,10 +1,13 @@
 import {
+    PaginationObject,
+    PaginationParams,
     Recipe,
     RecipeCreate,
     RecipeScopeArgs,
     RecipeScopes,
     RecipeSortOptions,
     RecipeUpdate,
+    ScopeParams,
     Sort,
 } from '@recipes/api-types/v1'
 import { api } from './base'
@@ -12,45 +15,50 @@ import { withPopupMutation, withPopupQuery } from '@/hooks'
 
 type BaseArg = { sectionId: number }
 
-type GetRecipeParams = {
-    scopes?: RecipeScopes[]
-    search?: string[]
-    sort?: Sort<RecipeSortOptions>[]
-    page?: number
-    body?: RecipeScopeArgs
-}
+type GetRecipeParams = ScopeParams<
+    RecipeScopes,
+    RecipeScopeArgs,
+    RecipeSortOptions,
+    true
+> &
+    PaginationParams & { search?: string[] }
+
+const listParams = ['scopes', 'search', 'sort']
+const singleParams = ['page', 'perPage']
 
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getRecipesByScopes: builder.query<Recipe[], GetRecipeParams>({
+        getRecipesByScopes: builder.query<
+            PaginationObject<Recipe>,
+            GetRecipeParams
+        >({
             query: (params) => {
                 let suffix = ''
 
-                for (const param of ['scopes', 'search', 'sort']) {
-                    const par = params[
-                        param as keyof GetRecipeParams
-                    ] as Array<string>
+                for (const param of listParams.concat(singleParams)) {
+                    const par = params[param as keyof GetRecipeParams] as
+                        | string[]
+                        | number
 
-                    if (typeof par !== 'undefined' && par.length > 0) {
+                    if (typeof par !== 'undefined') {
+                        if (par instanceof Array && par.length === 0) {
+                            break
+                        }
                         suffix =
                             suffix.length === 0
                                 ? suffix.concat('?')
                                 : suffix.concat('&')
-                        suffix = suffix.concat(`${param}=${par.join(',')}`)
+                        const val = par instanceof Array ? par.join(',') : par
+                        suffix = suffix.concat(`${param}=${val}`)
                     }
                 }
 
-                suffix =
-                    suffix.length === 0
-                        ? suffix.concat('?')
-                        : suffix.concat('&')
-                const page = params.page || 1
-                suffix = suffix.concat(`page=${page}`)
+                console.log('Suffix', params, suffix)
 
                 return {
                     url: `/recipes${suffix}`,
                     method: 'GET',
-                    body: params.body,
+                    body: params.args,
                 }
             },
         }),

@@ -101,6 +101,8 @@ const ListItemRecyclerView = React.forwardRef(
         const listRef = useRef<RecyclerListView<any, any>>(null)
         const combinedRef = useCombinedRefs(ref, listRef)
 
+        const renderItemsAhead = 5
+
         const itemLayout = {
             width,
             height: itemHeight,
@@ -154,7 +156,7 @@ const ListItemRecyclerView = React.forwardRef(
             setDragIndex(index)
             setDragging(true)
             currentIndex.value = index
-            data[index] = { ...data[index] }
+            data[index] = cloneDeep(data[index])
         }
 
         function reset(posY: number): void {
@@ -300,7 +302,10 @@ const ListItemRecyclerView = React.forwardRef(
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
                         onEndReached={onEndReached}
-                        renderAheadOffset={100}
+                        renderAheadOffset={itemHeight * renderItemsAhead}
+                        scrollViewProps={{
+                            showsVerticalScrollIndicator: false,
+                        }}
                     />
                 </Container>
             )
