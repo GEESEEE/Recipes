@@ -10,27 +10,22 @@ import {
     useDebounce,
     useUpdateEffect,
     useAuth,
+    useBrowse,
+    useAppDispatch,
 } from '@/hooks'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
-import { recipeService } from '@/redux'
+import { recipeService, browseActions } from '@/redux'
 import { Button } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const { theme, textSize } = useSettings()
-
+    const dispatch = useAppDispatch()
     const [page, setPage] = React.useState(1)
 
-    const [recipes, setRecipes] = React.useState<Recipe[]>([])
-    function addRecipes(newRecipes: Recipe[]) {
-        const currentIds = recipes.map((r) => r.id)
-        const actualNewRecipes = newRecipes.filter(
-            (r) => !currentIds.includes(r.id)
-        )
-        setRecipes([...recipes, ...actualNewRecipes])
-    }
+    const recipes = useBrowse()
 
     const search = useSearch()
     const [skip, setSkip] = React.useState(true)
@@ -57,9 +52,9 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         if (typeof data !== 'undefined') {
             const res = data.data
             if (page === 1) {
-                setRecipes(res)
+                dispatch(browseActions.setRecipes(res))
             } else {
-                addRecipes(res)
+                dispatch(browseActions.addRecipes(res))
             }
         }
     }, [data])

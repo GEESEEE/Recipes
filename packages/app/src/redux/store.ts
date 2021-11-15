@@ -6,6 +6,7 @@ import {
     sectionsReducer,
     recipesReducer,
     editRecipeReducer,
+    browseReducer,
 } from './slices'
 import { api } from './services'
 import { logMiddleware } from './middleware'
@@ -18,6 +19,7 @@ export const store = configureStore({
         sections: sectionsReducer,
         recipes: recipesReducer,
         editRecipe: editRecipeReducer,
+        browse: browseReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

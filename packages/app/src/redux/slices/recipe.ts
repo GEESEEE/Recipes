@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Recipe } from '@recipes/api-types/v1'
-import { getNewPosition } from '@/utils'
 
 export type RecipesState = {
     [key: number]: Recipe[]

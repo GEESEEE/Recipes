@@ -26,3 +26,7 @@ export function useRecipes() {
 export function useEditRecipe() {
     return useAppSelector((state) => state.editRecipe)
 }
+
+export function useBrowse() {
+    return useAppSelector((state) => state.browse)
+}
