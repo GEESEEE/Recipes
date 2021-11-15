@@ -4,7 +4,6 @@ import Drawer from './Drawer'
 import EditRecipeTabs from './EditRecipeTabs'
 import { PopupScreen, ViewRecipeScreen } from '@/screens'
 import { screenUtils } from '@/utils'
-import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
 

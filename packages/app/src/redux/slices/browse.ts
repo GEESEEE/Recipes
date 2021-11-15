@@ -15,7 +15,7 @@ const browseSlice = createSlice({
             const actualNewRecipes = newRecipes.filter(
                 (r) => !currentIds.includes(r.id)
             )
-            state = [...state, ...actualNewRecipes]
+            return [...state, ...actualNewRecipes]
         },
     },
 })
