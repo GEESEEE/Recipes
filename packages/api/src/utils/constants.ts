@@ -8,7 +8,6 @@ export const TYPES = {
     PassportMiddleware: Symbol.for('PassportMiddleware'),
     TokenMiddleware: Symbol.for('TokenMiddleware'),
     ErrorMiddleware: Symbol.for('ErrorMiddleware'),
-    PaginationMiddleware: Symbol.for('PaginationMiddleware'),
 
     // Authorization Repositories
     UserRepository: Symbol.for('UserRepository'),

@@ -19,7 +19,7 @@ import {
     UserService,
 } from '@/services'
 import { TYPES } from '@/utils/constants'
-import { ErrorMiddleware, PaginationMiddleware } from '@/middlewares'
+import { ErrorMiddleware } from '@/middlewares'
 import { RecipeRepository, SectionRepository } from '@/repositories'
 import { Validator } from '@/utils'
 
@@ -39,7 +39,6 @@ bind<any>(TYPES.PassportMiddleware).toConstantValue(
     passport.authenticate('bearer', { session: false })
 )
 bind<ErrorMiddleware>(TYPES.ErrorMiddleware).to(ErrorMiddleware)
-bind<PaginationMiddleware>(TYPES.PaginationMiddleware).to(PaginationMiddleware)
 
 // Auth Repositories
 bind<Repository<User>>(TYPES.UserRepository)
