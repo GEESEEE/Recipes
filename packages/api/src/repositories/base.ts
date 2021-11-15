@@ -175,7 +175,7 @@ export abstract class BaseQueryBuilder<T> extends SelectQueryBuilder<T> {
 
     public async paginate(
         page = 1,
-        perPage = 15,
+        perPage = 20,
         property?: string
     ): Promise<PaginationObject<any>> {
         const skip = (page - 1) * perPage
