@@ -4,14 +4,8 @@ import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 export type ViewProps = LayoutProps
 
-const View = React.forwardRef(
-    ({ children, ...rest }: ViewProps, ref: any): JSX.Element => {
-        return (
-            <RNView ref={ref} {...rest}>
-                {children}
-            </RNView>
-        )
-    }
-)
+const View = ({ children, ...rest }: ViewProps): JSX.Element => {
+    return <RNView {...rest}>{children}</RNView>
+}
 
 export default withLayoutProps(View)

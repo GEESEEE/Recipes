@@ -46,7 +46,7 @@ const recipeApi = api.injectEndpoints({
                         : suffix.concat('&')
                 const page = params.page || 1
                 suffix = suffix.concat(`page=${page}`)
-                console.log('Suffix', suffix)
+
                 return {
                     url: `/recipes${suffix}`,
                     method: 'GET',
