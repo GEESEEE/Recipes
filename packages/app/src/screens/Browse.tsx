@@ -25,7 +25,11 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [recipes, setRecipes] = React.useState<Recipe[]>([])
     function addRecipes(newRecipes: Recipe[]) {
-        setRecipes([...recipes, ...newRecipes])
+        const currentIds = recipes.map((r) => r.id)
+        const actualNewRecipes = newRecipes.filter(
+            (r) => !currentIds.includes(r.id)
+        )
+        setRecipes([...recipes, ...actualNewRecipes])
     }
 
     const search = useSearch()
