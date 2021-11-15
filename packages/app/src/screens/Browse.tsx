@@ -84,6 +84,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         title: 'Browse',
         drawer: true,
         search: true,
+        sort: true,
         right: [],
     })
 

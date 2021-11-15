@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { v4 as uuid } from 'uuid'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
+import SortModal from '../Sort'
 import { View, Text, Icons } from '@/components/base'
 import { IconButton, TextInputWithIcons } from '@/components/atoms'
 import { useSettings, useToggle } from '@/hooks'
@@ -30,6 +31,7 @@ export type HeaderConfig = {
     drawer?: boolean
     return?: () => void
     search?: boolean
+    sort?: boolean
     title?: string
     right: Array<HeaderIcon>
 }
@@ -48,6 +50,7 @@ function HeaderComponent({
     const routeName = route.name
 
     const [search, toggleSearch] = useToggle(false)
+    const [sort, toggleSort] = useToggle(false)
 
     function handleSearchToggle(): void {
         navigation.setParams({ headerSearch: '' })
@@ -143,6 +146,14 @@ function HeaderComponent({
                         color={color}
                     />
                 ) : null}
+                {config.sort ? (
+                    <HeaderIcon
+                        type={Icons.MyMaterialIcons}
+                        name="filter-list"
+                        onPress={toggleSort}
+                        color={color}
+                    />
+                ) : null}
                 {config.right.map((icon) => {
                     return (
                         <HeaderIcon
@@ -156,6 +167,7 @@ function HeaderComponent({
                         />
                     )
                 })}
+                {sort ? <SortModal toggle={() => toggleSort(false)} /> : null}
             </SafeContainer>
         </Container>
     )
