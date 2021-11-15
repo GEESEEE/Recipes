@@ -1,11 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import {
-    SectionsScreen,
-    EditSectionScreen,
-    RecipesScreen,
-    ViewRecipeScreen,
-} from '@/screens'
+import { SectionsScreen, EditSectionScreen, RecipesScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 import { HeaderComponent } from '@/components/molecules'
 
@@ -42,8 +37,6 @@ function RecipesStack(): JSX.Element {
             <Stack.Screen name="EditSection" component={EditSectionScreen} />
 
             <Stack.Screen name="Recipes" component={RecipesScreen} />
-
-            <Stack.Screen name="ViewRecipe" component={ViewRecipeScreen} />
         </Stack.Navigator>
     )
 }

@@ -2,8 +2,9 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
 import EditRecipeTabs from './EditRecipeTabs'
-import { PopupScreen } from '@/screens'
+import { PopupScreen, ViewRecipeScreen } from '@/screens'
 import { screenUtils } from '@/utils'
+import { HeaderComponent } from '@/components/molecules'
 
 const Stack = createStackNavigator()
 
@@ -27,6 +28,8 @@ function RootStack(): JSX.Element {
             />
 
             <Stack.Screen name="EditRecipeTabs" component={EditRecipeTabs} />
+
+            <Stack.Screen name="ViewRecipe" component={ViewRecipeScreen} />
 
             <Stack.Screen
                 name="Popup"

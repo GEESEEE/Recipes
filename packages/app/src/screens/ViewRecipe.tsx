@@ -4,7 +4,7 @@ import { SectionList } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { Instruction, Recipe, RecipeIngredient } from '@recipes/api-types/v1'
 import { View, Text, Icons } from '@/components/base'
-import { useSettings, useHeader, useRecipes } from '@/hooks'
+import { useSettings, useHeader, useRecipes, useBrowse } from '@/hooks'
 import {
     IngredientListItem,
     InstructionListItem,
@@ -19,7 +19,8 @@ type ViewRecipeProps = {
 
 function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const { theme } = useSettings()
-    const recipes = useRecipes()
+    const myRecipes = useRecipes()
+    const browseRecipes = useBrowse()
 
     const route = useRoute() as {
         params?: { sectionId: number; recipeId: number }
@@ -33,10 +34,14 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     }
 
     let passedRecipe: Recipe | undefined
-    const sectionRecipes = recipes[sectionId]
-    if (typeof sectionRecipes !== 'undefined') {
+    const sectionRecipes = myRecipes[sectionId]
+    const isBrowse = typeof sectionRecipes === 'undefined'
+    if (!isBrowse) {
         passedRecipe = sectionRecipes.find((recipe) => recipe.id === recipeId)
+    } else {
+        passedRecipe = browseRecipes.find((recipe) => recipe.id === recipeId)
     }
+
     const existRecipe =
         typeof passedRecipe !== 'undefined' ? { ...passedRecipe } : new Recipe()
     const peopleCount = passedRecipe?.peopleCount || 1
@@ -106,26 +111,29 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
         },
     ]
 
+    const right = []
+    if (!isBrowse) {
+        right.push({
+            type: Icons.MyMaterialIcons,
+            name: 'edit',
+            onPress: () =>
+                navigation.navigate('EditRecipeTabs', {
+                    screen: 'EditRecipeStack',
+                    params: {
+                        screen: 'EditRecipe',
+                        params: {
+                            sectionId: recipe.sectionId,
+                            recipeId: recipe.id,
+                        },
+                    },
+                }),
+        })
+    }
+
     useHeader(navigation, {
         title:
             typeof passedRecipe !== 'undefined' ? recipe.name : 'View Recipe',
-        right: [
-            {
-                type: Icons.MyMaterialIcons,
-                name: 'edit',
-                onPress: () =>
-                    navigation.navigate('EditRecipeTabs', {
-                        screen: 'EditRecipeStack',
-                        params: {
-                            screen: 'EditRecipe',
-                            params: {
-                                sectionId: recipe.sectionId,
-                                recipeId: recipe.id,
-                            },
-                        },
-                    }),
-            },
-        ],
+        right,
     })
 
     return (
