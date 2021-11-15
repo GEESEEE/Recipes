@@ -29,7 +29,15 @@ function RootStack(): JSX.Element {
 
             <Stack.Screen name="EditRecipeTabs" component={EditRecipeTabs} />
 
-            <Stack.Screen name="ViewRecipe" component={ViewRecipeScreen} />
+            <Stack.Screen
+                name="ViewRecipe"
+                component={ViewRecipeScreen}
+                options={{
+                    headerShown: true,
+                    presentation: 'transparentModal',
+                    cardStyleInterpolator: screenUtils.slideVertical,
+                }}
+            />
 
             <Stack.Screen
                 name="Popup"

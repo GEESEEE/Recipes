@@ -63,7 +63,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         if (page === 1) {
             listRef.current?.scrollToTop(true)
         }
-        console.log(`Fetching ${page} `)
         setPage(page)
         setSkip(false)
     }
