@@ -5,6 +5,7 @@ import {
     RecyclerListView,
     DataProvider,
     LayoutProvider,
+    RecyclerListViewProps,
 } from 'recyclerlistview'
 import styled from 'styled-components'
 import { useHeaderHeight } from '@react-navigation/elements'
@@ -19,7 +20,6 @@ import {
     useCombinedRefs,
     useSettings,
     useToggle,
-    useUpdateEffect,
 } from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { moveElement } from '@/utils'
@@ -56,7 +56,14 @@ type ListItemRecyclerViewProps<
     itemHeight: number
     onRefresh?: () => Promise<void>
     onEndReached?: () => void
-}
+} & Omit<
+    RecyclerListViewProps,
+    | 'rowRenderer'
+    | 'layoutProvider'
+    | 'dataProvider'
+    | 'onScroll'
+    | 'scrollViewProps'
+>
 
 const ListItemRecyclerView = React.forwardRef(
     <T extends ListItem, U>(
@@ -70,7 +77,7 @@ const ListItemRecyclerView = React.forwardRef(
             updateDatabase,
             itemHeight,
             onRefresh,
-            onEndReached,
+            ...rest
         }: ListItemRecyclerViewProps<T, U>,
         ref?: any
     ): JSX.Element => {
@@ -294,7 +301,6 @@ const ListItemRecyclerView = React.forwardRef(
                         dataProvider={dataProvider}
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
-                        onEndReached={onEndReached}
                         // renderAheadOffset={itemHeight * renderItemsAhead}
                         scrollViewProps={{
                             showsVerticalScrollIndicator: false,
@@ -316,6 +322,7 @@ const ListItemRecyclerView = React.forwardRef(
                                 />
                             ),
                         }}
+                        {...rest}
                     />
                 </Container>
             )

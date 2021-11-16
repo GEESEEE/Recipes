@@ -1,25 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Recipe } from '@recipes/api-types/v1'
 import { RecyclerListView } from 'recyclerlistview'
-import { View, Text, Icons } from '@/components/base'
+import { View, Icons } from '@/components/base'
 import {
     useHeader,
     useSearch,
     useSettings,
-    useDebounce,
     useUpdateEffect,
     useAuth,
     useBrowse,
     useAppDispatch,
-    useSort,
     useSortState,
 } from '@/hooks'
 import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
-import { Button } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
@@ -44,7 +40,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }
 
-    function refetch() {
+    function fetch() {
         setParams({
             scopes: ['published'],
             search: search.length > 0 ? [search] : undefined,
@@ -55,7 +51,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     React.useEffect(() => {
-        refetch()
+        fetch()
     }, [])
 
     const skip = auth.token.length <= 0
@@ -83,7 +79,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
             {
                 type: Icons.MyMaterialCommunityIcons,
                 name: 'refresh',
-                onPress: () => refetch(),
+                onPress: () => fetch(),
                 loading: isFetching,
             },
         ],
@@ -106,7 +102,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 loading={isLoading}
                 onEndReached={newPage}
                 ref={listRef}
-                onRefresh={async () => refetch()}
+                onRefresh={async () => fetch()}
             />
         </Container>
     )
