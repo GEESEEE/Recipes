@@ -30,3 +30,7 @@ export function useEditRecipe() {
 export function useBrowse() {
     return useAppSelector((state) => state.browse)
 }
+
+export function useSort() {
+    return useAppSelector((state) => state.sort)
+}

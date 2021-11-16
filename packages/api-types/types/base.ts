@@ -6,6 +6,8 @@ export type Class<T> = new (...args: any[]) => T
 
 export type Instance = { [key: string]: any }
 
+export type BooleanString = 'true' | 'false'
+
 // Helper Types
 export type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X
     ? 1

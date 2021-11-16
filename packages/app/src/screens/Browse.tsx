@@ -13,11 +13,10 @@ import {
     useBrowse,
     useAppDispatch,
 } from '@/hooks'
-import { ListItemRecyclerView } from '@/components/organisms'
+import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
-import { Button } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
@@ -36,16 +35,15 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         setSkip(auth.token.length <= 0)
     }, [auth.token])
 
-    const { data, isLoading, isFetching } =
-        recipeService.useGetRecipesByScopesQuery(
-            {
-                scopes: ['published'],
-                search: search.length > 0 ? [search] : undefined,
-                sort: ['createtime'],
-                page,
-            },
-            { skip }
-        )
+    const { data, isLoading } = recipeService.useGetRecipesByScopesQuery(
+        {
+            scopes: ['published'],
+            search: search.length > 0 ? [search] : undefined,
+            sort: ['createtime'],
+            page,
+        },
+        { skip }
+    )
 
     useUpdateEffect(() => {
         setSkip(true)
@@ -90,6 +88,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
+            <SortHeader />
             <ListItemRecyclerView
                 data={recipes}
                 props={{}}

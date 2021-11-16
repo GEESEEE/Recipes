@@ -1,4 +1,4 @@
-import { RecipeSortOptions, Sort } from '@recipes/api-types/v1'
+import { RecipeSortOptions } from '@recipes/api-types/v1'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type SortState = {
@@ -22,6 +22,10 @@ const sortSlice = createSlice({
     name: 'sort',
     initialState,
     reducers: {
+        reset() {
+            return initialState
+        },
+
         addSort(state, action: PayloadAction<RecipeSortOptions>) {
             state.order = [...state.order, action.payload]
         },
