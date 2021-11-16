@@ -21,33 +21,39 @@ function SortModal({ toggle }: SortModalProps): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <IconButton
-                type={Icons.MyMaterialIcons}
-                name="arrow-back"
-                onPress={toggle}
-                size="l"
-            />
             <SubContainer>
-                <Title type="Header" color={theme.primary} paddingVertical="s">
-                    {title}
-                </Title>
-                {sortOptions.map((sortOption, index: number) => {
-                    const position = sort.order.indexOf(sortOption)
-                    return (
-                        <SortRow
-                            key={index}
-                            position={position}
-                            option={sortOption}
-                        />
-                    )
-                })}
-                <Button
-                    marginVertical="l"
-                    width="s"
-                    type="Solid"
-                    text="Reset"
-                    onPress={() => dispatch(sortActions.reset())}
+                <IconButton
+                    type={Icons.MyMaterialIcons}
+                    name="arrow-back"
+                    onPress={toggle}
+                    size="l"
                 />
+                <ContentContainer>
+                    <Title
+                        type="Header"
+                        color={theme.primary}
+                        paddingVertical="s"
+                    >
+                        {title}
+                    </Title>
+                    {sortOptions.map((sortOption, index: number) => {
+                        const position = sort.order.indexOf(sortOption)
+                        return (
+                            <SortRow
+                                key={index}
+                                position={position}
+                                option={sortOption}
+                            />
+                        )
+                    })}
+                    <Button
+                        marginVertical="l"
+                        width="s"
+                        type="Solid"
+                        text="Reset"
+                        onPress={() => dispatch(sortActions.reset())}
+                    />
+                </ContentContainer>
             </SubContainer>
         </Container>
     )
@@ -57,9 +63,14 @@ export default SortModal
 
 const Container = styled(Modal)`
     flex: 1;
+    align-items: center;
 `
 
 const SubContainer = styled(View)`
+    width: 95%;
+`
+
+const ContentContainer = styled(View)`
     align-items: center;
 `
 

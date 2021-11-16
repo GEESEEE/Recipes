@@ -9,6 +9,7 @@ import { useAppDispatch, useSort } from '@/hooks'
 type SortRowProps = {
     position: number
     option: RecipeSortOptions
+    header?: boolean
 }
 
 const names: { [key in RecipeSortOptions]: string } = {
@@ -21,13 +22,13 @@ const names: { [key in RecipeSortOptions]: string } = {
 }
 
 function values(option: RecipeSortOptions): { [key in BooleanString]: string } {
-    if (option in ['createtime', 'publishtime', 'preparetime']) {
+    if (['createtime', 'publishtime', 'preparetime'].includes(option)) {
         return {
             true: 'old - new',
             false: 'new - old',
         }
     } else if (
-        option in ['peoplecount', 'ingredientcount', 'instructioncount']
+        ['peoplecount', 'ingredientcount', 'instructioncount'].includes(option)
     ) {
         return {
             true: 'low - high',
@@ -40,7 +41,7 @@ function values(option: RecipeSortOptions): { [key in BooleanString]: string } {
     }
 }
 
-function SortRow({ position, option }: SortRowProps): JSX.Element {
+function SortRow({ position, option, header }: SortRowProps): JSX.Element {
     const dispatch = useAppDispatch()
     const sort = useSort()
 
@@ -48,10 +49,13 @@ function SortRow({ position, option }: SortRowProps): JSX.Element {
     const state = sort.state[option].toString() as BooleanString
 
     return (
-        <RowContainer width="l">
-            <Position marginHorizontal="s">
-                {selected ? position + 1 : ''}
-            </Position>
+        <RowContainer>
+            {header ? null : (
+                <Position marginHorizontal="s">
+                    {selected ? position + 1 : ''}
+                </Position>
+            )}
+
             <SortName>{names[option]}</SortName>
             <SortValue>
                 <Text>{values(option)[state]}</Text>

@@ -2,16 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import { View } from '@/components/base'
 import { SortRow } from '@/components/molecules'
-import { useSettings, useSort } from '@/hooks'
+import { useSort } from '@/hooks'
 
 function SortHeader(): JSX.Element {
-    const { theme } = useSettings()
     const sort = useSort()
 
     return (
-        <Container>
+        <Container width="l">
             {sort.order.map((sortOption, index) => (
-                <SortRow key={index} position={index} option={sortOption} />
+                <SortRow
+                    key={index}
+                    position={index}
+                    option={sortOption}
+                    header
+                />
             ))}
         </Container>
     )
@@ -20,6 +24,5 @@ function SortHeader(): JSX.Element {
 export default SortHeader
 
 const Container = styled(View)`
-    width: 100%;
     align-items: center;
 `
