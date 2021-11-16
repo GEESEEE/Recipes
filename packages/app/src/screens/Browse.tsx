@@ -28,13 +28,10 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const recipes = useBrowse()
 
-    console.log('BrowseScreen rerender')
-
     const search = useSearch()
     const sort = useSortState()
 
     const [nextPage, setNextPage] = React.useState<number | null>(2)
-
     const listRef = React.useRef<RecyclerListView<any, any>>(null)
 
     const [params, setParams] = React.useState<recipeService.GetRecipeParams>(
@@ -109,6 +106,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 loading={isLoading}
                 onEndReached={newPage}
                 ref={listRef}
+                onRefresh={async () => refetch()}
             />
         </Container>
     )

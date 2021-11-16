@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
-import { createDropDownItems } from '@/utils'
+
 import { sectionsActions, sectionService } from '@/redux'
 import { useAppDispatch } from '@/hooks'
 import { ListItemBaseProps } from '@/types'

@@ -33,9 +33,8 @@ const recipeApi = api.injectEndpoints({
         >({
             query: (params) => {
                 let suffix = ''
-                console.log('allParams', recipeParams)
+
                 for (const param of recipeParams) {
-                    console.log('Param', param)
                     const par = params[param as keyof GetRecipeParams] as
                         | string[]
                         | number

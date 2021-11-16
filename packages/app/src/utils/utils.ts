@@ -18,23 +18,6 @@ export function handleNumericTextInput(
     return 0
 }
 
-export function createDropDownItems(
-    onPresses: Array<() => Promise<void> | void>,
-    name: string
-): DropdownItem[] {
-    return onPresses.map((onPress) => {
-        // Slice recipe off the function name
-        const text = capitalize(
-            onPress.name.slice(0, onPress.name.length - name.length)
-        )
-        return {
-            id: onPresses.indexOf(onPress),
-            text,
-            onPress,
-        }
-    })
-}
-
 export function sortPosition<T extends ListItem>(arr: T[], ascending = true) {
     return new Array(...arr).sort((a, b) =>
         ascending ? a.position - b.position : b.position - a.position

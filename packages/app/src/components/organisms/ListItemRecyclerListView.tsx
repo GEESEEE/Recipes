@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
-import { Dimensions, LayoutChangeEvent } from 'react-native'
+import { Dimensions, LayoutChangeEvent, RefreshControl } from 'react-native'
 import {
     RecyclerListView,
     DataProvider,
@@ -14,7 +14,13 @@ import isEqual from 'lodash/isEqual'
 import cloneDeep from 'lodash/cloneDeep'
 import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
-import { useAppDispatch, useToggle } from '@/hooks'
+import {
+    useAppDispatch,
+    useCombinedRefs,
+    useSettings,
+    useToggle,
+    useUpdateEffect,
+} from '@/hooks'
 import { GestureChangeEvent, ListItem, ListItemBaseProps } from '@/types'
 import { moveElement } from '@/utils'
 
@@ -48,25 +54,8 @@ type ListItemRecyclerViewProps<
         }
     ) => JSX.Element
     itemHeight: number
+    onRefresh?: () => Promise<void>
     onEndReached?: () => void
-}
-
-function useCombinedRefs(...refs: any): any {
-    const targetRef = React.useRef()
-
-    React.useEffect(() => {
-        refs.forEach((ref: any) => {
-            if (!ref) return
-
-            if (typeof ref === 'function') {
-                ref(targetRef.current)
-            } else {
-                ref.current = targetRef.current
-            }
-        })
-    }, [refs])
-
-    return targetRef
 }
 
 const ListItemRecyclerView = React.forwardRef(
@@ -80,11 +69,13 @@ const ListItemRecyclerView = React.forwardRef(
             updateSlice,
             updateDatabase,
             itemHeight,
+            onRefresh,
             onEndReached,
         }: ListItemRecyclerViewProps<T, U>,
         ref?: any
     ): JSX.Element => {
         const dispatch = useAppDispatch()
+        const { theme } = useSettings()
 
         const scrollOffset = useSharedValue(0)
         const currentIndex = useSharedValue(-1)
@@ -100,6 +91,8 @@ const ListItemRecyclerView = React.forwardRef(
 
         const listRef = useRef<RecyclerListView<any, any>>(null)
         const combinedRef = useCombinedRefs(ref, listRef)
+
+        const [refreshing, setRefreshing] = React.useState(false)
 
         const renderItemsAhead = 5
 
@@ -305,6 +298,23 @@ const ListItemRecyclerView = React.forwardRef(
                         // renderAheadOffset={itemHeight * renderItemsAhead}
                         scrollViewProps={{
                             showsVerticalScrollIndicator: false,
+                            refreshControl: (
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={async () => {
+                                        setRefreshing(true)
+                                        if (typeof onRefresh !== 'undefined') {
+                                            onRefresh().then(() =>
+                                                setRefreshing(false)
+                                            )
+                                        }
+                                    }}
+                                    colors={[theme.primary]}
+                                    progressBackgroundColor={
+                                        theme.backgroundVariant
+                                    }
+                                />
+                            ),
                         }}
                     />
                 </Container>
