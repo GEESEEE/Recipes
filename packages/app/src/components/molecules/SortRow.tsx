@@ -22,13 +22,18 @@ const names: { [key in RecipeSortOptions]: string } = {
 }
 
 function values(option: RecipeSortOptions): { [key in BooleanString]: string } {
-    if (['createtime', 'publishtime', 'preparetime'].includes(option)) {
+    if (['createtime', 'publishtime'].includes(option)) {
         return {
             true: 'old - new',
             false: 'new - old',
         }
     } else if (
-        ['peoplecount', 'ingredientcount', 'instructioncount'].includes(option)
+        [
+            'peoplecount',
+            'ingredientcount',
+            'instructioncount',
+            'preparetime',
+        ].includes(option)
     ) {
         return {
             true: 'low - high',

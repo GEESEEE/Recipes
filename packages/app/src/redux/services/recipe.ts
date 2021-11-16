@@ -8,22 +8,22 @@ import {
     RecipeSortOptions,
     RecipeUpdate,
     ScopeParams,
+    Sort,
 } from '@recipes/api-types/v1'
 import { api } from './base'
 import { withPopupMutation, withPopupQuery } from '@/hooks'
 
 type BaseArg = { sectionId: number }
 
-type GetRecipeParams = ScopeParams<
+export type GetRecipeParams = ScopeParams<
     RecipeScopes,
     RecipeScopeArgs,
-    RecipeSortOptions,
+    Sort<RecipeSortOptions>,
     true
 > &
     PaginationParams & { search?: string[] }
 
-const listParams = ['scopes', 'search', 'sort']
-const singleParams = ['page', 'perPage']
+const recipeParams = ['scopes', 'search', 'sort', 'page', 'perPage']
 
 const recipeApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -33,20 +33,22 @@ const recipeApi = api.injectEndpoints({
         >({
             query: (params) => {
                 let suffix = ''
-
-                for (const param of listParams.concat(singleParams)) {
+                console.log('allParams', recipeParams)
+                for (const param of recipeParams) {
+                    console.log('Param', param)
                     const par = params[param as keyof GetRecipeParams] as
                         | string[]
                         | number
 
                     if (typeof par !== 'undefined') {
                         if (par instanceof Array && par.length === 0) {
-                            break
+                            continue
                         }
                         suffix =
                             suffix.length === 0
                                 ? suffix.concat('?')
                                 : suffix.concat('&')
+
                         const val = par instanceof Array ? par.join(',') : par
                         suffix = suffix.concat(`${param}=${val}`)
                     }

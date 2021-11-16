@@ -8,6 +8,7 @@ import { View, Text, Icons } from '@/components/base'
 import { IconButton, TextInputWithIcons } from '@/components/atoms'
 import { useSettings, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
+import { LayoutProps } from '@/components/higher-order'
 
 type HeaderIcon = {
     type: any
@@ -20,11 +21,11 @@ type HeaderIcon = {
 type HeaderIconProps = HeaderIcon & {
     color: string
     size?: Spacing.Size
-}
+} & LayoutProps
 
 function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
     size = size || 'l'
-    return <IconButton size={size} paddingHorizontal="n" {...rest} />
+    return <IconButton size={size} paddingHorizontal="s" {...rest} />
 }
 
 export type HeaderConfig = {
@@ -115,6 +116,7 @@ function HeaderComponent({
                                     onPress={() => handleSearchToggle()}
                                     color={color}
                                     size="m"
+                                    paddingHorizontal="n"
                                 />
                             }
                             autoFocus

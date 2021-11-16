@@ -1,3 +1,4 @@
+import { RecipeSortOptions, Sort } from '@recipes/api-types/v1'
 import { useAppSelector } from './redux'
 import { sectionsSelector } from '@/redux'
 
@@ -33,4 +34,12 @@ export function useBrowse() {
 
 export function useSort() {
     return useAppSelector((state) => state.sort)
+}
+
+export function useSortState(): Sort<RecipeSortOptions>[] {
+    const sort = useSort()
+
+    return sort.order.map((s) => {
+        return (sort.state[s] ? s : `-${s}`) as Sort<RecipeSortOptions>
+    })
 }

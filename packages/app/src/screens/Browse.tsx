@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Recipe } from '@recipes/api-types/v1'
 import { RecyclerListView } from 'recyclerlistview'
-import { View, Text } from '@/components/base'
+import { View, Text, Icons } from '@/components/base'
 import {
     useHeader,
     useSearch,
@@ -12,44 +12,64 @@ import {
     useAuth,
     useBrowse,
     useAppDispatch,
+    useSort,
+    useSortState,
 } from '@/hooks'
 import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
+import { Button } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
-    const { theme, textSize } = useSettings()
     const dispatch = useAppDispatch()
-    const [page, setPage] = React.useState(1)
+    const { theme, textSize } = useSettings()
 
     const recipes = useBrowse()
 
+    console.log('BrowseScreen rerender')
+
     const search = useSearch()
-    const [skip, setSkip] = React.useState(true)
+    const sort = useSortState()
+
+    const [nextPage, setNextPage] = React.useState<number | null>(2)
 
     const listRef = React.useRef<RecyclerListView<any, any>>(null)
 
-    useUpdateEffect(() => {
-        setSkip(auth.token.length <= 0)
-    }, [auth.token])
-
-    const { data, isLoading } = recipeService.useGetRecipesByScopesQuery(
-        {
-            scopes: ['published'],
-            search: search.length > 0 ? [search] : undefined,
-            sort: ['createtime'],
-            page,
-        },
-        { skip }
+    const [params, setParams] = React.useState<recipeService.GetRecipeParams>(
+        {}
     )
 
+    function newPage() {
+        if (nextPage !== null) {
+            setParams({ ...params, page: (params.page as number) + 1 })
+        }
+    }
+
+    function refetch() {
+        setParams({
+            scopes: ['published'],
+            search: search.length > 0 ? [search] : undefined,
+            sort,
+            page: 1,
+        })
+        listRef.current?.scrollToTop(true)
+    }
+
+    React.useEffect(() => {
+        refetch()
+    }, [])
+
+    const skip = auth.token.length <= 0
+    const { data, isLoading, isFetching } =
+        recipeService.useGetRecipesByScopesQuery(params, { skip })
+
     useUpdateEffect(() => {
-        setSkip(true)
         if (typeof data !== 'undefined') {
+            setNextPage(data.next_page ?? null)
             const res = data.data
-            if (page === 1) {
+            if (params.page === 1) {
                 dispatch(browseActions.setRecipes(res))
             } else {
                 dispatch(browseActions.addRecipes(res))
@@ -57,33 +77,19 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         }
     }, [data])
 
-    function fetch(page: number) {
-        if (page === 1) {
-            listRef.current?.scrollToTop(true)
-        }
-        setPage(page)
-        setSkip(false)
-    }
-
-    useDebounce(
-        () => {
-            fetch(1)
-        },
-        250,
-        [search]
-    )
-
-    function onEndReached() {
-        console.log('onEndReached fetching', page + 1)
-        fetch(page + 1)
-    }
-
     useHeader(navigation, {
         title: 'Browse',
         drawer: true,
         search: true,
         sort: true,
-        right: [],
+        right: [
+            {
+                type: Icons.MyMaterialCommunityIcons,
+                name: 'refresh',
+                onPress: () => refetch(),
+                loading: isFetching,
+            },
+        ],
     })
 
     return (
@@ -101,7 +107,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                     8
                 }
                 loading={isLoading}
-                onEndReached={onEndReached}
+                onEndReached={newPage}
                 ref={listRef}
             />
         </Container>
