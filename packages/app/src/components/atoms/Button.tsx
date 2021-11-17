@@ -66,7 +66,7 @@ const Button = ({
 
     if (type === TYPE.Clear) {
         textWeight = textWeight || 'normal'
-        textTransform = textTransform || 'lowercase'
+        textTransform = textTransform || 'none'
     }
 
     textType = textType || 'Text'
@@ -95,9 +95,10 @@ const Button = ({
             onPress={onPress}
             disabled={disabled}
             style={[buttonStyle, style]}
+            paddingVertical="s"
             {...rest}
         >
-            <View paddingVertical="s">
+            <View>
                 {loading ? (
                     <Loading4Dots
                         backgroundColor={backgroundColor}

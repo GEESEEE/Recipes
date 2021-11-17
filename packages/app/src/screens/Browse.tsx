@@ -88,7 +88,6 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <SortHeader />
             <ListItemRecyclerView
                 data={recipes}
                 props={{}}
@@ -115,16 +114,22 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                     if (nextPage === null) {
                         return (
                             <FooterContainer>
-                                <Text>End of List</Text>
+                                <Text color={theme.primary}>End of List</Text>
                             </FooterContainer>
                         )
                     }
                     return (
-                        <Button
-                            type="Clear"
-                            text="Load more"
-                            onPress={() => newPage()}
-                        />
+                        <FooterContainer>
+                            <Button
+                                type="Outline"
+                                text="Load More"
+                                textTransform="capitalize"
+                                paddingVertical="n"
+                                marginVertical="s"
+                                width="s"
+                                onPress={() => newPage()}
+                            />
+                        </FooterContainer>
                     )
                 }}
             />

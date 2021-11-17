@@ -1,6 +1,6 @@
 import { css, FlattenInterpolation } from 'styled-components'
 
-export type TextTransform = 'uppercase' | 'lowercase' | 'capitalize'
+export type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none'
 
 // Font Weights
 export type TextWeight = 'light' | 'normal' | 'semiBold' | 'bold' | 'extraBold'
