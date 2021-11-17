@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RecyclerListView } from 'recyclerlistview'
-import { View, Icons } from '@/components/base'
+import { View, Icons, Text } from '@/components/base'
 import {
     useHeader,
     useSearch,
@@ -16,6 +16,7 @@ import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
+import { Loading4Dots } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
@@ -103,6 +104,23 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 onEndReached={newPage}
                 ref={listRef}
                 onRefresh={async () => fetch()}
+                renderFooter={() => {
+                    if (isFetching) {
+                        return (
+                            <Loading4Dots
+                                height={Typography.lineHeight('Text', textSize)}
+                            />
+                        )
+                    }
+                    if (nextPage === null) {
+                        return (
+                            <FooterContainer>
+                                <Text>End of List</Text>
+                            </FooterContainer>
+                        )
+                    }
+                    return null
+                }}
             />
         </Container>
     )
@@ -113,5 +131,10 @@ export default BrowseScreen
 const Container = styled(View)`
     flex: 1;
     justify-content: flex-start;
+    align-items: center;
+`
+
+const FooterContainer = styled(View)`
+    width: 100%;
     align-items: center;
 `

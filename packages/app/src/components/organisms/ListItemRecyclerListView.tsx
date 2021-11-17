@@ -13,7 +13,7 @@ import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
 import isEqual from 'lodash/isEqual'
 import cloneDeep from 'lodash/cloneDeep'
-import { View } from '@/components/base'
+import { Text, View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
 import {
     useAppDispatch,
