@@ -28,8 +28,14 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const dispatch = useAppDispatch()
 
     // Verify Token stuff
+    const [loading, setLoading] = React.useState(true)
+
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
+
+    useUpdateEffect(() => {
+        setLoading(verifyTokenStatus.isLoading)
+    }, [verifyTokenStatus.isLoading])
 
     async function retrieveToken(): Promise<void> {
         const token = await SecureStore.getItemAsync('token')
@@ -38,6 +44,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
             if ('data' in res) {
                 await dispatch(authActions.login({ user: res.data, token }))
             }
+        } else {
+            setLoading(false)
         }
     }
 
@@ -87,8 +95,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
             {auth.user.id < 0 ? <LoginModal /> : null}
+            {loading ? <LoadingModal /> : null}
 
             <ListItemRecyclerView
                 Element={SectionListItem}
