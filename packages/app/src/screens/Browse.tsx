@@ -98,26 +98,24 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 onEndReached={newPage}
                 ref={listRef}
                 onRefresh={async () => fetch()}
-                renderFooter={() => {
-                    return (
-                        <FooterContainer paddingVertical="s">
-                            {nextPage === null ? (
-                                <Text color={theme.primary}>End of List</Text>
-                            ) : (
-                                <Button
-                                    type="Clear"
-                                    text="Load More"
-                                    textTransform="capitalize"
-                                    paddingVertical="n"
-                                    marginVertical="s"
-                                    width="s"
-                                    onPress={() => newPage()}
-                                    loading={isFetching}
-                                />
-                            )}
-                        </FooterContainer>
-                    )
-                }}
+                renderFooter={() => (
+                    <FooterContainer paddingVertical="s">
+                        {nextPage === null ? (
+                            <Text color={theme.primary}>End of List</Text>
+                        ) : (
+                            <Button
+                                type="Clear"
+                                text="Load More"
+                                textTransform="capitalize"
+                                paddingVertical="n"
+                                marginVertical="s"
+                                width="s"
+                                onPress={() => newPage()}
+                                loading={isFetching}
+                            />
+                        )}
+                    </FooterContainer>
+                )}
             />
         </Container>
     )

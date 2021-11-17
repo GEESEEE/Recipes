@@ -5,10 +5,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
 import { SortModal } from '@/components/organisms'
 import { View, Text, Icons } from '@/components/base'
-import { IconButton, TextInputWithIcons } from '@/components/atoms'
-import { useSettings, useToggle } from '@/hooks'
+import {
+    IconButton,
+    IconButtonProps,
+    TextInputWithIcons,
+} from '@/components/atoms'
+import { useSettings, useSort, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
-import { LayoutProps } from '@/components/higher-order'
 
 type HeaderIcon = {
     type: any
@@ -21,7 +24,7 @@ type HeaderIcon = {
 type HeaderIconProps = HeaderIcon & {
     color: string
     size?: Spacing.Size
-} & LayoutProps
+} & IconButtonProps
 
 function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
     size = size || 'l'
@@ -48,6 +51,7 @@ function HeaderComponent({
 }: HeaderComponentProps): JSX.Element {
     const { theme, invertedColors } = useSettings()
     const route = useRoute()
+    const sortState = useSort()
     const routeName = route.name
 
     const [search, toggleSearch] = useToggle(false)
@@ -152,8 +156,9 @@ function HeaderComponent({
                     <HeaderIcon
                         type={Icons.MyMaterialIcons}
                         name="filter-list"
-                        onPress={toggleSort}
+                        onPress={() => toggleSort()}
                         color={color}
+                        subCount={sortState.order.length}
                     />
                 ) : null}
                 {config.right.map((icon) => {

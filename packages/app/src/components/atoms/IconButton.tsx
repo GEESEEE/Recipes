@@ -5,12 +5,17 @@ import {
     TouchableOpacity,
     TouchableOpacityProps,
 } from '@/components/base'
-import { withLayoutProps, LayoutProps } from '@/components/higher-order'
+import {
+    withLayoutProps,
+    LayoutProps,
+    withSubCount,
+    SubCountProps,
+} from '@/components/higher-order'
 import { Spacing } from '@/styles'
 import { useSettings } from '@/hooks'
 import { TouchableEvent } from '@/types'
 
-type IconButtonProps = {
+export type IconButtonProps = {
     onPress: (e: TouchableEvent) => void
     type: any
     name: string
@@ -19,6 +24,7 @@ type IconButtonProps = {
     color?: string
     size?: Spacing.Size
 } & LayoutProps &
+    SubCountProps &
     TouchableOpacityProps
 
 function IconButton({
@@ -51,4 +57,4 @@ function IconButton({
     )
 }
 
-export default withLayoutProps(IconButton)
+export default withSubCount(withLayoutProps(IconButton))
