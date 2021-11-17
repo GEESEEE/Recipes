@@ -20,20 +20,21 @@ const names: { [key in RecipeSortOptions]: string } = {
     instructioncount: 'Instruction Count',
 }
 
+const oldNewOptions = ['createtime', 'publishtime']
+const lowHighOptions = [
+    'peoplecount',
+    'ingredientcount',
+    'instructioncount',
+    'preparetime',
+]
+
 function values(option: RecipeSortOptions): { [key in BooleanString]: string } {
-    if (['createtime', 'publishtime'].includes(option)) {
+    if (oldNewOptions.includes(option)) {
         return {
             true: 'old - new',
             false: 'new - old',
         }
-    } else if (
-        [
-            'peoplecount',
-            'ingredientcount',
-            'instructioncount',
-            'preparetime',
-        ].includes(option)
-    ) {
+    } else if (lowHighOptions.includes(option)) {
         return {
             true: 'low - high',
             false: 'high - low',
