@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react'
 import { ScrollEvent } from 'recyclerlistview/dist/reactnative/core/scrollcomponent/BaseScrollView'
-import { Dimensions, LayoutChangeEvent, RefreshControl } from 'react-native'
+import {
+    Dimensions,
+    LayoutChangeEvent,
+    RefreshControl,
+    ScrollViewProps,
+} from 'react-native'
 import {
     RecyclerListView,
     DataProvider,
@@ -13,7 +18,7 @@ import Animated, { useSharedValue } from 'react-native-reanimated'
 import { State } from 'react-native-gesture-handler'
 import isEqual from 'lodash/isEqual'
 import cloneDeep from 'lodash/cloneDeep'
-import { Text, View } from '@/components/base'
+import { View } from '@/components/base'
 import { Loading4Dots } from '@/components/atoms'
 import {
     useAppDispatch,
@@ -272,6 +277,24 @@ const ListItemRecyclerView = React.forwardRef(
             )
         }
 
+        const scrollViewProps: ScrollViewProps = {
+            showsVerticalScrollIndicator: false,
+        }
+
+        if (typeof onRefresh !== 'undefined') {
+            scrollViewProps.refreshControl = (
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={async () => {
+                        setRefreshing(true)
+                        onRefresh().then(() => setRefreshing(false))
+                    }}
+                    colors={[theme.primary]}
+                    progressBackgroundColor={theme.backgroundVariant}
+                />
+            )
+        }
+
         if (loading) {
             return <Loading4Dots width={50} />
         }
@@ -302,26 +325,7 @@ const ListItemRecyclerView = React.forwardRef(
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
                         // renderAheadOffset={itemHeight * renderItemsAhead}
-                        scrollViewProps={{
-                            showsVerticalScrollIndicator: false,
-                            refreshControl: (
-                                <RefreshControl
-                                    refreshing={refreshing}
-                                    onRefresh={async () => {
-                                        setRefreshing(true)
-                                        if (typeof onRefresh !== 'undefined') {
-                                            onRefresh().then(() =>
-                                                setRefreshing(false)
-                                            )
-                                        }
-                                    }}
-                                    colors={[theme.primary]}
-                                    progressBackgroundColor={
-                                        theme.backgroundVariant
-                                    }
-                                />
-                            ),
-                        }}
+                        scrollViewProps={scrollViewProps}
                         {...rest}
                     />
                 </Container>

@@ -1,7 +1,5 @@
 import isEqual from 'lodash/isEqual'
 import { StyleProp, ViewStyle } from 'react-native'
-import { capitalize } from '@recipes/api-types/utils'
-import { DropdownItem } from '@/types'
 import { ListItem } from '@/types'
 
 export function handleNumericTextInput(

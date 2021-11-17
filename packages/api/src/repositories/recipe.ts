@@ -139,7 +139,7 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         if (typeof this.searchQuery === 'undefined') return this
 
         const queries = this.searchQuery.map((q) => {
-            const query = `'%${q}%'`
+            const query = `'%${q.trim()}%'`
             return `(${this.repository
                 .createQueryBuilder('recipe')
                 .select('recipe.id', 'id')

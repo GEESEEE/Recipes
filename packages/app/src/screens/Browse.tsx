@@ -16,7 +16,7 @@ import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
 import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
-import { Loading4Dots } from '@/components/atoms'
+import { Button, Loading4Dots } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
@@ -119,7 +119,13 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                             </FooterContainer>
                         )
                     }
-                    return null
+                    return (
+                        <Button
+                            type="Clear"
+                            text="Load more"
+                            onPress={() => newPage()}
+                        />
+                    )
                 }}
             />
         </Container>
