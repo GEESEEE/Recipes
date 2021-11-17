@@ -19,12 +19,11 @@ import { SectionListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { sectionsActions } from '@/redux/slices'
 import { applySearch, sortPosition } from '@/utils'
-import { Typography } from '@/styles'
 
 function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const settings = useSettings()
-    const { theme, textSize } = settings
+    const { theme } = settings
     const sectionHeight = useSectionHeight()
     const dispatch = useAppDispatch()
 

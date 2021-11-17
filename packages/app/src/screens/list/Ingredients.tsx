@@ -12,7 +12,6 @@ import {
 import { IngredientListItem } from '@/components/molecules'
 import { sortPosition } from '@/utils'
 import { editRecipeActions } from '@/redux'
-import { Typography } from '@/styles'
 
 function EditIngredientsScreen({
     navigation,
@@ -21,7 +20,7 @@ function EditIngredientsScreen({
 }): JSX.Element {
     const settings = useSettings()
     const editRecipe = useEditRecipe()
-    const { theme, textSize } = settings
+    const { theme } = settings
     const ingredientHeight = useIngredientHeight()
 
     useHeader(navigation, {
