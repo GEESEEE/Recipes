@@ -106,8 +106,6 @@ const ListItemRecyclerView = React.forwardRef(
 
         const [refreshing, setRefreshing] = React.useState(false)
 
-        const renderItemsAhead = 5
-
         const itemLayout = {
             width,
             height: itemHeight,
@@ -324,7 +322,6 @@ const ListItemRecyclerView = React.forwardRef(
                         dataProvider={dataProvider}
                         rowRenderer={rowRenderer}
                         onScroll={onScroll}
-                        // renderAheadOffset={itemHeight * renderItemsAhead}
                         scrollViewProps={scrollViewProps}
                         {...rest}
                     />
