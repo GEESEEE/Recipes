@@ -88,8 +88,8 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     return (
         <Container backgroundColor={theme.background}>
             {verifyTokenStatus.isLoading ? <LoadingModal /> : null}
-
             {auth.user.id < 0 ? <LoginModal /> : null}
+
             <ListItemRecyclerView
                 Element={SectionListItem}
                 data={filteredSections}
