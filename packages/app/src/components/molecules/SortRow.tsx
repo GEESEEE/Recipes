@@ -54,20 +54,21 @@ function SortRow({ position, option, header }: SortRowProps): JSX.Element {
     const state = sort.state[option].toString() as BooleanString
 
     return (
-        <RowContainer>
+        <RowContainer marginVertical="s">
             {header ? null : (
-                <Position marginHorizontal="s">
+                <Position type="SubHeader" marginHorizontal="s">
                     {selected ? position + 1 : ''}
                 </Position>
             )}
 
-            <SortName>{names[option]}</SortName>
+            <SortName type="SubHeader">{names[option]}</SortName>
             <SortValue>
-                <Text>{values(option)[state]}</Text>
+                <Text type="SubHeader">{values(option)[state]}</Text>
                 <IconButton
                     type={Icons.MyMaterialCommunityIcons}
                     name="swap-vertical"
                     onPress={() => dispatch(sortActions.swapSortState(option))}
+                    size="l"
                 />
             </SortValue>
             <ApplyButton
@@ -81,6 +82,7 @@ function SortRow({ position, option, header }: SortRowProps): JSX.Element {
                     )
                 }}
                 marginHorizontal="s"
+                size="l"
             />
         </RowContainer>
     )
