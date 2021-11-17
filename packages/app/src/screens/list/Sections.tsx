@@ -11,6 +11,7 @@ import {
     useSearch,
     useUpdateEffect,
     useSections,
+    useSectionHeight,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService, sectionService } from '@/redux'
@@ -24,6 +25,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const settings = useSettings()
     const { theme, textSize } = settings
+    const sectionHeight = useSectionHeight()
     const dispatch = useAppDispatch()
 
     // Verify Token stuff
@@ -97,11 +99,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
                 dragDrop
                 updateSlice={sectionsActions.updateSections}
                 updateDatabase={updateSections}
-                itemHeight={
-                    16 +
-                    Typography.lineHeight('SubHeader', textSize) +
-                    2 * Typography.lineHeight('Text', textSize)
-                }
+                itemHeight={sectionHeight}
             />
         </Container>
     )

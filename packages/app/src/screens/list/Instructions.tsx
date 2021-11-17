@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import { Instruction } from '@recipes/api-types/v1'
 import { Icons, View } from '@/components/base'
 import { ListItemRecyclerView } from '@/components/organisms'
-import { useEditRecipe, useHeader, useSettings } from '@/hooks'
+import {
+    useEditRecipe,
+    useHeader,
+    useInstructionHeight,
+    useSettings,
+} from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
 import { sortPosition } from '@/utils'
 import { editRecipeActions } from '@/redux'
@@ -17,6 +22,7 @@ function EditInstructionsScreen({
     const settings = useSettings()
     const editRecipe = useEditRecipe()
     const { theme, textSize } = settings
+    const instructionHeight = useInstructionHeight()
 
     useHeader(navigation, {
         title: 'Instructions',
@@ -43,7 +49,7 @@ function EditInstructionsScreen({
                 props={{ instructions, useDropdown: true }}
                 dragDrop
                 updateSlice={updateSlice}
-                itemHeight={16 + 2 * Typography.lineHeight('Text', textSize)}
+                itemHeight={instructionHeight}
             />
         </Container>
     )

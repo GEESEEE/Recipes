@@ -11,17 +11,18 @@ import {
     useBrowse,
     useAppDispatch,
     useSortState,
+    useRecipeHeight,
 } from '@/hooks'
-import { ListItemRecyclerView, SortHeader } from '@/components/organisms'
+import { ListItemRecyclerView } from '@/components/organisms'
 import { RecipeListItem } from '@/components/molecules'
-import { Spacing, Typography } from '@/styles'
 import { recipeService, browseActions } from '@/redux'
-import { Button, Loading4Dots } from '@/components/atoms'
+import { Button } from '@/components/atoms'
 
 function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const dispatch = useAppDispatch()
-    const { theme, textSize } = useSettings()
+    const { theme } = useSettings()
+    const recipeHeight = useRecipeHeight()
 
     const recipes = useBrowse()
 
@@ -92,43 +93,28 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
                 data={recipes}
                 props={{}}
                 Element={RecipeListItem}
-                itemHeight={
-                    16 +
-                    Typography.lineHeight('SubHeader', textSize) +
-                    2 * Typography.lineHeight('Text', textSize) +
-                    Spacing.standardIconSize[textSize] +
-                    8
-                }
+                itemHeight={recipeHeight}
                 loading={isLoading}
                 onEndReached={newPage}
                 ref={listRef}
                 onRefresh={async () => fetch()}
                 renderFooter={() => {
-                    if (isFetching) {
-                        return (
-                            <Loading4Dots
-                                height={Typography.lineHeight('Text', textSize)}
-                            />
-                        )
-                    }
-                    if (nextPage === null) {
-                        return (
-                            <FooterContainer>
-                                <Text color={theme.primary}>End of List</Text>
-                            </FooterContainer>
-                        )
-                    }
                     return (
-                        <FooterContainer>
-                            <Button
-                                type="Outline"
-                                text="Load More"
-                                textTransform="capitalize"
-                                paddingVertical="n"
-                                marginVertical="s"
-                                width="s"
-                                onPress={() => newPage()}
-                            />
+                        <FooterContainer paddingVertical="s">
+                            {nextPage === null ? (
+                                <Text color={theme.primary}>End of List</Text>
+                            ) : (
+                                <Button
+                                    type="Clear"
+                                    text="Load More"
+                                    textTransform="capitalize"
+                                    paddingVertical="n"
+                                    marginVertical="s"
+                                    width="s"
+                                    onPress={() => newPage()}
+                                    loading={isFetching}
+                                />
+                            )}
                         </FooterContainer>
                     )
                 }}
@@ -146,6 +132,5 @@ const Container = styled(View)`
 `
 
 const FooterContainer = styled(View)`
-    width: 100%;
     align-items: center;
 `

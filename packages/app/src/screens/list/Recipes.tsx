@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Copy, Recipe, RecipeUpdate } from '@recipes/api-types/v1'
+import { Recipe, RecipeUpdate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
 import {
     useAppDispatch,
     useAuth,
     useHeader,
+    useRecipeHeight,
     useRecipes,
     useSearch,
     useSettings,
@@ -16,12 +17,12 @@ import { recipesActions, recipeService } from '@/redux'
 import { RecipeListItem } from '@/components/molecules'
 import { ListItemRecyclerView } from '@/components/organisms'
 import { applySearch, sortPosition } from '@/utils'
-import { Spacing, Typography } from '@/styles'
 
 function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
     const auth = useAuth()
     const recipes = useRecipes()
-    const { theme, textSize } = useSettings()
+    const { theme } = useSettings()
+    const recipeHeight = useRecipeHeight()
     const dispatch = useAppDispatch()
 
     const route = useRoute() as {
@@ -105,13 +106,7 @@ function RecipesScreen({ navigation }: { navigation: any }): JSX.Element {
                 dragDrop
                 updateSlice={updateSlice}
                 updateDatabase={updateDatabase}
-                itemHeight={
-                    16 +
-                    Typography.lineHeight('SubHeader', textSize) +
-                    2 * Typography.lineHeight('Text', textSize) +
-                    Spacing.standardIconSize[textSize] +
-                    8
-                }
+                itemHeight={recipeHeight}
             />
         </Container>
     )
