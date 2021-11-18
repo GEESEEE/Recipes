@@ -93,7 +93,10 @@ export default class RecipeService {
         recipes: Array<RecipeUpdate>
     ): Promise<RecipeResult[]> {
         const finalRecipes = recipes.map(async (recipe) => {
-            if (typeof recipe.sectionId !== 'undefined') {
+            if (
+                typeof recipe.sectionId !== 'undefined' &&
+                recipe.sectionId !== null
+            ) {
                 const maxPos = await this.recipeRepository
                     .queryBuilder()
                     .getMaxRecipePosition(recipe.sectionId)
