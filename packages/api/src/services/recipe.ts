@@ -122,6 +122,7 @@ export default class RecipeService {
         if (isCopied) {
             await this.recipeRepository.update(recipeId, {
                 sectionId: null,
+                publishedAt: null,
             })
             return true
         } else {
