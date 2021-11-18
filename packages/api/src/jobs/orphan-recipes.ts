@@ -10,8 +10,7 @@ async function run() {
             NOT IN
                 (SELECT recipe.copy_of
                 FROM recipe
-                WHERE recipe.copy_of IS NOT null
-                )
+                WHERE recipe.copy_of IS NOT null)
                 `
     )
 

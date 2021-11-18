@@ -6,11 +6,11 @@ const bree = new Bree({
     jobs: [
         {
             name: 'orphan-ingredients',
-            interval: '24h',
+            interval: 'at 3:00 am',
         },
         {
             name: 'orphan-recipes',
-            interval: '24h',
+            interval: 'at 3:00 am',
         },
     ],
 })
