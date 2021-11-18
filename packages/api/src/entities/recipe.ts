@@ -47,8 +47,8 @@ export default class Recipe {
     public instructions?: Instruction[]
 
     @Expose({ name: 'section_id' })
-    @Column({ name: 'section_id' })
-    public sectionId!: number
+    @Column({ name: 'section_id', nullable: true })
+    public sectionId!: number | null
 
     @Expose()
     @Type(() => Section)

@@ -29,7 +29,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     // Verify Token stuff
     const [loading, setLoading] = React.useState(true)
-
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
 
@@ -52,19 +51,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     React.useEffect(() => {
         retrieveToken()
     }, [])
-
-    useHeader(navigation, {
-        title: 'Sections',
-        drawer: true,
-        search: true,
-        right: [
-            {
-                type: Icons.MyFeather,
-                name: 'plus',
-                onPress: () => navigation.navigate('EditSection'),
-            },
-        ],
-    })
 
     // Sections configuration
     async function setSections(sections: Section[]): Promise<void> {
@@ -92,6 +78,19 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
         [search],
         ['name', 'description']
     )
+
+    useHeader(navigation, {
+        title: 'Sections',
+        drawer: true,
+        search: true,
+        right: [
+            {
+                type: Icons.MyFeather,
+                name: 'plus',
+                onPress: () => navigation.navigate('EditSection'),
+            },
+        ],
+    })
 
     return (
         <Container backgroundColor={theme.background}>
