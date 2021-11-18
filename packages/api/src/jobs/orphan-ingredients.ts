@@ -13,6 +13,5 @@ async function run() {
 
     process.exit(0)
 }
-;(async () => {
-    await run()
-})()
+
+run()

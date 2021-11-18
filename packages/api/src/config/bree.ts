@@ -8,6 +8,10 @@ const bree = new Bree({
             name: 'orphan-ingredients',
             interval: '24h',
         },
+        {
+            name: 'orphan-recipes',
+            interval: '24h',
+        },
     ],
 })
 
