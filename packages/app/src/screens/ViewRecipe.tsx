@@ -23,14 +23,17 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const browseRecipes = useBrowse()
 
     const route = useRoute() as {
-        params?: { sectionId: number; recipeId: number }
+        params?: { sectionId: number | null; recipeId: number }
     }
 
     let sectionId = -1
     let recipeId = -1
     if (typeof route.params !== 'undefined') {
-        recipeId = route.params.recipeId
-        sectionId = route.params.sectionId
+        const { params } = route
+        recipeId = params.recipeId
+        if (params.sectionId !== null) {
+            sectionId = params.sectionId
+        }
     }
 
     let passedRecipe: Recipe | undefined
