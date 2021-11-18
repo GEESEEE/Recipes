@@ -172,6 +172,16 @@ export class RecipeQueryBuilder extends BaseRecipeQueryBuilder<Recipe> {
         return this.andWhere(`recipe.id IN (${queries.join(' INTERSECT ')})`)
     }
 
+    public async isCopied(recipeId: number): Promise<boolean> {
+        const res = await this.repository.manager.query(`
+            SELECT recipe.copy_of
+            FROM recipe
+            WHERE recipe.copy_of IS NOT null
+        `)
+        const ids = res.map((val: any) => val.copy_of)
+        return ids.includes(recipeId)
+    }
+
     public async getMaxRecipePosition(sectionId: number): Promise<number> {
         const res = await this.repository.manager.query(`
            SELECT MAX(recipe.position)

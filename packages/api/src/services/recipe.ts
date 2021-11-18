@@ -115,8 +115,19 @@ export default class RecipeService {
     }
 
     public async deleteRecipe(recipeId: number): Promise<boolean> {
-        const result = await this.recipeRepository.delete(recipeId)
-        return result.affected !== 0
+        const isCopied = await this.recipeRepository
+            .queryBuilder()
+            .isCopied(recipeId)
+
+        if (isCopied) {
+            await this.recipeRepository.update(recipeId, {
+                sectionId: null,
+            })
+            return true
+        } else {
+            const result = await this.recipeRepository.delete(recipeId)
+            return result.affected !== 0
+        }
     }
 
     public async addIngredients(
