@@ -406,12 +406,12 @@ export class createSchema1620169219541 implements MigrationInterface {
                         type: 'float',
                     },
                     {
-                        name: 'payment_period',
+                        name: 'time_period',
                         type: 'enum',
                         enum: ['monthly', 'yearly'],
                     },
                     {
-                        name: 'time_period',
+                        name: 'payment_period',
                         type: 'enum',
                         enum: ['monthly', 'yearly'],
                     },
