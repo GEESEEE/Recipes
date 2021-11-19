@@ -4,7 +4,13 @@ import { SectionList } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { Instruction, Recipe, RecipeIngredient } from '@recipes/api-types/v1'
 import { View, Text, Icons } from '@/components/base'
-import { useSettings, useHeader, useRecipes, useBrowse } from '@/hooks'
+import {
+    useSettings,
+    useHeader,
+    useRecipes,
+    useBrowse,
+    useSections,
+} from '@/hooks'
 import {
     IngredientListItem,
     InstructionListItem,
@@ -19,6 +25,7 @@ type ViewRecipeProps = {
 
 function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const { theme } = useSettings()
+    const sections = useSections()
     const myRecipes = useRecipes()
     const browseRecipes = useBrowse()
 
@@ -84,7 +91,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     }
 
     const keyExtractor = (item: ListItem) => item.id.toString()
-    const sections = [
+    const listSections = [
         {
             key: 'Ingredients',
             data: recipe.recipeIngredients,
@@ -115,21 +122,24 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     ]
 
     const right = []
-    if (!isBrowse) {
+    if (!isBrowse || sections.length > 0) {
         right.push({
             type: Icons.MyMaterialIcons,
-            name: 'edit',
-            onPress: () =>
+            name: isBrowse ? 'content-copy' : 'edit',
+            onPress: () => {
+                const sectionId = isBrowse ? sections[0].id : recipe.sectionId
                 navigation.navigate('EditRecipeTabs', {
                     screen: 'EditRecipeStack',
                     params: {
                         screen: 'EditRecipe',
                         params: {
-                            sectionId: recipe.sectionId,
+                            sectionId,
                             recipeId: recipe.id,
+                            browse: isBrowse,
                         },
                     },
-                }),
+                })
+            },
         })
     }
 
@@ -142,7 +152,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     return (
         <Container backgroundColor={theme.background}>
             <StyledList
-                sections={sections}
+                sections={listSections}
                 ListHeaderComponent={
                     <RecipeListItem
                         item={recipe}
