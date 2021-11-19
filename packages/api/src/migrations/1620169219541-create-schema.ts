@@ -402,8 +402,13 @@ export class createSchema1620169219541 implements MigrationInterface {
                         type: 'varchar(255)',
                     },
                     {
-                        name: 'cost_per_month',
+                        name: 'cost_per_period',
                         type: 'float',
+                    },
+                    {
+                        name: 'time_period',
+                        type: 'enum',
+                        enum: ['monthly', 'yearly'],
                     },
                 ],
             })
