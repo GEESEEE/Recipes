@@ -36,10 +36,12 @@ function RecipeListItem({
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
     async function deleteRecip(): Promise<void> {
-        const args = { sectionId: item.sectionId, recipeId: item.id }
-        const res = await deleteRecipe(args)
-        if ('data' in res) {
-            dispatch(recipesActions.removeRecipe(args))
+        if (item.sectionId !== null) {
+            const args = { sectionId: item.sectionId, recipeId: item.id }
+            const res = await deleteRecipe(args)
+            if ('data' in res) {
+                dispatch(recipesActions.removeRecipe(args))
+            }
         }
     }
 

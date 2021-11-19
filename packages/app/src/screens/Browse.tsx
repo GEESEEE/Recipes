@@ -91,7 +91,7 @@ function BrowseScreen({ navigation }: { navigation: any }): JSX.Element {
         <Container backgroundColor={theme.background}>
             <ListItemRecyclerView
                 data={recipes}
-                props={{}}
+                props={{ useDropdown: true }}
                 Element={RecipeListItem}
                 itemHeight={recipeHeight}
                 loading={isLoading}

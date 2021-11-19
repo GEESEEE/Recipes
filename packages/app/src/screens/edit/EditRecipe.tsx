@@ -201,7 +201,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         }
 
         const baseArgs = {
-            sectionId: editRecipe.sectionId,
+            sectionId: editRecipe.sectionId as number,
             recipeId: oldRecipe.id,
         }
 
@@ -255,7 +255,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
             )
             dispatch(
                 recipesActions.addRecipe({
-                    sectionId: finalRecipe.sectionId,
+                    sectionId: finalRecipe.sectionId as number,
                     recipe: finalRecipe,
                 })
             )
