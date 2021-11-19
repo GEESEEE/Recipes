@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Recipe } from '@recipes/api-types/v1'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
 import { recipesActions, recipeService } from '@/redux'
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useSections } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
@@ -33,6 +33,10 @@ function RecipeListItem({
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
 
+    const route = useRoute()
+    const sections = useSections()
+    const isBrowse = route.name === 'Browse'
+
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
     async function deleteRecip(): Promise<void> {
@@ -46,13 +50,15 @@ function RecipeListItem({
     }
 
     function editRecip(): void {
+        const sectionId = isBrowse ? sections[0].id : item.sectionId
         navigation.navigate('EditRecipeTabs', {
             screen: 'EditRecipeStack',
             params: {
                 screen: 'EditRecipe',
                 params: {
-                    sectionId: item.sectionId,
+                    sectionId,
                     recipeId: item.id,
+                    browse: isBrowse,
                 },
             },
         })
@@ -65,18 +71,21 @@ function RecipeListItem({
         })
     }
 
-    const dropdownItems = [
-        {
-            id: 0,
-            text: 'Edit',
+    const dropdownItems = []
+
+    if (!isBrowse || sections.length > 0) {
+        dropdownItems.push({
+            text: isBrowse ? 'Copy' : 'Edit',
             onPress: editRecip,
-        },
-        {
-            id: 1,
+        })
+    }
+
+    if (!isBrowse) {
+        dropdownItems.push({
             text: 'Delete',
             onPress: deleteRecip,
-        },
-    ]
+        })
+    }
 
     const editPeopleCount =
         editable &&
@@ -88,7 +97,14 @@ function RecipeListItem({
 
     return (
         <ListItem
-            items={useDropdown ? dropdownItems : undefined}
+            items={
+                useDropdown
+                    ? dropdownItems.map((item, index) => ({
+                          id: index,
+                          ...item,
+                      }))
+                    : undefined
+            }
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
             hide={hide}

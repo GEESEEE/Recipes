@@ -85,7 +85,7 @@ function HeaderComponent({
         paddingLeft: insets.left + horizontalInsets,
         paddingRight: insets.right + horizontalInsets,
     }
-    console.log('Header', backgroundColor, color)
+
     return (
         <Container backgroundColor={backgroundColor} style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>

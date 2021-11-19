@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { View, Text, TextInput, TextInputProps } from '@/components/base'
+import { useSettings } from '@/hooks'
 
 type TextInputRoundedProps = {
     title?: string
@@ -13,6 +14,7 @@ function TextInputWithTitle({
     width,
     ...rest
 }: TextInputRoundedProps): JSX.Element {
+    const { theme } = useSettings()
     paddingHorizontal = paddingHorizontal || 'm'
     width = width || 'l'
 
@@ -27,11 +29,12 @@ function TextInputWithTitle({
                     {title}
                 </Text>
             ) : null}
-            <StyledTextInput
+            <TextInput
                 borderRadius="s"
                 paddingVertical="s"
                 paddingHorizontal={paddingHorizontal}
                 placeholder={title}
+                backgroundColor={theme.backgroundVariant}
                 {...rest}
             />
         </Container>
@@ -41,7 +44,3 @@ function TextInputWithTitle({
 export default TextInputWithTitle
 
 const Container = styled(View)``
-
-const StyledTextInput = styled(TextInput)`
-    background-color: ${(props) => props.theme.backgroundVariant};
-`

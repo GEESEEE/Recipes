@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native'
 import { Recipe } from '@recipes/api-types/v1'
 import {
     useAppDispatch,
+    useBrowse,
     useEditRecipe,
     useHeader,
     useRecipes,
@@ -46,22 +47,28 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const recipes = useRecipes()
     const sections = useSections()
     const dispatch = useAppDispatch()
+    const browse = useBrowse()
 
     const route = useRoute() as {
-        params?: { sectionId: number; recipeId: number }
+        params?: { sectionId: number; recipeId: number; browse: boolean }
     }
 
     let sectionId = -1
     let recipeId = -1
+    let isBrowse = false
     if (typeof route.params !== 'undefined') {
         recipeId = route.params.recipeId
         sectionId = route.params.sectionId
+        isBrowse = route.params.browse
     }
 
     let passedRecipe: Recipe | undefined
     const sectionRecipes = recipes[sectionId]
-    if (typeof sectionRecipes !== 'undefined') {
+    if (!isBrowse && typeof sectionRecipes !== 'undefined') {
         passedRecipe = sectionRecipes.find((recipe) => recipe.id === recipeId)
+    }
+    if (isBrowse) {
+        passedRecipe = browse.find((recipe) => recipe.id === recipeId)
     }
 
     React.useEffect(() => {
