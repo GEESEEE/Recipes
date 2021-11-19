@@ -46,10 +46,10 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     let passedRecipe: Recipe | undefined
     const sectionRecipes = myRecipes[sectionId]
     const isBrowse = typeof sectionRecipes === 'undefined'
-    if (!isBrowse) {
-        passedRecipe = sectionRecipes.find((recipe) => recipe.id === recipeId)
-    } else {
+    if (isBrowse) {
         passedRecipe = browseRecipes.find((recipe) => recipe.id === recipeId)
+    } else {
+        passedRecipe = sectionRecipes.find((recipe) => recipe.id === recipeId)
     }
 
     const existRecipe =
