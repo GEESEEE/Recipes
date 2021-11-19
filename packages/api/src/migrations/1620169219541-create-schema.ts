@@ -386,9 +386,116 @@ export class createSchema1620169219541 implements MigrationInterface {
                 ],
             })
         )
+
+        await queryRunner.createTable(
+            new Table({
+                name: 'subscription_plan',
+                columns: [
+                    {
+                        name: 'id',
+                        type: 'int',
+                        isPrimary: true,
+                        isGenerated: true,
+                    },
+                    {
+                        name: 'name',
+                        type: 'varchar(255)',
+                    },
+                    {
+                        name: 'cost_per_month',
+                        type: 'float',
+                    },
+                ],
+            })
+        )
+
+        await queryRunner.createTable(
+            new Table({
+                name: 'subscription',
+                columns: [
+                    {
+                        name: 'id',
+                        type: 'int',
+                        isPrimary: true,
+                        isGenerated: true,
+                    },
+                    {
+                        name: 'plan_id',
+                        type: 'int',
+                    },
+                    {
+                        name: 'user_id',
+                        type: 'int',
+                    },
+                    {
+                        name: 'start',
+                        type: 'timestamp with time zone',
+                        default: 'NOW()',
+                    },
+                    {
+                        name: 'end',
+                        type: 'timestamp with time zone',
+                        isNullable: true,
+                        default: null,
+                    },
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['plan_id'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'subscription_plan',
+                        onDelete: 'CASCADE',
+                    },
+                    {
+                        columnNames: ['user_id'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'user',
+                        onDelete: 'CASCADE',
+                    },
+                ],
+            })
+        )
+
+        await queryRunner.createTable(
+            new Table({
+                name: 'payment',
+                columns: [
+                    {
+                        name: 'id',
+                        type: 'int',
+                        isPrimary: true,
+                        isGenerated: true,
+                    },
+                    {
+                        name: 'subscription_id',
+                        type: 'int',
+                    },
+                    {
+                        name: 'amount',
+                        type: 'float',
+                    },
+                    {
+                        name: 'date',
+                        type: 'timestamp with time zone',
+                        default: 'NOW()',
+                    },
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['subscription_id'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'subscription',
+                        onDelete: 'CASCADE',
+                    },
+                ],
+            })
+        )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable('payment')
+        await queryRunner.dropTable('subscription')
+        await queryRunner.dropTable('subscription_plan')
         await queryRunner.dropTable('instruction')
         await queryRunner.dropTable('recipe_ingredient')
         await queryRunner.dropTable('ingredient')
