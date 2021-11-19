@@ -71,6 +71,7 @@ function DropdownMenu({
                 }}
                 color={iconColor}
                 size={iconSize}
+                disabled={items.length === 0}
             />
             {open ? (
                 <Menu toggle={toggle} items={items} style={menuStyle} />
