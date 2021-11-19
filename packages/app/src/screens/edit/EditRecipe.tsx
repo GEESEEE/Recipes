@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { Recipe } from '@recipes/api-types/v1'
+import cloneDeep from 'lodash/cloneDeep'
 import {
     useAppDispatch,
     useBrowse,
@@ -59,7 +60,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     if (typeof route.params !== 'undefined') {
         recipeId = route.params.recipeId
         sectionId = route.params.sectionId
-        isBrowse = route.params.browse
+        isBrowse = !!route.params.browse
     }
 
     let passedRecipe: Recipe | undefined
@@ -72,14 +73,24 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     React.useEffect(() => {
-        dispatch(
-            editRecipeActions.setRecipe(
-                passedRecipe || { ...emptyRecipe, sectionId }
-            )
-        )
+        if (isBrowse && typeof passedRecipe !== 'undefined') {
+            const clone = cloneDeep(passedRecipe)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            passedRecipe = {
+                ...clone,
+                sectionId,
+                copyOf: recipeId,
+                publishedAt: null,
+            }
+        }
+        if (typeof passedRecipe === 'undefined') {
+            passedRecipe = { ...emptyRecipe, sectionId }
+        }
+
+        dispatch(editRecipeActions.setRecipe(passedRecipe))
     }, [dispatch, passedRecipe, sectionId])
 
-    const editing = typeof passedRecipe !== 'undefined'
+    const editing = typeof passedRecipe !== 'undefined' && !isBrowse
 
     const prepareTimeHours = Math.floor(editRecipe.prepareTime / 60)
     const prepareTimeMinutes = editRecipe.prepareTime - prepareTimeHours * 60
@@ -410,20 +421,22 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <View width="s" />
             </RowContainer>
 
-            <RowContainer
-                width={width}
-                paddingHorizontal={paddingHorizontal}
-                marginVertical={marginVertical}
-            >
-                <FlexText>{publishedText}</FlexText>
-                <Toggle
-                    width="s"
-                    marginHorizontal="s"
-                    onValueChange={(val: boolean) => handlePublish(val)}
-                    value={!!editRecipe.publishedAt}
-                />
-                <View width="s" />
-            </RowContainer>
+            {editRecipe.copyOf === null ? (
+                <RowContainer
+                    width={width}
+                    paddingHorizontal={paddingHorizontal}
+                    marginVertical={marginVertical}
+                >
+                    <FlexText>{publishedText}</FlexText>
+                    <Toggle
+                        width="s"
+                        marginHorizontal="s"
+                        onValueChange={(val: boolean) => handlePublish(val)}
+                        value={!!editRecipe.publishedAt}
+                    />
+                    <View width="s" />
+                </RowContainer>
+            ) : null}
 
             <RowContainer
                 width={width}
