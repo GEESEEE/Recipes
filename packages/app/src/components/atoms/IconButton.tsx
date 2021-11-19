@@ -40,9 +40,8 @@ function IconButton({
 
     ...rest
 }: IconButtonProps): JSX.Element {
-    const { theme, textSize } = useSettings()
+    const { textSize } = useSettings()
     size = size || 's'
-    console.log('IconButton', backgroundColor, color)
 
     const iconSize = Spacing.iconSize(size, textSize)
     return (

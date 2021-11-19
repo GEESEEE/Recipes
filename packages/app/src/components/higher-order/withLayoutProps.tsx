@@ -57,8 +57,8 @@ function withLayoutProps<T extends LayoutProps>(
 
         return (
             <WrappedComponent
-                style={[myStyle, style]}
                 backgroundColor={backgroundColor}
+                style={[myStyle, style]}
                 {...(rest as T)}
             >
                 {children}

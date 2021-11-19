@@ -76,7 +76,6 @@ function HeaderComponent({
 
     const containerStyle = {
         height: insets.top + height,
-        backgroundColor,
         borderColor: theme.primary,
         borderBottomWidth: 1,
     }
@@ -88,7 +87,7 @@ function HeaderComponent({
     }
     console.log('Header', backgroundColor, color)
     return (
-        <Container style={containerStyle}>
+        <Container backgroundColor={backgroundColor} style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
                 {config.drawer ? (
                     <HeaderIcon
@@ -96,6 +95,7 @@ function HeaderComponent({
                         name="menu"
                         onPress={() => navigation.toggleDrawer()}
                         color={color}
+                        backgroundColor={backgroundColor}
                     />
                 ) : null}
                 {!config.drawer || config.return ? (
@@ -108,6 +108,7 @@ function HeaderComponent({
                                 : navigation.goBack()
                         }}
                         color={color}
+                        backgroundColor={backgroundColor}
                     />
                 ) : null}
 
@@ -151,6 +152,7 @@ function HeaderComponent({
                         name="search"
                         onPress={() => handleSearchToggle()}
                         color={color}
+                        backgroundColor={backgroundColor}
                     />
                 ) : null}
                 {config.sort ? (
@@ -159,6 +161,7 @@ function HeaderComponent({
                         name="filter-list"
                         onPress={() => toggleSort()}
                         color={color}
+                        backgroundColor={backgroundColor}
                         subCount={sortState.order.length}
                     />
                 ) : null}

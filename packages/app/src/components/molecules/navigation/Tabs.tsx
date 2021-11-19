@@ -78,7 +78,6 @@ const TabComponent = ({
     const containerStyle: StyleProp<ViewStyle> = {
         paddingTop,
         height: height + paddingTop,
-        backgroundColor,
         borderWidth: 1,
         ...containerBorder,
     }
@@ -115,7 +114,7 @@ const TabComponent = ({
     // #endregion
 
     return (
-        <Container style={containerStyle}>
+        <Container backgroundColor={backgroundColor} style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
                 <TabSlider key={uuid()} style={sliderStyle} />
 
@@ -177,7 +176,7 @@ const RouteTab = ({
                     color={color}
                 />
             ) : null}
-            <Text type="SubHeader" style={{ color }}>
+            <Text type="SubHeader" color={color}>
                 {text}
             </Text>
         </TabContainer>

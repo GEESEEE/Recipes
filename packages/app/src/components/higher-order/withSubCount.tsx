@@ -25,7 +25,6 @@ function withSubCount<T extends SubCountProps>(
         color,
         ...rest
     }): JSX.Element => {
-        const { theme } = useSettings()
         if (typeof subCount === 'undefined') {
             return <WrappedComponent color={color} {...(rest as T)} />
         }
