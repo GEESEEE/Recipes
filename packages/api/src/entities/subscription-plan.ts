@@ -17,6 +17,10 @@ export default class SubscriptionPlan {
     @Column({ type: 'float', name: 'cost_per_period' })
     public costPerPeriod!: number
 
+    @Expose({ name: 'payment_period' })
+    @Column({ type: 'enum', enum: TimePeriod, name: 'payment_period' })
+    public paymentPeriod!: TimePeriod
+
     @Expose({ name: 'time_period' })
     @Column({ type: 'enum', enum: TimePeriod, name: 'time_period' })
     public timePeriod!: TimePeriod
