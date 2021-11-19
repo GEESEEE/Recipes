@@ -45,7 +45,7 @@ function withSubCount<T extends SubCountProps>(
                 <WrappedComponent color={color} {...(rest as T)} />
                 <Text
                     type="SubText"
-                    weight="semiBold"
+                    weight="bold"
                     style={subCountStyle}
                     color={color}
                     borderRadius="s"

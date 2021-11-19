@@ -34,13 +34,16 @@ function IconButton({
 
     loading,
     color,
+    backgroundColor,
     size,
     disabled,
 
     ...rest
 }: IconButtonProps): JSX.Element {
-    const { textSize } = useSettings()
+    const { theme, textSize } = useSettings()
     size = size || 's'
+    console.log('IconButton', backgroundColor, color)
+
     const iconSize = Spacing.iconSize(size, textSize)
     return (
         <TouchableOpacity
@@ -49,9 +52,19 @@ function IconButton({
             {...rest}
         >
             {loading ? (
-                <Loading4Dots width={iconSize} />
+                <Loading4Dots
+                    width={iconSize}
+                    dotColor={color}
+                    backgroundColor={backgroundColor}
+                />
             ) : (
-                <Icon type={type} name={name} color={color} size={size} />
+                <Icon
+                    type={type}
+                    name={name}
+                    color={color}
+                    size={size}
+                    backgroundColor={backgroundColor}
+                />
             )}
         </TouchableOpacity>
     )

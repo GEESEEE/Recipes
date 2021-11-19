@@ -12,8 +12,8 @@ import {
 import { settingsActions } from '@/redux'
 import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
-import { View, Text, TextInput } from '@/components/base'
-import { Error, Button } from '@/components/atoms'
+import { View, Text, TextInput, Icons } from '@/components/base'
+import { Error, Button, IconButton } from '@/components/atoms'
 
 import { userService } from '@/redux'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
@@ -121,6 +121,13 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 type="Solid"
                 text="Merge test"
                 onPress={() => showPopup()}
+            />
+            <IconButton
+                type={Icons.MyFeather}
+                name="menu"
+                loading
+                onPress={() => console.log('Press')}
+                color={theme.error}
             />
         </Container>
     )

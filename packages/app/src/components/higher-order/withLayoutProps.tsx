@@ -56,7 +56,11 @@ function withLayoutProps<T extends LayoutProps>(
         if (width) myStyle.width = Spacing.widths[width]
 
         return (
-            <WrappedComponent style={[myStyle, style]} {...(rest as T)}>
+            <WrappedComponent
+                style={[myStyle, style]}
+                backgroundColor={backgroundColor}
+                {...(rest as T)}
+            >
                 {children}
             </WrappedComponent>
         )

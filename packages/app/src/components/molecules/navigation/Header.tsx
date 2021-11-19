@@ -23,6 +23,7 @@ type HeaderIcon = {
 
 type HeaderIconProps = HeaderIcon & {
     color: string
+    backgroundColor?: string
     size?: Spacing.Size
 } & IconButtonProps
 
@@ -85,7 +86,7 @@ function HeaderComponent({
         paddingLeft: insets.left + horizontalInsets,
         paddingRight: insets.right + horizontalInsets,
     }
-
+    console.log('Header', backgroundColor, color)
     return (
         <Container style={containerStyle}>
             <SafeContainer style={safeContainerStyle}>
@@ -169,6 +170,7 @@ function HeaderComponent({
                             name={icon.name}
                             onPress={icon.onPress}
                             color={color}
+                            backgroundColor={backgroundColor}
                             loading={icon.loading}
                             disabled={icon.disabled}
                         />
