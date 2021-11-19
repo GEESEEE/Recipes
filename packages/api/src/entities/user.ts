@@ -15,29 +15,36 @@ import {
 } from 'typeorm'
 import Section from './section'
 import Settings from './settings'
+import Subscription from './subscription'
 import Token from './token'
 
 @Entity('user')
 export default class User {
+    @Expose()
     @PrimaryGeneratedColumn()
     public readonly id!: number
 
+    @Expose()
     @Column({ length: 255, unique: true })
     @IsNotEmpty()
     @NotContains(' ')
     @IsAlphanumeric()
     public name!: string
 
+    @Expose()
     @Column({ length: 255, unique: true })
     @IsEmail()
     public email!: string
 
+    @Expose()
     @OneToMany(() => Token, (token) => token.user)
     public tokens?: string
 
+    @Expose()
     @OneToMany(() => Section, (section) => section.user)
     public sections?: Section[]
 
+    @Expose()
     @Column({ length: 255 })
     @IsNotEmpty()
     public password!: string
@@ -51,4 +58,9 @@ export default class User {
     @OneToOne(() => Settings, (settings) => settings.user)
     @JoinColumn({ name: 'settings_id' })
     public settings?: Settings
+
+    @Expose()
+    @Type(() => Subscription)
+    @OneToMany(() => Subscription, (subscription) => subscription.user)
+    public subscriptions?: Subscription[]
 }
