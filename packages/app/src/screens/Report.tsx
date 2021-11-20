@@ -21,12 +21,12 @@ function ReportScreen(): JSX.Element {
     }
 
     const [state, setState] = React.useState({
-        category: ReportType.INVALID,
+        category: capitalize(ReportType.INVALID),
         description: '',
     })
 
     function changeCategory(category: ReportType) {
-        setState({ ...state, category })
+        setState({ ...state, category: capitalize(category) })
     }
 
     function changeDescription(description: string) {
@@ -39,6 +39,7 @@ function ReportScreen(): JSX.Element {
     async function onSubmit() {
         await reportRecipe({
             ...state,
+            category: state.category.toLowerCase(),
             recipeId,
         })
         navigation.goBack()
@@ -62,7 +63,6 @@ function ReportScreen(): JSX.Element {
                         width="n"
                     />
                 }
-                element2={null}
                 paddingVertical="s"
             />
             <TextInputWithTitle
@@ -76,9 +76,10 @@ function ReportScreen(): JSX.Element {
             <Button
                 type="Solid"
                 text="Submit"
-                onPress={() => console.log('Submitting report')}
+                onPress={() => onSubmit()}
                 loading={reportRecipeStatus.isLoading}
                 marginVertical="m"
+                width="s"
             />
         </Container>
     )
