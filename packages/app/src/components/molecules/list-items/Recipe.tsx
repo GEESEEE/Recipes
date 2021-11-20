@@ -6,7 +6,7 @@ import ListItem from './ListItem'
 import { Icon, Icons, View, Text } from '@/components/base'
 import { Counter, Editable } from '@/components/atoms'
 import { recipesActions, recipeService } from '@/redux'
-import { useAppDispatch, useSections } from '@/hooks'
+import { useAppDispatch, useRecipeDropdownItems, useSections } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
@@ -24,39 +24,9 @@ function RecipeListItem({
     handleSectionNameChange,
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
-    const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
-
     const route = useRoute()
-    const sections = useSections()
     const isBrowse = route.name === 'Browse'
-
-    const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
-
-    async function deleteRecip(): Promise<void> {
-        if (item.sectionId !== null) {
-            const args = { sectionId: item.sectionId, recipeId: item.id }
-            const res = await deleteRecipe(args)
-            if ('data' in res) {
-                dispatch(recipesActions.removeRecipe(args))
-            }
-        }
-    }
-
-    function editRecip(): void {
-        const sectionId = isBrowse ? sections[0].id : item.sectionId
-        navigation.navigate('EditRecipeTabs', {
-            screen: 'EditRecipeStack',
-            params: {
-                screen: 'EditRecipe',
-                params: {
-                    sectionId,
-                    recipeId: item.id,
-                    browse: isBrowse,
-                },
-            },
-        })
-    }
 
     function onPress(): void {
         navigation.navigate('ViewRecipe', {
@@ -65,21 +35,7 @@ function RecipeListItem({
         })
     }
 
-    const dropdownItems = []
-
-    if (!isBrowse || sections.length > 0) {
-        dropdownItems.push({
-            text: isBrowse ? 'Copy' : 'Edit',
-            onPress: editRecip,
-        })
-    }
-
-    if (!isBrowse) {
-        dropdownItems.push({
-            text: 'Delete',
-            onPress: deleteRecip,
-        })
-    }
+    const dropdownItems = useRecipeDropdownItems(item, isBrowse)
 
     const prepareTimeHours = Math.floor(item.prepareTime / 60)
     const prepareTimeMinutes = item.prepareTime - prepareTimeHours * 60

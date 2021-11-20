@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './Drawer'
 import EditRecipeTabs from './EditRecipeTabs'
-import { PopupScreen, ViewRecipeScreen } from '@/screens'
+import { PopupScreen, ReportScreen, ViewRecipeScreen } from '@/screens'
 import { screenUtils } from '@/utils'
 
 const Stack = createStackNavigator()
@@ -31,6 +31,16 @@ function RootStack(): JSX.Element {
             <Stack.Screen
                 name="ViewRecipe"
                 component={ViewRecipeScreen}
+                options={{
+                    headerShown: true,
+                    presentation: 'transparentModal',
+                    cardStyleInterpolator: screenUtils.slideVertical,
+                }}
+            />
+
+            <Stack.Screen
+                name="ReportRecipe"
+                component={ReportScreen}
                 options={{
                     headerShown: true,
                     presentation: 'transparentModal',
