@@ -321,15 +321,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         ],
     })
 
-    const width = 'l'
-    const paddingHorizontal = 'm'
-    const marginVertical = 's'
-
-    const prepareTimeText = 'Prepare time'
-    const peopleCountText = 'People count'
-    const sectionText = 'Section'
-    const publishedText = 'Published'
-
     function handlePublish(val: boolean) {
         if (isComplete(editRecipe)) {
             dispatch(editRecipeActions.setPublished(val))
@@ -438,7 +429,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 text="Section"
                 element={
                     <Picker
-                        marginVertical={marginVertical}
                         items={sectionDropdownItems}
                         current={
                             sections.find((s) => s.id === editRecipe.sectionId)
@@ -447,6 +437,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         original={
                             sections.find((s) => s.id === sectionId)?.name || ''
                         }
+                        width="n"
                     />
                 }
             />

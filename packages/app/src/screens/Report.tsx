@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { ReportType } from '@recipes/api-types'
+import { capitalize, ReportType } from '@recipes/api-types/v1'
 import { View, Text, TextInput } from '@/components/base'
+import { Button, EditItem, TextInputWithTitle } from '@/components/atoms'
+import { Picker } from '@/components/molecules'
 import { useHeader, useSettings } from '@/hooks'
 import { recipeService } from '@/redux'
-import { Picker } from '@/components/molecules'
-import { Button } from '@/components/atoms'
 
 function ReportScreen(): JSX.Element {
     const { theme } = useSettings()
@@ -48,26 +48,37 @@ function ReportScreen(): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
-            <Text>Report </Text>
-            <Picker
-                items={Object.values(ReportType).map((cat, index) => ({
-                    id: index,
-                    text: cat,
-                    onPress: () => changeCategory(cat),
-                }))}
-                current={state.category}
-                original={state.category}
+            <EditItem
+                text="Category"
+                element={
+                    <Picker
+                        items={Object.values(ReportType).map((cat, index) => ({
+                            id: index,
+                            text: capitalize(cat),
+                            onPress: () => changeCategory(cat),
+                        }))}
+                        current={state.category}
+                        original={state.category}
+                        width="n"
+                    />
+                }
+                element2={null}
+                paddingVertical="s"
             />
-            <TextInput
+            <TextInputWithTitle
                 placeholder="Description"
+                title="Description"
                 value={state.description}
                 onChangeText={(t: string) => changeDescription(t)}
+                multiline
             />
+
             <Button
                 type="Solid"
                 text="Submit"
                 onPress={() => console.log('Submitting report')}
                 loading={reportRecipeStatus.isLoading}
+                marginVertical="m"
             />
         </Container>
     )
