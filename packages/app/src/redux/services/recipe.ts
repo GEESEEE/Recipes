@@ -7,6 +7,8 @@ import {
     RecipeScopes,
     RecipeSortOptions,
     RecipeUpdate,
+    Report,
+    ReportCreate,
     ScopeParams,
     Sort,
 } from '@recipes/api-types/v1'
@@ -61,6 +63,17 @@ const recipeApi = api.injectEndpoints({
             },
         }),
 
+        reportRecipe: builder.mutation<Report, Omit<ReportCreate, 'userId'>>({
+            query: (args) => ({
+                url: `/recipes/${args.recipeId}/report`,
+                method: 'PUT',
+                body: {
+                    description: args.description,
+                    category: args.category,
+                },
+            }),
+        }),
+
         getRecipesBySectionId: builder.query<Recipe[], number>({
             query: (sectionId) => ({
                 url: `/sections/${sectionId}/recipes`,
@@ -106,6 +119,10 @@ const { endpoints } = recipeApi
 export const useGetRecipesByScopesQuery = withPopupQuery<
     typeof endpoints.getRecipesByScopes
 >(recipeApi.useGetRecipesByScopesQuery)
+
+export const useReportRecipeMutation = withPopupMutation<
+    typeof endpoints.reportRecipe
+>(recipeApi.useReportRecipeMutation)
 
 export const useGetRecipesBySectionIdQuery = withPopupQuery<
     typeof endpoints.getRecipesBySectionId
