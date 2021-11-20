@@ -22,6 +22,8 @@ export const TYPES = {
     RecipeIngredientRepository: Symbol.for('RecipeIngredientRepository'),
     InstructionRepository: Symbol.for('InstructionRepository'),
 
+    ReportRepository: Symbol.for('ReportRepository'),
+
     // Services
     SectionService: Symbol.for('SectionService'),
     RecipeService: Symbol.for('RecipeService'),

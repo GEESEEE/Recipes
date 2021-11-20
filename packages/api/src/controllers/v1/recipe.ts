@@ -2,6 +2,7 @@ import { ValidationChain, query, body } from 'express-validator'
 import {
     controller,
     httpGet,
+    httpPut,
     interfaces,
     queryParam,
     request,
@@ -14,11 +15,12 @@ import {
     RecipeScopeArgs,
     RecipeScopes,
     RecipeSortOptions,
+    ReportType,
     SortQueryTuple,
 } from '@recipes/api-types/v1'
 import { constants, decodeQueryParams, decodeSortQuery } from '@/utils'
 import { RecipeService } from '@/services'
-import { RecipeResult } from '@/types'
+import { RecipeResult, ReportResult } from '@/types'
 
 const { TYPES } = constants
 
@@ -72,6 +74,28 @@ export default class RecipeController implements interfaces.Controller {
         })
     }
 
+    @httpPut(
+        ':recipeId/report',
+        TYPES.PassportMiddleware,
+        ...RecipeController.validate('reportRecipe'),
+        TYPES.ErrorMiddleware
+    )
+    public async reportRecipe(
+        @request() req: Request,
+        @queryParam('recipeId') recipeId: number,
+        @requestBody()
+        body: {
+            category: ReportType
+            description: string
+        }
+    ): Promise<ReportResult> {
+        return await this.recipeService.reportRecipe({
+            userId: req.user?.id as number,
+            recipeId,
+            ...body,
+        })
+    }
+
     // #region validate
     private static validate(method: string): ValidationChain[] {
         switch (method) {
@@ -92,6 +116,13 @@ export default class RecipeController implements interfaces.Controller {
                     query('scopes').customSanitizer(decodeQueryParams),
                     query('sort').customSanitizer(decodeSortQuery),
                     query('search').customSanitizer(decodeQueryParams),
+                ]
+
+            case 'reportRecipe':
+                return [
+                    query('recipeId').isInt().toInt(),
+                    body('category').isIn(Object.values(ReportType)),
+                    body('description').isString(),
                 ]
 
             default:

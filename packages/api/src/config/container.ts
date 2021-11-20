@@ -11,6 +11,7 @@ import {
     Token,
     Application,
     Ingredient,
+    Report,
 } from '@/entities'
 import {
     AuthService,
@@ -84,6 +85,9 @@ bind<Repository<Instruction>>(TYPES.InstructionRepository)
         return getRepository(Instruction)
     })
     .inRequestScope()
+bind<Repository<Report>>(TYPES.ReportRepository).toDynamicValue(() => {
+    return getRepository(Report)
+})
 
 bind<SectionService>(TYPES.SectionService).to(SectionService)
 bind<RecipeService>(TYPES.RecipeService).to(RecipeService)
