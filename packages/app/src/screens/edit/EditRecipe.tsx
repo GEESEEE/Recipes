@@ -389,6 +389,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         onChangeText={(t: string) => handlePrepareTimeHours(t)}
                         keyboardType="numeric"
                         maxLength={2}
+                        width="n"
                     />
                 }
                 element2={
@@ -400,6 +401,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         }
                         keyboardType="numeric"
                         maxLength={2}
+                        width="n"
                     />
                 }
             />
@@ -411,7 +413,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         increment={incrementPeopleCount}
                         decrement={decrementPeopleCount}
                         value={editRecipe.peopleCount}
-                        width="l"
+                        width="n"
                     />
                 }
                 element2={null}

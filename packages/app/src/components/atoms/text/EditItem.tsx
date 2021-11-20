@@ -25,6 +25,7 @@ function EditItem({
             <FlexText>{text}</FlexText>
             <ElementContainer width="m">
                 <FlexView>{element}</FlexView>
+                <View paddingHorizontal="s" />
                 {typeof element2 === 'undefined' ? null : element2 === null ? (
                     <FlexView />
                 ) : (
