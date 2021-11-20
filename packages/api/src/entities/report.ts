@@ -43,4 +43,8 @@ export default class Report {
     @ManyToOne(() => User, (user) => user.reports)
     @JoinColumn({ name: 'user_id' })
     public user?: User
+
+    @Expose()
+    @Column('timestamp with time zone', { default: 'NOW()' })
+    public date!: Date
 }

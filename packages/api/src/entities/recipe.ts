@@ -60,7 +60,10 @@ export default class Recipe {
     public section!: Section
 
     @Expose({ name: 'created_at' })
-    @Column('timestamp with time zone', { name: 'created_at' })
+    @Column('timestamp with time zone', {
+        name: 'created_at',
+        default: 'NOW()',
+    })
     public createdAt!: Date
 
     @Expose()
