@@ -80,6 +80,6 @@ export default class Recipe {
     public copyOf!: number | null
 
     @Expose()
-    @OneToMany(() => Report, (report) => report.recipes)
+    @OneToMany(() => Report, (report) => report.recipe)
     public reports?: Report[]
 }

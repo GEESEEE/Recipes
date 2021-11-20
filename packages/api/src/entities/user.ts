@@ -13,6 +13,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm'
+import Report from './report'
 import Section from './section'
 import Settings from './settings'
 import Subscription from './subscription'
@@ -63,4 +64,8 @@ export default class User {
     @Type(() => Subscription)
     @OneToMany(() => Subscription, (subscription) => subscription.user)
     public subscriptions?: Subscription[]
+
+    @Expose()
+    @OneToMany(() => Report, (report) => report.recipe)
+    public reports?: Report[]
 }

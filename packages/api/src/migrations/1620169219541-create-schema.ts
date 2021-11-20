@@ -410,12 +410,22 @@ export class createSchema1620169219541 implements MigrationInterface {
                         name: 'recipe_id',
                         type: 'int',
                     },
+                    {
+                        name: 'user_id',
+                        type: 'int',
+                    },
                 ],
                 foreignKeys: [
                     {
                         columnNames: ['recipe_id'],
                         referencedColumnNames: ['id'],
                         referencedTableName: 'recipe',
+                        onDelete: 'CASCADE',
+                    },
+                    {
+                        columnNames: ['user_id'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'user',
                         onDelete: 'CASCADE',
                     },
                 ],
