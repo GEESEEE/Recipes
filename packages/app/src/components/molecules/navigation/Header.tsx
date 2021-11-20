@@ -14,7 +14,7 @@ import { useSettings, useSort, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
 
 type HeaderElement = {
-    Element: any
+    element: any
     props: any
 }
 
@@ -189,7 +189,7 @@ function HeaderComponent({
                             />
                         )
                     }
-                    return <icon.Element key={uuid()} {...icon.props} />
+                    return <icon.element key={uuid()} {...icon.props} />
                 })}
                 {sort ? <SortModal toggle={() => toggleSort(false)} /> : null}
             </SafeContainer>

@@ -43,7 +43,7 @@ function DropdownMenu({
             paddingEnd: totalOffset,
         }
     }
-    console.log('Dropdownmenu', items, items?.length)
+
     const width = 100
     const menuHeight =
         (16 + Typography.lineHeight('Text', textSize)) * items.length
@@ -62,17 +62,18 @@ function DropdownMenu({
 
     return (
         <View style={containerStyle}>
-            <IconButton
-                type={Icons.MyMaterialCommunityIcons}
-                name="dots-vertical"
-                onPress={(e: TouchableEvent) => {
-                    setPosition(e.nativeEvent)
-                    toggle(true)
-                }}
-                color={iconColor}
-                size={iconSize}
-                disabled={items.length === 0}
-            />
+            {items.length > 0 ? (
+                <IconButton
+                    type={Icons.MyMaterialCommunityIcons}
+                    name="dots-vertical"
+                    onPress={(e: TouchableEvent) => {
+                        setPosition(e.nativeEvent)
+                        toggle(true)
+                    }}
+                    color={iconColor}
+                    size={iconSize}
+                />
+            ) : null}
             {open ? (
                 <Menu toggle={toggle} items={items} style={menuStyle} />
             ) : null}

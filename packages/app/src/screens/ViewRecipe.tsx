@@ -125,23 +125,21 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     ]
 
     const recipeDropdownItems = useRecipeDropdownItems(recipe, isBrowse)
-    console.log('ViewRecipe', recipeDropdownItems)
-    const right = []
-
-    right.push({
-        Element: DropdownMenu,
-        props: {
-            items: recipeDropdownItems.map((item, index) => ({
-                id: index,
-                ...item,
-            })),
-        },
-    })
 
     useHeader(navigation, {
         title:
             typeof passedRecipe !== 'undefined' ? recipe.name : 'View Recipe',
-        right,
+        right: [
+            {
+                element: DropdownMenu,
+                props: {
+                    items: recipeDropdownItems.map((item, index) => ({
+                        id: index,
+                        ...item,
+                    })),
+                },
+            },
+        ],
     })
 
     return (
