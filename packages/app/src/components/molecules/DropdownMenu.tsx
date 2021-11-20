@@ -43,7 +43,7 @@ function DropdownMenu({
             paddingEnd: totalOffset,
         }
     }
-
+    console.log('Dropdownmenu', items, items?.length)
     const width = 100
     const menuHeight =
         (16 + Typography.lineHeight('Text', textSize)) * items.length

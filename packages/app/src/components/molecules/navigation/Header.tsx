@@ -13,6 +13,11 @@ import {
 import { useSettings, useSort, useToggle } from '@/hooks'
 import { Spacing } from '@/styles'
 
+type HeaderElement = {
+    Element: any
+    props: any
+}
+
 type HeaderIcon = {
     type: any
     name: string
@@ -28,8 +33,17 @@ type HeaderIconProps = HeaderIcon & {
 } & IconButtonProps
 
 function HeaderIcon({ size, ...rest }: HeaderIconProps): JSX.Element {
+    const { theme, invertedColors } = useSettings()
+    const backgroundColor = invertedColors ? theme.primary : theme.background
     size = size || 'l'
-    return <IconButton size={size} paddingHorizontal="s" {...rest} />
+    return (
+        <IconButton
+            size={size}
+            paddingHorizontal="s"
+            backgroundColor={backgroundColor}
+            {...rest}
+        />
+    )
 }
 
 export type HeaderConfig = {
@@ -38,7 +52,7 @@ export type HeaderConfig = {
     search?: boolean
     sort?: boolean
     title?: string
-    right: Array<HeaderIcon>
+    right: Array<HeaderIcon | HeaderElement>
 }
 
 type HeaderComponentProps = {
@@ -95,7 +109,6 @@ function HeaderComponent({
                         name="menu"
                         onPress={() => navigation.toggleDrawer()}
                         color={color}
-                        backgroundColor={backgroundColor}
                     />
                 ) : null}
                 {!config.drawer || config.return ? (
@@ -108,7 +121,6 @@ function HeaderComponent({
                                 : navigation.goBack()
                         }}
                         color={color}
-                        backgroundColor={backgroundColor}
                     />
                 ) : null}
 
@@ -152,7 +164,6 @@ function HeaderComponent({
                         name="search"
                         onPress={() => handleSearchToggle()}
                         color={color}
-                        backgroundColor={backgroundColor}
                     />
                 ) : null}
                 {config.sort ? (
@@ -161,23 +172,24 @@ function HeaderComponent({
                         name="filter-list"
                         onPress={() => toggleSort()}
                         color={color}
-                        backgroundColor={backgroundColor}
                         subCount={sortState.order.length}
                     />
                 ) : null}
-                {config.right.map((icon) => {
-                    return (
-                        <HeaderIcon
-                            key={uuid()}
-                            type={icon.type}
-                            name={icon.name}
-                            onPress={icon.onPress}
-                            color={color}
-                            backgroundColor={backgroundColor}
-                            loading={icon.loading}
-                            disabled={icon.disabled}
-                        />
-                    )
+                {config.right.map((icon: any) => {
+                    if (typeof icon.type !== 'undefined') {
+                        return (
+                            <HeaderIcon
+                                key={uuid()}
+                                type={icon.type}
+                                name={icon.name}
+                                onPress={icon.onPress}
+                                color={color}
+                                loading={icon.loading}
+                                disabled={icon.disabled}
+                            />
+                        )
+                    }
+                    return <icon.Element key={uuid()} {...icon.props} />
                 })}
                 {sort ? <SortModal toggle={() => toggleSort(false)} /> : null}
             </SafeContainer>

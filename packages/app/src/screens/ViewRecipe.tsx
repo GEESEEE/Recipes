@@ -11,8 +11,10 @@ import {
     useRecipes,
     useBrowse,
     useSections,
+    useRecipeDropdownItems,
 } from '@/hooks'
 import {
+    DropdownMenu,
     IngredientListItem,
     InstructionListItem,
     RecipeListItem,
@@ -122,27 +124,19 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
         },
     ]
 
+    const recipeDropdownItems = useRecipeDropdownItems(recipe, isBrowse)
+    console.log('ViewRecipe', recipeDropdownItems)
     const right = []
-    if (!isBrowse || sections.length > 0) {
-        right.push({
-            type: Icons.MyMaterialIcons,
-            name: isBrowse ? 'content-copy' : 'edit',
-            onPress: () => {
-                const sectionId = isBrowse ? sections[0].id : recipe.sectionId
-                navigation.navigate('EditRecipeTabs', {
-                    screen: 'EditRecipeStack',
-                    params: {
-                        screen: 'EditRecipe',
-                        params: {
-                            sectionId,
-                            recipeId: recipe.id,
-                            browse: isBrowse,
-                        },
-                    },
-                })
-            },
-        })
-    }
+
+    right.push({
+        Element: DropdownMenu,
+        props: {
+            items: recipeDropdownItems.map((item, index) => ({
+                id: index,
+                ...item,
+            })),
+        },
+    })
 
     useHeader(navigation, {
         title:
