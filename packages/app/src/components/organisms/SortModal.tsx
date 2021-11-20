@@ -43,7 +43,10 @@ function SortModal({ toggle }: SortModalProps): JSX.Element {
                     {sort.order.map((option, index: number) => {
                         return <SortRow key={index} option={option} />
                     })}
-                    <Separator backgroundColor={theme.primary} />
+                    <Separator
+                        backgroundColor={theme.primary}
+                        marginVertical="m"
+                    />
                     {notSelectedOptions.map((option, index: number) => {
                         return <SortRow key={index} option={option} />
                     })}
