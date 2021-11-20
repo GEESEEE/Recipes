@@ -389,6 +389,41 @@ export class createSchema1620169219541 implements MigrationInterface {
 
         await queryRunner.createTable(
             new Table({
+                name: 'report',
+                columns: [
+                    {
+                        name: 'id',
+                        type: 'int',
+                        isPrimary: true,
+                        isGenerated: true,
+                    },
+                    {
+                        name: 'description',
+                        type: 'varchar(255)',
+                    },
+                    {
+                        name: 'category',
+                        type: 'enum',
+                        enum: ['incomplete', 'invalid', 'trolling', 'spam'],
+                    },
+                    {
+                        name: 'recipe_id',
+                        type: 'int',
+                    },
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['recipe_id'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'recipe',
+                        onDelete: 'CASCADE',
+                    },
+                ],
+            })
+        )
+
+        await queryRunner.createTable(
+            new Table({
                 name: 'subscription_plan',
                 columns: [
                     {

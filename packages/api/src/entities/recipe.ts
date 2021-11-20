@@ -10,6 +10,7 @@ import { Expose, Type } from 'class-transformer'
 import Instruction from './instruction'
 import RecipeIngredient from './recipe-ingredient'
 import Section from './section'
+import Report from './report'
 
 @Entity('recipe')
 export default class Recipe {
@@ -77,4 +78,8 @@ export default class Recipe {
     @Expose({ name: 'copy_of' })
     @Column({ type: 'int', name: 'copy_of', nullable: true, default: null })
     public copyOf!: number | null
+
+    @Expose()
+    @OneToMany(() => Report, (report) => report.recipes)
+    public reports?: Report[]
 }
