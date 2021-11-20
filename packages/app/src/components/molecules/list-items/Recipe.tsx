@@ -12,9 +12,6 @@ import { ListItemBaseProps } from '@/types'
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
     handleSectionNameChange?: (text: string) => void
     handleSectionDescriptionChange?: (text: string) => void
-    incrementPeopleCount?: () => void
-    decrementPeopleCount?: () => void
-    changePeopleCount?: (text: string) => void
 }
 
 function RecipeListItem({
@@ -26,9 +23,6 @@ function RecipeListItem({
     hide,
     handleSectionNameChange,
     handleSectionDescriptionChange,
-    incrementPeopleCount,
-    decrementPeopleCount,
-    changePeopleCount,
 }: SectionListItemProps): JSX.Element {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
@@ -87,11 +81,6 @@ function RecipeListItem({
         })
     }
 
-    const editPeopleCount =
-        editable &&
-        typeof incrementPeopleCount !== 'undefined' &&
-        typeof decrementPeopleCount !== 'undefined'
-
     const prepareTimeHours = Math.floor(item.prepareTime / 60)
     const prepareTimeMinutes = item.prepareTime - prepareTimeHours * 60
 
@@ -137,23 +126,15 @@ function RecipeListItem({
                         }${prepareTimeMinutes}`}
                     />
 
-                    {editPeopleCount ? (
-                        <Counter
-                            increment={incrementPeopleCount}
-                            decrement={decrementPeopleCount}
-                            value={item.peopleCount}
-                            iconType={Icons.MyMaterialIcons}
-                            iconName="person"
-                            onChange={changePeopleCount}
-                        />
-                    ) : (
+                    {editable ? null : (
                         <Property
                             iconType={Icons.MyMaterialIcons}
                             iconName="person"
-                            text={item.peopleCount}
+                            text={
+                                item.peopleCount === 0 ? '0' : item.peopleCount
+                            }
                         />
                     )}
-
                     {item.publishedAt !== null ? (
                         <Property
                             iconType={Icons.MyMaterialIcons}

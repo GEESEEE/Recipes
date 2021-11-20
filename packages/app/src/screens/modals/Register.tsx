@@ -2,7 +2,7 @@ import React, { Dispatch, useReducer } from 'react'
 import styled from 'styled-components'
 import { LOGIN_ACTIONS } from './Login'
 import { useAppSelector } from '@/hooks'
-import { Icons, Modal } from '@/components/base'
+import { Icons, Modal, View } from '@/components/base'
 import {
     Button,
     IconButton,
@@ -101,7 +101,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
     }
 
     function handleEmailInputChange(email: string): void {
-        const regex = /^[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+$/i
+        const regex =
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
         const isValidEmail = regex.test(email)
         localDispatch({
             type: REGISTER_ACTIONS.EMAIL_CHANGE,
@@ -176,8 +177,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
 
     return (
         <Container backgroundColor={theme.background}>
+            <View paddingVertical="l" marginVertical="l" />
             {/* Username Input Field */}
-
             <TextInputWithIcons
                 onChangeText={(text: string) => handleUsernameInputChange(text)}
                 placeholder="Username"

@@ -28,7 +28,7 @@ function Counter({
     const [editable, toggleEditable] = useToggle(false)
 
     const displayIcon = iconName && iconType && onChange
-
+    const size = 'l'
     return (
         <Container
             borderRadius="s"
@@ -41,19 +41,21 @@ function Counter({
                 name="minus"
                 onPress={decrement}
                 color={theme.primary}
+                size={size}
             />
             {displayIcon ? (
                 <IconButton
                     type={iconType}
                     name={iconName}
                     onPress={() => toggleEditable()}
+                    size={size}
                 />
             ) : null}
             <Editable
                 editable={editable}
                 paddingHorizontal={displayIcon ? 's' : 'm'}
                 paddingVertical="s"
-                type={displayIcon ? 'SubHeader' : 'Text'}
+                type={displayIcon ? 'Header' : 'SubHeader'}
                 text={value.toString()}
                 handleTextChange={onChange}
             />
@@ -63,6 +65,7 @@ function Counter({
                 name="plus"
                 onPress={increment}
                 color={theme.primary}
+                size={size}
             />
         </Container>
     )

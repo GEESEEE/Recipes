@@ -6,7 +6,7 @@ async function run() {
     await connection.manager.query(
         `   DELETE FROM recipe
             WHERE section_id = null
-            AND WHERE id
+            AND id
             NOT IN
                 (SELECT recipe.copy_of
                 FROM recipe

@@ -4,6 +4,7 @@ import { SectionList } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { Instruction, Recipe, RecipeIngredient } from '@recipes/api-types/v1'
 import { View, Text, Icons } from '@/components/base'
+import { Counter } from '@/components/atoms'
 import {
     useSettings,
     useHeader,
@@ -154,14 +155,17 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
             <StyledList
                 sections={listSections}
                 ListHeaderComponent={
-                    <RecipeListItem
-                        item={recipe}
-                        editable
-                        incrementPeopleCount={incrementPeopleCount}
-                        decrementPeopleCount={decrementPeopleCount}
-                        changePeopleCount={changePeopleCount}
-                        releaseHeight
-                    />
+                    <HeaderContainer>
+                        <RecipeListItem item={recipe} editable releaseHeight />
+                        <Counter
+                            increment={incrementPeopleCount}
+                            decrement={decrementPeopleCount}
+                            value={recipe.peopleCount}
+                            iconType={Icons.MyMaterialIcons}
+                            iconName="person"
+                            onChange={changePeopleCount}
+                        />
+                    </HeaderContainer>
                 }
                 renderSectionHeader={({ section }: any) => (
                     <SectionHeaderText
@@ -182,6 +186,10 @@ export default ViewRecipeScreen
 
 const Container = styled(View)`
     flex: 1;
+`
+
+const HeaderContainer = styled(View)`
+    align-items: center;
 `
 
 const StyledList = styled(SectionList as new () => SectionList<ListItem>)``
