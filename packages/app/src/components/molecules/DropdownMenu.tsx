@@ -13,14 +13,14 @@ type DropdownMenuProps = {
     items: DropdownItem[]
     iconOffset?: Spacing.Size
     iconSize?: Spacing.Size
-    iconColor?: string
+    color?: string
 }
 
 function DropdownMenu({
     items,
     iconOffset,
     iconSize,
-    iconColor,
+    color,
 }: DropdownMenuProps): JSX.Element {
     const { theme, textSize } = useSettings()
     const [open, toggle] = useToggle(false)
@@ -28,7 +28,7 @@ function DropdownMenu({
     const [pageX, pageY, setPosition] = usePosition()
 
     iconSize = iconSize || 'm'
-    iconColor = iconColor || theme.primary
+    color = color || theme.primary
 
     let containerStyle: StyleProp<ViewStyle> = {}
 
@@ -70,7 +70,7 @@ function DropdownMenu({
                         setPosition(e.nativeEvent)
                         toggle(true)
                     }}
-                    color={iconColor}
+                    color={color}
                     size={iconSize}
                 />
             ) : null}

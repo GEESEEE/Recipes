@@ -189,7 +189,13 @@ function HeaderComponent({
                             />
                         )
                     }
-                    return <icon.element key={uuid()} {...icon.props} />
+                    return (
+                        <icon.element
+                            key={uuid()}
+                            color={color}
+                            {...icon.props}
+                        />
+                    )
                 })}
                 {sort ? <SortModal toggle={() => toggleSort(false)} /> : null}
             </SafeContainer>

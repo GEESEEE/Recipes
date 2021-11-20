@@ -4,9 +4,10 @@ export class Report {
     public userId!: number
     public category!: ReportType
     public description!: string
+    public date!: Date
 }
 
-export type ReportCreate = Omit<Report, 'id'>
+export type ReportCreate = Omit<Report, 'id' | 'date'>
 
 export enum ReportType {
     INCOMPLETE = 'incomplete',
