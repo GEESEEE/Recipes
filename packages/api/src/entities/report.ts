@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm'
 import { Expose, Type } from 'class-transformer'
 import { ReportType } from '@recipes/api-types/v1'
 import Recipe from './recipe'
@@ -25,6 +31,7 @@ export default class Report {
     @Expose()
     @Type(() => Recipe)
     @ManyToOne(() => Recipe, (recipe) => recipe.reports)
+    @JoinColumn({ name: 'recipe_id' })
     public recipe?: Recipe
 
     @Expose({ name: 'user_id' })
@@ -34,5 +41,6 @@ export default class Report {
     @Expose()
     @Type(() => User)
     @ManyToOne(() => User, (user) => user.reports)
+    @JoinColumn({ name: 'user_id' })
     public user?: User
 }
