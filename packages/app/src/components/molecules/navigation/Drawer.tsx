@@ -8,7 +8,7 @@ import { authActions, settingsActions, authService, userService } from '@/redux'
 import { useAppDispatch, useAuth, useSettings, useToggle } from '@/hooks'
 import { ColorPicker } from '@/screens'
 import { Toggle, Text, View, Icons, Icon } from '@/components/base'
-import { Button, PressableTextWithElement } from '@/components/atoms'
+import { Button, DrawerItem } from '@/components/atoms'
 
 type DrawerNavigatorProps = {
     navigation: any
@@ -63,7 +63,7 @@ export default function DrawerNavigator({
                 </Header>
 
                 <ContainerView paddingVertical="m">
-                    <PressableTextWithElement
+                    <DrawerItem
                         text="Set Primary Color"
                         element={
                             <Icon
@@ -87,7 +87,7 @@ export default function DrawerNavigator({
                 </Text>
                 <ContainerView paddingVertical="m">
                     {/* Light Theme Toggle */}
-                    <PressableTextWithElement
+                    <DrawerItem
                         text="Light Theme"
                         element={
                             <Toggle
@@ -100,7 +100,7 @@ export default function DrawerNavigator({
                     />
 
                     {/* Inverted Colors Toggle */}
-                    <PressableTextWithElement
+                    <DrawerItem
                         text="Inverted Colors"
                         element={
                             <Toggle

@@ -10,13 +10,11 @@ type TextInputRoundedProps = {
 function TextInputWithTitle({
     title,
     marginHorizontal,
-    paddingHorizontal,
-    width,
+    paddingHorizontal = 'm',
+    width = 'l',
     ...rest
 }: TextInputRoundedProps): JSX.Element {
     const { theme } = useSettings()
-    paddingHorizontal = paddingHorizontal || 'm'
-    width = width || 'l'
 
     return (
         <Container

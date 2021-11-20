@@ -14,7 +14,7 @@ import {
     useToggle,
 } from '@/hooks'
 import { View, Text, Icons, Toggle } from '@/components/base'
-import { TextInputWithTitle, Counter } from '@/components/atoms'
+import { TextInputWithTitle, Counter, EditItem } from '@/components/atoms'
 import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
     editRecipeActions,
@@ -380,84 +380,74 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 value={editRecipe.description}
             />
 
-            <RowContainer
-                width={width}
-                paddingHorizontal={paddingHorizontal}
-                marginVertical={marginVertical}
-            >
-                <FlexText>{prepareTimeText}</FlexText>
-                <TextInputWithTitle
-                    value={prepareTimeHours.toString()}
-                    marginHorizontal="s"
-                    title="Hours"
-                    onChangeText={(t: string) => handlePrepareTimeHours(t)}
-                    width="s"
-                    keyboardType="numeric"
-                    maxLength={2}
-                />
-                <TextInputWithTitle
-                    value={prepareTimeMinutes.toString()}
-                    title="Minutes"
-                    onChangeText={(t: string) => handlePrepareTimeMinutes(t)}
-                    width="s"
-                    keyboardType="numeric"
-                    maxLength={2}
-                />
-            </RowContainer>
+            <EditItem
+                text="Prepare time"
+                element={
+                    <TextInputWithTitle
+                        value={prepareTimeHours.toString()}
+                        title="Hours"
+                        onChangeText={(t: string) => handlePrepareTimeHours(t)}
+                        keyboardType="numeric"
+                        maxLength={2}
+                    />
+                }
+                element2={
+                    <TextInputWithTitle
+                        value={prepareTimeMinutes.toString()}
+                        title="Minutes"
+                        onChangeText={(t: string) =>
+                            handlePrepareTimeMinutes(t)
+                        }
+                        keyboardType="numeric"
+                        maxLength={2}
+                    />
+                }
+            />
 
-            <RowContainer
-                width={width}
-                paddingHorizontal={paddingHorizontal}
-                marginVertical={marginVertical}
-            >
-                <FlexText>{peopleCountText}</FlexText>
-                <Counter
-                    width="s"
-                    marginHorizontal="s"
-                    increment={incrementPeopleCount}
-                    decrement={decrementPeopleCount}
-                    value={editRecipe.peopleCount}
-                />
-                <View width="s" />
-            </RowContainer>
+            <EditItem
+                text="People count"
+                element={
+                    <Counter
+                        increment={incrementPeopleCount}
+                        decrement={decrementPeopleCount}
+                        value={editRecipe.peopleCount}
+                        width="l"
+                    />
+                }
+                element2={null}
+            />
 
             {editRecipe.copyOf === null ? (
-                <RowContainer
-                    width={width}
-                    paddingHorizontal={paddingHorizontal}
-                    marginVertical={marginVertical}
-                >
-                    <FlexText>{publishedText}</FlexText>
-                    <Toggle
-                        width="s"
-                        marginHorizontal="s"
-                        onValueChange={(val: boolean) => handlePublish(val)}
-                        value={!!editRecipe.publishedAt}
-                    />
-                    <View width="s" />
-                </RowContainer>
+                <EditItem
+                    text="Published"
+                    element={
+                        <Toggle
+                            width="s"
+                            marginHorizontal="s"
+                            onValueChange={(val: boolean) => handlePublish(val)}
+                            value={!!editRecipe.publishedAt}
+                        />
+                    }
+                    element2={null}
+                />
             ) : null}
 
-            <RowContainer
-                width={width}
-                paddingHorizontal={paddingHorizontal}
-                marginVertical={marginVertical}
-            >
-                <FlexText>{sectionText}</FlexText>
-                <Picker
-                    width="m"
-                    marginHorizontal="s"
-                    marginVertical={marginVertical}
-                    items={sectionDropdownItems}
-                    current={
-                        sections.find((s) => s.id === editRecipe.sectionId)
-                            ?.name || ''
-                    }
-                    original={
-                        sections.find((s) => s.id === sectionId)?.name || ''
-                    }
-                />
-            </RowContainer>
+            <EditItem
+                text="Section"
+                element={
+                    <Picker
+                        marginVertical={marginVertical}
+                        items={sectionDropdownItems}
+                        current={
+                            sections.find((s) => s.id === editRecipe.sectionId)
+                                ?.name || ''
+                        }
+                        original={
+                            sections.find((s) => s.id === sectionId)?.name || ''
+                        }
+                    />
+                }
+            />
         </Container>
     )
 }
@@ -467,13 +457,4 @@ export default EditRecipeScreen
 const Container = styled(View)`
     flex: 1;
     align-items: center;
-`
-
-const RowContainer = styled(View)`
-    flex-direction: row;
-    align-items: center;
-`
-
-const FlexText = styled(Text)`
-    flex: 1;
 `
