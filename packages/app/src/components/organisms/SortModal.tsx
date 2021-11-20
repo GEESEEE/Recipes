@@ -33,13 +33,13 @@ function SortModal({ toggle }: SortModalProps): JSX.Element {
                     size="l"
                 />
                 <ContentContainer>
-                    <Title
+                    <Text
                         type="Header"
                         color={theme.primary}
                         paddingVertical="s"
                     >
                         {title}
-                    </Title>
+                    </Text>
                     {sort.order.map((option, index: number) => {
                         return <SortRow key={index} option={option} />
                     })}
@@ -77,8 +77,6 @@ const SubContainer = styled(View)`
 const ContentContainer = styled(View)`
     align-items: center;
 `
-
-const Title = styled(Text)``
 
 const Separator = styled(View)`
     width: 100%;
