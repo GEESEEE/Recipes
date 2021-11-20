@@ -4,9 +4,8 @@ import { Recipe } from '@recipes/api-types/v1'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { Icon, Icons, View, Text } from '@/components/base'
-import { Counter, Editable } from '@/components/atoms'
-import { recipesActions, recipeService } from '@/redux'
-import { useAppDispatch, useRecipeDropdownItems, useSections } from '@/hooks'
+import { Editable } from '@/components/atoms'
+import { useRecipeDropdownItems } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Recipe> {
@@ -42,14 +41,7 @@ function RecipeListItem({
 
     return (
         <ListItem
-            items={
-                useDropdown
-                    ? dropdownItems.map((item, index) => ({
-                          id: index,
-                          ...item,
-                      }))
-                    : undefined
-            }
+            items={useDropdown ? dropdownItems : undefined}
             onPress={!editable ? onPress : undefined}
             onGesture={onGesture}
             hide={hide}

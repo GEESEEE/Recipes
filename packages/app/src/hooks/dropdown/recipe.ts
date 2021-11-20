@@ -8,7 +8,7 @@ import { DropdownItem } from '@/types'
 export function useRecipeDropdownItems(
     recipe: Recipe,
     isBrowse: boolean
-): Omit<DropdownItem, 'id'>[] {
+): DropdownItem[] {
     const navigation = useNavigation<any>()
     const dispatch = useAppDispatch()
     const sections = useSections()
@@ -40,6 +40,10 @@ export function useRecipeDropdownItems(
         }
     }
 
+    async function reportRecipe() {
+        navigation.navigate('ReportRecipe', { recipeId: recipe.id })
+    }
+
     const dropdownItems = []
 
     if (!isBrowse || sections.length > 0) {
@@ -56,5 +60,15 @@ export function useRecipeDropdownItems(
         })
     }
 
-    return dropdownItems
+    if (isBrowse) {
+        dropdownItems.push({
+            text: 'Report',
+            onPress: reportRecipe,
+        })
+    }
+
+    return dropdownItems.map((item, index) => ({
+        id: index,
+        ...item,
+    }))
 }

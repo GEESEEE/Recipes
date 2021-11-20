@@ -10,7 +10,6 @@ import {
     useHeader,
     useRecipes,
     useBrowse,
-    useSections,
     useRecipeDropdownItems,
 } from '@/hooks'
 import {
@@ -28,7 +27,6 @@ type ViewRecipeProps = {
 
 function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
     const { theme } = useSettings()
-    const sections = useSections()
     const myRecipes = useRecipes()
     const browseRecipes = useBrowse()
 
@@ -133,10 +131,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
             {
                 element: DropdownMenu,
                 props: {
-                    items: recipeDropdownItems.map((item, index) => ({
-                        id: index,
-                        ...item,
-                    })),
+                    items: recipeDropdownItems,
                 },
             },
         ],

@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { ReportType } from '@recipes/api-types'
 import { View, Text, TextInput } from '@/components/base'
-import { useHeader } from '@/hooks'
+import { useHeader, useSettings } from '@/hooks'
 import { recipeService } from '@/redux'
 import { Picker } from '@/components/molecules'
 import { Button } from '@/components/atoms'
 
 function ReportScreen(): JSX.Element {
+    const { theme } = useSettings()
     const navigation = useNavigation<any>()
     const route = useRoute() as {
         params?: { recipeId: number }
@@ -46,7 +47,7 @@ function ReportScreen(): JSX.Element {
     useHeader(navigation, { title: 'Reporting Recipe', right: [] })
 
     return (
-        <Container>
+        <Container backgroundColor={theme.background}>
             <Text>Report </Text>
             <Picker
                 items={Object.values(ReportType).map((cat, index) => ({
