@@ -10,10 +10,13 @@ export function useReports() {
 
     const getReports = userService.useGetReportsQuery(undefined, { skip })
 
-    useUpdateEffect(async () => {
-        if (typeof getReports.data !== 'undefined') {
-            await dispatch(reportActions.setReports(getReports.data))
+    useUpdateEffect(() => {
+        async function func() {
+            if (typeof getReports.data !== 'undefined') {
+                await dispatch(reportActions.setReports(getReports.data))
+            }
         }
+        func()
     }, [getReports])
 
     function callback() {

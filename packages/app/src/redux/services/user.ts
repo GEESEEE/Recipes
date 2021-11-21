@@ -28,7 +28,7 @@ const userApi = api.injectEndpoints({
 
         getReports: builder.query<Report[], void>({
             query: () => ({
-                url: `/reports`,
+                url: `users/reports`,
                 method: 'GET',
             }),
         }),

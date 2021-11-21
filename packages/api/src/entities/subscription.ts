@@ -42,7 +42,7 @@ export default class Subscription {
     public start!: Date
 
     @Expose()
-    @Column()
+    @Column('timestamp with time zone', { nullable: true })
     public end!: Date | null
 
     @Expose()
