@@ -43,3 +43,7 @@ export function useSortState(): Sort<RecipeSortOptions>[] {
         return (sort.state[s] ? s : `-${s}`) as Sort<RecipeSortOptions>
     })
 }
+
+export function useReport() {
+    return useAppSelector((state) => state.report)
+}

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { Recipe } from '@recipes/api-types/v1'
 import { useAppDispatch } from '../redux'
-import { useSections } from '../selectors'
+import { useReport, useSections } from '../selectors'
 import { recipesActions, recipeService } from '@/redux'
 import { DropdownItem } from '@/types'
 
@@ -12,6 +12,7 @@ export function useRecipeDropdownItems(
     const navigation = useNavigation<any>()
     const dispatch = useAppDispatch()
     const sections = useSections()
+    const report = useReport()
 
     const [deleteRecipe] = recipeService.useDeleteRecipeMutation()
 
@@ -60,7 +61,11 @@ export function useRecipeDropdownItems(
         })
     }
 
-    if (isBrowse) {
+    const alreadyReported =
+        typeof report.find((report) => report.recipeId === recipe.id) !==
+        'undefined'
+
+    if (isBrowse && !alreadyReported) {
         dropdownItems.push({
             text: 'Report',
             onPress: reportRecipe,

@@ -15,7 +15,6 @@ import {
     PaginationObject,
     ScopeParams,
     PaginationParams,
-    ReportCreate,
 } from '@recipes/api-types/v1'
 import { TYPES } from '@/utils/constants'
 import { RecipeQueryBuilder, RecipeRepository } from '@/repositories'
@@ -23,15 +22,8 @@ import {
     InstructionResult,
     RecipeIngredientResult,
     RecipeResult,
-    ReportResult,
 } from '@/types'
-import {
-    Ingredient,
-    Instruction,
-    Recipe,
-    RecipeIngredient,
-    Report,
-} from '@/entities'
+import { Ingredient, Instruction, Recipe, RecipeIngredient } from '@/entities'
 
 type RecipeScopeParams = ScopeParams<
     RecipeScopes,
@@ -53,9 +45,6 @@ export default class RecipeService {
 
     @inject(TYPES.InstructionRepository)
     private readonly instructionRepository!: Repository<Instruction>
-
-    @inject(TYPES.ReportRepository)
-    private readonly reportRepository!: Repository<Report>
 
     // #region Recipe
     public async createRecipes(

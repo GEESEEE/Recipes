@@ -568,6 +568,7 @@ export class createSchema1620169219541 implements MigrationInterface {
         await queryRunner.dropTable('payment')
         await queryRunner.dropTable('subscription')
         await queryRunner.dropTable('subscription_plan')
+        await queryRunner.dropTable('report')
         await queryRunner.dropTable('instruction')
         await queryRunner.dropTable('recipe_ingredient')
         await queryRunner.dropTable('ingredient')

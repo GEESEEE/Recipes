@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { capitalize, ReportType } from '@recipes/api-types/v1'
+import { ReportType } from '@recipes/api-types/v1'
 import { View } from '@/components/base'
 import { Button, EditItem, TextInputWithTitle } from '@/components/atoms'
 import { Picker } from '@/components/molecules'
-import { useHeader, useSettings } from '@/hooks'
-import { recipeService } from '@/redux'
+import { useAppDispatch, useHeader, useSettings } from '@/hooks'
+import { recipeService, reportActions } from '@/redux'
 
 function ReportScreen(): JSX.Element {
     const { theme } = useSettings()
+    const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
     const route = useRoute() as {
         params?: { recipeId: number }
@@ -37,11 +38,15 @@ function ReportScreen(): JSX.Element {
         recipeService.useReportRecipeMutation()
 
     async function onSubmit() {
-        await reportRecipe({
+        const report = await reportRecipe({
             ...state,
             category: state.category,
             recipeId,
         })
+
+        if ('data' in report) {
+            dispatch(reportActions.addReport(report.data))
+        }
         navigation.goBack()
     }
 
