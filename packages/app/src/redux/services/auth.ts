@@ -7,7 +7,6 @@ import {
     LoginResult,
 } from '@recipes/api-types/v1'
 import { api } from './base'
-import { withPopupMutation } from '@/hooks'
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
