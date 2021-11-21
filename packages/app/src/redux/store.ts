@@ -8,6 +8,7 @@ import {
     editRecipeReducer,
     browseReducer,
     sortReducer,
+    reportReducer,
 } from './slices'
 import { api } from './services'
 import { logMiddleware } from './middleware'
@@ -22,6 +23,7 @@ export const store = configureStore({
         editRecipe: editRecipeReducer,
         browse: browseReducer,
         sort: sortReducer,
+        report: reportReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
