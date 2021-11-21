@@ -10,8 +10,7 @@ export function useVerifyToken() {
     const [loading, setLoading] = useState(true)
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
-
-    const [getReports] = useReports()
+    useReports()
 
     useUpdateEffect(() => {
         setLoading(verifyTokenStatus.isLoading)
@@ -23,7 +22,6 @@ export function useVerifyToken() {
             const res = await verifyToken(token)
             if ('data' in res) {
                 await dispatch(authActions.login({ user: res.data, token }))
-                getReports()
             }
         } else {
             setLoading(false)

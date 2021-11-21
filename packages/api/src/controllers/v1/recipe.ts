@@ -1,4 +1,4 @@
-import { ValidationChain, query, body } from 'express-validator'
+import { ValidationChain, query, body, param } from 'express-validator'
 import {
     controller,
     httpGet,
@@ -7,6 +7,7 @@ import {
     queryParam,
     request,
     requestBody,
+    requestParam,
 } from 'inversify-express-utils'
 import { inject } from 'inversify'
 import { Request } from 'express'
@@ -78,14 +79,14 @@ export default class RecipeController implements interfaces.Controller {
     }
 
     @httpPut(
-        ':recipeId/report',
+        '/:recipeId/report',
         TYPES.PassportMiddleware,
         ...RecipeController.validate('reportRecipe'),
         TYPES.ErrorMiddleware
     )
     public async reportRecipe(
         @request() req: Request,
-        @queryParam('recipeId') recipeId: number,
+        @requestParam('recipeId') recipeId: number,
         @requestBody()
         body: {
             category: ReportType
@@ -123,7 +124,7 @@ export default class RecipeController implements interfaces.Controller {
 
             case 'reportRecipe':
                 return [
-                    query('recipeId').isInt().toInt(),
+                    param('recipeId').isInt().toInt(),
                     body('category').isIn(Object.values(ReportType)),
                     body('description').isString(),
                 ]

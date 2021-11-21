@@ -17,7 +17,7 @@ export function useLogin(): [
 
     const [signIn, signInStatus] = authService.useSignInMutation()
     const [getUser, getUserStatus] = userService.useGetUserMutation()
-    const [getReports] = useReports()
+    useReports()
 
     async function login(loginData: LoginParams) {
         let res: any = await signIn(loginData)
@@ -33,7 +33,6 @@ export function useLogin(): [
             res = await getUser(token)
             if ('data' in res) {
                 dispatch(authActions.login({ user: res.data, token }))
-                getReports()
                 return
             }
         }

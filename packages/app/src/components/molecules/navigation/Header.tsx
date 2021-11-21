@@ -135,6 +135,7 @@ function HeaderComponent({
                                     color={color}
                                     size="m"
                                     paddingHorizontal="n"
+                                    backgroundColor={theme.backgroundVariant}
                                 />
                             }
                             autoFocus
