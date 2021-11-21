@@ -404,7 +404,13 @@ export class createSchema1620169219541 implements MigrationInterface {
                     {
                         name: 'category',
                         type: 'enum',
-                        enum: ['incomplete', 'invalid', 'trolling', 'spam'],
+                        enum: [
+                            'Incomplete',
+                            'Invalid',
+                            'Trolling',
+                            'Spam',
+                            'Other',
+                        ],
                     },
                     {
                         name: 'recipe_id',
@@ -432,6 +438,12 @@ export class createSchema1620169219541 implements MigrationInterface {
                         referencedColumnNames: ['id'],
                         referencedTableName: 'user',
                         onDelete: 'CASCADE',
+                    },
+                ],
+                indices: [
+                    {
+                        columnNames: ['recipe_id', 'user_id'],
+                        isUnique: true,
                     },
                 ],
             })

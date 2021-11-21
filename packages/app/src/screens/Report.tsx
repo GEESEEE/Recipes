@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { capitalize, ReportType } from '@recipes/api-types/v1'
-import { View, Text, TextInput } from '@/components/base'
+import { View } from '@/components/base'
 import { Button, EditItem, TextInputWithTitle } from '@/components/atoms'
 import { Picker } from '@/components/molecules'
 import { useHeader, useSettings } from '@/hooks'
@@ -21,12 +21,12 @@ function ReportScreen(): JSX.Element {
     }
 
     const [state, setState] = React.useState({
-        category: capitalize(ReportType.INVALID),
+        category: ReportType.INVALID,
         description: '',
     })
 
     function changeCategory(category: ReportType) {
-        setState({ ...state, category: capitalize(category) })
+        setState({ ...state, category })
     }
 
     function changeDescription(description: string) {
@@ -39,7 +39,7 @@ function ReportScreen(): JSX.Element {
     async function onSubmit() {
         await reportRecipe({
             ...state,
-            category: state.category.toLowerCase(),
+            category: state.category,
             recipeId,
         })
         navigation.goBack()
@@ -55,7 +55,7 @@ function ReportScreen(): JSX.Element {
                     <Picker
                         items={Object.values(ReportType).map((cat, index) => ({
                             id: index,
-                            text: capitalize(cat),
+                            text: cat,
                             onPress: () => changeCategory(cat),
                         }))}
                         current={state.category}

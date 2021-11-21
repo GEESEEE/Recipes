@@ -10,8 +10,9 @@ export class Report {
 export type ReportCreate = Omit<Report, 'id' | 'date'>
 
 export enum ReportType {
-    INCOMPLETE = 'incomplete',
-    INVALID = 'invalid',
-    TROLLING = 'trolling',
-    SPAM = 'spam',
+    INCOMPLETE = 'Incomplete',
+    INVALID = 'Invalid',
+    TROLLING = 'Trolling',
+    SPAM = 'Spam',
+    OTHER = 'Other',
 }
