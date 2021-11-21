@@ -2,6 +2,7 @@ import { LoginParams } from '@recipes/api-types/v1'
 import * as SecureStore from 'expo-secure-store'
 import { useState } from 'react'
 import { useAppDispatch } from '../redux'
+import { useReports } from './report'
 import { authActions, authService, userService } from '@/redux'
 import { isFetchError } from '@/utils'
 
@@ -16,6 +17,7 @@ export function useLogin(): [
 
     const [signIn, signInStatus] = authService.useSignInMutation()
     const [getUser, getUserStatus] = userService.useGetUserMutation()
+    const [getReports] = useReports()
 
     async function login(loginData: LoginParams) {
         let res: any = await signIn(loginData)
@@ -31,6 +33,7 @@ export function useLogin(): [
             res = await getUser(token)
             if ('data' in res) {
                 dispatch(authActions.login({ user: res.data, token }))
+                getReports()
                 return
             }
         }

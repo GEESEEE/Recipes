@@ -30,7 +30,6 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
 
     const [loading] = useVerifyToken()
 
-    // Sections configuration
     async function setSections(sections: Section[]): Promise<void> {
         await dispatch(sectionsActions.setSections(sections))
     }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import * as SecureStore from 'expo-secure-store'
 import { useUpdateEffect } from '../util/update-effect'
 import { useAppDispatch } from '../redux'
+import { useReports } from './report'
 import { authActions, authService } from '@/redux'
 
 export function useVerifyToken() {
@@ -9,6 +10,8 @@ export function useVerifyToken() {
     const [loading, setLoading] = useState(true)
     const [verifyToken, verifyTokenStatus] =
         authService.useVerifyTokenMutation()
+
+    const [getReports] = useReports()
 
     useUpdateEffect(() => {
         setLoading(verifyTokenStatus.isLoading)
@@ -20,6 +23,7 @@ export function useVerifyToken() {
             const res = await verifyToken(token)
             if ('data' in res) {
                 await dispatch(authActions.login({ user: res.data, token }))
+                getReports()
             }
         } else {
             setLoading(false)
