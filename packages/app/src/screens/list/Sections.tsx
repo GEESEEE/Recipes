@@ -12,6 +12,7 @@ import {
     useUpdateEffect,
     useSections,
     useSectionHeight,
+    useVerifyToken,
 } from '@/hooks'
 import { View, Icons } from '@/components/base'
 import { authActions, authService, sectionService } from '@/redux'
@@ -27,30 +28,7 @@ function SectionsScreen({ navigation }: { navigation: any }): JSX.Element {
     const sectionHeight = useSectionHeight()
     const dispatch = useAppDispatch()
 
-    // Verify Token stuff
-    const [loading, setLoading] = React.useState(true)
-    const [verifyToken, verifyTokenStatus] =
-        authService.useVerifyTokenMutation()
-
-    useUpdateEffect(() => {
-        setLoading(verifyTokenStatus.isLoading)
-    }, [verifyTokenStatus.isLoading])
-
-    async function retrieveToken(): Promise<void> {
-        const token = await SecureStore.getItemAsync('token')
-        if (token) {
-            const res = await verifyToken(token)
-            if ('data' in res) {
-                await dispatch(authActions.login({ user: res.data, token }))
-            }
-        } else {
-            setLoading(false)
-        }
-    }
-
-    React.useEffect(() => {
-        retrieveToken()
-    }, [])
+    const [loading] = useVerifyToken()
 
     // Sections configuration
     async function setSections(sections: Section[]): Promise<void> {

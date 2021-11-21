@@ -1,11 +1,10 @@
 import React, { useReducer } from 'react'
 import { Dimensions, Image } from 'react-native'
 import styled from 'styled-components'
-import * as SecureStore from 'expo-secure-store'
 import LoadingModal from './Loading'
 import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
-import { useAppDispatch, useAppSelector } from '@/hooks'
+import { useAppSelector, useLogin } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import {
     Button,
@@ -13,8 +12,6 @@ import {
     Error,
     TextInputWithIcons,
 } from '@/components/atoms'
-import { authActions, userService, authService } from '@/redux'
-import { isFetchError } from '@/utils'
 
 export const LOGIN_ACTIONS = {
     USERNAME_CHANGE: 'usernameChange',
@@ -55,12 +52,8 @@ function reducer(state: LoginState, action: any): LoginState {
 function LoginModal(): JSX.Element {
     const { theme } = useAppSelector((state) => state.settings)
 
-    const dispatch = useAppDispatch()
-    const [signIn, signInStatus] = authService.useSignInMutation()
-
-    const [getUser, getUserStatus] = userService.useGetUserMutation()
-
-    const [error, setError] = React.useState('')
+    const [loginFunction, errorMessage, signInLoading, getUserLoading] =
+        useLogin()
 
     const [displayRegisterScreen, setDisplayRegisterScreen] =
         React.useState(false)
@@ -116,33 +109,13 @@ function LoginModal(): JSX.Element {
                 username: data.username,
                 password: data.password,
             }
-            setError('')
-            let res: any = await signIn(loginData)
-            if (isFetchError(res)) {
-                setError(res.error.message)
-                return
-            }
-
-            if ('data' in res) {
-                const token = res.data.access_token
-                await SecureStore.setItemAsync('token', token)
-
-                res = await getUser(token)
-                if ('data' in res) {
-                    dispatch(authActions.login({ user: res.data, token }))
-                    return
-                }
-            }
+            await loginFunction(loginData)
         }
-    }
-
-    function handleRegisterButton(): void {
-        setDisplayRegisterScreen(true)
     }
 
     return (
         <Container backgroundColor={theme.background}>
-            {getUserStatus.isLoading ? <LoadingModal /> : null}
+            {getUserLoading ? <LoadingModal /> : null}
 
             {displayRegisterScreen ? (
                 <RegisterModal
@@ -208,18 +181,18 @@ function LoginModal(): JSX.Element {
                     data.username.length === 0
                 }
                 onPress={() => handleLoginButton()}
-                loading={signInStatus.isLoading}
+                loading={signInLoading}
                 marginVertical="s"
             />
 
             <Button
                 type="Outline"
                 text="Register"
-                onPress={() => handleRegisterButton()}
+                onPress={() => setDisplayRegisterScreen(true)}
                 marginVertical="m"
             />
 
-            <Error message={error} />
+            <Error message={errorMessage} />
         </Container>
     )
 }
