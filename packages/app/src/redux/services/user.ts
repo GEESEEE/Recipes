@@ -1,4 +1,5 @@
 import {
+    Report,
     Settings,
     SettingsUpdate,
     User,
@@ -22,6 +23,13 @@ const userApi = api.injectEndpoints({
                 url: `/users/settings`,
                 method: 'PUT',
                 body,
+            }),
+        }),
+
+        getReports: builder.query<Report[], void>({
+            query: () => ({
+                url: `/reports`,
+                method: 'GET',
             }),
         }),
     }),

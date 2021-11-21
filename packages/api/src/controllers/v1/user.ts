@@ -11,7 +11,7 @@ import { Request } from 'express'
 import { inject } from 'inversify'
 import { Theme, SettingsUpdate, WithoutId } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
-import { UserService } from '@/services'
+import { ReportService, UserService } from '@/services'
 import { BadRequestError } from '@/errors'
 import { ReportResult, SettingsResult, UserResult } from '@/types'
 
@@ -20,6 +20,9 @@ const { TYPES } = constants
 @controller('/v1/users')
 export default class UserController implements interfaces.Controller {
     @inject(TYPES.UserService) private readonly userService!: UserService
+
+    @inject(TYPES.ReportService)
+    private readonly reportService!: ReportService
 
     @httpGet(
         '/',
@@ -68,13 +71,15 @@ export default class UserController implements interfaces.Controller {
 
     // #endregion
 
-    // @httpGet(
-    //     '/reports',
-    //     TYPES.PassportMiddleware,
-    //     ...UserController.validate('getReports'),
-    //     TYPES.ErrorMiddleware
-    // )
-    // public async getReports(@request() req: Request): Promise<ReportResult[]> {}
+    @httpGet(
+        '/reports',
+        TYPES.PassportMiddleware,
+        ...UserController.validate('getReports'),
+        TYPES.ErrorMiddleware
+    )
+    public async getReports(@request() req: Request): Promise<ReportResult[]> {
+        return await this.reportService.getReportsByUser(req.user?.id as number)
+    }
 
     // #region validate
     private static validate(method: string): ValidationChain[] {
@@ -91,6 +96,9 @@ export default class UserController implements interfaces.Controller {
                     body('color').optional().isString(),
                     body('invertedColors').optional().isBoolean(),
                 ]
+
+            case 'getReports':
+                return []
 
             default:
                 return []
