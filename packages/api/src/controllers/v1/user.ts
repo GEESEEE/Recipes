@@ -13,7 +13,7 @@ import { Theme, SettingsUpdate, WithoutId } from '@recipes/api-types/v1'
 import { constants } from '@/utils'
 import { UserService } from '@/services'
 import { BadRequestError } from '@/errors'
-import { SettingsResult, UserResult } from '@/types'
+import { ReportResult, SettingsResult, UserResult } from '@/types'
 
 const { TYPES } = constants
 
@@ -67,6 +67,14 @@ export default class UserController implements interfaces.Controller {
     }
 
     // #endregion
+
+    // @httpGet(
+    //     '/reports',
+    //     TYPES.PassportMiddleware,
+    //     ...UserController.validate('getReports'),
+    //     TYPES.ErrorMiddleware
+    // )
+    // public async getReports(@request() req: Request): Promise<ReportResult[]> {}
 
     // #region validate
     private static validate(method: string): ValidationChain[] {

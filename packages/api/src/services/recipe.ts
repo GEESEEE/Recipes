@@ -142,10 +142,6 @@ export default class RecipeService {
         }
     }
 
-    public async reportRecipe(report: ReportCreate): Promise<ReportResult> {
-        return await this.reportRepository.save(report)
-    }
-
     public async addIngredients(
         ingredients: Array<IngredientCreate>
     ): Promise<Ingredient[]> {

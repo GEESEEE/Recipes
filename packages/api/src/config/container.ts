@@ -18,6 +18,7 @@ import {
     RecipeService,
     SectionService,
     UserService,
+    ReportService,
 } from '@/services'
 import { TYPES } from '@/utils/constants'
 import { ErrorMiddleware } from '@/middlewares'
@@ -93,6 +94,7 @@ bind<SectionService>(TYPES.SectionService).to(SectionService)
 bind<RecipeService>(TYPES.RecipeService).to(RecipeService)
 bind<AuthService>(TYPES.AuthService).to(AuthService)
 bind<UserService>(TYPES.UserService).to(UserService)
+bind<ReportService>(TYPES.ReportService).to(ReportService)
 
 bind<Validator>(TYPES.Validator).to(Validator)
 

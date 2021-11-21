@@ -19,7 +19,7 @@ import {
     SortQueryTuple,
 } from '@recipes/api-types/v1'
 import { constants, decodeQueryParams, decodeSortQuery } from '@/utils'
-import { RecipeService } from '@/services'
+import { RecipeService, ReportService } from '@/services'
 import { RecipeResult, ReportResult } from '@/types'
 
 const { TYPES } = constants
@@ -28,6 +28,9 @@ const { TYPES } = constants
 export default class RecipeController implements interfaces.Controller {
     @inject(TYPES.RecipeService)
     private readonly recipeService!: RecipeService
+
+    @inject(TYPES.ReportService)
+    private readonly reportService!: ReportService
 
     @httpGet(
         '/',
@@ -89,7 +92,7 @@ export default class RecipeController implements interfaces.Controller {
             description: string
         }
     ): Promise<ReportResult> {
-        return await this.recipeService.reportRecipe({
+        return await this.reportService.reportRecipe({
             userId: req.user?.id as number,
             recipeId,
             ...body,
