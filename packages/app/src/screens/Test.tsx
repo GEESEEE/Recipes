@@ -13,7 +13,7 @@ import { settingsActions } from '@/redux'
 import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
 import { View, Text, TextInput, Icons } from '@/components/base'
-import { Error, Button, IconButton } from '@/components/atoms'
+import { Error, Button, IconButton, CustomToggle } from '@/components/atoms'
 
 import { userService } from '@/redux'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
@@ -94,6 +94,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
 
     const [val, toggleVal] = useToggle(false)
 
+    const [value, setVal] = React.useState(false)
+
     function tog(v: boolean): void {
         console.log('toggle', val, v)
         toggleVal(v)
@@ -122,12 +124,14 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 text="Merge test"
                 onPress={() => showPopup()}
             />
-            <IconButton
-                type={Icons.MyFeather}
-                name="menu"
-                loading
-                onPress={() => console.log('Press')}
-                color={theme.error}
+
+            <CustomToggle
+                value={value}
+                onValueChange={(val: boolean) => {
+                    setVal(val)
+                    console.log('Toggle', val)
+                }}
+                width="l"
             />
         </Container>
     )
