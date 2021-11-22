@@ -163,7 +163,7 @@ function ViewRecipeScreen({ navigation }: ViewRecipeProps): JSX.Element {
                         {section.key}
                     </SectionHeaderText>
                 )}
-                renderSectionFooter={() => <View paddingVertical="s" />}
+                renderSectionFooter={() => <View paddingVertical="l" />}
             />
         </Container>
     )
