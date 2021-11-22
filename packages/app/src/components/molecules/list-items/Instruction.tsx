@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Instruction } from '@recipes/api-types/v1'
-import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { View, Text } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { ListItemBaseProps } from '@/types'
-import { useAppDispatch } from '@/hooks'
-import { editRecipeActions } from '@/redux'
+import { useInstructionDropdownItems } from '@/hooks'
 
 interface InstructionListItemProps extends ListItemBaseProps<Instruction> {
     instructions: Instruction[]
@@ -25,29 +23,7 @@ function InstructionListItem({
     handleInstructionTextChange,
 }: InstructionListItemProps): JSX.Element {
     const index = instructions.indexOf(item)
-    const dispatch = useAppDispatch()
-    const navigation = useNavigation<any>()
-
-    function editInstruction(): void {
-        navigation.navigate('EditInstruction', { instructionId: item.id })
-    }
-
-    function deleteInstruction(): void {
-        dispatch(editRecipeActions.removeInstruction({ id: item.id }))
-    }
-
-    const dropdownItems = [
-        {
-            id: 0,
-            text: 'Edit',
-            onPress: editInstruction,
-        },
-        {
-            id: 1,
-            text: 'Delete',
-            onPress: deleteInstruction,
-        },
-    ]
+    const dropdownItems = useInstructionDropdownItems(item)
 
     return (
         <ListItem

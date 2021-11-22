@@ -7,7 +7,7 @@ import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 
 import { sectionsActions, sectionService } from '@/redux'
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useSectionDropdownItems } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
@@ -25,38 +25,13 @@ function SectionListItem({
     handleSectionNameChange,
     handleSectionDescriptionChange,
 }: SectionListItemProps): JSX.Element {
-    const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
-
-    const [deleteSection] = sectionService.useDeleteSectionMutation()
-
-    async function deleteSect(): Promise<void> {
-        const res = await deleteSection(item.id)
-        if ('data' in res) {
-            dispatch(sectionsActions.removeSection(item.id))
-        }
-    }
-
-    function editSection(): void {
-        navigation.navigate('EditSection', { sectionId: item.id })
-    }
 
     function onPress(): void {
         navigation.navigate('Recipes', { sectionId: item.id })
     }
 
-    const dropdownItems = [
-        {
-            id: 0,
-            text: 'Edit',
-            onPress: editSection,
-        },
-        {
-            id: 1,
-            text: 'Delete',
-            onPress: deleteSect,
-        },
-    ]
+    const dropdownItems = useSectionDropdownItems(item)
 
     return (
         <ListItem

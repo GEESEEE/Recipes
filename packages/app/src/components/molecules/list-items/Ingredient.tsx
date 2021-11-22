@@ -6,7 +6,7 @@ import ListItem from './ListItem'
 import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { ListItemBaseProps } from '@/types'
-import { useAppDispatch } from '@/hooks'
+import { useAppDispatch, useIngredientDropdownItems } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
@@ -26,29 +26,7 @@ function IngredientListItem({
     handleIngredientAmountChange,
     handleIngredientUnitChange,
 }: IngredientListItemProps): JSX.Element {
-    const dispatch = useAppDispatch()
-    const navigation = useNavigation<any>()
-
-    function editIngredient(): void {
-        navigation.navigate('EditIngredient', { ingredientId: item.id })
-    }
-
-    function deleteIngredient(): void {
-        dispatch(editRecipeActions.removeIngredient({ id: item.id }))
-    }
-
-    const dropdownItems = [
-        {
-            id: 0,
-            text: 'Edit',
-            onPress: editIngredient,
-        },
-        {
-            id: 1,
-            text: 'Delete',
-            onPress: deleteIngredient,
-        },
-    ]
+    const dropdownItems = useIngredientDropdownItems(item)
 
     return (
         <ListItem
