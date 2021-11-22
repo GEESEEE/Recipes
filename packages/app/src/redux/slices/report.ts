@@ -9,7 +9,7 @@ const reportSlice = createSlice({
             return action.payload
         },
         addReport(state, action: PayloadAction<Report>) {
-            state = [...state, action.payload]
+            return [...state, action.payload]
         },
     },
 })
