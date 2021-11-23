@@ -4,6 +4,7 @@ import { LayoutProps } from '@/components/higher-order'
 import { View, Icons } from '@/components/base'
 import { IconButton, Editable } from '@/components/atoms'
 import { useSettings, useToggle } from '@/hooks'
+import { Spacing } from '@/styles'
 
 type CounterProps = {
     increment: () => void
@@ -12,6 +13,7 @@ type CounterProps = {
     onChange?: (text: string) => void
     iconType?: any
     iconName?: string
+    size?: Spacing.Size
 } & LayoutProps
 
 function Counter({
@@ -21,6 +23,7 @@ function Counter({
     iconType,
     iconName,
     onChange,
+    size = 'l',
     ...rest
 }: CounterProps): JSX.Element {
     const { theme } = useSettings()
@@ -28,7 +31,6 @@ function Counter({
     const [editable, toggleEditable] = useToggle(false)
 
     const displayIcon = iconName && iconType && onChange
-    const size = 'l'
     return (
         <Container
             borderRadius="s"
@@ -54,8 +56,7 @@ function Counter({
             <Editable
                 editable={editable}
                 paddingHorizontal={displayIcon ? 's' : 'm'}
-                paddingVertical="s"
-                type={displayIcon ? 'Header' : 'SubHeader'}
+                type={displayIcon ? 'SubHeader' : 'Text'}
                 text={value.toString()}
                 handleTextChange={onChange}
             />

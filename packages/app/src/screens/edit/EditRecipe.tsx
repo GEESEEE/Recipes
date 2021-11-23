@@ -410,6 +410,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         decrement={decrementPeopleCount}
                         value={editRecipe.peopleCount}
                         width="n"
+                        size="m"
                     />
                 }
                 element2={null}
@@ -424,6 +425,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                             paddingVertical="s"
                             onValueChange={(val: boolean) => handlePublish(val)}
                             value={!!editRecipe.publishedAt}
+                            marginVertical="s"
                         />
                     }
                     element2={null}
