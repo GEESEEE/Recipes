@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import styled from 'styled-components'
+import { Keyboard } from 'react-native'
 import { useAppSelector } from '@/hooks'
 import { Icons, Modal, View } from '@/components/base'
 import {
@@ -224,7 +225,9 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 }
                 focus={focusPassword1}
                 onFocus={() => setFocusPassword1(false)}
-                onSubmitEditing={() => setFocusPassword2(true)}
+                onSubmitEditing={() => {
+                    setFocusPassword2(true)
+                }}
             />
 
             {/* Password 2 Input Field */}

@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+    Keyboard,
     TextInput as RNTextInput,
     TextInputProps as RNTextInputProps,
 } from 'react-native'
@@ -21,6 +22,7 @@ const TextInput = ({
     focus,
     type,
     style,
+    multiline,
     ...rest
 }: TextInputProps): JSX.Element => {
     const { theme, textSize } = useSettings()
@@ -53,7 +55,11 @@ const TextInput = ({
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
             maxLength={255}
-            blurOnSubmit={false}
+            blurOnSubmit={typeof multiline !== 'undefined'}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+                Keyboard.dismiss()
+            }}
             ref={ref}
             {...rest}
         />
