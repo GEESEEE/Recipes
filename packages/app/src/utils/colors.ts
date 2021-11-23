@@ -16,4 +16,5 @@ export default {
 
     primaryBlue: '#4ecdc4',
     primaryRed: '#fc5c65',
+    primaryGreen: '#55f063',
 }

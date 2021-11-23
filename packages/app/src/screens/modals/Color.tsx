@@ -56,12 +56,40 @@ function ColorPicker({ toggle }: ColorPickerProps): JSX.Element {
                     onColorChange={(color: HsvColor) =>
                         setLocalColor(fromHsv(color))
                     }
+                    color={localColor}
                 />
             </PickerContainer>
+            <ButtonRow marginVertical="l">
+                <Button
+                    type="Solid"
+                    text="Blue"
+                    color={colors.primaryBlue}
+                    onPress={() => setLocalColor(colors.primaryBlue)}
+                    width="s"
+                />
+
+                <Button
+                    type="Solid"
+                    text="Red"
+                    color={colors.primaryRed}
+                    onPress={() => setLocalColor(colors.primaryRed)}
+                    width="s"
+                    marginHorizontal="s"
+                />
+
+                <Button
+                    type="Solid"
+                    text="Green"
+                    color={colors.primaryGreen}
+                    onPress={() => setLocalColor(colors.primaryGreen)}
+                    width="s"
+                />
+            </ButtonRow>
+
             <Button
                 type="Solid"
                 text="Save New Color"
-                marginVertical="l"
+                marginVertical="m"
                 color={localColor}
                 onPress={() => {
                     setPrimaryColor(localColor)
@@ -88,4 +116,8 @@ const PickerContainer = styled(View)`
 
 const Picker = styled(TriangleColorPicker)`
     flex: 1;
+`
+
+const ButtonRow = styled(View)`
+    flex-direction: row;
 `
