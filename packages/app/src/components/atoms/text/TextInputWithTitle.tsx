@@ -9,6 +9,7 @@ type TextInputRoundedProps = {
 
 function TextInputWithTitle({
     title,
+    marginVertical,
     marginHorizontal,
     paddingHorizontal = 'm',
     width = 'l',
@@ -19,7 +20,7 @@ function TextInputWithTitle({
     return (
         <Container
             width={width}
-            marginVertical="s"
+            marginVertical={marginVertical}
             marginHorizontal={marginHorizontal}
         >
             {title ? (

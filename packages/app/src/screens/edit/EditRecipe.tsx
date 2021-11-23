@@ -353,6 +353,8 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     const [focusHours, toggleFocusHours] = useToggle(false)
     const [focusMinutes, toggleFocusMinutes] = useToggle(false)
 
+    const marginVertical = 's'
+
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">
             {showConfirmation ? (
@@ -376,6 +378,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 multiline
                 value={editRecipe.name}
                 onSubmitEditing={() => toggleFocusDescription()}
+                marginVertical={marginVertical}
             />
 
             <TextInputWithTitle
@@ -387,6 +390,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 value={editRecipe.description}
                 focus={focusDescription}
                 onSubmitEditing={() => toggleFocusHours()}
+                marginVertical={marginVertical}
             />
 
             <EditItem
@@ -399,6 +403,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         keyboardType="numeric"
                         maxLength={2}
                         width="n"
+                        marginVertical={marginVertical}
                         focus={focusHours}
                         onSubmitEditing={() => toggleFocusMinutes()}
                     />
@@ -413,6 +418,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         keyboardType="numeric"
                         maxLength={2}
                         width="n"
+                        marginVertical={marginVertical}
                         focus={focusMinutes}
                     />
                 }
@@ -427,6 +433,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         value={editRecipe.peopleCount}
                         width="n"
                         size="m"
+                        marginVertical={marginVertical}
                     />
                 }
                 element2={null}
@@ -441,7 +448,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                             paddingVertical="s"
                             onValueChange={(val: boolean) => handlePublish(val)}
                             value={!!editRecipe.publishedAt}
-                            marginVertical="s"
+                            marginVertical={marginVertical}
                         />
                     }
                     element2={null}
