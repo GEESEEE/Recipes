@@ -44,6 +44,7 @@ import { handleNumericTextInput, sortPosition } from '@/utils/utils'
 import { showPopup } from '@/utils/screen'
 
 const emptyRecipe = new Recipe()
+emptyRecipe.publishedAt = null
 emptyRecipe.instructions = []
 emptyRecipe.recipeIngredients = []
 
@@ -365,6 +366,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                     onCancel={() => toggleConfirmation(false)}
                 />
             ) : null}
+
             <TextInputWithTitle
                 title="Title"
                 type="SubHeader"

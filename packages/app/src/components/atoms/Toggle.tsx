@@ -34,10 +34,10 @@ function Toggle({
     const [newWidth, setWidth] = React.useState(size * 2.5)
     const toggleSize = size + 2 * Spacing.spacings[paddingVertical]
 
-    const [toggleValue] = React.useState(new Animated.Value(0))
+    const [toggleTranslation] = React.useState(new Animated.Value(0))
 
     const animateToggle = (value: boolean) => {
-        Animated.timing(toggleValue, {
+        Animated.timing(toggleTranslation, {
             toValue: value ? newWidth - toggleSize : 0,
             duration: 150,
             useNativeDriver: true,
@@ -50,7 +50,7 @@ function Toggle({
 
     const toggleStyle = [
         {
-            transform: [{ translateX: toggleValue }],
+            transform: [{ translateX: toggleTranslation }],
             backgroundColor: value ? theme.primary : theme.grey,
             height: toggleSize,
             width: toggleSize,
