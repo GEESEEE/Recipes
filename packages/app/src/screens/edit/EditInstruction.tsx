@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { Instruction } from '@recipes/api-types/v1'
-import { View, Icons } from '@/components/base'
+import { Icons, KeyboardContainer } from '@/components/base'
 import { useAppDispatch, useEditRecipe, useHeader, useSettings } from '@/hooks'
 import { InstructionListItem } from '@/components/molecules'
 import { getNewId } from '@/utils'
@@ -79,6 +79,6 @@ function EditInstructionScreen({
 
 export default EditInstructionScreen
 
-const Container = styled(View)`
+const Container = styled(KeyboardContainer)`
     flex: 1;
 `

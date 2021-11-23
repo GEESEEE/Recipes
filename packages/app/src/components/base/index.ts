@@ -24,3 +24,5 @@ export {
     Icons,
     ScrollView,
 }
+
+export { default as KeyboardContainer } from './KeyboardContainer'

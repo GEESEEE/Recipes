@@ -13,7 +13,7 @@ import {
     useSettings,
     useToggle,
 } from '@/hooks'
-import { View, Text, Icons, Toggle } from '@/components/base'
+import { View, KeyboardContainer, Icons, Toggle } from '@/components/base'
 import { TextInputWithTitle, Counter, EditItem } from '@/components/atoms'
 import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
@@ -447,7 +447,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
 
 export default EditRecipeScreen
 
-const Container = styled(View)`
+const Container = styled(KeyboardContainer)`
     flex: 1;
     align-items: center;
 `

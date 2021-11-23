@@ -3,6 +3,7 @@ import { Modal as RNModal } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import View from './View'
+import KeyboardContainer from './KeyboardContainer'
 import { withLayoutProps, LayoutProps } from '@/components/higher-order'
 
 export type ModalProps = {
@@ -40,6 +41,6 @@ function Modal({
 
 export default withLayoutProps(Modal)
 
-const Container = styled(View)`
+const Container = styled(KeyboardContainer)`
     flex: 1;
 `

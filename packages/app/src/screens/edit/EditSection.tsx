@@ -2,9 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { Section, SectionCreate } from '@recipes/api-types/v1'
 import { useRoute } from '@react-navigation/native'
-import { View, Icons } from '@/components/base'
+import { Icons, KeyboardContainer } from '@/components/base'
 import { SectionListItem } from '@/components/molecules'
-import { useAppDispatch, useHeader, useSectionById, useSections } from '@/hooks'
+import {
+    useAppDispatch,
+    useHeader,
+    useSectionById,
+    useSections,
+    useSettings,
+} from '@/hooks'
 import { sectionsActions, sectionService } from '@/redux'
 import { getNewPosition, sectionUpdateObject } from '@/utils'
 
@@ -16,6 +22,7 @@ function EditSectionScreen({
     navigation,
 }: EditSectionScreenProps): JSX.Element {
     const dispatch = useAppDispatch()
+    const { theme } = useSettings()
 
     const route = useRoute()
     const editing = Boolean(route.params)
@@ -91,7 +98,7 @@ function EditSectionScreen({
     })
 
     return (
-        <Container>
+        <Container backgroundColor={theme.background}>
             <SectionListItem
                 item={sectionData}
                 editable
@@ -104,8 +111,7 @@ function EditSectionScreen({
 
 export default EditSectionScreen
 
-const Container = styled(View)`
+const Container = styled(KeyboardContainer)`
     flex: 1;
-    background-color: ${(props) => props.theme.background};
     align-items: center;
 `

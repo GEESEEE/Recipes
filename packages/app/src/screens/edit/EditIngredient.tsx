@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useRoute } from '@react-navigation/native'
 import { RecipeIngredient } from '@recipes/api-types/v1'
-import { View, Icons } from '@/components/base'
+import { Icons, KeyboardContainer } from '@/components/base'
 import { Error } from '@/components/atoms'
 import {
     useAppDispatch,
@@ -131,6 +131,6 @@ function EditIngredientScreen({
 
 export default EditIngredientScreen
 
-const Container = styled(View)`
+const Container = styled(KeyboardContainer)`
     flex: 1;
 `
