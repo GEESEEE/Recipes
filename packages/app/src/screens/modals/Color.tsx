@@ -88,7 +88,7 @@ function ColorPicker({ toggle }: ColorPickerProps): JSX.Element {
 
             <Button
                 type="Solid"
-                text="Save New Color"
+                text="Save"
                 marginVertical="m"
                 color={localColor}
                 onPress={() => {
