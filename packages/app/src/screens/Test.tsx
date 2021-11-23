@@ -13,7 +13,7 @@ import { settingsActions } from '@/redux'
 import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
 import { View, Text, TextInput, Icons } from '@/components/base'
-import { Error, Button, IconButton, CustomToggle } from '@/components/atoms'
+import { Error, Button, IconButton, Toggle } from '@/components/atoms'
 import { userService } from '@/redux'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
 
@@ -124,7 +124,7 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                 onPress={() => showPopup()}
             />
 
-            <CustomToggle
+            <Toggle
                 value={value}
                 onValueChange={(val: boolean) => {
                     setVal(val)

@@ -13,7 +13,7 @@ type CustomToggleProps = {
     value?: boolean
 } & LayoutProps
 
-function CustomToggle({
+function Toggle({
     disabled,
     onValueChange,
     value,
@@ -67,9 +67,9 @@ function CustomToggle({
     if (typeof width === 'undefined') {
         containerStyle.width = newWidth
     }
-    console.log('Toggle')
+
     return (
-        <Container
+        <TouchableOpacity
             onPress={() => {
                 if (!disabled) {
                     onToggle()
@@ -87,15 +87,13 @@ function CustomToggle({
             {...rest}
         >
             <View style={toggleCopyStyle} />
-            <Toggle key={uuid()} style={toggleStyle} />
-        </Container>
+            <ToggleView key={uuid()} style={toggleStyle} />
+        </TouchableOpacity>
     )
 }
 
-export default CustomToggle
+export default Toggle
 
-const Container = styled(TouchableOpacity)``
-
-const Toggle = styled(Animated.View)`
+const ToggleView = styled(Animated.View)`
     position: absolute;
 `

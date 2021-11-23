@@ -7,8 +7,8 @@ import { Theme } from '@recipes/api-types/v1'
 import { authActions, settingsActions, authService, userService } from '@/redux'
 import { useAppDispatch, useAuth, useSettings, useToggle } from '@/hooks'
 import { ColorPicker } from '@/screens'
-import { Toggle, Text, View, Icons, Icon } from '@/components/base'
-import { Button, DrawerItem, CustomToggle } from '@/components/atoms'
+import { Text, View, Icons, Icon } from '@/components/base'
+import { Button, DrawerItem, Toggle } from '@/components/atoms'
 
 type DrawerNavigatorProps = {
     navigation: any
@@ -90,7 +90,7 @@ export default function DrawerNavigator({
                     <DrawerItem
                         text="Light Theme"
                         element={
-                            <CustomToggle
+                            <Toggle
                                 value={theme.mode === 'light'}
                                 onValueChange={(val: boolean) =>
                                     handleSetTheme(val)
@@ -103,7 +103,7 @@ export default function DrawerNavigator({
                     <DrawerItem
                         text="Inverted Colors"
                         element={
-                            <CustomToggle
+                            <Toggle
                                 value={invertedColors}
                                 onValueChange={(val: boolean) =>
                                     handleSetInvertedColors(val)

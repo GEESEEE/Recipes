@@ -13,12 +13,12 @@ import {
     useSettings,
     useToggle,
 } from '@/hooks'
-import { View, KeyboardContainer, Icons, Toggle } from '@/components/base'
+import { KeyboardContainer, Icons } from '@/components/base'
 import {
     TextInputWithTitle,
     Counter,
     EditItem,
-    CustomToggle,
+    Toggle,
 } from '@/components/atoms'
 import { ConfirmationModal, Picker } from '@/components/molecules'
 import {
@@ -419,7 +419,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 <EditItem
                     text="Published"
                     element={
-                        <CustomToggle
+                        <Toggle
                             width="n"
                             paddingVertical="s"
                             onValueChange={(val: boolean) => handlePublish(val)}
