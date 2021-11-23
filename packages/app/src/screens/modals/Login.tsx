@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { Dimensions, Image, Keyboard } from 'react-native'
+import { Dimensions, Image } from 'react-native'
 import styled from 'styled-components'
 import LoadingModal from './Loading'
 import RegisterModal from './Register'

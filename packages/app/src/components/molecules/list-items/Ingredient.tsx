@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RecipeIngredient } from '@recipes/api-types/v1'
-import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { ListItemBaseProps } from '@/types'
-import { useAppDispatch, useIngredientDropdownItems, useToggle } from '@/hooks'
-import { editRecipeActions } from '@/redux'
+import { useIngredientDropdownItems, useToggle } from '@/hooks'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
     handleIngredientNameChange?: (text: string) => void
