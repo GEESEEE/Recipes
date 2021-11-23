@@ -18,7 +18,7 @@ function ColorPicker({ toggle }: ColorPickerProps): JSX.Element {
     const dispatch = useAppDispatch()
     const [updateSettings] = useUpdateSettingsMutation()
 
-    const [localColor, setLocalColor] = useState<string>(colors.primary)
+    const [localColor, setLocalColor] = useState<string>(theme.primary)
     const headerText = 'Change Primary Color'
 
     async function setPrimaryColor(color: string): Promise<void> {
