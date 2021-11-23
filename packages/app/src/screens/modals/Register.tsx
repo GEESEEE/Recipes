@@ -1,6 +1,5 @@
-import React, { Dispatch, useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import styled from 'styled-components'
-import { LOGIN_ACTIONS } from './Login'
 import { useAppSelector } from '@/hooks'
 import { Icons, Modal, View } from '@/components/base'
 import {
@@ -175,6 +174,10 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
         showLogin()
     }
 
+    const [focusEmail, setFocusEmail] = useState(false)
+    const [focusPassword1, setFocusPassword1] = useState(false)
+    const [focusPassword2, setFocusPassword2] = useState(false)
+
     return (
         <Container backgroundColor={theme.background}>
             <View paddingVertical="l" marginVertical="l" />
@@ -186,6 +189,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 errorMessage={
                     !data.isValidUsername ? 'Invalid Username' : undefined
                 }
+                onSubmitEditing={() => setFocusEmail(true)}
             />
 
             {/* Email Input Field */}
@@ -194,6 +198,9 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 placeholder="E-mail"
                 error
                 errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
+                focus={focusEmail}
+                onFocus={() => setFocusEmail(false)}
+                onSubmitEditing={() => setFocusPassword1(true)}
             />
 
             {/* Password 1 Input Field */}
@@ -215,6 +222,9 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 errorMessage={
                     !data.isValidPassword1 ? 'Invalid Password' : undefined
                 }
+                focus={focusPassword1}
+                onFocus={() => setFocusPassword1(false)}
+                onSubmitEditing={() => setFocusPassword2(true)}
             />
 
             {/* Password 2 Input Field */}
@@ -232,6 +242,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                         ? 'Passwords are not the same'
                         : undefined
                 }
+                focus={focusPassword2}
+                onFocus={() => setFocusPassword2(false)}
             />
 
             {/* Register Button */}

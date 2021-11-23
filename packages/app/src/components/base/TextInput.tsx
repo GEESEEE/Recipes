@@ -13,9 +13,16 @@ import { Typography } from '@/styles'
 import { searchStyles } from '@/utils'
 import { useSettings } from '@/hooks'
 
-export type TextInputProps = RNTextInputProps & TextProps & LayoutProps
+export type TextInputProps = { focus?: boolean } & RNTextInputProps &
+    TextProps &
+    LayoutProps
 
-const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
+const TextInput = ({
+    focus,
+    type,
+    style,
+    ...rest
+}: TextInputProps): JSX.Element => {
     const { theme, textSize } = useSettings()
     type = type || 'Text'
     const lineHeight = Typography.lineHeight(type, textSize)
@@ -30,6 +37,14 @@ const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
         setHeight(lines * lineHeight + padding)
     }
 
+    const ref = React.useRef<RNTextInput>(null)
+
+    React.useEffect(() => {
+        if (focus) {
+            ref.current?.focus()
+        }
+    }, [focus])
+
     return (
         <RNTextInput
             style={[{ height }, style]}
@@ -38,6 +53,7 @@ const TextInput = ({ type, style, ...rest }: TextInputProps): JSX.Element => {
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
             maxLength={255}
+            ref={ref}
             {...rest}
         />
     )
