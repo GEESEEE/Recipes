@@ -28,6 +28,9 @@ function IngredientListItem({
 }: IngredientListItemProps): JSX.Element {
     const dropdownItems = useIngredientDropdownItems(item)
 
+    const [focusAmount, setFocusAmount] = React.useState(false)
+    const [focusUnit, setFocusUnit] = React.useState(false)
+
     return (
         <ListItem
             items={useDropdown ? dropdownItems : undefined}
@@ -43,6 +46,7 @@ function IngredientListItem({
                     paddingHorizontal="s"
                     numberOfLines={1}
                     placeholder="Ingredient Name"
+                    onSubmitEditing={() => setFocusAmount(true)}
                 />
                 <SubContainer>
                     <Editable
@@ -52,6 +56,9 @@ function IngredientListItem({
                         handleTextChange={handleIngredientAmountChange}
                         paddingHorizontal="s"
                         numberOfLines={1}
+                        focus={focusAmount}
+                        onFocus={() => setFocusAmount(false)}
+                        onSubmitEditing={() => setFocusUnit(true)}
                     />
                     <FlexEditable
                         releaseHeight={releaseHeight}
@@ -60,6 +67,8 @@ function IngredientListItem({
                         handleTextChange={handleIngredientUnitChange}
                         placeholder="Unit?"
                         numberOfLines={1}
+                        focus={focusUnit}
+                        onFocus={() => setFocusUnit(false)}
                     />
                 </SubContainer>
             </Container>

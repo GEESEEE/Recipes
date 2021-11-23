@@ -55,7 +55,7 @@ const TextInput = ({
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
             maxLength={255}
-            blurOnSubmit={typeof multiline !== 'undefined'}
+            blurOnSubmit={false}
             returnKeyType="next"
             onSubmitEditing={() => {
                 Keyboard.dismiss()

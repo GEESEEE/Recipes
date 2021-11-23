@@ -15,6 +15,9 @@ type EditableProps = {
     releaseHeight?: boolean
     placeholder?: string
     handleTextChange?: (text: string, ...args: any[]) => void
+    focus?: boolean
+    onSubmitEditing?: () => void
+    onFocus?: () => void
 } & TextProps &
     LayoutProps
 
