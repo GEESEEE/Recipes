@@ -14,7 +14,6 @@ import { useAppDispatch, useSettings, useToggle } from '@/hooks'
 import { screenUtils } from '@/utils'
 import { View, Text, TextInput, Icons } from '@/components/base'
 import { Error, Button, IconButton, CustomToggle } from '@/components/atoms'
-
 import { userService } from '@/redux'
 import DragDropTest from '@/components/organisms/DragAndDropTest'
 
@@ -131,7 +130,8 @@ const TestScreen = ({ navigation }: { navigation: any }): JSX.Element => {
                     setVal(val)
                     console.log('Toggle', val)
                 }}
-                width="l"
+                width="s"
+                paddingVertical="s"
             />
         </Container>
     )

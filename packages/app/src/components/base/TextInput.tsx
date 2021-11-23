@@ -53,6 +53,7 @@ const TextInput = ({
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
             maxLength={255}
+            blurOnSubmit={false}
             ref={ref}
             {...rest}
         />

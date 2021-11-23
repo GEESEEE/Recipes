@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Animated, StyleProp, ViewStyle } from 'react-native'
+import { Animated, LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native'
 import { v4 as uuid } from 'uuid'
-import { View, Text, TouchableOpacity } from '@/components/base'
+import { View, TouchableOpacity } from '@/components/base'
 import { LayoutProps } from '@/components/higher-order'
 import { useSettings } from '@/hooks'
 import { Spacing, Typography } from '@/styles'
@@ -17,6 +17,8 @@ function CustomToggle({
     disabled,
     onValueChange,
     value,
+    paddingVertical = 'n',
+    borderRadius = 's',
     width,
     ...rest
 }: CustomToggleProps): JSX.Element {
@@ -27,15 +29,18 @@ function CustomToggle({
             onValueChange(!value)
         }
     }
-    console.log('Toggle, widht', width)
+
     const size = Typography.fontSize('Header', textSize)
+    const [newWidth, setWidth] = React.useState(size * 2.5)
+    const toggleSize = size + 2 * Spacing.spacings[paddingVertical]
 
     const [toggleValue] = React.useState(new Animated.Value(0))
+
     const animateToggle = (value: boolean) => {
         Animated.timing(toggleValue, {
-            toValue: value ? 1 : 0,
+            toValue: value ? newWidth - toggleSize : 0,
             duration: 150,
-            useNativeDriver: false,
+            useNativeDriver: true,
         }).start()
     }
 
@@ -43,22 +48,13 @@ function CustomToggle({
         animateToggle(!!value)
     }, [value])
 
-    const colorInterpolation = toggleValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.grey, theme.primary],
-    })
-    const translationInterpolation = toggleValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, size * 1.5],
-    })
-
     const toggleStyle = [
         {
-            transform: [{ translateX: translationInterpolation }],
-            backgroundColor: colorInterpolation,
-            height: size,
-            width: size,
-            borderRadius: Spacing.borderRadii['s'],
+            transform: [{ translateX: toggleValue }],
+            backgroundColor: value ? theme.primary : theme.grey,
+            height: toggleSize,
+            width: toggleSize,
+            borderRadius: Spacing.borderRadii[borderRadius],
         },
     ]
 
@@ -67,17 +63,27 @@ function CustomToggle({
         height: size,
     }
 
-    const containerStyle = {
-        width: size * 2.5,
+    const containerStyle: StyleProp<ViewStyle> = {}
+    if (typeof width === 'undefined') {
+        containerStyle.width = newWidth
     }
-
+    console.log('Toggle')
     return (
         <Container
-            onPress={() => onToggle()}
-            style={containerStyle}
-            borderRadius="s"
+            onPress={() => {
+                if (!disabled) {
+                    onToggle()
+                }
+            }}
             backgroundColor={theme.backgroundVariant}
+            style={containerStyle}
             activeOpacity={1}
+            onLayout={(e: LayoutChangeEvent) =>
+                setWidth(e.nativeEvent.layout.width)
+            }
+            width={width}
+            borderRadius={borderRadius}
+            paddingVertical={paddingVertical}
             {...rest}
         >
             <View style={toggleCopyStyle} />

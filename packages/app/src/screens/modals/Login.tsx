@@ -113,7 +113,7 @@ function LoginModal(): JSX.Element {
         }
     }
 
-    const [focusInput2, setFocusInput2] = React.useState(false)
+    const [focusPassword, setFocusPassword] = React.useState(false)
 
     return (
         <Container backgroundColor={theme.background}>
@@ -147,8 +147,7 @@ function LoginModal(): JSX.Element {
                         : undefined
                 }
                 onSubmitEditing={() => {
-                    console.log('Submitte')
-                    setFocusInput2(true)
+                    setFocusPassword(true)
                 }}
             />
 
@@ -175,8 +174,8 @@ function LoginModal(): JSX.Element {
                 errorMessage={
                     !data.isValidPassword ? 'Invalid Password' : undefined
                 }
-                focus={focusInput2}
-                onFocus={() => setFocusInput2(false)}
+                focus={focusPassword}
+                onFocus={() => setFocusPassword(false)}
             />
 
             <Button
