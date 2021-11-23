@@ -117,7 +117,11 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
     }
 
     function decrementPeopleCount(): void {
-        dispatch(editRecipeActions.setPeopleCount(editRecipe.peopleCount - 1))
+        if (editRecipe.peopleCount > 0) {
+            dispatch(
+                editRecipeActions.setPeopleCount(editRecipe.peopleCount - 1)
+            )
+        }
     }
 
     // Recipe Creation in database
