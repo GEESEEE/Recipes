@@ -46,7 +46,7 @@ function Toggle({
 
     React.useEffect(() => {
         animateToggle(!!value)
-    }, [value])
+    }, [value, newWidth])
 
     const toggleStyle = [
         {
