@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import ListItem from './ListItem'
 import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
-import { useSectionDropdownItems } from '@/hooks'
+import { useSectionDropdownItems, useToggle } from '@/hooks'
 import { ListItemBaseProps } from '@/types'
 
 interface SectionListItemProps extends ListItemBaseProps<Section> {
@@ -31,7 +31,7 @@ function SectionListItem({
 
     const dropdownItems = useSectionDropdownItems(item)
 
-    const [focusDescription, setFocusDescription] = React.useState(false)
+    const [focusDescription, toggleFocusDescription] = useToggle(false)
 
     return (
         <ListItem
@@ -50,7 +50,7 @@ function SectionListItem({
                     paddingHorizontal="s"
                     numberOfLines={1}
                     placeholder="Section Name"
-                    onSubmitEditing={() => setFocusDescription(true)}
+                    onSubmitEditing={() => toggleFocusDescription()}
                 />
                 <Editable
                     releaseHeight={releaseHeight}
@@ -62,7 +62,6 @@ function SectionListItem({
                     maxLength={1023}
                     placeholder="Description"
                     focus={focusDescription}
-                    onFocus={() => setFocusDescription(false)}
                 />
             </Container>
         </ListItem>

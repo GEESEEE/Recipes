@@ -42,9 +42,7 @@ const TextInput = ({
     const ref = React.useRef<RNTextInput>(null)
 
     React.useEffect(() => {
-        if (focus) {
-            ref.current?.focus()
-        }
+        ref.current?.focus()
     }, [focus])
 
     return (
@@ -55,7 +53,8 @@ const TextInput = ({
             autoCorrect={false}
             onContentSizeChange={(e) => onContentSizeChange(e)}
             maxLength={255}
-            blurOnSubmit={false}
+            blurOnSubmit={typeof multiline !== 'undefined'}
+            multiline={multiline}
             returnKeyType="next"
             onSubmitEditing={() => {
                 Keyboard.dismiss()

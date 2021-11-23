@@ -349,9 +349,9 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
         onPress: () => handleChangeSection(section.id),
     }))
 
-    const [focusDescription, setFocusDescription] = React.useState(false)
-    const [focusHours, setFocusHours] = React.useState(false)
-    const [focusMinutes, setFocusMinutes] = React.useState(false)
+    const [focusDescription, toggleFocusDescription] = useToggle(false)
+    const [focusHours, toggleFocusHours] = useToggle(false)
+    const [focusMinutes, toggleFocusMinutes] = useToggle(false)
 
     return (
         <Container backgroundColor={theme.background} paddingVertical="s">
@@ -375,7 +375,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 }
                 multiline
                 value={editRecipe.name}
-                onSubmitEditing={() => setFocusDescription(true)}
+                onSubmitEditing={() => toggleFocusDescription()}
             />
 
             <TextInputWithTitle
@@ -386,8 +386,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                 multiline
                 value={editRecipe.description}
                 focus={focusDescription}
-                onFocus={() => setFocusDescription(false)}
-                onSubmitEditing={() => setFocusHours(true)}
+                onSubmitEditing={() => toggleFocusHours()}
             />
 
             <EditItem
@@ -401,8 +400,7 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         maxLength={2}
                         width="n"
                         focus={focusHours}
-                        onFocus={() => setFocusHours(false)}
-                        onSubmitEditing={() => setFocusMinutes(true)}
+                        onSubmitEditing={() => toggleFocusMinutes()}
                     />
                 }
                 element2={
@@ -416,7 +414,6 @@ function EditRecipeScreen({ navigation }: { navigation: any }): JSX.Element {
                         maxLength={2}
                         width="n"
                         focus={focusMinutes}
-                        onFocus={() => setFocusMinutes(false)}
                     />
                 }
             />

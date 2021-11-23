@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import LoadingModal from './Loading'
 import RegisterModal from './Register'
 import logo from '@/assets/temp_icon.png'
-import { useAppSelector, useLogin } from '@/hooks'
+import { useAppSelector, useLogin, useToggle } from '@/hooks'
 import { Icon, Icons, View, Modal } from '@/components/base'
 import {
     Button,
@@ -113,7 +113,7 @@ function LoginModal(): JSX.Element {
         }
     }
 
-    const [focusPassword, setFocusPassword] = React.useState(false)
+    const [focusPassword, setFocusPassword] = useToggle(false)
 
     return (
         <Container backgroundColor={theme.background}>
@@ -147,7 +147,7 @@ function LoginModal(): JSX.Element {
                         : undefined
                 }
                 onSubmitEditing={() => {
-                    setFocusPassword(true)
+                    setFocusPassword()
                 }}
             />
 
@@ -175,7 +175,6 @@ function LoginModal(): JSX.Element {
                     !data.isValidPassword ? 'Invalid Password' : undefined
                 }
                 focus={focusPassword}
-                onFocus={() => setFocusPassword(false)}
             />
 
             <Button

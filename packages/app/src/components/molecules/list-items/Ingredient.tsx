@@ -6,7 +6,7 @@ import ListItem from './ListItem'
 import { View } from '@/components/base'
 import { Editable } from '@/components/atoms'
 import { ListItemBaseProps } from '@/types'
-import { useAppDispatch, useIngredientDropdownItems } from '@/hooks'
+import { useAppDispatch, useIngredientDropdownItems, useToggle } from '@/hooks'
 import { editRecipeActions } from '@/redux'
 
 interface IngredientListItemProps extends ListItemBaseProps<RecipeIngredient> {
@@ -28,8 +28,8 @@ function IngredientListItem({
 }: IngredientListItemProps): JSX.Element {
     const dropdownItems = useIngredientDropdownItems(item)
 
-    const [focusAmount, setFocusAmount] = React.useState(false)
-    const [focusUnit, setFocusUnit] = React.useState(false)
+    const [focusAmount, toggleFocusAmount] = useToggle(false)
+    const [focusUnit, toggleFocusUnit] = useToggle(false)
 
     return (
         <ListItem
@@ -46,7 +46,7 @@ function IngredientListItem({
                     paddingHorizontal="s"
                     numberOfLines={1}
                     placeholder="Ingredient Name"
-                    onSubmitEditing={() => setFocusAmount(true)}
+                    onSubmitEditing={() => toggleFocusAmount()}
                 />
                 <SubContainer>
                     <Editable
@@ -57,8 +57,7 @@ function IngredientListItem({
                         paddingHorizontal="s"
                         numberOfLines={1}
                         focus={focusAmount}
-                        onFocus={() => setFocusAmount(false)}
-                        onSubmitEditing={() => setFocusUnit(true)}
+                        onSubmitEditing={() => toggleFocusUnit()}
                     />
                     <FlexEditable
                         releaseHeight={releaseHeight}
@@ -68,7 +67,6 @@ function IngredientListItem({
                         placeholder="Unit?"
                         numberOfLines={1}
                         focus={focusUnit}
-                        onFocus={() => setFocusUnit(false)}
                     />
                 </SubContainer>
             </Container>

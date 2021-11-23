@@ -1,7 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import styled from 'styled-components'
-import { Keyboard } from 'react-native'
-import { useAppSelector } from '@/hooks'
+import { useAppSelector, useToggle } from '@/hooks'
 import { Icons, Modal, View } from '@/components/base'
 import {
     Button,
@@ -175,9 +174,9 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
         showLogin()
     }
 
-    const [focusEmail, setFocusEmail] = useState(false)
-    const [focusPassword1, setFocusPassword1] = useState(false)
-    const [focusPassword2, setFocusPassword2] = useState(false)
+    const [focusEmail, setFocusEmail] = useToggle(false)
+    const [focusPassword1, setFocusPassword1] = useToggle(false)
+    const [focusPassword2, setFocusPassword2] = useToggle(false)
 
     return (
         <Container backgroundColor={theme.background}>
@@ -190,7 +189,7 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 errorMessage={
                     !data.isValidUsername ? 'Invalid Username' : undefined
                 }
-                onSubmitEditing={() => setFocusEmail(true)}
+                onSubmitEditing={() => setFocusEmail()}
             />
 
             {/* Email Input Field */}
@@ -200,7 +199,6 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                 error
                 errorMessage={!data.isValidEmail ? 'Invalid Email' : undefined}
                 focus={focusEmail}
-                onFocus={() => setFocusEmail(false)}
                 onSubmitEditing={() => setFocusPassword1(true)}
             />
 
@@ -224,9 +222,8 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                     !data.isValidPassword1 ? 'Invalid Password' : undefined
                 }
                 focus={focusPassword1}
-                onFocus={() => setFocusPassword1(false)}
                 onSubmitEditing={() => {
-                    setFocusPassword2(true)
+                    setFocusPassword2()
                 }}
             />
 
@@ -246,7 +243,6 @@ function RegisterScreen({ showLogin }: RegisterModalProps): JSX.Element {
                         : undefined
                 }
                 focus={focusPassword2}
-                onFocus={() => setFocusPassword2(false)}
             />
 
             {/* Register Button */}
