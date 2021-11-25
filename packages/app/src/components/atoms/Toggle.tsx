@@ -78,9 +78,9 @@ function Toggle({
             backgroundColor={theme.backgroundVariant}
             style={containerStyle}
             activeOpacity={1}
-            onLayout={(e: LayoutChangeEvent) =>
+            onLayout={(e: LayoutChangeEvent) => {
                 setWidth(e.nativeEvent.layout.width)
-            }
+            }}
             width={width}
             borderRadius={borderRadius}
             paddingVertical={paddingVertical}

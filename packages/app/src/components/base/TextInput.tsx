@@ -55,7 +55,7 @@ const TextInput = ({
             maxLength={255}
             blurOnSubmit={typeof multiline !== 'undefined'}
             multiline={multiline}
-            returnKeyType="next"
+            returnKeyType="done"
             onSubmitEditing={() => {
                 Keyboard.dismiss()
             }}
