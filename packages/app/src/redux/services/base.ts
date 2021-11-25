@@ -14,7 +14,7 @@ import { FetchError } from '@/types'
 const V1 = 'v1'
 
 const base = fetchBaseQuery({
-    baseUrl: `${'http://60b2-85-145-4-64.ngrok.io' ?? '127.0.0.1'}/${V1}`,
+    baseUrl: `${'http://0f2c-85-145-4-64.ngrok.io' ?? '127.0.0.1'}/${V1}`,
     prepareHeaders: (headers, { getState }) => {
         const { token } = (getState() as RootState).auth
         if (token.length > 0) {
