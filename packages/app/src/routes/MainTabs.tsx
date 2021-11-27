@@ -2,7 +2,7 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import RecipesStack from './RecipesStack'
 import BrowseStack from './BrowseStack'
-import { TestScreen } from '@/screens'
+import { TestScreen, PaymentScreen } from '@/screens'
 import { TabComponent, TabConfig } from '@/components/molecules'
 
 const Tabs = createMaterialTopTabNavigator()
@@ -19,6 +19,10 @@ const config: TabConfig = {
     Test: {
         icon: 'test-tube',
         name: 'Test',
+    },
+    Payment: {
+        icon: 'menu',
+        name: 'Payment',
     },
 }
 
@@ -47,6 +51,8 @@ function MainTabs(): JSX.Element {
             <Tabs.Screen name="BrowseStack" component={BrowseStack} />
 
             <Tabs.Screen name="Test" component={TestScreen} />
+
+            <Tabs.Screen name="Payment" component={PaymentScreen} />
         </Tabs.Navigator>
     )
 }
