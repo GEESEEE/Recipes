@@ -18,6 +18,9 @@
 !.yarn/versions
 yarn.lock
 
+# Expo
+**/.expo
+
 
 # Should not commit build outputs
 # api
