@@ -24,7 +24,8 @@
         "plugin:react-hooks/recommended",
         "plugin:react-redux/recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "next/core-web-vitals"
     ],
     "plugins": [
         "import",

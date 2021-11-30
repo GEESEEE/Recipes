@@ -14,6 +14,7 @@
         "app": "yarn workspace @recipes/app",
         "api": "yarn workspace @recipes/api",
         "types": "yarn workspace @recipes/api-types",
+        "admin": "yarn workspace @recipes/admin",
         "lint": "yarn lerna run lint",
         "build": "yarn lerna run build",
         "start": "yarn lerna run start --parallel"
@@ -64,7 +65,6 @@
         "pretty-quick": "^3.1.1",
         "react-native-bundle-visualizer": "^3.0.0",
         "ts-node": "^10.1.0",
-        "tsconfig-paths": "^3.11.0",
         "tscpaths": "^0.0.9",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4"
